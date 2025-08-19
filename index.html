@@ -1,72 +1,118 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I’m in Pain – prototyp</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>I’m in Pain – prototyp</title>
+
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<nav>
-    <div class="logo">I’m in Pain</div>
-    <ul>
+  <!-- Nawigacja -->
+  <nav class="nav">
+    <div class="nav__inner container">
+      <div class="logo">I’m in Pain</div>
+      <ul class="menu">
         <li><a href="#home">Strona główna</a></li>
         <li><a href="#details">Informacje</a></li>
         <li><a href="#medications">Leki</a></li>
         <li><a href="#contact">Kontakt</a></li>
-    </ul>
-</nav>
-<div class="container">
-    <!-- Interaktywne modele -->
-    <section id="models" class="models">
-        <div class="model" data-gender="female">
-            <img src="female.png" alt="Sylwetka kobiety">
-            <div class="overlay part-head" data-part="head" style="top:0;left:0;width:100%;height:20%;"></div>
-            <div class="overlay part-torso" data-part="torso" style="top:20%;left:0;width:100%;height:35%;"></div>
-            <div class="overlay part-arms" data-part="arms" style="top:20%;left:0;width:100%;height:35%;"></div>
-            <div class="overlay part-legs" data-part="legs" style="top:55%;left:0;width:100%;height:45%;"></div>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero / intro -->
+  <header id="home" class="hero container">
+    <div class="hero__text">
+      <h1>Znajdź przyczynę bólu i dowiedz się, gdzie szukać pomocy</h1>
+      <p class="muted">
+        Kliknij wybraną część ciała, aby zobaczyć typowe dolegliwości, możliwe przyczyny oraz sugerowanych specjalistów.
+      </p>
+      <a class="btn btn--primary" href="#models">Przejdź do modeli</a>
+    </div>
+  </header>
+
+  <main class="container grid">
+    <!-- Modele interaktywne -->
+    <section id="models" class="card">
+      <div class="card__header">
+        <h2>Modele interaktywne</h2>
+        <p class="muted">Najedź i kliknij, aby wybrać część ciała.</p>
+      </div>
+
+      <div class="models">
+        <!-- Kobieta -->
+        <div class="model" data-gender="female" aria-label="Model kobiety">
+          <div class="imgwrap">
+            <img src="female.png" alt="Sylwetka kobiety" />
+          </div>
+          <div class="overlay part-head"  data-part="head"  title="Głowa"></div>
+          <div class="overlay part-torso" data-part="torso" title="Tułów"></div>
+          <div class="overlay part-arms"  data-part="arms"  title="Ręce"></div>
+          <div class="overlay part-legs"  data-part="legs"  title="Nogi"></div>
         </div>
-        <div class="model" data-gender="male">
-            <img src="male.png" alt="Sylwetka mężczyzny">
-            <div class="overlay part-head" data-part="head" style="top:0;left:0;width:100%;height:20%;"></div>
-            <div class="overlay part-torso" data-part="torso" style="top:20%;left:0;width:100%;height:35%;"></div>
-            <div class="overlay part-arms" data-part="arms" style="top:20%;left:0;width:100%;height:35%;"></div>
-            <div class="overlay part-legs" data-part="legs" style="top:55%;left:0;width:100%;height:45%;"></div>
+
+        <!-- Mężczyzna -->
+        <div class="model" data-gender="male" aria-label="Model mężczyzny">
+          <div class="imgwrap">
+            <img src="mezczyzna.png" alt="Sylwetka mężczyzny" />
+          </div>
+          <div class="overlay part-head"  data-part="head"  title="Głowa"></div>
+          <div class="overlay part-torso" data-part="torso" title="Tułów"></div>
+          <div class="overlay part-arms"  data-part="arms"  title="Ręce"></div>
+          <div class="overlay part-legs"  data-part="legs"  title="Nogi"></div>
         </div>
+      </div>
     </section>
 
-    <!-- Sekcja z detalami -->
-    <section id="details" class="details">
-        <h2>Informacje o bólu</h2>
-        <p>Kliknij część ciała na modelu, aby zobaczyć szczegółowe informacje o możliwych przyczynach bólu, rekomendowanych badaniach i lekarzach.</p>
-        <div id="detail-content"></div>
+    <!-- Szczegóły / wynik -->
+    <section id="details" class="card">
+      <div class="card__header">
+        <h2>Szczegóły</h2>
+        <p class="muted">Kliknij część ciała, by zobaczyć możliwe przyczyny bólu, badania i sugerowanych specjalistów.</p>
+      </div>
+      <div id="detail-content" class="prose">
+        Kliknij część ciała, aby zobaczyć informacje.
+      </div>
     </section>
 
-    <!-- Lista leków -->
-    <section id="medications" class="medications">
-        <h2>Lista leków przeciwbólowych</h2>
-        <p>Poniższa tabela prezentuje główne kategorie leków przeciwbólowych wraz z przykładami i krótkim opisem. Pamiętaj, aby zawsze konsultować się z lekarzem lub farmaceutą przed zastosowaniem leku.</p>
-        <table>
-            <thead>
-                <tr><th>Kategoria</th><th>Przykładowe substancje</th><th>Zastosowanie / uwagi</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>Paracetamol</td><td>Paracetamol</td><td>Lek pierwszego wyboru przy bólu łagodnym i gorączce; przekroczenie dawki uszkadza wątrobę.</td></tr>
-                <tr><td>NLPZ</td><td>Ibuprofen, naproksen, aspiryna</td><td>Skuteczne przy bólu zapalnym (mięśnie, stawy); ryzyko podrażnienia żołądka.</td></tr>
-                <tr><td>Leki miejscowe</td><td>Diklofenak (żel/maść)</td><td>Działają miejscowo, ograniczając działania ogólnoustrojowe.</td></tr>
-                <tr><td>Opioidy (na receptę)</td><td>Kodeina, tramadol, oksykodon</td><td>Silny ból; wymagają ścisłego nadzoru lekarza, ryzyko uzależnienia.</td></tr>
-                <tr><td>Adjuwanty</td><td>Gabapentyna, duloksetyna</td><td>Stosowane w bólu neuropatycznym lub przewlekłym.</td></tr>
-                <tr><td>Leki przeciwmigrenowe</td><td>Sumatryptan, rizatryptan</td><td>Napady migreny – stosowane doraźnie.</td></tr>
-            </tbody>
+    <!-- Leki -->
+    <section id="medications" class="card">
+      <div class="card__header">
+        <h2>Leki przeciwbólowe</h2>
+        <p class="muted">Poniższa tabela to przegląd kategorii – nie zastępuje porady lekarskiej.</p>
+      </div>
+
+      <div class="tablewrap">
+        <table class="table">
+          <thead>
+            <tr><th>Kategoria</th><th>Przykładowe substancje</th><th>Zastosowanie / uwagi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Paracetamol</td><td>Paracetamol</td><td>Na ból łagodny i gorączkę; uwaga na dawki (wątroba).</td></tr>
+            <tr><td>NLPZ</td><td>Ibuprofen, naproksen, aspiryna</td><td>Gdy występuje stan zapalny; możliwe podrażnienie żołądka.</td></tr>
+            <tr><td>Leki miejscowe</td><td>Diklofenak (żel), lidokaina (plastry)</td><td>Miejscowe działanie przeciwbólowe.</td></tr>
+            <tr><td>Opioidy (Rx)</td><td>Kodeina, tramadol, oksykodon</td><td>Silny ból; ryzyko uzależnienia – tylko pod kontrolą lekarza.</td></tr>
+            <tr><td>Adjuwanty</td><td>Gabapentyna, duloksetyna</td><td>Ból neuropatyczny / przewlekły.</td></tr>
+            <tr><td>Przeciwwmigrenowe</td><td>Sumatryptan, ryzatryptan</td><td>Napady migreny.</td></tr>
+          </tbody>
         </table>
+      </div>
     </section>
+  </main>
 
-    <!-- Kontakt -->
-    <section id="contact" class="contact">
-        <h2>Kontakt</h2>
-        <p>Masz pytania lub uwagi? Napisz do nas: <a href="mailto:kontakt@iminpain.pl">kontakt@iminpain.pl</a></p>
-    </section>
-</div>
-<script src="script.js"></script>
+  <footer id="contact" class="footer">
+    <div class="container footer__inner">
+      <div>
+        <h3>Kontakt</h3>
+        <p>Masz pytania lub uwagi? Napisz: <a href="mailto:kontakt@iminpain.pl">kontakt@iminpain.pl</a></p>
+      </div>
+      <div class="muted small">© 2025 I’m in Pain</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
