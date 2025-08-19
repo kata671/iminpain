@@ -1,43 +1,252 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Boli mnie… – prototyp</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Boli mnie… – wybierz część ciała</title>
+  <style>
+    :root{
+      --bg1:#0b0f1a;
+      --bg2:#2a35d1;
+      --brand:#1e88e5;
+      --text:#0c1222;
+      --card:#ffffff;
+      --ring:#3155ff;
+      --ring-weak:#a6b2ff66;
+      --shadow: 0 10px 30px rgba(0,0,0,.15);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    body{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 900px at -10% -10%, #0b0f1a 15%, #11173a 35%, #1c2399 65%, var(--bg2) 100%);
+      min-height:100svh;
+      display:flex;
+      flex-direction:column;
+    }
+    header{
+      background:linear-gradient(180deg, var(--brand), #4aa3ff);
+      color:#fff;
+      padding:32px 16px 28px;
+      text-align:center;
+      box-shadow:var(--shadow);
+    }
+    header h1{
+      margin:0 0 8px;
+      font-size:clamp(28px, 3.6vw, 44px);
+      letter-spacing:.5px;
+      font-weight:800;
+    }
+    header p{
+      margin:0;
+      opacity:.95;
+      font-size:clamp(14px,1.6vw,18px);
+    }
+    main{
+      width:min(1100px, 92vw);
+      margin:28px auto 64px;
+      display:grid;
+      gap:26px;
+    }
+
+    /* Dwie karty: Kobieta / Mężczyzna */
+    .models{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:26px;
+    }
+    @media (max-width:860px){
+      .models{grid-template-columns:1fr}
+    }
+
+    .model{
+      background:var(--card);
+      border-radius:18px;
+      padding:18px 18px 22px;
+      box-shadow:var(--shadow);
+      border:1px solid #e9eef7;
+    }
+    .model h2{
+      margin:6px 6px 14px;
+      font-size:clamp(18px,2vw,22px);
+      color:#13214d;
+      font-weight:800;
+    }
+
+    /* 3 segmenty */
+    .segments{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:14px;
+    }
+    @media (max-width:720px){
+      .segments{grid-template-columns:1fr; gap:12px}
+    }
+
+    .body-part{
+      position:relative;
+      isolation:isolate;
+      border-radius:16px;
+      overflow:hidden;
+      outline:2px solid transparent;
+      transition:transform .15s ease, outline-color .15s ease, box-shadow .15s ease;
+      cursor:pointer;
+      background:#000;
+      box-shadow:0 6px 18px rgba(10,20,60,.15);
+    }
+    .body-part:hover{
+      transform:translateY(-4px);
+      outline-color:var(--ring);
+      box-shadow:0 16px 38px rgba(20,40,120,.25);
+    }
+    .body-part img{
+      display:block;
+      width:100%;
+      height:280px;
+      object-fit:cover;
+      object-position:center;
+      filter:saturate(1.02) contrast(1.02);
+      transition:transform .35s ease, filter .35s ease, opacity .25s ease;
+    }
+    @media (max-width:720px){
+      .body-part img{height:220px}
+    }
+    .body-part::after{
+      /* subtelny glow na krawędzi przy hover */
+      content:"";
+      position:absolute; inset:0;
+      box-shadow: inset 0 0 0 3px var(--ring-weak);
+      opacity:0; pointer-events:none;
+      transition:opacity .2s ease;
+      border-radius:16px;
+    }
+    .body-part:hover img{transform:scale(1.03)}
+    .body-part:hover::after{opacity:1}
+
+    .label{
+      position:absolute;
+      left:10px; bottom:10px;
+      z-index:2;
+      padding:6px 10px;
+      border-radius:10px;
+      backdrop-filter: blur(6px);
+      background:linear-gradient(180deg, rgba(12,18,34,.65), rgba(12,18,34,.35));
+      color:#fff;
+      font-weight:700;
+      font-size:13px;
+      letter-spacing:.2px;
+      border:1px solid rgba(255,255,255,.22);
+      box-shadow:0 6px 14px rgba(0,0,0,.35);
+    }
+
+    footer{
+      margin:auto auto 18px;
+      color:#e9eef7;
+      font-size:13px;
+      opacity:.85;
+    }
+  </style>
 </head>
 <body>
-  <header class="hero">
+  <header>
     <h1>Boli mnie…</h1>
-    <p>Kliknij w część ciała, aby zobaczyć możliwe przyczyny bólu.</p>
+    <p>Kliknij w odpowiedni obszar, a pokażemy możliwe przyczyny bólu i kolejne opcje.</p>
   </header>
 
-  <main class="wrap">
-    <section class="gender">
-      <h2>Kobieta</h2>
-      <div class="split" data-gender="female">
-        <img src="img/kobieta-model1.png" alt="Sylwetka kobiety" />
-        <button class="segment" data-area="head"  data-label="Głowa / szyja" style="left:0%"></button>
-        <button class="segment" data-area="torso" data-label="Klatka / brzuch / plecy" style="left:33.333%"></button>
-        <button class="segment" data-area="legs"  data-label="Biodra / nogi / stopy" style="left:66.666%"></button>
-      </div>
-    </section>
+  <main>
+    <section class="models">
 
-    <section class="gender">
-      <h2>Mężczyzna</h2>
-      <div class="split" data-gender="male">
-        <img src="img/mezczyzna-model1.png" alt="Sylwetka mężczyzny" />
-        <button class="segment" data-area="head"  data-label="Głowa / szyja" style="left:0%"></button>
-        <button class="segment" data-area="torso" data-label="Klatka / brzuch / plecy" style="left:33.333%"></button>
-        <button class="segment" data-area="legs"  data-label="Biodra / nogi / stopy" style="left:66.666%"></button>
-      </div>
+      <!-- KOBIETA -->
+      <article class="model" aria-label="Model kobiety">
+        <h2>Kobieta</h2>
+        <div class="segments">
+          <!-- Głowa / szyja — ŚRODKOWE zdjęcie -->
+          <div class="body-part"
+               data-gender="female"
+               data-part="head"
+               title="Głowa i szyja">
+            <img src="img/kobieta-twarz.png" alt="Kobieta: głowa i szyja">
+            <span class="label">Głowa · Szyja</span>
+          </div>
+
+          <!-- Klatka / brzuch / plecy — TRZECIE zdjęcie -->
+          <div class="body-part"
+               data-gender="female"
+               data-part="chest"
+               title="Klatka · Brzuch · Plecy">
+            <img src="img/kobieta-gora.png" alt="Kobieta: klatka, brzuch, plecy">
+            <span class="label">Klatka · Brzuch · Plecy</span>
+          </div>
+
+          <!-- Biodra / nogi / stopy — PIERWSZE zdjęcie -->
+          <div class="body-part"
+               data-gender="female"
+               data-part="legs"
+               title="Biodra · Nogi · Stopy">
+            <img src="img/kobieta-biodra.png" alt="Kobieta: biodra, nogi, stopy">
+            <span class="label">Biodra · Nogi · Stopy</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- MĘŻCZYZNA -->
+      <article class="model" aria-label="Model mężczyzny">
+        <h2>Mężczyzna</h2>
+        <div class="segments">
+          <!-- Głowa / szyja — ŚRODKOWE zdjęcie -->
+          <div class="body-part"
+               data-gender="male"
+               data-part="head"
+               title="Głowa i szyja">
+            <img src="img/mezczyzna-twarz.png" alt="Mężczyzna: głowa i szyja">
+            <span class="label">Głowa · Szyja</span>
+          </div>
+
+          <!-- Klatka / brzuch / plecy — TRZECIE zdjęcie -->
+          <div class="body-part"
+               data-gender="male"
+               data-part="chest"
+               title="Klatka · Brzuch · Plecy">
+            <img src="img/mezczyzna-gora.png" alt="Mężczyzna: klatka, brzuch, plecy">
+            <span class="label">Klatka · Brzuch · Plecy</span>
+          </div>
+
+          <!-- Biodra / nogi / stopy — PIERWSZE zdjęcie -->
+          <div class="body-part"
+               data-gender="male"
+               data-part="legs"
+               title="Biodra · Nogi · Stopy">
+            <img src="img/mezczyzna-biodra.png" alt="Mężczyzna: biodra, nogi, stopy">
+            <span class="label">Biodra · Nogi · Stopy</span>
+          </div>
+        </div>
+      </article>
+
     </section>
   </main>
 
-  <footer class="foot">
-    <a href="./">Start</a>
-  </footer>
+  <footer style="text-align:center">© I’m in Pain – prototyp</footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Klik na segment → przejście na odpowiednią podstronę
+    // Otwieramy details.html (lub swoją stronę) z parametrami w URL
+    document.querySelectorAll('.body-part').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const gender = el.dataset.gender;  // "female" | "male"
+        const part   = el.dataset.part;    // "head" | "chest" | "legs"
+
+        // >>> Jeżeli masz już własne podstrony, możesz tu podmienić ścieżki <<<
+        // Przykład alternatywy:
+        // if (gender==='female' && part==='head') location.href='kobieta-head.html';
+        // else if (gender==='female' && part==='chest') location.href='kobieta-chest.html';
+        // ...
+
+        // Domyślnie przechodzimy do generycznej strony z parametrami:
+        const url = details.html?gender=${encodeURIComponent(gender)}&part=${encodeURIComponent(part)};
+        location.assign(url);
+      });
+    });
+  </script>
 </body>
 </html>
