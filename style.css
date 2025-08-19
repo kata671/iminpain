@@ -1,55 +1,75 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f7f9fc;
-  color: #222;
-  margin: 0;
-  text-align: center;
+root{
+  --bg: #0b1020;
+  --bg2:#1b2b7a;
+  --card:#0d1328;
+  --text:#e9eefc;
+  --muted:#a9b3d6;
+  --accent:#3b82f6;
 }
 
-header {
-  padding: 20px;
-  background: #0ea5e9;
-  color: white;
-}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:linear-gradient(90deg,var(--bg),var(--bg2));color:var(--text);font:16px/1.5 system-ui,Segoe UI,Roboto,Arial}
+img{max-width:100%;display:block}
 
-.models {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  padding: 20px;
+.hero{
+  text-align:center;
+  padding:32px 16px 24px;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),transparent);
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
+.hero h1{margin:0 0 6px;font-size:40px;letter-spacing:.4px}
+.hero p{margin:0;color:var(--muted)}
 
-.model img {
-  max-width: 300px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+.wrap{
+  max-width:1200px;margin:24px auto 40px;padding:0 16px;
+  display:grid;grid-template-columns:1fr 1fr;gap:28px;
 }
+@media (max-width:900px){.wrap{grid-template-columns:1fr}}
 
-area {
-  cursor: pointer;
-}
+.gender h2{margin:0 0 12px 4px;font-size:24px}
 
-/* Modal */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.7);
-  justify-content: center;
-  align-items: center;
+/* Karta ze zdjęciem podzielonym na 3 hotspoty */
+.split{
+  position:relative;
+  width:min(520px,90vw);
+  aspect-ratio: 3/2;  /* estetyczne proporcje; obraz dopasujemy */
+  border-radius:18px;
+  overflow:hidden;
+  background:var(--card);
+  box-shadow:0 10px 24px rgba(0,0,0,.35), inset 0 0 0 2px rgba(255,255,255,.04);
 }
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 500px;
+.split img{
+  position:absolute;inset:0;object-fit:cover;width:100%;height:100%;
+  filter:saturate(1.05) contrast(1.02);
 }
-.modal-content img {
-  max-width: 100%;
-  border-radius: 6px;
+.segment{
+  position:absolute;top:0;bottom:0;width:33.3334%;
+  background:transparent;border:none;padding:0;margin:0;cursor:pointer;
+  transition: background .18s ease, outline .18s ease;
 }
-#close {
-  float: right;
-  font-size: 20px;
-  cursor: pointer;
+.segment:hover{
+  background:rgba(59,130,246,.18);
+  outline:2px solid rgba(59,130,246,.65);
+  outline-offset:-2px;
 }
+/* pionowe linie podziału */
+.split::before,.split::after{
+  content:"";position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.18);
+}
+.split::before{left:33.333%}
+.split::after{left:66.666%}
+
+/* dymek z etykietą przy najechaniu */
+.segment::after{
+  content:attr(data-label);
+  position:absolute;left:50%;top:10px;transform:translateX(-50%);
+  font-size:13px;color:#fff;background:rgba(0,0,0,.45);
+  padding:6px 10px;border-radius:999px;opacity:0;pointer-events:none;
+  transition:opacity .18s ease;
+  white-space:nowrap;
+}
+.segment:hover::after{opacity:1}
+
+.foot{max-width:1200px;margin:16px auto 40px;padding:0 16px;color:var(--muted)}
+.foot a{color:var(--text);opacity:.8;text-decoration:none}
+.foot a:hover{opacity:1;text-decoration:underline}
