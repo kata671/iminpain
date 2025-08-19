@@ -1,58 +1,42 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>I’m in Pain – mapa bólu</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boli mnie… – prototyp</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>I’m in Pain</h1>
+  <header class="hero">
+    <h1>Boli mnie…</h1>
     <p>Kliknij w część ciała, aby zobaczyć możliwe przyczyny bólu.</p>
   </header>
 
-  <main class="models">
-    <!-- Kobieta -->
-    <div class="model">
+  <main class="wrap">
+    <section class="gender">
       <h2>Kobieta</h2>
-      <img src="img/kobieta-model1.png" usemap="#kobieta-map" alt="Sylwetka kobiety">
-      <map name="kobieta-map">
-        <area shape="rect" coords="80,10,160,80" href="#" alt="Głowa" data-target="kobieta-twarz">
-        <area shape="rect" coords="70,80,170,160" href="#" alt="Góra tułowia" data-target="kobieta-gora">
-        <area shape="rect" coords="70,160,170,220" href="#" alt="Klatka piersiowa" data-target="serce-pluca">
-        <area shape="rect" coords="70,220,170,280" href="#" alt="Brzuch" data-target="uklad-pokarmowy">
-        <area shape="rect" coords="60,280,180,350" href="#" alt="Biodra" data-target="kobieta-biodra">
-        <area shape="rect" coords="80,350,160,500" href="#" alt="Nogi" data-target="nogi">
-        <area shape="rect" coords="40,200,70,250" href="#" alt="Kręgosłup" data-target="kregoslup">
-        <area shape="rect" coords="90,500,150,560" href="#" alt="Stawy" data-target="stawy">
-      </map>
-    </div>
+      <div class="split" data-gender="female">
+        <img src="img/kobieta-model1.png" alt="Sylwetka kobiety" />
+        <button class="segment" data-area="head"  data-label="Głowa / szyja" style="left:0%"></button>
+        <button class="segment" data-area="torso" data-label="Klatka / brzuch / plecy" style="left:33.333%"></button>
+        <button class="segment" data-area="legs"  data-label="Biodra / nogi / stopy" style="left:66.666%"></button>
+      </div>
+    </section>
 
-    <!-- Mężczyzna -->
-    <div class="model">
+    <section class="gender">
       <h2>Mężczyzna</h2>
-      <img src="img/mezczyzna-model1.png" usemap="#mezczyzna-map" alt="Sylwetka mężczyzny">
-      <map name="mezczyzna-map">
-        <area shape="rect" coords="80,10,160,80" href="#" alt="Głowa" data-target="kobieta-twarz">
-        <area shape="rect" coords="70,80,170,160" href="#" alt="Klatka piersiowa" data-target="serce-pluca">
-        <area shape="rect" coords="70,160,170,220" href="#" alt="Brzuch" data-target="uklad-pokarmowy">
-        <area shape="rect" coords="60,220,180,300" href="#" alt="Biodra" data-target="kobieta-biodra">
-        <area shape="rect" coords="80,300,160,500" href="#" alt="Nogi" data-target="nogi">
-        <area shape="rect" coords="40,200,70,250" href="#" alt="Kręgosłup" data-target="kregoslup">
-        <area shape="rect" coords="90,500,150,560" href="#" alt="Stawy" data-target="stawy">
-      </map>
-    </div>
+      <div class="split" data-gender="male">
+        <img src="img/mezczyzna-model1.png" alt="Sylwetka mężczyzny" />
+        <button class="segment" data-area="head"  data-label="Głowa / szyja" style="left:0%"></button>
+        <button class="segment" data-area="torso" data-label="Klatka / brzuch / plecy" style="left:33.333%"></button>
+        <button class="segment" data-area="legs"  data-label="Biodra / nogi / stopy" style="left:66.666%"></button>
+      </div>
+    </section>
   </main>
 
-  <!-- Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span id="close">&times;</span>
-      <h3 id="modal-title"></h3>
-      <img id="modal-img" src="" alt="">
-      <p id="modal-desc"></p>
-    </div>
-  </div>
+  <footer class="foot">
+    <a href="./">Start</a>
+  </footer>
 
   <script src="script.js"></script>
 </body>
