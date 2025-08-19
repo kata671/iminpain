@@ -46,26 +46,13 @@
     }
 
     .model h2 {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
 
-    .images {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-    }
-
-    .images img {
-      width: 220px;   /* zmniejszone zdjęcia */
+    .model img {
+      width: 280px;   /* dopasowane rozmiary */
       height: auto;
       border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .images img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255,255,255,0.6);
     }
 
     footer {
@@ -80,28 +67,30 @@
 <body>
   <header>
     <h1>Boli mnie...</h1>
-    <p>Wybierz model i kliknij w część ciała, aby zobaczyć możliwe przyczyny bólu.</p>
+    <p>Kliknij w część ciała, aby zobaczyć możliwe przyczyny bólu.</p>
   </header>
 
   <div class="container">
     <!-- Kobieta -->
     <div class="model">
       <h2>Kobieta</h2>
-      <div class="images">
-        <img src="img/kobieta-model1.png" alt="Kobieta - biodra/nogi/stopy">
-        <img src="img/kobieta-model2.png" alt="Kobieta - głowa/szyja">
-        <img src="img/kobieta-model3.png" alt="Kobieta - klatka/brzuch/plecy">
-      </div>
+      <img src="img/kobieta-3panels.png" usemap="#kobieta" alt="Kobieta - podział na części ciała">
+      <map name="kobieta">
+        <area shape="rect" coords="0,0,280,100" href="kobieta-glowa.html" alt="Głowa i szyja">
+        <area shape="rect" coords="0,100,280,200" href="kobieta-klatka.html" alt="Klatka, brzuch i plecy">
+        <area shape="rect" coords="0,200,280,400" href="kobieta-nogi.html" alt="Biodra, nogi i stopy">
+      </map>
     </div>
 
     <!-- Mężczyzna -->
     <div class="model">
       <h2>Mężczyzna</h2>
-      <div class="images">
-        <img src="img/mezczyzna-model1.png" alt="Mężczyzna - biodra/nogi/stopy">
-        <img src="img/mezczyzna-model2.png" alt="Mężczyzna - głowa/szyja">
-        <img src="img/mezczyzna-model3.png" alt="Mężczyzna - klatka/brzuch/plecy">
-      </div>
+      <img src="img/mezczyzna-3panels.png" usemap="#mezczyzna" alt="Mężczyzna - podział na części ciała">
+      <map name="mezczyzna">
+        <area shape="rect" coords="0,0,280,100" href="mezczyzna-glowa.html" alt="Głowa i szyja">
+        <area shape="rect" coords="0,100,280,200" href="mezczyzna-klatka.html" alt="Klatka, brzuch i plecy">
+        <area shape="rect" coords="0,200,280,400" href="mezczyzna-nogi.html" alt="Biodra, nogi i stopy">
+      </map>
     </div>
   </div>
 
