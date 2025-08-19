@@ -1,88 +1,77 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I’m in Pain – prototyp</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>I’m in Pain – interaktywne modele</title>
+  <meta name="description" content="I’m in Pain – interaktywny przewodnik po przyczynach bólu, pierwszej pomocy i specjalistach. Kliknij część ciała, aby zobaczyć możliwe przyczyny i zdjęcia organów." />
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <!-- Nawigacja -->
   <nav class="nav">
-    <div class="logo" aria-label="I'm in Pain">
-      <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
-        <defs>
-          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+    <div class="nav__inner container">
+      <div class="logo" aria-label="I'm in Pain">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0ea5e9"/>
-          </linearGradient>
-        </defs>
-        <circle cx="12" cy="12" r="10" fill="url(#g)"/>
-        <path d="M12 7v5l3 3" stroke="#00131f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      </svg>
-      <span class="logo__text">I’m in Pain</span>
+          </linearGradient></defs>
+          <circle cx="12" cy="12" r="10" fill="url(#g)"/>
+          <path d="M12 6.8v5l3 3" stroke="#00131f" stroke-width="2" stroke-linecap="round" fill="none"/>
+        </svg>
+        <span class="logo__text">I’m in Pain</span>
+      </div>
+      <ul class="menu">
+        <li><a href="#models">Modele</a></li>
+        <li><a href="#details">Informacje</a></li>
+        <li><a href="#gallery">Galeria</a></li>
+        <li><a href="#contact">Kontakt</a></li>
+      </ul>
+      <button id="themeToggle" class="iconbtn" aria-label="Zmień motyw" title="Zmień motyw">☀️</button>
     </div>
-    <ul class="menu">
-      <li><a href="#home">Strona główna</a></li>
-      <li><a href="#details">Informacje</a></li>
-      <li><a href="#medications">Leki</a></li>
-      <li><a href="#contact">Kontakt</a></li>
-    </ul>
-    <button id="themeToggle" class="iconbtn" aria-label="Zmień motyw" title="Zmień motyw">☀️</button>
   </nav>
 
-  <div class="container">
-    <!-- Interaktywne modele -->
-    <section id="models" class="models hero">
-      <div class="model" data-gender="female">
-        <img src="female.png" alt="Sylwetka kobiety">
-        <div class="overlay part-head" data-part="head" title="Głowa"></div>
-        <div class="overlay part-torso" data-part="torso" title="Tułów" style="top:20%;"></div>
-        <div class="overlay part-arms" data-part="arms" title="Ramiona"></div>
-        <div class="overlay part-legs" data-part="legs" title="Nogi" style="top:55%;"></div>
+  <!-- Hero -->
+  <header class="hero container">
+    <div class="hero__text">
+      <h1>Wybierz sylwetkę i kliknij część ciała</h1>
+      <p class="muted">Podświetlenie wskazuje aktywne obszary. Kliknięcie otworzy zdjęcie organu z krótkim opisem możliwych przyczyn bólu, kiedy zgłosić się do lekarza i jakiego specjalistę rozważyć.</p>
+    </div>
+  </header>
+
+  <!-- Główna siatka -->
+  <main class="container grid">
+    <!-- MODELE -->
+    <section id="models" class="card">
+      <div class="card__header">
+        <h2>Modele interaktywne</h2>
+        <p class="muted">Kobieta i mężczyzna – kliknij: Głowa, Szyja, Klatka piersiowa, Brzuch, Ręce, Nogi.</p>
       </div>
-      <div class="model" data-gender="male">
-        <img src="mezczyzna.png" alt="Sylwetka mężczyzny">
-        <div class="overlay part-head" data-part="head" title="Głowa"></div>
-        <div class="overlay part-torso" data-part="torso" title="Tułów" style="top:20%;"></div>
-        <div class="overlay part-arms" data-part="arms" title="Ramiona"></div>
-        <div class="overlay part-legs" data-part="legs" title="Nogi" style="top:55%;"></div>
-      </div>
-    </section>
 
-    <!-- Sekcja z detalami -->
-    <section id="details" class="details card">
-      <h2>Informacje o bólu</h2>
-      <p>Kliknij część ciała na modelu, aby zobaczyć szczegółowe informacje o możliwych przyczynach bólu, rekomendowanych badaniach i lekarzach.</p>
-      <div id="detail-content"></div>
-    </section>
+      <div class="models">
+        <!-- KOBIETA -->
+        <div class="model" data-gender="female" aria-label="Model kobiety">
+          <picture>
+            <source srcset="img/female-full.webp" type="image/webp" />
+            <img src="female.png" alt="Sylwetka kobiety" />
+          </picture>
+          <button class="overlay part-head"  data-part="head"   title="Głowa" aria-label="Głowa"></button>
+          <button class="overlay part-neck"  data-part="neck"   title="Szyja" aria-label="Szyja"></button>
+          <button class="overlay part-chest" data-part="chest"  title="Klatka piersiowa" aria-label="Klatka piersiowa"></button>
+          <button class="overlay part-abd"   data-part="abdomen" title="Brzuch" aria-label="Brzuch"></button>
+          <button class="overlay part-arms"  data-part="arms"   title="Ręce" aria-label="Ręce"></button>
+          <button class="overlay part-legs"  data-part="legs"   title="Nogi" aria-label="Nogi"></button>
+        </div>
 
-    <!-- Lista leków -->
-    <section id="medications" class="medications card">
-      <h2>Lista leków przeciwbólowych</h2>
-      <p>Poniższa tabela prezentuje główne kategorie leków przeciwbólowych wraz z przykładem i krótkim opisem.</p>
-      <table class="table">
-        <thead>
-          <tr><th>Kategoria</th><th>Przykładowe substancje</th><th>Zastosowanie / uwagi</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Paracetamol</td><td>Paracetamol</td><td>Lek pierwszego wyboru przy bólu łagodnym i gorączce; uwaga na wątrobę</td></tr>
-          <tr><td>NLPZ</td><td>Ibuprofen, naproksen</td><td>Bóle zapalne (mięśnie, stawy); ryzyko podrażnienia żołądka</td></tr>
-          <tr><td>Leki miejscowe</td><td>Diklofenak</td><td>Żele i maści na ból mięśni/stawów</td></tr>
-          <tr><td>Opioidy</td><td>Kodeina, tramadol</td><td>Silny ból – tylko na receptę, ryzyko uzależnienia</td></tr>
-          <tr><td>Adjuwanty</td><td>Gabapentyna</td><td>Ból neuropatyczny</td></tr>
-          <tr><td>Leki przeciwmigrenowe</td><td>Sumatryptan</td><td>Napady migreny</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- Kontakt -->
-    <section id="contact" class="contact card">
-      <h2>Kontakt</h2>
-      <p>Masz pytania lub uwagi? Napisz: <a href="mailto:kontakt@iminpain.pl">kontakt@iminpain.pl</a></p>
-    </section>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+        <!-- MĘŻCZYZNA -->
+        <div class="model" data-gender="male" aria-label="Model mężczyzny">
+          <picture>
+            <source srcset="img/male-full.webp" type="image/webp" />
+            <img src="mezczyzna.png" alt="Sylwetka mężczyzny" />
+          </picture>
+          <button class="overlay part-head"  data-part="head"   title="Głowa" aria-label="Głowa"></button>
+          <button class="overlay part-neck"  data-part="neck"   title="Szyja" aria-label="Szyja"></button>
+          <button class="overlay part-chest" data-part="chest"  title="Klatka piersiowa" aria-label="Klatka piersiowa"></button>
+          <button class="overlay part-abd"   data-part="abdomen" title="Brzuch"
