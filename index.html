@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I’m in Pain – prototyp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav>
+    <div class="logo">I’m in Pain</div>
+    <ul>
+        <li><a href="#home">Strona główna</a></li>
+        <li><a href="#details">Informacje</a></li>
+        <li><a href="#medications">Leki</a></li>
+        <li><a href="#contact">Kontakt</a></li>
+    </ul>
+</nav>
+<div class="container">
+    <!-- Interaktywne modele -->
+    <section id="models" class="models">
+        <div class="model" data-gender="female">
+            <img src="female.png" alt="Sylwetka kobiety">
+            <div class="overlay part-head" data-part="head" style="top:0;left:0;width:100%;height:20%;"></div>
+            <div class="overlay part-torso" data-part="torso" style="top:20%;left:0;width:100%;height:35%;"></div>
+            <div class="overlay part-arms" data-part="arms" style="top:20%;left:0;width:100%;height:35%;"></div>
+            <div class="overlay part-legs" data-part="legs" style="top:55%;left:0;width:100%;height:45%;"></div>
+        </div>
+        <div class="model" data-gender="male">
+            <img src="male.png" alt="Sylwetka mężczyzny">
+            <div class="overlay part-head" data-part="head" style="top:0;left:0;width:100%;height:20%;"></div>
+            <div class="overlay part-torso" data-part="torso" style="top:20%;left:0;width:100%;height:35%;"></div>
+            <div class="overlay part-arms" data-part="arms" style="top:20%;left:0;width:100%;height:35%;"></div>
+            <div class="overlay part-legs" data-part="legs" style="top:55%;left:0;width:100%;height:45%;"></div>
+        </div>
+    </section>
+
+    <!-- Sekcja z detalami -->
+    <section id="details" class="details">
+        <h2>Informacje o bólu</h2>
+        <p>Kliknij część ciała na modelu, aby zobaczyć szczegółowe informacje o możliwych przyczynach bólu, rekomendowanych badaniach i lekarzach.</p>
+        <div id="detail-content"></div>
+    </section>
+
+    <!-- Lista leków -->
+    <section id="medications" class="medications">
+        <h2>Lista leków przeciwbólowych</h2>
+        <p>Poniższa tabela prezentuje główne kategorie leków przeciwbólowych wraz z przykładami i krótkim opisem. Pamiętaj, aby zawsze konsultować się z lekarzem lub farmaceutą przed zastosowaniem leku.</p>
+        <table>
+            <thead>
+                <tr><th>Kategoria</th><th>Przykładowe substancje</th><th>Zastosowanie / uwagi</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Paracetamol</td><td>Paracetamol</td><td>Lek pierwszego wyboru przy bólu łagodnym i gorączce; przekroczenie dawki uszkadza wątrobę.</td></tr>
+                <tr><td>NLPZ</td><td>Ibuprofen, naproksen, aspiryna</td><td>Skuteczne przy bólu zapalnym (mięśnie, stawy); ryzyko podrażnienia żołądka.</td></tr>
+                <tr><td>Leki miejscowe</td><td>Diklofenak (żel/maść)</td><td>Działają miejscowo, ograniczając działania ogólnoustrojowe.</td></tr>
+                <tr><td>Opioidy (na receptę)</td><td>Kodeina, tramadol, oksykodon</td><td>Silny ból; wymagają ścisłego nadzoru lekarza, ryzyko uzależnienia.</td></tr>
+                <tr><td>Adjuwanty</td><td>Gabapentyna, duloksetyna</td><td>Stosowane w bólu neuropatycznym lub przewlekłym.</td></tr>
+                <tr><td>Leki przeciwmigrenowe</td><td>Sumatryptan, rizatryptan</td><td>Napady migreny – stosowane doraźnie.</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Kontakt -->
+    <section id="contact" class="contact">
+        <h2>Kontakt</h2>
+        <p>Masz pytania lub uwagi? Napisz do nas: <a href="mailto:kontakt@iminpain.pl">kontakt@iminpain.pl</a></p>
+    </section>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

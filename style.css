@@ -1,0 +1,91 @@
+/* Podstawowe style */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f7f7f7;
+  color: #333;
+}
+nav {
+  background: #0074b7;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+nav .logo {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+nav ul li {
+  margin-left: 20px;
+}
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.models {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.model {
+  position: relative;
+  flex: 1 1 45%;
+  max-width: 45%;
+}
+.model img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+.overlay {
+  position: absolute;
+  border: 2px solid transparent;
+}
+.overlay:hover {
+  border: 2px solid rgba(0, 116, 183, 0.5);
+  background: rgba(0, 116, 183, 0.1);
+}
+.details, .medications, .contact {
+  background: #fff;
+  padding: 20px;
+  margin-top: 30px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.details h2, .medications h2, .contact h2 {
+  margin-top: 0;
+}
+.medications table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.medications th, .medications td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+.medications th {
+  background: #f0f0f0;
+}
+@media (max-width: 768px) {
+  .model {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+}
