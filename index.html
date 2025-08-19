@@ -1,119 +1,83 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boli mnie...</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    :root{
-      --bg:#1e1e1e;
-      --text:#fff;
-      --muted:#aaa;
-      --glow: rgba(130,160,255,.55);
-      /* kolory animowanego gradientu kart */
-      --g1:#2a2a2a; 
-      --g2:#3a3a46; 
-      --g3:#2f3550; 
-      --g4:#2b2f3b;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--text);
-      background: var(--bg); text-align:center;
-    }
-    header{ padding:20px }
-    h1{ margin:0; font-size:2.5em }
-    p{ margin:6px 0 20px }
-
-    .container{
-      display:flex; justify-content:center; gap:40px; margin:20px; flex-wrap:wrap;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111; /* ciemne tło */
+      color: #fff;
+      text-align: center;
     }
 
-    .card{
-      width:340px; height:500px;
-      border-radius:14px;
-      padding:20px;
-      display:flex; flex-direction:column; justify-content:space-between; align-items:stretch;
-      /* ✨ animowany gradient tła */
-      background: linear-gradient(130deg, var(--g1), var(--g2), var(--g3), var(--g4));
-      background-size: 300% 300%;
-      animation: cardGradient 12s ease-in-out infinite;
-      box-shadow:0 4px 10px rgba(0,0,0,.5);
-      border:1px solid rgba(255,255,255,.08);
-      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease, outline-color .3s ease;
-      outline: 0 solid transparent;
-      position: relative;
-      overflow: hidden;
-    }
-    @keyframes cardGradient{
-      0%  { background-position: 0% 50% }
-      50% { background-position: 100% 50% }
-      100%{ background-position: 0% 50% }
+    header {
+      padding: 20px;
+      background: #222;
+      font-size: 2rem;
+      font-weight: bold;
     }
 
-    /* ✨ pulsująca poświata na hover (delikatna) */
-    .card::before{
-      content:"";
-      position:absolute; inset:-60% -60%;
-      background: radial-gradient(circle, var(--glow) 0%, transparent 65%);
-      opacity:0; transition:opacity .5s ease; z-index:0;
-    }
-    .card:hover::before{ opacity:.35; animation:pulseGlow 2.2s infinite }
-    @keyframes pulseGlow{
-      0%{ transform:scale(1); opacity:.28 }
-      50%{ transform:scale(1.15); opacity:.45 }
-      100%{ transform:scale(1); opacity:.28 }
+    main {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 40px 20px;
+      flex-wrap: wrap;
     }
 
-    .card:hover{
-      transform: translateY(-6px);
-      box-shadow:0 16px 40px rgba(0,0,0,.55);
-      border-color: rgba(130,160,255,.45);
-      outline: 2px solid var(--glow);
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #1b1b1b;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: #fff;
     }
 
-    .card h2{ margin:10px 0 0; z-index:1; position:relative }
-
-    .card a{ text-decoration:none; color:inherit; display:block; z-index:1; position:relative }
-    .card img{
-      width:300px; height:400px; object-fit:cover;
-      border-radius:10px; display:block; margin:0 auto;
-      transition: transform .25s ease, filter .25s ease, box-shadow .25s ease;
-    }
-    .card a:hover img,
-    .card a:focus img{
-      transform: scale(1.03);
-      filter: brightness(1.12);
-      box-shadow: 0 8px 16px rgba(255,255,255,.25);
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(50, 150, 255, 0.7);
     }
 
-    footer{ margin:40px 0 30px; font-size:.9em; color:var(--muted) }
+    .card img {
+      width: 300px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Boli mnie...</h1>
-    <p>Kliknij w część ciała, aby zobaczyć możliwe przyczyny bólu.</p>
+    Boli mnie...
   </header>
 
-  <div class="container">
-    <div class="card">
+  <main>
+    <!-- KARTA: KOBIETA -->
+    <a class="card" href="kobieta.html" aria-label="Przejdź do wyboru sekcji – kobieta">
+      <img src="img/kobieta-3panels.png?v=2" alt="Kobieta - podział na części ciała">
       <h2>Kobieta</h2>
-      <a href="kobieta.html" aria-label="Przejdź do wyboru sekcji – kobieta">
-        <img src="kobieta.png" alt="Kobieta - podział na części ciała" />
-      </a>
-    </div>
+    </a>
 
-    <div class="card">
+    <!-- KARTA: MĘŻCZYZNA -->
+    <a class="card" href="mezczyzna.html" aria-label="Przejdź do wyboru sekcji – mężczyzna">
+      <img src="img/mezczyzna-3panels.png?v=2" alt="Mężczyzna - podział na części ciała">
       <h2>Mężczyzna</h2>
-      <a href="mezczyzna.html" aria-label="Przejdź do wyboru sekcji – mężczyzna">
-        <img src="mezczyzna.png" alt="Mężczyzna - podział na części ciała" />
-      </a>
-    </div>
-  </div>
-
-  <footer>
-    © 2025 Iminpain – Materiał ma charakter poglądowy i nie zastępuje konsultacji z lekarzem.
-  </footer>
+    </a>
+  </main>
 </body>
 </html>
