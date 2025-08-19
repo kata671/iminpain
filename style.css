@@ -73,3 +73,22 @@ img{max-width:100%;display:block}
 .foot{max-width:1200px;margin:16px auto 40px;padding:0 16px;color:var(--muted)}
 .foot a{color:var(--text);opacity:.8;text-decoration:none}
 .foot a:hover{opacity:1;text-decoration:underline}
+/* --- FORCE same size for both tiles --- */
+.model-card .model-image {
+  width: 240px !important;    /* prostokąt pionowy */
+  height: 360px !important;
+  object-fit: cover !important;  /* przytnij zamiast rozciągać */
+  border-radius: 12px;
+}
+@media (max-width: 900px) {
+  .model-card .model-image {
+    width: 180px !important;
+    height: 270px !important;
+  }
+}
+@media (max-width: 600px) {
+  .model-card .model-image {
+    width: 140px !important;
+    height: 210px !important;
+  }
+}
