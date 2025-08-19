@@ -1,77 +1,59 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>I’m in Pain – interaktywne modele</title>
-  <meta name="description" content="I’m in Pain – interaktywny przewodnik po przyczynach bólu, pierwszej pomocy i specjalistach. Kliknij część ciała, aby zobaczyć możliwe przyczyny i zdjęcia organów." />
-  <meta name="theme-color" content="#0ea5e9" />
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>I’m in Pain – mapa bólu</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Nawigacja -->
-  <nav class="nav">
-    <div class="nav__inner container">
-      <div class="logo" aria-label="I'm in Pain">
-        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
-          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0ea5e9"/>
-          </linearGradient></defs>
-          <circle cx="12" cy="12" r="10" fill="url(#g)"/>
-          <path d="M12 6.8v5l3 3" stroke="#00131f" stroke-width="2" stroke-linecap="round" fill="none"/>
-        </svg>
-        <span class="logo__text">I’m in Pain</span>
-      </div>
-      <ul class="menu">
-        <li><a href="#models">Modele</a></li>
-        <li><a href="#details">Informacje</a></li>
-        <li><a href="#gallery">Galeria</a></li>
-        <li><a href="#contact">Kontakt</a></li>
-      </ul>
-      <button id="themeToggle" class="iconbtn" aria-label="Zmień motyw" title="Zmień motyw">☀️</button>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <header class="hero container">
-    <div class="hero__text">
-      <h1>Wybierz sylwetkę i kliknij część ciała</h1>
-      <p class="muted">Podświetlenie wskazuje aktywne obszary. Kliknięcie otworzy zdjęcie organu z krótkim opisem możliwych przyczyn bólu, kiedy zgłosić się do lekarza i jakiego specjalistę rozważyć.</p>
-    </div>
+  <header>
+    <h1>I’m in Pain</h1>
+    <p>Kliknij w część ciała, aby zobaczyć możliwe przyczyny bólu.</p>
   </header>
 
-  <!-- Główna siatka -->
-  <main class="container grid">
-    <!-- MODELE -->
-    <section id="models" class="card">
-      <div class="card__header">
-        <h2>Modele interaktywne</h2>
-        <p class="muted">Kobieta i mężczyzna – kliknij: Głowa, Szyja, Klatka piersiowa, Brzuch, Ręce, Nogi.</p>
-      </div>
+  <main class="models">
+    <!-- Kobieta -->
+    <div class="model">
+      <h2>Kobieta</h2>
+      <img src="img/kobieta-model1.png" usemap="#kobieta-map" alt="Sylwetka kobiety">
+      <map name="kobieta-map">
+        <area shape="rect" coords="80,10,160,80" href="#" alt="Głowa" data-target="kobieta-twarz">
+        <area shape="rect" coords="70,80,170,160" href="#" alt="Góra tułowia" data-target="kobieta-gora">
+        <area shape="rect" coords="70,160,170,220" href="#" alt="Klatka piersiowa" data-target="serce-pluca">
+        <area shape="rect" coords="70,220,170,280" href="#" alt="Brzuch" data-target="uklad-pokarmowy">
+        <area shape="rect" coords="60,280,180,350" href="#" alt="Biodra" data-target="kobieta-biodra">
+        <area shape="rect" coords="80,350,160,500" href="#" alt="Nogi" data-target="nogi">
+        <area shape="rect" coords="40,200,70,250" href="#" alt="Kręgosłup" data-target="kregoslup">
+        <area shape="rect" coords="90,500,150,560" href="#" alt="Stawy" data-target="stawy">
+      </map>
+    </div>
 
-      <div class="models">
-        <!-- KOBIETA -->
-        <div class="model" data-gender="female" aria-label="Model kobiety">
-          <picture>
-            <source srcset="img/female-full.webp" type="image/webp" />
-            <img src="female.png" alt="Sylwetka kobiety" />
-          </picture>
-          <button class="overlay part-head"  data-part="head"   title="Głowa" aria-label="Głowa"></button>
-          <button class="overlay part-neck"  data-part="neck"   title="Szyja" aria-label="Szyja"></button>
-          <button class="overlay part-chest" data-part="chest"  title="Klatka piersiowa" aria-label="Klatka piersiowa"></button>
-          <button class="overlay part-abd"   data-part="abdomen" title="Brzuch" aria-label="Brzuch"></button>
-          <button class="overlay part-arms"  data-part="arms"   title="Ręce" aria-label="Ręce"></button>
-          <button class="overlay part-legs"  data-part="legs"   title="Nogi" aria-label="Nogi"></button>
-        </div>
+    <!-- Mężczyzna -->
+    <div class="model">
+      <h2>Mężczyzna</h2>
+      <img src="img/mezczyzna-model1.png" usemap="#mezczyzna-map" alt="Sylwetka mężczyzny">
+      <map name="mezczyzna-map">
+        <area shape="rect" coords="80,10,160,80" href="#" alt="Głowa" data-target="kobieta-twarz">
+        <area shape="rect" coords="70,80,170,160" href="#" alt="Klatka piersiowa" data-target="serce-pluca">
+        <area shape="rect" coords="70,160,170,220" href="#" alt="Brzuch" data-target="uklad-pokarmowy">
+        <area shape="rect" coords="60,220,180,300" href="#" alt="Biodra" data-target="kobieta-biodra">
+        <area shape="rect" coords="80,300,160,500" href="#" alt="Nogi" data-target="nogi">
+        <area shape="rect" coords="40,200,70,250" href="#" alt="Kręgosłup" data-target="kregoslup">
+        <area shape="rect" coords="90,500,150,560" href="#" alt="Stawy" data-target="stawy">
+      </map>
+    </div>
+  </main>
 
-        <!-- MĘŻCZYZNA -->
-        <div class="model" data-gender="male" aria-label="Model mężczyzny">
-          <picture>
-            <source srcset="img/male-full.webp" type="image/webp" />
-            <img src="mezczyzna.png" alt="Sylwetka mężczyzny" />
-          </picture>
-          <button class="overlay part-head"  data-part="head"   title="Głowa" aria-label="Głowa"></button>
-          <button class="overlay part-neck"  data-part="neck"   title="Szyja" aria-label="Szyja"></button>
-          <button class="overlay part-chest" data-part="chest"  title="Klatka piersiowa" aria-label="Klatka piersiowa"></button>
-          <button class="overlay part-abd"   data-part="abdomen" title="Brzuch"
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="close">&times;</span>
+      <h3 id="modal-title"></h3>
+      <img id="modal-img" src="" alt="">
+      <p id="modal-desc"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
