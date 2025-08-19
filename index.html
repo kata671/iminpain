@@ -1,439 +1,232 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Boli mnie… — Kobieta: Głowa i szyja</title>
-<style>
-  :root { --bg:#111; --panel:#1f1f1f; --text:#fff; --muted:#bdbdbd; --accent:#3ea6ff; }
-  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-  header{padding:22px 16px;border-bottom:1px solid #2a2a2a}
-  header a{color:var(--muted);text-decoration:none}
-  header a:hover{color:var(--accent)}
-  h1{margin:8px 0 0;font-size:28px}
-  .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
-  .hero{display:flex;gap:24px;flex-wrap:wrap}
-  .hero img{width:320px;max-width:100%;border-radius:12px}
-  .hero .info{flex:1 1 360px;background:var(--panel);border-radius:12px;padding:20px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:24px}
-  .card{background:var(--panel);border-radius:12px;overflow:hidden}
-  .card img{width:100%;display:block}
-  .card .txt{padding:12px 14px}
-  details{background:rgba(255,255,255,0.04);border-radius:10px;margin-top:8px;padding:8px 10px}
-  summary{cursor:pointer;color:#e6e6e6}
-  .back{display:inline-block;margin-top:16px}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Boli mnie… – wybierz model</title>
+  <meta name="description" content="Wybierz model kobiety lub mężczyzny, aby zaznaczyć część ciała i poznać możliwe przyczyny bólu." />
+
+  <style>
+    :root{
+      --bg:#0f0f10;       /* bardzo ciemny szary */
+      --panel:#18191c;    /* ciemny panel */
+      --text:#e9eef3;
+      --muted:#b9c1c7;
+      --brand:#2f80ed;
+      --brand-2:#8257e6;
+      --radius:18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at -10% -10%, #101114 0%, #0d0d0e 50%, #0b0b0c 100%),
+        var(--bg);
+    }
+
+    /* Nagłówek */
+    header{
+      padding:36px 20px 22px;
+      background: linear-gradient(90deg, rgba(47,128,237,.18), rgba(130,87,230,.18));
+      border-bottom:1px solid rgba(255,255,255,.06);
+      backdrop-filter: blur(6px);
+      position: sticky;
+      top:0;
+      z-index: 5;
+    }
+    .container{
+      width: min(1200px, 92vw);
+      margin: 0 auto;
+    }
+    h1{
+      margin:0 0 6px 0;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      letter-spacing:.2px;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: clamp(14px, 2.2vw, 16px);
+    }
+
+    /* Sekcja wyboru płci */
+    .gender-section{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(260px, 1fr));
+      gap: 32px;
+      padding: 36px 20px 56px;
+    }
+
+    .card{
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border:1px solid rgba(255,255,255,.06);
+      overflow: hidden;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      border-color: rgba(130,87,230,.45);
+      box-shadow: 0 16px 40px rgba(130,87,230,.20);
+    }
+
+    .card-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px 18px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      background: linear-gradient(90deg, rgba(47,128,237,.08), rgba(130,87,230,.08));
+    }
+    .card-title{
+      margin:0;
+      font-size: clamp(18px, 2.6vw, 22px);
+      font-weight:700;
+    }
+    .badge{
+      font-size:12px;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,.12);
+      padding:4px 8px;
+      border-radius:999px;
+    }
+
+    .image-wrap{
+      position:relative;
+      aspect-ratio: 4 / 3; /* proporcje większego podglądu */
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .image-wrap img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transition: transform .35s ease;
+    }
+    .card:hover .image-wrap img{
+      transform: scale(1.03);
+    }
+
+    /* CTA w stopce karty */
+    .card-foot{
+      padding:14px 18px 18px;
+      display:flex;
+      gap:12px;
+    }
+    .btn{
+      appearance:none;
+      border:0;
+      border-radius:12px;
+      padding:10px 14px;
+      font-weight:600;
+      cursor:pointer;
+      transition: filter .15s ease, transform .15s ease;
+      text-decoration:none;
+      color:white;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn:active{ transform: translateY(1px); }
+
+    .btn-primary{
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      box-shadow: 0 8px 18px rgba(47,128,237,.25);
+    }
+    .btn-ghost{
+      background: transparent;
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--text);
+    }
+    .hint{
+      color:var(--muted);
+      margin-top:2px;
+      font-size:13px;
+    }
+
+    /* Responsywność */
+    @media (max-width: 860px){
+      .gender-section{ grid-template-columns: 1fr; }
+    }
+
+    footer{
+      border-top:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      padding:28px 20px 60px;
+      text-align:center;
+    }
+    a{ color:#a7c4ff; }
+    a:hover{ color:#cfe0ff; }
+  </style>
 </head>
 <body>
-<header class="wrap">
-  <a href="index.html" class="back">← Wróć</a>
-  <h1>Kobieta — Głowa i szyja</h1>
-</header>
 
-<div class="wrap">
-  <div class="hero">
-    <img src="img/kobieta-twarz.png" alt="Kobieta — głowa i szyja">
-    <div class="info">
-      <h2>Wybierz obszar lub kartę poniżej</h2>
-      <p class="muted">Przykładowe dolegliwości dla obszaru głowy i szyi. Rozwiń szczegóły, aby przeczytać o typowych przyczynach i zaleceniach.</p>
-      <details><summary>Ból głowy (napięciowy, migrena)</summary>
-        <p>Możliwe przyczyny: stres, odwodnienie, brak snu, nadwrażliwość na światło. Sygnały alarmowe: nagły „piorunujący” ból, gorączka z sztywnością karku, niedowład — wymagają pilnej konsultacji.</p>
-      </details>
-      <details><summary>Ból szyi / karku</summary>
-        <p>Możliwe przyczyny: przeciążenie mięśni, praca przy komputerze, dyskopatia szyjna. Pomaga ergonomia, krótkie przerwy, delikatne ćwiczenia; utrzymujące się objawy — ortopeda/fizjoterapeuta.</p>
-      </details>
-      <details><summary>Ból gardła / krtani</summary>
-        <p>Najczęściej infekcja wirusowa; gdy wysoka gorączka, naloty ropne lub duszność — pilna ocena lekarska. Nawodnienie, NLPZ, pastylki nawilżające.</p>
-      </details>
+  <header>
+    <div class="container">
+      <h1>Boli mnie…</h1>
+      <p class="subtitle">Wybierz model i kliknij w część ciała, aby zobaczyć możliwe przyczyny bólu.</p>
     </div>
-  </div>
+  </header>
 
-  <h2 style="margin-top:28px">Karty z narządami</h2>
-  <div class="grid">
-    <article class="card">
-      <img src="img/serce-pluca.png" alt="Układ oddechowy — płuca">
-      <div class="txt">
-        <strong>Układ oddechowy</strong>
-        <details><summary>Szczegóły</summary>
-          <p>Kaszel, ból przy oddychaniu, duszność — możliwe zapalenie, astma, przeciążenie. Objawy alarmowe: spoczynkowa duszność, ból w klatce — SOR.</p>
-        </details>
-      </div>
-    </article>
+  <main class="container">
+    <section class="gender-section">
 
-    <article class="card">
-      <img src="img/kregoslup.png" alt="Odcinek szyjny kręgosłupa">
-      <div class="txt">
-        <strong>Kręgosłup szyjny</strong>
-        <details><summary>Szczegóły</summary>
-          <p>Drętwienie palców, ból promieniujący do barku może sugerować ucisk korzeni nerwowych. Rozważ konsultację ortopedy/neurochirurga.</p>
-        </details>
-      </div>
-    </article>
-  </div>
-</div>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Boli mnie… — Kobieta: Klatka, brzuch, plecy</title>
-<style>
-  :root { --bg:#111; --panel:#1f1f1f; --text:#fff; --muted:#bdbdbd; --accent:#3ea6ff; }
-  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-  header{padding:22px 16px;border-bottom:1px solid #2a2a2a}
-  header a{color:var(--muted);text-decoration:none}
-  header a:hover{color:var(--accent)}
-  h1{margin:8px 0 0;font-size:28px}
-  .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
-  .hero{display:flex;gap:24px;flex-wrap:wrap}
-  .hero img{width:360px;max-width:100%;border-radius:12px}
-  .info{flex:1 1 380px;background:#1f1f1f;border-radius:12px;padding:20px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
-  .card{background:#1f1f1f;border-radius:12px;overflow:hidden}
-  .card img{width:100%;display:block}
-  .card .txt{padding:12px 14px}
-  details{background:rgba(255,255,255,0.04);border-radius:10px;margin-top:8px;padding:8px 10px}
-  summary{cursor:pointer;color:#e6e6e6}
-</style>
-</head>
-<body>
-<header class="wrap">
-  <a href="index.html">← Wróć</a>
-  <h1>Kobieta — Klatka, brzuch, plecy</h1>
-</header>
+      <!-- KOBIETA -->
+      <article class="card">
+        <div class="card-head">
+          <h2 class="card-title">Kobieta</h2>
+          <span class="badge">3 sekcje</span>
+        </div>
 
-<div class="wrap">
-  <div class="hero">
-    <img src="img/kobieta-gora.png" alt="Kobieta — klatka/brzuch/plecy">
-    <div class="info">
-      <h2>Najczęstsze źródła bólu</h2>
-      <details open><summary>Ból w klatce piersiowej</summary>
-        <p>Łagodny kłujący ból bywa mięśniowo-żebrowy. Objawy alarmowe: uciskający ból z promieniowaniem do lewej ręki/szczęki, duszność, poty — natychmiastowe 112.</p>
-      </details>
-      <details><summary>Ból brzucha</summary>
-        <p>Przyczyny: niestrawność, zespół jelita drażliwego, infekcje. Silny ból z twardym brzuchem, gorączką lub krwią w stolcu — pilna konsultacja.</p>
-      </details>
-      <details><summary>Ból pleców</summary>
-        <p>Często przeciążenie lub dyskopatia. Czerwone flagi: zaburzenia zwieraczy, gorączka, uraz, ból nowotworowy — szybka diagnostyka.</p>
-      </details>
-    </div>
-  </div>
+        <a class="image-wrap" href="kobieta.html" aria-label="Przejdź do wyboru: Kobieta">
+          <!-- Twój obraz 3-panelowy kobiety -->
+          <img src="img/kobieta-3panels.png" alt="Model kobiety – 3 sekcje: głowa i szyja, klatka i brzuch, biodra i nogi" />
+        </a>
 
-  <h2 style="margin-top:28px">Karty z narządami</h2>
-  <div class="grid">
-    <article class="card">
-      <img src="img/serce-pluca.png" alt="Serce i płuca">
-      <div class="txt">
-        <strong>Serce i płuca</strong>
-        <details><summary>Szczegóły</summary>
-          <p>Duszność, ból przy wysiłku — wymaga oceny. Kaszel z bólem mostka często jest mięśniowy od kaszlu.</p>
-        </details>
-      </div>
-    </article>
-    <article class="card">
-      <img src="img/uklad-pokarmowy.png" alt="Układ pokarmowy">
-      <div class="txt">
-        <strong>Układ pokarmowy</strong>
-        <details><summary>Szczegóły</summary>
-          <p>Refluks, kolki, zapalenia. Objawy alarmowe: chudnięcie, smoliste stolce, anemia.</p>
-        </details>
-      </div>
-    </article>
-    <article class="card">
-      <img src="img/kregoslup.png" alt="Kręgosłup piersiowy/lędźwiowy">
-      <div class="txt">
-        <strong>Plecy i kręgosłup</strong>
-        <details><summary>Szczegóły</summary>
-          <p>Ból nasila się przy skłonie/skręcie? Często przeciążenie. Promieniowanie do nogi — podejrzenie rwy kulszowej.</p>
-        </details>
-      </div>
-    </article>
-  </div>
-</div>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Boli mnie… — Kobieta: Biodra, nogi, stopy</title>
-<style>
-  :root { --bg:#111; --panel:#1f1f1f; --text:#fff; --muted:#bdbdbd; --accent:#3ea6ff; }
-  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-  header{padding:22px 16px;border-bottom:1px solid #2a2a2a}
-  header a{color:var(--muted);text-decoration:none}
-  header a:hover{color:var(--accent)}
-  h1{margin:8px 0 0;font-size:28px}
-  .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
-  .hero{display:flex;gap:24px;flex-wrap:wrap}
-  .hero img{width:360px;max-width:100%;border-radius:12px}
-  .info{flex:1 1 380px;background:#1f1f1f;border-radius:12px;padding:20px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
-  .card{background:#1f1f1f;border-radius:12px;overflow:hidden}
-  .card img{width:100%;display:block}
-  .card .txt{padding:12px 14px}
-  details{background:rgba(255,255,255,0.04);border-radius:10px;margin-top:8px;padding:8px 10px}
-  summary{cursor:pointer;color:#e6e6e6}
-</style>
-</head>
-<body>
-<header class="wrap">
-  <a href="index.html">← Wróć</a>
-  <h1>Kobieta — Biodra, nogi, stopy</h1>
-</header>
+        <div class="card-foot">
+          <a class="btn btn-primary" href="kobieta.html">Wybierz model</a>
+          <a class="btn btn-ghost" href="kobieta.html#jak-to-dziala">Jak to działa?</a>
+        </div>
+        <div class="hint" style="padding:0 18px 18px;">Najedź kursorem, a podgląd lekko się powiększy.</div>
+      </article>
 
-<div class="wrap">
-  <div class="hero">
-    <img src="img/kobieta-biodra.png" alt="Kobieta — biodra/nogi/stopy">
-    <div class="info">
-      <h2>Najczęstsze dolegliwości</h2>
-      <details open><summary>Ból kolana / stawu</summary>
-        <p>Przeciążenie, uraz więzadeł/łąkotek, choroba zwyrodnieniowa. Obrzęk i blokowanie stawu — konsultacja ortopedyczna.</p>
-      </details>
-      <details><summary>Ból biodra</summary>
-        <p>Zespół pasma biodrowo-piszczelowego, zapalenie kaletki, konflikt udowo-panewkowy. Pomagają ćwiczenia rozciągające i fizjoterapia.</p>
-      </details>
-      <details><summary>Ból stopy / pięty</summary>
-        <p>Ostroga piętowa, zapalenie rozcięgna podeszwowego. Wkładki, rozciąganie łydki/rozcięgna; przy silnym bólu USG/RTG.</p>
-      </details>
-    </div>
-  </div>
+      <!-- MĘŻCZYZNA -->
+      <article class="card">
+        <div class="card-head">
+          <h2 class="card-title">Mężczyzna</h2>
+          <span class="badge">3 sekcje</span>
+        </div>
 
-  <h2 style="margin-top:28px">Karty z obszarami</h2>
-  <div class="grid">
-    <article class="card">
-      <img src="img/stawy.png" alt="Stawy kończyn dolnych">
-      <div class="txt">
-        <strong>Stawy</strong>
-        <details><summary>Szczegóły</summary>
-          <p>Trzaski bez bólu zwykle są fizjologiczne; dolegliwości bólowe i poranna sztywność — reumatolog/ortopeda.</p>
-        </details>
-      </div>
-    </article>
-    <article class="card">
-      <img src="img/nogi.png" alt="Mięśnie i nerwy nóg">
-      <div class="txt">
-        <strong>Mięśnie i nerwy</strong>
-        <details><summary>Szczegóły</summary>
-          <p>Kurcze, rwa kulszowa, przeciążenia biegowe. Odpoczynek, stopniowy powrót do aktywności, ew. fizjoterapia.</p>
-        </details>
-      </div>
-    </article>
-  </div>
-</div>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Boli mnie… — Mężczyzna: Głowa i szyja</title>
-<style>
-  :root { --bg:#111; --panel:#1f1f1f; --text:#fff; --muted:#bdbdbd; --accent:#3ea6ff; }
-  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-  header{padding:22px 16px;border-bottom:1px solid #2a2a2a}
-  header a{color:var(--muted);text-decoration:none}
-  header a:hover{color:var(--accent)}
-  h1{margin:8px 0 0;font-size:28px}
-  .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
-  .hero{display:flex;gap:24px;flex-wrap:wrap}
-  .hero img{width:320px;max-width:100%;border-radius:12px}
-  .info{flex:1 1 360px;background:#1f1f1f;border-radius:12px;padding:20px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:24px}
-  .card{background:#1f1f1f;border-radius:12px;overflow:hidden}
-  .card img{width:100%;display:block}
-  .card .txt{padding:12px 14px}
-  details{background:rgba(255,255,255,0.04);border-radius:10px;margin-top:8px;padding:8px 10px}
-  summary{cursor:pointer;color:#e6e6e6}
-</style>
-</head>
-<body>
-<header class="wrap">
-  <a href="index.html">← Wróć</a>
-  <h1>Mężczyzna — Głowa i szyja</h1>
-</header>
+        <a class="image-wrap" href="mezczyzna.html" aria-label="Przejdź do wyboru: Mężczyzna">
+          <!-- Twój obraz 3-panelowy mężczyzny -->
+          <img src="img/mezczyzna-3panels.png" alt="Model mężczyzny – 3 sekcje: głowa i szyja, klatka i brzuch, biodra i nogi" />
+        </a>
 
-<div class="wrap">
-  <div class="hero">
-    <img src="img/mezczyzna-twarz.png" alt="Mężczyzna — głowa i szyja">
-    <div class="info">
-      <h2>Najczęstsze dolegliwości</h2>
-      <details open><summary>Migrena / napięciowy ból głowy</summary>
-        <p>Wyzwalacze: stres, odwodnienie, światło, zapachy. Leczenie doraźne + profilaktyka stylu życia.</p>
-      </details>
-      <details><summary>Ból karku</summary>
-        <p>Przeciążenie, „forward head posture”, dyskopatia. Ćwiczenia posturalne, ergonomia, fizjoterapia.</p>
-      </details>
-      <details><summary>Ból zatok / twarzy</summary>
-        <p>Uczucie rozpierania czoła/policzków, nasilenie przy pochylaniu — najczęściej wirusowe, nawilżanie, NLPZ; ropna wydzielina/gorączka — lekarz.</p>
-      </details>
-    </div>
-  </div>
+        <div class="card-foot">
+          <a class="btn btn-primary" href="mezczyzna.html">Wybierz model</a>
+          <a class="btn btn-ghost" href="mezczyzna.html#jak-to-dziala">Jak to działa?</a>
+        </div>
+        <div class="hint" style="padding:0 18px 18px;">Kliknij, aby przejść do interaktywnego wyboru części ciała.</div>
+      </article>
 
-  <h2 style="margin-top:28px">Karty z narządami</h2>
-  <div class="grid">
-    <article class="card">
-      <img src="img/kregoslup.png" alt="Kręgosłup szyjny">
-      <div class="txt">
-        <strong>Kręgosłup szyjny</strong>
-        <details><summary>Szczegóły</summary>
-          <p>Promieniowanie do barku/ramienia — możliwy ucisk korzeni. Wskazane badanie neurologiczne przy niedowładach.</p>
-        </details>
-      </div>
-    </article>
-  </div>
-</div>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Boli mnie… — Mężczyzna: Klatka, brzuch, plecy</title>
-<style>
-  :root { --bg:#111; --panel:#1f1f1f; --text:#fff; --muted:#bdbdbd; --accent:#3ea6ff; }
-  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-  header{padding:22px 16px;border-bottom:1px solid #2a2a2a}
-  header a{color:var(--muted);text-decoration:none}
-  header a:hover{color:var(--accent)}
-  h1{margin:8px 0 0;font-size:28px}
-  .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
-  .hero{display:flex;gap:24px;flex-wrap:wrap}
-  .hero img{width:360px;max-width:100%;border-radius:12px}
-  .info{flex:1 1 380px;background:#1f1f1f;border-radius:12px;padding:20px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
-  .card{background:#1f1f1f;border-radius:12px;overflow:hidden}
-  .card img{width:100%;display:block}
-  .card .txt{padding:12px 14px}
-  details{background:rgba(255,255,255,0.04);border-radius:10px;margin-top:8px;padding:8px 10px}
-  summary{cursor:pointer;color:#e6e6e6}
-</style>
-</head>
-<body>
-<header class="wrap">
-  <a href="index.html">← Wróć</a>
-  <h1>Mężczyzna — Klatka, brzuch, plecy</h1>
-</header>
+    </section>
+  </main>
 
-<div class="wrap">
-  <div class="hero">
-    <img src="img/mezczyzna-gora.png" alt="Mężczyzna — klatka/brzuch/plecy">
-    <div class="info">
-      <h2>Najczęstsze źródła bólu</h2>
-      <details open><summary>Ból w klatce piersiowej</summary>
-        <p>Mięśniowo-żebrowy vs. kardiologiczny. Ucisk, duszność, poty — <strong>dzwoń 112</strong>.</p>
-      </details>
-      <details><summary>Ból brzucha</summary>
-        <p>Niestrawność, wrzody, zapalenie wyrostka (prawy dół brzucha + gorączka). Objawy alarmowe — pilny SOR.</p>
-      </details>
-      <details><summary>Ból pleców</summary>
-        <p>Przeciążenie, rwa, dyskopatia. Czerwone flagi: uraz, gorączka, zaburzenia zwieraczy, niedowład.</p>
-      </details>
-    </div>
-  </div>
+  <footer>
+    © <span id="y"></span> iminpain • Materiał ma charakter poglądowy i nie zastępuje konsultacji z lekarzem.
+  </footer>
 
-  <h2 style="margin-top:28px">Karty z narządami</h2>
-  <div class="grid">
-    <article class="card">
-      <img src="img/serce-pluca.png" alt="Serce i płuca">
-      <div class="txt">
-        <strong>Serce i płuca</strong>
-        <details><summary>Szczegóły</summary>
-          <p>Ból przy głębokim wdechu — możliwa pleurodynia/kostno-stawowe; ból z wysiłkiem — kardiologiczny do wykluczenia.</p>
-        </details>
-      </div>
-    </article>
-    <article class="card">
-      <img src="img/uklad-pokarmowy.png" alt="Układ pokarmowy">
-      <div class="txt">
-        <strong>Układ pokarmowy</strong>
-        <details><summary>Szczegóły</summary>
-          <p>Refluks (pieczenie za mostkiem), zaparcia, biegunki infekcyjne; przewlekle — gastrolog.</p>
-        </details>
-      </div>
-    </article>
-    <article class="card">
-      <img src="img/kregoslup.png" alt="Kręgosłup">
-      <div class="txt">
-        <strong>Plecy i kręgosłup</strong>
-        <details><summary>Szczegóły</summary>
-          <p>Ból po dźwiganiu — przeciążenie; promieniowanie do pośladka/udo — rwa. Ćwiczenia core, fizjoterapia.</p>
-        </details>
-      </div>
-    </article>
-  </div>
-</div>
-</body>
-</html>
-!DOCTYPE html>
-<html lang="pl">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Boli mnie… — Mężczyzna: Biodra, nogi, stopy</title>
-<style>
-  :root { --bg:#111; --panel:#1f1f1f; --text:#fff; --muted:#bdbdbd; --accent:#3ea6ff; }
-  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-  header{padding:22px 16px;border-bottom:1px solid #2a2a2a}
-  header a{color:var(--muted);text-decoration:none}
-  header a:hover{color:var(--accent)}
-  h1{margin:8px 0 0;font-size:28px}
-  .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
-  .hero{display:flex;gap:24px;flex-wrap:wrap}
-  .hero img{width:360px;max-width:100%;border-radius:12px}
-  .info{flex:1 1 380px;background:#1f1f1f;border-radius:12px;padding:20px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
-  .card{background:#1f1f1f;border-radius:12px;overflow:hidden}
-  .card img{width:100%;display:block}
-  .card .txt{padding:12px 14px}
-  details{background:rgba(255,255,255,0.04);border-radius:10px;margin-top:8px;padding:8px 10px}
-  summary{cursor:pointer;color:#e6e6e6}
-</style>
-</head>
-<body>
-<header class="wrap">
-  <a href="index.html">← Wróć</a>
-  <h1>Mężczyzna — Biodra, nogi, stopy</h1>
-</header>
-
-<div class="wrap">
-  <div class="hero">
-    <img src="img/mezczyzna-biodra.png" alt="Mężczyzna — biodra/nogi/stopy">
-    <div class="info">
-      <h2>Najczęstsze dolegliwości</h2>
-      <details open><summary>Kolano / stawy kończyn</summary>
-        <p>Urazy sportowe, zwyrodnienia, zapalenia. Obrzęk, zaczerwienienie, gorączka — pilna konsultacja.</p>
-      </details>
-      <details><summary>Biodro</summary>
-        <p>Konflikt udowo-panewkowy, tendinopatie. Ćwiczenia, odciążenie, fizjoterapia.</p>
-      </details>
-      <details><summary>Stopa / pięta</summary>
-        <p>Rozcięgno podeszwowe, przeciążenia biegowe. Rozciąganie, wkładki, modyfikacja obuwia.</p>
-      </details>
-    </div>
-  </div>
-
-  <h2 style="margin-top:28px">Karty z obszarami</h2>
-  <div class="grid">
-    <article class="card">
-      <img src="img/stawy.png" alt="Stawy kończyn dolnych">
-      <div class="txt">
-        <strong>Stawy</strong>
-        <details><summary>Szczegóły</summary>
-          <p>Poranna sztywność &gt; 30 min sugeruje zapalenie (np. RZS); zbieraj objawy systemowe.</p>
-        </details>
-      </div>
-    </article>
-    <article class="card">
-      <img src="img/nogi.png" alt="Mięśnie i nerwy nóg">
-      <div class="txt">
-        <strong>Mięśnie i nerwy</strong>
-        <details><summary>Szczegóły</summary>
-          <p>Rwa kulszowa, przeciążenia, skurcze nocne. Ćwiczenia ekscentryczne, nawodnienie, suplementacja wg wskazań.</p>
-        </details>
-      </div>
-    </article>
-  </div>
-</div>
+  <script>
+    // Rok w stopce
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
