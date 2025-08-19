@@ -1,94 +1,78 @@
-root{
-  --bg: #0b1020;
-  --bg2:#1b2b7a;
-  --card:#0d1328;
-  --text:#e9eefc;
-  --muted:#a9b3d6;
-  --accent:#3b82f6;
+/* Ogólne ustawienia dla całej strony */
+body {
+  background-color: #1e1e1e; /* ciemny grafit */
+  color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+
+  /* delikatne kropeczki w tle */
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
 }
 
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:linear-gradient(90deg,var(--bg),var(--bg2));color:var(--text);font:16px/1.5 system-ui,Segoe UI,Roboto,Arial}
-img{max-width:100%;display:block}
+/* Nagłówek strony */
+header {
+  text-align: center;
+  padding: 20px;
+  background-color: #2b2b2b;
+  color: #ffffff;
+}
 
-.hero{
-  text-align:center;
-  padding:32px 16px 24px;
-  background:linear-gradient(180deg,rgba(255,255,255,.08),transparent);
-  border-bottom:1px solid rgba(255,255,255,.06);
+/* Kontener na główne elementy */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  padding: 40px;
+  flex-wrap: wrap;
 }
-.hero h1{margin:0 0 6px;font-size:40px;letter-spacing:.4px}
-.hero p{margin:0;color:var(--muted)}
 
-.wrap{
-  max-width:1200px;margin:24px auto 40px;padding:0 16px;
-  display:grid;grid-template-columns:1fr 1fr;gap:28px;
+/* Zdjęcia na stronie głównej */
+.character {
+  width: 300px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
 }
-@media (max-width:900px){.wrap{grid-template-columns:1fr}}
 
-.gender h2{margin:0 0 12px 4px;font-size:24px}
+.character:hover {
+  transform: scale(1.05);
+}
 
-/* Karta ze zdjęciem podzielonym na 3 hotspoty */
-.split{
-  position:relative;
-  width:min(520px,90vw);
-  aspect-ratio: 3/2;  /* estetyczne proporcje; obraz dopasujemy */
-  border-radius:18px;
-  overflow:hidden;
-  background:var(--card);
-  box-shadow:0 10px 24px rgba(0,0,0,.35), inset 0 0 0 2px rgba(255,255,255,.04);
+/* Strony z wyborem sekcji (np. głowa, klatka, nogi) */
+.panels {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 40px;
 }
-.split img{
-  position:absolute;inset:0;object-fit:cover;width:100%;height:100%;
-  filter:saturate(1.05) contrast(1.02);
-}
-.segment{
-  position:absolute;top:0;bottom:0;width:33.3334%;
-  background:transparent;border:none;padding:0;margin:0;cursor:pointer;
-  transition: background .18s ease, outline .18s ease;
-}
-.segment:hover{
-  background:rgba(59,130,246,.18);
-  outline:2px solid rgba(59,130,246,.65);
-  outline-offset:-2px;
-}
-/* pionowe linie podziału */
-.split::before,.split::after{
-  content:"";position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.18);
-}
-.split::before{left:33.333%}
-.split::after{left:66.666%}
 
-/* dymek z etykietą przy najechaniu */
-.segment::after{
-  content:attr(data-label);
-  position:absolute;left:50%;top:10px;transform:translateX(-50%);
-  font-size:13px;color:#fff;background:rgba(0,0,0,.45);
-  padding:6px 10px;border-radius:999px;opacity:0;pointer-events:none;
-  transition:opacity .18s ease;
-  white-space:nowrap;
+.panel {
+  width: 300px;
+  text-align: center;
 }
-.segment:hover::after{opacity:1}
 
-.foot{max-width:1200px;margin:16px auto 40px;padding:0 16px;color:var(--muted)}
-.foot a{color:var(--text);opacity:.8;text-decoration:none}
-.foot a:hover{opacity:1;text-decoration:underline}
-/* --- FORCE same size for both tiles --- */
-.model-card .model-image {
-  width: 240px !important;    /* prostokąt pionowy */
-  height: 360px !important;
-  object-fit: cover !important;  /* przytnij zamiast rozciągać */
-  border-radius: 12px;
+.panel img {
+  width: 100%;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
-@media (max-width: 900px) {
-  .model-card .model-image {
-    width: 180px !important;
-    height: 270px !important;
-  }
+
+.panel img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
-@media (max-width: 600px) {
-  .model-card .model-image {
-    width: 140px !important;
-    height: 210px !important;
-  }
+
+/* Linki */
+a {
+  text-decoration: none;
+  color: #f0f0f0;
+}
+
+a:hover {
+  text-decoration: underline;
 }
