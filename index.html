@@ -1,195 +1,91 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Boli mnie...</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #1a1a1a; /* bardzo ciemny szary */
-      color: white;
-      text-align: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boli mnie...</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #222; /* bardzo ciemny szary */
+            color: #fff;
+            text-align: center;
+        }
 
-    header {
-      padding: 20px;
-      background: #222;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
+        header {
+            padding: 20px;
+        }
 
-    h1 {
-      margin: 0;
-      font-size: 2.5em;
-    }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
 
-    p {
-      margin: 5px 0 20px;
-      font-size: 1.2em;
-    }
+        header p {
+            margin: 5px 0 20px;
+            font-size: 1.2em;
+            color: #ccc;
+        }
 
-    .container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 20px;
-      gap: 40px;
-    }
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
 
-    .model {
-      background: #2a2a2a;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    }
+        .card {
+            background: #333;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            width: 300px;
+        }
 
-    .model h2 {
-      margin-bottom: 15px;
-    }
+        .card img {
+            width: 100%;
+            border-radius: 8px;
+        }
 
-    .model img {
-      width: 280px;   /* dopasowane rozmiary */
-      height: auto;
-      border-radius: 8px;
-    }
+        .card h2 {
+            margin-top: 15px;
+            font-size: 1.5em;
+        }
 
-    footer {
-      margin-top: 30px;
-      padding: 15px;
-      font-size: 0.9em;
-      background: #111;
-      color: #aaa;
-    }
-  </style>
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Boli mnie...</h1>
-    <p>Kliknij w część ciała, aby zobaczyć możliwe przyczyny bólu.</p>
-  </header>
+    <header>
+        <h1>Boli mnie...</h1>
+        <p>Kliknij w część ciała, aby zobaczyć możliwe przyczyny bólu.</p>
+    </header>
 
-  <div class="container">
-    <!-- Kobieta -->
-    <div class="model">
-      <h2>Kobieta</h2>
-      <img src="img/kobieta-3panels.png" usemap="#kobieta" alt="Kobieta - podział na części ciała">
-      <map name="kobieta">
-        <area shape="rect" coords="0,0,280,100" href="kobieta-glowa.html" alt="Głowa i szyja">
-        <area shape="rect" coords="0,100,280,200" href="kobieta-klatka.html" alt="Klatka, brzuch i plecy">
-        <area shape="rect" coords="0,200,280,400" href="kobieta-nogi.html" alt="Biodra, nogi i stopy">
-      </map>
+    <div class="container">
+        <div class="card">
+            <a href="kobieta.html">
+                <img src="kobieta-3panels.png" alt="Kobieta">
+                <h2>Kobieta</h2>
+            </a>
+        </div>
+
+        <div class="card">
+            <a href="mezczyzna.html">
+                <img src="mezczyzna-3panels.png" alt="Mężczyzna">
+                <h2>Mężczyzna</h2>
+            </a>
+        </div>
     </div>
 
-    <!-- Mężczyzna -->
-    <div class="model">
-      <h2>Mężczyzna</h2>
-      <img src="img/mezczyzna-3panels.png" usemap="#mezczyzna" alt="Mężczyzna - podział na części ciała">
-      <map name="mezczyzna">
-        <area shape="rect" coords="0,0,280,100" href="mezczyzna-glowa.html" alt="Głowa i szyja">
-        <area shape="rect" coords="0,100,280,200" href="mezczyzna-klatka.html" alt="Klatka, brzuch i plecy">
-        <area shape="rect" coords="0,200,280,400" href="mezczyzna-nogi.html" alt="Biodra, nogi i stopy">
-      </map>
-    </div>
-  </div>
-
-  <footer>
-    © 2025 Iminpain – Materiał ma charakter poglądowy i nie zastępuje konsultacji z lekarzem.
-  </footer>
-</body>
-</html>
-<!doctype html>
-<html lang="pl">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Test Pages</title>
-  </head>
-  <body style="font:16px/1.5 system-ui; padding:32px">
-    <h1>GitHub Pages działa ✅</h1>
-    <p>Jeśli to widzisz, konfiguracja Pages jest OK. Teraz przywrócimy właściwą stronę.</p>
-  </body>
-</html>
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Boli mnie...</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #1e1e1e; /* bardzo ciemny szary */
-      color: #fff;
-      text-align: center;
-    }
-    header {
-      padding: 40px 20px 20px;
-    }
-    h1 {
-      font-size: 2.5em;
-      margin: 0;
-    }
-    p {
-      font-size: 1.2em;
-      margin: 10px 0 30px;
-    }
-    .container {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      padding: 20px;
-      flex-wrap: wrap;
-    }
-    .card {
-      background: #2b2b2b;
-      border-radius: 12px;
-      padding: 20px;
-      max-width: 320px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.8);
-    }
-    .card img {
-      width: 100%;
-      border-radius: 8px;
-    }
-    footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #bbb;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Boli mnie...</h1>
-    <p>Kliknij w część ciała, aby zobaczyć możliwe przyczyny bólu.</p>
-  </header>
-
-  <div class="container">
-    <!-- Kobieta -->
-    <a class="card" href="kobieta-glowa.html">
-      <img src="img/kobieta-3panels.png" alt="Kobieta">
-      <h2>Kobieta</h2>
-    </a>
-
-    <!-- Mężczyzna -->
-    <a class="card" href="mezczyzna-glowa.html">
-      <img src="img/mezczyzna-3panels.png" alt="Mężczyzna">
-      <h2>Mężczyzna</h2>
-    </a>
-  </div>
-
-  <footer>
-    © 2025 Iminpain – Materiał ma charakter poglądowy i nie zastępuje konsultacji z lekarzem.
-  </footer>
+    <footer>
+        © 2025 Iminpain – Materiał ma charakter poglądowy i nie zastępuje konsultacji z lekarzem.
+    </footer>
 </body>
 </html>
