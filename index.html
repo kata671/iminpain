@@ -8,56 +8,46 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #2b2b2b; /* grafitowe tło */
+      background-color: #2b2b2b;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 20px 20px;
       color: white;
       text-align: center;
-      min-height: 100vh;
-      background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
-      background-size: 20px 20px; /* delikatne kropeczki */
     }
-
     h1 {
       margin-top: 20px;
     }
-
-    p {
-      margin-bottom: 30px;
-    }
-
     .container {
       display: flex;
       justify-content: center;
-      align-items: flex-start;
       gap: 40px;
-      padding: 20px;
-      flex-wrap: wrap;
-    }
-
-    .card {
-      flex: 1;
-      max-width: 400px;   /* maksymalna szerokość */
-      margin: 10px;
-      text-align: center;
-      background: #222;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    }
-
-    .card img {
-      display: block;
-      width: 100%;
-      height: 450px;   /* stała wysokość obrazków */
-      object-fit: cover; /* zachowanie proporcji */
-    }
-
-    .card h2 {
-      margin: 10px 0;
-    }
-
-    .footer {
       margin-top: 40px;
-      font-size: 0.9em;
+    }
+    .card {
+      background: #1e1e1e;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      overflow: hidden;
+      width: 280px;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .card h2 {
+      margin: 0;
+      padding: 12px;
+      background: #333;
+      font-size: 18px;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 12px;
       color: #aaa;
     }
   </style>
@@ -67,25 +57,22 @@
   <p>Kliknij w model ciała, aby zobaczyć możliwe przyczyny bólu.</p>
 
   <div class="container">
-    <!-- Karta dla kobiety -->
     <div class="card">
       <a href="kobieta.html">
-        <img src="img/kobieta-glowna.png" alt="Model kobiety">
+        <img src="kobieta-glowna-1.png" alt="Model kobiety">
+        <h2>Kobieta</h2>
       </a>
-      <h2>Kobieta</h2>
     </div>
-
-    <!-- Karta dla mężczyzny -->
     <div class="card">
       <a href="mezczyzna.html">
-        <img src="img/mezczyzna-glowna.png" alt="Model mężczyzny">
+        <img src="mezczyzna-glowna-1.png" alt="Model mężczyzny">
+        <h2>Mężczyzna</h2>
       </a>
-      <h2>Mężczyzna</h2>
     </div>
   </div>
 
-  <div class="footer">
+  <footer>
     © 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.
-  </div>
+  </footer>
 </body>
 </html>
