@@ -2,53 +2,173 @@
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Boli mnie...</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Boli mnie…</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
-    body { text-align:center; }
-    .hero { max-width: 1200px; margin: 24px auto; padding: 0 16px; }
-    .grid2 { display:grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
-    .panel { position:relative; border-radius:16px; overflow:hidden; box-shadow:0 8px 28px rgba(0,0,0,.45); }
-    .panel img { display:block; width:100%; height:auto; object-fit:cover; }
-    .label {
-      position:absolute; bottom:0; left:0; right:0;
-      background:rgba(0,0,0,0.6); color:#fff; padding:12px;
-      font-size:1.2rem; font-weight:bold;
+    :root{
+      --bg:#1f2327;              /* grafit */
+      --panel:#2a2f35;           /* kafel */
+      --panel-d:#24292e;         /* obwódka cienia */
+      --text:#e9eef3;
+      --muted:#b9c2cc;
+      --brand:#4f8cff;           /* akcent */
+      --radius:18px;
     }
-    @media(max-width:800px){
-      .grid2{ grid-template-columns:1fr; }
+
+    /* tło – grafit + delikatne kropeczki */
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1px 1px at 25px 25px, rgba(255,255,255,.06) 0, rgba(255,255,255,0) 2px) ,
+        radial-gradient(1px 1px at 55px 55px, rgba(255,255,255,.05) 0, rgba(255,255,255,0) 2px) ,
+        linear-gradient(var(--bg), var(--bg));
+      background-size: 80px 80px, 80px 80px, 100% 100%;
+      min-height:100dvh;
+    }
+
+    header{
+      padding:48px 16px 8px;
+      text-align:center;
+    }
+    h1{
+      margin:0 0 8px;
+      font-size:clamp(28px,4.5vw,44px);
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .sub{
+      color:var(--muted);
+      font-size:clamp(14px,2.2vw,18px);
+      margin:0;
+    }
+
+    /* GRID z 2 kartami */
+    .models{
+      max-width:1100px;
+      margin:32px auto 56px;
+      padding:0 16px;
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap:32px;
+    }
+
+    /* Karta */
+    .card{
+      background:linear-gradient(180deg, var(--panel) 0%, #22272e 140%);
+      border-radius:var(--radius);
+      box-shadow:
+        0 1px 0 0 rgba(255,255,255,.04) inset,
+        0 10px 30px rgba(0,0,0,.35),
+        0 0 0 1px var(--panel-d);
+      padding:18px 18px 16px;
+      transition:.22s transform ease, .22s box-shadow ease;
+    }
+    .card:hover{
+      transform:translateY(-2px);
+      box-shadow:
+        0 1px 0 0 rgba(255,255,255,.06) inset,
+        0 16px 40px rgba(0,0,0,.45),
+        0 0 0 1px rgba(79,140,255,.25);
+    }
+
+    /* Ramka z obrazkiem – stałe proporcje i jednakowy rozmiar
+       (dla desktopu ~340x220, skaluje się responsywnie) */
+    .thumb{
+      width:100%;
+      aspect-ratio: 16 / 10;
+      border-radius:12px;
+      overflow:hidden;
+      position:relative;
+      background:#0e1116;
+      box-shadow: inset 0 0 0 2px rgba(79,140,255,.35);
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform:translateZ(0); /* ostrzejsze renderowanie */
+    }
+
+    .title{
+      margin:14px 4px 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      color:var(--text);
+      text-decoration:none;
+    }
+    .title span{
+      font-weight:700;
+      font-size:18px;
+      letter-spacing:.2px;
+      text-shadow:0 1px 0 rgba(0,0,0,.25);
+    }
+    .title small{
+      color:var(--muted);
+      font-weight:600;
+      font-size:13px;
+      background:#0e1116;
+      border:1px solid #2b3138;
+      padding:4px 8px;
+      border-radius:999px;
+    }
+
+    footer{
+      text-align:center;
+      color:#97a3af;
+      font-size:12px;
+      padding:28px 16px 38px;
+    }
+
+    /* Dostępność – focus outline na linku całej karty */
+    .card a:focus-visible{
+      outline:2px solid var(--brand);
+      outline-offset:6px;
+      border-radius:14px;
     }
   </style>
 </head>
-<body class="dark">
-  <header class="hero">
-    <h1>Boli mnie...</h1>
-    <p>Kliknij w model ciała, aby zobaczyć możliwe przyczyny bólu.</p>
+<body>
+  <header>
+    <h1>Boli mnie…</h1>
+    <p class="sub">Kliknij w model ciała, aby zobaczyć możliwe przyczyny bólu.</p>
   </header>
 
-  <main class="hero">
-    <section class="grid2">
+  <main class="models">
 
-      <div class="panel">
-        <a href="kobieta.html">
-          <img src="img/kobieta-model1.png" alt="Model kobiety – wybór części ciała">
-          <div class="label">Kobieta</div>
-        </a>
-      </div>
+    <!-- KOBIETA -->
+    <article class="card">
+      <a class="thumb" href="kobieta.html" aria-label="Kobieta – podział na części ciała">
+        <img src="img/kobieta-3panels.png" alt="Model kobiety – trzy panele do wyboru">
+      </a>
+      <a class="title" href="kobieta.html" aria-label="Kobieta – przejdź do wyboru sekcji ciała">
+        <span>Kobieta</span>
+        <small>Podział na części ciała</small>
+      </a>
+    </article>
 
-      <div class="panel">
-        <a href="mezczyzna.html">
-          <img src="img/mezczyzna-model1.png" alt="Model mężczyzny – wybór części ciała">
-          <div class="label">Mężczyzna</div>
-        </a>
-      </div>
+    <!-- MĘŻCZYZNA -->
+    <article class="card">
+      <a class="thumb" href="mezczyzna.html" aria-label="Mężczyzna – podział na części ciała">
+        <img src="img/mezczyzna-3panels.png" alt="Model mężczyzny – trzy panele do wyboru">
+      </a>
+      <a class="title" href="mezczyzna.html" aria-label="Mężczyzna – przejdź do wyboru sekcji ciała">
+        <span>Mężczyzna</span>
+        <small>Podział na części ciała</small>
+      </a>
+    </article>
 
-    </section>
   </main>
 
-  <footer class="hero">
-    <p style="opacity:.7;font-size:.9rem">© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  <footer>
+    © 2025 Iminpain — Materiał ma charakter poglądowy i nie zastępuje konsultacji z lekarzem.
   </footer>
 </body>
 </html>
