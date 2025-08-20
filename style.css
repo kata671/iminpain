@@ -39,11 +39,11 @@ h1, h2 {
 
 /* Siatka kart */
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
   padding: 20px;
+  justify-items: center;
 }
 
 /* Karty */
@@ -52,7 +52,7 @@ h1, h2 {
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.3);
   overflow: hidden;
-  width: 220px;
+  width: 220px;  /* stała szerokość */
   text-align: center;
   transition: transform 0.2s;
 }
@@ -65,10 +65,9 @@ h1, h2 {
 .card img {
   width: 100%;
   height: auto;
-  max-width: 220px; /* ograniczenie, żeby zdjęcia nie były za duże */
+  max-height: 180px;  /* ograniczamy wysokość */
+  object-fit: cover;  /* przycinanie zamiast rozciągania */
   border-bottom: 2px solid #444;
-  display: block;
-  margin: 0 auto;
 }
 
 /* Tekst w kartach */
