@@ -1,100 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Kobieta – Anatomia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root{
-      --bg:#0b1220;
-      --card:#111827;
-      --card2:#1f2937;
-      --text:#e5e7eb;
-      --muted:#9ca3af;
-      --link:#60a5fa;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1200px 800px at 20% -10%, rgba(37,99,235,.15), transparent 60%),
-        radial-gradient(900px 700px at 120% 20%, rgba(56,189,248,.12), transparent 55%),
-        var(--bg);
-      line-height:1.45;
-    }
-    .container{max-width:1000px;margin:0 auto;padding:20px}
-    a{color:var(--link);text-decoration:none}
-    a:hover{text-decoration:underline}
-    h1{font-size:1.8rem;margin:18px 0 18px}
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:20px;
-    }
-    .card{
-      background:var(--card);
-      border-radius:14px;
-      overflow:hidden;
-      box-shadow:0 6px 18px rgba(0,0,0,.25);
-      transition:transform .18s ease, box-shadow .18s ease;
-      display:block;
-    }
-    .card:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.35)}
-    .thumb{
-      width:100%;
-      height:200px;            /* stała wysokość jak na innych stronach */
-      display:block;
-      object-fit:cover;
-      background:#0a0f1a;
-    }
-    .title{
-      background:var(--card2);
-      padding:12px 14px;
-      text-align:center;
-      font-weight:600;
-    }
-    footer{margin-top:28px;color:var(--muted);font-size:.92rem}
-  </style>
-  <script>
-    // Fallback ścieżek obrazków: najpierw root, potem /img/
-    function setSrcWithFallback(img, primary, fallback){
-      img.src = primary;
-      img.onerror = () => { if (img.src.indexOf(fallback) === -1) img.src = fallback; };
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      setSrcWithFallback(document.getElementById('img-glowa'),
-        'kobieta-glowa-5.png', 'img/kobieta-glowa-5.png');
-
-      setSrcWithFallback(document.getElementById('img-klatka'),
-        'kobieta-klatka.png', 'img/kobieta-klatka.png');
-
-      setSrcWithFallback(document.getElementById('img-nogi'),
-        'kobieta-nogi.png', 'img/kobieta-nogi.png');
-    });
-  </script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kobieta — Anatomia</title>
+<style>
+  :root{
+    --bg1:#14161a; --bg2:#0e1116; --bg3:#0b0e13;
+    --card:#1f242d; --card2:#2a3140;
+    --text:#e8edf7; --muted:#a9b3c6; --accent:#3b82f6;
+    --radius:16px;
+  }
+  /* TŁO W KROPKI — jak na stronie głównej */
+  body{
+    margin:0; color:var(--text); font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
+    background:
+      radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px) 0 0/20px 20px,
+      linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 60%, var(--bg3) 100%) !important;
+    min-height:100dvh;
+  }
+  a{color:var(--text); text-decoration:none}
+  .wrap{max-width:1100px; margin:0 auto; padding:24px 16px 56px}
+  .crumbs{margin-bottom:16px; font-size:14px}
+  .crumbs a:hover{color:var(--accent)}
+  h1{margin:10px 0 18px; font-size:32px}
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px}
+  .card{background:linear-gradient(180deg,var(--card),var(--card2));
+        border-radius:var(--radius); box-shadow:0 8px 24px rgba(0,0,0,.35);
+        overflow:hidden}
+  .thumb{display:block; width:100%; height:220px; object-fit:cover}
+  .label{display:block; padding:12px 14px; background:rgba(0,0,0,.35); text-align:center}
+  .label strong{font-weight:600}
+  footer{margin-top:28px; color:var(--muted); font-size:12px}
+</style>
 </head>
 <body>
-  <div class="container">
-    <a href="index.html">← Wróć do startu</a> <span style="opacity:.7">|</span> <a href="index.html">Strona główna</a>
+  <div class="wrap">
+    <div class="crumbs">
+      <a href="index.html">← Wróć do startu</a> | <a href="index.html">Strona główna</a>
+    </div>
 
     <h1>Wybierz obszar bólu – Kobieta</h1>
 
     <div class="grid">
       <a class="card" href="kobieta-glowa.html">
-        <img id="img-glowa" class="thumb" alt="Głowa i szyja" />
-        <div class="title">Głowa i szyja</div>
+        <img class="thumb" src="img/kobieta-glowa-5.png" alt="Głowa i szyja — ilustracja" />
+        <span class="label"><strong>Głowa i szyja</strong></span>
       </a>
 
       <a class="card" href="kobieta-klatka.html">
-        <img id="img-klatka" class="thumb" alt="Klatka / Brzuch / Plecy" />
-        <div class="title">Klatka / Brzuch / Plecy</div>
+        <img class="thumb" src="img/kobieta-klatka.png" alt="Klatka / Brzuch / Plecy — ilustracja" />
+        <span class="label"><strong>Klatka / Brzuch / Plecy</strong></span>
       </a>
 
       <a class="card" href="kobieta-nogi.html">
-        <img id="img-nogi" class="thumb" alt="Biodra / Nogi / Stopy" />
-        <div class="title">Biodra / Nogi / Stopy</div>
+        <img class="thumb" src="img/kobieta-biodra.png" alt="Biodra / Nogi / Stopy — ilustracja" />
+        <span class="label"><strong>Biodra / Nogi / Stopy</strong></span>
       </a>
     </div>
 
