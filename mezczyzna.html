@@ -4,48 +4,52 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mężczyzna – Anatomia</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="nav-buttons">
-    <a href="index.html">← Wróć do startu</a>
+  <div class="container">
+    <a href="index.html" class="back-button">← Wróć do startu</a>
+    <h1>Mężczyzna – wybierz sekcję ciała</h1>
+    <p>Wybierz jedną z sekcji: Głowa/Szyja, Klatka/Brzuch/Plecy lub Biodra/Nogi/Stopy.</p>
+
+    <div class="tiles">
+      <div class="tile">
+        <a href="mezczyzna-glowa.html">
+          <div class="tile__media">
+            <img src="img/mezczyzna-glowa-5.png"
+                 alt="Głowa i szyja"
+                 onerror="this.onerror=null;this.src='imp/mezczyzna-glowa-5.png';">
+          </div>
+          <div class="tile__title">Głowa i szyja</div>
+        </a>
+      </div>
+
+      <div class="tile">
+        <a href="mezczyzna-klatka.html">
+          <div class="tile__media">
+            <img src="img/mezczyzna-klatka-5.png"
+                 alt="Klatka, brzuch, plecy"
+                 onerror="this.onerror=null;this.src='imp/mezczyzna-klatka-5.png';">
+          </div>
+          <div class="tile__title">Klatka • Brzuch • Plecy</div>
+        </a>
+      </div>
+
+      <div class="tile">
+        <a href="mezczyzna-nogi.html">
+          <div class="tile__media">
+            <img src="img/mezczyzna-nogi-5.png"
+                 alt="Biodra, nogi i stopy"
+                 onerror="this.onerror=null;this.src='imp/mezczyzna-nogi-5.png';">
+          </div>
+          <div class="tile__title">Biodra • Nogi • Stopy</div>
+        </a>
+      </div>
+    </div>
   </div>
 
-  <h1>Mężczyzna – wybierz sekcję ciała</h1>
-  <p class="lead">Kliknij jedną z ilustracji: Głowa/Szyja, Klatka/Brzuch/Plecy lub Biodra/Nogi/Stopy.</p>
-
-  <div class="tiles">
-    <!-- Głowa i szyja -->
-    <div class="tile">
-      <a href="mezczyzna-glowa.html">
-        <div class="tile__media">
-          <img src="img/mezczyzna-glowa-start.png" alt="Głowa i szyja"/>
-        </div>
-        <div class="tile__title">Głowa i szyja</div>
-      </a>
-    </div>
-
-    <!-- Klatka / brzuch / plecy -->
-    <div class="tile">
-      <a href="mezczyzna-klatka.html">
-        <div class="tile__media">
-          <img src="img/mezczyzna-klatka-start.png" alt="Klatka piersiowa, brzuch, plecy"/>
-        </div>
-        <div class="tile__title">Klatka • Brzuch • Plecy</div>
-      </a>
-    </div>
-
-    <!-- Biodra / nogi / stopy -->
-    <div class="tile">
-      <a href="mezczyzna-nogi.html">
-        <div class="tile__media">
-          <img src="img/mezczyzna-nogi-start.png" alt="Biodra, nogi, stopy"/>
-        </div>
-        <div class="tile__title">Biodra • Nogi • Stopy</div>
-      </a>
-    </div>
-  </div>
-
-  <footer>© 2025 lminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
+  <footer>
+    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  </footer>
 </body>
 </html>
