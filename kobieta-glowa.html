@@ -3,52 +3,115 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kobieta — Głowa i szyja</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Kobieta – Głowa i szyja</title>
+
+  <!-- Twój główny arkusz stylów -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Minimalna poprawka tylko dla miniaturek -->
+  <style>
+    .miniatura{
+      width: 240px;
+      height: auto;
+      border-radius: 14px;
+      object-fit: cover;
+      display: block;
+    }
+    .grid{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+    .card{
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    }
+    .card a{
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .card-title{
+      margin: 8px 4px 2px;
+      font-weight: 700;
+    }
+    .toolbar{
+      display:flex; gap:10px; margin:18px 0;
+    }
+    .btn{
+      appearance:none; border:0; padding:10px 14px; border-radius:12px;
+      background:#223; color:#fff; font-weight:600; cursor:pointer; text-decoration:none;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .page{
+      max-width:1100px; margin:0 auto; padding:24px 16px;
+    }
+    h1{
+      font-size: clamp(28px, 4vw, 44px);
+      margin: 8px 0 12px;
+    }
+    .lead{
+      opacity:.85; margin-bottom:18px;
+    }
+  </style>
 </head>
-<body class="page">
-  <main class="container">
-    <div class="top-actions">
+<body>
+
+  <div class="page">
+    <div class="toolbar">
       <a class="btn" href="kobieta.html">← Wróć do wyboru sekcji</a>
       <a class="btn" href="index.html">Strona główna</a>
     </div>
 
     <h1>Kobieta — Głowa i szyja</h1>
-    <p>Wybierz część: Głowa, Nos, Ucho, Oczy lub Szyja.</p>
+    <p class="lead">Wybierz część: Głowa, Nos, Ucho, Oczy lub Szyja.</p>
 
-    <section class="grid">
-      <!-- GŁOWA -->
-      <a class="card" href="kobieta-glowa-szczegoly.html">
-        <img src="img/kobieta-glowa-5.png?v=6" alt="Głowa" />
-        <div class="card-label">Głowa</div>
-      </a>
+    <div class="grid">
+      <!-- GŁÓWNA KAFELKA: Głowa -->
+      <div class="card">
+        <a href="kobieta-glowa-szczegoly.html" aria-label="Głowa – szczegóły">
+          <img class="miniatura" src="img/kobieta-glowa-5.png" alt="Głowa – przekrój" />
+          <div class="card-title">Głowa</div>
+        </a>
+      </div>
 
       <!-- NOS -->
-      <a class="card" href="kobieta-nos.html">
-        <img src="img/kobieta-nos.png?v=6" alt="Nos" />
-        <div class="card-label">Nos</div>
-      </a>
+      <div class="card">
+        <a href="kobieta-nos.html" aria-label="Nos">
+          <img class="miniatura" src="img/kobieta-nos.png" alt="Nos – ilustracja" />
+          <div class="card-title">Nos</div>
+        </a>
+      </div>
 
       <!-- UCHO -->
-      <a class="card" href="kobieta-ucho.html">
-        <img src="img/kobieta-ucho.png?v=6" alt="Ucho" />
-        <div class="card-label">Ucho</div>
-      </a>
+      <div class="card">
+        <a href="kobieta-ucho.html" aria-label="Ucho">
+          <img class="miniatura" src="img/kobieta-ucho.png" alt="Ucho – ilustracja" />
+          <div class="card-title">Ucho</div>
+        </a>
+      </div>
 
       <!-- OCZY -->
-      <a class="card" href="kobieta-oczy.html">
-        <img src="img/kobieta-oczy.png?v=6" alt="Oczy" />
-        <div class="card-label">Oczy</div>
-      </a>
+      <div class="card">
+        <a href="kobieta-oczy.html" aria-label="Oczy">
+          <img class="miniatura" src="img/kobieta-oczy.png" alt="Oczy – ilustracja" />
+          <div class="card-title">Oczy</div>
+        </a>
+      </div>
 
       <!-- SZYJA -->
-      <a class="card" href="kobieta-szyja.html">
-        <img src="img/kobieta-szyja.png?v=6" alt="Szyja" />
-        <div class="card-label">Szyja</div>
-      </a>
-    </section>
+      <div class="card">
+        <a href="kobieta-szyja.html" aria-label="Szyja">
+          <img class="miniatura" src="img/kobieta-szyja.png" alt="Szyja – ilustracja" />
+          <div class="card-title">Szyja</div>
+        </a>
+      </div>
+    </div>
 
-    <footer class="foot">© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
-  </main>
+    <p style="opacity:.7; margin-top:22px;">© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  </div>
 </body>
 </html>
