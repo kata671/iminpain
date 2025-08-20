@@ -3,49 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kobieta – Głowa i Szyja (NOWA)</title>
-  <link rel="stylesheet" href="style.css?v=120">
+  <title>Kobieta — Głowa i szyja</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header>
-    <nav style="margin:16px 0;">
-      <a class="btn" href="kobieta.html?v=120">← Wróć do wyboru sekcji</a>
-      <a class="btn" href="index.html?v=120">Strona główna</a>
-    </nav>
-    <h1>Kobieta – Głowa i szyja</h1>
-    <p>Wybierz część: Głowa, Nos, Ucho, Oczy lub Szyja.</p>
-  </header>
+<body data-page="kobieta">
+  <div style="margin: 20px;">
+    <a href="kobieta.html" style="color: #00aaff; text-decoration: none;">← Wróć do wyboru sekcji</a> | 
+    <a href="index.html" style="color: #00aaff; text-decoration: none;">Strona główna</a>
+  </div>
 
-  <main class="tiles-container">
-    <!-- Głowa -->
-    <a class="tile" href="kobieta-glowa-glowa.html?v=120">
-      <img class="tile-img" src="img/kobieta-glowa-5.png?v=120" alt="Głowa">
-      <div class="tile-title">Głowa</div>
-    </a>
+  <h1>Kobieta — Głowa i szyja</h1>
+  <p>Kliknij, aby zobaczyć szczegóły dla poszczególnych części.</p>
 
-    <!-- Nos -->
-    <a class="tile" href="kobieta-nos.html?v=120">
-      <img class="tile-img" src="img/kobieta-nos.png?v=120" alt="Nos">
-      <div class="tile-title">Nos</div>
-    </a>
+  <div class="grid-container">
+    <a href="kobieta-glowa.html" class="grid-item"><img src="kobieta-glowa.png" alt="Głowa"><p>Głowa</p></a>
+    <a href="kobieta-oczy.html" class="grid-item"><img src="kobieta-oczy.png" alt="Oczy"><p>Oczy</p></a>
+    <a href="kobieta-nos.html" class="grid-item"><img src="kobieta-nos.png" alt="Nos"><p>Nos</p></a>
+    <a href="kobieta-ucho.html" class="grid-item"><img src="kobieta-ucho.png" alt="Ucho"><p>Ucho</p></a>
+    <a href="kobieta-szyja.html" class="grid-item"><img src="kobieta-szyja.png" alt="Szyja"><p>Szyja</p></a>
+  </div>
 
-    <!-- Ucho -->
-    <a class="tile" href="kobieta-ucho.html?v=120">
-      <img class="tile-img" src="img/kobieta-ucho.png?v=120" alt="Ucho">
-      <div class="tile-title">Ucho</div>
-    </a>
-
-    <!-- Oczy -->
-    <a class="tile" href="kobieta-oczy.html?v=120">
-      <img class="tile-img" src="img/kobieta-oczy.png?v=120" alt="Oczy">
-      <div class="tile-title">Oczy</div>
-    </a>
-
-    <!-- Szyja -->
-    <a class="tile" href="kobieta-szyja.html?v=120">
-      <img class="tile-img" src="img/kobieta-szyja.png?v=120" alt="Szyja">
-      <div class="tile-title">Szyja</div>
-    </a>
-  </main>
+  <footer><p>© 2025 Iminpain</p></footer>
 </body>
 </html>
