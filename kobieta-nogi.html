@@ -1,45 +1,48 @@
-<!doctype html>
-<html lang="pl"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Kobieta – Biodra, nogi, stopy</title>
-<style>/* ten sam CSS co wyżej */ 
-:root{--bg:#1e1e1e;--panel:#222831;--edge:#2f3742;--txt:#f5f5f5;--muted:#c8c8c8;--pri:#2b74ff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
-header{padding:30px 16px;text-align:center}h1{margin:0 0 6px;font-size:28px}.lead{margin:0;color:var(--muted)}
-.wrap{max-width:1100px;margin:10px auto 40px;padding:0 16px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}@media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}@media (max-width:580px){.grid{grid-template-columns:1fr}}
-.card{background:var(--panel);border:1px solid var(--edge);border-radius:14px;overflow:hidden;box-shadow:0 12px 28px rgba(0,0,0,.35)}
-.card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
-.card .meta{padding:12px}.card h3{margin:0 0 8px;font-size:18px}.card p{margin:0;color:var(--muted);font-size:14px}
-.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:18px 0}
-.btn{padding:9px 14px;border-radius:999px;background:#ffffff14;color:var(--txt);text-decoration:none;border:1px solid #ffffff26}.btn:hover{background:#ffffff1f}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}
-.box{max-width:900px;width:min(900px,95vw);background:#0f1116;border:1px solid #2a2f37;border-radius:14px;overflow:hidden}
-.box img{width:100%;display:block;object-fit:contain;background:#000}.box .info{padding:14px}.box .info h2{margin:0 0 8px}.box .info p{margin:0;color:var(--muted)}
-.close{position:absolute;top:14px;right:14px;background:#ffffff1a;border:1px solid #ffffff3d;color:#fff;border-radius:999px;padding:6px 10px;cursor:pointer}
-</style></head>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kobieta – biodra, nogi, stopy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
-<header><h1>Kobieta – Biodra, nogi, stopy</h1><p class="lead">Kliknij ilustrację, aby zobaczyć możliwe przyczyny bólu.</p></header>
-<div class="wrap">
-  <div class="actions">
-    <a class="btn" href="kobieta.html">← Wróć do wyboru sekcji</a>
-    <a class="btn" href="index.html">Strona główna</a>
+  <div class="container">
+    <header>
+      <h1>Kobieta – Biodra, nogi, stopy</h1>
+      <p>Kliknij ilustrację, aby zobaczyć możliwe przyczyny bólu.</p>
+      <nav>
+        <a href="kobieta.html" class="button">← Wróć do wyboru sekcji</a>
+        <a href="index.html" class="button">🏠 Strona główna</a>
+      </nav>
+    </header>
+
+    <main class="section-grid">
+      <!-- Biodra -->
+      <a class="card" href="#">
+        <img src="img/kobieta-biodra.png" alt="Kobieta – biodra">
+        <h3>Biodra</h3>
+        <p>Ból promieniujący, sztywność przy chodzeniu.</p>
+      </a>
+
+      <!-- Uda -->
+      <a class="card" href="#">
+        <img src="img/kobieta-uda.png" alt="Kobieta – uda">
+        <h3>Uda</h3>
+        <p>Ból mięśniowy i przeciążeniowy.</p>
+      </a>
+
+      <!-- Stopy -->
+      <a class="card" href="#">
+        <img src="img/kobieta-stopy.png" alt="Kobieta – stopy">
+        <h3>Stopy</h3>
+        <p>Różne bóle mięśni, ścięgien, stawów.</p>
+      </a>
+    </main>
+
+    <footer>
+      <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+    </footer>
   </div>
-  <section class="grid">
-    <article class="card" data-title="Biodra" data-text="Możliwe: przeciążenia, zapalenie kaletki, choroba zwyrodnieniowa, rwa kulszowa." data-img="img/kobieta-nogi-1.png">
-      <img src="img/kobieta-nogi-1.png" alt="Biodra"><div class="meta"><h3>Biodra</h3><p>Kłucie, ból przy chodzeniu.</p></div>
-    </article>
-    <article class="card" data-title="Kolana i łydki" data-text="Możliwe: przeciążenia, zapalenia, urazy ścięgien. Obrzęk/ocieplenie → konsultacja." data-img="img/kobieta-nogi-2.png">
-      <img src="img/kobieta-nogi-2.png" alt="Kolana i łydki"><div class="meta"><h3>Kolana i łydki</h3><p>Ból wysiłkowy i spoczynkowy.</p></div>
-    </article>
-    <article class="card" data-title="Stopy i kostki" data-text="Możliwe: zapalenie rozcięgna, skręcenia, przeciążenia, płaskostopie." data-img="img/kobieta-nogi-3.png">
-      <img src="img/kobieta-nogi-3.png" alt="Stopy i kostki"><div class="meta"><h3>Stopy i kostki</h3><p>Poranny ból pięty, obrzęk.</p></div>
-    </article>
-  </section>
-</div>
-<div class="modal" id="m"><div class="box"><button class="close" onclick="m.classList.remove('open')">Zamknij ✕</button><img id="mImg" alt=""><div class="info"><h2 id="mTitle"></h2><p id="mText"></p></div></div></div>
-<script>
-const m=document.getElementById('m'),i=document.getElementById('mImg'),t=document.getElementById('mTitle'),x=document.getElementById('mText');
-document.querySelectorAll('.card').forEach(c=>c.onclick=()=>{i.src=c.dataset.img;t.textContent=c.dataset.title;x.textContent=c.dataset.text;m.classList.add('open')});
-m.onclick=e=>{if(e.target===m)m.classList.remove('open')}
-</script>
-</body></html>
+</body>
+</html>
