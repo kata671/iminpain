@@ -2,42 +2,56 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mężczyzna — Biodra, nogi, stopy</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background:#0b1220; color:#e8eefc; font-family: system-ui, Arial, sans-serif; }
+    .container { max-width:1100px; margin:24px auto 80px; padding:0 16px; }
+    .top-links { display:flex; gap:12px; margin-bottom:20px; }
+    .btn { display:inline-block; padding:10px 14px; border-radius:12px; background:#121a2c; color:#e8eefc;
+           text-decoration:none; border:1px solid #26314e; }
+    h1 { font-size:36px; margin:10px 0 8px; }
+    .sub { opacity:.8; margin-bottom:18px; }
+    .grid { display:grid; gap:18px; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); }
+    .card { background:#111a2a; border:1px solid #26314e; border-radius:18px; overflow:hidden;
+            box-shadow:0 6px 18px rgba(0,0,0,.35); transition:transform .2s, box-shadow .2s; }
+    .card:hover { transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.45); }
+    .thumb { width:100%; height:180px; object-fit:cover; display:block; }
+    .title { padding:10px 14px; font-weight:700; }
+    .footer { margin-top:28px; opacity:.7; font-size:14px; text-align:center; }
+  </style>
 </head>
 <body>
   <div class="container">
-    <div class="top-actions">
-      <a href="mezczyzna.html" class="back-button">← Wróć do wyboru sekcji</a>
-      <a href="index.html" class="back-button">Strona główna</a>
+    <div class="top-links">
+      <a class="btn" href="mezczyzna.html">← Wróć do wyboru sekcji</a>
+      <a class="btn" href="index.html">Strona główna</a>
     </div>
 
     <h1>Mężczyzna — Biodra, nogi, stopy</h1>
-    <p>Kliknij ilustrację, aby zobaczyć możliwe przyczyny bólu.</p>
+    <p class="sub">Kliknij ilustrację, aby zobaczyć możliwe przyczyny bólu.</p>
 
     <div class="grid">
-      <a href="mezczyzna-biodra-szczegoly.html" class="card">
-        <img src="img/mezczyzna-biodra.png" alt="Biodra" />
-        <p>Biodra</p>
+      <a class="card" href="#">
+        <img class="thumb" src="img/mezczyzna-biodra.png?v=12" alt="Biodra">
+        <div class="title">Biodra</div>
       </a>
-      <a href="mezczyzna-uda.html" class="card">
-        <img src="img/mezczyzna-uda.png" alt="Uda" />
-        <p>Uda</p>
+      <a class="card" href="#">
+        <img class="thumb" src="img/mezczyzna-uda.png?v=12" alt="Uda">
+        <div class="title">Uda</div>
       </a>
-      <a href="mezczyzna-nogi-szczegoly.html" class="card">
-        <img src="img/mezczyzna-nogi-1.png" alt="Nogi" />
-        <p>Nogi</p>
+      <a class="card" href="#">
+        <img class="thumb" src="img/mezczyzna-nogi.png?v=12" alt="Nogi">
+        <div class="title">Nogi</div>
       </a>
-      <a href="mezczyzna-stopy.html" class="card">
-        <img src="img/mezczyzna-stopy.png" alt="Stopy" />
-        <p>Stopy</p>
+      <a class="card" href="#">
+        <img class="thumb" src="img/mezczyzna-stopy.png?v=12" alt="Stopy">
+        <div class="title">Stopy</div>
       </a>
     </div>
-  </div>
 
-  <footer>
-    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
-  </footer>
+    <p class="footer">© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  </div>
 </body>
 </html>
