@@ -1,68 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mężczyzna – Klatka, brzuch, plecy</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="nav-buttons">
-    <a href="index.html">← Wróć do wyboru sekcji</a>
-    <a href="index.html">Strona główna</a>
-  </div>
-
-  <h1>Mężczyzna – Klatka, brzuch, plecy</h1>
-  <p style="text-align:center;">Kliknij ilustrację, aby zobaczyć możliwe przyczyny bólu.</p>
-
-  <div class="tiles">
-    <!-- Serce -->
-    <div class="tile">
-      <a href="mezczyzna-serce.html">
-        <div class="tile__media">
-          <img src="img/mezczyzna-serce.png" alt="Serce mężczyzna">
-        </div>
-        <div class="tile__title">Serce</div>
-        <div class="tile__description">Ucisk, kłucie, promieniowanie, duszność.</div>
-      </a>
+  <header class="page-header">
+    <div class="actions">
+      <a class="btn" href="mezczyzna.html">← Wróć do wyboru sekcji</a>
+      <a class="btn" href="index.html">Strona główna</a>
     </div>
+    <h1>Mężczyzna – Klatka, brzuch, plecy</h1>
+    <p>Kliknij ilustracje, aby zobaczyć możliwe przyczyny bólu.</p>
+  </header>
 
-    <!-- Płuca -->
-    <div class="tile">
-      <a href="mezczyzna-pluca.html">
-        <div class="tile__media">
-          <img src="img/mezczyzna-pluca.png" alt="Płuca mężczyzna">
-        </div>
-        <div class="tile__title">Płuca</div>
-        <div class="tile__description">Ból przy oddychaniu, kaszel, świsty, duszność.</div>
-      </a>
-    </div>
+  <main class="grid">
+    <a class="card" href="#">
+      <img src="img/mezczyzna-serce.png" alt="Serce" />
+      <div class="card-title">Serce</div>
+      <div class="card-desc">Ucisk, kłucie, promieniowanie, duszność.</div>
+    </a>
 
-    <!-- Brzuch -->
-    <div class="tile">
-      <a href="mezczyzna-brzuch.html">
-        <div class="tile__media">
-          <img src="img/mezczyzna-brzuch.png" alt="Brzuch mężczyzna">
-        </div>
-        <div class="tile__title">Brzuch</div>
-        <div class="tile__description">Rozlane bóle, kolki, wzdęcia.</div>
-      </a>
-    </div>
+    <a class="card" href="#">
+      <img src="img/mezczyzna-pluca.png" alt="Płuca" />
+      <div class="card-title">Płuca</div>
+      <div class="card-desc">Ból przy oddychaniu, kaszel, świsty, duszność.</div>
+    </a>
 
-    <!-- Plecy -->
-    <div class="tile">
-      <a href="mezczyzna-plecy.html">
-        <div class="tile__media">
-          <img src="img/mezczyzna-plecy.png" alt="Plecy mężczyzna">
-        </div>
-        <div class="tile__title">Plecy</div>
-        <div class="tile__description">Od lędźwi po łopatki, nasilone przy ruchu.</div>
-      </a>
-    </div>
-  </div>
+    <a class="card" href="#">
+      <img src="img/mezczyzna-brzuch.png" alt="Brzuch" />
+      <div class="card-title">Brzuch</div>
+      <div class="card-desc">Rozlane bóle, kolki, wzdęcia.</div>
+    </a>
 
-  <footer>
-    © 2025 lminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
-  </footer>
+    <a class="card" href="#">
+      <img src="img/mezczyzna-plecy.png" alt="Plecy" />
+      <div class="card-title">Plecy</div>
+      <div class="card-desc">Od lędźwi po łopatki, nasilenie przy ruchu.</div>
+    </a>
+  </main>
+
+  <footer class="page-footer">© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
 </body>
 </html>
