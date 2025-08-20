@@ -1,55 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Kobieta – Anatomia</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <a href="index.html" class="back-button">← Wróć do startu</a>
+  <header class="page-header">
+    <a class="btn" href="index.html">← Wróć do startu</a>
     <h1>Kobieta – Anatomia</h1>
     <p>Wybierz sekcję ciała, aby przejść dalej.</p>
+  </header>
 
-    <div class="tiles">
-      <div class="tile">
-        <a href="kobieta-glowa.html">
-          <div class="tile__media">
-            <img src="img/kobieta-glowa-5.png"
-                 alt="Głowa i szyja"
-                 onerror="this.onerror=null;this.src='imp/kobieta-glowa-5.png';">
-          </div>
-          <div class="tile__title">Głowa i szyja</div>
-        </a>
-      </div>
+  <main class="grid">
+    <a class="card" href="kobieta-glowa.html">
+      <img src="img/kobieta-glowna-1.png" alt="Kobieta: głowa i szyja" />
+      <div class="card-title">Głowa i szyja</div>
+    </a>
 
-      <div class="tile">
-        <a href="kobieta-klatka.html">
-          <div class="tile__media">
-            <img src="img/kobieta-klatka-5.png"
-                 alt="Klatka piersiowa, brzuch, plecy"
-                 onerror="this.onerror=null;this.src='imp/kobieta-klatka-5.png';">
-          </div>
-          <div class="tile__title">Klatka piersiowa, brzuch, plecy</div>
-        </a>
-      </div>
+    <a class="card" href="kobieta-klatka.html">
+      <img src="img/kobieta-klatka-1.png" alt="Kobieta: klatka, brzuch, plecy" />
+      <div class="card-title">Klatka piersiowa, brzuch, plecy</div>
+    </a>
 
-      <div class="tile">
-        <a href="kobieta-nogi.html">
-          <div class="tile__media">
-            <img src="img/kobieta-nogi-5.png"
-                 alt="Biodra, nogi i stopy"
-                 onerror="this.onerror=null;this.src='imp/kobieta-nogi-5.png';">
-          </div>
-          <div class="tile__title">Biodra, nogi i stopy</div>
-        </a>
-      </div>
-    </div>
-  </div>
+    <a class="card" href="kobieta-nogi.html">
+      <img src="img/kobieta-nogi-1.png" alt="Kobieta: biodra, nogi, stopy" />
+      <div class="card-title">Biodra, nogi i stopy</div>
+    </a>
+  </main>
 
-  <footer>
-    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
-  </footer>
+  <footer class="page-footer">© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
 </body>
 </html>
