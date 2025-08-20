@@ -1,138 +1,84 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kobieta – Głowa i szyja</title>
-
-  <!-- Ogólny CSS strony (jeśli masz) -->
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- Lekki, lokalny CSS tylko dla tej podstrony (siatka + karty) -->
+  <link rel="stylesheet" href="style.css">
   <style>
-    :root{
-      --card-bg: #2f2f33;
-      --card-bd: #3b3b41;
-      --card-txt: #e9e9ec;
-      --chip-bg: rgba(0,0,0,.55);
-      --chip-txt: #fff;
-      --accent: #6aa7ff;
+    .container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
     }
-    body{
-      /* tło grafitowe z kropkami – nie koliduje z Twoim globalnym */
-      background:
-        radial-gradient(circle at 1px 1px, rgba(255,255,255,.07) 1px, transparent 1px) 0 0 / 18px 18px,
-        #2a2a2e;
-      color: var(--card-txt);
+    .card {
+      background: #222;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      padding: 10px;
+      text-align: center;
+      width: 200px; /* szerokość kafelka */
     }
-    .wrap{
-      max-width: 1100px;
-      margin: 28px auto 64px;
-      padding: 0 16px;
-    }
-    .topbar{
-      display:flex; align-items:center; gap:12px; margin-bottom:18px;
-    }
-    .back{
-      display:inline-flex; align-items:center; gap:8px;
-      background:#0b5ed7; color:#fff; padding:10px 14px; border-radius:10px;
-      text-decoration:none; font-weight:600; box-shadow:0 6px 18px rgba(11,94,215,.25);
-    }
-    h1{
-      margin: 6px 0 10px; font-size: clamp(1.4rem, 1.2rem + 1.2vw, 2rem);
-      letter-spacing:.3px;
-    }
-    .hint{opacity:.85; margin-bottom:18px}
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 18px;
-    }
-    .card{
-      background: var(--card-bg);
-      border: 1px solid var(--card-bd);
-      border-radius: 16px;
-      box-shadow: 0 8px 28px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);
-      overflow: hidden;
-      transition: transform .18s ease, box-shadow .18s ease;
-      position:relative;
-      isolation:isolate;
-    }
-    .card:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 14px 34px rgba(0,0,0,.45), 0 0 0 1px rgba(106,167,255,.25);
-    }
-    .thumb{
-      width:100%; aspect-ratio: 4 / 5; /* pionowy kadr; obraz jest cropowany z zachowaniem proporcji */
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+      height: auto;
+      max-height: 220px; /* wysokość obrazka */
       object-fit: cover;
-      display:block;
-      background:#1a1a1d;
     }
-    .label{
-      position:absolute; top:10px; left:10px;
-      background: var(--chip-bg); color: var(--chip-txt);
-      padding:6px 10px; font-size:.85rem; border-radius:999px;
-      border:1px solid rgba(255,255,255,.18);
-      backdrop-filter: blur(4px);
+    .card-title {
+      margin-top: 8px;
+      font-size: 1.1em;
+      color: white;
     }
-    .name{
-      padding: 10px 12px 12px;
-      font-weight:700; color:#fff; letter-spacing:.2px;
+    .back-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
     }
-    .card a{
-      position:absolute; inset:0; /* klikalna cała karta */
-      border-radius: 16px;
-    }
-    /* drobna responsywność */
-    @media (max-width: 520px){
-      .grid{ grid-template-columns: 1fr 1fr; }
+    .back-button:hover {
+      background-color: #666;
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <a class="back" href="kobieta.html">← Wróć</a>
+  <h1 style="text-align:center;">Kobieta – Głowa i szyja</h1>
+
+  <button class="back-button" onclick="window.history.back()">← Wróć</button>
+
+  <div class="container">
+    <div class="card">
+      <img src="img/kobieta-glowa-1.png" alt="Kobieta głowa">
+      <div class="card-title">Głowa</div>
     </div>
-
-    <h1>Kobieta – Głowa i szyja</h1>
-    <p class="hint">Kliknij zdjęcie, aby je powiększyć w nowej karcie.</p>
-
-    <div id="grid" class="grid" aria-live="polite"></div>
+    <div class="card">
+      <img src="img/kobieta-glowa-2.png" alt="Kobieta nos">
+      <div class="card-title">Nos</div>
+    </div>
+    <div class="card">
+      <img src="img/kobieta-glowa-3.png" alt="Kobieta ucho">
+      <div class="card-title">Ucho</div>
+    </div>
+    <div class="card">
+      <img src="img/kobieta-glowa-4.png" alt="Kobieta oczy">
+      <div class="card-title">Oczy</div>
+    </div>
+    <div class="card">
+      <img src="img/kobieta-glowa-5.png" alt="Kobieta szyja">
+      <div class="card-title">Szyja</div>
+    </div>
   </div>
 
-  <!-- Prosty generator kart: dopisz wiersz w tablicy, a karta pojawi się sama -->
-  <script>
-    // 1) TU DOPISUJESZ/NADPISUJESZ ELEMENTY
-    //    Zwróć uwagę na poprawne ścieżki i wielkość liter w nazwach.
-    const items = [
-      { src: "images/kobieta-glowa-1.png", title: "Kobieta – głowa 1" },
-      { src: "images/kobieta-glowa-2.png", title: "Kobieta – głowa 2" },
-      { src: "images/kobieta-glowa-3.png", title: "Kobieta – głowa 3" },
-
-      // Przykłady – usuń lub nadpisz swoimi:
-      // { src: "images/kobieta-glowa-4.png", title: "Kobieta – głowa 4" },
-      // { src: "images/kobieta-glowa-5.jpg", title: "Kobieta – głowa 5" },
-      // { src: "images/kobieta-glowa-6.webp", title: "Kobieta – głowa 6" },
-    ];
-
-    // 2) GENEROWANIE SIATKI
-    const grid = document.getElementById("grid");
-
-    function cardHTML({src, title}) {
-      // Otwieramy obraz w nowej karcie (pełny rozmiar)
-      return `
-        <figure class="card">
-          <img class="thumb" src="${src}" alt="${title}" loading="lazy" decoding="async" />
-          <figcaption class="label">Głowa • Szyja</figcaption>
-          <div class="name">${title}</div>
-          <a href="${src}" target="_blank" rel="noopener" aria-label="Otwórz: ${title}"></a>
-        </figure>
-      `;
-    }
-
-    grid.innerHTML = items.map(cardHTML).join("");
-  </script>
+  <footer style="text-align:center; margin-top:40px; font-size:12px; color:#aaa;">
+    © 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.
+  </footer>
 </body>
 </html>
