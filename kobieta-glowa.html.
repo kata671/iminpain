@@ -1,119 +1,97 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Kobieta – Głowa i szyja</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body {
-      background-color: #2b2b2b;
+    /* Wszystko tylko dla tej strony, z wysoką specyficznością */
+    #page-glowa {
+      --tileH: 200px;
+      --tileBG: #1f1f1f;
+      --tileRadius: 14px;
       color: #fff;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
       text-align: center;
     }
-
-    h1 {
-      margin: 20px 0;
+    #page-glowa .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 18px 36px;
     }
-
-    .back-button {
-      display: inline-block;
-      margin: 10px auto 20px auto;
-      padding: 10px 18px;
-      background-color: #444;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 14px;
+    #page-glowa h1 { margin: 10px 0 8px; }
+    #page-glowa .btn-back {
+      display:inline-block; margin: 8px 0 18px;
+      padding:10px 14px; border-radius:8px;
+      background:#444; color:#fff; text-decoration:none;
     }
+    #page-glowa .btn-back:hover { background:#676767; }
 
-    .back-button:hover {
-      background-color: #666;
-    }
-
-    .cards-grid {
-      display: grid;
+    #page-glowa .tiles {
+      display:grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-      max-width: 1100px;
-      margin: 0 auto 40px auto;
-      padding: 0 20px;
+      gap:18px;
     }
-
-    .card {
-      background-color: #1e1e1e;
-      border-radius: 14px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      overflow: hidden;
-      transition: transform 0.2s;
+    #page-glowa .tile {
+      background: var(--tileBG);
+      border-radius: var(--tileRadius);
+      box-shadow: 0 4px 14px rgba(0,0,0,.35);
+      overflow:hidden;
+      transition: transform .18s ease, box-shadow .18s ease;
     }
-
-    .card:hover {
-      transform: scale(1.03);
+    #page-glowa .tile:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.45);
     }
-
-    .card-image img {
-      width: 100%;
-      height: 220px;      /* wszystkie obrazki równe */
-      object-fit: cover;  /* przycięcie, zachowanie proporcji */
-      display: block;
+    /* KLUCZ: obrazki zawsze takie same */
+    #page-glowa .tile img {
+      width:100% !important;
+      height: var(--tileH) !important;
+      object-fit: cover !important;  /* przycina, ale trzyma proporcje */
+      display:block;
     }
-
-    .card-title {
-      padding: 10px;
-      font-weight: bold;
-      font-size: 16px;
+    #page-glowa .label {
+      font-weight:700;
+      padding:10px 8px 12px;
+      font-size:16px;
     }
   </style>
 </head>
-<body>
+<body id="page-glowa">
+  <div class="wrap">
+    <h1>Kobieta – Głowa i szyja</h1>
+    <a class="btn-back" href="kobieta.html">← Wróć</a>
 
-  <h1>Kobieta – Głowa i szyja</h1>
-  <a href="kobieta.html" class="back-button">← Wróć</a>
+    <div class="tiles">
+      <!-- 1. Głowa -->
+      <article class="tile">
+        <img src="img/kobieta-glowa-1.png" alt="Kobieta – głowa" />
+        <div class="label">Głowa</div>
+      </article>
 
-  <div class="cards-grid">
-    <!-- 1. Głowa -->
-    <article class="card">
-      <div class="card-image">
-        <img src="img/kobieta-glowa-1.png" alt="Kobieta głowa">
-      </div>
-      <div class="card-title">Głowa</div>
-    </article>
+      <!-- 2. Nos -->
+      <article class="tile">
+        <img src="img/kobieta-glowa-2.png" alt="Kobieta – nos" />
+        <div class="label">Nos</div>
+      </article>
 
-    <!-- 2. Nos -->
-    <article class="card">
-      <div class="card-image">
-        <img src="img/kobieta-glowa-2.png" alt="Kobieta nos">
-      </div>
-      <div class="card-title">Nos</div>
-    </article>
+      <!-- 3. Ucho -->
+      <article class="tile">
+        <img src="img/kobieta-glowa-3.png" alt="Kobieta – ucho" />
+        <div class="label">Ucho</div>
+      </article>
 
-    <!-- 3. Ucho -->
-    <article class="card">
-      <div class="card-image">
-        <img src="img/kobieta-glowa-3.png" alt="Kobieta ucho">
-      </div>
-      <div class="card-title">Ucho</div>
-    </article>
+      <!-- 4. Oczy -->
+      <article class="tile">
+        <img src="img/kobieta-glowa-4.png" alt="Kobieta – oczy" />
+        <div class="label">Oczy</div>
+      </article>
 
-    <!-- 4. Oczy -->
-    <article class="card">
-      <div class="card-image">
-        <img src="img/kobieta-glowa-4.png" alt="Kobieta oczy">
-      </div>
-      <div class="card-title">Oczy</div>
-    </article>
-
-    <!-- 5. Szyja -->
-    <article class="card">
-      <div class="card-image">
-        <img src="img/kobieta-glowa-5.png" alt="Kobieta szyja">
-      </div>
-      <div class="card-title">Szyja</div>
-    </article>
+      <!-- 5. Szyja -->
+      <article class="tile">
+        <img src="img/kobieta-glowa-5.png" alt="Kobieta – szyja" />
+        <div class="label">Szyja</div>
+      </article>
+    </div>
   </div>
-
 </body>
 </html>
