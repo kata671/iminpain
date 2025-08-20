@@ -1,158 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kobieta – Anatomia</title>
-
-  <style>
-    :root{
-      --bg:#1f2327;         /* grafit */
-      --card:#2a2f35;
-      --cardEdge:#3a4149;
-      --text:#e9edf1;
-      --muted:#aeb6bf;
-      --accent:#2b6cb0;
-    }
-
-    /* TŁO z delikatnymi kropkami */
-    html,body{
-      height:100%;
-      margin:0;
-      background:
-        radial-gradient(#ffffff13 1px, transparent 1px) 0 0 / 14px 14px,
-        radial-gradient(#00000026 1px, transparent 1px) 7px 7px / 14px 14px,
-        var(--bg);
-      color:var(--text);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
-    }
-
-    .wrap{
-      max-width:1100px;
-      margin: 28px auto 64px;
-      padding: 0 16px;
-    }
-
-    h1{
-      margin: 0 0 18px;
-      font-size: clamp(24px, 3.5vw, 36px);
-      letter-spacing:.5px;
-      text-align:center;
-    }
-
-    .lead{
-      text-align:center;
-      color:var(--muted);
-      margin-bottom: 22px;
-      font-size: 15px;
-    }
-
-    .back{
-      display:inline-block;
-      margin: 0 0 18px;
-      padding:8px 12px;
-      background:#2f3740;
-      border:1px solid #3b4550;
-      border-radius:10px;
-      text-decoration:none;
-      color:var(--text);
-      font-weight:600;
-    }
-    .back:hover{ background:#36404a; }
-
-    /* SIATKA KAFELKÓW */
-    .grid{
-      display:grid;
-      gap:18px;
-      grid-template-columns: repeat(3, 1fr);
-    }
-    @media (max-width: 980px){
-      .grid{ grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 640px){
-      .grid{ grid-template-columns: 1fr; }
-    }
-
-    /* KAFELKI */
-    .card{
-      background: linear-gradient(180deg, var(--card) 0%, #242a30 100%);
-      border:1px solid var(--cardEdge);
-      border-radius:16px;
-      box-shadow: 0 8px 22px rgba(0,0,0,.22);
-      overflow:hidden;
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-      text-decoration:none;
-      color:inherit;
-      display:flex;
-      flex-direction:column;
-      min-height: 100%;
-    }
-    .card:hover{
-      transform: translateY(-2px);
-      border-color:#4a5562;
-      box-shadow: 0 12px 30px rgba(0,0,0,.28);
-    }
-
-    /* >>> KLUCZ: ujednolicone miniatury */
-    .card img{
-      width:100%;
-      height: 220px;          /* stała wysokość obrazka w kafelku */
-      object-fit: cover;      /* przytnij proporcjonalnie, bez rozciągania */
-      display:block;
-    }
-
-    .card .body{
-      padding:12px 14px 14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .card h3{
-      margin:0;
-      font-size: 17px;
-      letter-spacing:.3px;
-      text-align:center;
-      font-weight:700;
-    }
-
-    footer{
-      margin-top:28px;
-      text-align:center;
-      color:var(--muted);
-      font-size:13px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="wrap">
-    <a class="back" href="index.html">← Wróć do startu</a>
-
+  <div class="container">
+    <a href="index.html" class="back-button">← Wróć do startu</a>
     <h1>Kobieta – Anatomia</h1>
-    <p class="lead">Wybierz sekcję ciała, aby przejść dalej.</p>
+    <p>Wybierz sekcję ciała, aby przejść dalej.</p>
 
-    <section class="grid">
-      <!-- Głowa i szyja -->
+    <div class="grid">
+      <!-- Głowa i szyja (zmienione zdjęcie) -->
       <a class="card" href="kobieta-glowa.html">
-        <img src="img/kobieta-glowa-5.png" alt="Kobieta – głowa i szyja">
-        <div class="body"><h3>Głowa i szyja</h3></div>
+        <img src="img/kobieta-glowa-nowe.png" alt="Głowa i szyja">
+        <h3>Głowa i szyja</h3>
       </a>
 
-      <!-- Klatka piersiowa / brzuch / plecy -->
+      <!-- Klatka piersiowa -->
       <a class="card" href="kobieta-klatka.html">
-        <img src="img/kobieta-klatka-1.png" alt="Kobieta – klatka piersiowa / brzuch / plecy">
-        <div class="body"><h3>Klatka piersiowa</h3></div>
+        <img src="img/kobieta-klatka.png" alt="Klatka piersiowa">
+        <h3>Klatka piersiowa</h3>
       </a>
 
-      <!-- Biodra / nogi / stopy -->
+      <!-- Nogi -->
       <a class="card" href="kobieta-nogi.html">
-        <img src="img/kobieta-nogi-1.png" alt="Kobieta – biodra, nogi i stopy">
-        <div class="body"><h3>Nogi</h3></div>
+        <img src="img/kobieta-nogi.png" alt="Nogi">
+        <h3>Nogi</h3>
       </a>
-    </section>
-
-    <footer>
-      © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
-    </footer>
+    </div>
   </div>
+
+  <footer>
+    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  </footer>
 </body>
 </html>
