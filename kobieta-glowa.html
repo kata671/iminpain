@@ -1,132 +1,43 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kobieta – Głowa i szyja</title>
-
-  <style>
-    :root{
-      --bg:#1f2328;          /* grafit */
-      --card:#2a2f36;
-      --cardEdge:#3a4048;
-      --text:#e9eef4;
-      --muted:#b8c0cc;
-      --accent:#3b82f6;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background: radial-gradient(1200px 1200px at 10% -10%, #2b3138 0%, transparent 40%),
-                  radial-gradient(1200px 1200px at 110% 10%, #2b3138 0%, transparent 40%),
-                  #1c2026;
-      /* delikatne kropeczki */
-      background-image:
-        radial-gradient(#2f353d 1px, transparent 1px),
-        radial-gradient(#2f353d 1px, transparent 1px),
-        radial-gradient(1200px 1200px at 10% -10%, #2b3138 0%, transparent 40%),
-        radial-gradient(1200px 1200px at 110% 10%, #2b3138 0%, transparent 40%),
-        #1c2026;
-      background-size: 24px 24px, 24px 24px, auto, auto, auto;
-      background-position: 0 0, 12px 12px, 0 0, 0 0, 0 0;
-    }
-
-    .wrap{max-width:1100px;margin:32px auto;padding:0 16px}
-
-    header{
-      display:flex;align-items:center;gap:12px;margin-bottom:16px
-    }
-    header h1{font-size:28px;margin:0}
-    .back{
-      appearance:none;border:0;border-radius:10px;padding:6px 12px;
-      background:var(--cardEdge); color:var(--text); cursor:pointer;
-      transition:.15s transform ease;
-    }
-    .back:hover{transform:translateY(-1px)}
-
-    .hint{color:var(--muted);margin:0 0 20px 0}
-
-    .tiles{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:16px;
-    }
-    @media (max-width:980px){
-      .tiles{grid-template-columns: repeat(2, 1fr);}
-    }
-    @media (max-width:640px){
-      .tiles{grid-template-columns: 1fr;}
-    }
-
-    .tile{
-      background:var(--card);
-      border:1px solid var(--cardEdge);
-      border-radius:14px;
-      padding:10px;
-      box-shadow: 0 10px 20px rgba(0,0,0,.25);
-      transition:transform .15s ease, box-shadow .15s ease;
-    }
-    .tile:hover{transform:translateY(-2px); box-shadow:0 14px 26px rgba(0,0,0,.32)}
-    .tile img{
-      display:block;width:100%;height:220px;object-fit:cover;
-      border-radius:10px;
-      background:#121418;
-    }
-    .label{
-      text-align:center;
-      margin:8px 0 4px;
-      font-weight:600;
-    }
-    footer{
-      color:var(--muted);font-size:12px;text-align:center;margin:28px 0 8px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <button class="back" onclick="history.back()">← Wróć</button>
-      <h1>Kobieta – Głowa i szyja</h1>
-    </header>
+  <div class="container">
+    <h1>Kobieta – Głowa i szyja</h1>
+    <a href="kobieta.html" class="back-button">← Wróć</a>
+    <p>Wybierz część Głowa, Nos, Ucho, Oczy lub Szyja.</p>
 
-    <p class="hint">Wybierz część: Głowa, Nos, Ucho, Oczy lub Szyja.</p>
-
-    <section class="tiles">
-      <!-- 1. Głowa -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-1.png?v=10" alt="Kobieta – głowa" loading="lazy">
-        <div class="label">Głowa</div>
-      </article>
-
-      <!-- 2. Nos -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-2.png?v=10" alt="Kobieta – nos" loading="lazy">
-        <div class="label">Nos</div>
-      </article>
-
-      <!-- 3. Ucho -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-3.png?v=10" alt="Kobieta – ucho" loading="lazy">
-        <div class="label">Ucho</div>
-      </article>
-
-      <!-- 4. Oczy -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-4.png?v=10" alt="Kobieta – oczy" loading="lazy">
-        <div class="label">Oczy</div>
-      </article>
-
-      <!-- 5. Szyja -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-5.png?v=10" alt="Kobieta – szyja" loading="lazy">
-        <div class="label">Szyja</div>
-      </article>
-    </section>
-
-    <footer>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
+    <div class="gallery">
+      <a href="kobieta-glowa-1.html" class="card">
+        <img src="img/kobieta-glowa-1.png" alt="Głowa">
+        <p>Głowa</p>
+      </a>
+      <a href="kobieta-glowa-2.html" class="card">
+        <img src="img/kobieta-glowa-2.png" alt="Nos">
+        <p>Nos</p>
+      </a>
+      <a href="kobieta-glowa-3.html" class="card">
+        <img src="img/kobieta-glowa-3.png" alt="Ucho">
+        <p>Ucho</p>
+      </a>
+      <a href="kobieta-glowa-4.html" class="card">
+        <img src="img/kobieta-glowa-4.png" alt="Oczy">
+        <p>Oczy</p>
+      </a>
+      <a href="kobieta-glowa-5.html" class="card">
+        <img src="img/kobieta-glowa-5.png" alt="Szyja">
+        <p>Szyja</p>
+      </a>
+    </div>
   </div>
+
+  <footer>
+    <p>© 2023 Innpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  </footer>
 </body>
 </html>
