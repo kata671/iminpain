@@ -1,87 +1,75 @@
-/* Reset stylów */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Tło stron */
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #1e1e1e;
-  color: white;
-  line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-color: #111;
+  color: #fff;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
-/* Nagłówek */
-h1, h2 {
-  text-align: center;
-  margin: 20px 0;
-  color: #ffffff;
-}
-
-/* Linki powrotu */
-.back-link {
-  margin: 15px;
-  display: block;
-  color: #4da6ff;
+a {
+  color: #4da3ff;
   text-decoration: none;
 }
 
-.back-link:hover {
+a:hover {
   text-decoration: underline;
 }
 
-/* Siatka kart */
-.container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+header {
   padding: 20px;
-  justify-items: center;
 }
 
-/* Karty */
-.card {
-  background: #2a2a2a;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-  overflow: hidden;
-  width: 220px;  /* stała szerokość */
+h1 {
+  font-size: 1.6em;
+  margin: 0 0 20px;
   text-align: center;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  padding: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #222;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   transition: transform 0.2s;
+  max-width: 300px; /* stała szerokość kart */
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: scale(1.05);
 }
 
-/* Obrazki w kartach */
 .card img {
   width: 100%;
-  height: auto;
-  max-height: 180px;  /* ograniczamy wysokość */
-  object-fit: cover;  /* przycinanie zamiast rozciągania */
-  border-bottom: 2px solid #444;
+  height: 200px;       /* ujednolicony rozmiar */
+  object-fit: cover;   /* przycięcie proporcji */
 }
 
-/* Tekst w kartach */
 .card p {
-  padding: 10px;
+  margin: 10px;
+  color: #fff;
   font-weight: bold;
-  color: #ddd;
+  text-align: center;
 }
 
-/* Stopka */
+nav {
+  padding: 10px 20px;
+}
+
 footer {
-  margin-top: auto;
   text-align: center;
-  padding: 15px;
-  font-size: 0.9em;
+  padding: 20px;
+  font-size: 0.8em;
   color: #aaa;
 }
