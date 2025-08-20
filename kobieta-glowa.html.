@@ -1,50 +1,73 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Kobieta – Głowa i szyja</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- jeśli masz wspólny CSS, zachowaj tę linię; dopisałem ?v=3 aby odświeżyć cache -->
+  <link rel="stylesheet" href="css/style.css?v=3" />
+
   <style>
-    body{color:#fff}
-    .wrap{max-width:1200px;margin:0 auto;padding:18px}
-    h1{margin:10px 0 8px;text-align:center}
-    .btn{display:inline-block;margin:8px 0 18px;padding:10px 14px;border-radius:8px;background:#444;color:#fff;text-decoration:none}
-    .btn:hover{background:#666}
-    .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-    .tile{background:#1f1f1f;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.35)}
-    .label{font-weight:700;padding:10px 8px 12px;text-align:center}
+    /* Bezpieczne minimum, gdyby zewnętrzny CSS był niezaładowany.
+       Nie koliduje z Twoim, bo używa tylko klas pomocniczych. */
+    .wrap{max-width:1200px;margin:0 auto;padding:16px}
+    .btns{display:flex;gap:12px;margin:8px 0 24px}
+    .btn{display:inline-block;background:#223;border-radius:12px;color:#fff;text-decoration:none;padding:10px 14px}
+    h1{color:#fff;font-weight:800;margin:0 0 8px}
+    p.lead{color:#cfd6ff;margin:0 0 20px}
+    .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+    .card{display:block;background:#1a1f2b;border-radius:16px;overflow:hidden;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.35)}
+    .card img{display:block;width:100%;height:180px;object-fit:cover}
+    .card .title{padding:10px 12px;color:#e9eefc;font-weight:700}
+    body{background:#0f1320;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Calibri,sans-serif}
+    footer{color:#9fb0ff80;text-align:center;margin:28px 0 8px;font-size:.9rem}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Kobieta – Głowa i szyja</h1>
-    <a class="btn" href="kobieta.html">← Wróć</a>
 
-    <div class="tiles">
-      <!-- 1. Głowa -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-1.png?v=3"
-             alt="Kobieta – głowa"
-             style="display:block;width:100%;height:200px;object-fit:cover;" />
-        <div class="label">Głowa</div>
-      </article>
-
-      <!-- 2. Nos -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-2.png?v=3"
-             alt="Kobieta – nos"
-             style="display:block;width:100%;height:200px;object-fit:cover;" />
-        <div class="label">Nos</div>
-      </article>
-
-      <!-- 3. Ucho -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-3.png?v=3"
-             alt="Kobieta – ucho"
-             style="display:block;width:100%;height:200px;object-fit:cover;" />
-        <div class="label">Ucho</div>
-      </article>
+    <div class="btns">
+      <a class="btn" href="kobieta.html">← Wróć do wyboru sekcji</a>
+      <a class="btn" href="index.html">Strona główna</a>
     </div>
+
+    <h1>Kobieta – Głowa i szyja</h1>
+    <p class="lead">Wybierz część: Głowa, Nos, Ucho, Oczy lub Szyja.</p>
+
+    <div class="cards">
+      <!-- GŁOWA -->
+      <a class="card" href="kobieta-glowa-glowa.html">
+        <img src="img/kobieta-glowa.png?v=3" alt="Głowa">
+        <div class="title">Głowa</div>
+      </a>
+
+      <!-- NOS -->
+      <a class="card" href="kobieta-nos.html">
+        <img src="img/kobieta-nos.png?v=3" alt="Nos">
+        <div class="title">Nos</div>
+      </a>
+
+      <!-- UCHO -->
+      <a class="card" href="kobieta-ucho.html">
+        <img src="img/kobieta-ucho.png?v=3" alt="Ucho">
+        <div class="title">Ucho</div>
+      </a>
+
+      <!-- OCZY -->
+      <a class="card" href="kobieta-oczy.html">
+        <img src="img/kobieta-oczy.png?v=3" alt="Oczy">
+        <div class="title">Oczy</div>
+      </a>
+
+      <!-- SZYJA -->
+      <a class="card" href="kobieta-szyja.html">
+        <img src="img/kobieta-szyja.png?v=3" alt="Szyja">
+        <div class="title">Szyja</div>
+      </a>
+    </div>
+
+    <footer>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
   </div>
 </body>
 </html>
