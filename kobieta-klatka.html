@@ -1,70 +1,89 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Kobieta – Klatka, brzuch, plecy</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Mini-styl dla pewności spójnych kafelków */
+    .cards { display:grid; gap:22px; grid-template-columns: repeat( auto-fit, minmax(260px, 1fr) ); }
+    .tile { background:#2b2f36; border-radius:16px; box-shadow:0 6px 18px rgba(0,0,0,.25); overflow:hidden; }
+    .tile__media { aspect-ratio: 16 / 9; position:relative; }
+    .tile__media img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .tile__body { padding:12px 14px 16px; }
+    .tile__title { font-weight:700; color:#fff; margin:0 0 2px; }
+    .tile__desc { color:#c9ced6; font-size:.95rem; margin:0; }
+    .actions { margin:18px 0 10px; display:flex; gap:10px; }
+    .btn { background:#3b82f6; color:#fff; padding:8px 12px; border-radius:10px; text-decoration:none; }
+    .container { max-width:1100px; margin:0 auto; padding:24px; }
+    h1 { margin:8px 0 6px; }
+    p.lead { color:#c9ced6; margin:0 0 18px; }
+    footer { text-align:center; color:#9aa3ad; margin:30px 0 10px; font-size:.9rem; }
+  </style>
 </head>
 <body>
   <div class="container">
+    <div class="actions">
+      <a class="btn" href="kobieta.html">← Wróć do wyboru sekcji</a>
+      <a class="btn" href="index.html">Strona główna</a>
+    </div>
+
     <h1>Kobieta – Klatka, brzuch, plecy</h1>
-    <p>Kliknij ilustrację, aby zobaczyć możliwe przyczyny bólu.</p>
+    <p class="lead">Kliknij ilustrację, aby zobaczyć możliwe przyczyny bólu.</p>
 
-    <div class="card-grid">
-      <!-- Klatka piersiowa -->
-      <div class="card">
-        <a href="kobieta-klatka-piersiowa.html">
-          <img src="img/kobieta-klatka.png" alt="Klatka piersiowa">
-          <h3>Klatka piersiowa</h3>
-        </a>
-        <p>Kłucie, ucisk, nasilenie przy ruchu.</p>
-      </div>
-
-      <!-- Brzuch -->
-      <div class="card">
-        <a href="kobieta-brzuch.html">
-          <img src="img/kobieta-brzuch.png" alt="Brzuch">
-          <h3>Brzuch</h3>
-        </a>
-        <p>Rozlane bóle, kolki, wzdęcia.</p>
-      </div>
-
-      <!-- Plecy -->
-      <div class="card">
-        <a href="kobieta-plecy.html">
-          <img src="img/kobieta-plecy.png" alt="Plecy">
-          <h3>Plecy</h3>
-        </a>
-        <p>Ból lędźwi, promieniowanie do kończyn.</p>
-      </div>
-
+    <div class="cards">
       <!-- Serce -->
-      <div class="card">
-        <a href="kobieta-serce.html">
-          <img src="img/kobieta-serce.png" alt="Serce">
-          <h3>Serce</h3>
-        </a>
-        <p>Ból w klatce, ucisk, promieniowanie do ramienia.</p>
-      </div>
+      <a class="tile" href="kobieta-serce.html">
+        <div class="tile__media">
+          <img src="img/kobieta-serce.png" alt="Kobieta — serce">
+        </div>
+        <div class="tile__body">
+          <h3 class="tile__title">Serce</h3>
+          <p class="tile__desc">Ucisk, kłucie, promieniowanie, duszność.</p>
+        </div>
+      </a>
 
       <!-- Płuca -->
-      <div class="card">
-        <a href="kobieta-pluca.html">
-          <img src="img/kobieta-pluca.png" alt="Płuca">
-          <h3>Płuca</h3>
-        </a>
-        <p>Duszność, kaszel, ból przy oddychaniu.</p>
-      </div>
+      <a class="tile" href="kobieta-pluca.html">
+        <div class="tile__media">
+          <img src="img/kobieta-pluca.png" alt="Kobieta — płuca">
+        </div>
+        <div class="tile__body">
+          <h3 class="tile__title">Płuca</h3>
+          <p class="tile__desc">Ból przy oddychaniu, kaszel, świsty, duszność.</p>
+        </div>
+      </a>
+
+      <!-- Brzuch (kotwica na tej stronie) -->
+      <a class="tile" href="#brzuch">
+        <div class="tile__media">
+          <img src="img/kobieta-brzuch.png" alt="Kobieta — brzuch">
+        </div>
+        <div class="tile__body">
+          <h3 class="tile__title">Brzuch</h3>
+          <p class="tile__desc">Rozlane bóle, kolki, wzdęcia.</p>
+        </div>
+      </a>
+
+      <!-- Plecy (kotwica na tej stronie) -->
+      <a class="tile" href="#plecy">
+        <div class="tile__media">
+          <img src="img/kobieta-plecy.png" alt="Kobieta — plecy">
+        </div>
+        <div class="tile__body">
+          <h3 class="tile__title">Plecy</h3>
+          <p class="tile__desc">Od lędźwi po łopatki, nasilone przy ruchu.</p>
+        </div>
+      </a>
     </div>
 
-    <div class="navigation">
-      <a href="kobieta.html" class="btn">← Wróć do wyboru sekcji</a>
-      <a href="index.html" class="btn">Strona główna</a>
-    </div>
+    <!-- Twoje istniejące sekcje/akordeony mogą zostać niżej -->
+    <div id="brzuch" style="margin-top:34px;"></div>
+    <div id="plecy" style="margin-top:34px;"></div>
+
+    <footer>
+      © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
+    </footer>
   </div>
-
-  <footer>
-    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
-  </footer>
 </body>
 </html>
