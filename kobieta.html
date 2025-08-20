@@ -1,78 +1,103 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Kobieta – Anatomia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    :root{
+      --bg:#0b1220;
+      --card:#111827;
+      --card2:#1f2937;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --link:#60a5fa;
+    }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:#e5e7eb;
-      line-height:1.45;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--text);
       background:
         radial-gradient(1200px 800px at 20% -10%, rgba(37,99,235,.15), transparent 60%),
         radial-gradient(900px 700px at 120% 20%, rgba(56,189,248,.12), transparent 55%),
-        #0b1220;
+        var(--bg);
+      line-height:1.45;
     }
-    .container{
-      max-width:1000px;
-      margin:0 auto;
-      padding:20px;
-    }
-    h1{
-      font-size:1.6rem;
-      margin-bottom:20px;
-    }
+    .container{max-width:1000px;margin:0 auto;padding:20px}
+    a{color:var(--link);text-decoration:none}
+    a:hover{text-decoration:underline}
+    h1{font-size:1.8rem;margin:18px 0 18px}
     .grid{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
       gap:20px;
     }
     .card{
-      background:#111827;
-      border-radius:12px;
+      background:var(--card);
+      border-radius:14px;
       overflow:hidden;
-      text-align:center;
-      transition:transform .2s;
+      box-shadow:0 6px 18px rgba(0,0,0,.25);
+      transition:transform .18s ease, box-shadow .18s ease;
+      display:block;
     }
-    .card:hover{ transform:scale(1.03); }
-    .card img{
+    .card:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.35)}
+    .thumb{
       width:100%;
-      height:200px;
+      height:200px;            /* stała wysokość jak na innych stronach */
+      display:block;
       object-fit:cover;
+      background:#0a0f1a;
     }
-    .card-title{
-      padding:10px;
-      font-size:1.1rem;
-      background:#1f2937;
+    .title{
+      background:var(--card2);
+      padding:12px 14px;
+      text-align:center;
+      font-weight:600;
     }
-    a{ color:#60a5fa; text-decoration:none; }
-    a:hover{ text-decoration:underline; }
-    footer{
-      margin-top:30px;
-      font-size:0.9rem;
-      color:#9ca3af;
-    }
+    footer{margin-top:28px;color:var(--muted);font-size:.92rem}
   </style>
+  <script>
+    // Fallback ścieżek obrazków: najpierw root, potem /img/
+    function setSrcWithFallback(img, primary, fallback){
+      img.src = primary;
+      img.onerror = () => { if (img.src.indexOf(fallback) === -1) img.src = fallback; };
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      setSrcWithFallback(document.getElementById('img-glowa'),
+        'kobieta-glowa-5.png', 'img/kobieta-glowa-5.png');
+
+      setSrcWithFallback(document.getElementById('img-klatka'),
+        'kobieta-klatka.png', 'img/kobieta-klatka.png');
+
+      setSrcWithFallback(document.getElementById('img-nogi'),
+        'kobieta-nogi.png', 'img/kobieta-nogi.png');
+    });
+  </script>
 </head>
 <body>
   <div class="container">
-    <a href="index.html">← Wróć do startu Strona główna</a>
+    <a href="index.html">← Wróć do startu</a> <span style="opacity:.7">|</span> <a href="index.html">Strona główna</a>
+
     <h1>Wybierz obszar bólu – Kobieta</h1>
+
     <div class="grid">
       <a class="card" href="kobieta-glowa.html">
-        <img src="kobieta-glowa-5.png" alt="Głowa i szyja">
-        <div class="card-title">Głowa i szyja</div>
+        <img id="img-glowa" class="thumb" alt="Głowa i szyja" />
+        <div class="title">Głowa i szyja</div>
       </a>
+
       <a class="card" href="kobieta-klatka.html">
-        <img src="kobieta-klatka.png" alt="Klatka / Brzuch / Plecy">
-        <div class="card-title">Klatka / Brzuch / Plecy</div>
+        <img id="img-klatka" class="thumb" alt="Klatka / Brzuch / Plecy" />
+        <div class="title">Klatka / Brzuch / Plecy</div>
       </a>
+
       <a class="card" href="kobieta-nogi.html">
-        <img src="kobieta-nogi.png" alt="Biodra / Nogi / Stopy">
-        <div class="card-title">Biodra / Nogi / Stopy</div>
+        <img id="img-nogi" class="thumb" alt="Biodra / Nogi / Stopy" />
+        <div class="title">Biodra / Nogi / Stopy</div>
       </a>
     </div>
+
     <footer>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
   </div>
 </body>
