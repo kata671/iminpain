@@ -1,58 +1,104 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Kobieta – Głowa i szyja</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kobieta – Anatomia</title>
+
   <style>
-    :root { --tile-h: 200px; } 
-    body { color: #fff; }
-    .wrap { max-width: 1200px; margin: 0 auto; padding: 18px; }
-    h1 { margin: 10px 0 8px; text-align: center; }
-    .btn { display:inline-block; margin:12px 0 20px; padding:10px 14px; border-radius:8px; background:#444; color:#fff; text-decoration:none }
-    .btn:hover { background:#666; }
-    .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; }
-    .tile { background:#1f1f1f; border-radius:14px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,.35); }
-    .tile img { width: 100% !important; height: var(--tile-h) !important; object-fit: cover !important; display:block !important; }
-    .label { font-weight:700; padding:10px 8px 12px; text-align:center; }
+    :root{
+      --bg:#1f2328;
+      --card:#2a2f36;
+      --cardEdge:#3a4048;
+      --text:#e9eef4;
+      --muted:#b8c0cc;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 1200px at 10% -10%, #2b3138 0%, transparent 40%),
+                  radial-gradient(1200px 1200px at 110% 10%, #2b3138 0%, transparent 40%),
+                  #1c2026;
+      background-image:
+        radial-gradient(#2f353d 1px, transparent 1px),
+        radial-gradient(#2f353d 1px, transparent 1px),
+        radial-gradient(1200px 1200px at 10% -10%, #2b3138 0%, transparent 40%),
+        radial-gradient(1200px 1200px at 110% 10%, #2b3138 0%, transparent 40%),
+        #1c2026;
+      background-size: 24px 24px, 24px 24px, auto, auto, auto;
+      background-position: 0 0, 12px 12px, 0 0, 0 0, 0 0;
+    }
+
+    .wrap{max-width:1100px;margin:32px auto;padding:0 16px}
+    header h1{font-size:28px;margin:0 0 20px;text-align:center}
+
+    .tiles{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:16px;
+    }
+    @media (max-width:980px){
+      .tiles{grid-template-columns: repeat(2, 1fr);}
+    }
+    @media (max-width:640px){
+      .tiles{grid-template-columns: 1fr;}
+    }
+
+    .tile{
+      background:var(--card);
+      border:1px solid var(--cardEdge);
+      border-radius:14px;
+      padding:10px;
+      box-shadow: 0 10px 20px rgba(0,0,0,.25);
+      transition:transform .15s ease, box-shadow .15s ease;
+      text-decoration:none; color:var(--text);
+    }
+    .tile:hover{transform:translateY(-2px); box-shadow:0 14px 26px rgba(0,0,0,.32)}
+    .tile img{
+      display:block;width:100%;height:220px;object-fit:cover;
+      border-radius:10px;
+      background:#121418;
+    }
+    .label{
+      text-align:center;
+      margin:8px 0 4px;
+      font-weight:600;
+    }
+    footer{
+      color:var(--muted);font-size:12px;text-align:center;margin:28px 0 8px;
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Kobieta – Głowa i szyja</h1>
-    <p style="text-align:center"><a class="btn" href="kobieta.html">← Wróć</a></p>
+    <header>
+      <h1>Kobieta – Anatomia</h1>
+    </header>
 
-    <div class="tiles">
-      <!-- 1. Głowa -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-1.png?v=5" alt="Kobieta – głowa" loading="lazy">
-        <div class="label">Głowa</div>
-      </article>
+    <section class="tiles">
+      <!-- Głowa i szyja -->
+      <a href="kobieta-glowa.html" class="tile">
+        <img src="img/kobieta-glowna-1.png" alt="Kobieta – głowa i szyja" loading="lazy">
+        <div class="label">Głowa i szyja</div>
+      </a>
 
-      <!-- 2. Nos -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-2.png?v=5" alt="Kobieta – nos" loading="lazy">
-        <div class="label">Nos</div>
-      </article>
+      <!-- Klatka piersiowa -->
+      <a href="kobieta-klatka.html" class="tile">
+        <img src="img/kobieta-glowna-2.png" alt="Kobieta – klatka piersiowa" loading="lazy">
+        <div class="label">Klatka piersiowa</div>
+      </a>
 
-      <!-- 3. Ucho -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-3.png?v=5" alt="Kobieta – ucho" loading="lazy">
-        <div class="label">Ucho</div>
-      </article>
+      <!-- Nogi -->
+      <a href="kobieta-nogi.html" class="tile">
+        <img src="img/kobieta-glowna-3.png" alt="Kobieta – nogi" loading="lazy">
+        <div class="label">Nogi</div>
+      </a>
+    </section>
 
-      <!-- 4. Oczy -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-4.png?v=5" alt="Kobieta – oczy" loading="lazy">
-        <div class="label">Oczy</div>
-      </article>
-
-      <!-- 5. Szyja -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-5.png?v=5" alt="Kobieta – szyja" loading="lazy">
-        <div class="label">Szyja</div>
-      </article>
-    </div>
+    <footer>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
   </div>
 </body>
 </html>
