@@ -162,3 +162,16 @@ a:hover { color: var(--accent-2); }
   .tile__title { padding: 10px 10px 4px; }
   .tile__description { padding-bottom: 12px; }
 }
+/* --- HOTFIX: bezpieczne rozmiary obrazków --- */
+.tiles .tile__media img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Gdy obrazek jest użyty luzem, nie w kafelku – niech nie przekracza szerokości */
+main img, .container img {
+  max-width: 100%;
+  height: auto;
+}
