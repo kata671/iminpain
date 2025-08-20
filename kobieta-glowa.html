@@ -2,34 +2,53 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kobieta - Głowa i szyja</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Kobieta — Głowa i szyja</title>
+  <style>
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:#e5e7eb;
+      line-height:1.45;
+      background:
+        radial-gradient(1200px 800px at 20% -10%, rgba(37,99,235,.15), transparent 60%),
+        radial-gradient(900px 700px at 120% 20%, rgba(56,189,248,.12), transparent 55%),
+        #0b1220;
+    }
+    .container{
+      max-width:1000px;
+      margin:0 auto;
+      padding:20px;
+    }
+    h1{ font-size:1.6rem; margin-bottom:20px; }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:20px;
+    }
+    .card{
+      background:#111827;
+      border-radius:12px;
+      overflow:hidden;
+      text-align:center;
+      transition:transform .2s;
+    }
+    .card:hover{ transform:scale(1.03); }
+    .card img{ width:100%; height:200px; object-fit:cover; }
+    .card-title{ padding:10px; background:#1f2937; }
+    a{ color:#60a5fa; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+  </style>
 </head>
-<body data-page="kobieta">
+<body>
   <div class="container">
-    <h1>Kobieta - Głowa i szyja</h1>
+    <a href="kobieta.html">← Wróć do wyboru sekcji</a> | <a href="index.html">Strona główna</a>
+    <h1>Kobieta — Głowa i szyja</h1>
     <div class="grid">
-      <div class="card">
-        <img src="img/kobieta-glowa-1.png" alt="Głowa" class="thumb">
-        <p>Głowa</p>
-      </div>
-      <div class="card">
-        <img src="img/kobieta-nos.png" alt="Nos" class="thumb">
-        <p>Nos</p>
-      </div>
-      <div class="card">
-        <img src="img/kobieta-ucho.png" alt="Ucho" class="thumb">
-        <p>Ucho</p>
-      </div>
-      <div class="card">
-        <img src="img/kobieta-oczy.png" alt="Oczy" class="thumb">
-        <p>Oczy</p>
-      </div>
-      <div class="card">
-        <img src="img/kobieta-szyja.png" alt="Szyja" class="thumb">
-        <p>Szyja</p>
-      </div>
+      <a class="card" href="kobieta-glowa-glowa.html"><img src="kobieta-glowa.png" alt="Głowa"><div class="card-title">Głowa</div></a>
+      <a class="card" href="kobieta-nos.html"><img src="kobieta-nos.png" alt="Nos"><div class="card-title">Nos</div></a>
+      <a class="card" href="kobieta-ucho.html"><img src="kobieta-ucho.png" alt="Ucho"><div class="card-title">Ucho</div></a>
+      <a class="card" href="kobieta-oczy.html"><img src="kobieta-oczy.png" alt="Oczy"><div class="card-title">Oczy</div></a>
+      <a class="card" href="kobieta-szyja.html"><img src="kobieta-szyja.png" alt="Szyja"><div class="card-title">Szyja</div></a>
     </div>
   </div>
 </body>
