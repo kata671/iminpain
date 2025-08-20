@@ -1,104 +1,38 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kobieta – Anatomia</title>
-
-  <style>
-    :root{
-      --bg:#1f2328;
-      --card:#2a2f36;
-      --cardEdge:#3a4048;
-      --text:#e9eef4;
-      --muted:#b8c0cc;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background: radial-gradient(1200px 1200px at 10% -10%, #2b3138 0%, transparent 40%),
-                  radial-gradient(1200px 1200px at 110% 10%, #2b3138 0%, transparent 40%),
-                  #1c2026;
-      background-image:
-        radial-gradient(#2f353d 1px, transparent 1px),
-        radial-gradient(#2f353d 1px, transparent 1px),
-        radial-gradient(1200px 1200px at 10% -10%, #2b3138 0%, transparent 40%),
-        radial-gradient(1200px 1200px at 110% 10%, #2b3138 0%, transparent 40%),
-        #1c2026;
-      background-size: 24px 24px, 24px 24px, auto, auto, auto;
-      background-position: 0 0, 12px 12px, 0 0, 0 0, 0 0;
-    }
-
-    .wrap{max-width:1100px;margin:32px auto;padding:0 16px}
-    header h1{font-size:28px;margin:0 0 20px;text-align:center}
-
-    .tiles{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:16px;
-    }
-    @media (max-width:980px){
-      .tiles{grid-template-columns: repeat(2, 1fr);}
-    }
-    @media (max-width:640px){
-      .tiles{grid-template-columns: 1fr;}
-    }
-
-    .tile{
-      background:var(--card);
-      border:1px solid var(--cardEdge);
-      border-radius:14px;
-      padding:10px;
-      box-shadow: 0 10px 20px rgba(0,0,0,.25);
-      transition:transform .15s ease, box-shadow .15s ease;
-      text-decoration:none; color:var(--text);
-    }
-    .tile:hover{transform:translateY(-2px); box-shadow:0 14px 26px rgba(0,0,0,.32)}
-    .tile img{
-      display:block;width:100%;height:220px;object-fit:cover;
-      border-radius:10px;
-      background:#121418;
-    }
-    .label{
-      text-align:center;
-      margin:8px 0 4px;
-      font-weight:600;
-    }
-    footer{
-      color:var(--muted);font-size:12px;text-align:center;margin:28px 0 8px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <h1>Kobieta – Anatomia</h1>
-    </header>
+  <div class="container">
+    <h1>Kobieta – Anatomia</h1>
 
-    <section class="tiles">
+    <div class="grid">
       <!-- Głowa i szyja -->
-      <a href="kobieta-glowa.html" class="tile">
-        <img src="img/kobieta-glowna-1.png" alt="Kobieta – głowa i szyja" loading="lazy">
-        <div class="label">Głowa i szyja</div>
+      <a href="kobieta-glowa.html" class="card">
+        <img src="img/kobieta-glowa-5.png" alt="Kobieta – głowa i szyja">
+        <p>Głowa i szyja</p>
       </a>
 
       <!-- Klatka piersiowa -->
-      <a href="kobieta-klatka.html" class="tile">
-        <img src="img/kobieta-glowna-2.png" alt="Kobieta – klatka piersiowa" loading="lazy">
-        <div class="label">Klatka piersiowa</div>
+      <a href="kobieta-klatka.html" class="card">
+        <img src="img/kobieta-klatka.png" alt="Kobieta – klatka piersiowa">
+        <p>Klatka piersiowa</p>
       </a>
 
       <!-- Nogi -->
-      <a href="kobieta-nogi.html" class="tile">
-        <img src="img/kobieta-glowna-3.png" alt="Kobieta – nogi" loading="lazy">
-        <div class="label">Nogi</div>
+      <a href="kobieta-nogi.html" class="card">
+        <img src="img/kobieta-nogi.png" alt="Kobieta – nogi">
+        <p>Nogi</p>
       </a>
-    </section>
+    </div>
 
-    <footer>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
+    <footer>
+      <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+    </footer>
   </div>
 </body>
 </html>
