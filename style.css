@@ -1,78 +1,123 @@
-/* Ogólne ustawienia dla całej strony */
-body {
-  background-color: #1e1e1e; /* ciemny grafit */
-  color: #f0f0f0;
-  font-family: Arial, sans-serif;
+/* ===============================
+   style.css – główny arkusz stylów
+   =============================== */
+
+:root {
+  --bg: #1f2327;        /* grafit */
+  --card: #2a2f35;
+  --cardEdge: #3a4149;
+  --text: #e9edf1;
+  --muted: #aeb6bf;
+  --accent: #2b6cb0;
+}
+
+/* Tło z delikatnymi kropkami */
+html, body {
+  height: 100%;
   margin: 0;
-  padding: 0;
-
-  /* delikatne kropeczki w tle */
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 30px 30px;
+  background:
+    radial-gradient(#ffffff13 1px, transparent 1px) 0 0 / 14px 14px,
+    radial-gradient(#00000026 1px, transparent 1px) 7px 7px / 14px 14px,
+    var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
 }
 
-/* Nagłówek strony */
-header {
-  text-align: center;
-  padding: 20px;
-  background-color: #2b2b2b;
-  color: #ffffff;
+/* Kontener */
+.wrap {
+  max-width: 1100px;
+  margin: 28px auto 64px;
+  padding: 0 16px;
 }
 
-/* Kontener na główne elementy */
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 50px;
-  padding: 40px;
-  flex-wrap: wrap;
-}
-
-/* Zdjęcia na stronie głównej */
-.character {
-  width: 300px;
-  transition: transform 0.3s ease;
-  cursor: pointer;
-}
-
-.character:hover {
-  transform: scale(1.05);
-}
-
-/* Strony z wyborem sekcji (np. głowa, klatka, nogi) */
-.panels {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  padding: 40px;
-}
-
-.panel {
-  width: 300px;
+/* Nagłówki */
+h1 {
+  margin: 0 0 18px;
+  font-size: clamp(24px, 3.5vw, 36px);
+  letter-spacing: .5px;
   text-align: center;
 }
 
-.panel img {
-  width: 100%;
-  border-radius: 8px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
+.lead {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 22px;
+  font-size: 15px;
 }
 
-.panel img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-}
-
-/* Linki */
-a {
+/* Link powrotny */
+.back {
+  display: inline-block;
+  margin: 0 0 18px;
+  padding: 8px 12px;
+  background: #2f3740;
+  border: 1px solid #3b4550;
+  border-radius: 10px;
   text-decoration: none;
-  color: #f0f0f0;
+  color: var(--text);
+  font-weight: 600;
+}
+.back:hover { background: #36404a; }
+
+/* Siatka */
+.grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 980px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
 }
 
-a:hover {
-  text-decoration: underline;
+/* Karty */
+.card {
+  background: linear-gradient(180deg, var(--card) 0%, #242a30 100%);
+  border: 1px solid var(--cardEdge);
+  border-radius: 16px;
+  box-shadow: 0 8px 22px rgba(0,0,0,.22);
+  overflow: hidden;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.card:hover {
+  transform: translateY(-2px);
+  border-color: #4a5562;
+  box-shadow: 0 12px 30px rgba(0,0,0,.28);
+}
+
+/* Obrazy w kartach – stała wysokość */
+.card img {
+  width: 100%;
+  height: 220px;       /* stała wysokość */
+  object-fit: cover;   /* przycinanie proporcjonalne */
+  display: block;
+}
+
+.card .body {
+  padding: 12px 14px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card h3 {
+  margin: 0;
+  font-size: 17px;
+  letter-spacing: .3px;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* Stopka */
+footer {
+  margin-top: 28px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
 }
