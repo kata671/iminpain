@@ -1,10 +1,39 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mężczyzna — wybierz sekcję ciała</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .card {
+      background: #111;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.2s ease;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;   /* stała wysokość */
+      object-fit: cover; /* przycięcie proporcji zamiast rozciągania */
+    }
+    .card p {
+      margin: 10px 0;
+      font-size: 1.1em;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -14,17 +43,15 @@
 
     <div class="grid">
       <a href="mezczyzna-glowa.html" class="card">
-        <img src="img/mezczyzna-glowa.png" alt="Mężczyzna - Głowa i szyja">
+        <img src="img/mezczyzna-glowa.png" alt="Głowa i szyja" />
         <p>Głowa i szyja</p>
       </a>
-
       <a href="mezczyzna-klatka.html" class="card">
-        <img src="img/mezczyzna-klatka.png" alt="Mężczyzna - Klatka, Brzuch i Plecy">
+        <img src="img/mezczyzna-klatka.png" alt="Klatka, brzuch i plecy" />
         <p>Klatka • Brzuch • Plecy</p>
       </a>
-
-      <a href="mezczyzna-biodra.html" class="card">
-        <img src="img/mezczyzna-biodra.png" alt="Mężczyzna - Biodra, Nogi i Stopy">
+      <a href="mezczyzna-nogi.html" class="card">
+        <img src="img/mezczyzna-nogi.png" alt="Biodra, nogi i stopy" />
         <p>Biodra • Nogi • Stopy</p>
       </a>
     </div>
