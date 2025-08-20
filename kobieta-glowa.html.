@@ -1,73 +1,64 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kobieta – Głowa i szyja</title>
-
-  <!-- jeśli masz wspólny CSS, zachowaj tę linię; dopisałem ?v=3 aby odświeżyć cache -->
-  <link rel="stylesheet" href="css/style.css?v=3" />
-
-  <style>
-    /* Bezpieczne minimum, gdyby zewnętrzny CSS był niezaładowany.
-       Nie koliduje z Twoim, bo używa tylko klas pomocniczych. */
-    .wrap{max-width:1200px;margin:0 auto;padding:16px}
-    .btns{display:flex;gap:12px;margin:8px 0 24px}
-    .btn{display:inline-block;background:#223;border-radius:12px;color:#fff;text-decoration:none;padding:10px 14px}
-    h1{color:#fff;font-weight:800;margin:0 0 8px}
-    p.lead{color:#cfd6ff;margin:0 0 20px}
-    .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
-    .card{display:block;background:#1a1f2b;border-radius:16px;overflow:hidden;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.35)}
-    .card img{display:block;width:100%;height:180px;object-fit:cover}
-    .card .title{padding:10px 12px;color:#e9eefc;font-weight:700}
-    body{background:#0f1320;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Calibri,sans-serif}
-    footer{color:#9fb0ff80;text-align:center;margin:28px 0 8px;font-size:.9rem}
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="wrap">
-
-    <div class="btns">
-      <a class="btn" href="kobieta.html">← Wróć do wyboru sekcji</a>
-      <a class="btn" href="index.html">Strona główna</a>
-    </div>
+  <div class="container">
+    <a href="index.html" class="back-button">← Wróć do wyboru sekcji</a>
+    <a href="index.html" class="home-button">Strona główna</a>
 
     <h1>Kobieta – Głowa i szyja</h1>
-    <p class="lead">Wybierz część: Głowa, Nos, Ucho, Oczy lub Szyja.</p>
+    <p>Wybierz część: Głowa, Nos, Ucho, Oczy lub Szyja.</p>
 
-    <div class="cards">
-      <!-- GŁOWA -->
-      <a class="card" href="kobieta-glowa-glowa.html">
-        <img src="img/kobieta-glowa.png?v=3" alt="Głowa">
-        <div class="title">Głowa</div>
-      </a>
+    <div class="grid">
+      <!-- Głowa -->
+      <div class="tile">
+        <a href="kobieta-glowa-glowa.html">
+          <img src="img/kobieta-glowa-5.png?v=100" alt="Głowa" class="tile-img">
+          <p>Głowa</p>
+        </a>
+      </div>
 
-      <!-- NOS -->
-      <a class="card" href="kobieta-nos.html">
-        <img src="img/kobieta-nos.png?v=3" alt="Nos">
-        <div class="title">Nos</div>
-      </a>
+      <!-- Nos -->
+      <div class="tile">
+        <a href="kobieta-nos.html">
+          <img src="img/kobieta-nos.png?v=100" alt="Nos" class="tile-img">
+          <p>Nos</p>
+        </a>
+      </div>
 
-      <!-- UCHO -->
-      <a class="card" href="kobieta-ucho.html">
-        <img src="img/kobieta-ucho.png?v=3" alt="Ucho">
-        <div class="title">Ucho</div>
-      </a>
+      <!-- Ucho -->
+      <div class="tile">
+        <a href="kobieta-ucho.html">
+          <img src="img/kobieta-ucho.png?v=100" alt="Ucho" class="tile-img">
+          <p>Ucho</p>
+        </a>
+      </div>
 
-      <!-- OCZY -->
-      <a class="card" href="kobieta-oczy.html">
-        <img src="img/kobieta-oczy.png?v=3" alt="Oczy">
-        <div class="title">Oczy</div>
-      </a>
+      <!-- Oczy -->
+      <div class="tile">
+        <a href="kobieta-oczy.html">
+          <img src="img/kobieta-oczy.png?v=100" alt="Oczy" class="tile-img">
+          <p>Oczy</p>
+        </a>
+      </div>
 
-      <!-- SZYJA -->
-      <a class="card" href="kobieta-szyja.html">
-        <img src="img/kobieta-szyja.png?v=3" alt="Szyja">
-        <div class="title">Szyja</div>
-      </a>
+      <!-- Szyja -->
+      <div class="tile">
+        <a href="kobieta-szyja.html">
+          <img src="img/kobieta-szyja.png?v=100" alt="Szyja" class="tile-img">
+          <p>Szyja</p>
+        </a>
+      </div>
     </div>
-
-    <footer>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
   </div>
+
+  <footer>
+    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  </footer>
 </body>
 </html>
