@@ -1,48 +1,42 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mężczyzna — Klatka, brzuch, plecy</title>
-  <link rel="stylesheet" href="style.css"/>
-  <style>
-    body{
-      background-color:#101318;
-      background-image:
-        radial-gradient(#2a2f3a 1px, transparent 1px),
-        linear-gradient(#101318,#101318);
-      background-size:16px 16px, auto;
-      background-position:0 0, 0 0;
-      color:#e8eff7;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <a href="mezczyzna.html">← Wróć do wyboru sekcji</a> | <a href="index.html">Strona główna</a>
-  <h2>Mężczyzna — Klatka, brzuch, plecy</h2>
-  <p>Kliknij, aby zobaczyć szczegóły.</p>
+<body data-page="mezczyzna">
+  <nav class="top-nav">
+    <a href="mezczyzna.html" class="back-link">← Wróć do wyboru sekcji</a>
+    <span class="sep">|</span>
+    <a href="index.html" class="home-link">Strona główna</a>
+  </nav>
 
-  <div class="card-grid">
-    <div class="card">
-      <img src="img/mezczyzna-serce.png" alt="Serce"/>
-      <p>Serce</p>
+  <main class="page">
+    <h1>Mężczyzna — Klatka, brzuch, plecy</h1>
+    <p>Kliknij, aby zobaczyć szczegóły.</p>
+
+    <div class="container">
+      <a class="card" href="mezczyzna-serce.html">
+        <img src="img/mezczyzna-serce.png" alt="Mężczyzna — Serce" loading="lazy" />
+        <p>Serce</p>
+      </a>
+
+      <a class="card" href="mezczyzna-pluca.html">
+        <img src="img/mezczyzna-pluca.png" alt="Mężczyzna — Płuca" loading="lazy" />
+        <p>Płuca</p>
+      </a>
+
+      <a class="card" href="mezczyzna-brzuch.html">
+        <img src="img/mezczyzna-brzuch.png" alt="Mężczyzna — Brzuch" loading="lazy" />
+        <p>Brzuch</p>
+      </a>
     </div>
-    <div class="card">
-      <img src="img/mezczyzna-pluca.png" alt="Płuca"/>
-      <p>Płuca</p>
-    </div>
-    <div class="card">
-      <img src="img/mezczyzna-brzuch.png" alt="Brzuch"/>
-      <p>Brzuch</p>
-    </div>
-    <div class="card">
-      <img src="img/mezczyzna-plecy.png" alt="Plecy"/>
-      <p>Plecy</p>
-    </div>
-  </div>
+  </main>
 
   <footer>
-    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
   </footer>
 </body>
 </html>
