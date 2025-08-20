@@ -1,31 +1,40 @@
-/* Kafelki: siatka */
-.cards, .grid, .tiles {
+:root { --card-h: 180px; }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: #0b1220;
+  color: #e5e7eb;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+}
+
+.container { max-width: 1100px; margin: 48px auto; padding: 0 16px; }
+header { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+h1 { font-size: 36px; line-height: 1.2; margin: 0 0 12px; }
+.subtitle { opacity: .85; margin-bottom: 24px; }
+
+.nav { display:flex; gap:10px; margin-bottom: 16px; }
+.nav a {
+  display:inline-block; padding:10px 14px; background:#111827; border-radius:12px;
+  text-decoration:none; color:#dbeafe; box-shadow:0 6px 16px rgba(0,0,0,.35);
+}
+.nav a:hover { background:#0f172a; }
+
+.cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
+  gap: 20px;
 }
-
-/* Pojedynczy kafelek */
 .card {
-  background: #1f2937;       /* ciemny */
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+  background:#111827; border-radius:16px; overflow:hidden;
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
 }
+.card img { width:100%; height:var(--card-h); object-fit:cover; display:block; }
+.card h3 { font-size:18px; padding:10px 14px; margin:0; }
+.card p { font-size:14px; opacity:.85; padding:0 14px 14px; margin:0; }
 
-/* Obraz w kafelku – klucz do rozmiaru */
-.card img, .tiles img, .grid .card img, .cards .card img, a.card img {
-  display: block;
-  width: 100%;
-  height: 200px;             /* stała wysokość kafelka */
-  object-fit: cover;         /* przycięcie zamiast rozciągania */
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
+.hero img { max-width:100%; height:auto; display:block; border-radius:16px; }
 
-/* Podpis pod obrazem (jeśli masz) */
-.card p {
-  margin: 10px 12px 14px;
-  font-weight: 600;
-}
-
-/* NIE tykamy globalnych <img>, żeby banery/duże ilustracje się nie rozjeżdżały */
+.footer { opacity:.7; margin:28px 0; text-align:center; font-size:12px; }
+a { color:#9ad1ff; text-decoration:none; }
+a:hover { text-decoration:underline; }
