@@ -1,68 +1,58 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kobieta – wybierz sekcję ciała</title>
+  <meta charset="UTF-8" />
+  <title>Kobieta – Głowa i szyja</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    :root{
-      --bg:#2b2b2b; --card:#3a3a3a; --text:#fff; --muted:#cfd2d6;
-      --shadow:0 10px 24px rgba(0,0,0,.35); --radius:14px; --accent:#276ef1;
-    }
-    html,body{height:100%}
-    body{
-      margin:0; color:var(--text);
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px) 0 0/18px 18px, var(--bg);
-      display:flex; flex-direction:column; align-items:center;
-    }
-    header{ width:min(1100px,92vw); }
-    h1{ margin:26px 0 6px; letter-spacing:.5px; }
-    p.lead{ margin:0 0 18px; color:var(--muted); }
-    a.back{ display:inline-block; background:var(--accent); color:#fff; text-decoration:none;
-      padding:10px 14px; border-radius:10px; box-shadow:var(--shadow); margin:6px 0 16px;}
-    main{ width:min(1100px,92vw); display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
-    .card{ background:var(--card); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow); }
-    .figure{ display:block; width:100%; height:420px; border-radius:10px; overflow:hidden; background:#1d1d1d; }
-    .figure img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .badge{ position:relative; top:-14px; left:10px; display:inline-block; background:#000c; color:#fff;
-      padding:6px 10px; border-radius:999px; font-size:12px; backdrop-filter:saturate(1.2) blur(2px)}
-    .title{ text-align:center; font-weight:700; margin:8px 0 2px; }
-    footer{ margin:26px 0 24px; font-size:12px; color:#bcbfc3; text-align:center; }
-    @media (max-width:900px){ main{ grid-template-columns:1fr; } .figure{ height:360px; } }
+    :root { --tile-h: 200px; } 
+    body { color: #fff; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 18px; }
+    h1 { margin: 10px 0 8px; text-align: center; }
+    .btn { display:inline-block; margin:12px 0 20px; padding:10px 14px; border-radius:8px; background:#444; color:#fff; text-decoration:none }
+    .btn:hover { background:#666; }
+    .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; }
+    .tile { background:#1f1f1f; border-radius:14px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,.35); }
+    .tile img { width: 100% !important; height: var(--tile-h) !important; object-fit: cover !important; display:block !important; }
+    .label { font-weight:700; padding:10px 8px 12px; text-align:center; }
   </style>
 </head>
 <body>
-  <header>
-    <a href="index.html" class="back">← Wróć do startu</a>
-    <h1>Kobieta – wybierz sekcję ciała</h1>
-    <p class="lead">Kliknij jeden z obrazów: <strong>Głowa/Szyja</strong>, <strong>Klatka/Brzuch/Plecy</strong> lub <strong>Biodra/Nogi/Stopy</strong>.</p>
-  </header>
+  <div class="wrap">
+    <h1>Kobieta – Głowa i szyja</h1>
+    <p style="text-align:center"><a class="btn" href="kobieta.html">← Wróć</a></p>
 
-  <main>
-    <article class="card">
-      <a class="figure" href="kobieta-glowa.html" aria-label="Kobieta – głowa i szyja">
-        <!-- KLUCZOWA ZMIANA: myślnik w nazwie -->
-        <img src="img/kobieta-glowa-1.png" alt="Kobieta – głowa i szyja">
-      </a>
-      <div class="title"><span class="badge">Głowa • Szyja</span></div>
-    </article>
+    <div class="tiles">
+      <!-- 1. Głowa -->
+      <article class="tile">
+        <img src="img/kobieta-glowa-1.png?v=5" alt="Kobieta – głowa" loading="lazy">
+        <div class="label">Głowa</div>
+      </article>
 
-    <article class="card">
-      <a class="figure" href="kobieta-klatka.html" aria-label="Kobieta – klatka, brzuch, plecy">
-        <img src="img/kobieta-klatka-1.png" alt="Kobieta – klatka, brzuch, plecy">
-      </a>
-      <div class="title"><span class="badge">Klatka • Brzuch • Plecy</span></div>
-    </article>
+      <!-- 2. Nos -->
+      <article class="tile">
+        <img src="img/kobieta-glowa-2.png?v=5" alt="Kobieta – nos" loading="lazy">
+        <div class="label">Nos</div>
+      </article>
 
-    <article class="card">
-      <a class="figure" href="kobieta-nogi.html" aria-label="Kobieta – biodra, nogi, stopy">
-        <img src="img/kobieta-nogi-1.png" alt="Kobieta – biodra, nogi, stopy">
-      </a>
-      <div class="title"><span class="badge">Biodra • Nogi • Stopy</span></div>
-    </article>
-  </main>
+      <!-- 3. Ucho -->
+      <article class="tile">
+        <img src="img/kobieta-glowa-3.png?v=5" alt="Kobieta – ucho" loading="lazy">
+        <div class="label">Ucho</div>
+      </article>
 
-  <footer>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
+      <!-- 4. Oczy -->
+      <article class="tile">
+        <img src="img/kobieta-glowa-4.png?v=5" alt="Kobieta – oczy" loading="lazy">
+        <div class="label">Oczy</div>
+      </article>
+
+      <!-- 5. Szyja -->
+      <article class="tile">
+        <img src="img/kobieta-glowa-5.png?v=5" alt="Kobieta – szyja" loading="lazy">
+        <div class="label">Szyja</div>
+      </article>
+    </div>
+  </div>
 </body>
 </html>
