@@ -1,42 +1,48 @@
-<!DOCTYPE html><html lang="pl"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mężczyzna – Klatka, brzuch, plecy | Boli mnie…</title>
-<style>
-body{margin:0;background:#1a1a1a;color:#fff;font-family:Arial,Helvetica,sans-serif}
-header,footer{background:#222;padding:16px 12px}
-main{max-width:1000px;margin:20px auto;padding:0 16px}
-a.back{color:#9cc1ff;text-decoration:none}
-h1{margin:8px 0 12px}
-.wrap{display:grid;grid-template-columns:320px 1fr;gap:20px}
-@media(max-width:900px){.wrap{grid-template-columns:1fr}}
-.panel{background:#2a2a2a;border-radius:12px;padding:14px}
-.panel img{width:100%;height:auto;border-radius:10px;display:block}
-.card{background:#2a2a2a;border-radius:12px;padding:14px;margin-top:14px}
-details{background:#242424;padding:10px;border-radius:10px;margin:10px 0}
-summary{cursor:pointer}
-.nav-links{display:flex;justify-content:space-between;margin-top:20px}
-.nav-links a{background:#333;color:#fff;padding:10px 16px;border-radius:6px;text-decoration:none;transition:background .2s}
-.nav-links a:hover{background:#555}
-</style></head><body>
-<header><a class="back" href="index.html">← Wróć</a></header>
-<main>
-  <h1>Mężczyzna — Klatka, brzuch, plecy</h1>
-  <div class="wrap">
-    <div class="panel">
-      <img src="img/mezczyzna-klatka.png" alt="Klatka / brzuch / plecy – mężczyzna">
-    </div>
-    <div class="panel">
-      <h2>Najczęstsze dolegliwości</h2>
-      <details open><summary>Ból w klatce</summary><p>Kostno–mięśniowy częstszy niż sercowy...</p></details>
-      <details><summary>Ból brzucha</summary><p>Niestrawność, stres...</p></details>
-      <details><summary>Ból pleców</summary><p>Praca siedząca, dyskopatia...</p></details>
-      <div class="card">Wróć: <a class="back" href="index.html">Strona główna</a></div>
-    </div>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mężczyzna – Klatka, brzuch, plecy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Mężczyzna – Klatka, brzuch, plecy</h1>
+      <p>Kliknij ilustrację, aby zobaczyć możliwe przyczyny bólu.</p>
+      <nav>
+        <a href="mezczyzna.html" class="button">← Wróć do wyboru sekcji</a>
+        <a href="index.html" class="button">🏠 Strona główna</a>
+      </nav>
+    </header>
+
+    <main class="section-grid">
+      <!-- Klatka piersiowa -->
+      <a class="card" href="#">
+        <img src="img/mezczyzna-klatka.png" alt="Mężczyzna – klatka piersiowa">
+        <h3>Klatka piersiowa</h3>
+        <p>Ból w klatce – kłucie, ucisk, nasilenie przy ruchu.</p>
+      </a>
+
+      <!-- Brzuch -->
+      <a class="card" href="#">
+        <img src="img/mezczyzna-brzuch.png" alt="Mężczyzna – brzuch">
+        <h3>Brzuch</h3>
+        <p>Rozlane bóle, kolki, wzdęcia.</p>
+      </a>
+
+      <!-- Plecy -->
+      <a class="card" href="#">
+        <img src="img/mezczyzna-plecy.png" alt="Mężczyzna – plecy">
+        <h3>Plecy</h3>
+        <p>Bóle od lędźwi po łopatki.</p>
+      </a>
+    </main>
+
+    <footer>
+      <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+    </footer>
   </div>
-  <div class="nav-links">
-    <a href="mezczyzna-glowa.html">← Poprzednia</a>
-    <a href="mezczyzna-nogi.html">Następna →</a>
-  </div>
-</main>
-<footer>Materiał poglądowy – nie zastępuje porady lekarza.</footer>
-</body></html>
+</body>
+</html>
