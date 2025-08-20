@@ -20,13 +20,11 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       transition: transform 0.2s ease;
     }
-    .card:hover {
-      transform: scale(1.05);
-    }
+    .card:hover { transform: scale(1.05); }
     .card img {
       width: 100%;
-      height: 180px;   /* stała wysokość */
-      object-fit: cover; /* przycięcie proporcji zamiast rozciągania */
+      height: 180px;        /* stała wysokość */
+      object-fit: cover;    /* kadrowanie zamiast rozciągania */
     }
     .card p {
       margin: 10px 0;
@@ -38,6 +36,7 @@
 <body>
   <div class="container">
     <a href="index.html" class="back-button">← Wróć do startu</a>
+
     <h1>Mężczyzna — wybierz sekcję ciała</h1>
     <p>Wybierz jedną z ilustracji: Głowa/Szyja, Klatka/Brzuch/Plecy lub Biodra/Nogi/Stopy.</p>
 
@@ -46,12 +45,14 @@
         <img src="img/mezczyzna-glowa.png" alt="Głowa i szyja" />
         <p>Głowa i szyja</p>
       </a>
+
       <a href="mezczyzna-klatka.html" class="card">
-        <img src="img/mezczyzna-klatka.png" alt="Klatka, brzuch i plecy" />
+        <img src="img/mezczyzna-klatka.png" alt="Klatka, brzuch, plecy" />
         <p>Klatka • Brzuch • Plecy</p>
       </a>
-      <a href="mezczyzna-nogi.html" class="card">
-        <img src="img/mezczyzna-nogi.png" alt="Biodra, nogi i stopy" />
+
+      <a href="mezczyzna-biodra.html" class="card">
+        <img src="img/mezczyzna-biodra.png" alt="Biodra, nogi, stopy" />
         <p>Biodra • Nogi • Stopy</p>
       </a>
     </div>
