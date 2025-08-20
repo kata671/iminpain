@@ -1,150 +1,100 @@
-/* ========== RESET & BAZA ========== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* style.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #0f172a;
+  color: white;
 }
 
-:root{
-  --bg:#0f1722;          /* tło */
-  --panel:#1b2533;       /* kafelki/panele */
-  --panel-2:#222d3d;
-  --text:#eaf0ff;        /* tekst podstawowy */
-  --muted:#a7b0c2;       /* tekst pomocniczy */
-  --brand:#3aa6ff;       /* akcje/linki */
-  --shadow: 0 10px 30px rgba(0,0,0,.35);
-  --radius:14px;
-}
-
-html, body {
-  height: 100%;
-}
-
-body{
-  margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  background: radial-gradient(1200px 900px at 20% -10%, #172133 0%, var(--bg) 40%);
-  color: var(--text);
-  line-height: 1.45;
-}
-
-/* ========== KONTENER ========== */
-.container{
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 24px 16px 40px;
-}
-
-/* ========== NAGŁÓWKI ========== */
-h1{
-  font-size: clamp(28px, 4vw, 42px);
-  margin: 8px 0 12px;
-  letter-spacing: .3px;
-}
-
-h2{
-  font-size: clamp(20px, 2.6vw, 26px);
-  margin: 0 0 8px;
-  color: var(--text);
-}
-
-.lead{
-  color: var(--muted);
-  margin-bottom: 18px;
-}
-
-/* ========== LINKI I PRZYCISKI ========== */
-a{ color: inherit; text-decoration: none; }
-
-.btns{
-  display:flex; gap:12px; flex-wrap: wrap; margin-bottom: 18px;
-}
-
-.btn{
-  display:inline-flex; align-items:center; gap:8px;
-  background: var(--panel);
-  border:1px solid #2a364a;
-  color: var(--text);
-  padding: 10px 14px;
-  border-radius: 999px;
-  font-weight: 600;
+a {
+  color: #60a5fa;
   text-decoration: none;
-  box-shadow: var(--shadow);
-  transition: transform .12s ease, background .2s ease, border-color .2s ease;
-}
-.btn:hover{ background: var(--panel-2); border-color:#36455f; transform: translateY(-1px); }
-
-/* ========== KAFELKI / GRID ========== */
-.grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
-  gap: 18px;
 }
 
-/* Karta z obrazkiem i podpisem */
-.card{
-  background: linear-gradient(180deg, #223046 0%, #1a2433 100%);
-  border: 1px solid #2a364a;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease;
-}
-.card:hover{
-  transform: translateY(-2px);
-  border-color:#3a4e6d;
-  box-shadow: 0 14px 40px rgba(0,0,0,.45);
+a:hover {
+  text-decoration: underline;
 }
 
-/* Miniatura – klucz do równych rozmiarów */
-.card .thumb{
-  display:block;
-  width: 100%;
-  height: 180px;           /* stała wysokość miniatury */
-  object-fit: cover;       /* przycięcie zamiast rozciągania */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-/* Treść karty */
-.card .body{
-  padding: 12px 14px;
-}
-.card .title{
-  font-weight: 700;
-  font-size: 18px;
+h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
 }
 
-/* ========== LISTY LINKÓW W OPISACH (np. pod kafelkami) ========== */
-.badges{
-  display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;
+h2 {
+  font-size: 22px;
+  margin-bottom: 20px;
 }
-.badge{
-  display:inline-block;
-  padding: 4px 8px;
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: #1e293b;
   border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.card p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.footer {
+  margin-top: 40px;
   font-size: 12px;
-  background:#223047;
-  border:1px solid #2e3c54;
-  color:#cfe2ff;
+  text-align: center;
+  color: #94a3b8;
 }
 
-/* ========== OBRAZKI ========== */
-img{ display:block; max-width:100%; height:auto; }
-
-/* ========== STOPKA ========== */
-footer{
-  margin-top: 28px;
-  color: var(--muted);
-  font-size: 14px;
-  text-align:center;
+.back-links {
+  margin-bottom: 20px;
 }
 
-/* ========== RESPONSYWNOŚĆ ========== */
-@media (max-width: 480px){
-  .btn{ width:100%; justify-content:center; }
-  .card .thumb{ height: 160px; }
+.back-links a {
+  margin-right: 15px;
 }
 
-/* ========== DROBNE KLASY POMOCNICZE ========== */
-.mt-16{ margin-top:16px; }
-.mt-24{ margin-top:24px; }
-.center{ text-align:center; }
+/* Miniatury */
+.card .thumb {
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.card .thumb img {
+  height: 100%;
+  width: auto;
+}
+
+/* --- DODANE: różne wysokości dla kobiet i mężczyzn --- */
+body[data-page="kobieta"] .card .thumb {
+  height: 220px;  /* możesz zmienić np. 200–240px zależnie od wyglądu */
+}
+
+body[data-page="mezczyzna"] .card .thumb {
+  height: 180px;
+}
