@@ -1,40 +1,150 @@
-:root { --card-h: 180px; }
-
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  background: #0b1220;
-  color: #e5e7eb;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+/* ========== RESET & BAZA ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-.container { max-width: 1100px; margin: 48px auto; padding: 0 16px; }
-header { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
-h1 { font-size: 36px; line-height: 1.2; margin: 0 0 12px; }
-.subtitle { opacity: .85; margin-bottom: 24px; }
-
-.nav { display:flex; gap:10px; margin-bottom: 16px; }
-.nav a {
-  display:inline-block; padding:10px 14px; background:#111827; border-radius:12px;
-  text-decoration:none; color:#dbeafe; box-shadow:0 6px 16px rgba(0,0,0,.35);
+:root{
+  --bg:#0f1722;          /* tło */
+  --panel:#1b2533;       /* kafelki/panele */
+  --panel-2:#222d3d;
+  --text:#eaf0ff;        /* tekst podstawowy */
+  --muted:#a7b0c2;       /* tekst pomocniczy */
+  --brand:#3aa6ff;       /* akcje/linki */
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --radius:14px;
 }
-.nav a:hover { background:#0f172a; }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+html, body {
+  height: 100%;
 }
-.card {
-  background:#111827; border-radius:16px; overflow:hidden;
-  box-shadow:0 8px 24px rgba(0,0,0,.35);
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: radial-gradient(1200px 900px at 20% -10%, #172133 0%, var(--bg) 40%);
+  color: var(--text);
+  line-height: 1.45;
 }
-.card img { width:100%; height:var(--card-h); object-fit:cover; display:block; }
-.card h3 { font-size:18px; padding:10px 14px; margin:0; }
-.card p { font-size:14px; opacity:.85; padding:0 14px 14px; margin:0; }
 
-.hero img { max-width:100%; height:auto; display:block; border-radius:16px; }
+/* ========== KONTENER ========== */
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
 
-.footer { opacity:.7; margin:28px 0; text-align:center; font-size:12px; }
-a { color:#9ad1ff; text-decoration:none; }
-a:hover { text-decoration:underline; }
+/* ========== NAGŁÓWKI ========== */
+h1{
+  font-size: clamp(28px, 4vw, 42px);
+  margin: 8px 0 12px;
+  letter-spacing: .3px;
+}
+
+h2{
+  font-size: clamp(20px, 2.6vw, 26px);
+  margin: 0 0 8px;
+  color: var(--text);
+}
+
+.lead{
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+/* ========== LINKI I PRZYCISKI ========== */
+a{ color: inherit; text-decoration: none; }
+
+.btns{
+  display:flex; gap:12px; flex-wrap: wrap; margin-bottom: 18px;
+}
+
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  background: var(--panel);
+  border:1px solid #2a364a;
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, background .2s ease, border-color .2s ease;
+}
+.btn:hover{ background: var(--panel-2); border-color:#36455f; transform: translateY(-1px); }
+
+/* ========== KAFELKI / GRID ========== */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+  gap: 18px;
+}
+
+/* Karta z obrazkiem i podpisem */
+.card{
+  background: linear-gradient(180deg, #223046 0%, #1a2433 100%);
+  border: 1px solid #2a364a;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.card:hover{
+  transform: translateY(-2px);
+  border-color:#3a4e6d;
+  box-shadow: 0 14px 40px rgba(0,0,0,.45);
+}
+
+/* Miniatura – klucz do równych rozmiarów */
+.card .thumb{
+  display:block;
+  width: 100%;
+  height: 180px;           /* stała wysokość miniatury */
+  object-fit: cover;       /* przycięcie zamiast rozciągania */
+}
+
+/* Treść karty */
+.card .body{
+  padding: 12px 14px;
+}
+.card .title{
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* ========== LISTY LINKÓW W OPISACH (np. pod kafelkami) ========== */
+.badges{
+  display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;
+}
+.badge{
+  display:inline-block;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  background:#223047;
+  border:1px solid #2e3c54;
+  color:#cfe2ff;
+}
+
+/* ========== OBRAZKI ========== */
+img{ display:block; max-width:100%; height:auto; }
+
+/* ========== STOPKA ========== */
+footer{
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 14px;
+  text-align:center;
+}
+
+/* ========== RESPONSYWNOŚĆ ========== */
+@media (max-width: 480px){
+  .btn{ width:100%; justify-content:center; }
+  .card .thumb{ height: 160px; }
+}
+
+/* ========== DROBNE KLASY POMOCNICZE ========== */
+.mt-16{ margin-top:16px; }
+.mt-24{ margin-top:24px; }
+.center{ text-align:center; }
