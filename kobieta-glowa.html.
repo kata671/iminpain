@@ -1,28 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kobieta — Głowa i szyja</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kobieta — Głowa i szyja</title>
+<style>
+  :root{
+    --bg1:#14161a; --bg2:#0e1116; --bg3:#0b0e13;
+    --card:#1f242d; --card2:#2a3140;
+    --text:#e8edf7; --muted:#a9b3c6; --accent:#3b82f6;
+    --radius:16px;
+  }
+  /* TŁO W KROPKI (jak na stronie głównej) */
+  body{
+    margin:0; color:var(--text); font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
+    background:
+      radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px) 0 0/20px 20px,
+      linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 60%, var(--bg3) 100%);
+    min-height:100dvh;
+  }
+  a{color:var(--text); text-decoration:none}
+  .wrap{max-width:1100px; margin:0 auto; padding:24px 16px 56px}
+  .crumbs{margin-bottom:16px; font-size:14px}
+  .crumbs a{opacity:.9}
+  .crumbs a:hover{color:var(--accent)}
+  h1{margin:10px 0 8px; font-size:32px}
+  p.lead{margin:0 0 18px; color:var(--muted)}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px}
+  .card{background:linear-gradient(180deg,var(--card),var(--card2));
+        border-radius:var(--radius); box-shadow:0 8px 24px rgba(0,0,0,.35);
+        overflow:hidden}
+  .thumb{display:block; width:100%; height:170px; object-fit:cover}
+  .label{display:block; padding:10px 14px; background:rgba(0,0,0,.35)}
+  .label strong{font-weight:600}
+  footer{margin-top:28px; color:var(--muted); font-size:12px}
+</style>
 </head>
-<body data-page="kobieta">
-  <div style="margin: 20px;">
-    <a href="kobieta.html" style="color: #00aaff; text-decoration: none;">← Wróć do wyboru sekcji</a> | 
-    <a href="index.html" style="color: #00aaff; text-decoration: none;">Strona główna</a>
+<body>
+  <div class="wrap">
+    <div class="crumbs">
+      <a href="kobieta.html">← Wróć do wyboru sekcji</a> | <a href="index.html">Strona główna</a>
+    </div>
+
+    <h1>Kobieta — Głowa i szyja</h1>
+    <p class="lead">Wybierz część: Głowa, Nos, Ucho, Oczy lub Szyja.</p>
+
+    <div class="grid">
+      <a class="card" href="kobieta-glowa-szczegoly.html">
+        <img class="thumb" src="img/kobieta-glowa-5.png" alt="Głowa – ilustracja" />
+        <span class="label"><strong>Głowa</strong></span>
+      </a>
+
+      <a class="card" href="kobieta-nos.html">
+        <img class="thumb" src="img/kobieta-nos.png" alt="Nos – ilustracja" />
+        <span class="label"><strong>Nos</strong></span>
+      </a>
+
+      <a class="card" href="kobieta-ucho.html">
+        <img class="thumb" src="img/kobieta-ucho.png" alt="Ucho – ilustracja" />
+        <span class="label"><strong>Ucho</strong></span>
+      </a>
+
+      <a class="card" href="kobieta-oczy.html">
+        <img class="thumb" src="img/kobieta-oczy.png" alt="Oczy – ilustracja" />
+        <span class="label"><strong>Oczy</strong></span>
+      </a>
+
+      <a class="card" href="kobieta-szyja.html">
+        <img class="thumb" src="img/kobieta-szyja.png" alt="Szyja – ilustracja" />
+        <span class="label"><strong>Szyja</strong></span>
+      </a>
+    </div>
+
+    <footer>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
   </div>
-
-  <h1>Kobieta — Głowa i szyja</h1>
-  <p>Kliknij, aby zobaczyć szczegóły dla poszczególnych części.</p>
-
-  <div class="grid-container">
-    <a href="kobieta-glowa.html" class="grid-item"><img src="kobieta-glowa.png" alt="Głowa"><p>Głowa</p></a>
-    <a href="kobieta-oczy.html" class="grid-item"><img src="kobieta-oczy.png" alt="Oczy"><p>Oczy</p></a>
-    <a href="kobieta-nos.html" class="grid-item"><img src="kobieta-nos.png" alt="Nos"><p>Nos</p></a>
-    <a href="kobieta-ucho.html" class="grid-item"><img src="kobieta-ucho.png" alt="Ucho"><p>Ucho</p></a>
-    <a href="kobieta-szyja.html" class="grid-item"><img src="kobieta-szyja.png" alt="Szyja"><p>Szyja</p></a>
-  </div>
-
-  <footer><p>© 2025 Iminpain</p></footer>
 </body>
 </html>
