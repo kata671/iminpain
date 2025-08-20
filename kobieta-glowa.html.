@@ -5,91 +5,44 @@
   <title>Kobieta – Głowa i szyja</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Wszystko tylko dla tej strony, z wysoką specyficznością */
-    #page-glowa {
-      --tileH: 200px;
-      --tileBG: #1f1f1f;
-      --tileRadius: 14px;
-      color: #fff;
-      text-align: center;
-    }
-    #page-glowa .wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 18px 18px 36px;
-    }
-    #page-glowa h1 { margin: 10px 0 8px; }
-    #page-glowa .btn-back {
-      display:inline-block; margin: 8px 0 18px;
-      padding:10px 14px; border-radius:8px;
-      background:#444; color:#fff; text-decoration:none;
-    }
-    #page-glowa .btn-back:hover { background:#676767; }
-
-    #page-glowa .tiles {
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap:18px;
-    }
-    #page-glowa .tile {
-      background: var(--tileBG);
-      border-radius: var(--tileRadius);
-      box-shadow: 0 4px 14px rgba(0,0,0,.35);
-      overflow:hidden;
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    #page-glowa .tile:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 22px rgba(0,0,0,.45);
-    }
-    /* KLUCZ: obrazki zawsze takie same */
-    #page-glowa .tile img {
-      width:100% !important;
-      height: var(--tileH) !important;
-      object-fit: cover !important;  /* przycina, ale trzyma proporcje */
-      display:block;
-    }
-    #page-glowa .label {
-      font-weight:700;
-      padding:10px 8px 12px;
-      font-size:16px;
-    }
+    body{color:#fff}
+    .wrap{max-width:1200px;margin:0 auto;padding:18px}
+    h1{margin:10px 0 8px;text-align:center}
+    .btn{display:inline-block;margin:8px 0 18px;padding:10px 14px;border-radius:8px;background:#444;color:#fff;text-decoration:none}
+    .btn:hover{background:#666}
+    .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    .tile{background:#1f1f1f;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+    .label{font-weight:700;padding:10px 8px 12px;text-align:center}
   </style>
 </head>
-<body id="page-glowa">
+<body>
   <div class="wrap">
     <h1>Kobieta – Głowa i szyja</h1>
-    <a class="btn-back" href="kobieta.html">← Wróć</a>
+    <a class="btn" href="kobieta.html">← Wróć</a>
 
     <div class="tiles">
       <!-- 1. Głowa -->
       <article class="tile">
-        <img src="img/kobieta-glowa-1.png" alt="Kobieta – głowa" />
+        <img src="img/kobieta-glowa-1.png?v=3"
+             alt="Kobieta – głowa"
+             style="display:block;width:100%;height:200px;object-fit:cover;" />
         <div class="label">Głowa</div>
       </article>
 
       <!-- 2. Nos -->
       <article class="tile">
-        <img src="img/kobieta-glowa-2.png" alt="Kobieta – nos" />
+        <img src="img/kobieta-glowa-2.png?v=3"
+             alt="Kobieta – nos"
+             style="display:block;width:100%;height:200px;object-fit:cover;" />
         <div class="label">Nos</div>
       </article>
 
       <!-- 3. Ucho -->
       <article class="tile">
-        <img src="img/kobieta-glowa-3.png" alt="Kobieta – ucho" />
+        <img src="img/kobieta-glowa-3.png?v=3"
+             alt="Kobieta – ucho"
+             style="display:block;width:100%;height:200px;object-fit:cover;" />
         <div class="label">Ucho</div>
-      </article>
-
-      <!-- 4. Oczy -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-4.png" alt="Kobieta – oczy" />
-        <div class="label">Oczy</div>
-      </article>
-
-      <!-- 5. Szyja -->
-      <article class="tile">
-        <img src="img/kobieta-glowa-5.png" alt="Kobieta – szyja" />
-        <div class="label">Szyja</div>
       </article>
     </div>
   </div>
