@@ -3,62 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kobieta – Głowa i szyja</title>
+  <title>Kobieta – Głowa i Szyja</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <a href="index.html" class="back-button">← Wróć do wyboru sekcji</a>
-    <a href="index.html" class="home-button">Strona główna</a>
+  <header>
+    <h1>Kobieta – Głowa i Szyja</h1>
+    <nav>
+      <a href="index.html">Strona główna</a>
+    </nav>
+  </header>
 
-    <h1>Kobieta – Głowa i szyja</h1>
-    <p>Wybierz część: Głowa, Nos, Ucho, Oczy lub Szyja.</p>
-
-    <div class="grid">
-      <!-- Głowa -->
-      <div class="tile">
-        <a href="kobieta-glowa-glowa.html">
-          <img src="img/kobieta-glowa-5.png?v=100" alt="Głowa" class="tile-img">
-          <p>Głowa</p>
-        </a>
-      </div>
-
-      <!-- Nos -->
-      <div class="tile">
-        <a href="kobieta-nos.html">
-          <img src="img/kobieta-nos.png?v=100" alt="Nos" class="tile-img">
-          <p>Nos</p>
-        </a>
-      </div>
-
-      <!-- Ucho -->
-      <div class="tile">
-        <a href="kobieta-ucho.html">
-          <img src="img/kobieta-ucho.png?v=100" alt="Ucho" class="tile-img">
-          <p>Ucho</p>
-        </a>
-      </div>
-
-      <!-- Oczy -->
-      <div class="tile">
-        <a href="kobieta-oczy.html">
-          <img src="img/kobieta-oczy.png?v=100" alt="Oczy" class="tile-img">
-          <p>Oczy</p>
-        </a>
-      </div>
-
-      <!-- Szyja -->
-      <div class="tile">
-        <a href="kobieta-szyja.html">
-          <img src="img/kobieta-szyja.png?v=100" alt="Szyja" class="tile-img">
-          <p>Szyja</p>
-        </a>
-      </div>
+  <main class="tiles-container">
+    <!-- Głowa -->
+    <div class="tile">
+      <img src="img/kobieta-glowa-5.png?v=110" alt="Głowa" class="tile-img">
+      <p>Głowa</p>
     </div>
-  </div>
 
-  <footer>
-    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
-  </footer>
+    <!-- Nos -->
+    <div class="tile">
+      <img src="img/kobieta-nos.png?v=110" alt="Nos" class="tile-img">
+      <p>Nos</p>
+    </div>
+
+    <!-- Ucho -->
+    <div class="tile">
+      <img src="img/kobieta-ucho.png?v=110" alt="Ucho" class="tile-img">
+      <p>Ucho</p>
+    </div>
+
+    <!-- Oczy -->
+    <div class="tile">
+      <img src="img/kobieta-oczy.png?v=110" alt="Oczy" class="tile-img">
+      <p>Oczy</p>
+    </div>
+
+    <!-- Szyja -->
+    <div class="tile">
+      <img src="img/kobieta-szyja.png?v=110" alt="Szyja" class="tile-img">
+      <p>Szyja</p>
+    </div>
+  </main>
 </body>
 </html>
