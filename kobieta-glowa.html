@@ -1,55 +1,83 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Kobieta — Głowa i szyja</title>
-  <style>
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:#e5e7eb;
-      line-height:1.45;
-      background:
-        radial-gradient(1200px 800px at 20% -10%, rgba(37,99,235,.15), transparent 60%),
-        radial-gradient(900px 700px at 120% 20%, rgba(56,189,248,.12), transparent 55%),
-        #0b1220;
-    }
-    .container{
-      max-width:1000px;
-      margin:0 auto;
-      padding:20px;
-    }
-    h1{ font-size:1.6rem; margin-bottom:20px; }
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-      gap:20px;
-    }
-    .card{
-      background:#111827;
-      border-radius:12px;
-      overflow:hidden;
-      text-align:center;
-      transition:transform .2s;
-    }
-    .card:hover{ transform:scale(1.03); }
-    .card img{ width:100%; height:200px; object-fit:cover; }
-    .card-title{ padding:10px; background:#1f2937; }
-    a{ color:#60a5fa; text-decoration:none; }
-    a:hover{ text-decoration:underline; }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kobieta — Głowa i szyja</title>
+<style>
+  :root{
+    --bg1:#14161a; --bg2:#0e1116; --bg3:#0b0e13;
+    --card:#1f242d; --card2:#2a3140;
+    --text:#e8edf7; --muted:#a9b3c6; --accent:#3b82f6;
+    --radius:16px;
+  }
+  /* tło w kropki jak na stronie głównej */
+  body{
+    margin:0; color:var(--text); font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
+    background:
+      radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px) 0 0/20px 20px,
+      linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 60%, var(--bg3) 100%) !important;
+    min-height:100dvh;
+  }
+  a{color:var(--text); text-decoration:none}
+  .wrap{max-width:1100px; margin:0 auto; padding:24px 16px 56px}
+  .crumbs{margin-bottom:16px; font-size:14px}
+  .crumbs a:hover{color:var(--accent)}
+  h1{margin:10px 0 18px; font-size:32px}
+  .hint{margin-bottom:14px; color:var(--muted)}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px}
+  .card{background:linear-gradient(180deg,var(--card),var(--card2));
+        border-radius:var(--radius); box-shadow:0 8px 24px rgba(0,0,0,.35);
+        overflow:hidden}
+  .thumb{display:block; width:100%; height:180px; object-fit:cover}
+  .label{display:block; padding:12px 14px; background:rgba(0,0,0,.35); text-align:center}
+  .label strong{font-weight:600}
+  footer{margin-top:28px; color:var(--muted); font-size:12px}
+</style>
 </head>
 <body>
-  <div class="container">
-    <a href="kobieta.html">← Wróć do wyboru sekcji</a> | <a href="index.html">Strona główna</a>
-    <h1>Kobieta — Głowa i szyja</h1>
-    <div class="grid">
-      <a class="card" href="kobieta-glowa-glowa.html"><img src="kobieta-glowa.png" alt="Głowa"><div class="card-title">Głowa</div></a>
-      <a class="card" href="kobieta-nos.html"><img src="kobieta-nos.png" alt="Nos"><div class="card-title">Nos</div></a>
-      <a class="card" href="kobieta-ucho.html"><img src="kobieta-ucho.png" alt="Ucho"><div class="card-title">Ucho</div></a>
-      <a class="card" href="kobieta-oczy.html"><img src="kobieta-oczy.png" alt="Oczy"><div class="card-title">Oczy</div></a>
-      <a class="card" href="kobieta-szyja.html"><img src="kobieta-szyja.png" alt="Szyja"><div class="card-title">Szyja</div></a>
+  <div class="wrap">
+    <div class="crumbs">
+      <a href="kobieta.html">← Wróć do wyboru sekcji</a> | <a href="index.html">Strona główna</a>
     </div>
+
+    <h1>Kobieta — Głowa i szyja</h1>
+    <div class="hint">Wybierz część: Głowa, Nos, Ucho, Oczy lub Szyja.</div>
+
+    <div class="grid">
+      <!-- GŁOWA -->
+      <a class="card" href="kobieta-glowa-szczegoly.html">
+        <img class="thumb" src="img/kobieta-glowa-5.png" alt="Głowa — ilustracja" />
+        <span class="label"><strong>Głowa</strong></span>
+      </a>
+
+      <!-- NOS -->
+      <a class="card" href="kobieta-nos.html">
+        <img class="thumb" src="img/kobieta-nos.png" alt="Nos — ilustracja" />
+        <span class="label"><strong>Nos</strong></span>
+      </a>
+
+      <!-- UCHO -->
+      <a class="card" href="kobieta-ucho.html">
+        <img class="thumb" src="img/kobieta-ucho.png" alt="Ucho — ilustracja" />
+        <span class="label"><strong>Ucho</strong></span>
+      </a>
+
+      <!-- OCZY -->
+      <a class="card" href="kobieta-oczy.html">
+        <img class="thumb" src="img/kobieta-oczy.png" alt="Oczy — ilustracja" />
+        <span class="label"><strong>Oczy</strong></span>
+      </a>
+
+      <!-- SZYJA -->
+      <a class="card" href="kobieta-szyja.html">
+        <img class="thumb" src="img/kobieta-szyja.png" alt="Szyja — ilustracja" />
+        <span class="label"><strong>Szyja</strong></span>
+      </a>
+    </div>
+
+    <footer>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
   </div>
 </body>
 </html>
