@@ -3,47 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kobieta – Głowa i Szyja</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Kobieta – Głowa i Szyja (NOWA)</title>
+  <link rel="stylesheet" href="style.css?v=120">
 </head>
 <body>
   <header>
-    <h1>Kobieta – Głowa i Szyja</h1>
-    <nav>
-      <a href="index.html">Strona główna</a>
+    <nav style="margin:16px 0;">
+      <a class="btn" href="kobieta.html?v=120">← Wróć do wyboru sekcji</a>
+      <a class="btn" href="index.html?v=120">Strona główna</a>
     </nav>
+    <h1>Kobieta – Głowa i szyja</h1>
+    <p>Wybierz część: Głowa, Nos, Ucho, Oczy lub Szyja.</p>
   </header>
 
   <main class="tiles-container">
     <!-- Głowa -->
-    <div class="tile">
-      <img src="img/kobieta-glowa-5.png?v=110" alt="Głowa" class="tile-img">
-      <p>Głowa</p>
-    </div>
+    <a class="tile" href="kobieta-glowa-glowa.html?v=120">
+      <img class="tile-img" src="img/kobieta-glowa-5.png?v=120" alt="Głowa">
+      <div class="tile-title">Głowa</div>
+    </a>
 
     <!-- Nos -->
-    <div class="tile">
-      <img src="img/kobieta-nos.png?v=110" alt="Nos" class="tile-img">
-      <p>Nos</p>
-    </div>
+    <a class="tile" href="kobieta-nos.html?v=120">
+      <img class="tile-img" src="img/kobieta-nos.png?v=120" alt="Nos">
+      <div class="tile-title">Nos</div>
+    </a>
 
     <!-- Ucho -->
-    <div class="tile">
-      <img src="img/kobieta-ucho.png?v=110" alt="Ucho" class="tile-img">
-      <p>Ucho</p>
-    </div>
+    <a class="tile" href="kobieta-ucho.html?v=120">
+      <img class="tile-img" src="img/kobieta-ucho.png?v=120" alt="Ucho">
+      <div class="tile-title">Ucho</div>
+    </a>
 
     <!-- Oczy -->
-    <div class="tile">
-      <img src="img/kobieta-oczy.png?v=110" alt="Oczy" class="tile-img">
-      <p>Oczy</p>
-    </div>
+    <a class="tile" href="kobieta-oczy.html?v=120">
+      <img class="tile-img" src="img/kobieta-oczy.png?v=120" alt="Oczy">
+      <div class="tile-title">Oczy</div>
+    </a>
 
     <!-- Szyja -->
-    <div class="tile">
-      <img src="img/kobieta-szyja.png?v=110" alt="Szyja" class="tile-img">
-      <p>Szyja</p>
-    </div>
+    <a class="tile" href="kobieta-szyja.html?v=120">
+      <img class="tile-img" src="img/kobieta-szyja.png?v=120" alt="Szyja">
+      <div class="tile-title">Szyja</div>
+    </a>
   </main>
 </body>
 </html>
