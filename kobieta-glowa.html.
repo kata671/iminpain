@@ -1,156 +1,119 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
   <title>Kobieta – Głowa i szyja</title>
-  <link rel="preload" href="img/kobieta-glowa-1.png" as="image">
-  <link rel="preload" href="img/kobieta-glowa-2.png" as="image">
-  <link rel="preload" href="img/kobieta-glowa-3.png" as="image">
-  <link rel="preload" href="img/kobieta-glowa-4.png" as="image">
-  <link rel="preload" href="img/kobieta-glowa-5.png" as="image">
+  <link rel="stylesheet" href="style.css">
   <style>
-    :root{
-      --bg:#1f2226;               /* grafitowe tło */
-      --dot:#2b2f35;
-      --card:#2b2f34;
-      --cardEdge:#3a3f46;
-      --text:#e9eef5;
-      --muted:#b8c1cc;
-      --accent:#6aa5ff;
-    }
-
-    /* grafit + delikatne kropeczki jak na pozostałych stronach */
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at 1px 1px, var(--dot) 1px, transparent 1px) 0 0/16px 16px,
-        linear-gradient(#0000,#0000) var(--bg);
-    }
-
-    .wrap{
-      max-width: 1100px;
-      padding: 24px 16px 48px;
-      margin: 0 auto;
-    }
-
-    h1{
-      margin: 8px 0 14px;
-      font-size: clamp(22px, 3.6vw, 36px);
-      letter-spacing: .5px;
+    body {
+      background-color: #2b2b2b;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
       text-align: center;
     }
 
-    .toolbar{
-      display:flex; gap:12px; align-items:center; margin: 0 0 18px;
-    }
-    .btn{
-      background:#2f6bff; color:#fff; border:none; border-radius:10px;
-      padding:10px 14px; font-weight:600; cursor:pointer;
-      box-shadow: 0 6px 16px rgba(47,107,255,.25);
-    }
-    .btn:hover{ filter:brightness(1.08); }
-
-    .hint{
-      text-align:center; color:var(--muted); margin: 0 0 14px;
+    h1 {
+      margin: 20px 0;
     }
 
-    /* siatka kafelków – mniejsze obrazki */
-    .tiles{
-      display:grid;
+    .back-button {
+      display: inline-block;
+      margin: 10px auto 20px auto;
+      padding: 10px 18px;
+      background-color: #444;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .back-button:hover {
+      background-color: #666;
+    }
+
+    .cards-grid {
+      display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap:18px;
+      gap: 18px;
+      max-width: 1100px;
+      margin: 0 auto 40px auto;
+      padding: 0 20px;
     }
 
-    .tile{
-      background:linear-gradient(180deg, var(--card), var(--cardEdge));
-      border-radius:18px;
-      padding:12px;
-      box-shadow: 0 12px 26px rgba(0,0,0,.35);
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-    .tile:hover{
-      transform: translateY(-3px);
-      box-shadow: 0 20px 34px rgba(0,0,0,.45);
+    .card {
+      background-color: #1e1e1e;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      overflow: hidden;
+      transition: transform 0.2s;
     }
 
-    .thumb{
-      width:100%;
-      height:220px;                 /* <<< mniejsze obrazki */
-      object-fit:cover;
-      border-radius:14px;
-      display:block;
-      background:#111;
+    .card:hover {
+      transform: scale(1.03);
     }
 
-    .caption{
-      margin:10px 4px 2px;
-      font-weight:700; letter-spacing:.3px;
-    }
-    .sub{
-      margin:0 4px 4px;
-      color:var(--muted);
-      font-size:.92rem;
+    .card-image img {
+      width: 100%;
+      height: 220px;      /* wszystkie obrazki równe */
+      object-fit: cover;  /* przycięcie, zachowanie proporcji */
+      display: block;
     }
 
-    footer{
-      margin-top:26px; text-align:center; color:var(--muted); font-size:.9rem;
-    }
-
-    @media (max-width:520px){
-      .thumb{ height:190px; }
+    .card-title {
+      padding: 10px;
+      font-weight: bold;
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="toolbar">
-      <a class="btn" href="kobieta.html">← Wróć</a>
-    </div>
 
-    <h1>Kobieta – Głowa i szyja</h1>
-    <p class="hint">Kliknij kafelek, aby przejść dalej.</p>
+  <h1>Kobieta – Głowa i szyja</h1>
+  <a href="kobieta.html" class="back-button">← Wróć</a>
 
-    <section class="tiles">
-      <!-- 1. Głowa -->
-      <article class="tile">
-        <img class="thumb" src="img/kobieta-glowa-1.png" alt="Głowa – kobieta">
-        <div class="caption">Głowa</div>
-        <div class="sub">ból głowy, czoło, skronie</div>
-      </article>
+  <div class="cards-grid">
+    <!-- 1. Głowa -->
+    <article class="card">
+      <div class="card-image">
+        <img src="img/kobieta-glowa-1.png" alt="Kobieta głowa">
+      </div>
+      <div class="card-title">Głowa</div>
+    </article>
 
-      <!-- 2. Nos -->
-      <article class="tile">
-        <img class="thumb" src="img/kobieta-glowa-2.png" alt="Nos – kobieta">
-        <div class="caption">Nos</div>
-        <div class="sub">zatoki, katar, kichanie</div>
-      </article>
+    <!-- 2. Nos -->
+    <article class="card">
+      <div class="card-image">
+        <img src="img/kobieta-glowa-2.png" alt="Kobieta nos">
+      </div>
+      <div class="card-title">Nos</div>
+    </article>
 
-      <!-- 3. Ucho -->
-      <article class="tile">
-        <img class="thumb" src="img/kobieta-glowa-3.png" alt="Ucho – kobieta">
-        <div class="caption">Ucho</div>
-        <div class="sub">szumy, ból, zapalenie</div>
-      </article>
+    <!-- 3. Ucho -->
+    <article class="card">
+      <div class="card-image">
+        <img src="img/kobieta-glowa-3.png" alt="Kobieta ucho">
+      </div>
+      <div class="card-title">Ucho</div>
+    </article>
 
-      <!-- 4. Oczy -->
-      <article class="tile">
-        <img class="thumb" src="img/kobieta-glowa-4.png" alt="Oczy – kobieta">
-        <div class="caption">Oczy</div>
-        <div class="sub">pieczenie, łzawienie, światłowstręt</div>
-      </article>
+    <!-- 4. Oczy -->
+    <article class="card">
+      <div class="card-image">
+        <img src="img/kobieta-glowa-4.png" alt="Kobieta oczy">
+      </div>
+      <div class="card-title">Oczy</div>
+    </article>
 
-      <!-- 5. Szyja -->
-      <article class="tile">
-        <img class="thumb" src="img/kobieta-glowa-5.png" alt="Szyja – kobieta">
-        <div class="caption">Szyja</div>
-        <div class="sub">napięcie mięśni, ograniczenie ruchu</div>
-      </article>
-    </section>
-
-    <footer>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
+    <!-- 5. Szyja -->
+    <article class="card">
+      <div class="card-image">
+        <img src="img/kobieta-glowa-5.png" alt="Kobieta szyja">
+      </div>
+      <div class="card-title">Szyja</div>
+    </article>
   </div>
+
 </body>
 </html>
