@@ -2,52 +2,42 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mężczyzna — wybierz sekcję ciała</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wybierz obszar bólu – Mężczyzna</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    body { background:#0b1220; color:#e8eefc; font-family: system-ui, Arial, sans-serif; }
-    .container { max-width:1100px; margin:24px auto 80px; padding:0 16px; }
-    .top { margin-bottom:16px; }
-    .btn { display:inline-block; padding:10px 14px; border-radius:12px; background:#121a2c; color:#e8eefc; text-decoration:none; border:1px solid #26314e; }
-    h1 { font-size:36px; margin:12px 0 8px; }
-    .sub { opacity:.8; margin-bottom:18px; }
-    .grid { display:grid; gap:18px; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); }
-    .card { background:#111a2a; border:1px solid #26314e; border-radius:18px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.35); transition:transform .2s, box-shadow .2s; text-decoration:none; color:inherit; }
-    .card:hover { transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.45); }
-    .thumb { width:100%; height:180px; object-fit:cover; display:block; background:#0f1a2d; }
-    .title { padding:10px 14px; font-weight:700; }
-    .footer { margin-top:28px; opacity:.7; font-size:14px; text-align:center; }
+    body{
+      background-color:#101318;
+      background-image:
+        radial-gradient(#2a2f3a 1px, transparent 1px),
+        linear-gradient(#101318,#101318);
+      background-size:16px 16px, auto;
+      background-position:0 0, 0 0;
+      color:#e8eff7;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="top">
-      <a class="btn" href="index.html">← Wróć do startu</a>
-    </div>
+  <a href="index.html">← Wróć do startu</a> | <a href="index.html">Strona główna</a>
+  <h2>Wybierz obszar bólu – Mężczyzna</h2>
 
-    <h1>Mężczyzna — wybierz sekcję ciała</h1>
-    <p class="sub">Wybierz jedną z ilustracji: Głowa/Szyja, Klatka/Brzuch/Plecy lub Biodra/Nogi/Stopy.</p>
-
-    <div class="grid">
-      <a class="card" href="mezczyzna-glowa.html">
-        <img class="thumb" src="img/mezczyzna-glowa.png?v=12" alt="Głowa i szyja">
-        <div class="title">Głowa i szyja</div>
-      </a>
-
-      <a class="card" href="mezczyzna-klatka.html">
-        <img class="thumb" src="img/mezczyzna-klatka.png?v=12" alt="Klatka • Brzuch • Plecy">
-        <div class="title">Klatka • Brzuch • Plecy</div>
-      </a>
-
-      <!-- TU BYŁ BŁĘDNY LINK → poprawny prowadzi do mezczyzna-nogi.html -->
-      <a class="card" href="mezczyzna-nogi.html">
-        <img class="thumb" src="img/mezczyzna-nogi-1.png?v=12" alt="Biodra • Nogi • Stopy">
-        <div class="title">Biodra • Nogi • Stopy</div>
-      </a>
-    </div>
-
-    <p class="footer">© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  <div class="card-grid">
+    <a class="card" href="mezczyzna-glowa.html">
+      <img src="img/mezczyzna-glowa.png" alt="Głowa i szyja" />
+      <p>Głowa i szyja</p>
+    </a>
+    <a class="card" href="mezczyzna-klatka.html">
+      <img src="img/mezczyzna-klatka.png" alt="Klatka / Brzuch / Plecy" />
+      <p>Klatka / Brzuch / Plecy</p>
+    </a>
+    <a class="card" href="mezczyzna-nogi.html">
+      <img src="img/mezczyzna-nogi.png" alt="Biodra / Nogi / Stopy" />
+      <p>Biodra / Nogi / Stopy</p>
+    </a>
   </div>
+
+  <footer>
+    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  </footer>
 </body>
 </html>
