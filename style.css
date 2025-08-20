@@ -1,100 +1,88 @@
-/* style.css */
-body {
-  font-family: Arial, sans-serif;
+/* Reset stylów */
+* {
   margin: 0;
   padding: 0;
-  background-color: #0f172a;
-  color: white;
+  box-sizing: border-box;
 }
 
-a {
-  color: #60a5fa;
+/* Tło stron */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #1e1e1e;
+  color: white;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Nagłówek */
+h1, h2 {
+  text-align: center;
+  margin: 20px 0;
+  color: #ffffff;
+}
+
+/* Linki powrotu */
+.back-link {
+  margin: 15px;
+  display: block;
+  color: #4da6ff;
   text-decoration: none;
 }
 
-a:hover {
+.back-link:hover {
   text-decoration: underline;
 }
 
+/* Siatka kart */
 .container {
-  max-width: 1000px;
-  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
   padding: 20px;
 }
 
-h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-h2 {
-  font-size: 22px;
-  margin-bottom: 20px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-}
-
+/* Karty */
 .card {
-  background-color: #1e293b;
-  border-radius: 8px;
+  background: #2a2a2a;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
   overflow: hidden;
+  width: 220px;
   text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s;
 }
 
 .card:hover {
-  transform: scale(1.03);
+  transform: translateY(-5px);
 }
 
+/* Obrazki w kartach */
 .card img {
   width: 100%;
-  object-fit: cover;
+  height: auto;
+  max-width: 220px; /* ograniczenie, żeby zdjęcia nie były za duże */
+  border-bottom: 2px solid #444;
+  display: block;
+  margin: 0 auto;
 }
 
+/* Tekst w kartach */
 .card p {
-  margin: 10px 0;
-  font-size: 16px;
+  padding: 10px;
+  font-weight: bold;
+  color: #ddd;
 }
 
-.footer {
-  margin-top: 40px;
-  font-size: 12px;
+/* Stopka */
+footer {
+  margin-top: auto;
   text-align: center;
-  color: #94a3b8;
-}
-
-.back-links {
-  margin-bottom: 20px;
-}
-
-.back-links a {
-  margin-right: 15px;
-}
-
-/* Miniatury */
-.card .thumb {
-  height: 180px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-.card .thumb img {
-  height: 100%;
-  width: auto;
-}
-
-/* --- DODANE: różne wysokości dla kobiet i mężczyzn --- */
-body[data-page="kobieta"] .card .thumb {
-  height: 220px;  /* możesz zmienić np. 200–240px zależnie od wyglądu */
-}
-
-body[data-page="mezczyzna"] .card .thumb {
-  height: 180px;
+  padding: 15px;
+  font-size: 0.9em;
+  color: #aaa;
 }
