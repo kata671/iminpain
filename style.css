@@ -1,89 +1,63 @@
-/* Reset i podstawowy wygląd */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #1c1c1c;
-  color: #fff;
+/* ====== Reset i bazowe ====== */
+:root{
+  --bg:#0f1418;
+  --card:#1b232a;
+  --card-2:#202a32;
+  --text:#e6eef6;
+  --muted:#a7b1b9;
+  --accent:#3b82f6;
+  --radius:16px;
+  --shadow:0 8px 20px rgba(0,0,0,.28);
 }
 
-/* Nagłówki */
-h1, h2, h3 {
-  text-align: center;
-  margin: 20px 0;
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,Segoe UI,Roboto,Arial,sans-serif}
+
+/* BARDZO WAŻNE: brak globalnego width:100% dla img */
+img{display:block;max-width:100%;height:auto}
+
+/* Heading + drobne elementy UI */
+h1{margin:28px 0 4px;font-size:clamp(24px,3.4vw,36px);font-weight:800;text-align:center}
+p.lead{margin:0 0 22px;text-align:center;color:var(--muted)}
+
+.nav-buttons{display:flex;gap:10px;justify-content:center;margin:14px 0 6px}
+.nav-buttons a{
+  text-decoration:none;background:var(--card-2);color:var(--text);
+  padding:8px 14px;border-radius:999px;border:1px solid #2c3842;
+}
+footer{margin:32px 0 40px;text-align:center;color:var(--muted);font-size:13px}
+
+/* ====== Siatka i kafelki ====== */
+.tiles{
+  --gap:18px;
+  width:min(1200px,92vw);
+  margin:18px auto 28px;
+  display:grid;
+  gap:var(--gap);
+  grid-template-columns:repeat( auto-fit, minmax(220px,1fr) );
 }
 
-/* Kontener kafelków */
-.tiles {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
+.tile{
+  background:linear-gradient(180deg,var(--card),var(--card-2));
+  border:1px solid #2a3640;border-radius:var(--radius);
+  box-shadow:var(--shadow);overflow:hidden;transition:transform .18s ease,box-shadow .18s ease;
+}
+.tile a{color:inherit;text-decoration:none;display:block;height:100%}
+.tile:hover{transform:translateY(-4px);box-shadow:0 18px 36px rgba(0,0,0,.35)}
+
+/* Media ma stałe proporcje; obrazek przycięty, nigdy nie „wybrzusza” strony */
+.tile__media{position:relative;aspect-ratio:16/9;overflow:hidden;background:#0b0f12}
+.tile__media img{width:100%;height:100%;object-fit:cover;object-position:center}
+
+.tile__title{
+  font-weight:800;text-align:center;padding:10px 10px 2px;
+}
+.tile__description{
+  color:var(--muted);font-size:14px;text-align:center;padding:0 12px 14px;
 }
 
-/* Pojedynczy kafelek */
-.tile {
-  background-color: #2a2a2a;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.4);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
-}
-
-.tile:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.6);
-}
-
-/* Obrazek w kafelku */
-.tile__media img {
-  width: 100%;
-  height: 180px;       /* stała wysokość */
-  object-fit: cover;   /* obrazek się przycina zamiast rozciągać */
-  display: block;
-  border-bottom: 3px solid #1c1c1c;
-}
-
-/* Opis kafelka */
-.tile__title {
-  font-size: 18px;
-  font-weight: bold;
-  padding: 10px;
-  text-align: center;
-}
-
-.tile__description {
-  font-size: 14px;
-  padding: 0 10px 15px 10px;
-  text-align: center;
-  color: #bbb;
-}
-
-/* Przyciski nawigacyjne */
-.nav-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 20px;
-}
-
-.nav-buttons a {
-  background: #007bff;
-  color: #fff;
-  padding: 10px 15px;
-  text-decoration: none;
-  border-radius: 6px;
-  transition: background 0.3s ease;
-}
-
-.nav-buttons a:hover {
-  background: #0056b3;
-}
-
-/* Stopka */
-footer {
-  text-align: center;
-  font-size: 12px;
-  color: #888;
-  margin: 20px 0;
+/* Responsywne dopieszczki */
+@media (max-width:520px){
+  .tiles{gap:14px}
+  .tile__description{font-size:13px}
 }
