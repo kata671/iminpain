@@ -1,28 +1,46 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kobieta</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kobieta – wybierz obszar</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body data-page="kobieta">
   <div class="container">
-    <h1>Wybierz obszar bólu - Kobieta</h1>
+
+    <!-- Nawigacja u góry -->
+    <div class="top-nav">
+      <a href="index.html" class="btn-back">← Wróć do startu</a>
+      <a href="index.html" class="btn-home">Strona główna</a>
+    </div>
+
+    <h1>Wybierz obszar bólu – Kobieta</h1>
+
     <div class="grid">
+      <!-- Głowa i szyja -->
       <a href="kobieta-glowa.html" class="card">
-        <img src="img/kobieta-glowa.png" alt="Głowa i szyja" class="thumb">
+        <!-- WAŻNE: plik musi istnieć: img/kobieta-glowa.png -->
+        <img src="img/kobieta-glowa.png" alt="Głowa i szyja" class="thumb" />
         <p>Głowa i szyja</p>
       </a>
+
+      <!-- Klatka / Brzuch / Plecy -->
       <a href="kobieta-klatka.html" class="card">
-        <img src="img/kobieta-klatka.png" alt="Klatka, brzuch, plecy" class="thumb">
+        <img src="img/kobieta-klatka.png" alt="Klatka, Brzuch, Plecy" class="thumb" />
         <p>Klatka / Brzuch / Plecy</p>
       </a>
+
+      <!-- Biodra / Nogi / Stopy -->
       <a href="kobieta-nogi.html" class="card">
-        <img src="img/kobieta-nogi.png" alt="Biodra, nogi, stopy" class="thumb">
+        <img src="img/kobieta-nogi.png" alt="Biodra, Nogi, Stopy" class="thumb" />
         <p>Biodra / Nogi / Stopy</p>
       </a>
     </div>
+
+    <footer class="footer-note">
+      © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
+    </footer>
   </div>
 </body>
 </html>
