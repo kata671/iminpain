@@ -1,148 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
   <title>Kobieta — Biodra, nogi, stopy</title>
   <style>
-    :root {
-      --bg: #0b1220;        /* tło strony (ciemny granat) */
-      --card: #111827;      /* kafelki */
-      --text: #e5e7eb;      /* jasny tekst */
-      --muted: #93a3b8;     /* podtytuły */
-      --accent: #2563eb;    /* linki */
-      --radius: 16px;
-      --shadow: 0 10px 25px rgba(0,0,0,.35);
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:#e5e7eb;
+      line-height:1.45;
+      background:
+        radial-gradient(1200px 800px at 20% -10%, rgba(37,99,235,.15), transparent 60%),
+        radial-gradient(900px 700px at 120% 20%, rgba(56,189,248,.12), transparent 55%),
+        #0b1220;
     }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 800px at 20% -10%, rgba(37,99,235,.15), transparent 60%),
-                  radial-gradient(900px 700px at 120% 20%, rgba(56,189,248,.12), transparent 55%),
-                  var(--bg);
-      color: var(--text);
-      line-height: 1.45;
-    }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 18px 64px; }
-
-    /* Nawigacja u góry */
-    .nav {
-      display: flex; gap: 12px; flex-wrap: wrap; margin: 6px 0 22px;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 14px; border-radius: 12px;
-      background: rgba(255,255,255,.06);
-      color: var(--text); text-decoration: none; font-weight: 600;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: var(--shadow);
-      transition: transform .08s ease, background .2s ease, opacity .2s ease;
-    }
-    .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.10); }
-
-    h1 {
-      font-size: clamp(28px, 4vw, 38px);
-      margin: 0 0 6px;
-      letter-spacing: .3px;
-    }
-    .lead { color: var(--muted); margin: 0 0 24px; }
-
-    /* Siatka kafelków */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 22px;
-    }
-    .tile {
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
-    }
-    .tile:hover { transform: translateY(-2px); box-shadow: 0 16px 30px rgba(0,0,0,.45); }
-
-    /* Stały, spójny rozmiar miniatur: */
-    .thumb {
-      width: 100%;
-      height: 180px;              /* wysokość miniatury */
-      overflow: hidden;
-      display: block;
-      background: #0a0f1a;
-    }
-    .thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;          /* przytnie obraz tak, by ładnie wypełnić ramkę */
-      display: block;
-    }
-    .caption {
-      padding: 12px 14px 14px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      font-weight: 700;
-      letter-spacing: .2px;
-    }
-    .caption small { display:block; color: var(--muted); font-weight: 500; margin-top: 4px; }
-
-    /* Stopka */
-    footer {
-      margin-top: 28px; color: var(--muted); font-size: 14px;
-      border-top: 1px dashed rgba(255,255,255,.15);
-      padding-top: 16px;
-    }
-
-    @media (max-width: 420px) {
-      .thumb { height: 160px; }
-    }
+    .container{ max-width:1000px; margin:0 auto; padding:20px; }
+    h1{ font-size:1.6rem; margin-bottom:20px; }
+    .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; }
+    .card{ background:#111827; border-radius:12px; overflow:hidden; text-align:center; transition:transform .2s; }
+    .card:hover{ transform:scale(1.03); }
+    .card img{ width:100%; height:200px; object-fit:cover; }
+    .card-title{ padding:10px; background:#1f2937; }
+    a{ color:#60a5fa; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
   </style>
 </head>
-<body data-page="kobieta">
-  <main class="wrap">
-    <!-- PRZYCISKI NAWIGACJI -->
-    <nav class="nav">
-      <a class="btn" href="kobieta.html" aria-label="Wróć do wyboru sekcji">← Wróć do wyboru sekcji</a>
-      <a class="btn" href="index.html">Strona główna</a>
-    </nav>
-
-    <header>
-      <h1>Kobieta — Biodra, nogi, stopy</h1>
-      <p class="lead">Kliknij, aby zobaczyć szczegóły.</p>
-    </header>
-
-    <!-- KAFELKI -->
-    <section class="grid">
-      <a class="tile" href="kobieta-biodra.html">
-        <span class="thumb">
-          <img src="img/kobieta-biodra.png" alt="Biodra — ilustracja anatomii kobiety">
-        </span>
-        <div class="caption">Biodra</div>
-      </a>
-
-      <a class="tile" href="kobieta-uda.html">
-        <span class="thumb">
-          <img src="img/kobieta-uda.png" alt="Uda — ilustracja anatomii kobiety">
-        </span>
-        <div class="caption">Uda</div>
-      </a>
-
-      <a class="tile" href="kobieta-nogi-szczegoly.html">
-        <span class="thumb">
-          <img src="img/kobieta-nogi.png" alt="Nogi — ilustracja anatomii kobiety">
-        </span>
-        <div class="caption">Nogi <small>(łydki, kolana)</small></div>
-      </a>
-
-      <a class="tile" href="kobieta-stopy.html">
-        <span class="thumb">
-          <img src="img/kobieta-stopy.png" alt="Stopy — ilustracja anatomii kobiety">
-        </span>
-        <div class="caption">Stopy</div>
-      </a>
-    </section>
-
-    <footer>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
-  </main>
+<body>
+  <div class="container">
+    <a href="kobieta.html">← Wróć do wyboru sekcji</a> | <a href="index.html">Strona główna</a>
+    <h1>Kobieta — Biodra, nogi, stopy</h1>
+    <div class="grid">
+      <a class="card" href="kobieta-biodra.html"><img src="kobieta-biodra.png" alt="Biodra"><div class="card-title">Biodra</div></a>
+      <a class="card" href="kobieta-uda.html"><img src="kobieta-uda.png" alt="Uda"><div class="card-title">Uda</div></a>
+      <a class="card" href="kobieta-nogi-lydki.html"><img src="kobieta-nogi.png" alt="Nogi"><div class="card-title">Nogi (łydki, kolana)</div></a>
+      <a class="card" href="kobieta-stopy.html"><img src="kobieta-stopy.png" alt="Stopy"><div class="card-title">Stopy</div></a>
+    </div>
+  </div>
 </body>
 </html>
