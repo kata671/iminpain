@@ -593,3 +593,11 @@ a.card span {
   display: block;
   width: 100%;
 }
+/* Niebieskie podpisy również dla strong w kartach */
+a.card span,
+a.card span strong {
+  color: #00aaff !important;
+  text-align: center !important;
+  display: block;
+  width: 100%;
+}
