@@ -2118,3 +2118,63 @@ a.card > img, a.tile > img,
   gap: 24px !important;
   align-items: start !important;
 }
+/* === ATOMÓWKA v2 — WSZYSTKO POZIOMO 16:9, IMG + BACKGROUND === */
+
+/* Kafelki = kolumna: obrazek, potem podpis */
+.wrap .card, .wrap .tile, .wrap a.card, .wrap a.tile, 
+.wrap [class*="card"], .wrap [class*="tile"] {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 10px !important;
+  overflow: hidden !important;
+}
+
+/* IMG – wymuś 16:9 i przytnij */
+.wrap img, 
+.wrap .thumb img, 
+.wrap figure img, 
+.wrap a.card > img, 
+.wrap a.tile > img {
+  width: 100% !important;
+  height: auto !important;           /* pozwala aspect-ratio działać */
+  aspect-ratio: 16 / 9 !important;   /* POZIOMO */
+  object-fit: cover !important;       /* przytnij pionowe do ramki */
+  object-position: center !important;
+  display: block !important;
+  max-height: none !important;        /* kasuje stare limity */
+  border-radius: 16px !important;
+  order: 1 !important;
+}
+
+/* BACKGROUND-IMAGE – kafelki, które nie używają <img> */
+.wrap [style*="background"], 
+.wrap .bg, 
+.wrap .thumb-bg, 
+.wrap .image, 
+.wrap .thumb {
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;   /* POZIOMO */
+  background-size: cover !important;
+  background-position: center !important;
+  border-radius: 16px !important;
+  order: 1 !important;
+}
+
+/* Podpis pod obrazkiem i na niebiesko */
+.wrap .card p, .wrap .tile p, 
+.wrap .card .label, .wrap .tile .label, 
+.wrap span.label {
+  order: 2 !important;
+  margin: 6px 0 0 !important;
+  text-align: center !important;
+  color: var(--accent, #4ea3ff) !important;
+}
+
+/* Siatki – elastyczny układ kafelków */
+.wrap .grid, .wrap [id*="grid"], .wrap .cards {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
