@@ -466,3 +466,35 @@ Wysłano
   margin:10px 0 0;
   font-weight:600;
 }}
+/* Grid dla strony kobieta.html */
+#grid-kobieta {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap; /* jak się nie zmieści to spadnie do nowej linii */
+}
+
+#grid-kobieta .card {
+  background: #111;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  width: 220px;  /* ta sama szerokość */
+  height: 320px; /* ta sama wysokość */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#grid-kobieta .card img {
+  width: 100%;
+  height: 250px; /* wszystkie obrazki równe */
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+#grid-kobieta .card p {
+  margin-top: 8px;
+  font-weight: bold;
+}
