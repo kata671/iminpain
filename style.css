@@ -318,3 +318,25 @@ img[src*="mezczyzna-glowa-1"] + .label{
     height: 350px !important;
   }
 }
+/* Mężczyzna — Głowa i szyja (ten kontener masz już na stronie) */
+#grid-men-glowa{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(260px, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+/* Kobieta — wybór obszaru bólu (jeśli nie masz id, nadaj go kontenerowi) */
+#grid-kobieta-obszary{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(260px, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+@media (max-width: 1100px){
+  #grid-men-glowa, #grid-kobieta-obszary{ grid-template-columns: repeat(2, minmax(260px, 1fr)) !important; }
+}
+@media (max-width: 700px){
+  #grid-men-glowa, #grid-kobieta-obszary{ grid-template-columns: 1fr !important; }
+}
