@@ -1172,3 +1172,66 @@ html, body{
     var(--bg) !important;
   color: var(--text) !important;
 }
+/* ========================
+   Styl dla stron mężczyzny
+   ======================== */
+body {
+  background: 
+    radial-gradient(rgba(255, 255, 255, .08) 1px, transparent 1px) 0 0 / 18px 18px,
+    radial-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px) 9px 9px / 18px 18px,
+    linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(0, 0, 0, .6) 120px);
+  background-color: #111;
+  color: #9ecff3; /* domyślny kolor tekstu */
+}
+
+/* GRID dla mężczyzna-głowa */
+#grid-men-glowa {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  justify-items: center;
+  align-items: start;
+  margin-top: 32px;
+}
+
+/* kafelki */
+.tile {
+  background: var(--card, #1e1e1e);
+  padding: 12px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+}
+
+/* obrazki w kafelkach */
+.tile img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* podpisy pod obrazkami */
+.tile a {
+  display: block;
+  color: #2aa8ff;   /* niebieski na stałe */
+  font-weight: bold;
+  text-decoration: none;
+  margin-top: 4px;
+}
+.tile a:hover {
+  text-decoration: underline;
+}
+
+/* link powrotu */
+.back a {
+  color: #2aa8ff;
+  display: inline-block;
+  margin-top: 32px;
+}
