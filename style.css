@@ -31,7 +31,31 @@ body{
     linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,0) 120px) top / 100% 180px no-repeat,
     var(--bg);
 }
+/* Poziomy układ kafelków tam, gdzie są co najmniej dwie karty */
+.wrap:has(.card + .card),
+section:has(.card + .card),
+div:has(> .card + .card) {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(260px, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
 
+/* Responsywność */
+@media (max-width: 1100px){
+  .wrap:has(.card + .card),
+  section:has(.card + .card),
+  div:has(> .card + .card){
+    grid-template-columns: repeat(2, minmax(260px, 1fr)) !important;
+  }
+}
+@media (max-width: 700px){
+  .wrap:has(.card + .card),
+  section:has(.card + .card),
+  div:has(> .card + .card){
+    grid-template-columns: 1fr !important;
+  }
+}
 /* Nagłówki */
 h1, h2 {
   margin: 24px 0 8px;
