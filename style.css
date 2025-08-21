@@ -893,3 +893,13 @@ a.card .label *,
   display: block;
   border-radius: 16px;
 }
+/* Ujednolicenie miniaturek na wszystkich stronach */
+.cards .card > img,
+.grid .card > img,
+a.card > img {
+  width: 100%;
+  height: 220px;      /* możesz zmienić np. na 200–260px */
+  object-fit: cover;  /* przytnij proporcjonalnie do ramki */
+  display: block;
+  border-radius: 16px;
+}
