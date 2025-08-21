@@ -845,3 +845,44 @@ a.card .label * ,
   color: var(--link) !important;    /* również <strong> w niebieskim */
   text-decoration: none !important;
 }
+/* === TWARDY FIX: podpisy w kafelkach wyśrodkowane i niebieskie === */
+a.card, .card {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* obraz u góry, podpis pod spodem */
+a.card > img, .card > img {
+  order: 1 !important;
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* sam podpis: pełna szerokość, środek, kolor linków */
+a.card > span,
+a.card .label,
+.card > span,
+.card .label {
+  order: 2 !important;
+  align-self: stretch !important;   /* rozciągnij na całą szerokość kafla */
+  display: block !important;
+  width: 100% !important;
+  text-align: center !important;
+  margin: 0 !important;
+  padding: 10px 14px 12px !important;
+  color: var(--link) !important;    /* niebieski jak link */
+  text-decoration: none !important;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)) !important;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+/* gdy podpis jest w <strong> – też na niebiesko i bez podkreślenia */
+a.card > span *,
+a.card .label *,
+.card > span *,
+.card .label * {
+  color: var(--link) !important;
+  text-decoration: none !important;
+}
