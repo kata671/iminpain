@@ -1,220 +1,86 @@
-/* ====== Reset / baza ====== */
-:root{
-  --bg: #0e0f12;           /* ciemny szary */
-  --card: #1a1d22;
-  --card-muted: #242830;
-  --text: #e8ecf1;
-  --link: #6bb3ff;
-  --gap: 24px;
-  --card-w: 320px;         /* szerokość kafla jak u „Kobieta” */
-  --radius: 16px;
+:root {
+    --bg: #0d0d0d;
+    --card-bg: #1a1a1a;
+    --text: #ffffff;
+    --accent: #00bcd4;
 }
 
-/* kropkowane tło jak na stronie głównej */
-html, body{
-  height: 100%;
-}
-body{
-  margin: 0;
-  color: var(--text);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-
-  /* warstwa tła: kropki + delikatny gradient */
-  background:
-    radial-gradient(circle at 1px 1px, rgba(255,255,255,.10) 1px, transparent 1.4px) 0 0/18px 18px,
-    linear-gradient(180deg, #0e0f12 0%, #0b0d11 100%);
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: var(--text);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 / 10px 10px, var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* linki */
-a{ color: var(--link); text-decoration: none; }
-a:hover{ text-decoration: underline; }
-
-/* nagłówki */
-h1,h2{ margin: 16px auto; text-align:center; }
-
-/* ====== Układ kafelków ====== */
-/* obsłuż dowolną nazwę kontenera, by nie trzeba było ruszać HTML-a */
-.cards,
-.cards-grid,
-.card-grid,
-.grid,
-.tiles{
-  display: flex !important;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--gap);
-  padding: var(--gap);
+h1 {
+    margin-top: 20px;
+    font-size: 2rem;
+    text-align: center;
 }
 
-/* pojedyncza karta */
-.card{
-  width: var(--card-w);
-  background: var(--card);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0,0,0,.35);
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-.card:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,.45);
+.lead {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
 }
 
-/* obraz w karcie – pełna szerokość, zachowaj proporcje */
-.card img{
-  width: 100%;
-  height: auto;
-  display: block;
+.cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: min(1200px, 92vw);
 }
 
-/* pasek tytułu pod obrazkiem */
-.card .card-title{
-  background: var(--card-muted);
-  padding: 10px 12px;
-  font-weight: 700;
-  text-align: center;
-  border-top: 1px solid rgba(255,255,255,.06);
+.card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* responsywność – na bardzo wąskich ekranach lekko zwęź karty */
-@media (max-width: 380px){
-  :root{ --card-w: 280px; }
-}
-/* Fallback dla stron, gdzie kafelki nie używają klasy .card */
-.cards a,
-.cards-grid a,
-.card-grid a,
-.grid a,
-.tiles a,
-.tile,
-.item {
-  display: block;
-  width: var(--card-w);
-  background: var(--card);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0,0,0,.35);
-  transition: transform .18s ease, box-shadow .18s ease;
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
 }
 
-.cards a:hover,
-.cards-grid a:hover,
-.card-grid a:hover,
-.grid a:hover,
-.tiles a:hover,
-.tile:hover,
-.item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,.45);
-}
-
-/* Obraz w takich kafelkach – jak w .card */
-.cards a img,
-.cards-grid a img,
-.card-grid a img,
-.grid a img,
-.tiles a img,
-.tile img,
-.item img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Tytuł pod obrazkiem, jeśli jest osobnym elementem */
-.cards a .card-title,
-.cards-grid a .card-title,
-.card-grid a .card-title,
-.grid a .card-title,
-.tiles a .card-title,
-.tile .card-title,
-.item .card-title {
-  background: var(--card-muted);
-  padding: 10px 12px;
-  font-weight: 700;
-  text-align: center;
-  border-top: 1px solid rgba(255,255,255,.06);
-}
-/* Poprawka tylko dla strony kobieta.html */
-body[data-page="kobieta"] .cards img {
-  width: 250px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  border-radius: var(--radius);
-  box-shadow: 0 4px 14px rgba(0,0,0,.35);
-}
-/* --- Ujednolicone kafelki ze zdjęciami na wszystkich stronach --- */
-:root{
-  /* wysokość obrazu w kafelku – możesz ewentualnie zmienić liczby */
-  --card-img-min: 160px;
-  --card-img-max: 220px;
-  --card-gap: 24px;
-}
-
-/* kontener z kartami (klasa .cards jest u Ciebie na wszystkich stronach) */
-.cards{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--card-gap);
-  align-items: start;
-}
-
-/* sama karta (link) */
-.cards a{
-  display: flex;
-  flex-direction: column;
-  border-radius: 18px;
-  background: rgba(255,255,255,0.04);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-  overflow: hidden;
-  text-decoration: none;
-}
-
-/* OBRAZEK – klucz do identycznych wymiarów */
-.cards a img{
-  width: 100%;
-  aspect-ratio: 4 / 3;      /* ten sam poziomy format wszędzie */
-  height: clamp(var(--card-img-min), 26vw, var(--card-img-max));
-  object-fit: cover;         /* przycina bez rozciągania */
-  display: block;
-}
-
-/* podpis pod obrazkiem */
-.cards a span{
-  padding: 10px 14px 12px;
-  font-weight: 600;
-  color: #dfe9ff;
-}
-/* Ujednolicenie wielkości obrazków w kartach */
-.cards a img {
-  width: 100%;
-  height: 220px;       /* stała wysokość dla wszystkich obrazków */
-  object-fit: cover;   /* dopasowanie proporcji, przycięcie nadmiaru */
-  border-radius: 12px; /* zaokrąglone rogi jak wcześniej */
-}
-/* Ustal jedną wysokość zdjęć w kafelkach na wszystkich podstronach */
-:root { --card-image-height: 220px; }  /* możesz podbić np. na 240px jeśli wolisz większe */
-
-.cards a img,
 .card img {
-  display: block;
-  width: 100%;
-  height: var(--card-image-height) !important;
-  object-fit: cover;        /* przycina nadmiar, zachowuje proporcje */
-  object-position: center;
-  border-radius: 12px;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 2px solid var(--accent);
 }
 
-/* opcjonalnie: na wąskich ekranach trochę niższe obrazki */
-@media (max-width: 768px) {
-  :root { --card-image-height: 200px; }
+.card span {
+    padding: 12px;
+    display: block;
+    font-weight: bold;
+    text-align: center;
 }
-/* Wyśrodkowanie podpisów pod kafelkami (na wszystkich stronach) */
-.cards a span,
-.card span,
-.tile span {
-  display: block;
-  width: 100%;
-  text-align: center;
+
+footer {
+    margin: 30px 0;
+    font-size: 0.9rem;
+    text-align: center;
+    color: #aaa;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
