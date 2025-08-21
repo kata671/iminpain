@@ -727,3 +727,42 @@ a.card { color: inherit !important; }
   justify-items: center;
   align-items: start;
 }
+/* --- UJEDNOLICONY ROZMIAR KAFELKÓW I OBRAZKÓW --- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  justify-items: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 360px;           /* spójna szerokość kafelka na desktopie */
+  border-radius: 18px;
+}
+
+/* Sam obraz w kafelku */
+.card .thumb,
+.card img.thumb {
+  width: 100%;
+  height: 220px;              /* stała wysokość – nadaje proporcje poziome */
+  object-fit: cover;          /* przytnie do ramki zamiast ściskać */
+  display: block;
+  border-radius: 16px 16px 0 0;
+}
+
+/* Podpis – już masz kolor i wyśrodkowanie, ale zostawiamy na wszelki wypadek */
+.card span,
+.card .label {
+  display: block;
+  text-align: center;
+  padding: 10px 12px;
+}
+
+/* Responsywność – na wąskich ekranach trochę niższe obrazki */
+@media (max-width: 640px) {
+  .card .thumb,
+  .card img.thumb {
+    height: 180px;
+  }
+}
