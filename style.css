@@ -395,3 +395,39 @@ Wysłano
     max-width: 250px; /* wszystkie jednakowe */
     text-align: center;
 }
+/* --- KOBIETA: 3 kafelki w jednym rzędzie, jednakowe wymiary --- */
+#grid-kobieta-obszary{
+  display:flex;
+  flex-wrap:wrap;           /* zawija na małych ekranach */
+  gap:24px;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+/* każdy kafelek ma tę samą szerokość */
+#grid-kobieta-obszary .card{
+  width: 320px;             /* możesz zmienić np. na 300px */
+  max-width: 100%;
+  text-align:center;
+  margin: 0;
+}
+
+/* link jako blok, żeby p i img składały się równo */
+#grid-kobieta-obszary .card a{
+  display:block;
+}
+
+/* obrazek: pełna szerokość, stałe proporcje, przycięcie nadmiaru */
+#grid-kobieta-obszary .card img{
+  width:100%;
+  aspect-ratio: 16 / 9;     /* identyczne proporcje dla wszystkich */
+  object-fit: cover;        /* wypełnia, ewentualnie przycina */
+  display:block;
+  border-radius: 14px;
+}
+
+/* podpis zawsze pod obrazkiem */
+#grid-kobieta-obszary .card p{
+  margin:10px 0 0;
+  font-weight:600;
+}
