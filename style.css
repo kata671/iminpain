@@ -772,3 +772,22 @@ a.card { color: inherit !important; }
     text-align: center;
     width: 100%;
 }
+/* --- Wymuszone wyśrodkowanie podpisów na kafelkach --- */
+a.card { 
+  display: flex; 
+  flex-direction: column; 
+}
+
+a.card .label,
+a.card span {
+  display: flex !important;          /* nadpisuje stare display:block/flex */
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  width: 100% !important;
+  padding: 10px 14px 12px;           /* zachowujemy obecny wygląd */
+}
+
+a.card .label * {
+  text-align: inherit !important;    /* gdy w środku jest <strong> itp. */
+}
