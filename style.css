@@ -601,3 +601,13 @@ a.card span strong {
   display: block;
   width: 100%;
 }
+/* Wymuszenie koloru niebieskiego dla podpisów */
+.card span,
+.card span strong,
+.card .label,
+.card .label strong {
+  color: #00aaff !important;
+  text-align: center !important;
+  display: block;
+  width: 100%;
+}
