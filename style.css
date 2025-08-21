@@ -2073,3 +2073,48 @@ body[data-page="mezczyzna"] .cards {
   grid-template-columns: repeat(3, minmax(260px, 1fr)) !important;
   gap: 24px !important;
 }
+/* === ATOMÓWKA — POZIOME MINIATURY 16:9 NA CAŁEJ STRONIE === */
+
+/* Kafelki mają być kolumną: obrazek, potem podpis */
+.card, .tile, [class*="card"] {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  overflow: hidden !important;
+}
+
+/* Sam obrazek: zawsze poziomy 16:9, przycięty do środka */
+.card img, .tile img,
+.card .thumb, .tile .thumb,
+.grid img, [class*="grid"] img,
+a.card > img, a.tile > img,
+.wrap img {
+  width: 100% !important;
+  height: auto !important;         /* wysokość z aspect-ratio */
+  aspect-ratio: 16 / 9 !important; /* wymuś proporcje poziome */
+  object-fit: cover !important;     /* przytnij pionowe do ramki */
+  object-position: center !important;
+  display: block !important;
+  border-radius: 16px !important;
+  max-height: none !important;      /* wyczyść stare limity */
+}
+
+/* Podpis MA BYĆ pod obrazkiem i wyśrodkowany */
+.card p, .tile p, .card .label, .tile .label, span.label {
+  order: 2 !important;
+  margin: 10px 0 0 !important;
+  text-align: center !important;
+  color: var(--accent, #4ea3ff) !important; /* niebieski */
+}
+
+/* Obrazek zawsze pierwszy */
+.card > img, .tile > img,
+.card .thumb, .tile .thumb { order: 1 !important; }
+
+/* Siatka kafelków – elastycznie, 3/2/1 kolumna w zależności od ekranu */
+.grid, [id*="grid"], .cards {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
