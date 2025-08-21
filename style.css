@@ -1440,3 +1440,9 @@ body[data-page="mezczyzna"] .grid .card a:focus .label {
   font-weight: bold;
   text-decoration: none;
 }
+/* Mężczyzna – układ kafelków na stronie głównej mężczyzny */
+body[data-page="mezczyzna"] .grid{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+}
