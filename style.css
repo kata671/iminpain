@@ -1446,3 +1446,35 @@ body[data-page="mezczyzna"] .grid{
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   gap: 24px !important;
 }
+/* Mężczyzna – układ kafelków na stronie głównej mężczyzny */
+body[data-page="mezczyzna"] .grid{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+}
+Wysłano
+/* MĘŻCZYZNA – ustaw kafelki w wierszach na stronie wyboru części ciała */
+body[data-page="mezczyzna"] .wrap > div:has(> a.card),
+body[data-page="mezczyzna"] [id*="grid-men"],
+body[data-page="mezczyzna"] .grid-men {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+/* Responsywność: 2 kolumny / 1 kolumna */
+@media (max-width: 900px){
+  body[data-page="mezczyzna"] .wrap > div:has(> a.card),
+  body[data-page="mezczyzna"] [id*="grid-men"],
+  body[data-page="mezczyzna"] .grid-men {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 640px){
+  body[data-page="mezczyzna"] .wrap > div:has(> a.card),
+  body[data-page="mezczyzna"] [id*="grid-men"],
+  body[data-page="mezczyzna"] .grid-men {
+    grid-template-columns: 1fr !important;
+  }
+}
