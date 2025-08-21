@@ -1,86 +1,66 @@
-:root {
-    --bg: #0d0d0d;
-    --card-bg: #1a1a1a;
-    --text: #ffffff;
-    --accent: #00bcd4;
+:root{
+  --bg:#0e0f12;           /* tło bazowe jak na stronie głównej */
+  --card-bg:#1a1b1f;
+  --text:#fff;
+  --accent:#00bcd4;
 }
 
-body {
-    margin: 0;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color: var(--text);
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 / 10px 10px, var(--bg);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* TŁO: kropki + jaśniejsza baza – wymuszone wszędzie */
+html,body{
+  margin:0;
+  min-height:100%;
+  color:var(--text);
+  background:
+    radial-gradient(circle, rgba(255,255,255,.08) 1px, transparent 1px) 0 0/10px 10px,
+    var(--bg) !important;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
-h1 {
-    margin-top: 20px;
-    font-size: 2rem;
-    text-align: center;
+/* Nagłówki/lead – bez zmian wizualnych */
+h1{margin:24px 0 8px; font-size:2rem; text-align:center;}
+.lead{margin:0 0 16px; text-align:center; opacity:.9}
+
+/* Kontener na kafelki – GRID, żeby nic nie „rozjeżdżało” */
+main{width:min(1200px, 92vw); margin:16px auto;}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+  gap:24px;
 }
 
-.lead {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.2rem;
+/* Kafelek */
+.card{
+  background:var(--card-bg);
+  border-radius:14px;
+  box-shadow:0 6px 16px rgba(0,0,0,.45);
+  overflow:hidden;
+  text-decoration:none;
+  color:inherit;
+  display:flex;
+  flex-direction:column;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.card:hover{transform:scale(1.03); box-shadow:0 10px 24px rgba(0,0,0,.6);}
+
+/* Obraz w kafelku – STAŁA wysokość, bez rozszerzania na pełny ekran */
+.card img{
+  width:100%;
+  height:220px;            /* możesz zmienić na 200–240 wg uznania */
+  object-fit:cover;
+  display:block;
+  border-bottom:2px solid var(--accent);
 }
 
-.cards {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: min(1200px, 92vw);
+/* Podpis kafelka – na środku (żeby nie ucinało z lewej) */
+.card span{
+  padding:12px 14px;
+  font-weight:600;
+  text-align:center;
 }
 
-.card {
-    background: var(--card-bg);
-    border-radius: 12px;
-    overflow: hidden;
-    text-align: center;
-    text-decoration: none;
-    color: var(--text);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    transition: transform 0.2s, box-shadow 0.2s;
-    width: 220px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
-}
-
-.card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-bottom: 2px solid var(--accent);
-}
-
-.card span {
-    padding: 12px;
-    display: block;
-    font-weight: bold;
-    text-align: center;
-}
-
-footer {
-    margin: 30px 0;
-    font-size: 0.9rem;
-    text-align: center;
-    color: #aaa;
-}
-
-a {
-    color: var(--accent);
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
+/* Linki, stopka */
+a{color:var(--accent); text-decoration:none;}
+a:hover{text-decoration:underline;}
+footer{margin:28px 0 40px; font-size:.9rem; opacity:.8; text-align:center;}
