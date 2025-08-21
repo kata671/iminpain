@@ -791,3 +791,29 @@ a.card span {
 a.card .label * {
   text-align: inherit !important;    /* gdy w środku jest <strong> itp. */
 }
+/* Wyśrodkowanie i kolor podpisów na kafelkach – wersja odporna na wszystko */
+a.card { 
+  display: flex;
+  flex-direction: column;
+  text-align: center !important;          /* gdyby span nie przejął */
+  text-decoration: none !important;       /* bez podkreśleń */
+}
+
+a.card .label,
+a.card > span {                            /* działa i dla <span class="label"> i dla gołego <span> */
+  display: grid !important;                /* proste centrowanie */
+  place-items: center !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 10px 14px 12px !important;
+  text-align: center !important;
+  color: var(--link) !important;           /* niebieski jak u kobiety */
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)) !important;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+a.card .label strong { 
+  font-weight: 600;
+  color: inherit !important;               /* żeby <strong> też było niebieskie */
+}
