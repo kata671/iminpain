@@ -886,3 +886,10 @@ a.card .label *,
   color: var(--link) !important;
   text-decoration: none !important;
 }
+.cards .card img.thumb {
+  width: 100%;
+  height: 220px;       /* stała wysokość dla wszystkich miniaturek */
+  object-fit: cover;   /* przytnie obrazek proporcjonalnie */
+  display: block;
+  border-radius: 16px;
+}
