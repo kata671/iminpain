@@ -264,3 +264,25 @@ body{
   border-bottom-right-radius:18px;
   pointer-events:none;
 }
+/* === Unifikacja tła – wymuś to samo wszędzie === */
+:root{
+  --bg:#0f1317;
+}
+
+body{
+  background:
+    radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px) 0 0/18px 18px,
+    radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px) 9px 9px/18px 18px,
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,0) 120px) top/100% 180px no-repeat,
+    var(--bg) !important;
+}
+
+/* Jeśli jakieś strony ustawiają tło na kontenerach,
+   zerujemy to, żeby prześwitywało tło body */
+.page-bg,
+.wrapper,
+.container,
+main,
+.cards{
+  background: transparent !important;
+}
