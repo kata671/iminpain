@@ -984,3 +984,42 @@ a.card:hover,
   margin-top: 10px;
   font-weight: 700;
 }
+/* === 1) Napisy pod kafelkami – zawsze niebieskie, także u MĘŻCZYZNA === */
+a.card .label,
+a.card .label strong {
+  color: #00aaff !important;     /* niebieski */
+  text-align: center;
+}
+a.card:hover .label,
+a.card:hover .label strong {
+  color: #00aaff !important;     /* brak zmiany koloru po hoverze */
+}
+
+/* (opcjonalnie) jeśli na którejś stronie teksty dalej się upierają:
+   wymuś to globalnie przez klasę/atrybut body, jeśli go masz */
+[data-page^="mezczyzna"] a.card .label,
+[data-page^="mezczyzna"] a.card .label strong {
+  color: #00aaff !important;
+  text-align: center;
+}
+
+/* === 2) Obraz w kafelku – zawsze poziomo, wypełnia szerokość kafla ===
+   Działa niezależnie od rozmiaru oryginalnego obrazu */
+a.card .thumb,
+.card .thumb,
+.tile .thumb,
+.grid .thumb,
+.thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;    /* poziomy format */
+  height: auto;            /* nie blokuj wysokości */
+  object-fit: cover;       /* przytnij nadmiar, zostaw proporcje */
+  border-radius: 14px;     /* zaokrąglenie (dopasuj do Twojego stylu) */
+}
+
+/* Upewnij się, że nic nie nadpisuje wymiarów obrazka */
+a.card img {
+  max-width: 100% !important;
+  height: auto !important;
+}
