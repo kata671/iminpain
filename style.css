@@ -2178,3 +2178,71 @@ a.card > img, a.tile > img,
   gap: 24px !important;
   align-items: start !important;
 }
+/* === POZIOMO 16:9 — OSTATECZNY PATCH DLA STRON MĘŻCZYZNY === */
+
+/* Kafelki: kolumna (obraz u góry, podpis pod spodem) */
+body[data-page="mezczyzna"] .card,
+body[data-page="mezczyzna"] .tile,
+body[data-page="mezczyzna"] a.card,
+body[data-page="mezczyzna"] a.tile,
+body[data-page="mezczyzna"] [class*="card"],
+body[data-page="mezczyzna"] [class*="tile"]{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 10px !important;
+  overflow: hidden !important;
+}
+
+/* IMG -> wymuś poziomy kadr 16:9 i przycinanie */
+body[data-page="mezczyzna"] img,
+body[data-page="mezczyzna"] .thumb img,
+body[data-page="mezczyzna"] .card > img,
+body[data-page="mezczyzna"] .tile > img{
+  width: 100% !important;
+  height: clamp(160px, 22vw, 260px) !important; /* stała wysokość = poziomy kafel */
+  aspect-ratio: 16 / 9 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  max-height: none !important;
+  border-radius: 16px !important;
+  order: 1 !important;
+}
+
+/* Kafelki ze zdjęciem w tle (background-image) */
+body[data-page="mezczyzna"] [style*="background"],
+body[data-page="mezczyzna"] .bg,
+body[data-page="mezczyzna"] .thumb-bg,
+body[data-page="mezczyzna"] .image,
+body[data-page="mezczyzna"] .thumb{
+  width: 100% !important;
+  height: clamp(160px, 22vw, 260px) !important;
+  aspect-ratio: 16 / 9 !important;
+  background-size: cover !important;
+  background-position: center !important;
+  border-radius: 16px !important;
+  order: 1 !important;
+}
+
+/* Podpis na niebiesko pod zdjęciem */
+body[data-page="mezczyzna"] .card p,
+body[data-page="mezczyzna"] .tile p,
+body[data-page="mezczyzna"] .card .label,
+body[data-page="mezczyzna"] .tile .label,
+body[data-page="mezczyzna"] span.label{
+  order: 2 !important;
+  margin: 6px 0 0 !important;
+  text-align: center !important;
+  color: var(--accent, #4ea3ff) !important;
+}
+
+/* Siatki – kafelki w rzędach (poziomo), nie w jednej kolumnie */
+body[data-page="mezczyzna"] .grid,
+body[data-page="mezczyzna"] [id^="grid-men"],
+body[data-page="mezczyzna"] .cards{
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
