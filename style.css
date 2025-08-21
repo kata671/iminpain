@@ -1999,3 +1999,22 @@ body[data-page="mezczyzna"] .card a:hover{ color:#6bbcff !important; }
 body[data-page="mezczyzna"] .wrap > h1,
 body[data-page="mezczyzna"] .wrap > .lead,
 body[data-page="mezczyzna"] .wrap > p.back{ grid-column: 1 / -1 !important; }
+.cards {
+  display: flex;
+  flex-wrap: wrap;      /* zawijanie do nowego rzędu, jeśli się nie mieszczą */
+  justify-content: center; /* wyśrodkowanie */
+  gap: 20px;            /* odstęp między kafelkami */
+}
+
+.card {
+  flex: 1 1 250px;      /* szerokość minimalna kafelka */
+  max-width: 300px;     /* maksymalna szerokość kafelka */
+  text-align: center;   /* podpisy pod zdjęciami wyśrodkowane */
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+}
