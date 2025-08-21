@@ -532,3 +532,43 @@ main,
 .cards .card > :last-child a:hover {
   color: #33bbff !important;
 }
+/* === Podpisy w kartach: zawsze niebieskie i wyśrodkowane === */
+
+/* Najczęstsze warianty podpisów */
+.cards .card .caption,
+.cards .card .label,
+.cards .card .card-label,
+.cards .card .card-title,
+.cards .card .title,
+.cards .card figcaption,
+.cards .card footer,
+.cards .card > span,
+.cards .card > p,
+.cards .card > div.caption,
+.cards .card > div.label,
+.cards .card a.caption {
+  color: #00aaff !important;
+  text-align: center !important;
+  font-weight: 700 !important;
+}
+
+/* Gdy podpis jest linkiem (dowolny wariant stanu) */
+.cards .card a,
+.cards .card a:visited,
+.cards .card a:active,
+.cards .card a:hover {
+  color: #00aaff !important;
+  text-decoration: none !important;
+}
+
+/* Dodatkowo: niech podpis ma pełną szerokość, by centrowanie działało zawsze */
+.cards .card .caption,
+.cards .card .label,
+.cards .card footer,
+.cards .card figcaption,
+.cards .card > span,
+.cards .card > p,
+.cards .card > div {
+  width: 100%;
+  display: block;
+}
