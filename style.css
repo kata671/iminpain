@@ -2018,3 +2018,58 @@ body[data-page="mezczyzna"] .wrap > p.back{ grid-column: 1 / -1 !important; }
   border-radius: 10px;
   display: block;
 }
+/* === Wymuszenie poziomych kafelków i podpisów pod zdjęciem – MĘŻCZYZNA === */
+body[data-page="mezczyzna"] .grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(260px, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+@media (max-width: 1100px) {
+  body[data-page="mezczyzna"] .grid {
+    grid-template-columns: repeat(2, minmax(260px, 1fr)) !important;
+  }
+}
+@media (max-width: 640px) {
+  body[data-page="mezczyzna"] .grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Kafelek = obrazek nad podpisem */
+body[data-page="mezczyzna"] .card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* Obrazki na poziomo (16:9) z przycięciem, pełna szerokość kafla */
+body[data-page="mezczyzna"] .card img,
+body[data-page="mezczyzna"] .card .thumb {
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  height: auto !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 14px !important;
+}
+
+/* Podpis POD zdjęciem, wyśrodkowany i niebieski */
+body[data-page="mezczyzna"] .card .label,
+body[data-page="mezczyzna"] .card p,
+body[data-page="mezczyzna"] .card span,
+body[data-page="mezczyzna"] .card strong {
+  margin-top: 10px !important;
+  text-align: center !important;
+  color: var(--accent, #4ea5ff) !important;
+  font-weight: 700 !important;
+}
+
+/* Dodatkowo: jeśli gdzieś kafelki były układane pionowo flexem – wyłącz to */
+body[data-page="mezczyzna"] .wrap .cards,
+body[data-page="mezczyzna"] .cards {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(260px, 1fr)) !important;
+  gap: 24px !important;
+}
