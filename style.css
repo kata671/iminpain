@@ -1305,3 +1305,26 @@ body[data-page="mezczyzna"] .card .label:hover {
   color: var(--accent) !important;
   text-decoration: none !important;
 }
+/* MĘŻCZYZNA: wymuś niebieskie, wyśrodkowane podpisy na kafelkach */
+body[data-page="mezczyzna"] .grid .card .label,
+body[data-page="mezczyzna"] .grid .card .label *,
+body[data-page="mezczyzna"] .grid .card > span,
+body[data-page="mezczyzna"] .grid .card > span * {
+  color: var(--accent) !important;
+  text-align: center !important;
+}
+
+/* jeśli nagłówek kafelka jest flexem – wycentruj */
+body[data-page="mezczyzna"] .grid .card .label {
+  display: block !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* wyłącz jakiekolwiek efekty hover zmieniające kolor */
+body[data-page="mezczyzna"] .grid .card .label:hover,
+body[data-page="mezczyzna"] .grid .card a:hover .label,
+body[data-page="mezczyzna"] .grid .card a:focus .label {
+  color: var(--accent) !important;
+  text-decoration: none !important;
+}
