@@ -903,3 +903,16 @@ a.card > img {
   display: block;
   border-radius: 16px;
 }
+/* === FIX: jednakowy rozmiar obrazków w kafelkach na wszystkich stronach === */
+.cards .card img,
+.grid .card img,
+a.card > img,
+.card > img {
+  display: block !important;
+  width: 100% !important;
+  height: 220px !important;      /* w razie potrzeby zmień na 200–260px */
+  max-height: 220px !important;
+  object-fit: cover !important;   /* przytnij proporcjonalnie do ramki */
+  border-radius: 16px !important;
+  aspect-ratio: auto !important;  /* nadpisz ewentualne wcześniejsze ustawienia */
+}
