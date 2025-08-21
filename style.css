@@ -1286,3 +1286,22 @@ body {
   color: inherit !important;
   text-decoration: none !important;
 }
+/* MĘŻCZYZNA: niebieskie, wyśrodkowane podpisy na kafelkach */
+body[data-page="mezczyzna"] .card .label,
+body[data-page="mezczyzna"] .card h3,
+body[data-page="mezczyzna"] .card p,
+body[data-page="mezczyzna"] .card span,
+body[data-page="mezczyzna"] .card a,
+body[data-page="mezczyzna"] .card strong {
+  color: var(--accent) !important;
+  text-align: center !important;
+  text-decoration: none !important;
+}
+
+/* Gdyby jakiś :hover zmieniał kolor – wyłączamy */
+body[data-page="mezczyzna"] .card a:hover,
+body[data-page="mezczyzna"] .card a:focus,
+body[data-page="mezczyzna"] .card .label:hover {
+  color: var(--accent) !important;
+  text-decoration: none !important;
+}
