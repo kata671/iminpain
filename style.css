@@ -141,3 +141,15 @@ a:hover { text-decoration: underline; }
   text-align: center;
   font-weight: 700;
 }
+/* Strona wyboru płci – równe kafelki */
+.gender-choice .card {
+  width: 260px;               /* stała szerokość */
+}
+
+.gender-choice .thumb {
+  width: 100%;
+  aspect-ratio: 4 / 5;        /* wymusza ten sam kształt */
+  object-fit: cover;          /* przytnie obrazki, żeby pasowały */
+  border-radius: 12px;
+  display: block;
+}
