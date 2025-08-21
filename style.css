@@ -1123,3 +1123,37 @@ body[data-page="mezczyzna"] .card img {
   object-fit: cover !important;
   border-radius: 14px !important;
 }
+/* ===== HARD FIX: MĘŻCZYZNA — podpisy i miniatury ===== */
+
+/* NAPISY: zawsze niebieskie i wyśrodkowane */
+body[data-page="mezczyzna"] .card span.label,
+body[data-page="mezczyzna"] .card span.label strong,
+body[data-page="mezczyzna"] a.card span,
+body[data-page="mezczyzna"] a.card span strong,
+body[data-page="mezczyzna"] .card h3,
+body[data-page="mezczyzna"] .card h3 a,
+body[data-page="mezczyzna"] a {
+  color: #22aaff !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  display: block !important;
+}
+
+/* KAFELKI: układ w równej siatce */
+body[data-page="mezczyzna"] .grid,
+body[data-page="mezczyzna"] .cards {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: 24px !important;
+}
+
+/* OBRAZKI: zawsze poziome, równo przycięte */
+body[data-page="mezczyzna"] .card img,
+body[data-page="mezczyzna"] .card .thumb {
+  width: 100% !important;
+  aspect-ratio: 16 / 10 !important;  /* wymusza poziomy format */
+  object-fit: cover !important;       /* przycina bez zniekształcania */
+  display: block !important;
+  border-radius: 16px !important;
+}
