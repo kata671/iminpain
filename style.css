@@ -1,97 +1,143 @@
-/* Ogólne tło */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1f1f1f; /* ciemnoszare tło */
-    background-image: radial-gradient(#2a2a2a 1px, transparent 1px);
-    background-size: 20px 20px;
-    color: #ffffff;
-    margin: 0;
-    padding: 0;
-    text-align: center;
+/* ==============================
+   Iminpain — globalny CSS
+   ============================== */
+
+/* Reset / sanity */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Zmienne kolorów i promieni */
+:root{
+  --bg: #0e0f14;        /* bazowe tło */
+  --text: #e6eff9;      /* kolor tekstu */
+  --muted: #98abc7;     /* jaśniejszy tekst */
+  --card: #151922;      /* tło kafelka */
+  --card-brd: #222b36;  /* obramowanie kafelka */
+  --accent: #3ea8ff;    /* linki / akcent */
+  --radius: 18px;       /* promień zaokrągleń */
+}
+
+/* Wysokość dokumentu dla centrowania */
+html, body { height: 100%; }
+
+/* Tło – ciemna kratka jak na podstronach */
+body{
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+  /* Dwie warstwy kropek + delikatny gradient u góry */
+  background:
+    radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px) 0 0 / 18px 18px,
+    radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px) 9px 9px / 18px 18px,
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,0) 120px) top / 100% 180px no-repeat,
+    var(--bg);
 }
 
 /* Nagłówki */
 h1, h2 {
-    color: #00aaff;
-    margin-top: 20px;
+  margin: 24px 0 8px;
+  text-align: center;
+}
+h1 { font-size: 48px; line-height: 1.2; }
+h2 { font-size: 26px; color: var(--muted); }
+
+/* Linki */
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* -------------------------------------------------
+   STRONA WYBORU POSTACI (Kobieta / Mężczyzna)
+   Kontener powinien mieć klasę .gender-choice
+   ------------------------------------------------- */
+
+/* Siatka z dwoma kafelkami; spina się do 1 kolumny na wąskich ekranach */
+.gender-choice{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 420px));
+  gap: 36px;
+  justify-content: center;
+  padding: 16px;
+}
+@media (max-width: 860px){
+  .gender-choice{ grid-template-columns: 1fr; }
 }
 
-/* Kontener */
-.container {
-    padding: 20px;
+/* Pojedynczy kafelek jest labelką – podpis MA BYĆ POD obrazem */
+.gender-choice label{
+  display: flex;
+  flex-direction: column-reverse;   /* <<< klucz: napis pod spodem */
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);             /* niebieskie podpisy */
 }
 
-/* Wybór płci */
-.gender-choice {
-    display: flex;
-    justify-content: center;
-    gap: 60px;
-    margin-top: 40px;
+/* Ukryte radio (jeśli używane) */
+.gender-choice input[type="radio"]{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
 }
 
-.gender-choice label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    font-size: 20px;
-    color: #00aaff;
+/* Wizualny kafel */
+.gender-choice .card{
+  width: 100%;
+  max-width: 420px;
+  background: var(--card);
+  border: 1px solid var(--card-brd);
+  border-radius: calc(var(--radius) + 6px);
+  padding: 14px;
+  box-shadow: 0 4px 22px rgba(0,0,0,.35);
 }
 
-.gender-choice img {
-    margin-top: 10px;
-    width: 220px;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.6);
-    transition: transform 0.3s;
+/* Obrazek w kafelku – zawsze poziomo */
+.gender-choice .thumb{
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;   /* wymusza poziomy format */
+  object-fit: cover;       /* przytnie elegancko brzegi */
+  border-radius: var(--radius);
 }
 
-.gender-choice img:hover {
-    transform: scale(1.05);
+/* Podpis pod obrazkiem (jeśli używany osobny span/strong) */
+.gender-choice .caption,
+.gender-choice label span,
+.gender-choice label strong{
+  display: block;
+  text-align: center;
+  margin-top: 6px;         /* odstęp nad podpisem */
+  color: var(--accent);
+  font-weight: 800;
 }
 
-/* Ukrycie domyślnych radio */
-.gender-choice input[type="radio"] {
-    display: none;
+/* Drobny efekt przy najechaniu */
+.gender-choice label:hover .card{
+  transform: translateY(-2px);
+  transition: transform .15s ease;
 }
 
-Wysłano
-/* Kontener wyboru płci */
-.gender-choice {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 60px; /* odstęp między kafelkami */
-    margin-top: 40px;
+/* -------------------------------------------------
+   KAFELKI OGÓLNE (inne podstrony mogą z tego korzystać)
+   ------------------------------------------------- */
+
+.card{
+  background: var(--card);
+  border: 1px solid var(--card-brd);
+  border-radius: calc(var(--radius) + 6px);
+  padding: 12px;
+}
+.thumb{
+  width: 100%;
+  border-radius: var(--radius);
+  display: block;
 }
 
-/* Pojedynczy kafelek */
-.gender-choice label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    font-size: 20px;
-    color: #00aaff;
-}
-
-/* Obrazki – jednakowe kafelki */
-.gender-choice img {
-    margin-top: 10px;
-    width: 250px;   /* szerokość kafelka */
-    height: 300px;  /* wysokość kafelka */
-    object-fit: cover; /* dopasowanie obrazka */
-    border-radius: 12px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.6);
-    transition: transform 0.3s;
-}
-
-.gender-choice img:hover {
-    transform: scale(1.05);
-}
-
-/* Ukrycie domyślnych radio */
-.gender-choice input[type="radio"] {
-    display: none;
+/* Niebieskie podpisy pod kafelkami (fallback) */
+.card .label,
+.card .label strong,
+.card .label span{
+  color: var(--accent);
+  text-align: center;
+  font-weight: 700;
 }
