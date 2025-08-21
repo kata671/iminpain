@@ -627,3 +627,28 @@ a.card span strong {
   display: block;
   width: 100%;
 }
+/* === WYMUSZENIE NIEBIESKICH PODPISÓW NA KAŻDEJ PODSTRONIE === */
+
+/* 1) Kolor + wyśrodkowanie napisu (dla wszystkich wariantów markupu) */
+a.card span.label,
+a.card span.label *,
+.grid a.card span.label,
+.grid .card span.label,
+.grid .card span.label *,
+.card .label,
+.card .label * {
+  color: #00aaff !important;      /* niebieski */
+  text-align: center !important;  /* środek */
+  display: block !important;
+  width: 100% !important;
+}
+
+/* 2) Doprecyzowanie: jeżeli tekst siedzi w <strong>, też wymuszamy */
+a.card span.label strong,
+.card span.label strong {
+  color: #00aaff !important;
+  font-weight: 700;
+}
+
+/* 3) Gdyby link nadrabiał kolorem na przodku – wyłącz dziedziczenie */
+a.card { color: inherit !important; }
