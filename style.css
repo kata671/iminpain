@@ -619,3 +619,11 @@ a.card span strong {
   display: block;
   width: 100%;
 }
+/* Wymuszenie niebieskiego na podpisach */
+.label strong {
+  color: #00aaff !important;
+  font-weight: 700 !important;
+  text-align: center;
+  display: block;
+  width: 100%;
+}
