@@ -766,3 +766,9 @@ a.card { color: inherit !important; }
     height: 180px;
   }
 }
+.card span,
+.card .label {
+    display: block;
+    text-align: center;
+    width: 100%;
+}
