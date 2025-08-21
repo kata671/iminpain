@@ -1848,3 +1848,76 @@ body[data-page="mezczyzna"] .wrap .card a{
 body[data-page="mezczyzna"] .wrap .card a:hover{
   color: #6bbcff !important;
 }
+/* ===== MEN — fix dla WSZYSTKICH podstron mężczyzny ===== */
+
+/* Siatka: 3 kolumny desktop, 2 tablet, 1 tel. */
+body[data-page="mezczyzna"] .wrap{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+/* Nagłówek i link "Wróć…" mają iść w pełnej szerokości */
+body[data-page="mezczyzna"] .wrap > h1,
+body[data-page="mezczyzna"] .wrap > .lead,
+body[data-page="mezczyzna"] .wrap > p.back{
+  grid-column: 1 / -1 !important;
+  justify-self: center !important;
+}
+@media (max-width: 992px){
+  body[data-page="mezczyzna"] .wrap{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 640px){
+  body[data-page="mezczyzna"] .wrap{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Kafelek: pionowo (obrazek u góry, podpis pod spodem) */
+body[data-page="mezczyzna"] .wrap .card,
+body[data-page="mezczyzna"] .wrap a.card{
+  display: flex !important;
+  flex-direction: column !important;
+  text-decoration: none !important;
+}
+
+/* Ukryj ewentualne belki/nagłówki w kafelkach */
+body[data-page="mezczyzna"] .wrap .card .head,
+body[data-page="mezczyzna"] .wrap .card .header,
+body[data-page="mezczyzna"] .wrap .card .title,
+body[data-page="mezczyzna"] .wrap .card .label{
+  display: none !important;
+}
+
+/* Obrazek zawsze poziomo, wypełnia kafelek */
+body[data-page="mezczyzna"] .wrap .card > img{
+  order: 1 !important;
+  width: 100% !important;
+  height: clamp(160px, 20vw, 240px) !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: inherit;
+}
+
+/* Podpis POD zdjęciem – wyśrodkowany i niebieski */
+body[data-page="mezczyzna"] .wrap .card > p,
+body[data-page="mezczyzna"] .wrap .card > span:not(.label),
+body[data-page="mezczyzna"] .wrap .card > strong{
+  order: 2 !important;
+  display: block !important;
+  margin: 10px 0 0 !important;
+  text-align: center !important;
+  color: #3ea8ff !important;
+  font-weight: 700 !important;
+}
+
+/* Linki w podpisach też niebieskie */
+body[data-page="mezczyzna"] .wrap .card a{
+  color: #3ea8ff !important;
+}
+body[data-page="mezczyzna"] .wrap .card a:hover{
+  color: #6bbcff !important;
+}
