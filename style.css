@@ -144,3 +144,45 @@ body[data-page="kobieta"] .cards img {
   border-radius: var(--radius);
   box-shadow: 0 4px 14px rgba(0,0,0,.35);
 }
+/* --- Ujednolicone kafelki ze zdjęciami na wszystkich stronach --- */
+:root{
+  /* wysokość obrazu w kafelku – możesz ewentualnie zmienić liczby */
+  --card-img-min: 160px;
+  --card-img-max: 220px;
+  --card-gap: 24px;
+}
+
+/* kontener z kartami (klasa .cards jest u Ciebie na wszystkich stronach) */
+.cards{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--card-gap);
+  align-items: start;
+}
+
+/* sama karta (link) */
+.cards a{
+  display: flex;
+  flex-direction: column;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  overflow: hidden;
+  text-decoration: none;
+}
+
+/* OBRAZEK – klucz do identycznych wymiarów */
+.cards a img{
+  width: 100%;
+  aspect-ratio: 4 / 3;      /* ten sam poziomy format wszędzie */
+  height: clamp(var(--card-img-min), 26vw, var(--card-img-max));
+  object-fit: cover;         /* przycina bez rozciągania */
+  display: block;
+}
+
+/* podpis pod obrazkiem */
+.cards a span{
+  padding: 10px 14px 12px;
+  font-weight: 600;
+  color: #dfe9ff;
+}
