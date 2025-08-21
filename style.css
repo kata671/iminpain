@@ -1157,3 +1157,18 @@ body[data-page="mezczyzna"] .card .thumb {
   display: block !important;
   border-radius: 16px !important;
 }
+/* ===== FORCE DARK BACKGROUND EVERYWHERE ===== */
+:root{
+  --bg:#0b0f14;
+  --text:#e8eef9;
+}
+
+html, body{
+  /* ciemne tło z kropkami i delikatnym rozjaśnieniem u góry */
+  background:
+    radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px) 0 0/18px 18px,
+    radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px) 9px 9px/18px 18px,
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,0) 120px) top/100% 180px no-repeat,
+    var(--bg) !important;
+  color: var(--text) !important;
+}
