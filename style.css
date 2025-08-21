@@ -193,3 +193,20 @@ body[data-page="kobieta"] .cards img {
   object-fit: cover;   /* dopasowanie proporcji, przycięcie nadmiaru */
   border-radius: 12px; /* zaokrąglone rogi jak wcześniej */
 }
+/* Ustal jedną wysokość zdjęć w kafelkach na wszystkich podstronach */
+:root { --card-image-height: 220px; }  /* możesz podbić np. na 240px jeśli wolisz większe */
+
+.cards a img,
+.card img {
+  display: block;
+  width: 100%;
+  height: var(--card-image-height) !important;
+  object-fit: cover;        /* przycina nadmiar, zachowuje proporcje */
+  object-position: center;
+  border-radius: 12px;
+}
+
+/* opcjonalnie: na wąskich ekranach trochę niższe obrazki */
+@media (max-width: 768px) {
+  :root { --card-image-height: 200px; }
+}
