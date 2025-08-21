@@ -1520,3 +1520,44 @@ body[data-page="mezczyzna"] .grid > a p{
   color: #3ea8ff !important;
   font-weight: 700 !important;
 }
+/* ===== MĘŻCZYZNA — siatka 3 kolumny, obrazki poziomo, podpisy pod obrazkiem ===== */
+
+/* kontenery siatki na wszystkich podstronach mężczyzny */
+body[data-page="mezczyzna"] #grid-men,
+body[data-page="mezczyzna"] #grid-men-home,
+body[data-page="mezczyzna"] #grid-men-glowa,
+body[data-page="mezczyzna"] #grid-men-klatka,
+body[data-page="mezczyzna"] #grid-men-nogi,
+body[data-page="mezczyzna"] .grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important; /* 3 kolumny na desktopie */
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+/* kafelki: anchor .card lub div .card */
+body[data-page="mezczyzna"] a.card,
+body[data-page="mezczyzna"] .card {
+  display: flex !important;
+  flex-direction: column !important;    /* obrazek nad podpisem */
+  text-decoration: none !important;
+}
+
+/* obrazek — wymuszamy poziomy kadr 16:9 i wypełnienie */
+body[data-page="mezczyzna"] a.card img,
+body[data-page="mezczyzna"] .card img {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* podpis — pod zdjęciem, niebieski, wyśrodkowany */
+body[data-page="mezczyzna"] a.card p,
+body[data-page="mezczyzna"] .card p {
+  margin: 10px 0 0 !important;
+  text-align: center !important;
+  color: #3ea8ff !important;
+  font-weight: 700 !important;
+}
