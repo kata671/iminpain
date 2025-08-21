@@ -1,71 +1,86 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mężczyzna – Głowa i Szyja</title>
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Tymczasowy styl tylko dla tej strony -->
-  <style>
-  /* Podpisy zawsze niebieskie i wyśrodkowane */
-  .card span.label,
-  .card span.label strong,
-  .card h3,
-  .card h3 a,
-  .card a span {
-    color: #22aaff !important;
-    text-align: center !important;
-    text-decoration: none !important;
-    font-weight: 700 !important;
-    display: block !important;
-  }
-
-  /* Kafelki w równym układzie */
-  .grid,
-  .cards {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
-    gap: 24px !important;
-  }
-
-  /* Obrazki wymuszony poziomy format */
-  .card img {
-    width: 100% !important;
-    aspect-ratio: 16/10 !important;
-    object-fit: cover !important;
-    border-radius: 16px !important;
-    display: block !important;
-  }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mężczyzna – Głowa i szyja</title>
 </head>
-<body data-page="mezczyzna-glowa">
+<body>
 
-  <h1>Mężczyzna – Głowa i Szyja</h1>
+  <h1 style="text-align:center; color:#00aaff; font-weight:800; margin:16px 0 24px;">
+    Mężczyzna – Głowa i szyja
+  </h1>
 
-  <div class="grid">
-    <div class="card">
-      <img src="img/mezczyzna-glowa.jpg" alt="Głowa">
-      <span class="label">Głowa</span>
+  <!-- Siatka kafelków wymuszona inline -->
+  <div
+    style="
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap:24px;
+      align-items:start;
+      max-width:1100px;
+      margin:0 auto;
+      padding:0 16px 24px;
+    "
+  >
+    <!-- 1) Głowa -->
+    <div style="background:rgba(0,0,0,0.25); border-radius:18px; padding:12px; box-shadow:0 8px 20px rgba(0,0,0,.25);">
+      <img
+        src="img/mezczyzna-glowa.jpg"
+        alt="Głowa"
+        loading="lazy"
+        style="display:block; width:100%; height:220px; object-fit:cover; border-radius:14px;"
+      />
+      <div style="color:#00aaff; text-align:center; font-weight:700; margin-top:10px;">Głowa</div>
     </div>
-    <div class="card">
-      <img src="img/mezczyzna-nos.jpg" alt="Nos">
-      <span class="label">Nos</span>
+
+    <!-- 2) Nos -->
+    <div style="background:rgba(0,0,0,0.25); border-radius:18px; padding:12px; box-shadow:0 8px 20px rgba(0,0,0,.25);">
+      <img
+        src="img/mezczyzna-nos.jpg"
+        alt="Nos"
+        loading="lazy"
+        style="display:block; width:100%; height:220px; object-fit:cover; border-radius:14px;"
+      />
+      <div style="color:#00aaff; text-align:center; font-weight:700; margin-top:10px;">Nos</div>
     </div>
-    <div class="card">
-      <img src="img/mezczyzna-ucho.jpg" alt="Ucho">
-      <span class="label">Ucho</span>
+
+    <!-- 3) Ucho -->
+    <div style="background:rgba(0,0,0,0.25); border-radius:18px; padding:12px; box-shadow:0 8px 20px rgba(0,0,0,.25);">
+      <img
+        src="img/mezczyzna-ucho.jpg"
+        alt="Ucho"
+        loading="lazy"
+        style="display:block; width:100%; height:220px; object-fit:cover; border-radius:14px;"
+      />
+      <div style="color:#00aaff; text-align:center; font-weight:700; margin-top:10px;">Ucho</div>
     </div>
-    <div class="card">
-      <img src="img/mezczyzna-oczy.jpg" alt="Oczy">
-      <span class="label">Oczy</span>
+
+    <!-- 4) Oczy -->
+    <div style="background:rgba(0,0,0,0.25); border-radius:18px; padding:12px; box-shadow:0 8px 20px rgba(0,0,0,.25);">
+      <img
+        src="img/mezczyzna-oczy.jpg"
+        alt="Oczy"
+        loading="lazy"
+        style="display:block; width:100%; height:220px; object-fit:cover; border-radius:14px;"
+      />
+      <div style="color:#00aaff; text-align:center; font-weight:700; margin-top:10px;">Oczy</div>
     </div>
-    <div class="card">
-      <img src="img/mezczyzna-szyja.jpg" alt="Szyja">
-      <span class="label">Szyja</span>
+
+    <!-- 5) Szyja -->
+    <div style="background:rgba(0,0,0,0.25); border-radius:18px; padding:12px; box-shadow:0 8px 20px rgba(0,0,0,.25);">
+      <img
+        src="img/mezczyzna-szyja.jpg"
+        alt="Szyja"
+        loading="lazy"
+        style="display:block; width:100%; height:220px; object-fit:cover; border-radius:14px;"
+      />
+      <div style="color:#00aaff; text-align:center; font-weight:700; margin-top:10px;">Szyja</div>
     </div>
   </div>
 
-  <p><a href="mezczyzna.html">← Wróć do wyboru sekcji</a></p>
+  <p style="text-align:center; margin:0 0 24px;">
+    <a href="mezczyzna.html" style="color:#00aaff; font-weight:700; text-decoration:none;">← Wróć do wyboru sekcji</a>
+  </p>
 </body>
 </html>
