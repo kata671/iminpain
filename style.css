@@ -456,3 +456,61 @@ main,
   color: #33bbff !important;
   text-decoration: none !important;
 }
+/* ——— Podpisy pod kafelkami: kolor i wyśrodkowanie wszędzie ——— */
+.cards .card figcaption,
+.cards .card .caption,
+.cards .card .card__footer,
+.cards .card .card-footer,
+.cards .card .label,
+.cards .card .title,
+.cards .card .name,
+.cards .card .card-title,
+.cards .card .card__title,
+.cards .card .subtitle {
+  color: #00aaff !important;       /* niebieski jak u Kobiety */
+  text-align: center !important;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+/* Jeśli podpis jest linkiem (<a>) – też na niebiesko i bez podkreślenia */
+.cards .card figcaption a,
+.cards .card .caption a,
+.cards .card .card__footer a,
+.cards .card .card-footer a,
+.cards .card .label a,
+.cards .card .title a,
+.cards .card .name a,
+.cards .card .card-title a,
+.cards .card .card__title a,
+.cards .card .subtitle a {
+  display: block;
+  color: #00aaff !important;
+  text-decoration: none !important;
+}
+
+.cards .card figcaption a:visited,
+.cards .card .caption a:visited,
+.cards .card .card__footer a:visited,
+.cards .card .card-footer a:visited,
+.cards .card .label a:visited,
+.cards .card .title a:visited,
+.cards .card .name a:visited,
+.cards .card .card-title a:visited,
+.cards .card .card__title a:visited,
+.cards .card .subtitle a:visited {
+  color: #00aaff !important;
+}
+
+.cards .card figcaption a:hover,
+.cards .card .caption a:hover,
+.cards .card .card__footer a:hover,
+.cards .card .card-footer a:hover,
+.cards .card .label a:hover,
+.cards .card .title a:hover,
+.cards .card .name a:hover,
+.cards .card .card-title a:hover,
+.cards .card .card__title a:hover,
+.cards .card .subtitle a:hover {
+  color: #33bbff !important;
+}
