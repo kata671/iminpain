@@ -112,3 +112,29 @@ body[data-page="mezczyzna"] .card img {
 
 body[data-page="kobieta"] .card p,
 body[data-page="mezczyzna"] .card p {
+/* === Ujednolicone tło jak na stronie głównej (ciemny szary w kropki) === */
+:root {
+  /* możesz dostroić odcień i gęstość kropek w razie potrzeby */
+  --bg-base: #0e1116;                  /* bazowy ciemnoszary */
+  --bg-dot: rgba(255, 255, 255, 0.08); /* jasność kropek */
+  --bg-grid: 18px 18px;                /* odstęp kropek */
+}
+
+/* Wymuś identyczne tło na wszystkich podstronach */
+body,
+body[data-page] {
+  background-color: var(--bg-base) !important;
+  background-image: radial-gradient(var(--bg-dot) 1px, transparent 1px) !important;
+  background-size: var(--bg-grid) !important;
+  background-attachment: fixed !important;
+}
+
+/* Gdyby jakieś layoutowe wrappery miały własne tła — wyłącz je */
+.main,
+.content,
+.section,
+.cards,
+.page,
+.wrapper {
+  background: transparent !important;
+}
