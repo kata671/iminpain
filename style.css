@@ -1478,3 +1478,45 @@ body[data-page="mezczyzna"] .grid-men {
     grid-template-columns: 1fr !important;
   }
 }
+/* === MĘŻCZYZNA: kafelki w 3 kolumnach, obrazki poziomo, podpisy pod obrazkiem === */
+body[data-page="mezczyzna"] .wrap,
+body[data-page="mezczyzna"] .grid,
+body[data-page="mezczyzna"] #grid,
+body[data-page="mezczyzna"] #grid-men,
+body[data-page="mezczyzna"] #grid-men-home{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+/* każdy kafelek */
+body[data-page="mezczyzna"] .wrap > a,
+body[data-page="mezczyzna"] .grid > a,
+body[data-page="mezczyzna"] .wrap > .card,
+body[data-page="mezczyzna"] .grid > .card{
+  display: flex !important;
+  flex-direction: column !important;
+  text-decoration: none !important;
+}
+
+/* obrazek – zawsze poziomo (16:9), bez pionowego "ściskania" */
+body[data-page="mezczyzna"] .card img,
+body[data-page="mezczyzna"] .wrap > a img,
+body[data-page="mezczyzna"] .grid > a img{
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* podpis pod obrazkiem (niebieski, wyśrodkowany) */
+body[data-page="mezczyzna"] .card p,
+body[data-page="mezczyzna"] .wrap > a p,
+body[data-page="mezczyzna"] .grid > a p{
+  margin: 10px 0 0 !important;
+  text-align: center !important;
+  color: #3ea8ff !important;
+  font-weight: 700 !important;
+}
