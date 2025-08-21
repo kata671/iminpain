@@ -1041,3 +1041,60 @@ a.card img {
   color: #00aaff !important;   /* brak zmiany na hoverze */
   text-decoration: none;
 }
+/* --- UKŁAD KAFELKÓW: poziomo, równe odstępy --- */
+.grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+/* --- ZDJĘCIA W KAFELKACH: poziome, przycięte elegancko --- */
+.card img,
+.card .thumb {
+  width: 100% !important;
+  aspect-ratio: 16 / 10 !important;   /* poziomy format */
+  object-fit: cover !important;        /* przytnij, nie rozciągaj */
+  display: block !important;
+  border-radius: 14px !important;
+}
+
+/* --- PODPISY W KAFELKACH: zawsze niebieskie i wyśrodkowane --- */
+.card .label,
+.card span.label,
+.card > span.label,
+.card figcaption,
+a.card > span,
+a.card > strong,
+a.card .label * {
+  display: block !important;
+  text-align: center !important;
+  color: #00aaff !important;       /* ten sam niebieski co u Kobiety */
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  padding: 10px 12px !important;
+}
+
+/* bez zmiany koloru na hoverze */
+a.card > span:hover,
+a.card > strong:hover,
+.card .label:hover {
+  color: #00aaff !important;
+  text-decoration: none !important;
+}
+
+/* --- „Mężczyzna”: podpisy jako nagłówki nad kafelkami też na niebiesko i center --- */
+[data-page="mezczyzna"] h3,
+[data-page="mezczyzna"] h3 a {
+  color: #00aaff !important;
+  text-align: center !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  display: block !important;
+  margin: 8px 0 12px !important;
+}
+[data-page="mezczyzna"] h3 a:hover,
+[data-page="mezczyzna"] h3 a:focus {
+  color: #00aaff !important;
+  text-decoration: none !important;
+}
