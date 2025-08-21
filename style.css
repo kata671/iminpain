@@ -1561,3 +1561,91 @@ body[data-page="mezczyzna"] .card p {
   color: #3ea8ff !important;
   font-weight: 700 !important;
 }
+/* ====================================================================
+   MĘŻCZYZNA — OSTATECZNY PATCH
+   - 3 kolumny siatki
+   - zdjęcia poziome (16:9)
+   - podpis POD zdjęciem, wyśrodkowany, niebieski
+   - ukrycie górnych/nałożonych „belkowych” tytułów
+   ==================================================================== */
+
+/* --- kontenery siatki na wszystkich widokach mężczyzny --- */
+body[data-page="mezczyzna"] #grid-men,
+body[data-page="mezczyzna"] #grid-men-home,
+body[data-page="mezczyzna"] #grid-men-glowa,
+body[data-page="mezczyzna"] #grid-men-klatka,
+body[data-page="mezczyzna"] #grid-men-nogi,
+body[data-page="mezczyzna"] .grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important; /* 3 kolumny desktop */
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+/* responsywnie wężej */
+@media (max-width: 992px) {
+  body[data-page="mezczyzna"] #grid-men,
+  body[data-page="mezczyzna"] #grid-men-home,
+  body[data-page="mezczyzna"] #grid-men-glowa,
+  body[data-page="mezczyzna"] #grid-men-klatka,
+  body[data-page="mezczyzna"] #grid-men-nogi,
+  body[data-page="mezczyzna"] .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 600px) {
+  body[data-page="mezczyzna"] #grid-men,
+  body[data-page="mezczyzna"] #grid-men-home,
+  body[data-page="mezczyzna"] #grid-men-glowa,
+  body[data-page="mezczyzna"] #grid-men-klatka,
+  body[data-page="mezczyzna"] #grid-men-nogi,
+  body[data-page="mezczyzna"] .grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* --- kafelek (a.card lub div.card) = kolumna: obrazek nad podpisem --- */
+body[data-page="mezczyzna"] a.card,
+body[data-page="mezczyzna"] .card {
+  display: flex !important;
+  flex-direction: column !important;
+  text-decoration: none !important;
+}
+
+/* niepotrzebne górne belki/etykiety chowamy, żeby nie duplikowały tytułu */
+body[data-page="mezczyzna"] .card .head,
+body[data-page="mezczyzna"] .card .header,
+body[data-page="mezczyzna"] .card .label {
+  display: none !important;
+}
+
+/* --- obrazek: poziomy kadr 16:9 --- */
+body[data-page="mezczyzna"] a.card img,
+body[data-page="mezczyzna"] .card img {
+  order: 1 !important;                 /* obrazek zawsze pierwszy */
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: inherit;
+}
+
+/* --- podpis: zawsze POD zdjęciem, wyśrodkowany i niebieski --- */
+body[data-page="mezczyzna"] a.card p,
+body[data-page="mezczyzna"] .card p,
+body[data-page="mezczyzna"] a.card span:not(.label),
+body[data-page="mezczyzna"] .card span:not(.label),
+body[data-page="mezczyzna"] a.card strong,
+body[data-page="mezczyzna"] .card strong {
+  order: 2 !important;                 /* podpis zawsze drugi (pod obrazkiem) */
+  display: block !important;
+  margin: 10px 0 0 !important;
+  text-align: center !important;
+  color: #3ea8ff !important;
+  font-weight: 700 !important;
+}
+
+/* niebieski kolor linków na stronach mężczyzny */
+body[data-page="mezczyzna"] a { color: #3ea8ff !important; }
+body[data-page="mezczyzna"] a:hover { color: #6bbcff !important; }
