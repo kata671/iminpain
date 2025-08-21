@@ -1267,3 +1267,22 @@ body {
 #grid-men-glowa .tile a:hover {
   text-decoration: underline;
 }
+/* Podpisy pod kafelkami: niebieskie i wyśrodkowane wszędzie */
+.card p,
+.card .label,
+.card span,
+.card span strong {
+  display: block;
+  text-align: center;
+  color: var(--accent) !important; /* ten sam niebieski */
+  text-decoration: none;
+}
+
+/* Bez podkreślenia i bez zmiany koloru przy hoverze/focusie */
+.card a,
+.card a:visited,
+.card a:hover,
+.card a:focus {
+  color: inherit !important;
+  text-decoration: none !important;
+}
