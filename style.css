@@ -1,58 +1,82 @@
-/* Reset */
-body {
+/* ====== Reset / baza ====== */
+:root{
+  --bg: #0e0f12;           /* ciemny szary */
+  --card: #1a1d22;
+  --card-muted: #242830;
+  --text: #e8ecf1;
+  --link: #6bb3ff;
+  --gap: 24px;
+  --card-w: 320px;         /* szerokość kafla jak u „Kobieta” */
+  --radius: 16px;
+}
+
+/* kropkowane tło jak na stronie głównej */
+html, body{
+  height: 100%;
+}
+body{
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #0d0d0d;
-  color: white;
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* warstwa tła: kropki + delikatny gradient */
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,.10) 1px, transparent 1.4px) 0 0/18px 18px,
+    linear-gradient(180deg, #0e0f12 0%, #0b0d11 100%);
 }
 
-/* Linki */
-a {
-  color: #4da6ff;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
+/* linki */
+a{ color: var(--link); text-decoration: none; }
+a:hover{ text-decoration: underline; }
+
+/* nagłówki */
+h1,h2{ margin: 16px auto; text-align:center; }
+
+/* ====== Układ kafelków ====== */
+/* obsłuż dowolną nazwę kontenera, by nie trzeba było ruszać HTML-a */
+.cards,
+.cards-grid,
+.card-grid,
+.grid,
+.tiles{
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap);
+  padding: var(--gap);
 }
 
-/* Nagłówki */
-h1, h2 {
-  text-align: center;
-  margin: 20px 0;
-}
-
-/* Kontener na karty */
-.cards {
-  display: flex;
-  flex-wrap: wrap;       /* pozwala zawijać wiersze */
-  justify-content: center; /* wyśrodkowanie */
-  gap: 20px;             /* odstęp między kartami */
-  padding: 20px;
-}
-
-/* Pojedyncza karta */
-.card {
-  width: 220px;           /* stała szerokość */
-  background: #1a1a1a;
-  border-radius: 10px;
+/* pojedyncza karta */
+.card{
+  width: var(--card-w);
+  background: var(--card);
+  border-radius: var(--radius);
   overflow: hidden;
-  text-align: center;
-  transition: transform 0.2s;
+  box-shadow: 0 4px 14px rgba(0,0,0,.35);
+  transition: transform .18s ease, box-shadow .18s ease;
 }
-.card:hover {
-  transform: scale(1.05);
+.card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.45);
 }
 
-/* Obrazek w karcie */
-.card img {
+/* obraz w karcie – pełna szerokość, zachowaj proporcje */
+.card img{
   width: 100%;
   height: auto;
   display: block;
 }
 
-/* Tytuł karty */
-.card-title {
-  padding: 10px;
-  font-weight: bold;
-  background: #262626;
+/* pasek tytułu pod obrazkiem */
+.card .card-title{
+  background: var(--card-muted);
+  padding: 10px 12px;
+  font-weight: 700;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+
+/* responsywność – na bardzo wąskich ekranach lekko zwęź karty */
+@media (max-width: 380px){
+  :root{ --card-w: 280px; }
 }
