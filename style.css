@@ -430,4 +430,39 @@ Wysłano
 #grid-kobieta-obszary .card p{
   margin:10px 0 0;
   font-weight:600;
+/* KOBIETA – identyczne wymiary kafelków i zdjęć */
+#grid-kobieta-obszary{
+  display:flex;
+  flex-wrap:wrap;
+  gap:24px;
+  justify-content:center;
 }
+
+#grid-kobieta-obszary .card{
+  width:320px;                /* możesz zmienić np. 300–360px */
+  max-width:100%;
+  text-align:center;
+}
+
+/* Link = ramka na obrazek o stałych proporcjach */
+#grid-kobieta-obszary .card a{
+  display:block;
+  width:100%;
+  aspect-ratio:16/9 !important;  /* identyczny „ekran” */
+  overflow:hidden;
+  border-radius:14px;
+}
+
+/* Obrazek wypełnia ramkę, nadmiar się przycina */
+#grid-kobieta-obszary .card a img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  display:block;
+}
+
+/* Podpis zawsze pod zdjęciem */
+#grid-kobieta-obszary .card p{
+  margin:10px 0 0;
+  font-weight:600;
+}}
