@@ -1715,3 +1715,65 @@ body[data-page="mezczyzna"] a:hover { color: #6bbcff !important; }
 #grid-men a:hover, #grid-men-home a:hover, #grid-men-glowa a:hover, #grid-men-klatka a:hover, #grid-men-nogi a:hover{
   color:#6bbcff !important;
 }
+/* ===== MEN: uniwersalny fallback dla wszystkich podstron ===== */
+/* Ustaw siatkę 3 kolumn, a kafelek jako kolumnę: obrazek u góry, podpis pod spodem. */
+
+.wrap .grid,
+.wrap [class*="grid-men"]{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+@media (max-width: 992px){
+  .wrap .grid,
+  .wrap [class*="grid-men"]{
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  }
+}
+@media (max-width: 640px){
+  .wrap .grid,
+  .wrap [class*="grid-men"]{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Każdy kafelek: obrazek + podpis pod nim */
+.wrap .card, .wrap a.card{
+  display: flex !important;
+  flex-direction: column !important;
+  text-decoration: none !important;
+}
+
+/* Schowaj wszelkie nagłówki/belki nad obrazkiem, jeśli gdzieś są */
+.wrap .card .head,
+.wrap .card .header,
+.wrap .card .label{
+  display: none !important;
+}
+
+/* Wymuś „poziomy” wygląd zdjęcia (stała wysokość + cover) */
+.wrap .card img{
+  order: 1 !important;
+  width: 100% !important;
+  height: clamp(140px, 18vw, 220px) !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: inherit;
+}
+
+/* Podpis POD zdjęciem – wyśrodkowany i niebieski */
+.wrap .card p,
+.wrap .card span:not(.label),
+.wrap .card strong{
+  order: 2 !important;
+  display: block !important;
+  margin: 10px 0 0 !important;
+  text-align: center !important;
+  color: #3ea8ff !important;
+  font-weight: 700 !important;
+}
+
+/* Linki w kafelkach – zawsze niebieskie */
+.wrap .card a{ color:#3ea8ff !important; }
+.wrap .card a:hover{ color:#6bbcff !important; }
