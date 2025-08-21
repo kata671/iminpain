@@ -1375,3 +1375,28 @@ body[data-page="mezczyzna"] .grid .card a:focus .label {
   font-weight: bold;
   color: var(--accent) !important;
   te
+/* --- Mężczyzna: podpisy POD obrazkiem na stronie "Głowa i szyja" --- */
+#grid-men-glowa > .card {
+  display: flex !important;
+  flex-direction: column !important;   /* pionowo */
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+#grid-men-glowa > .card > img {
+  order: 1 !important;                 /* obrazek ZAWSZE pierwszy */
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 0 8px 0 !important;        /* odstęp nad podpisem */
+  border-radius: 12px;
+}
+
+#grid-men-glowa > .card > p {
+  order: 2 !important;                 /* podpis ZAWSZE po obrazku */
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: center !important;
+  color: var(--accent) !important;     /* niebieski */
+  font-weight: 700;
+}
