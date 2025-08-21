@@ -153,3 +153,57 @@ a:hover { text-decoration: underline; }
   border-radius: 12px;
   display: block;
 }
+/* === GLOBALNE, JEDNAKOWE KAFELKI — NA CAŁYM SERWISIE === */
+:root{
+  /* łatwo zmienisz szerokość i proporcje wszystkich kafelków */
+  --tile-w: 320px;          /* szerokość kafelka */
+  --tile-ratio: 16 / 10;    /* proporcje (np. 4/5 lub 1/1 jeśli wolisz) */
+}
+
+.card{
+  width: var(--tile-w) !important;
+  max-width: 100%;
+}
+
+/* Obraz wewnątrz kafelka */
+.card .thumb,
+.thumb{
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: var(--tile-ratio) !important;
+  object-fit: cover !important;   /* przytnij, żeby trzymać proporcje */
+  border-radius: 12px;
+}
+
+/* Podpis zawsze pod obrazkiem i wycentrowany */
+.card .label,
+.card p,
+.label{
+  margin-top: 10px !important;
+  text-align: center !important;
+}
+
+/* Siatki z równymi kolumnami gdziekolwiek */
+.grid{
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(var(--tile-w), 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+/* Strony głowa/szyja często miały swoje reguły — nadpisujemy */
+#grid-men-glowa .thumb,
+#grid-women-glowa .thumb,
+#grid-men-glowa .card .thumb,
+#grid-women-glowa .card .thumb{
+  aspect-ratio: var(--tile-ratio) !important;
+  object-fit: cover !important;
+}
+
+/* Responsywność: na wąskich ekranach kafelki pełnej szerokości */
+@media (max-width: 700px){
+  :root{ --tile-w: 100%; }
+  .card{ width: 100% !important; }
+  .grid{ grid-template-columns: 1fr !important; }
+}
