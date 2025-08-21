@@ -1023,3 +1023,21 @@ a.card img {
   max-width: 100% !important;
   height: auto !important;
 }
+/* MĘŻCZYZNA: nagłówki nad kafelkami (np. "Głowa", "Nos")
+   mają być niebieskie i wyśrodkowane, bez zmiany koloru po hoverze */
+[data-page="mezczyzna"] h3,
+[data-page="mezczyzna"] h3 a {
+  color: #00aaff !important;   /* ten sam niebieski co u kobiety */
+  text-align: center;
+  font-weight: 700;
+  text-decoration: none;
+  display: block;              /* żeby wyśrodkowanie działało niezależnie od domyślnego stylu */
+  margin: 8px 0 12px;          /* delikatny odstęp od kafelka */
+}
+
+[data-page="mezczyzna"] h3 a:hover,
+[data-page="mezczyzna"] h3 a:focus,
+[data-page="mezczyzna"] h3 a:active {
+  color: #00aaff !important;   /* brak zmiany na hoverze */
+  text-decoration: none;
+}
