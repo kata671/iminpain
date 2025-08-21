@@ -1098,3 +1098,28 @@ a.card > strong:hover,
   color: #00aaff !important;
   text-decoration: none !important;
 }
+/* --- Poprawka dla stron Mężczyzna --- */
+body[data-page="mezczyzna"] a,
+body[data-page="mezczyzna"] .card .label,
+body[data-page="mezczyzna"] h3,
+body[data-page="mezczyzna"] h3 a {
+  color: #00aaff !important;      /* zawsze niebieski */
+  text-align: center !important;  /* wyśrodkowane */
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  display: block !important;
+}
+
+/* kafelki i zdjęcia w poziomie */
+body[data-page="mezczyzna"] .grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+  gap: 24px !important;
+}
+
+body[data-page="mezczyzna"] .card img {
+  width: 100% !important;
+  aspect-ratio: 16 / 10 !important;   /* wymuszony poziomy format */
+  object-fit: cover !important;
+  border-radius: 14px !important;
+}
