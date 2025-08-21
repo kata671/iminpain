@@ -1,87 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mężczyzna – Głowa</title>
-  <link rel="stylesheet" href="style.css">
-
-  <!-- MEN GRID FIX – STYLE -->
-  <style>
-    .card, a.card, .grid-item {
-      display:flex; flex-direction:column; text-decoration:none;
-    }
-    .card img, .grid-item img {
-      width:100%; height:auto; aspect-ratio:16/9; object-fit:cover;
-      display:block; margin:0 0 8px 0; border-radius:12px;
-    }
-    .card p, .grid-item p, .card span:not(.label), .grid-item span:not(.label), 
-    .card strong, .grid-item strong {
-      display:block; margin:0; text-align:center; font-weight:700; color:#3ea8ff;
-    }
-    .wrap > .grid, .wrap > .grid-container, .wrap > .cards, .wrap > .tiles {
-      display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
-      gap:24px; align-items:start;
-    }
-    @media (max-width:992px){ .wrap > .grid, .wrap > .grid-container, .wrap > .cards, .wrap > .tiles { grid-template-columns:repeat(2, minmax(0,1fr)); } }
-    @media (max-width:640px){ .wrap > .grid, .wrap > .grid-container, .wrap > .cards, .wrap > .tiles { grid-template-columns:1fr; } }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mężczyzna — Głowa i szyja</title>
+  <!-- Uwaga: style.css (bez "s") -->
+  <link rel="stylesheet" href="./style.css?v=13" />
 </head>
 <body>
-  <div class="wrap">
-    <h1>Mężczyzna – Głowa</h1>
-    <div class="grid">
-      <a href="#" class="card">
-        <img src="img/mezczyzna-glowa.jpg" alt="Głowa">
-        <p>Głowa</p>
-      </a>
-      <a href="#" class="card">
-        <img src="img/mezczyzna-oczy.jpg" alt="Oczy">
-        <p>Oczy</p>
-      </a>
-      <a href="#" class="card">
-        <img src="img/mezczyzna-uszy.jpg" alt="Uszy">
-        <p>Uszy</p>
-      </a>
-    </div>
-  </div>
+  <nav class="breadcrumbs">
+    <a href="mezczyzna.html">← Wróć do wyboru sekcji</a>
+    <span>|</span>
+    <a href="index.html">Strona główna</a>
+  </nav>
 
-  <!-- MEN GRID FIX – SCRIPT -->
-  <script>
-  (function(){
-    var root = document.querySelector('.wrap') || document.body;
-    var candidates = Array.from(root.querySelectorAll('div,section,main'));
-    var container = candidates.find(el => el.querySelectorAll('.card, .grid-item, a.card').length >= 2);
-    if(container){
-      container.style.display = 'grid';
-      container.style.gridTemplateColumns = 'repeat(3, minmax(0, 1fr))';
-      container.style.gap = '24px';
-      container.style.alignItems = 'start';
-    }
-    Array.from(root.querySelectorAll('.card, .grid-item, a.card')).forEach(function(card){
-      card.style.display = 'flex';
-      card.style.flexDirection = 'column';
-      card.style.textDecoration = 'none';
-      var img = card.querySelector('img');
-      if(img){
-        img.style.width = '100%';
-        img.style.height = 'auto';
-        img.style.aspectRatio = '16/9';
-        img.style.objectFit = 'cover';
-        img.style.display = 'block';
-        img.style.margin = '0 0 8px 0';
-        img.style.borderRadius = '12px';
-      }
-      var label = card.querySelector('p, span:not(.label), strong');
-      if(label){
-        label.style.display = 'block';
-        label.style.margin = '0';
-        label.style.textAlign = 'center';
-        label.style.fontWeight = '700';
-        label.style.color = '#3ea8ff';
-      }
-    });
-  })();
-  </script>
+  <h1>Mężczyzna — Głowa i szyja</h1>
+  <p class="lead">Wybierz część: Szczęka, Nos, Uszy, Oczy lub Szyja.</p>
+
+  <main class="cards">
+    <div class="card">
+      <picture>
+        <source srcset="img/mezczyzna-szczeka.jpg" type="image/jpeg" />
+        <img src="img/mezczyzna-szczeka.png" alt="Szczęka" loading="lazy" />
+      </picture>
+      <div class="card-label">Szczęka</div>
+    </div>
+
+    <div class="card">
+      <picture>
+        <source srcset="img/mezczyzna-nos.jpg" type="image/jpeg" />
+        <img src="img/mezczyzna-nos.png" alt="Nos" loading="lazy" />
+      </picture>
+      <div class="card-label">Nos</div>
+    </div>
+
+    <div class="card">
+      <picture>
+        <source srcset="img/mezczyzna-ucho.jpg" type="image/jpeg" />
+        <img src="img/mezczyzna-ucho.png" alt="Uszy" loading="lazy" />
+      </picture>
+      <div class="card-label">Uszy</div>
+    </div>
+
+    <div class="card">
+      <picture>
+        <source srcset="img/mezczyzna-oczy.jpg" type="image/jpeg" />
+        <img src="img/mezczyzna-oczy.png" alt="Oczy" loading="lazy" />
+      </picture>
+      <div class="card-label">Oczy</div>
+    </div>
+
+    <div class="card">
+      <picture>
+        <source srcset="img/mezczyzna-szyja.jpg" type="image/jpeg" />
+        <img src="img/mezczyzna-szyja.png" alt="Szyja" loading="lazy" />
+      </picture>
+      <div class="card-label">Szyja</div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
+  </footer>
 </body>
 </html>

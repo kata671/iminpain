@@ -1,38 +1,112 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mężczyzna – Klatka / Brzuch / Plecy</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mężczyzna — Klatka, brzuch, plecy</title>
+
+  <link rel="stylesheet" href="style.css" />
+
   <style>
-    .card, a.card, .grid-item { display:flex; flex-direction:column; text-decoration:none; }
-    .card img, .grid-item img { width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; display:block; margin:0 0 8px 0; border-radius:12px; }
-    .card p, .grid-item p, .card span:not(.label), .grid-item span:not(.label), .card strong, .grid-item strong { display:block; margin:0; text-align:center; font-weight:700; color:#3ea8ff; }
-    .wrap > .grid, .wrap > .grid-container, .wrap > .cards, .wrap > .tiles { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:24px; align-items:start; }
-    @media (max-width:992px){ .wrap > .grid, .wrap > .grid-container, .wrap > .cards, .wrap > .tiles { grid-template-columns:repeat(2, minmax(0,1fr)); } }
-    @media (max-width:640px){ .wrap > .grid, .wrap > .grid-container, .wrap > .cards, .wrap > .tiles { grid-template-columns:1fr; } }
+    .grid-container{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:24px;
+      align-items:start;
+      justify-items:center;
+      width:100%;
+      max-width:1100px;
+      margin:24px auto 0;
+      padding:0 16px;
+    }
+    .card{
+      width:100%;
+      max-width:340px;
+      background:rgba(255,255,255,0.04);
+      border-radius:14px;
+      box-shadow:0 6px 18px rgba(0,0,0,.35);
+      overflow:hidden;
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .card:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.45); }
+    .card a{ display:block; color:inherit; text-decoration:none; }
+    .card-image{
+      display:block;
+      width:100%;
+      aspect-ratio:16/10;
+      object-fit:cover;
+    }
+    .card-caption{
+      padding:10px 14px;
+      font-weight:600;
+      text-align:center;
+    }
+    header .breadcrumbs{
+      display:flex; gap:12px; align-items:center;
+      padding:16px 16px 0; max-width:1100px; margin:0 auto;
+    }
+    header .breadcrumbs a{ text-decoration:none; }
+    main h1{ max-width:1100px; margin:8px auto 0; padding:0 16px; }
+    @media (max-width:480px){
+      .grid-container{ grid-template-columns:1fr; gap:18px; }
+      .card{ max-width:100%; }
+    }
   </style>
 </head>
-<body>
-  <div class="wrap">
-    <h1>Mężczyzna – Klatka / Brzuch / Plecy</h1>
-    <div class="grid">
-      <a href="#" class="card"><img src="img/mezczyzna-klatka.jpg" alt="Klatka"><p>Klatka</p></a>
-      <a href="#" class="card"><img src="img/mezczyzna-brzuch.jpg" alt="Brzuch"><p>Brzuch</p></a>
-      <a href="#" class="card"><img src="img/mezczyzna-plecy.jpg" alt="Plecy"><p>Plecy</p></a>
-    </div>
-  </div>
-  <script>
-  (function(){ var root=document.querySelector('.wrap')||document.body;
-    var container=Array.from(root.querySelectorAll('div,section,main')).find(el=>el.querySelectorAll('.card,.grid-item,a.card').length>=2);
-    if(container){ container.style.display='grid';container.style.gridTemplateColumns='repeat(3, minmax(0, 1fr))';container.style.gap='24px';container.style.alignItems='start'; }
-    Array.from(root.querySelectorAll('.card,.grid-item,a.card')).forEach(function(card){
-      card.style.display='flex';card.style.flexDirection='column';card.style.textDecoration='none';
-      var img=card.querySelector('img');if(img){img.style.width='100%';img.style.height='auto';img.style.aspectRatio='16/9';img.style.objectFit='cover';img.style.display='block';img.style.margin='0 0 8px 0';img.style.borderRadius='12px';}
-      var label=card.querySelector('p, span:not(.label), strong');if(label){label.style.display='block';label.style.margin='0';label.style.textAlign='center';label.style.fontWeight='700';label.style.color='#3ea8ff';}
-    });
-  })();
-  </script>
+
+<body data-page="mezczyzna-klatka">
+  <header>
+    <nav class="breadcrumbs">
+      <a href="mezczyzna.html">← Wróć do wyboru sekcji</a>
+      <span> | </span>
+      <a href="index.html">Strona główna</a>
+    </nav>
+    <h1>Mężczyzna — Klatka, brzuch, plecy</h1>
+    <p style="max-width:1100px;margin:4px auto 0;padding:0 16px;">
+      Kliknij ilustrację, aby zobaczyć możliwe przyczyny bólu.
+    </p>
+  </header>
+
+  <main>
+    <section class="grid-container" aria-label="Wybór części ciała">
+      <!-- Serce -->
+      <article class="card">
+        <a href="mezczyzna-serce-szczegoly.html">
+          <img class="card-image" src="img/mezczyzna-serce.jpg" alt="Serce" loading="lazy">
+          <div class="card-caption">Serce</div>
+        </a>
+      </article>
+
+      <!-- Płuca -->
+      <article class="card">
+        <a href="mezczyzna-pluca-szczegoly.html">
+          <img class="card-image" src="img/mezczyzna-pluca.jpg" alt="Płuca" loading="lazy">
+          <div class="card-caption">Płuca</div>
+        </a>
+      </article>
+
+      <!-- Brzuch -->
+      <article class="card">
+        <a href="mezczyzna-brzuch-szczegoly.html">
+          <img class="card-image" src="img/mezczyzna-brzuch.jpg" alt="Brzuch" loading="lazy">
+          <div class="card-caption">Brzuch</div>
+        </a>
+      </article>
+
+      <!-- Plecy (dodane) -->
+      <article class="card">
+        <a href="mezczyzna-plecy-szczegoly.html">
+          <img class="card-image" src="img/mezczyzna-plecy.jpg" alt="Plecy" loading="lazy">
+          <div class="card-caption">Plecy</div>
+        </a>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p style="text-align:center; opacity:.8; margin:28px 0 18px;">
+      © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
+    </p>
+  </footer>
 </body>
 </html>
