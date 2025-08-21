@@ -916,3 +916,12 @@ a.card > img,
   border-radius: 16px !important;
   aspect-ratio: auto !important;  /* nadpisz ewentualne wcześniejsze ustawienia */
 }
+/* Napisy w kafelkach - zawsze niebieskie */
+.card span {
+  display: block;
+  padding: 10px 14px 12px;
+  font-weight: 700;
+  text-align: center;
+  color: #1e90ff !important; /* zawsze niebieski */
+  background: linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0));
+}
