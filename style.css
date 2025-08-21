@@ -652,3 +652,31 @@ a.card span.label strong,
 
 /* 3) Gdyby link nadrabiał kolorem na przodku – wyłącz dziedziczenie */
 a.card { color: inherit !important; }
+/* === Wymuszenie niebieskich, wyśrodkowanych podpisów we WSZYSTKICH kafelkach === */
+.grid a.card > span,
+.grid a.card > span *,
+a.card > span,
+a.card > span *,
+.card > span,
+.card > span *,
+.grid .card span.label,
+.grid .card span.label *,
+.card .label,
+.card .label * {
+  color: #00aaff !important;      /* niebieski */
+  text-align: center !important;  /* wyśrodkowanie */
+  display: block !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+/* gdy tekst jest wewnątrz <strong> */
+.card > span > strong,
+.grid a.card > span > strong,
+.card .label > strong {
+  color: #00aaff !important;
+  font-weight: 700;
+}
+
+/* link w kafelku niech nie wymusza swojego koloru */
+a.card { color: inherit !important; }
