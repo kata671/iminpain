@@ -1,17 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mężczyzna — Wybierz część ciała</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- LOKALNE poprawki tylko dla tej strony -->
+  <!-- STYL TYLKO DLA TEJ STRONY -->
   <style>
+    /* ogólny wrapper strony */
+    body[data-page="mezczyzna-index"] .wrap{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* siatka kafelków */
     body[data-page="mezczyzna-index"] .grid{
-      display:grid;
+      display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap:24px;
+      gap: 24px;
+      align-items: start;
     }
     @media (max-width: 900px){
       body[data-page="mezczyzna-index"] .grid{
@@ -24,55 +33,65 @@
       }
     }
 
-    body[data-page="mezczyzna-index"] .card{
-      display:flex; 
-      flex-direction:column; 
-      align-items:center; 
-      text-align:center;
-      border-radius:18px;
-      padding:0;
+    /* kafelek + obrazek + podpis pod spodem */
+    body[data-page="mezczyzna-index"] a.card{
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      border-radius: 18px;
+      text-decoration: none;
+      overflow: hidden;        /* ładniejsze zaokrąglenia */
     }
-    body[data-page="mezczyzna-index"] .thumb{
-      width:100%;
-      aspect-ratio: 16/9;
-      object-fit:cover;
-      border-radius:14px;
-      display:block;
+    body[data-page="mezczyzna-index"] img.thumb{
+      width: 100%;
+      aspect-ratio: 16/9;      /* wymusza poziomy kadr */
+      object-fit: cover;
+      display: block;
+      border-radius: 14px;     /* zgodne z resztą serwisu */
     }
     body[data-page="mezczyzna-index"] .label{
-      display:block;
-      padding:10px 14px 14px;
+      display: block;
+      padding: 10px 14px 14px;
+      font-weight: 700;
+      color: var(--accent);    /* zawsze niebieskie */
+    }
+    /* wyłącz podkreślenie na hover, kolor bez zmian */
+    body[data-page="mezczyzna-index"] a.card:hover .label{
+      text-decoration: none;
       color: var(--accent);
-      font-weight:700;
     }
 
-    /* schowaj przypadkowe czarne "pigułki", jeśli były użyte do linków */
-    body[data-page="mezczyzna-index"] .back{ display:none; }
+    /* nagłówek jak na innych stronach */
+    body[data-page="mezczyzna-index"] h1{
+      text-align: center;
+      margin: 12px 0 28px;
+    }
   </style>
 </head>
+
 <body data-page="mezczyzna-index">
   <div class="wrap">
     <h1>Wybierz część ciała</h1>
 
     <div class="grid">
+      <!-- Głowa i szyja -->
       <a class="card" href="mezczyzna-glowa.html">
-        <!-- UŻYJ poprawnego rozszerzenia pliku: .png lub .jpg -->
-        <img class="thumb" src="img/mezczyzna-glowa.png" alt="Głowa i szyja" loading="lazy">
+        <img class="thumb" src="img/mezczyzna-glowa.png" alt="Głowa i szyja — ilustracja" loading="lazy" />
         <span class="label"><strong>Głowa i szyja</strong></span>
       </a>
 
+      <!-- Klatka / Brzuch / Plecy -->
       <a class="card" href="mezczyzna-klatka.html">
-        <img class="thumb" src="img/mezczyzna-klatka.png" alt="Klatka / Brzuch / Plecy" loading="lazy">
+        <img class="thumb" src="img/mezczyzna-klatka.png" alt="Klatka / Brzuch / Plecy — ilustracja" loading="lazy" />
         <span class="label"><strong>Klatka / Brzuch / Plecy</strong></span>
       </a>
 
+      <!-- Biodra / Nogi / Stopy -->
       <a class="card" href="mezczyzna-nogi.html">
-        <img class="thumb" src="img/mezczyzna-nogi.png" alt="Biodra / Nogi / Stopy" loading="lazy">
+        <img class="thumb" src="img/mezczyzna-nogi.png" alt="Biodra / Nogi / Stopy — ilustracja" loading="lazy" />
         <span class="label"><strong>Biodra / Nogi / Stopy</strong></span>
       </a>
     </div>
-
-    <p class="back"><a href="index.html">← Strona główna</a></p>
   </div>
 </body>
 </html>
