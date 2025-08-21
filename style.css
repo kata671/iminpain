@@ -1649,3 +1649,69 @@ body[data-page="mezczyzna"] .card strong {
 /* niebieski kolor linków na stronach mężczyzny */
 body[data-page="mezczyzna"] a { color: #3ea8ff !important; }
 body[data-page="mezczyzna"] a:hover { color: #6bbcff !important; }
+/* =================== MĘŻCZYZNA – OSTATECZNY PATCH =================== */
+/* 3 kolumny siatki + zdjęcia poziome + podpis POD zdjęciem (niebieski) */
+
+#grid-men, #grid-men-home, #grid-men-glowa, #grid-men-klatka, #grid-men-nogi {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+@media (max-width: 992px){
+  #grid-men, #grid-men-home, #grid-men-glowa, #grid-men-klatka, #grid-men-nogi{
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  }
+}
+@media (max-width: 640px){
+  #grid-men, #grid-men-home, #grid-men-glowa, #grid-men-klatka, #grid-men-nogi{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* każdy kafelek = kolumna: obrazek na górze, podpis pod spodem */
+#grid-men .card, #grid-men-home .card, #grid-men-glowa .card, #grid-men-klatka .card, #grid-men-nogi .card,
+#grid-men a.card, #grid-men-home a.card, #grid-men-glowa a.card, #grid-men-klatka a.card, #grid-men-nogi a.card{
+  display: flex !important;
+  flex-direction: column !important;
+  text-decoration: none !important;
+}
+
+/* ukryj wszelkie "belki" nad zdjęciem wewnątrz kafelka */
+#grid-men .card .head, #grid-men-home .card .head, #grid-men-glowa .card .head, #grid-men-klatka .card .head, #grid-men-nogi .card .head,
+#grid-men .card .header, #grid-men-home .card .header, #grid-men-glowa .card .header, #grid-men-klatka .card .header, #grid-men-nogi .card .header,
+#grid-men .card .label,  #grid-men-home .card .label,  #grid-men-glowa .card .label,  #grid-men-klatka .card .label,  #grid-men-nogi .card .label{
+  display: none !important;
+}
+
+/* * KLUCZ: wymuś poziomy kadr obrazka przez stałą wysokość + cover * */
+#grid-men .card img, #grid-men-home .card img, #grid-men-glowa .card img, #grid-men-klatka .card img, #grid-men-nogi .card img{
+  order: 1 !important;
+  width: 100% !important;
+  height: clamp(140px, 18vw, 220px) !important;  /* gwarantuje poziomy wygląd */
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: inherit;
+}
+
+/* podpis POD zdjęciem, wyśrodkowany i niebieski */
+#grid-men .card p, #grid-men-home .card p, #grid-men-glowa .card p, #grid-men-klatka .card p, #grid-men-nogi .card p,
+#grid-men .card span:not(.label), #grid-men-home .card span:not(.label), #grid-men-glowa .card span:not(.label),
+#grid-men-klatka .card span:not(.label), #grid-men-nogi .card span:not(.label),
+#grid-men .card strong, #grid-men-home .card strong, #grid-men-glowa .card strong,
+#grid-men-klatka .card strong, #grid-men-nogi .card strong{
+  order: 2 !important;
+  display: block !important;
+  margin: 10px 0 0 !important;
+  text-align: center !important;
+  color: #3ea8ff !important;
+  font-weight: 700 !important;
+}
+
+/* linki w sekcjach mężczyzny zawsze niebieskie */
+#grid-men a, #grid-men-home a, #grid-men-glowa a, #grid-men-klatka a, #grid-men-nogi a{
+  color:#3ea8ff !important;
+}
+#grid-men a:hover, #grid-men-home a:hover, #grid-men-glowa a:hover, #grid-men-klatka a:hover, #grid-men-nogi a:hover{
+  color:#6bbcff !important;
+}
