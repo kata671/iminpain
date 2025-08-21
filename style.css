@@ -267,3 +267,30 @@ img.thumb,
   :root{ --tile-min: 260px; --img-h: 190px; }
   .card{ width: 100% !important; }
 }
+/* --- Strona wyboru płci: ujednolicenie rozmiaru dwóch kafelków --- */
+/* Dopasuj ścieżki/nazwy plików jeśli Twoje są inne */
+img[src*="kobieta-glowa-12"],
+img[src*="mezczyzna-glowa-1"]{
+  width: 340px !important;     /* jedna szerokość dla obu */
+  height: 420px !important;    /* jedna wysokość dla obu (poziomy kadr) */
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  border-radius: 16px !important;
+}
+
+/* Podpisy pod obrazkami – wyśrodkowane */
+img[src*="kobieta-glowa-12"] + .label,
+img[src*="mezczyzna-glowa-1"] + .label{
+  display: block !important;
+  margin-top: 10px !important;
+  text-align: center !important;
+}
+
+@media (max-width: 700px){
+  img[src*="kobieta-glowa-12"],
+  img[src*="mezczyzna-glowa-1"]{
+    width: 280px !important;
+    height: 350px !important;
+  }
+}
