@@ -405,3 +405,54 @@ main,
   color: #33bbff !important;
   text-decoration: none !important;
 }
+/* Podpisy pod kafelkami – zawsze niebieskie i wyśrodkowane (K i M) */
+.cards .card figcaption,
+.cards .card .caption,
+.cards .card .card__footer,
+.cards .card .card-footer,
+.cards .card .label,
+.cards .card .title,
+.cards .card .name {
+  text-align: center !important;
+}
+
+/* Sam link z podpisem – niezależnie gdzie jest osadzony */
+.cards .card > a + a,
+.cards .card figcaption a,
+.cards .card .caption a,
+.cards .card .card__footer a,
+.cards .card .card-footer a,
+.cards .card .label a,
+.cards .card .title a,
+.cards .card .name a {
+  display: block;
+  color: #00aaff !important;      /* ten sam turkus co u Kobiety */
+  font-weight: 700;
+  letter-spacing: .2px;
+  margin-top: 10px;
+  text-decoration: none !important;
+}
+
+/* Spójność dla :visited i :hover */
+.cards .card figcaption a:visited,
+.cards .card .caption a:visited,
+.cards .card .card__footer a:visited,
+.cards .card .card-footer a:visited,
+.cards .card .label a:visited,
+.cards .card .title a:visited,
+.cards .card .name a:visited,
+.cards .card > a + a:visited {
+  color: #00aaff !important;
+}
+
+.cards .card figcaption a:hover,
+.cards .card .caption a:hover,
+.cards .card .card__footer a:hover,
+.cards .card .card-footer a:hover,
+.cards .card .label a:hover,
+.cards .card .title a:hover,
+.cards .card .name a:hover,
+.cards .card > a + a:hover {
+  color: #33bbff !important;
+  text-decoration: none !important;
+}
