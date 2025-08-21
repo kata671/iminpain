@@ -73,3 +73,42 @@ footer {
   font-size: 0.8em;
   color: #aaa;
 }
+/* ===== UNIFIKACJA KAFELKÓW KOBIETA/MĘŻCZYZNA ===== */
+body[data-page="kobieta"] .container,
+body[data-page="mezczyzna"] .container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  align-items: start;
+  justify-items: center; /* kafelki wycentrowane w kolumnach */
+}
+
+body[data-page="kobieta"] .card,
+body[data-page="mezczyzna"] .card {
+  width: 320px;          /* identyczna szerokość kafelka */
+  max-width: 320px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+body[data-page="kobieta"] .card:hover,
+body[data-page="mezczyzna"] .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.32);
+}
+
+body[data-page="kobieta"] .card img,
+body[data-page="mezczyzna"] .card img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 4 / 3;   /* ten sam proporcje obrazka */
+  object-fit: cover;     /* wypełnia kafelek */
+  border-radius: 12px;
+}
+
+body[data-page="kobieta"] .card p,
+body[data-page="mezczyzna"] .card p {
