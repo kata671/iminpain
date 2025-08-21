@@ -611,3 +611,11 @@ a.card span strong {
   display: block;
   width: 100%;
 }
+/* Wymuszenie koloru niebieskiego dla podpisów z <strong> */
+.card span.label strong {
+  color: #00aaff !important;
+  font-weight: 700;
+  text-align: center;
+  display: block;
+  width: 100%;
+}
