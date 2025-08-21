@@ -572,3 +572,17 @@ main,
   width: 100%;
   display: block;
 }
+/* NUCLEAR FIX: wszystkie podpisy w kartach zawsze niebieskie i wyśrodkowane */
+.cards .card :where(a, span, p, div, strong, em, small, figcaption, footer),
+.cards .card :where(a, a:visited, a:hover, a:active) {
+  color: #00aaff !important;
+  text-align: center !important;
+  display: block !important;   /* żeby centrowanie miało pełną szerokość */
+  width: 100% !important;
+}
+
+/* Jeżeli podpis ma zagnieżdżenia, odziedzicz kolor/centrowanie */
+.cards .card :where(a, span, p, div, strong, em, small, figcaption, footer) * {
+  color: inherit !important;
+  text-align: inherit !important;
+}
