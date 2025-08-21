@@ -186,3 +186,10 @@ body[data-page="kobieta"] .cards img {
   font-weight: 600;
   color: #dfe9ff;
 }
+/* Ujednolicenie wielkości obrazków w kartach */
+.cards a img {
+  width: 100%;
+  height: 220px;       /* stała wysokość dla wszystkich obrazków */
+  object-fit: cover;   /* dopasowanie proporcji, przycięcie nadmiaru */
+  border-radius: 12px; /* zaokrąglone rogi jak wcześniej */
+}
