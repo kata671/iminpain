@@ -157,3 +157,16 @@ main {
   width: min(1200px, 92vw);
   margin: 12px auto 40px;
 }
+/* --- OSTATECZNA REGUŁA DLA LUZEM OBRAZKÓW --- */
+body img {
+  max-width: 360px;         /* szerokość jak kafelek */
+  width: 100%;              /* skaluje się do szerokości kontenera */
+  height: auto;             /* proporcje zachowane */
+  object-fit: cover;        /* brak rozciągania */
+  display: block;
+  margin: 20px auto;        /* wyśrodkowanie */
+  border-radius: var(--radius);
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+  border: 1px solid var(--card-border);
+  background: #000;
+}
