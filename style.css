@@ -952,3 +952,35 @@ a.card:hover {
   color: inherit !important;              /* bierz kolor z <a class="card"> */
   text-align: center !important;
 }
+/* Napisy pod kafelkami – zawsze niebieskie i wyśrodkowane */
+a.card,
+.cards a.card,
+.grid a.card {
+  color: #00aaff !important;       /* niebieski */
+  text-align: center !important;   /* wyśrodkowane */
+  text-decoration: none !important;
+}
+
+a.card:visited,
+.cards a.card:visited,
+.grid a.card:visited {
+  color: #00aaff !important;
+}
+
+a.card:hover,
+.cards a.card:hover,
+.grid a.card:hover {
+  color: #33bbff !important;       /* jaśniejszy przy najechaniu */
+}
+
+.card .label,
+.card .label *,
+.card > span,
+.card > span * {
+  color: inherit !important;       /* dziedziczą kolor linku */
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: 700;
+}
