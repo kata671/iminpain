@@ -514,3 +514,21 @@ main,
 .cards .card .subtitle a:hover {
   color: #33bbff !important;
 }
+/* Fallback: wyśrodkuj i zrób niebieskie DOWOLNE ostatnie dziecko w .card */
+.cards .card > :last-child {
+  color: #00aaff !important;
+  text-align: center !important;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+/* Gdy podpis jest linkiem */
+.cards .card > :last-child a,
+.cards .card > :last-child a:visited {
+  color: #00aaff !important;
+  text-decoration: none !important;
+}
+
+.cards .card > :last-child a:hover {
+  color: #33bbff !important;
+}
