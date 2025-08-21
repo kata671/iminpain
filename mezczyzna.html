@@ -3,61 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mężczyzna – wybór części ciała</title>
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Styl tylko dla tej strony -->
-  <style>
-    body[data-page="mezczyzna"] .wrap{
-      display: grid !important;
-      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-      gap: 24px !important;
-      align-items: start !important;
-    }
-    body[data-page="mezczyzna"] .wrap h1,
-    body[data-page="mezczyzna"] .wrap .lead{
-      grid-column: 1 / -1;
-      text-align: center;
-    }
-    body[data-page="mezczyzna"] .wrap a.card{
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-    }
-    body[data-page="mezczyzna"] .wrap a.card img{
-      max-width: 100%;
-      border-radius: 8px;
-      display: block;
-    }
-    body[data-page="mezczyzna"] .wrap a.card p{
-      margin-top: 8px;
-      font-weight: bold;
-      color: #00aaff; /* niebieski */
-    }
-  </style>
+  <title>Mężczyzna – wybór sekcji</title>
+  <link rel="stylesheet" href="style.css?v=men-grid-fix-1">
 </head>
 <body data-page="mezczyzna">
-
-  <div class="wrap">
-    <h1>Wybierz część ciała</h1>
-
-    <a class="card" href="mezczyzna-glowa.html">
-      <img src="img/mezczyzna-glowa.png" alt="Głowa i szyja">
-      <p>Głowa i szyja</p>
-    </a>
-
-    <a class="card" href="mezczyzna-klatka.html">
-      <img src="img/mezczyzna-klatka.png" alt="Klatka / Brzuch / Plecy">
-      <p>Klatka / Brzuch / Plecy</p>
-    </a>
-
-    <a class="card" href="mezczyzna-nogi.html">
-      <img src="img/mezczyzna-nogi.png" alt="Biodra / Nogi / Stopy">
-      <p>Biodra / Nogi / Stopy</p>
-    </a>
+  <div class="container">
+    <h1>Wybierz część ciała – Mężczyzna</h1>
+    <div class="grid-container">
+      <a href="mezczyzna-glowa.html" class="grid-item">
+        <img src="img/mezczyzna-glowa.jpg" alt="Głowa i szyja" loading="lazy">
+        <p>Głowa i szyja</p>
+      </a>
+      <a href="mezczyzna-klatka.html" class="grid-item">
+        <img src="img/mezczyzna-klatka-brzuch-plecy.jpg" alt="Klatka / Brzuch / Plecy" loading="lazy">
+        <p>Klatka / Brzuch / Plecy</p>
+      </a>
+      <a href="mezczyzna-nogi.html" class="grid-item">
+        <img src="img/mezczyzna-biodra-nogi-stopy.jpg" alt="Biodra / Nogi / Stopy" loading="lazy">
+        <p>Biodra / Nogi / Stopy</p>
+      </a>
+    </div>
+    <a href="index.html" class="back-button">Wróć do wyboru płci</a>
   </div>
-
 </body>
 </html>
