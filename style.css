@@ -375,3 +375,33 @@ main,
 /* 3) brak podkreślenia i zmiana tylko koloru przy hoverze */
 .card a { text-decoration: none; }
 .card a:hover { text-decoration: none; color: #33bbff; }
+/* Podpisy pod kafelkami – kolor i wyśrodkowanie (Kobieta + Mężczyzna) */
+.cards .card figcaption,
+.cards .card .card__title,
+.cards .card .caption,
+.cards .card .label,
+.cards .card .title,
+.cards .card .name,
+.cards .card > a + a {
+  display: block;
+  text-align: center !important;
+  color: #00aaff !important;   /* ten sam turkus jak u Kobiety */
+  font-weight: 700;
+  margin-top: 10px;
+  letter-spacing: .2px;
+  text-decoration: none !important;
+}
+
+/* stan :visited i :hover, żeby nie wracał fiolet/niebieski */
+.cards .card > a + a:visited,
+.cards .card .caption a:visited,
+.cards .card .label a:visited {
+  color: #00aaff !important;
+}
+
+.cards .card > a + a:hover,
+.cards .card .caption a:hover,
+.cards .card .label a:hover {
+  color: #33bbff !important;
+  text-decoration: none !important;
+}
