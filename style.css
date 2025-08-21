@@ -80,3 +80,58 @@ h1,h2{ margin: 16px auto; text-align:center; }
 @media (max-width: 380px){
   :root{ --card-w: 280px; }
 }
+/* Fallback dla stron, gdzie kafelki nie używają klasy .card */
+.cards a,
+.cards-grid a,
+.card-grid a,
+.grid a,
+.tiles a,
+.tile,
+.item {
+  display: block;
+  width: var(--card-w);
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,.35);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.cards a:hover,
+.cards-grid a:hover,
+.card-grid a:hover,
+.grid a:hover,
+.tiles a:hover,
+.tile:hover,
+.item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.45);
+}
+
+/* Obraz w takich kafelkach – jak w .card */
+.cards a img,
+.cards-grid a img,
+.card-grid a img,
+.grid a img,
+.tiles a img,
+.tile img,
+.item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Tytuł pod obrazkiem, jeśli jest osobnym elementem */
+.cards a .card-title,
+.cards-grid a .card-title,
+.card-grid a .card-title,
+.grid a .card-title,
+.tiles a .card-title,
+.tile .card-title,
+.item .card-title {
+  background: var(--card-muted);
+  padding: 10px 12px;
+  font-weight: 700;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
