@@ -1,40 +1,53 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kobieta — Wybierz obszar bólu</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kobieta — Wybierz obszar bólu</title>
+
+  <!-- globalne style -->
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body data-page="kobieta">
-    <div class="wrap">
-        <h1>Wybierz obszar bólu — Kobieta</h1>
+<body>
 
-        <!-- NOWY kontener z identyfikatorem -->
-        <div id="grid-kobieta-obszary">
-            <div class="card">
-                <a href="kobieta-glowa.html">
-                    <img src="img/kobieta-glowa-12.png" alt="Głowa i szyja">
-                    <p>Głowa i szyja</p>
-                </a>
-            </div>
+  <div class="wrap">
+    <p class="back">
+      <a href="index.html">← Powrót do startu</a> |
+      <a href="index.html">Strona główna</a>
+    </p>
 
-            <div class="card">
-                <a href="kobieta-klatka.html">
-                    <img src="img/kobieta-klatka.png" alt="Klatka / brzuch / plecy">
-                    <p>Klatka / brzuch / plecy</p>
-                </a>
-            </div>
+    <h1>Wybierz obszar bólu — Kobieta</h1>
+    <p class="lead">Kliknij, aby zobaczyć szczegóły.</p>
 
-            <div class="card">
-                <a href="kobieta-nogi.html">
-                    <img src="img/kobieta-nogi.png" alt="Biodra / nogi / stopy">
-                    <p>Biodra / nogi / stopy</p>
-                </a>
-            </div>
-        </div>
+    <!-- RÓWNY UKŁAD 3 KAFELKÓW -->
+    <div id="grid-kobieta">
+      <!-- Kafelek 1 -->
+      <div class="card">
+        <a href="kobieta-glowa.html" aria-label="Kobieta — Głowa i szyja">
+          <img src="img/kobieta-glowa.png" alt="Głowa i szyja — ilustracja" />
+        </a>
+        <p><a href="kobieta-glowa.html">Głowa i szyja</a></p>
+      </div>
 
-        <p><a href="index.html">← Powrót do startu</a> | <a href="index.html">Strona główna</a></p>
+      <!-- Kafelek 2 -->
+      <div class="card">
+        <a href="kobieta-klatka.html" aria-label="Kobieta — Klatka, brzuch, plecy">
+          <img src="img/kobieta-klatka.png" alt="Klatka, brzuch, plecy — ilustracja" />
+        </a>
+        <p><a href="kobieta-klatka.html">Klatka / brzuch / plecy</a></p>
+      </div>
+
+      <!-- Kafelek 3 -->
+      <div class="card">
+        <a href="kobieta-nogi.html" aria-label="Kobieta — Biodra, nogi, stopy">
+          <img src="img/kobieta-nogi.png" alt="Biodra, nogi, stopy — ilustracja" />
+        </a>
+        <p><a href="kobieta-nogi.html">Biodra / nogi / stopy</a></p>
+      </div>
     </div>
+
+    <p class="footnote">© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  </div>
+
 </body>
 </html>
