@@ -925,3 +925,30 @@ a.card > img,
   color: #1e90ff !important; /* zawsze niebieski */
   background: linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0));
 }
+/* Podpisy w kafelkach: zawsze niebieskie (także u Mężczyzny) */
+.cards a.card,
+.grid a.card,
+a.card {
+  color: #00aaff !important;              /* bazowo niebieski */
+}
+
+.cards a.card:visited,
+.grid a.card:visited,
+a.card:visited {
+  color: #00aaff !important;              /* odwiedzony też niebieski */
+}
+
+.cards a.card:hover,
+.grid a.card:hover,
+a.card:hover {
+  color: #33bbff !important;              /* jaśniejszy przy hover */
+}
+
+/* Gdy podpis jest w osobnym elemencie */
+.cards .card .label,
+.cards .card .label *,
+.cards .card > span,
+.cards .card > span * {
+  color: inherit !important;              /* bierz kolor z <a class="card"> */
+  text-align: center !important;
+}
