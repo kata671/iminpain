@@ -64,3 +64,31 @@ main{width:min(1200px, 92vw); margin:16px auto;}
 a{color:var(--accent); text-decoration:none;}
 a:hover{text-decoration:underline;}
 footer{margin:28px 0 40px; font-size:.9rem; opacity:.8; text-align:center;}
+/* === HOTFIX: tło globalnie + stałe obrazki w kafelkach === */
+
+/* TŁO 1:1 jak na stronie głównej – wymuszone wszędzie */
+html, body {
+  background:
+    radial-gradient(circle, rgba(255,255,255,.08) 1px, transparent 1px) 0 0/10px 10px,
+    #0e0f12 !important;
+}
+
+/* Siatka kart – jeśli na którejś stronie jest inna klasa, też zadziała */
+.cards, .cards-woman, .cards-man {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+  gap: 24px !important;
+}
+
+/* Obrazki w kafelkach (również <main><a><img>) – stała wysokość */
+.card img,
+main a img {
+  width: 100% !important;
+  height: 220px !important;     /* w razie potrzeby zmień na 200–240 */
+  object-fit: cover !important;
+  display: block !important;
+  border-bottom: 2px solid rgba(0,188,212,.8);
+}
+
+/* Podpisy kafelków wyśrodkowane */
+.card span { text-align: center; }
