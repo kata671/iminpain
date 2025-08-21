@@ -1334,3 +1334,23 @@ body[data-page="mezczyzna"] .grid .card a:focus .label {
   text-align: center !important;
   font-weight: bold !important;
 }
+/* Napisy pod zdjęciami w kartach */
+#grid-men-glowa .card {
+  display: flex;
+  flex-direction: column;   /* układa elementy pionowo */
+  align-items: center;      /* wyśrodkowanie */
+}
+
+#grid-men-glowa .card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 8px;       /* odstęp od podpisu */
+}
+
+#grid-men-glowa .card p {
+  margin: 0;
+  color: var(--accent) !important;
+  font-weight: bold;
+  text-align: center;
+}
