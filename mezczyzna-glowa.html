@@ -1,32 +1,71 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mężczyzna - Głowa i szyja</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="men.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mężczyzna – Głowa i Szyja</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Tymczasowy styl tylko dla tej strony -->
+  <style>
+  /* Podpisy zawsze niebieskie i wyśrodkowane */
+  .card span.label,
+  .card span.label strong,
+  .card h3,
+  .card h3 a,
+  .card a span {
+    color: #22aaff !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    display: block !important;
+  }
+
+  /* Kafelki w równym układzie */
+  .grid,
+  .cards {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    gap: 24px !important;
+  }
+
+  /* Obrazki wymuszony poziomy format */
+  .card img {
+    width: 100% !important;
+    aspect-ratio: 16/10 !important;
+    object-fit: cover !important;
+    border-radius: 16px !important;
+    display: block !important;
+  }
+  </style>
 </head>
-<body data-page="mezczyzna">
-    <div class="container">
-        <h1>Głowa i szyja</h1>
-        <div class="gallery">
-            <div class="gallery-item">
-                <img src="img/mezczyzna-glowa-1.jpg" alt="Głowa">
-                <p>Głowa</p>
-            </div>
-            <div class="gallery-item">
-                <img src="img/mezczyzna-nos.jpg" alt="Nos">
-                <p>Nos</p>
-            </div>
-            <div class="gallery-item">
-                <img src="img/mezczyzna-ucho.jpg" alt="Ucho">
-                <p>Ucho</p>
-            </div>
-        </div>
-        <div class="back-button">
-            <a href="mezczyzna.html">← Wróć do wyboru sekcji</a>
-        </div>
+<body data-page="mezczyzna-glowa">
+
+  <h1>Mężczyzna – Głowa i Szyja</h1>
+
+  <div class="grid">
+    <div class="card">
+      <img src="img/mezczyzna-glowa.jpg" alt="Głowa">
+      <span class="label">Głowa</span>
     </div>
+    <div class="card">
+      <img src="img/mezczyzna-nos.jpg" alt="Nos">
+      <span class="label">Nos</span>
+    </div>
+    <div class="card">
+      <img src="img/mezczyzna-ucho.jpg" alt="Ucho">
+      <span class="label">Ucho</span>
+    </div>
+    <div class="card">
+      <img src="img/mezczyzna-oczy.jpg" alt="Oczy">
+      <span class="label">Oczy</span>
+    </div>
+    <div class="card">
+      <img src="img/mezczyzna-szyja.jpg" alt="Szyja">
+      <span class="label">Szyja</span>
+    </div>
+  </div>
+
+  <p><a href="mezczyzna.html">← Wróć do wyboru sekcji</a></p>
 </body>
 </html>
