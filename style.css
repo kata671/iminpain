@@ -1420,3 +1420,23 @@ body[data-page="mezczyzna"] .grid .card a:focus .label {
   font-weight: 700;
   color: var(--accent);
 }
+.section-link {
+  display: flex;
+  flex-direction: column;  /* ustawia obrazek nad podpisem */
+  align-items: center;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.section-link img {
+  width: 180px;
+  height: auto;
+  margin-bottom: 8px;  /* odstęp od tekstu */
+  border-radius: 12px;
+}
+
+.section-link a {
+  color: var(--accent);
+  font-weight: bold;
+  text-decoration: none;
+}
