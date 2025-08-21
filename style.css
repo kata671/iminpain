@@ -1777,3 +1777,74 @@ body[data-page="mezczyzna"] a:hover { color: #6bbcff !important; }
 /* Linki w kafelkach – zawsze niebieskie */
 .wrap .card a{ color:#3ea8ff !important; }
 .wrap .card a:hover{ color:#6bbcff !important; }
+/* =========================
+   MEN — pewniak dla wszystkich podstron
+   (Głowa i szyja, Klatka/Brzuch/Plecy, Biodra/Nogi/Stopy)
+   ========================= */
+
+/* 1) Każdy bezpośredni DIV w .wrap, który zawiera kafelki .card,
+      zamieniamy w siatkę 3 kolumn. */
+body[data-page="mezczyzna"] .wrap > div:has(.card){
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+/* RWD */
+@media (max-width: 992px){
+  body[data-page="mezczyzna"] .wrap > div:has(.card){
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 640px){
+  body[data-page="mezczyzna"] .wrap > div:has(.card){
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 2) Struktura pojedynczego kafelka: obrazek u góry, podpis pod spodem. */
+body[data-page="mezczyzna"] .wrap .card,
+body[data-page="mezczyzna"] .wrap a.card{
+  display: flex !important;
+  flex-direction: column !important;
+  text-decoration: none !important;
+}
+
+/* ukryj czarne belki / nagłówki wewnątrz kafelka jeśli są */
+body[data-page="mezczyzna"] .wrap .card .head,
+body[data-page="mezczyzna"] .wrap .card .header,
+body[data-page="mezczyzna"] .wrap .card .title,
+body[data-page="mezczyzna"] .wrap .card .label{
+  display: none !important;
+}
+
+/* obrazek zawsze „poziomy” */
+body[data-page="mezczyzna"] .wrap .card > img{
+  order: 1 !important;
+  width: 100% !important;
+  height: clamp(160px, 20vw, 240px) !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: inherit;
+}
+
+/* podpis POD zdjęciem, wyśrodkowany i niebieski */
+body[data-page="mezczyzna"] .wrap .card > p,
+body[data-page="mezczyzna"] .wrap .card > span:not(.label),
+body[data-page="mezczyzna"] .wrap .card > strong{
+  order: 2 !important;
+  display: block !important;
+  margin: 10px 0 0 !important;
+  text-align: center !important;
+  color: #3ea8ff !important;
+  font-weight: 700 !important;
+}
+
+/* linki w podpisach (gdy wystąpią) – też niebieskie */
+body[data-page="mezczyzna"] .wrap .card a{
+  color: #3ea8ff !important;
+}
+body[data-page="mezczyzna"] .wrap .card a:hover{
+  color: #6bbcff !important;
+}
