@@ -1,134 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Kobieta — Klatka, brzuch, plecy</title>
+  <link rel="stylesheet" href="style.css?v=lbl1" />
 
-  <!-- Twój główny CSS -->
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- DROBNE NADPISANIA, żeby tło i kafelki były identyczne wszędzie -->
-  <style>
-    /* kropkowane tło jak na stronie głównej */
-    body {
-      background-color: #101318;
-      background-image:
-        radial-gradient(#2a2f3a 1px, transparent 1px),
-        linear-gradient(#101318, #101318);
-      background-size: 16px 16px, auto;
-      background-position: 0 0, 0 0;
-      color: #e8eff7;
-    }
-
-    /* kontener strony */
-    .page {
-      max-width: 1100px;
-      margin: 24px auto 48px;
-      padding: 0 16px;
-    }
-
-    nav {
-      margin-bottom: 16px;
-      font-weight: 600;
-    }
-    nav a {
-      color: #8fb3ff;
-      text-decoration: none;
-      margin-right: 12px;
-    }
-    nav a:hover { text-decoration: underline; }
-
-    h1 {
-      font-size: clamp(28px, 3.2vw, 40px);
-      margin: 0 0 8px;
-    }
-    p.lead { margin: 0 0 20px; color: #aeb8c6; }
-
-    /* siatka kafelków */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 18px;
-    }
-
-    /* kafelek */
-    .card {
-      display: flex;
-      flex-direction: column;
-      background: #1b2029;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 6px 24px rgba(0,0,0,.35);
-      transition: transform .18s ease, box-shadow .18s ease;
-      text-decoration: none;
-      color: inherit;
-    }
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 28px rgba(0,0,0,.45);
-    }
-
-    /* obrazek w kafelku — stała wysokość i docięcie */
-    .card img {
-      display: block;
-      width: 100%;
-      height: 220px;           /* <- ujednolicony rozmiar */
-      object-fit: cover;       /* wypełnia bez rozciągania */
-    }
-
-    /* podpis kafelka */
-    .card span {
-      display: block;
-      padding: 10px 14px 12px;
-      font-weight: 700;
-      color: #dbe7ff;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
-    }
-
-    footer {
-      margin-top: 28px;
-      color: #95a1b3;
-      font-size: 14px;
+  <!-- ŁATKA: podpisy zawsze niebieskie i wyśrodkowane (tylko dla tej strony) -->
+  <style id="labels-fix-klatka">
+    .cards .card span.label,
+    .cards .card span.label *,
+    .cards .card .label,
+    .cards .card .label *,
+    .cards .card > span.label,
+    .cards .card > span.label * {
+      color: #00aaff !important;
+      text-align: center !important;
+      display: block !important;
+      width: 100% !important;
+      margin: 10px auto 0 !important;
+      font-weight: 700 !important;
+      letter-spacing: .2px;
     }
   </style>
 </head>
+<body>
+  <nav class="breadcrumbs" style="margin:10px 0;">
+    <a href="kobieta.html">← Wróć do wyboru sekcji</a>
+    <span>|</span>
+    <a href="index.html">Strona główna</a>
+  </nav>
 
-<body data-page="kobieta-klatka">
-  <div class="page">
-    <nav>
-      <a href="kobieta.html">← Wróć do wyboru sekcji</a>
-      <a href="index.html">Strona główna</a>
-    </nav>
+  <h1>Kobieta — Klatka, brzuch, plecy</h1>
 
-    <h1>Kobieta — Klatka, brzuch, plecy</h1>
-    <p class="lead">Kliknij, aby zobaczyć szczegóły.</p>
+  <main class="cards">
+    <!-- Serce -->
+    <a class="card" href="#">
+      <picture>
+        <source srcset="img/kobieta-serce.jpg" type="image/jpeg">
+        <img src="img/kobieta-serce.png" alt="Serce" loading="lazy">
+      </picture>
+      <span class="label"><strong>Serce</strong></span>
+    </a>
 
-    <div class="grid">
-      <a href="kobieta-serce.html" class="card">
-        <img src="img/kobieta-serce.png" alt="Serce – ilustracja" loading="lazy" />
-        <span>Serce</span>
-      </a>
+    <!-- Płuca -->
+    <a class="card" href="#">
+      <picture>
+        <source srcset="img/kobieta-pluca.jpg" type="image/jpeg">
+        <img src="img/kobieta-pluca.png" alt="Płuca" loading="lazy">
+      </picture>
+      <span class="label"><strong>Płuca</strong></span>
+    </a>
 
-      <a href="kobieta-pluca.html" class="card">
-        <img src="img/kobieta-pluca.png" alt="Płuca – ilustracja" loading="lazy" />
-        <span>Płuca</span>
-      </a>
+    <!-- Brzuch -->
+    <a class="card" href="#">
+      <picture>
+        <source srcset="img/kobieta-brzuch.jpg" type="image/jpeg">
+        <img src="img/kobieta-brzuch.png" alt="Brzuch" loading="lazy">
+      </picture>
+      <span class="label"><strong>Brzuch</strong></span>
+    </a>
 
-      <a href="kobieta-brzuch.html" class="card">
-        <img src="img/kobieta-brzuch.png" alt="Brzuch – ilustracja" loading="lazy" />
-        <span>Brzuch</span>
-      </a>
+    <!-- Plecy -->
+    <a class="card" href="#">
+      <picture>
+        <source srcset="img/kobieta-plecy.jpg" type="image/jpeg">
+        <img src="img/kobieta-plecy.png" alt="Plecy" loading="lazy">
+      </picture>
+      <span class="label"><strong>Plecy</strong></span>
+    </a>
+  </main>
 
-      <a href="kobieta-plecy.html" class="card">
-        <img src="img/kobieta-plecy.png" alt="Plecy – ilustracja" loading="lazy" />
-        <span>Plecy</span>
-      </a>
-    </div>
-
-    <footer>
-      <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
-    </footer>
-  </div>
+  <footer class="footer">
+    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
+  </footer>
 </body>
 </html>
