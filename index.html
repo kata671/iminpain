@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Strona główna</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boli mnie</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="home">
-  <div class="container">
-    <h1>Wybierz postać</h1>
-    <div class="tiles">
-      <a href="kobieta.html" class="tile">
-        <img src="img/kobieta-glowna.jpg" alt="Kobieta" loading="lazy">
-        <p>Kobieta</p>
-      </a>
-      <a href="mezczyzna.html" class="tile">
-        <img src="img/mezczyzna-glowna.jpg" alt="Mężczyzna" loading="lazy">
-        <p>Mężczyzna</p>
-      </a>
+<body>
+    <div class="container">
+        <h1>Boli mnie</h1>
+        <h2>Wybierz postać</h2>
+
+        <div class="gender-choice">
+            <label>
+                <input type="radio" name="gender" value="kobieta" onclick="location.href='kobieta.html'">
+                Kobieta
+                <br>
+                <img src="img/kobieta-glowa-12.png" alt="Kobieta" width="200">
+            </label>
+
+            <label>
+                <input type="radio" name="gender" value="mezczyzna" onclick="location.href='mezczyzna.html'">
+                Mężczyzna
+                <br>
+                <img src="img/mezczyzna-glowa-1.png" alt="Mężczyzna" width="200">
+            </label>
+        </div>
     </div>
-  </div>
 </body>
 </html>
