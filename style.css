@@ -1235,3 +1235,35 @@ body {
   display: inline-block;
   margin-top: 32px;
 }
+/* --- MEN: pokaż obrazki i wyłącz ewentualny overlay w kafelkach --- */
+#grid-men-glowa .card img,
+#grid-men-glowa .tile img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;
+  border-radius: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+/* jeśli w starych stylach było przyciemnienie nad obrazem – wyłączamy */
+#grid-men-glowa .card::before,
+#grid-men-glowa .tile::before {
+  display: none !important;
+}
+
+/* porządek w linkach/podpisach (na niebiesko i środek) */
+#grid-men-glowa .card a,
+#grid-men-glowa .tile a {
+  display: block !important;
+  color: #2aa8ff !important;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  margin-top: 8px;
+}
+#grid-men-glowa .card a:hover,
+#grid-men-glowa .tile a:hover {
+  text-decoration: underline;
+}
