@@ -207,3 +207,63 @@ a:hover { text-decoration: underline; }
   .card{ width: 100% !important; }
   .grid{ grid-template-columns: 1fr !important; }
 }
+/* ===== OSTATECZNE NADPISANIE — JEDNAKOWE, POZIOME KAFELKI WSZĘDZIE ===== */
+:root{
+  --tile-min: 320px;   /* minimalna szerokość kolumny w siatce */
+  --img-h: 220px;      /* wysokość części ze zdjęciem (poziomy kadr) */
+}
+
+/* Każdy kafelek: kolumna (obrazek u góry, podpis pod spodem) */
+.card{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* Zdjęcie w kafelku — ZAWSZE poziome, równe wymiary */
+.card img,
+img.thumb,
+.thumb{
+  width: 100% !important;
+  height: var(--img-h) !important;   /* wymusza poziomy kadr */
+  object-fit: cover !important;      /* przytnij nadmiar */
+  object-position: center !important;
+  border-radius: 14px !important;
+  display: block !important;
+}
+
+/* Podpis ZAWSZE pod zdjęciem i wyśrodkowany */
+.card .label,
+.card > p,
+.label{
+  order: 2 !important;
+  position: static !important;
+  margin-top: 10px !important;
+  text-align: center !important;
+}
+
+/* Usuń ewentualne nakładki/belki nad zdjęciem */
+.card::before,
+.card::after{
+  content: none !important;
+}
+
+/* Siatki na każdej podstronie — równe kolumny */
+.grid,
+#grid-men-glowa,
+#grid-women-glowa,
+#grid-men,
+#grid-women,
+#grid,
+#grid-tiles{
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(var(--tile-min), 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+/* Responsywność na wąskich ekranach */
+@media (max-width: 700px){
+  :root{ --tile-min: 260px; --img-h: 190px; }
+  .card{ width: 100% !important; }
+}
