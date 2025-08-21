@@ -1921,3 +1921,81 @@ body[data-page="mezczyzna"] .wrap .card a{
 body[data-page="mezczyzna"] .wrap .card a:hover{
   color: #6bbcff !important;
 }
+/* ===== MĘŻCZYZNA – układ kafelków (ostateczny, bardzo specyficzny) ===== */
+
+/* 1) Kontener siatki – łapiemy zarówno uniwersalnie, jak i ID z Twoich stron */
+body[data-page="mezczyzna"] .wrap > div,
+body[data-page="mezczyzna"] #grid-men-glowa,
+body[data-page="mezczyzna"] #grid-men-klatka,
+body[data-page="mezczyzna"] #grid-men-nogi {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+
+/* 2) Responsywność */
+@media (max-width: 1024px){
+  body[data-page="mezczyzna"] .wrap > div,
+  body[data-page="mezczyzna"] #grid-men-glowa,
+  body[data-page="mezczyzna"] #grid-men-klatka,
+  body[data-page="mezczyzna"] #grid-men-nogi {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 640px){
+  body[data-page="mezczyzna"] .wrap > div,
+  body[data-page="mezczyzna"] #grid-men-glowa,
+  body[data-page="mezczyzna"] #grid-men-klatka,
+  body[data-page="mezczyzna"] #grid-men-nogi {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 3) Kafelek: obrazek NA GÓRZE, podpis POD spodem */
+body[data-page="mezczyzna"] .wrap > div .card,
+body[data-page="mezczyzna"] #grid-men-glowa .card,
+body[data-page="mezczyzna"] #grid-men-klatka .card,
+body[data-page="mezczyzna"] #grid-men-nogi .card{
+  display: flex !important;
+  flex-direction: column !important;
+  width: auto !important;
+  text-decoration: none !important;
+}
+
+/* schowaj ewentualne nagłówki w kafelku */
+body[data-page="mezczyzna"] .card .head,
+body[data-page="mezczyzna"] .card .header,
+body[data-page="mezczyzna"] .card .title,
+body[data-page="mezczyzna"] .card .label{
+  display: none !important;
+}
+
+/* obrazek wypełnia kafelek poziomo */
+body[data-page="mezczyzna"] .card > img{
+  order: 1 !important;
+  width: 100% !important;
+  height: clamp(160px, 20vw, 240px) !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: inherit;
+}
+
+/* podpis pod obrazkiem – centrowany, niebieski */
+body[data-page="mezczyzna"] .card > p,
+body[data-page="mezczyzna"] .card > span:not(.label),
+body[data-page="mezczyzna"] .card > strong{
+  order: 2 !important;
+  display: block !important;
+  margin: 10px 0 0 !important;
+  text-align: center !important;
+  color: #3ea8ff !important;
+  font-weight: 700 !important;
+}
+body[data-page="mezczyzna"] .card a{ color:#3ea8ff !important; }
+body[data-page="mezczyzna"] .card a:hover{ color:#6bbcff !important; }
+
+/* 4) Nagłówek i link 'Wróć…' w pełnej szerokości */
+body[data-page="mezczyzna"] .wrap > h1,
+body[data-page="mezczyzna"] .wrap > .lead,
+body[data-page="mezczyzna"] .wrap > p.back{ grid-column: 1 / -1 !important; }
