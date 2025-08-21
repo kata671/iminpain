@@ -719,3 +719,11 @@ a.card { color: inherit !important; }
   height: 100%;
   object-fit: cover;  /* ładne przycięcie */
 }
+/* Ustawienie kafelków obok siebie */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  align-items: start;
+}
