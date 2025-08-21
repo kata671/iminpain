@@ -1,38 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mężczyzna</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="men.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mężczyzna — Wybierz część ciała</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- LOKALNE poprawki tylko dla tej strony -->
+  <style>
+    body[data-page="mezczyzna-index"] .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:24px;
+    }
+    @media (max-width: 900px){
+      body[data-page="mezczyzna-index"] .grid{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 560px){
+      body[data-page="mezczyzna-index"] .grid{
+        grid-template-columns: 1fr;
+      }
+    }
+
+    body[data-page="mezczyzna-index"] .card{
+      display:flex; 
+      flex-direction:column; 
+      align-items:center; 
+      text-align:center;
+      border-radius:18px;
+      padding:0;
+    }
+    body[data-page="mezczyzna-index"] .thumb{
+      width:100%;
+      aspect-ratio: 16/9;
+      object-fit:cover;
+      border-radius:14px;
+      display:block;
+    }
+    body[data-page="mezczyzna-index"] .label{
+      display:block;
+      padding:10px 14px 14px;
+      color: var(--accent);
+      font-weight:700;
+    }
+
+    /* schowaj przypadkowe czarne "pigułki", jeśli były użyte do linków */
+    body[data-page="mezczyzna-index"] .back{ display:none; }
+  </style>
 </head>
-<body data-page="mezczyzna">
-    <div class="container">
-        <h1>Wybierz część ciała</h1>
-        <div class="gallery">
-            <div class="gallery-item">
-                <a href="mezczyzna-glowa.html">
-                    <img src="img/mezczyzna-glowa.jpg" alt="Głowa i szyja">
-                </a>
-                <p>Głowa i szyja</p>
-            </div>
-            <div class="gallery-item">
-                <a href="mezczyzna-klatka.html">
-                    <img src="img/mezczyzna-klatka-brzuch-plecy.jpg" alt="Klatka / Brzuch / Plecy">
-                </a>
-                <p>Klatka / Brzuch / Plecy</p>
-            </div>
-            <div class="gallery-item">
-                <a href="mezczyzna-biodra.html">
-                    <img src="img/mezczyzna-biodra-nogi-stopy.jpg" alt="Biodra / Nogi / Stopy">
-                </a>
-                <p>Biodra / Nogi / Stopy</p>
-            </div>
-        </div>
-        <div class="back-button">
-            <a href="index.html">← Wróć</a>
-        </div>
+<body data-page="mezczyzna-index">
+  <div class="wrap">
+    <h1>Wybierz część ciała</h1>
+
+    <div class="grid">
+      <a class="card" href="mezczyzna-glowa.html">
+        <!-- UŻYJ poprawnego rozszerzenia pliku: .png lub .jpg -->
+        <img class="thumb" src="img/mezczyzna-glowa.png" alt="Głowa i szyja" loading="lazy">
+        <span class="label"><strong>Głowa i szyja</strong></span>
+      </a>
+
+      <a class="card" href="mezczyzna-klatka.html">
+        <img class="thumb" src="img/mezczyzna-klatka.png" alt="Klatka / Brzuch / Plecy" loading="lazy">
+        <span class="label"><strong>Klatka / Brzuch / Plecy</strong></span>
+      </a>
+
+      <a class="card" href="mezczyzna-nogi.html">
+        <img class="thumb" src="img/mezczyzna-nogi.png" alt="Biodra / Nogi / Stopy" loading="lazy">
+        <span class="label"><strong>Biodra / Nogi / Stopy</strong></span>
+      </a>
     </div>
+
+    <p class="back"><a href="index.html">← Strona główna</a></p>
+  </div>
 </body>
 </html>
