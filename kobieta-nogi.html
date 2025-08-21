@@ -1,71 +1,69 @@
 <!doctype html>
 <html lang="pl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Kobieta — Biodra, nogi, stopy</title>
-<style>
-  :root{
-    --bg1:#14161a; --bg2:#0e1116; --bg3:#0b0e13;
-    --card:#1f242d; --card2:#2a3140;
-    --text:#e8edf7; --muted:#a9b3c6; --accent:#3b82f6;
-    --radius:16px;
-  }
-  body{
-    margin:0; color:var(--text); font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
-    background:
-      radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px) 0 0/20px 20px,
-      linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 60%, var(--bg3) 100%);
-    min-height:100dvh;
-  }
-  a{color:var(--text); text-decoration:none}
-  .wrap{max-width:1100px; margin:0 auto; padding:24px 16px 56px}
-  .crumbs{margin-bottom:16px; font-size:14px}
-  .crumbs a:hover{color:#3b82f6}
-  h1{margin:10px 0 8px; font-size:32px}
-  p.lead{margin:0 0 18px; color:var(--muted)}
-  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px}
-  .card{background:linear-gradient(180deg,var(--card),var(--card2));
-        border-radius:var(--radius); box-shadow:0 8px 24px rgba(0,0,0,.35);
-        overflow:hidden}
-  .thumb{display:block; width:100%; height:170px; object-fit:cover}
-  .label{display:block; padding:10px 14px; background:rgba(0,0,0,.35)}
-  .label strong{font-weight:600}
-  footer{margin-top:28px; color:var(--muted); font-size:12px}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kobieta — Biodra, nogi, stopy</title>
+  <link rel="stylesheet" href="style.css?v=lbl1" />
+
+  <!-- ŁATKA: podpisy zawsze niebieskie i wyśrodkowane (tylko dla tej strony) -->
+  <style id="labels-fix-nogi">
+    .cards .card span.label,
+    .cards .card span.label *,
+    .cards .card .label,
+    .cards .card .label *,
+    .cards .card > span.label,
+    .cards .card > span.label * {
+      color: #00aaff !important;
+      text-align: center !important;
+      display: block !important;
+      width: 100% !important;
+      margin: 10px auto 0 !important;
+      font-weight: 700 !important;
+      letter-spacing: .2px;
+    }
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="crumbs">
-      <a href="kobieta.html">← Wróć do wyboru sekcji</a> | <a href="index.html">Strona główna</a>
-    </div>
+  <nav class="breadcrumbs" style="margin:10px 0;">
+    <a href="kobieta.html">← Wróć do wyboru sekcji</a>
+    <span>|</span>
+    <a href="index.html">Strona główna</a>
+  </nav>
 
-    <h1>Kobieta — Biodra, nogi, stopy</h1>
-    <p class="lead">Kliknij, aby zobaczyć szczegóły.</p>
+  <h1>Kobieta — Biodra, nogi, stopy</h1>
 
-    <div class="grid">
-      <a class="card" href="kobieta-biodra.html">
-        <img class="thumb" src="img/kobieta-biodra.png" alt="Biodra – ilustracja" />
-        <span class="label"><strong>Biodra</strong></span>
-      </a>
+  <main class="cards">
+    <!-- Biodra -->
+    <a class="card" href="#">
+      <picture>
+        <source srcset="img/kobieta-biodra.jpg" type="image/jpeg">
+        <img src="img/kobieta-biodra.png" alt="Biodra" loading="lazy">
+      </picture>
+      <span class="label"><strong>Biodra</strong></span>
+    </a>
 
-      <a class="card" href="kobieta-uda.html">
-        <img class="thumb" src="img/kobieta-uda.png" alt="Uda – ilustracja" />
-        <span class="label"><strong>Uda</strong></span>
-      </a>
+    <!-- Nogi / Uda -->
+    <a class="card" href="#">
+      <picture>
+        <source srcset="img/kobieta-nogi.jpg" type="image/jpeg">
+        <img src="img/kobieta-nogi.png" alt="Nogi" loading="lazy">
+      </picture>
+      <span class="label"><strong>Nogi / Uda</strong></span>
+    </a>
 
-      <a class="card" href="kobieta-nogi-szczegoly.html">
-        <img class="thumb" src="img/kobieta-nogi.png" alt="Nogi – ilustracja" />
-        <span class="label"><strong>Nogi</strong></span>
-      </a>
+    <!-- Stopy -->
+    <a class="card" href="#">
+      <picture>
+        <source srcset="img/kobieta-stopy.jpg" type="image/jpeg">
+        <img src="img/kobieta-stopy.png" alt="Stopy" loading="lazy">
+      </picture>
+      <span class="label"><strong>Stopy</strong></span>
+    </a>
+  </main>
 
-      <a class="card" href="kobieta-stopy.html">
-        <img class="thumb" src="img/kobieta-stopy.png" alt="Stopy – ilustracja" />
-        <span class="label"><strong>Stopy</strong></span>
-      </a>
-    </div>
-
-    <footer>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</footer>
-  </div>
+  <footer class="footer">
+    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
+  </footer>
 </body>
 </html>
