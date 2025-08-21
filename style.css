@@ -286,3 +286,9 @@ main,
 .cards{
   background: transparent !important;
 }
+.card__title {
+  color: #00aaff;      /* taki sam kolor jak u kobiety */
+  text-align: center;  /* wyśrodkowanie */
+  font-weight: bold;   /* opcjonalnie pogrubienie */
+  margin-top: 8px;     /* odstęp od obrazka */
+}
