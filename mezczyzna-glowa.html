@@ -1,87 +1,40 @@
 <!DOCTYPE html>
 <html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mężczyzna — Głowa i szyja</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mężczyzna – Głowa i szyja</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <h1>Mężczyzna – Głowa i szyja</h1>
 
-    <!-- globalne style strony -->
-    <link rel="stylesheet" href="style.css" />
-
-    <!-- Minimalny, lokalny CSS tylko do wyśrodkowania i koloru podpisów
-         (nic nie zmienia w tle, kafelkach ani układzie, bo to masz w style.css) -->
-    <style>
-      /* podpisy pod kafelkami – zawsze niebieskie i wyśrodkowane */
-      .card .label { text-align: center; }
-      .card .label strong { color: var(--accent); font-weight: 700; }
-
-      /* siatka 3 kolumny na desktopie, 2 na tabletach, 1 na telefonach */
-      #grid-men-glowa {
-        display: grid;
-        gap: 24px;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        align-items: start;
-      }
-      @media (max-width: 980px) {
-        #grid-men-glowa { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      }
-      @media (max-width: 620px) {
-        #grid-men-glowa { grid-template-columns: 1fr; }
-      }
-
-      /* obrazki w kafelkach poziome (cover) – spójnie z resztą serwisu */
-      .card .thumb {
-        width: 100%;
-        height: 220px;            /* taka sama wysokość jak u Kobiety */
-        object-fit: cover;        /* wypełnia kafelek poziomo */
-        display: block;
-        border-radius: var(--radius);
-      }
-    </style>
-  </head>
-
-  <!-- data-page zostaje "mezczyzna", żeby style globalne zadziałały -->
-  <body data-page="mezczyzna">
-    <div class="wrap">
-      <p class="back">
-        <a href="mezczyzna.html">← Wróć do wyboru sekcji</a>
-        <span class="sep"> | </span>
-        <a href="index.html">Strona główna</a>
-      </p>
-
-      <h1>Mężczyzna — Głowa i szyja</h1>
-
-      <div id="grid-men-glowa">
-        <!-- KAFEL 1: Głowa -->
-        <a class="card" href="mezczyzna-glowa-glowa.html">
-          <img class="thumb" src="mezczyzna-glowa.png" alt="Głowa — ilustracja" />
-          <span class="label"><strong>Głowa</strong></span>
-        </a>
-
-        <!-- KAFEL 2: Nos -->
-        <a class="card" href="mezczyzna-glowa-nos.html">
-          <img class="thumb" src="mezczyzna-nos.png" alt="Nos — ilustracja" />
-          <span class="label"><strong>Nos</strong></span>
-        </a>
-
-        <!-- KAFEL 3: Ucho -->
-        <a class="card" href="mezczyzna-glowa-ucho.html">
-          <img class="thumb" src="mezczyzna-ucho.png" alt="Ucho — ilustracja" />
-          <span class="label"><strong>Ucho</strong></span>
-        </a>
-
-        <!-- KAFEL 4: Oczy -->
-        <a class="card" href="mezczyzna-glowa-oczy.html">
-          <img class="thumb" src="mezczyzna-oczy.png" alt="Oczy — ilustracja" />
-          <span class="label"><strong>Oczy</strong></span>
-        </a>
-
-        <!-- KAFEL 5: Szyja -->
-        <a class="card" href="mezczyzna-glowa-szyja.html">
-          <img class="thumb" src="mezczyzna-szyja.png" alt="Szyja — ilustracja" />
-          <span class="label"><strong>Szyja</strong></span>
-        </a>
+    <!-- GRID 3 kolumny -->
+    <div id="grid-men-glowa">
+      <div class="card">
+        <img src="img/mezczyzna-glowa.png" alt="Głowa">
+        <p>Głowa</p>
+      </div>
+      <div class="card">
+        <img src="img/mezczyzna-nos.png" alt="Nos">
+        <p>Nos</p>
+      </div>
+      <div class="card">
+        <img src="img/mezczyzna-ucho.png" alt="Ucho">
+        <p>Ucho</p>
+      </div>
+      <div class="card">
+        <img src="img/mezczyzna-oczy.png" alt="Oczy">
+        <p>Oczy</p>
+      </div>
+      <div class="card">
+        <img src="img/mezczyzna-szyja.png" alt="Szyja">
+        <p>Szyja</p>
       </div>
     </div>
-  </body>
+
+    <p class="back"><a href="mezczyzna.html">← Wróć do wyboru sekcji</a></p>
+  </div>
+</body>
 </html>
