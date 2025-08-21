@@ -1328,3 +1328,9 @@ body[data-page="mezczyzna"] .grid .card a:focus .label {
   color: var(--accent) !important;
   text-decoration: none !important;
 }
+/* Wymuszenie koloru i centrowania podpisów w kartach */
+#grid-men-glowa .card p {
+  color: var(--accent) !important;
+  text-align: center !important;
+  font-weight: bold !important;
+}
