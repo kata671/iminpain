@@ -340,3 +340,58 @@ img[src*="mezczyzna-glowa-1"] + .label{
 @media (max-width: 700px){
   #grid-men-glowa, #grid-kobieta-obszary{ grid-template-columns: 1fr !important; }
 }
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kobieta — Wybierz obszar bólu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="kobieta">
+    <div class="wrap">
+        <h1>Wybierz obszar bólu — Kobieta</h1>
+
+        <!-- NOWY kontener z identyfikatorem -->
+        <div id="grid-kobieta-obszary">
+            <div class="card">
+                <a href="kobieta-glowa.html">
+                    <img src="img/kobieta-glowa-12.png" alt="Głowa i szyja">
+                    <p>Głowa i szyja</p>
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="kobieta-klatka.html">
+                    <img src="img/kobieta-klatka.png" alt="Klatka / brzuch / plecy">
+                    <p>Klatka / brzuch / plecy</p>
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="kobieta-nogi.html">
+                    <img src="img/kobieta-nogi.png" alt="Biodra / nogi / stopy">
+                    <p>Biodra / nogi / stopy</p>
+                </a>
+            </div>
+        </div>
+
+        <p><a href="index.html">← Powrót do startu</a> | <a href="index.html">Strona główna</a></p>
+    </div>
+</body>
+</html>
+00:34
+Wysłano
+/* Kafle poziome dla strony wyboru obszaru bólu u kobiety */
+#grid-kobieta-obszary {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+#grid-kobieta-obszary .card {
+    flex: 1;
+    max-width: 250px; /* wszystkie jednakowe */
+    text-align: center;
+}
