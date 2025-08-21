@@ -703,3 +703,19 @@ a.card { color: inherit !important; }
   height: 220px;
   object-fit: cover;
 }
+/* --- IMG w kartach, także gdy używamy <picture> --- */
+.cards .card picture,
+.cards .card img {
+  display: block;
+  width: 100%;
+  height: 220px;      /* jeśli chcesz inny rozmiar – zmień tu i będzie wszędzie */
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.cards .card picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* ładne przycięcie */
+}
