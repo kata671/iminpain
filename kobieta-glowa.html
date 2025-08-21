@@ -1,51 +1,83 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kobieta — Głowa i szyja</title>
-  <link rel="stylesheet" href="style.css">
+
+  <!-- Twój globalny CSS (cache-buster, żeby na pewno się wczytał) -->
+  <link rel="stylesheet" href="style.css?v=lbl3" />
+
+  <!-- ŁATKA TYLKO DLA TEJ STRONY: podpisy zawsze NIEBIESKIE i WYŚRODKOWANE,
+       plus stała wysokość miniaturek jak w reszcie serwisu -->
+  <style>
+    /* miniatury – spójny rozmiar */
+    .cards .card img.thumb {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      border-radius: 16px;
+    }
+    /* podpisy – niebieskie i na środku (obejmuje <span class="label"><strong>…</strong></span>) */
+    .cards .card .label,
+    .cards .card .label * {
+      color: #00aaff !important;
+      display: block !important;
+      width: 100% !important;
+      text-align: center !important;
+      margin: 10px auto 0 !important;
+      font-weight: 700 !important;
+      letter-spacing: .2px;
+    }
+  </style>
 </head>
 <body>
-  <a href="kobieta.html">← Wróć do wyboru sekcji</a> | <a href="index.html">Strona główna</a>
+  <nav class="breadcrumbs" style="margin:10px 0;">
+    <a href="kobieta.html">← Wróć do wyboru sekcji</a>
+    <span>|</span>
+    <a href="index.html">Strona główna</a>
+  </nav>
+
   <h1>Kobieta — Głowa i szyja</h1>
-  <p>Wybierz część: Głowa, Nos, Ucho, Oczy lub Szyja.</p>
+  <p class="lead">Wybierz część: Szczęka, Nos, Uszy, Oczy, Szyja.</p>
 
-  <div class="cards">
-    <a href="kobieta-glowa-glowa.html">
-      <img src="img/kobieta-glowa.png" alt="Głowa">
-      <span>Głowa</span>
+  <!-- Używamy obu klas, żeby złapały się style .cards i .grid, jeśli je masz -->
+  <main class="cards grid">
+    <!-- SZCZĘKA -->
+    <a class="card" href="kobieta-szczeka.html">
+      <img class="thumb" src="img/kobieta-szczeka.png" alt="Szczęka" loading="lazy">
+      <span class="label"><strong>Szczęka</strong></span>
     </a>
 
-    <a href="kobieta-glowa-nos.html">
-      <img src="img/kobieta-nos.png" alt="Nos">
-      <span>Nos</span>
+    <!-- NOS -->
+    <a class="card" href="kobieta-nos.html">
+      <img class="thumb" src="img/kobieta-nos.png" alt="Nos" loading="lazy">
+      <span class="label"><strong>Nos</strong></span>
     </a>
 
-    <!-- NOWY KAFEL Szczeka -->
-    <a href="kobieta-glowa-szczeka.html">
-      <img src="img/kobieta-szczeka.png" alt="Szczęka">
-      <span>Szczęka</span>
+    <!-- USZY -->
+    <a class="card" href="kobieta-ucho.html">
+      <img class="thumb" src="img/kobieta-ucho.png" alt="Uszy" loading="lazy">
+      <span class="label"><strong>Uszy</strong></span>
     </a>
 
-    <a href="kobieta-glowa-ucho.html">
-      <img src="img/kobieta-ucho.png" alt="Ucho">
-      <span>Ucho</span>
+    <!-- OCZY -->
+    <a class="card" href="kobieta-oczy.html">
+      <img class="thumb" src="img/kobieta-oczy.png" alt="Oczy" loading="lazy">
+      <span class="label"><strong>Oczy</strong></span>
     </a>
 
-    <a href="kobieta-glowa-oczy.html">
-      <img src="img/kobieta-oczy.png" alt="Oczy">
-      <span>Oczy</span>
+    <!-- SZYJA -->
+    <a class="card" href="kobieta-szyja.html">
+      <img class="thumb" src="img/kobieta-szyja.png" alt="Szyja" loading="lazy">
+      <span class="label"><strong>Szyja</strong></span>
     </a>
+  </main>
 
-    <a href="kobieta-glowa-szyja.html">
-      <img src="img/kobieta-szyja.png" alt="Szyja">
-      <span>Szyja</span>
-    </a>
-  </div>
-
-  <footer>
-    <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
+  <footer class="footer">
+    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
   </footer>
 </body>
 </html>
