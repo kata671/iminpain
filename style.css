@@ -170,3 +170,31 @@ body img {
   border: 1px solid var(--card-border);
   background: #000;
 }
+/* --- Naprawa podpisów kafelków --- */
+.card {
+  position: relative;              /* kotwica dla etykiety */
+  overflow: hidden;                /* żeby nic nie wystawało */
+}
+
+.card-label,
+.card figcaption {                  /* obsłuż obie nazwy, na wszelki wypadek */
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 14px;
+  text-align: center;              /* wyśrodkowanie tekstu */
+  color: #e9eef5;
+  font-weight: 700;
+  line-height: 1.2;
+  background: linear-gradient(
+    to top,
+    rgba(20,24,28,0.92) 0%,
+    rgba(20,24,28,0.78) 60%,
+    rgba(20,24,28,0.0) 100%
+  );
+  backdrop-filter: blur(2px);      /* lekki efekt jak na głównej */
+  border-bottom-left-radius: 16px; /* dopasowanie do zaokrągleń karty */
+  border-bottom-right-radius: 16px;
+  pointer-events: none;            /* klik nadal trafia w kartę */
+}
