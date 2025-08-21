@@ -586,3 +586,10 @@ main,
   color: inherit !important;
   text-align: inherit !important;
 }
+/* Naprawa: podpisy w kartach u kobiety na niebiesko */
+a.card span {
+  color: #00aaff !important;
+  text-align: center !important;
+  display: block;
+  width: 100%;
+}
