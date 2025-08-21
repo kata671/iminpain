@@ -1,93 +1,40 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mężczyzna – Głowa i szyja</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* --- TŁO i kolory jak na całym serwisie --- */
-    :root{
-      --bg: #0b0f14;
-      --text: #e8eef9;
-    }
-    body{
-      margin:0;
-      color:var(--text);
-      background:
-        radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px) 0 0 / 18px 18px,
-        radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px) 9px 9px / 18px 18px,
-        linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,0) 120px) top / 100% 180px no-repeat,
-        var(--bg) !important;
-    }
-
-    /* --- Layout strony --- */
-    .wrap{ max-width:1200px; margin:0 auto; padding:0 16px 24px; }
-
-    /* GRID: 3 kolumny desktop, 2 tablet, 1 telefon */
-    #grid-men-glowa{
-      display:grid !important;
-      grid-template-columns:repeat(3, minmax(0,1fr)) !important;
-      gap:24px !important;
-      align-items:start !important;
-    }
-    @media (max-width:900px){ #grid-men-glowa{ grid-template-columns:repeat(2, minmax(0,1fr)) !important; } }
-    @media (max-width:580px){ #grid-men-glowa{ grid-template-columns:1fr !important; } }
-
-    .card{
-      background:rgba(0,0,0,.25);
-      border-radius:18px;
-      padding:12px;
-      box-shadow:0 8px 20px rgba(0,0,0,.25);
-    }
-    .card img{
-      width:100% !important;
-      height:220px !important;
-      object-fit:cover !important;
-      display:block !important;
-      border-radius:14px !important;
-    }
-    .label{
-      color:#00aaff !important;
-      text-align:center !important;
-      font-weight:700 !important;
-      margin-top:10px !important;
-      display:block !important;
-    }
-
-    h1{ text-align:center; color:#00aaff; margin:16px 0 24px; font-weight:800; }
-    .back{ text-align:center; margin:16px 0 0; }
-    .back a{ color:#00aaff; text-decoration:none; font-weight:700; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mężczyzna – Głowa i szyja</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="mezczyzna">
-  <div class="wrap">
-    <h1>Mężczyzna – Głowa i szyja</h1>
-    <div id="grid-men-glowa">
-      <div class="card">
-        <img src="images/mezczyzna-glowa.jpg" alt="Głowa">
-        <span class="label">Głowa</span>
-      </div>
-      <div class="card">
-        <img src="images/mezczyzna-nos.jpg" alt="Nos">
-        <span class="label">Nos</span>
-      </div>
-      <div class="card">
-        <img src="images/mezczyzna-ucho.jpg" alt="Ucho">
-        <span class="label">Ucho</span>
-      </div>
-      <div class="card">
-        <img src="images/mezczyzna-oczy.jpg" alt="Oczy">
-        <span class="label">Oczy</span>
-      </div>
-      <div class="card">
-        <img src="images/mezczyzna-szyja.jpg" alt="Szyja">
-        <span class="label">Szyja</span>
-      </div>
+<body>
+    <div class="wrap">
+        <h1>Mężczyzna – Głowa i szyja</h1>
+
+        <!-- GRID z kafelkami -->
+        <div id="grid-men-glowa">
+            <div class="tile">
+                <img src="mezczyzna-glowa.png" alt="Głowa">
+                <a href="#">Głowa</a>
+            </div>
+            <div class="tile">
+                <img src="mezczyzna-nos.png" alt="Nos">
+                <a href="#">Nos</a>
+            </div>
+            <div class="tile">
+                <img src="mezczyzna-ucho.png" alt="Ucho">
+                <a href="#">Ucho</a>
+            </div>
+            <div class="tile">
+                <img src="mezczyzna-oczy.png" alt="Oczy">
+                <a href="#">Oczy</a>
+            </div>
+            <div class="tile">
+                <img src="mezczyzna-szyja.png" alt="Szyja">
+                <a href="#">Szyja</a>
+            </div>
+        </div>
+
+        <p class="back"><a href="mezczyzna.html">← Wróć do wyboru sekcji</a></p>
     </div>
-    <div class="back">
-      <a href="index.html">&larr; Wróć do wyboru sekcji</a>
-    </div>
-  </div>
 </body>
 </html>
