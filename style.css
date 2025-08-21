@@ -292,3 +292,56 @@ main,
   font-weight: bold;   /* opcjonalnie pogrubienie */
   margin-top: 8px;     /* odstęp od obrazka */
 }
+/* ------- KAFELKI: wygląd spójny wszędzie ------- */
+
+/* Kafelek (ramka) */
+.card {
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 18px;
+  padding: 12px 12px 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  overflow: hidden;            /* nic nie „wystaje” */
+}
+
+/* Klikalny obszar w kafelku – bez podkreśleń */
+.card a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Obraz w kafelku – zawsze równa wysokość, wypełnia bez rozciągania */
+.card img,
+.card .card__image {
+  width: 100%;
+  height: 230px;               /* wspólna wysokość miniatur we wszystkich sekcjach */
+  object-fit: cover;           /* przycina, nie zniekształca */
+  display: block;
+  border-radius: 14px;
+}
+
+/* Podpis pod obrazem – kolor jak u kobiety i wyśrodkowanie */
+.card__title,
+.card figcaption {
+  color: #00aaff;              /* ten sam kolor podpisów */
+  text-align: center;          /* wyśrodkowanie */
+  font-weight: 700;
+  margin-top: 10px;
+  letter-spacing: 0.2px;
+}
+
+/* Efekt hover – delikatne uniesienie jak na stronie głównej */
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.42);
+}
+
+/* Drobna korekta na małych ekranach */
+@media (max-width: 480px) {
+  .card img,
+  .card .card__image {
+    height: 200px;
+  }
+}
