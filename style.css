@@ -129,3 +129,31 @@ footer{
   .cards{ gap: 18px; }
   h1{ font-size: 22px; }
 }
+/* --- FIX: obrazki luzem na stronach typu mezczyzna-glowa.html --- */
+
+/* 1) Traktuj obrazki w .cards lub w <main> jak kafelki, jeśli nie mają .card */
+.cards > a > img,
+.cards > img,
+main > a > img,
+main > img {
+  width: 100%;
+  max-width: 360px;           /* ta sama szerokość co kafelek u „Kobiety” */
+  aspect-ratio: 4 / 3;        /* poziomy kadr */
+  height: auto;               /* fallback gdy aspect-ratio nie zadziała */
+  object-fit: cover;          /* bez rozciągania */
+  display: block;
+  background: #000;
+  border-radius: var(--radius);
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+  border: 1px solid var(--card-border);
+  margin: 0;                  /* bez przypadkowych odstępów */
+}
+
+/* 2) Ułóż takie obrazki w siatkę jak kafelki */
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  width: min(1200px, 92vw);
+  margin: 12px auto 40px;
+}
