@@ -345,3 +345,33 @@ main,
     height: 200px;
   }
 }
+/* --- Podpisy pod kafelkami: spójny wygląd na wszystkich stronach --- */
+
+/* 1) uniwersalnie: wszystko co wygląda jak podpis w .card */
+.card figcaption,
+.card .card__title,
+.card .caption,
+.card .label,
+.card .title,
+.card .name {
+  text-align: center;
+  color: #00aaff;
+  font-weight: 700;
+  margin-top: 10px;
+  letter-spacing: .2px;
+}
+
+/* 2) gdy podpis jest linkiem tuż pod obrazem (częsty case na stronach „Kobieta”) */
+.card > a + a,
+.card .caption a,
+.card .label a {
+  display: block;
+  text-align: center;
+  color: #00aaff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+/* 3) brak podkreślenia i zmiana tylko koloru przy hoverze */
+.card a { text-decoration: none; }
+.card a:hover { text-decoration: none; color: #33bbff; }
