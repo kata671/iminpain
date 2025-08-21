@@ -1354,3 +1354,24 @@ body[data-page="mezczyzna"] .grid .card a:focus .label {
   font-weight: bold;
   text-align: center;
 }
+#grid-men-glowa .card {
+  display: flex;
+  flex-direction: column;   /* pionowo: najpierw obraz, potem napis */
+  align-items: center;      /* wyśrodkowanie */
+  justify-content: flex-start;
+}
+
+#grid-men-glowa .card img {
+  order: 1;                 /* obrazek zawsze pierwszy */
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 6px;       /* odstęp od napisu */
+}
+
+#grid-men-glowa .card p {
+  order: 2;                 /* podpis zawsze po obrazku */
+  margin: 0;
+  font-weight: bold;
+  color: var(--accent) !important;
+  te
