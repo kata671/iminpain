@@ -1,50 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kobieta — Wybierz obszar bólu</title>
-  <link rel="stylesheet" href="style.css?v=9" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kobieta — Wybierz obszar bólu</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="kobieta">
+    <div class="wrap">
+        <h1>Wybierz obszar bólu — Kobieta</h1>
 
-  <nav class="breadcrumbs">
-    <a href="index.html">← Powrót do startu</a>
-    <span>|</span>
-    <a href="index.html">Strona główna</a>
-  </nav>
+        <!-- NOWY kontener z identyfikatorem -->
+        <div id="grid-kobieta-obszary">
+            <div class="card">
+                <a href="kobieta-glowa.html">
+                    <img src="img/kobieta-glowa-12.png" alt="Głowa i szyja">
+                    <p>Głowa i szyja</p>
+                </a>
+            </div>
 
-  <h1>Wybierz obszar bólu — Kobieta</h1>
+            <div class="card">
+                <a href="kobieta-klatka.html">
+                    <img src="img/kobieta-klatka.png" alt="Klatka / brzuch / plecy">
+                    <p>Klatka / brzuch / plecy</p>
+                </a>
+            </div>
 
-  <main class="cards">
-    <!-- Głowa i szyja -->
-    <a class="card" href="kobieta-glowa.html">
-      <div class="card__img">
-        <img src="img/kobieta-glowa.jpg?v=9" alt="Głowa i szyja" loading="lazy" />
-      </div>
-      <div class="card__title">Głowa i szyja</div>
-    </a>
+            <div class="card">
+                <a href="kobieta-nogi.html">
+                    <img src="img/kobieta-nogi.png" alt="Biodra / nogi / stopy">
+                    <p>Biodra / nogi / stopy</p>
+                </a>
+            </div>
+        </div>
 
-    <!-- Klatka / brzuch / plecy -->
-    <a class="card" href="kobieta-klatka.html">
-      <div class="card__img">
-        <img src="img/kobieta-klatka.jpg?v=9" alt="Klatka, brzuch, plecy" loading="lazy" />
-      </div>
-      <div class="card__title">Klatka, brzuch, plecy</div>
-    </a>
-
-    <!-- Biodra / nogi / stopy -->
-    <a class="card" href="kobieta-nogi.html">
-      <div class="card__img">
-        <img src="img/kobieta-biodra-nogi-stopy.jpg?v=9" alt="Biodra, nogi, stopy" loading="lazy" />
-      </div>
-      <div class="card__title">Biodra, nogi, stopy</div>
-    </a>
-  </main>
-
-  <footer class="footer">
-    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
-  </footer>
-
+        <p><a href="index.html">← Powrót do startu</a> | <a href="index.html">Strona główna</a></p>
+    </div>
 </body>
 </html>
