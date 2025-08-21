@@ -817,3 +817,31 @@ a.card .label strong {
   font-weight: 600;
   color: inherit !important;               /* żeby <strong> też było niebieskie */
 }
+/* CENTROWANIE I KOLOR PODPISÓW NA KAŻDEJ PODSTRONIE */
+a.card, .card {
+  text-align: center !important;
+}
+
+a.card > span,
+a.card .label,
+.card > span,
+.card .label {
+  display: block !important;        /* span ma zajmować całą szerokość kafelka */
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 10px 14px 12px !important;
+  text-align: center !important;    /* tekst na środku w obrębie spanu */
+  color: var(--link) !important;    /* niebieski */
+  text-decoration: none !important;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)) !important;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+a.card > span * ,
+a.card .label * ,
+.card > span * ,
+.card .label * {
+  color: var(--link) !important;    /* również <strong> w niebieskim */
+  text-decoration: none !important;
+}
