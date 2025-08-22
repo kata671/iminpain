@@ -1,66 +1,60 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mężczyzna — Głowa i szyja</title>
-  <!-- Uwaga: style.css (bez "s") -->
-  <link rel="stylesheet" href="./style.css?v=13" />
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <nav class="breadcrumbs">
-    <a href="mezczyzna.html">← Wróć do wyboru sekcji</a>
-    <span>|</span>
-    <a href="index.html">Strona główna</a>
-  </nav>
+<body data-page="mezczyzna-glowa">
+  <header>
+    <nav>
+      <a href="mezczyzna.html" class="back-link">← Wróć do wyboru sekcji</a> | 
+      <a href="index.html" class="back-link">Strona główna</a>
+    </nav>
+  </header>
 
-  <h1>Mężczyzna — Głowa i szyja</h1>
-  <p class="lead">Wybierz część: Szczęka, Nos, Uszy, Oczy lub Szyja.</p>
+  <main>
+    <h1>Mężczyzna — Głowa i szyja</h1>
+    <p>Wybierz część: Szczęka, Nos, Uszy, Oczy lub Szyja.</p>
 
-  <main class="cards">
-    <div class="card">
-      <picture>
-        <source srcset="img/mezczyzna-szczeka.jpg" type="image/jpeg" />
-        <img src="img/mezczyzna-szczeka.png" alt="Szczęka" loading="lazy" />
-      </picture>
-      <div class="card-label">Szczęka</div>
-    </div>
+    <!-- Kontener flex -->
+    <div class="tiles-row">
+      <div class="card">
+        <a href="mezczyzna-szczeka.html">
+          <img src="img/mezczyzna-szczeka.png" alt="Szczęka">
+          <p>Szczęka</p>
+        </a>
+      </div>
 
-    <div class="card">
-      <picture>
-        <source srcset="img/mezczyzna-nos.jpg" type="image/jpeg" />
-        <img src="img/mezczyzna-nos.png" alt="Nos" loading="lazy" />
-      </picture>
-      <div class="card-label">Nos</div>
-    </div>
+      <div class="card">
+        <a href="mezczyzna-nos.html">
+          <img src="img/mezczyzna-nos.png" alt="Nos">
+          <p>Nos</p>
+        </a>
+      </div>
 
-    <div class="card">
-      <picture>
-        <source srcset="img/mezczyzna-ucho.jpg" type="image/jpeg" />
-        <img src="img/mezczyzna-ucho.png" alt="Uszy" loading="lazy" />
-      </picture>
-      <div class="card-label">Uszy</div>
-    </div>
+      <div class="card">
+        <a href="mezczyzna-uszy.html">
+          <img src="img/mezczyzna-uszy.png" alt="Uszy">
+          <p>Uszy</p>
+        </a>
+      </div>
 
-    <div class="card">
-      <picture>
-        <source srcset="img/mezczyzna-oczy.jpg" type="image/jpeg" />
-        <img src="img/mezczyzna-oczy.png" alt="Oczy" loading="lazy" />
-      </picture>
-      <div class="card-label">Oczy</div>
-    </div>
+      <div class="card">
+        <a href="mezczyzna-oczy.html">
+          <img src="img/mezczyzna-oczy.png" alt="Oczy">
+          <p>Oczy</p>
+        </a>
+      </div>
 
-    <div class="card">
-      <picture>
-        <source srcset="img/mezczyzna-szyja.jpg" type="image/jpeg" />
-        <img src="img/mezczyzna-szyja.png" alt="Szyja" loading="lazy" />
-      </picture>
-      <div class="card-label">Szyja</div>
+      <div class="card">
+        <a href="mezczyzna-szyja.html">
+          <img src="img/mezczyzna-szyja.png" alt="Szyja">
+          <p>Szyja</p>
+        </a>
+      </div>
     </div>
   </main>
-
-  <footer>
-    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
-  </footer>
 </body>
 </html>
