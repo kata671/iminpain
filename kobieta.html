@@ -1,53 +1,62 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
   <title>Kobieta — Wybierz obszar bólu</title>
-
-  <!-- globalne style -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Wyśrodkowanie i równy rozmiar kafelków */
+    .tiles-wrapper {
+      display: flex;
+      justify-content: center;   /* na środku poziomo */
+      align-items: flex-start;
+      gap: 24px;
+      flex-direction: row;
+      flex-wrap: wrap;
+      max-width: 900px;          /* szerokość całego kontenera */
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .tile {
+      width: 220px;
+      text-align: center;
+    }
+    .tile img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+    .tile a {
+      display: block;
+      margin-top: 8px;
+      font-weight: bold;
+      color: #00aaff;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
+  <a href="index.html">← Powrót do startu</a> | <a href="index.html">Strona główna</a>
+  <h1>Wybierz obszar bólu — Kobieta</h1>
 
-  <div class="wrap">
-    <p class="back">
-      <a href="index.html">← Powrót do startu</a> |
-      <a href="index.html">Strona główna</a>
-    </p>
-
-    <h1>Wybierz obszar bólu — Kobieta</h1>
-    <p class="lead">Kliknij, aby zobaczyć szczegóły.</p>
-
-    <!-- RÓWNY UKŁAD 3 KAFELKÓW -->
-    <div id="grid-kobieta">
-      <!-- Kafelek 1 -->
-      <div class="card">
-        <a href="kobieta-glowa.html" aria-label="Kobieta — Głowa i szyja">
-          <img src="img/kobieta-glowa.png" alt="Głowa i szyja — ilustracja" />
-        </a>
-        <p><a href="kobieta-glowa.html">Głowa i szyja</a></p>
-      </div>
-
-      <!-- Kafelek 2 -->
-      <div class="card">
-        <a href="kobieta-klatka.html" aria-label="Kobieta — Klatka, brzuch, plecy">
-          <img src="img/kobieta-klatka.png" alt="Klatka, brzuch, plecy — ilustracja" />
-        </a>
-        <p><a href="kobieta-klatka.html">Klatka / brzuch / plecy</a></p>
-      </div>
-
-      <!-- Kafelek 3 -->
-      <div class="card">
-        <a href="kobieta-nogi.html" aria-label="Kobieta — Biodra, nogi, stopy">
-          <img src="img/kobieta-nogi.png" alt="Biodra, nogi, stopy — ilustracja" />
-        </a>
-        <p><a href="kobieta-nogi.html">Biodra / nogi / stopy</a></p>
-      </div>
+  <div class="tiles-wrapper">
+    <div class="tile">
+      <img src="img/kobieta-glowa-12.png" alt="Głowa i szyja">
+      <a href="kobieta-glowa.html">Głowa i szyja</a>
     </div>
-
-    <p class="footnote">© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+    <div class="tile">
+      <img src="img/kobieta-klatka.png" alt="Klatka / brzuch / plecy">
+      <a href="kobieta-klatka.html">Klatka / brzuch / plecy</a>
+    </div>
+    <div class="tile">
+      <img src="img/kobieta-nogi.png" alt="Biodra / nogi / stopy">
+      <a href="kobieta-nogi.html">Biodra / nogi / stopy</a>
+    </div>
   </div>
 
+  <footer>
+    <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
+  </footer>
 </body>
 </html>
