@@ -575,3 +575,22 @@ Wysłano
   flex-wrap: wrap;           /* zawijanie wierszy gdy brak miejsca */
   margin-top: 20px;
 }
+/* Stały rozmiar kafelków dla kobiet i mężczyzn */
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.image-card {
+  width: 200px;      /* szerokość kafelka */
+  text-align: center;
+}
+
+.image-card img {
+  width: 100%;
+  height: 180px;     /* stała wysokość */
+  object-fit: cover; /* przycięcie, żeby zdjęcie się mieściło */
+  border-radius: 10px;
+}
