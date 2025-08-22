@@ -567,3 +567,11 @@ Wysłano
   font-weight: 700;
   color: #00aaff;
 }
+/* Kafelki w rzędzie dla strony Mężczyzna - Głowa i szyja */
+.tiles-row {
+  display: flex;
+  justify-content: center;   /* wyśrodkowanie */
+  gap: 20px;                 /* odstęp między kafelkami */
+  flex-wrap: wrap;           /* zawijanie wierszy gdy brak miejsca */
+  margin-top: 20px;
+}
