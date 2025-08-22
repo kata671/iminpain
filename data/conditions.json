@@ -1,4 +1,3 @@
-
 {
   "serce_k": {
     "title": "Serce (Kobieta)",
@@ -79,114 +78,148 @@
   "kolano_k": {
     "title": "Kolano (Kobieta)",
     "description": "Ból kolana u kobiet może być wynikiem przeciążenia, urazu, chorób zwyrodnieniowych lub zapalnych.",
-    "causes": ["Kontuzja (naderwanie więzadeł, uszkodzenie łąkotki)", "Przeciążenie stawów podczas ćwiczeń", "Reumatoidalne zapalenie stawów", "Choroba zwyrodnieniowa stawów"],
-    "symptoms": ["Obrzęk kolana", "Ograniczona ruchomość", "Trzaski w kolanie przy ruchu", "Ból nasilający się przy wysiłku"],
+    "causes": ["Kontuzja więzadeł", "Przeciążenie", "Reumatoidalne zapalenie stawów", "Zwyrodnienie stawów"],
+    "symptoms": ["Obrzęk kolana", "Ograniczona ruchomość", "Trzaski przy ruchu", "Ból nasilający się przy wysiłku"],
     "doctors": ["Ortopeda", "Reumatolog", "Fizjoterapeuta"],
-    "medications": ["Leki przeciwbólowe (paracetamol, ibuprofen)", "Maści przeciwzapalne", "Suplementy z kolagenem i glukozaminą"],
-    "first_aid": "Odpoczynek, chłodzenie okładem, uniesienie nogi, kompresja elastycznym bandażem."
+    "medications": ["Ibuprofen", "Maści przeciwzapalne", "Suplementy z kolagenem"],
+    "first_aid": "Odpoczynek, chłodzenie, uniesienie nogi, bandaż elastyczny."
   },
   "kolano_m": {
     "title": "Kolano (Mężczyzna)",
     "description": "Ból kolana u mężczyzn często wynika z urazów sportowych, przeciążeń i chorób stawów.",
-    "causes": ["Uraz więzadeł krzyżowych", "Uszkodzenie łąkotki", "Zapalenie stawów", "Zwyrodnienie stawów"],
-    "symptoms": ["Ból przy chodzeniu", "Sztywność stawu", "Opuchlizna", "Uczucie niestabilności"],
-    "doctors": ["Ortopeda", "Rehabilitant", "Reumatolog"],
-    "medications": ["Ibuprofen", "Ketoprofen w żelu", "Paracetamol"],
+    "causes": ["Uraz więzadeł", "Uszkodzenie łąkotki", "Zapalenie stawów", "Zwyrodnienie"],
+    "symptoms": ["Ból przy chodzeniu", "Sztywność", "Opuchlizna", "Uczucie niestabilności"],
+    "doctors": ["Ortopeda", "Rehabilitant"],
+    "medications": ["Ibuprofen", "Ketoprofen żel", "Paracetamol"],
     "first_aid": "Unikanie wysiłku, zimne okłady, stabilizator kolana."
   },
 
   "kostka_k": {
     "title": "Kostka (Kobieta)",
     "description": "Ból kostki u kobiet najczęściej pojawia się w wyniku skręceń i przeciążeń.",
-    "causes": ["Skręcenie kostki", "Zapalenie ścięgien", "Urazy sportowe", "Niewłaściwe obuwie"],
+    "causes": ["Skręcenie kostki", "Zapalenie ścięgien", "Urazy sportowe"],
     "symptoms": ["Opuchlizna", "Siniak", "Ból przy obciążeniu", "Ograniczenie ruchu"],
     "doctors": ["Ortopeda", "Chirurg urazowy"],
-    "medications": ["Maści chłodzące", "Środki przeciwbólowe", "Żele przeciwzapalne"],
+    "medications": ["Maści chłodzące", "Środki przeciwbólowe"],
     "first_aid": "Chłodzenie, unieruchomienie, odpoczynek, uniesienie kończyny."
   },
   "kostka_m": {
     "title": "Kostka (Mężczyzna)",
     "description": "Ból kostki u mężczyzn najczęściej związany jest z urazem lub przeciążeniem.",
-    "causes": ["Skręcenie", "Zerwanie więzadeł", "Nadmierny wysiłek", "Stan zapalny"],
-    "symptoms": ["Ból przy chodzeniu", "Opuchlizna", "Siniaki", "Trudność w ruszaniu stopą"],
+    "causes": ["Skręcenie", "Zerwanie więzadeł", "Nadmierny wysiłek"],
+    "symptoms": ["Ból przy chodzeniu", "Opuchlizna", "Siniaki"],
     "doctors": ["Ortopeda", "Chirurg urazowy"],
-    "medications": ["Ibuprofen", "Żele chłodzące", "Paracetamol"],
-    "first_aid": "Odpoczynek, chłodzenie, bandaż elastyczny, unikanie obciążania."
+    "medications": ["Ibuprofen", "Żele chłodzące"],
+    "first_aid": "Odpoczynek, chłodzenie, bandaż elastyczny."
   },
 
   "lydka_k": {
     "title": "Łydka (Kobieta)",
     "description": "Ból łydki u kobiet często spowodowany jest przeciążeniem mięśni lub problemami z krążeniem.",
-    "causes": ["Skurcze mięśni", "Przeciążenie wysiłkowe", "Żylaki", "Zakrzepica żył głębokich"],
-    "symptoms": ["Nagły ból", "Sztywność mięśnia", "Obrzęk", "Uczucie ciężkości nóg"],
-    "doctors": ["Flebolog", "Internista", "Ortopeda"],
-    "medications": ["Leki przeciwbólowe", "Maści na żylaki", "Suplementy z magnezem"],
-    "first_aid": "Rozciąganie mięśnia, odpoczynek, masaż, uniesienie nogi."
+    "causes": ["Skurcze mięśni", "Przeciążenie wysiłkowe", "Żylaki"],
+    "symptoms": ["Nagły ból", "Sztywność", "Obrzęk", "Uczucie ciężkości nóg"],
+    "doctors": ["Flebolog", "Ortopeda"],
+    "medications": ["Leki przeciwbólowe", "Maści na żylaki", "Magnez"],
+    "first_aid": "Rozciąganie mięśnia, odpoczynek, uniesienie nogi."
   },
   "lydka_m": {
     "title": "Łydka (Mężczyzna)",
     "description": "Ból łydki u mężczyzn może wynikać z przeciążeń, skurczów mięśni, a także chorób naczyń.",
-    "causes": ["Skurcze mięśni", "Nadwyrężenie", "Problemy krążeniowe", "Zapalenie mięśni"],
-    "symptoms": ["Ostry ból", "Twardość mięśnia", "Obrzęk", "Problemy z chodzeniem"],
-    "doctors": ["Ortopeda", "Flebolog", "Internista"],
+    "causes": ["Skurcze mięśni", "Nadwyrężenie", "Problemy krążeniowe"],
+    "symptoms": ["Ostry ból", "Twardość mięśnia", "Obrzęk"],
+    "doctors": ["Ortopeda", "Flebolog"],
     "medications": ["Ibuprofen", "Magnez", "Żele rozgrzewające"],
-    "first_aid": "Rozciąganie, masaż, odpoczynek, ciepłe okłady."
+    "first_aid": "Rozciąganie, masaż, odpoczynek."
   },
 
   "bark_k": {
     "title": "Bark (Kobieta)",
     "description": "Ból barku u kobiet może być spowodowany urazem, przeciążeniem lub stanami zapalnymi.",
-    "causes": ["Zapalenie kaletki", "Zespół bolesnego barku", "Uraz sportowy", "Zwyrodnienie stawu"],
-    "symptoms": ["Ból przy unoszeniu ręki", "Sztywność barku", "Trudność w wykonywaniu ruchów", "Promieniowanie bólu do ramienia"],
-    "doctors": ["Ortopeda", "Reumatolog", "Fizjoterapeuta"],
-    "medications": ["Środki przeciwbólowe", "Maści rozgrzewające", "Leki przeciwzapalne"],
-    "first_aid": "Odpoczynek, zimny okład, unikanie podnoszenia ciężarów."
+    "causes": ["Zapalenie kaletki", "Zespół bolesnego barku", "Uraz sportowy"],
+    "symptoms": ["Ból przy unoszeniu ręki", "Sztywność barku", "Trudność w ruchu"],
+    "doctors": ["Ortopeda", "Reumatolog"],
+    "medications": ["Ibuprofen", "Maści rozgrzewające"],
+    "first_aid": "Odpoczynek, zimny okład."
   },
   "bark_m": {
     "title": "Bark (Mężczyzna)",
     "description": "Ból barku u mężczyzn to częsta przypadłość sportowa i wynikająca z pracy fizycznej.",
-    "causes": ["Uszkodzenie stożka rotatorów", "Zespół ciasnoty podbarkowej", "Uraz mechaniczny", "Zapalenie stawu barkowego"],
-    "symptoms": ["Ból przy ruchu ramienia", "Opuchlizna", "Ograniczona ruchomość", "Ból nocny"],
+    "causes": ["Uszkodzenie stożka rotatorów", "Zespół ciasnoty podbarkowej", "Uraz mechaniczny"],
+    "symptoms": ["Ból przy ruchu ramienia", "Opuchlizna", "Ograniczona ruchomość"],
     "doctors": ["Ortopeda", "Fizjoterapeuta"],
-    "medications": ["Ketonal", "Ibuprofen", "Maści przeciwzapalne"],
-    "first_aid": "Odpoczynek, zimne okłady, stosowanie stabilizatora."
+    "medications": ["Ketonal", "Ibuprofen"],
+    "first_aid": "Odpoczynek, zimne okłady."
   },
 
   "lokiec_k": {
     "title": "Łokieć (Kobieta)",
     "description": "Ból łokcia u kobiet często pojawia się przy powtarzających się ruchach i pracy przy komputerze.",
-    "causes": ["Łokieć tenisisty", "Łokieć golfisty", "Zapalenie ścięgien", "Uraz mechaniczny"],
-    "symptoms": ["Ból przy chwytaniu", "Tkliwość w okolicy stawu", "Osłabienie chwytu", "Sztywność stawu"],
+    "causes": ["Łokieć tenisisty", "Łokieć golfisty", "Zapalenie ścięgien"],
+    "symptoms": ["Ból przy chwytaniu", "Tkliwość w okolicy stawu", "Sztywność"],
     "doctors": ["Ortopeda", "Rehabilitant"],
-    "medications": ["Ibuprofen", "Żele przeciwzapalne", "Paracetamol"],
-    "first_aid": "Odpoczynek, zimne okłady, opaska elastyczna."
+    "medications": ["Ibuprofen", "Żele przeciwzapalne"],
+    "first_aid": "Odpoczynek, zimne okłady."
   },
   "lokiec_m": {
     "title": "Łokieć (Mężczyzna)",
     "description": "Ból łokcia u mężczyzn często pojawia się przy przeciążeniach sportowych i pracy fizycznej.",
-    "causes": ["Łokieć tenisisty", "Zapalenie kaletki", "Przeciążenie mięśni", "Uraz"],
-    "symptoms": ["Ból przy ruchu", "Tkliwość stawu", "Opuchlizna", "Sztywność"],
+    "causes": ["Łokieć tenisisty", "Zapalenie kaletki", "Przeciążenie mięśni"],
+    "symptoms": ["Ból przy ruchu", "Tkliwość stawu", "Opuchlizna"],
     "doctors": ["Ortopeda", "Reumatolog"],
-    "medications": ["Diklofenak", "Ibuprofen", "Maści przeciwzapalne"],
-    "first_aid": "Odpoczynek, zimny okład, opaska uciskowa."
+    "medications": ["Diklofenak", "Ibuprofen"],
+    "first_aid": "Odpoczynek, zimny okład."
   },
 
   "nadgarstek_k": {
     "title": "Nadgarstek (Kobieta)",
     "description": "Ból nadgarstka u kobiet często związany jest z zespołem cieśni nadgarstka lub urazami.",
-    "causes": ["Zespół cieśni nadgarstka", "Zapalenie stawów", "Uraz mechaniczny", "Przeciążenie"],
-    "symptoms": ["Mrowienie w palcach", "Osłabienie chwytu", "Ból przy zginaniu nadgarstka", "Drętwienie dłoni"],
-    "doctors": ["Ortopeda", "Neurolog", "Reumatolog"],
-    "medications": ["Leki przeciwbólowe", "Maści przeciwzapalne", "Witamina B6"],
-    "first_aid": "Odpoczynek, stabilizacja nadgarstka, zimne okłady."
+    "causes": ["Zespół cieśni nadgarstka", "Zapalenie stawów", "Uraz"],
+    "symptoms": ["Mrowienie w palcach", "Osłabienie chwytu", "Ból przy zginaniu"],
+    "doctors": ["Ortopeda", "Neurolog"],
+    "medications": ["Leki przeciwbólowe", "Maści przeciwzapalne"],
+    "first_aid": "Odpoczynek, stabilizacja nadgarstka."
   },
   "nadgarstek_m": {
     "title": "Nadgarstek (Mężczyzna)",
     "description": "Ból nadgarstka u mężczyzn często wynika z urazów sportowych lub pracy fizycznej.",
-    "causes": ["Skręcenie nadgarstka", "Złamanie kości nadgarstka", "Zapalenie stawu", "Zespół cieśni nadgarstka"],
-    "symptoms": ["Obrzęk", "Ból przy ruchu", "Trudność w chwytaniu", "Sztywność"],
+    "causes": ["Skręcenie", "Złamanie kości", "Zapalenie stawu"],
+    "symptoms": ["Obrzęk", "Ból przy ruchu", "Trudność w chwytaniu"],
     "doctors": ["Ortopeda", "Chirurg ręki"],
-    "medications": ["Ibuprofen", "Ketoprofen żel", "Paracetamol"],
-    "first_aid": "Unieruchomienie, zimny okład, odpoczynek."
-  }
-}
+    "medications": ["Ibuprofen", "Ketoprofen żel"],
+    "first_aid": "Unieruchomienie, zimny okład."
+  },
+
+  "oczy_k": {
+    "title": "Oczy (Kobieta)",
+    "description": "Ból oczu u kobiet może wynikać ze zmęczenia, wad wzroku lub infekcji.",
+    "causes": ["Zapalenie spojówek", "Zespół suchego oka", "Nadwyrężenie wzroku"],
+    "symptoms": ["Piecznie oczu", "Łzawienie", "Światłowstręt"],
+    "doctors": ["Okulista"],
+    "medications": ["Krople nawilżające", "Antybiotyki (w infekcjach)"],
+    "first_aid": "Odpoczynek od ekranów, krople nawilżające."
+  },
+  "oczy_m": {
+    "title": "Oczy (Mężczyzna)",
+    "description": "Ból oczu u mężczyzn najczęściej spowodowany jest zmęczeniem lub stanem zapalnym.",
+    "causes": ["Zapalenie spojówek", "Zespół suchego oka", "Nadwyrężenie wzroku"],
+    "symptoms": ["Ból", "Łzawienie", "Światłowstręt"],
+    "doctors": ["Okulista"],
+    "medications": ["Krople nawilżające"],
+    "first_aid": "Przerwy od pracy przy komputerze."
+  },
+
+  "nos_k": {
+    "title": "Nos (Kobieta)",
+    "description": "Ból w okolicy nosa może być skutkiem zapalenia zatok.",
+    "causes": ["Zapalenie zatok", "Infekcje wirusowe", "Alergie"],
+    "symptoms": ["Ból zatok", "Niedrożność nosa", "Gorączka"],
+    "doctors": ["Laryngolog"],
+    "medications": ["Leki przeciwbólowe", "Krople do nosa"],
+    "first_aid": "Nawadnianie, inhalacje parowe."
+  },
+  "nos_m": {
+    "title": "Nos (Mężczyzna)",
+    "description": "Ból nosa u mężczyzn zwykle związany jest z zatokami lub urazem.",
+    "causes": ["Zapalenie zatok", "Uraz nosa"],
+    "symptoms": ["Ból przy pochylaniu się", "Katar", "Niedrożność nosa"],
+    "do
