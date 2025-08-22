@@ -1,314 +1,168 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
   <title>Szczegóły</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    .details {max-width: 1000px; margin: 0 auto;}
-    .hero{display:flex; gap:24px; align-items:center; flex-wrap:wrap; margin:24px 0;}
-    .hero img{width:320px; max-width:100%; border-radius:16px}
-    .badges{display:flex; gap:8px; flex-wrap:wrap}
-    .badge{background:#1f2937; border:1px solid rgba(255,255,255,.1); padding:6px 10px; border-radius:999px; font-size:.9rem}
-    section{margin:18px 0; background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:16px}
-    h2{margin:0 0 10px}
-    ul{margin:0; padding-left:18px}
-    .danger{background:rgba(127,29,29,.35); border-color:rgba(185,28,28,.6)}
-  </style>
 </head>
-<body data-page="szczegoly">
-  <div class="wrap">
-    <header class="topbar">
-      <a href="javascript:history.back()">← Wróć</a> | <a href="index.html">Strona główna</a>
-    </header>
+<body>
+  <a href="index.html" class="back-link">← Strona główna</a>
+  <h1 id="title">Szczegóły</h1>
+  <div id="content"></div>
 
-    <h1 id="title">Szczegóły</h1>
-
-    <div id="content" class="details">
-      <div class="hero">
-        <img id="heroImg" alt="">
-        <div>
-          <div id="chips" class="badges"></div>
-          <p id="lead"></p>
-        </div>
-      </div>
-
-      <section>
-        <h2>Objawy</h2>
-        <ul id="sx"></ul>
-      </section>
-
-      <section>
-        <h2>Najczęstsze przyczyny</h2>
-        <ul id="causes"></ul>
-      </section>
-
-      <section class="danger">
-        <h2>Kiedy natychmiast po pomoc (zadzwoń 112/999)</h2>
-        <ul id="redflags"></ul>
-      </section>
-
-      <section>
-        <h2>Jak sobie radzić w domu</h2>
-        <ul id="selfcare"></ul>
-      </section>
-
-      <section>
-        <h2>Leki bez recepty</h2>
-        <ul id="otc"></ul>
-        <small><em>Uwaga: nie łącz jednocześnie paracetamolu z innymi preparatami zawierającymi paracetamol.
-          NLPZ (np. ibuprofen, naproksen) mogą podrażniać żołądek i nie są zalecane w ciąży (zwł. III trymestr),
-          przy chorobie wrzodowej i chorobach nerek. W razie wątpliwości skonsultuj się z lekarzem.</em></small>
-      </section>
-
-      <section>
-        <h2>Jacy specjaliści pomagają</h2>
-        <ul id="specs"></ul>
-      </section>
-
-      <section>
-        <h2>Gdzie szukać pilnej pomocy</h2>
-        <ul>
-          <li>Numer alarmowy: <strong>112</strong> lub <strong>999</strong> (pogotowie ratunkowe).</li>
-          <li>Nocna i świąteczna opieka zdrowotna NFZ.</li>
-          <li>Najbliższy SOR/Izba Przyjęć – w razie nagłych objawów z listy powyżej.</li>
-        </ul>
-      </section>
-
-      <p class="legal">Materiał edukacyjny. Nie zastępuje porady lekarza.</p>
-    </div>
-  </div>
+  <footer>
+    <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
+  </footer>
 
   <script>
-    // Dane do sekcji "Szczegóły"
-    const DATA = {
-      /* ====== KLATKA – NARZĄDY (M) ====== */
-      "serce_m": {
-        t: "Serce — Mężczyzna",
-        img: "img/mezczyzna-serce.png",
-        lead: "Ból w klatce piersiowej związany z sercem może mieć różny charakter – ucisk, pieczenie lub kłucie.",
-        chips: ["Klatka piersiowa", "Serce"],
-        sx: [
-          "Ucisk/ciężar za mostkiem promieniujący do lewej ręki, szyi lub żuchwy",
-          "Duszność, zimne poty, nudności",
-          "Nasilenie dolegliwości przy wysiłku lub stresie"
-        ],
-        causes: [
-          "Dławica piersiowa (choroba wieńcowa)",
-          "Zawał mięśnia sercowego",
-          "Zapalenie osierdzia (kłujący ból, gorszy przy wdechu i w leżeniu)",
-          "Zapalenie mięśnia sercowego (często po infekcji wirusowej)",
-          "Skurcz przełyku / refluks (naśladuje ból sercowy)",
-          "Napięciowy ból mięśni ściany klatki"
-        ],
-        red: [
-          "Silny, narastający ucisk za mostkiem >5 min",
-          "Ból z dusznością, omdleniem, sinieniem, zimnym potem",
-          "Nowy ból w spoczynku u osoby z czynnikami ryzyka (HT, cukrzyca, palenie, wysoki cholesterol)",
-          "Ból z utratą przytomności lub zaburzeniami rytmu serca"
-        ],
-        selfcare: [
-          "Przerwij wysiłek, usiądź półsiedząco, oddychaj spokojnie",
-          "Jeśli masz zalecony azotan (np. nitrogliceryna) – użyj zgodnie z zaleceniem",
-          "Notuj czas trwania i czynniki wyzwalające ból",
-          "Dbaj o sen, ogranicz stres i ciężkie posiłki przed wysiłkiem"
-        ],
-        otc: [
-          "Paracetamol na ból mięśniowo-kostny ściany klatki",
-          "Unikaj NLPZ przy podejrzeniu zawału/dławicy – mogą maskować objawy i wchodzić w interakcje"
-        ],
-        specs: ["Kardiolog", "Lekarz rodzinny", "SOR/karetka w nagłych przypadkach"]
-      },
+  // ====== BAZA DANYCH SZCZEGÓŁÓW ======
+  const DATA = {
+    /* ====== GŁOWA I SZYJA ====== */
+    "szczeka_m": {
+      t: "Szczęka — Mężczyzna",
+      img: "img/mezczyzna-szczeka.png",
+      lead: "Ból w obrębie żuchwy/szczęki bywa zębowy, stawowy (SSŻ) lub rzutowany.",
+      chips: ["Głowa i szyja", "Szczęka/SSŻ"],
+      sx: ["Ból przy żuciu/otwieraniu ust", "Trzaski w stawie skroniowo-żuchwowym", "Nadwrażliwość zębów"],
+      causes: ["Zapalenie miazgi", "Bruksizm", "Zatoki szczękowe", "Rzutowanie z serca (rzadko)"],
+      red: ["Obrzęk twarzy z gorączką", "Trudność w otwieraniu ust", "Uraz ze zmianą zgryzu"],
+      selfcare: ["Miękka dieta", "Ciepłe okłady", "Higiena jamy ustnej"],
+      otc: ["Paracetamol", "Ibuprofen", "Żele stomatologiczne"],
+      specs: ["Dentysta", "Chirurg stomatologiczny", "Laryngolog", "Fizjoterapeuta"]
+    },
+    "szczeka_k": {"$ref":"szczeka_m","t":"Szczęka — Kobieta","img":"img/kobieta-szczeka.png"},
 
-      "pluca_m": {
-        t: "Płuca — Mężczyzna",
-        img: "img/mezczyzna-pluca.jpg",
-        lead: "Ból pochodzenia oddechowego częściej kłuje i nasila się przy głębokim wdechu lub kaszlu.",
-        chips: ["Klatka piersiowa", "Układ oddechowy"],
-        sx: [
-          "Kłujący ból przy oddychaniu",
-          "Kaszel, gorączka",
-          "Duszność lub świszczący oddech"
-        ],
-        causes: [
-          "Zapalenie opłucnej / zapalenie płuc",
-          "Skurcz oskrzeli (astma, POChP)",
-          "Zatorowość płucna (nagła duszność po unieruchomieniu lub podróży)",
-          "Odma opłucnowa (ostry jednostronny ból i duszność)",
-          "Nadwyrężenie mięśni od kaszlu"
-        ],
-        red: [
-          "Nagła duszność, ból przy oddychaniu, przyspieszony oddech",
-          "Krwioplucie, sinica, spadek saturacji",
-          "Gorączka > 38.5°C z ciężką dusznością"
-        ],
-        selfcare: [
-          "Nawilżaj powietrze i pij ciepłe płyny",
-          "Odpoczynek, stopniowe wznawianie aktywności",
-          "Techniki oddechowe (powolny, przeponowy oddech)"
-        ],
-        otc: [
-          "Paracetamol lub ibuprofen na gorączkę/ból (jeśli brak przeciwwskazań)",
-          "Wykrztuśne przy mokrym kaszlu (np. gwajafenezyna) lub przeciwkaszlowe przy suchym kaszlu (np. dekstrometorfan)"
-        ],
-        specs: ["Pulmonolog", "Lekarz rodzinny", "SOR w nagłych stanach"]
-      },
+    "nos_m": {
+      t: "Nos — Mężczyzna",
+      img: "img/mezczyzna-nos.png",
+      lead: "Ból i ucisk u nasady nosa najczęściej towarzyszą zapaleniu zatok.",
+      chips: ["Głowa i szyja","Nos/Zatoki"],
+      sx: ["Ucisk w czole", "Gęsta wydzielina", "Gorszy węch"],
+      causes: ["Zapalenie zatok", "Alergia", "Skrzywiona przegroda"],
+      red: ["Gorączka > 39°C", "Obrzęk oczodołu", "Silny ból z zaburzeniami widzenia"],
+      selfcare: ["Płukanie nosa solą", "Nawilżanie powietrza", "Inhalacje"],
+      otc: ["Paracetamol", "Ibuprofen", "Steryd donosowy"],
+      specs: ["Laryngolog", "Alergolog", "Lekarz rodzinny"]
+    },
+    "nos_k": {"$ref":"nos_m","t":"Nos — Kobieta","img":"img/kobieta-nos.png"},
 
-      "uklad_oddechowy_m": {
-        t: "Układ oddechowy — Mężczyzna",
-        img: "img/uklad-oddechowy.jpg",
-        lead: "Objawy z dróg oddechowych — nos, krtań, tchawica, oskrzela i płuca.",
-        chips: ["Klatka piersiowa", "Układ oddechowy"],
-        sx: ["Kaszel (suchy lub mokry)", "Duszność", "Ból w klatce przy oddychaniu", "Gorączka lub stan podgorączkowy"],
-        causes: [
-          "Infekcja wirusowa/bakteryjna (zapalenie oskrzeli/płuc)",
-          "Astma, POChP",
-          "Alergie",
-          "Zatorowość płucna, odma (rzadziej, ale groźne)"
-        ],
-        red: [
-          "Spoczynkowa duszność, sinienie warg/palców",
-          "Krwioplucie, jednostronny ostry ból",
-          "Gorączka > 3 dni z narastającą dusznością"
-        ],
-        selfcare: [
-          "Nawilżanie, płyny, odpoczynek",
-          "Unikanie dymu i drażniących aerozoli",
-          "Inhalacje z soli fizjologicznej"
-        ],
-        otc: [
-          "Paracetamol/ibuprofen na gorączkę i ból (o ile brak przeciwwskazań)",
-          "Preparaty na kaszel zgodnie z typem kaszlu"
-        ],
-        specs: ["Pulmonolog", "Alergolog", "Lekarz rodzinny"]
-      },
+    "uszy_m": {
+      t: "Uszy — Mężczyzna",
+      img: "img/mezczyzna-uszy.png",
+      lead: "Ból ucha bywa pochodzenia zapalnego lub rzutowany z gardła.",
+      chips: ["Głowa i szyja","Ucho"],
+      sx: ["Ból kłujący", "Szum", "Uczucie zatkania"],
+      causes: ["Zapalenie ucha środkowego", "Zapalenie przewodu słuchowego", "Korek woskowinowy"],
+      red: ["Silny ból z wyciekiem", "Nagła głuchota", "Uraz z zawrotami głowy"],
+      selfcare: ["Ciepły okład", "Nawilżanie śluzówek", "Unikanie patyczków"],
+      otc: ["Paracetamol", "Ibuprofen", "Krople do ucha"],
+      specs: ["Laryngolog", "Lekarz rodzinny"]
+    },
+    "uszy_k": {"$ref":"uszy_m","t":"Uszy — Kobieta","img":"img/kobieta-uszy.png"},
 
-      "uklad_pokarmowy_m": {
-        t: "Układ pokarmowy — Mężczyzna",
-        img: "img/uklad-pokarmowy.jpg",
-        lead: "Ból w nadbrzuszu lub za mostkiem często ma podłoże żołądkowo-przełykowe.",
-        chips: ["Brzuch", "Układ pokarmowy"],
-        sx: ["Zgaga/pieczenie za mostkiem", "Ból po posiłku, odbijania", "Nudności"],
-        causes: [
-          "Refluks żołądkowo-przełykowy (GERD)",
-          "Zapalenie żołądka, wrzody",
-          "Skurcz przełyku",
-          "Dyspepsja czynnościowa"
-        ],
-        red: [
-          "Smoliste stolce lub krwiste wymioty",
-          "Utrata masy ciała, problemy z połykaniem",
-          "Ostry twardy brzuch, wysoka gorączka"
-        ],
-        selfcare: [
-          "Mniejsze posiłki, unikanie tłustych/ostrych potraw i kofeiny",
-          "Nie kładź się 2–3 h po posiłku; podnieś wezgłowie łóżka",
-          "Redukcja masy ciała, ograniczenie alkoholu"
-        ],
-        otc: [
-          "Leki zobojętniające/alginiowe doraźnie",
-          "IPP OTC (np. omeprazol) krótkoterminowo – jeśli brak przeciwwskazań"
-        ],
-        specs: ["Gastroenterolog", "Lekarz rodzinny"]
-      },
+    "oczy_m": {
+      t: "Oczy — Mężczyzna",
+      img: "img/mezczyzna-oczy.png",
+      lead: "Ból oka to pilny objaw, zwłaszcza z pogorszeniem widzenia.",
+      chips: ["Głowa i szyja","Oko"],
+      sx: ["Ból i światłowstręt", "Łzawienie", "Zaczerwienienie"],
+      causes: ["Zapalenie spojówek", "Suche oko", "Ostra jaskra"],
+      red: ["Nagła utrata widzenia", "Uraz chemiczny", "Twarde, bolesne oko"],
+      selfcare: ["Sztuczne łzy", "Przerwy od ekranu", "Okłady"],
+      otc: ["Krople nawilżające", "Leki przeciwalergiczne"],
+      specs: ["Okulista", "SOR"]
+    },
+    "oczy_k": {"$ref":"oczy_m","t":"Oczy — Kobieta","img":"img/kobieta-oczy.png"},
 
-      "uklad_krwionosny_m": {
-        t: "Układ krwionośny — Mężczyzna",
-        img: "img/uklad-k.jpg",
-        lead: "Układ krążenia obejmuje serce i naczynia. Ból klatki może wynikać z problemów wieńcowych, zapalnych lub zatorowych.",
-        chips: ["Klatka piersiowa", "Układ krążenia"],
-        sx: ["Ucisk w klatce", "Kołatania serca", "Osłabienie, zawroty głowy"],
-        causes: [
-          "Choroba wieńcowa, zawał",
-          "Zapalenie osierdzia/mięśnia sercowego",
-          "Zatorowość płucna, rozwarstwienie aorty",
-          "Nadciśnienie, zaburzenia rytmu"
-        ],
-        red: [
-          "Silny nowy ból klatki, duszność, omdlenie",
-          "Nagły niedowład/mowa bełkotliwa (podejrzenie udaru)",
-          "Silny ból pleców promieniujący do brzucha (aorta)"
-        ],
-        selfcare: [
-          "Kontrola ciśnienia, cukru i cholesterolu",
-          "Rzucenie palenia; regularny umiarkowany ruch",
-          "Dieta śródziemnomorska, redukcja stresu"
-        ],
-        otc: [
-          "Paracetamol na bóle mięśniowe; unikaj samodzielnego stosowania NLPZ przy chorobie sercowo-naczyniowej",
-          "Nie bierz profilaktycznie aspiryny bez zaleceń lekarza"
-        ],
-        specs: ["Kardiolog", "Lekarz rodzinny", "SOR w nagłych przypadkach"]
-      },
+    "szyja_m": {
+      t: "Szyja — Mężczyzna",
+      img: "img/mezczyzna-szyja.png",
+      lead: "Ból karku zwykle wynika z przeciążenia mięśni i kręgosłupa szyjnego.",
+      chips: ["Głowa i szyja","Szyja"],
+      sx: ["Sztywność karku", "Ból promieniujący do barku", "Ból głowy"],
+      causes: ["Napięcie mięśni", "Dyskopatia szyjna", "Uraz komunikacyjny"],
+      red: ["Sztywność karku z gorączką", "Drętwienie rąk", "Uraz z objawami neurologicznymi"],
+      selfcare: ["Ergonomia pracy", "Ćwiczenia rozciągające", "Ciepłe okłady"],
+      otc: ["Paracetamol", "Ibuprofen", "Maści rozgrzewające"],
+      specs: ["Lekarz rodzinny", "Fizjoterapeuta", "Neurolog"]
+    },
+    "szyja_k": {"$ref":"szyja_m","t":"Szyja — Kobieta","img":"img/kobieta-szyja.png"},
 
-      /* ====== KOBIETA – re-use męskich wpisów + zmiana tytułu ====== */
-      "serce_k":                 {"$ref":"serce_m",              "t":"Serce — Kobieta"},
-      "pluca_k":                 {"$ref":"pluca_m",              "t":"Płuca — Kobieta"},
-      "uklad_oddechowy_k":       {"$ref":"uklad_oddechowy_m",    "t":"Układ oddechowy — Kobieta"},
-      "uklad_pokarmowy_k":       {"$ref":"uklad_pokarmowy_m",    "t":"Układ pokarmowy — Kobieta"},
-      "uklad_krwionosny_k":      {"$ref":"uklad_krwionosny_m",   "t":"Układ krwionośny — Kobieta"}
-    };
+    /* ====== BIODRA / NOGI / STOPY ====== */
+    "biodra_m": {
+      t: "Biodra — Mężczyzna",
+      img: "img/mezczyzna-biodra.jpg",
+      lead: "Ból biodra może pochodzić ze stawu, ścięgien lub kręgosłupa.",
+      chips: ["Kończyna dolna","Biodro"],
+      sx: ["Ból pachwiny", "Sztywność poranna", "Utykanie"],
+      causes: ["Przeciążenie ścięgien", "Zwyrodnienie", "Rzutowanie z kręgosłupa"],
+      red: ["Nagły ból i obrzęk biodra", "Uraz z niemożnością chodzenia"],
+      selfcare: ["Odpoczynek", "Zimne okłady", "Ćwiczenia wzmacniające"],
+      otc: ["Paracetamol", "NLPZ doustnie/żel"],
+      specs: ["Ortopeda", "Fizjoterapeuta"]
+    },
+    "biodra_k": {"$ref":"biodra_m","t":"Biodra — Kobieta","img":"img/kobieta-biodra.jpg"},
 
-    // Dziedziczenie danych przez $ref
-    function resolve(id){
-      const item = DATA[id];
-      if(!item) return null;
-      if(item.$ref){
-        const base = JSON.parse(JSON.stringify(DATA[item.$ref] || {}));
-        delete item.$ref;
-        return Object.assign(base, item);
-      }
-      return item;
-    }
+    "uda_m": {
+      t: "Uda — Mężczyzna",
+      img: "img/mezczyzna-uda.jpg",
+      lead: "Ból uda zwykle wynika z przeciążenia mięśni.",
+      chips: ["Kończyna dolna","Udo"],
+      sx: ["Tkliwość mięśni", "Ból przy wysiłku", "Drętwienie przy rwie"],
+      causes: ["Naciągnięcie mięśni", "Rwa udowa", "Przeciążenie sportowe"],
+      red: ["Nagły obrzęk uda", "Uraz z krwiakiem i niemożnością chodzenia"],
+      selfcare: ["RICE (odpoczynek, lód, ucisk, uniesienie)", "Rozciąganie", "Wzmacnianie mięśni"],
+      otc: ["Paracetamol", "Ibuprofen"],
+      specs: ["Ortopeda", "Fizjoterapeuta"]
+    },
+    "uda_k": {"$ref":"uda_m","t":"Uda — Kobieta","img":"img/kobieta-uda.jpg"},
 
-    // Pobierz parametr z URL
-    function qs(name){ return new URLSearchParams(location.search).get(name); }
+    "stopy_m": {
+      t: "Stopy — Mężczyzna",
+      img: "img/mezczyzna-stopy.png",
+      lead: "Ból stopy najczęściej jest skutkiem przeciążeń i zapaleń.",
+      chips: ["Kończyna dolna","Stopa"],
+      sx: ["Ból pięty", "Sztywność poranna", "Ból po staniu"],
+      causes: ["Zapalenie rozcięgna podeszwowego", "Achilles", "Haluks", "Złe obuwie"],
+      red: ["Obrzęk i ból łydki (zakrzepica)", "Uraz z deformacją"],
+      selfcare: ["Odpoczynek", "Lód", "Wkładki i rozciąganie"],
+      otc: ["Paracetamol", "Żele NLPZ"],
+      specs: ["Ortopeda", "Podolog", "Fizjoterapeuta"]
+    },
+    "stopy_k": {"$ref":"stopy_m","t":"Stopy — Kobieta","img":"img/kobieta-stopy.jpg"}
+  };
 
-    // Render strony
-    function render(){
-      const id = qs('id');
-      const rec = resolve(id);
-      const title = document.getElementById('title');
+  // ====== LOGIKA WYŚWIETLANIA ======
+  const id = new URLSearchParams(window.location.search).get("id");
+  let item = DATA[id];
 
-      if(!rec){
-        title.textContent = "Szczegóły";
-        document.getElementById('content').innerHTML =
-          '<section class="danger"><h2>Brak danych</h2><p>Nie znaleziono informacji dla identyfikatora: <code>'+(id||'—')+'</code>.</p></section>';
-        return;
-      }
+  // Jeśli jest $ref — kopiujemy dane z innego obiektu i nadpisujemy różnice
+  if (item && item.$ref) {
+    item = Object.assign({}, DATA[item.$ref], item);
+    delete item.$ref;
+  }
 
-      title.textContent = rec.t;
-      document.getElementById('heroImg').src = rec.img;
-      document.getElementById('heroImg').alt = rec.t;
-      document.getElementById('lead').textContent = rec.lead;
-
-      const chips = document.getElementById('chips');
-      chips.innerHTML = '';
-      (rec.chips||[]).forEach(c=>{
-        const span = document.createElement('span');
-        span.className = 'badge';
-        span.textContent = c;
-        chips.appendChild(span);
-      });
-
-      function fill(id, arr){
-        const el = document.getElementById(id);
-        el.innerHTML = '';
-        (arr||[]).forEach(x=>{
-          const li = document.createElement('li');
-          li.textContent = x;
-          el.appendChild(li);
-        });
-      }
-      fill('sx', rec.sx);
-      fill('causes', rec.causes);
-      fill('redflags', rec.red);
-      fill('selfcare', rec.selfcare);
-      fill('otc', rec.otc);
-      fill('specs', rec.specs);
-    }
-    render();
+  if (item) {
+    document.getElementById("title").textContent = item.t;
+    document.getElementById("content").innerHTML = `
+      <img src="${item.img}" alt="${item.t}" class="detail-img">
+      <p>${item.lead}</p>
+      <h3>Objawy</h3>
+      <ul>${item.sx.map(x=>`<li>${x}</li>`).join("")}</ul>
+      <h3>Możliwe przyczyny</h3>
+      <ul>${item.causes.map(x=>`<li>${x}</li>`).join("")}</ul>
+      <h3 class="red">Kiedy pilnie do lekarza</h3>
+      <ul>${item.red.map(x=>`<li>${x}</li>`).join("")}</ul>
+      <h3>Co możesz zrobić samodzielnie</h3>
+      <ul>${item.selfcare.map(x=>`<li>${x}</li>`).join("")}</ul>
+      <h3>Leki bez recepty</h3>
+      <ul>${item.otc.map(x=>`<li>${x}</li>`).join("")}</ul>
+      <h3>Specjaliści</h3>
+      <ul>${item.specs.map(x=>`<li>${x}</li>`).join("")}</ul>
+    `;
+  } else {
+    document.getElementById("content").innerHTML = <p>Nie znaleziono danych dla tego elementu.</p>;
+  }
   </script>
 </body>
 </html>
