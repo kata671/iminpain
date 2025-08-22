@@ -1,6 +1,77 @@
 {
+  "oczy_k": {
+    "title": "Oczy (Kobieta)",
+    "description": "Bóle oczu i okolic.",
+    "causes": ["Zapalenie spojówek", "Jaskra", "Suchość oka", "Migrena oczna"],
+    "symptoms": ["Ból gałki ocznej", "Światłowstręt", "Łzawienie", "Zaczerwienienie"],
+    "doctors": ["Okulista", "Neurolog"],
+    "medications": ["Sztuczne łzy", "Leki przeciwbólowe", "Krople przeciwzapalne"],
+    "first_aid": "Odpocznij od ekranów, stosuj krople nawilżające.",
+    "emergency": [
+      "Nagła utrata widzenia.",
+      "Silny ból oka z nudnościami.",
+      "Uraz oka, ciało obce, krwawienie."
+    ]
+  },
+  "uszy_k": {
+    "title": "Uszy (Kobieta)",
+    "description": "Ból ucha i okolic.",
+    "causes": ["Zapalenie ucha środkowego", "Zatkane ucho woskowiną", "Infekcja gardła"],
+    "symptoms": ["Ból ucha", "Wyciek", "Pogorszenie słuchu", "Gorączka"],
+    "doctors": ["Laryngolog", "Lekarz rodzinny"],
+    "medications": ["Krople do uszu", "Antybiotyki (na receptę)", "Leki przeciwbólowe"],
+    "first_aid": "Unikaj wody w uchu, można stosować ciepły okład.",
+    "emergency": [
+      "Nagły ból z wysoką gorączką.",
+      "Silny zawrót głowy, zaburzenia równowagi.",
+      "Podejrzenie zapalenia opon (ból ucha + sztywność karku)."
+    ]
+  },
+  "nos_k": {
+    "title": "Nos (Kobieta)",
+    "description": "Bóle w obrębie nosa i zatok.",
+    "causes": ["Zapalenie zatok", "Alergia", "Uraz nosa"],
+    "symptoms": ["Utrudnione oddychanie", "Ból przy pochylaniu", "Katar", "Gorączka"],
+    "doctors": ["Laryngolog", "Alergolog"],
+    "medications": ["Krople do nosa", "Leki przeciwbólowe", "Leki antyhistaminowe"],
+    "first_aid": "Stosuj inhalacje z soli fizjologicznej, pij dużo płynów.",
+    "emergency": [
+      "Nagły obrzęk twarzy z dusznością.",
+      "Silne krwawienie z nosa, które nie ustaje.",
+      "Uraz nosa z podejrzeniem złamania czaszki."
+    ]
+  },
+  "szczeka_k": {
+    "title": "Szczęka (Kobieta)",
+    "description": "Bóle żuchwy i szczęki.",
+    "causes": ["Problemy stomatologiczne", "Bruksizm", "Zapalenie stawu skroniowo-żuchwowego"],
+    "symptoms": ["Ból przy żuciu", "Trzaski w stawie", "Ból promieniujący do ucha"],
+    "doctors": ["Dentysta", "Chirurg szczękowy"],
+    "medications": ["Środki przeciwbólowe", "Szyna relaksacyjna", "Antybiotyki (infekcje)"],
+    "first_aid": "Unikaj twardych pokarmów, rozluźniaj mięśnie.",
+    "emergency": [
+      "Nagły silny ból szczęki z dusznością (może być objawem zawału!).",
+      "Obrzęk szczęki z gorączką.",
+      "Uraz z deformacją twarzy."
+    ]
+  },
+  "szyja_k": {
+    "title": "Szyja (Kobieta)",
+    "description": "Bóle karku, szyi i okolic.",
+    "causes": ["Napięcie mięśniowe", "Uraz kręgosłupa szyjnego", "Przepuklina krążka"],
+    "symptoms": ["Sztywność karku", "Ból przy ruchach", "Zawroty głowy"],
+    "doctors": ["Ortopeda", "Neurolog", "Fizjoterapeuta"],
+    "medications": ["Leki przeciwbólowe", "Maści rozgrzewające", "Fizjoterapia"],
+    "first_aid": "Unikaj gwałtownych ruchów, stosuj ciepłe okłady.",
+    "emergency": [
+      "Nagły ból szyi z drętwieniem rąk/nóg.",
+      "Uraz szyi z zaburzeniami świadomości.",
+      "Sztywność karku + gorączka — podejrzenie zapalenia opon mózgowych."
+    ]
+  },
+
   "serce_k": {
-    "title": "Serce",
+    "title": "Serce (Kobieta)",
     "description": "Bóle w obrębie klatki piersiowej związane z sercem.",
     "causes": ["Choroba wieńcowa", "Zawał mięśnia sercowego", "Niewydolność serca", "Zapalenie osierdzia"],
     "symptoms": ["Ucisk w klatce", "Ból promieniujący do ramienia", "Duszność", "Zimne poty"],
@@ -8,16 +79,16 @@
     "medications": ["Nitrogliceryna (na receptę)", "Leki przeciwpłytkowe", "Leki obniżające ciśnienie"],
     "first_aid": "Przerwij wysiłek, usiądź. Wezwij pomoc przy nasilonym bólu.",
     "emergency": [
-      "Nagły, silny ucisk w klatce piersiowej trwający >5 minut.",
-      "Ból promieniujący do żuchwy/ramienia, duszność, zimne poty, omdlenie.",
-      "Objawy w spoczynku lub po wysiłku — natychmiast dzwoń 112."
+      "Nagły, silny ucisk w klatce piersiowej >5 minut.",
+      "Ból promieniujący do żuchwy/ramienia, duszność, omdlenie.",
+      "Objawy w spoczynku lub po wysiłku — natychmiast 112."
     ]
   },
   "pluca_k": {
-    "title": "Płuca",
+    "title": "Płuca (Kobieta)",
     "description": "Problemy z oddychaniem, kaszlem, bólem w klatce piersiowej.",
     "causes": ["Zapalenie płuc", "Astma", "POChP", "Zatorowość płucna"],
-    "symptoms": ["Duszność", "Kaszel", "Ból w klatce piersiowej nasilany oddechem", "Krwioplucie"],
+    "symptoms": ["Duszność", "Kaszel", "Ból w klatce nasilany oddechem", "Krwioplucie"],
     "doctors": ["Pulmonolog", "Lekarz rodzinny"],
     "medications": ["Leki rozszerzające oskrzela", "Antybiotyki (przy infekcji)", "Sterydy wziewne"],
     "first_aid": "Uspokój oddech, usiądź. Jeśli duszność narasta — wezwij pomoc.",
@@ -28,7 +99,7 @@
     ]
   },
   "brzuch_k": {
-    "title": "Brzuch",
+    "title": "Brzuch (Kobieta)",
     "description": "Bóle brzucha mogą mieć wiele przyczyn.",
     "causes": ["Zapalenie żołądka", "Wrzody", "Kolka żółciowa", "Zapalenie wyrostka"],
     "symptoms": ["Ból w nadbrzuszu", "Mdłości", "Wzdęcia", "Biegunka"],
@@ -36,41 +107,70 @@
     "medications": ["Leki przeciwbólowe (paracetamol)", "Leki osłonowe", "Preparaty rozkurczowe"],
     "first_aid": "Odpoczywaj, unikaj ciężkostrawnych potraw.",
     "emergency": [
-      "Narastający, stały ból brzucha z gorączką lub wymiotami.",
-      "Czarne stolce / krew w stolcu, wymioty fusowate.",
-      "Objawy w ciąży lub po urazie — natychmiast dzwoń 112."
+      "Narastający ból brzucha z gorączką/wymiotami.",
+      "Czarne stolce, krwawienie z przewodu pokarmowego.",
+      "Ból brzucha w ciąży — natychmiast pomoc."
+    ]
+  },
+  "plecy_k": {
+    "title": "Plecy (Kobieta)",
+    "description": "Bóle w obrębie kręgosłupa i pleców.",
+    "causes": ["Przeciążenie mięśni", "Dyskopatia", "Urazy", "Reumatyzm"],
+    "symptoms": ["Ból przewlekły", "Drętwienie kończyn", "Ograniczona ruchomość"],
+    "doctors": ["Ortopeda", "Neurolog", "Reumatolog"],
+    "medications": ["Leki przeciwbólowe", "Maści przeciwzapalne"],
+    "first_aid": "Odpoczynek, lekkie rozciąganie, zimne/ciepłe okłady.",
+    "emergency": [
+      "Silny ból pleców z niedowładem nóg.",
+      "Utrata kontroli nad oddawaniem moczu/stolca.",
+      "Ból po urazie z deformacją kręgosłupa."
     ]
   },
   "ciaza_k": {
     "title": "Ciąża",
-    "description": "Ból i dolegliwości w czasie ciąży.",
+    "description": "Dolegliwości bólowe związane z ciążą.",
     "causes": ["Napięcie więzadeł", "Ruchy płodu", "Skurcze macicy"],
-    "symptoms": ["Ból podbrzusza", "Uczucie rozpierania", "Obrzęki"],
+    "symptoms": ["Ból podbrzusza", "Obrzęki", "Napięcie brzucha"],
     "doctors": ["Ginekolog", "Położna"],
-    "medications": ["Paracetamol (po konsultacji)", "Preparaty magnezu"],
-    "first_aid": "Odpoczywaj, połóż się na lewym boku.",
+    "medications": ["Paracetamol (po konsultacji)", "Magnez"],
+    "first_aid": "Odpocznij, połóż się na lewym boku.",
     "emergency": [
       "Silny ból podbrzusza lub krwawienie.",
-      "Nagły ból głowy + zaburzenia widzenia + obrzęki.",
-      "Brak/znaczne osłabienie ruchów płodu."
+      "Brak ruchów płodu.",
+      "Nagły ból głowy + zaburzenia widzenia + obrzęki."
     ]
   },
-  "szyja_k": {
-    "title": "Szyja",
-    "description": "Bóle karku, szyi i okolic.",
-    "causes": ["Napięcie mięśniowe", "Uraz kręgosłupa szyjnego", "Przepuklina krążka"],
-    "symptoms": ["Sztywność karku", "Ból przy ruchach", "Zawroty głowy"],
-    "doctors": ["Ortopeda", "Neurolog", "Fizjoterapeuta"],
-    "medications": ["Leki przeciwbólowe", "Maści rozgrzewające", "Fizjoterapia"],
-    "first_aid": "Unikaj gwałtownych ruchów, stosuj ciepłe okłady.",
+
+  "biodra_k": {
+    "title": "Biodra (Kobieta)",
+    "description": "Bóle bioder.",
+    "causes": ["Zwyrodnienie stawu", "Uraz", "Zapalenie stawu"],
+    "symptoms": ["Ból przy chodzeniu", "Sztywność", "Ograniczenie ruchu"],
+    "doctors": ["Ortopeda", "Reumatolog"],
+    "medications": ["Leki przeciwbólowe", "Ćwiczenia wzmacniające"],
+    "first_aid": "Odciąż biodro, odpoczywaj.",
     "emergency": [
-      "Nagły ból szyi z drętwieniem rąk/nóg.",
-      "Uraz szyi z zaburzeniami świadomości.",
-      "Sztywność karku + gorączka — podejrzenie zapalenia opon mózgowo-rdzeniowych."
+      "Silny ból po upadku, brak możliwości chodzenia.",
+      "Podejrzenie złamania szyjki kości udowej.",
+      "Silny ból z gorączką i obrzękiem stawu."
+    ]
+  },
+  "uda_k": {
+    "title": "Uda (Kobieta)",
+    "description": "Ból uda.",
+    "causes": ["Przeciążenie mięśni", "Skurcze mięśni", "Urazy"],
+    "symptoms": ["Ból przy wysiłku", "Obrzęk", "Ograniczenie ruchu"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Rozciąganie", "Leki przeciwbólowe"],
+    "first_aid": "Odpocznij, rozciągnij mięśnie.",
+    "emergency": [
+      "Nagły silny ból + obrzęk uda (podejrzenie zakrzepicy).",
+      "Zniekształcenie kończyny po urazie.",
+      "Brak czucia lub osłabienie nogi."
     ]
   },
   "kolano_k": {
-    "title": "Kolano",
+    "title": "Kolano (Kobieta)",
     "description": "Bóle stawu kolanowego.",
     "causes": ["Uraz więzadeł", "Choroba zwyrodnieniowa", "Zapalenie stawu"],
     "symptoms": ["Obrzęk", "Ból przy chodzeniu", "Ograniczona ruchomość"],
@@ -83,8 +183,36 @@
       "Objawy infekcji stawu: gorączka, zaczerwienienie, silny ból."
     ]
   },
+  "lydka_k": {
+    "title": "Łydka (Kobieta)",
+    "description": "Bóle w obrębie łydki.",
+    "causes": ["Skurcze", "Przeciążenie", "Zakrzepica"],
+    "symptoms": ["Ból spoczynkowy", "Obrzęk", "Tkliwość"],
+    "doctors": ["Fizjoterapeuta", "Angiolog"],
+    "medications": ["Leki przeciwbólowe", "Rozciąganie"],
+    "first_aid": "Rozciągaj mięśnie, odpoczywaj.",
+    "emergency": [
+      "Silny ból + obrzęk jednej nogi (podejrzenie zakrzepicy).",
+      "Nagły krwotok z urazu.",
+      "Silny ból po ukąszeniu (reakcja alergiczna)."
+    ]
+  },
+  "kostka_k": {
+    "title": "Kostka (Kobieta)",
+    "description": "Ból w obrębie kostki.",
+    "causes": ["Skręcenie", "Złamanie", "Zwyrodnienie"],
+    "symptoms": ["Obrzęk", "Ból przy chodzeniu", "Zasinienie"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Chłodzenie", "Leki przeciwbólowe"],
+    "first_aid": "Unieś nogę, stosuj lód.",
+    "emergency": [
+      "Zniekształcenie kostki, brak możliwości chodzenia.",
+      "Silny ból + deformacja (złamanie).",
+      "Nagły brak czucia w stopie."
+    ]
+  },
   "stopy_k": {
-    "title": "Stopy",
+    "title": "Stopy (Kobieta)",
     "description": "Bóle stóp i pięt.",
     "causes": ["Płaskostopie", "Zapalenie rozcięgna podeszwowego", "Urazy"],
     "symptoms": ["Ból przy chodzeniu", "Obrzęk", "Zaczerwienienie"],
@@ -97,4 +225,6 @@
       "Podejrzenie złamania otwartego."
     ]
   }
+
+  /* ⚠️ Dalej identycznie dodać sekcje dla mężczyzny (oczy_m, uszy_m, serce_m, itd.) — pełna kopia jak powyżej, tylko z _m w ID i tytułach */
 }
