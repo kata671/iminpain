@@ -1,33 +1,314 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Szczegóły — Ból i pomoc</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Szczegóły</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .details {max-width: 1000px; margin: 0 auto;}
+    .hero{display:flex; gap:24px; align-items:center; flex-wrap:wrap; margin:24px 0;}
+    .hero img{width:320px; max-width:100%; border-radius:16px}
+    .badges{display:flex; gap:8px; flex-wrap:wrap}
+    .badge{background:#1f2937; border:1px solid rgba(255,255,255,.1); padding:6px 10px; border-radius:999px; font-size:.9rem}
+    section{margin:18px 0; background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:16px}
+    h2{margin:0 0 10px}
+    ul{margin:0; padding-left:18px}
+    .danger{background:rgba(127,29,29,.35); border-color:rgba(185,28,28,.6)}
+  </style>
 </head>
 <body data-page="szczegoly">
-  <div class="container">
-    <a href="index.html" class="back-link">← Strona główna</a>
+  <div class="wrap">
+    <header class="topbar">
+      <a href="javascript:history.back()">← Wróć</a> | <a href="index.html">Strona główna</a>
+    </header>
+
     <h1 id="title">Szczegóły</h1>
-    <p id="subtitle" class="muted"></p>
 
-    <div id="cards" class="details-grid">
-      <!-- Karty sekcji wypełni JS -->
+    <div id="content" class="details">
+      <div class="hero">
+        <img id="heroImg" alt="">
+        <div>
+          <div id="chips" class="badges"></div>
+          <p id="lead"></p>
+        </div>
+      </div>
+
+      <section>
+        <h2>Objawy</h2>
+        <ul id="sx"></ul>
+      </section>
+
+      <section>
+        <h2>Najczęstsze przyczyny</h2>
+        <ul id="causes"></ul>
+      </section>
+
+      <section class="danger">
+        <h2>Kiedy natychmiast po pomoc (zadzwoń 112/999)</h2>
+        <ul id="redflags"></ul>
+      </section>
+
+      <section>
+        <h2>Jak sobie radzić w domu</h2>
+        <ul id="selfcare"></ul>
+      </section>
+
+      <section>
+        <h2>Leki bez recepty</h2>
+        <ul id="otc"></ul>
+        <small><em>Uwaga: nie łącz jednocześnie paracetamolu z innymi preparatami zawierającymi paracetamol.
+          NLPZ (np. ibuprofen, naproksen) mogą podrażniać żołądek i nie są zalecane w ciąży (zwł. III trymestr),
+          przy chorobie wrzodowej i chorobach nerek. W razie wątpliwości skonsultuj się z lekarzem.</em></small>
+      </section>
+
+      <section>
+        <h2>Jacy specjaliści pomagają</h2>
+        <ul id="specs"></ul>
+      </section>
+
+      <section>
+        <h2>Gdzie szukać pilnej pomocy</h2>
+        <ul>
+          <li>Numer alarmowy: <strong>112</strong> lub <strong>999</strong> (pogotowie ratunkowe).</li>
+          <li>Nocna i świąteczna opieka zdrowotna NFZ.</li>
+          <li>Najbliższy SOR/Izba Przyjęć – w razie nagłych objawów z listy powyżej.</li>
+        </ul>
+      </section>
+
+      <p class="legal">Materiał edukacyjny. Nie zastępuje porady lekarza.</p>
     </div>
-
-    <section class="callout emergency">
-      <h3>Numery alarmowe</h3>
-      <p><strong>112</strong> – numer alarmowy (całodobowo).<br>
-         <strong>999</strong> – pogotowie ratunkowe.</p>
-      <p>Dzwoń natychmiast, jeśli występują <strong>„czerwone flagi”</strong> opisane poniżej.</p>
-    </section>
   </div>
 
-  <footer>
-    <p>© 2025 Iminpain — Materiał poglądowy. Nie zastępuje konsultacji z lekarzem.</p>
-  </footer>
+  <script>
+    // Dane do sekcji "Szczegóły"
+    const DATA = {
+      /* ====== KLATKA – NARZĄDY (M) ====== */
+      "serce_m": {
+        t: "Serce — Mężczyzna",
+        img: "img/mezczyzna-serce.png",
+        lead: "Ból w klatce piersiowej związany z sercem może mieć różny charakter – ucisk, pieczenie lub kłucie.",
+        chips: ["Klatka piersiowa", "Serce"],
+        sx: [
+          "Ucisk/ciężar za mostkiem promieniujący do lewej ręki, szyi lub żuchwy",
+          "Duszność, zimne poty, nudności",
+          "Nasilenie dolegliwości przy wysiłku lub stresie"
+        ],
+        causes: [
+          "Dławica piersiowa (choroba wieńcowa)",
+          "Zawał mięśnia sercowego",
+          "Zapalenie osierdzia (kłujący ból, gorszy przy wdechu i w leżeniu)",
+          "Zapalenie mięśnia sercowego (często po infekcji wirusowej)",
+          "Skurcz przełyku / refluks (naśladuje ból sercowy)",
+          "Napięciowy ból mięśni ściany klatki"
+        ],
+        red: [
+          "Silny, narastający ucisk za mostkiem >5 min",
+          "Ból z dusznością, omdleniem, sinieniem, zimnym potem",
+          "Nowy ból w spoczynku u osoby z czynnikami ryzyka (HT, cukrzyca, palenie, wysoki cholesterol)",
+          "Ból z utratą przytomności lub zaburzeniami rytmu serca"
+        ],
+        selfcare: [
+          "Przerwij wysiłek, usiądź półsiedząco, oddychaj spokojnie",
+          "Jeśli masz zalecony azotan (np. nitrogliceryna) – użyj zgodnie z zaleceniem",
+          "Notuj czas trwania i czynniki wyzwalające ból",
+          "Dbaj o sen, ogranicz stres i ciężkie posiłki przed wysiłkiem"
+        ],
+        otc: [
+          "Paracetamol na ból mięśniowo-kostny ściany klatki",
+          "Unikaj NLPZ przy podejrzeniu zawału/dławicy – mogą maskować objawy i wchodzić w interakcje"
+        ],
+        specs: ["Kardiolog", "Lekarz rodzinny", "SOR/karetka w nagłych przypadkach"]
+      },
 
-  <script src="details.js"></script>
+      "pluca_m": {
+        t: "Płuca — Mężczyzna",
+        img: "img/mezczyzna-pluca.jpg",
+        lead: "Ból pochodzenia oddechowego częściej kłuje i nasila się przy głębokim wdechu lub kaszlu.",
+        chips: ["Klatka piersiowa", "Układ oddechowy"],
+        sx: [
+          "Kłujący ból przy oddychaniu",
+          "Kaszel, gorączka",
+          "Duszność lub świszczący oddech"
+        ],
+        causes: [
+          "Zapalenie opłucnej / zapalenie płuc",
+          "Skurcz oskrzeli (astma, POChP)",
+          "Zatorowość płucna (nagła duszność po unieruchomieniu lub podróży)",
+          "Odma opłucnowa (ostry jednostronny ból i duszność)",
+          "Nadwyrężenie mięśni od kaszlu"
+        ],
+        red: [
+          "Nagła duszność, ból przy oddychaniu, przyspieszony oddech",
+          "Krwioplucie, sinica, spadek saturacji",
+          "Gorączka > 38.5°C z ciężką dusznością"
+        ],
+        selfcare: [
+          "Nawilżaj powietrze i pij ciepłe płyny",
+          "Odpoczynek, stopniowe wznawianie aktywności",
+          "Techniki oddechowe (powolny, przeponowy oddech)"
+        ],
+        otc: [
+          "Paracetamol lub ibuprofen na gorączkę/ból (jeśli brak przeciwwskazań)",
+          "Wykrztuśne przy mokrym kaszlu (np. gwajafenezyna) lub przeciwkaszlowe przy suchym kaszlu (np. dekstrometorfan)"
+        ],
+        specs: ["Pulmonolog", "Lekarz rodzinny", "SOR w nagłych stanach"]
+      },
+
+      "uklad_oddechowy_m": {
+        t: "Układ oddechowy — Mężczyzna",
+        img: "img/uklad-oddechowy.jpg",
+        lead: "Objawy z dróg oddechowych — nos, krtań, tchawica, oskrzela i płuca.",
+        chips: ["Klatka piersiowa", "Układ oddechowy"],
+        sx: ["Kaszel (suchy lub mokry)", "Duszność", "Ból w klatce przy oddychaniu", "Gorączka lub stan podgorączkowy"],
+        causes: [
+          "Infekcja wirusowa/bakteryjna (zapalenie oskrzeli/płuc)",
+          "Astma, POChP",
+          "Alergie",
+          "Zatorowość płucna, odma (rzadziej, ale groźne)"
+        ],
+        red: [
+          "Spoczynkowa duszność, sinienie warg/palców",
+          "Krwioplucie, jednostronny ostry ból",
+          "Gorączka > 3 dni z narastającą dusznością"
+        ],
+        selfcare: [
+          "Nawilżanie, płyny, odpoczynek",
+          "Unikanie dymu i drażniących aerozoli",
+          "Inhalacje z soli fizjologicznej"
+        ],
+        otc: [
+          "Paracetamol/ibuprofen na gorączkę i ból (o ile brak przeciwwskazań)",
+          "Preparaty na kaszel zgodnie z typem kaszlu"
+        ],
+        specs: ["Pulmonolog", "Alergolog", "Lekarz rodzinny"]
+      },
+
+      "uklad_pokarmowy_m": {
+        t: "Układ pokarmowy — Mężczyzna",
+        img: "img/uklad-pokarmowy.jpg",
+        lead: "Ból w nadbrzuszu lub za mostkiem często ma podłoże żołądkowo-przełykowe.",
+        chips: ["Brzuch", "Układ pokarmowy"],
+        sx: ["Zgaga/pieczenie za mostkiem", "Ból po posiłku, odbijania", "Nudności"],
+        causes: [
+          "Refluks żołądkowo-przełykowy (GERD)",
+          "Zapalenie żołądka, wrzody",
+          "Skurcz przełyku",
+          "Dyspepsja czynnościowa"
+        ],
+        red: [
+          "Smoliste stolce lub krwiste wymioty",
+          "Utrata masy ciała, problemy z połykaniem",
+          "Ostry twardy brzuch, wysoka gorączka"
+        ],
+        selfcare: [
+          "Mniejsze posiłki, unikanie tłustych/ostrych potraw i kofeiny",
+          "Nie kładź się 2–3 h po posiłku; podnieś wezgłowie łóżka",
+          "Redukcja masy ciała, ograniczenie alkoholu"
+        ],
+        otc: [
+          "Leki zobojętniające/alginiowe doraźnie",
+          "IPP OTC (np. omeprazol) krótkoterminowo – jeśli brak przeciwwskazań"
+        ],
+        specs: ["Gastroenterolog", "Lekarz rodzinny"]
+      },
+
+      "uklad_krwionosny_m": {
+        t: "Układ krwionośny — Mężczyzna",
+        img: "img/uklad-k.jpg",
+        lead: "Układ krążenia obejmuje serce i naczynia. Ból klatki może wynikać z problemów wieńcowych, zapalnych lub zatorowych.",
+        chips: ["Klatka piersiowa", "Układ krążenia"],
+        sx: ["Ucisk w klatce", "Kołatania serca", "Osłabienie, zawroty głowy"],
+        causes: [
+          "Choroba wieńcowa, zawał",
+          "Zapalenie osierdzia/mięśnia sercowego",
+          "Zatorowość płucna, rozwarstwienie aorty",
+          "Nadciśnienie, zaburzenia rytmu"
+        ],
+        red: [
+          "Silny nowy ból klatki, duszność, omdlenie",
+          "Nagły niedowład/mowa bełkotliwa (podejrzenie udaru)",
+          "Silny ból pleców promieniujący do brzucha (aorta)"
+        ],
+        selfcare: [
+          "Kontrola ciśnienia, cukru i cholesterolu",
+          "Rzucenie palenia; regularny umiarkowany ruch",
+          "Dieta śródziemnomorska, redukcja stresu"
+        ],
+        otc: [
+          "Paracetamol na bóle mięśniowe; unikaj samodzielnego stosowania NLPZ przy chorobie sercowo-naczyniowej",
+          "Nie bierz profilaktycznie aspiryny bez zaleceń lekarza"
+        ],
+        specs: ["Kardiolog", "Lekarz rodzinny", "SOR w nagłych przypadkach"]
+      },
+
+      /* ====== KOBIETA – re-use męskich wpisów + zmiana tytułu ====== */
+      "serce_k":                 {"$ref":"serce_m",              "t":"Serce — Kobieta"},
+      "pluca_k":                 {"$ref":"pluca_m",              "t":"Płuca — Kobieta"},
+      "uklad_oddechowy_k":       {"$ref":"uklad_oddechowy_m",    "t":"Układ oddechowy — Kobieta"},
+      "uklad_pokarmowy_k":       {"$ref":"uklad_pokarmowy_m",    "t":"Układ pokarmowy — Kobieta"},
+      "uklad_krwionosny_k":      {"$ref":"uklad_krwionosny_m",   "t":"Układ krwionośny — Kobieta"}
+    };
+
+    // Dziedziczenie danych przez $ref
+    function resolve(id){
+      const item = DATA[id];
+      if(!item) return null;
+      if(item.$ref){
+        const base = JSON.parse(JSON.stringify(DATA[item.$ref] || {}));
+        delete item.$ref;
+        return Object.assign(base, item);
+      }
+      return item;
+    }
+
+    // Pobierz parametr z URL
+    function qs(name){ return new URLSearchParams(location.search).get(name); }
+
+    // Render strony
+    function render(){
+      const id = qs('id');
+      const rec = resolve(id);
+      const title = document.getElementById('title');
+
+      if(!rec){
+        title.textContent = "Szczegóły";
+        document.getElementById('content').innerHTML =
+          '<section class="danger"><h2>Brak danych</h2><p>Nie znaleziono informacji dla identyfikatora: <code>'+(id||'—')+'</code>.</p></section>';
+        return;
+      }
+
+      title.textContent = rec.t;
+      document.getElementById('heroImg').src = rec.img;
+      document.getElementById('heroImg').alt = rec.t;
+      document.getElementById('lead').textContent = rec.lead;
+
+      const chips = document.getElementById('chips');
+      chips.innerHTML = '';
+      (rec.chips||[]).forEach(c=>{
+        const span = document.createElement('span');
+        span.className = 'badge';
+        span.textContent = c;
+        chips.appendChild(span);
+      });
+
+      function fill(id, arr){
+        const el = document.getElementById(id);
+        el.innerHTML = '';
+        (arr||[]).forEach(x=>{
+          const li = document.createElement('li');
+          li.textContent = x;
+          el.appendChild(li);
+        });
+      }
+      fill('sx', rec.sx);
+      fill('causes', rec.causes);
+      fill('redflags', rec.red);
+      fill('selfcare', rec.selfcare);
+      fill('otc', rec.otc);
+      fill('specs', rec.specs);
+    }
+    render();
+  </script>
 </body>
 </html>
