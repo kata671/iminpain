@@ -1,100 +1,192 @@
+
 {
-  "mezczyzna_klatka_pluca": {
-    "tytul": "Mężczyzna — Płuca (ból w klatce)",
-    "podtytul": "Lokalizacja i przyczyny bólu związane z układem oddechowym",
-    "lokalizacja": ["Ucisk/ukłucie w środkowej lub bocznej części klatki", "Nasilenie przy głębokim wdechu lub kaszlu"],
-    "przyczyny": [
-      "Infekcje dróg oddechowych (zapalenie oskrzeli, płuc)",
-      "Zapalenie opłucnej",
-      "Skurcz oskrzeli (astma), POChP",
-      "Zakrzepica/zatorowość płucna (nagły ból + duszność — pilnie!)"
-    ],
-    "objawy": ["Kaszel, gorączka/dreszcze", "Duszność, świszczący oddech", "Ból przy oddychaniu, osłabienie"],
-    "lekarze": ["Lekarz rodzinny/POZ", "Pulmonolog", "W nagłych — SOR / 112"],
-    "leki": [
-      "Paracetamol lub ibuprofen na ból/gorączkę (zgodnie z ulotką)",
-      "Nawilżanie powietrza, inhalacje z 0,9% NaCl"
-    ],
-    "dom": [
-      "Odpoczynek, nawodnienie",
-      "Unikaj wysiłku do czasu ustąpienia duszności/gorączki"
-    ],
-    "pierwsza_pomoc": [
-      "Usiądź w pozycji półsiedzącej, staraj się oddychać spokojnie",
-      "Jeśli masz lek doraźny zalecony wcześniej przez lekarza (np. inhalator) — zastosuj"
-    ],
-    "czerwone_flagi": [
-      "Nagły, silny ból w klatce z dusznością lub krwiopluciem",
-      "Zasinienie ust/palców, splątanie",
-      "<strong>Dzwoń 112/999</strong>"
-    ]
+  "serce_k": {
+    "title": "Serce (Kobieta)",
+    "description": "Ból serca u kobiet może być spowodowany chorobą wieńcową, stresem lub innymi schorzeniami.",
+    "causes": ["Choroba wieńcowa", "Stres i nerwica", "Nadciśnienie"],
+    "symptoms": ["Ucisk w klatce piersiowej", "Kołatanie serca", "Duszność"],
+    "doctors": ["Kardiolog", "Internista"],
+    "medications": ["Leki nasercowe", "Środki uspokajające"],
+    "first_aid": "W przypadku silnego bólu natychmiast wezwij pogotowie — 112."
+  },
+  "serce_m": {
+    "title": "Serce (Mężczyzna)",
+    "description": "Ból serca u mężczyzn często jest objawem choroby wieńcowej lub zawału.",
+    "causes": ["Zawał mięśnia sercowego", "Choroba wieńcowa", "Stres"],
+    "symptoms": ["Ból promieniujący do lewej ręki", "Ucisk", "Zimne poty"],
+    "doctors": ["Kardiolog", "Internista"],
+    "medications": ["Aspiryna", "Leki nasercowe"],
+    "first_aid": "Wezwij natychmiast pomoc medyczną — 112."
   },
 
-  "mezczyzna_klatka_serce": {
-    "tytul": "Mężczyzna — Serce (ból w klatce)",
-    "podtytul": "Gdy podejrzewasz problem kardiologiczny",
-    "lokalizacja": ["Ucisk za mostkiem, promieniowanie do lewego ramienia/szyi"],
-    "przyczyny": ["Dławica piersiowa", "Zawał serca", "Zapalenie osierdzia/mięśnia sercowego"],
-    "objawy": ["Zimny pot, nudności, duszność", "Nasilenie przy wysiłku/stresie"],
-    "lekarze": ["Ratownictwo medyczne (112/999)", "Kardiolog"],
-    "leki": [
-      "Jeśli zalecone wcześniej: nitrogliceryna podjęzykowo",
-      "Nie przyjmuj leków „na własną rękę” przy ostrym bólu w klatce"
-    ],
-    "dom": ["Ogranicz wysiłek, usiądź", "Mierz ciśnienie jeśli możesz"],
-    "pierwsza_pomoc": [
-      "Wezwij pomoc, nie prowadź auta",
-      "Aspiryna do rozgryzienia — tylko jeśli nie ma przeciwwskazań i zalecono wcześniej"
-    ],
-    "czerwone_flagi": [
-      "Silny, narastający ból w klatce, duszność, zlewne poty",
-      "<strong>Natychmiast 112/999</strong>"
-    ]
+  "pluca_k": {
+    "title": "Płuca (Kobieta)",
+    "description": "Ból płuc u kobiet może wynikać z infekcji, zapalenia lub problemów z układem oddechowym.",
+    "causes": ["Zapalenie płuc", "Astma", "Infekcja wirusowa"],
+    "symptoms": ["Kaszel", "Gorączka", "Duszność"],
+    "doctors": ["Pulmonolog", "Internista"],
+    "medications": ["Antybiotyki", "Leki wykrztuśne"],
+    "first_aid": "Odpoczynek, nawadnianie, wizyta u lekarza."
+  },
+  "pluca_m": {
+    "title": "Płuca (Mężczyzna)",
+    "description": "Ból płuc u mężczyzn często związany jest z infekcjami i przewlekłymi chorobami oddechowymi.",
+    "causes": ["POChP", "Zapalenie oskrzeli", "Zapalenie płuc"],
+    "symptoms": ["Kaszel", "Duszność", "Zmęczenie"],
+    "doctors": ["Pulmonolog", "Internista"],
+    "medications": ["Leki rozszerzające oskrzela", "Antybiotyki"],
+    "first_aid": "Unikanie wysiłku, odpoczynek, konsultacja lekarska."
   },
 
-  "kobieta_glowa_szczeka": {
-    "tytul": "Kobieta — Szczęka",
-    "podtytul": "Ból żuchwy/szczęki",
-    "lokalizacja": ["Okolice stawu skroniowo-żuchwowego, zęby, promieniowanie do ucha/skroni"],
-    "przyczyny": [
-      "Bruksizm (zgrzytanie), stres",
-      "Stan zapalny zęba/ropień",
-      "Dysfunkcja stawu skroniowo-żuchwowego"
-    ],
-    "objawy": ["Trzaski w stawie, ból przy żuciu, ograniczone otwieranie ust", "Nadwrażliwość zębów"],
-    "lekarze": ["Dentysta", "Laryngolog (jeśli promieniuje do ucha)", "Fizjoterapeuta stomatologiczny"],
-    "leki": ["Ibuprofen/ketoprofen (zgodnie z ulotką)", "Żele stomatologiczne przy stanach zapalnych"],
-    "dom": ["Miękka dieta, okłady ciepło/zimno", "Ćwiczenia rozluźniające i higiena snu"],
-    "pierwsza_pomoc": ["Unikaj szerokiego ziewania/gryzienia twardych pokarmów"],
-    "czerwone_flagi": ["Obrzęk, gorączka, trudności z otwieraniem ust — pilna wizyta u dentysty/SOR"]
+  "brzuch_k": {
+    "title": "Brzuch (Kobieta)",
+    "description": "Ból brzucha u kobiet może być związany z układem pokarmowym lub ginekologicznym.",
+    "causes": ["Zespół jelita drażliwego", "Zapalenie żołądka", "Problemy ginekologiczne"],
+    "symptoms": ["Skurcze", "Wzdęcia", "Biegunka"],
+    "doctors": ["Gastroenterolog", "Ginekolog"],
+    "medications": ["Leki rozkurczowe", "Probiotyki"],
+    "first_aid": "Ciepły okład na brzuch, odpoczynek, wizyta u lekarza."
+  },
+  "brzuch_m": {
+    "title": "Brzuch (Mężczyzna)",
+    "description": "Ból brzucha u mężczyzn może wynikać z chorób przewodu pokarmowego.",
+    "causes": ["Zapalenie wyrostka", "Wrzody żołądka", "Zatrucie pokarmowe"],
+    "symptoms": ["Skurcze", "Nudności", "Biegunka"],
+    "doctors": ["Gastroenterolog", "Internista"],
+    "medications": ["Leki rozkurczowe", "Leki na nadkwasotę"],
+    "first_aid": "Unikanie jedzenia ciężkostrawnego, wizyta u lekarza."
   },
 
-  "kobieta_nogi_stopy": {
-    "tytul": "Kobieta — Stopy",
-    "podtytul": "Ból stóp i śródstopia",
-    "lokalizacja": ["Pięta, śródstopie, paluch (hallux)"],
-    "przyczyny": ["Zapalenie rozcięgna podeszwowego", "Przeciążenia, niewygodne obuwie", "Płaskostopie"],
-    "objawy": ["Ból poranny przy pierwszych krokach", "Obrzęk, tkliwość uciskowa"],
-    "lekarze": ["Lekarz rodzinny", "Ortopeda", "Fizjoterapeuta"],
-    "leki": ["NLPZ miejscowo (żele), doustnie krótkotrwale zgodnie z ulotką"],
-    "dom": ["Rozciąganie rozcięgna, rolowanie piłką", "Wkładki, zmiana obuwia, schładzanie 10–15 min"],
-    "pierwsza_pomoc": ["Zasada PRICE: Protection, Rest, Ice, Compression, Elevation"],
-    "czerwone_flagi": ["Silny ból po urazie + niemożność obciążenia — RTG, SOR"]
+  "plecy_k": {
+    "title": "Plecy (Kobieta)",
+    "description": "Ból pleców u kobiet to częsta dolegliwość wynikająca z przeciążenia lub zmian zwyrodnieniowych.",
+    "causes": ["Przeciążenie mięśni", "Dyskopatia", "Wady postawy"],
+    "symptoms": ["Sztywność", "Ból przy ruchu", "Promieniowanie do nóg"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Leki przeciwbólowe", "Maści rozgrzewające"],
+    "first_aid": "Rozciąganie, odpoczynek, masaż."
+  },
+  "plecy_m": {
+    "title": "Plecy (Mężczyzna)",
+    "description": "Ból pleców u mężczyzn często wynika z pracy fizycznej lub przeciążeń sportowych.",
+    "causes": ["Przeciążenie", "Rwa kulszowa", "Dyskopatia"],
+    "symptoms": ["Ból przy schylaniu", "Sztywność", "Promieniowanie bólu"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Ibuprofen", "Diklofenak"],
+    "first_aid": "Rozciąganie, odpoczynek, unikanie dźwigania ciężarów."
   },
 
-  "kobieta_klatka_ciaza": {
-    "tytul": "Kobieta — Ciąża (ból w klatce/brzuchu)",
-    "podtytul": "Bezpieczeństwo mamy i dziecka",
-    "lokalizacja": ["Napięcia mięśniowe klatki, ból podżebrowy, zgaga"],
-    "przyczyny": ["Zmiany hormonalne i mechaniczne", "Zgaga/refluks", "Rozciąganie więzadeł macicy"],
-    "objawy": ["Zgaga, uczucie pełności, bóle przeciążeniowe"],
-    "lekarze": ["Położna/Ginekolog", "Lekarz rodzinny"],
-    "leki": [
-      "Dozwolone: paracetamol (po konsultacji); unikać NLPZ w III trymestrze",
-      "Na zgagę: preparaty zobojętniające, po konsultacji"
-    ],
-    "dom": ["Częste, małe posiłki, unikanie leżenia po jedzeniu", "Delikatny ruch, ćwiczenia oddechowe"],
-    "pierwsza_pomoc": ["Odpoczynek na lewym boku przy duszności/zasłabnięciu"],
-    "czerwone_flagi": ["Krwawienie, ból z twardnieniem brzucha, omdlenia — <strong>pilnie skontaktuj się z lekarzem lub 112</strong>"]
+  "kolano_k": {
+    "title": "Kolano (Kobieta)",
+    "description": "Ból kolana u kobiet może być wynikiem przeciążenia, urazu, chorób zwyrodnieniowych lub zapalnych.",
+    "causes": ["Kontuzja (naderwanie więzadeł, uszkodzenie łąkotki)", "Przeciążenie stawów podczas ćwiczeń", "Reumatoidalne zapalenie stawów", "Choroba zwyrodnieniowa stawów"],
+    "symptoms": ["Obrzęk kolana", "Ograniczona ruchomość", "Trzaski w kolanie przy ruchu", "Ból nasilający się przy wysiłku"],
+    "doctors": ["Ortopeda", "Reumatolog", "Fizjoterapeuta"],
+    "medications": ["Leki przeciwbólowe (paracetamol, ibuprofen)", "Maści przeciwzapalne", "Suplementy z kolagenem i glukozaminą"],
+    "first_aid": "Odpoczynek, chłodzenie okładem, uniesienie nogi, kompresja elastycznym bandażem."
+  },
+  "kolano_m": {
+    "title": "Kolano (Mężczyzna)",
+    "description": "Ból kolana u mężczyzn często wynika z urazów sportowych, przeciążeń i chorób stawów.",
+    "causes": ["Uraz więzadeł krzyżowych", "Uszkodzenie łąkotki", "Zapalenie stawów", "Zwyrodnienie stawów"],
+    "symptoms": ["Ból przy chodzeniu", "Sztywność stawu", "Opuchlizna", "Uczucie niestabilności"],
+    "doctors": ["Ortopeda", "Rehabilitant", "Reumatolog"],
+    "medications": ["Ibuprofen", "Ketoprofen w żelu", "Paracetamol"],
+    "first_aid": "Unikanie wysiłku, zimne okłady, stabilizator kolana."
+  },
+
+  "kostka_k": {
+    "title": "Kostka (Kobieta)",
+    "description": "Ból kostki u kobiet najczęściej pojawia się w wyniku skręceń i przeciążeń.",
+    "causes": ["Skręcenie kostki", "Zapalenie ścięgien", "Urazy sportowe", "Niewłaściwe obuwie"],
+    "symptoms": ["Opuchlizna", "Siniak", "Ból przy obciążeniu", "Ograniczenie ruchu"],
+    "doctors": ["Ortopeda", "Chirurg urazowy"],
+    "medications": ["Maści chłodzące", "Środki przeciwbólowe", "Żele przeciwzapalne"],
+    "first_aid": "Chłodzenie, unieruchomienie, odpoczynek, uniesienie kończyny."
+  },
+  "kostka_m": {
+    "title": "Kostka (Mężczyzna)",
+    "description": "Ból kostki u mężczyzn najczęściej związany jest z urazem lub przeciążeniem.",
+    "causes": ["Skręcenie", "Zerwanie więzadeł", "Nadmierny wysiłek", "Stan zapalny"],
+    "symptoms": ["Ból przy chodzeniu", "Opuchlizna", "Siniaki", "Trudność w ruszaniu stopą"],
+    "doctors": ["Ortopeda", "Chirurg urazowy"],
+    "medications": ["Ibuprofen", "Żele chłodzące", "Paracetamol"],
+    "first_aid": "Odpoczynek, chłodzenie, bandaż elastyczny, unikanie obciążania."
+  },
+
+  "lydka_k": {
+    "title": "Łydka (Kobieta)",
+    "description": "Ból łydki u kobiet często spowodowany jest przeciążeniem mięśni lub problemami z krążeniem.",
+    "causes": ["Skurcze mięśni", "Przeciążenie wysiłkowe", "Żylaki", "Zakrzepica żył głębokich"],
+    "symptoms": ["Nagły ból", "Sztywność mięśnia", "Obrzęk", "Uczucie ciężkości nóg"],
+    "doctors": ["Flebolog", "Internista", "Ortopeda"],
+    "medications": ["Leki przeciwbólowe", "Maści na żylaki", "Suplementy z magnezem"],
+    "first_aid": "Rozciąganie mięśnia, odpoczynek, masaż, uniesienie nogi."
+  },
+  "lydka_m": {
+    "title": "Łydka (Mężczyzna)",
+    "description": "Ból łydki u mężczyzn może wynikać z przeciążeń, skurczów mięśni, a także chorób naczyń.",
+    "causes": ["Skurcze mięśni", "Nadwyrężenie", "Problemy krążeniowe", "Zapalenie mięśni"],
+    "symptoms": ["Ostry ból", "Twardość mięśnia", "Obrzęk", "Problemy z chodzeniem"],
+    "doctors": ["Ortopeda", "Flebolog", "Internista"],
+    "medications": ["Ibuprofen", "Magnez", "Żele rozgrzewające"],
+    "first_aid": "Rozciąganie, masaż, odpoczynek, ciepłe okłady."
+  },
+
+  "bark_k": {
+    "title": "Bark (Kobieta)",
+    "description": "Ból barku u kobiet może być spowodowany urazem, przeciążeniem lub stanami zapalnymi.",
+    "causes": ["Zapalenie kaletki", "Zespół bolesnego barku", "Uraz sportowy", "Zwyrodnienie stawu"],
+    "symptoms": ["Ból przy unoszeniu ręki", "Sztywność barku", "Trudność w wykonywaniu ruchów", "Promieniowanie bólu do ramienia"],
+    "doctors": ["Ortopeda", "Reumatolog", "Fizjoterapeuta"],
+    "medications": ["Środki przeciwbólowe", "Maści rozgrzewające", "Leki przeciwzapalne"],
+    "first_aid": "Odpoczynek, zimny okład, unikanie podnoszenia ciężarów."
+  },
+  "bark_m": {
+    "title": "Bark (Mężczyzna)",
+    "description": "Ból barku u mężczyzn to częsta przypadłość sportowa i wynikająca z pracy fizycznej.",
+    "causes": ["Uszkodzenie stożka rotatorów", "Zespół ciasnoty podbarkowej", "Uraz mechaniczny", "Zapalenie stawu barkowego"],
+    "symptoms": ["Ból przy ruchu ramienia", "Opuchlizna", "Ograniczona ruchomość", "Ból nocny"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Ketonal", "Ibuprofen", "Maści przeciwzapalne"],
+    "first_aid": "Odpoczynek, zimne okłady, stosowanie stabilizatora."
+  },
+
+  "lokiec_k": {
+    "title": "Łokieć (Kobieta)",
+    "description": "Ból łokcia u kobiet często pojawia się przy powtarzających się ruchach i pracy przy komputerze.",
+    "causes": ["Łokieć tenisisty", "Łokieć golfisty", "Zapalenie ścięgien", "Uraz mechaniczny"],
+    "symptoms": ["Ból przy chwytaniu", "Tkliwość w okolicy stawu", "Osłabienie chwytu", "Sztywność stawu"],
+    "doctors": ["Ortopeda", "Rehabilitant"],
+    "medications": ["Ibuprofen", "Żele przeciwzapalne", "Paracetamol"],
+    "first_aid": "Odpoczynek, zimne okłady, opaska elastyczna."
+  },
+  "lokiec_m": {
+    "title": "Łokieć (Mężczyzna)",
+    "description": "Ból łokcia u mężczyzn często pojawia się przy przeciążeniach sportowych i pracy fizycznej.",
+    "causes": ["Łokieć tenisisty", "Zapalenie kaletki", "Przeciążenie mięśni", "Uraz"],
+    "symptoms": ["Ból przy ruchu", "Tkliwość stawu", "Opuchlizna", "Sztywność"],
+    "doctors": ["Ortopeda", "Reumatolog"],
+    "medications": ["Diklofenak", "Ibuprofen", "Maści przeciwzapalne"],
+    "first_aid": "Odpoczynek, zimny okład, opaska uciskowa."
+  },
+
+  "nadgarstek_k": {
+    "title": "Nadgarstek (Kobieta)",
+    "description": "Ból nadgarstka u kobiet często związany jest z zespołem cieśni nadgarstka lub urazami.",
+    "causes": ["Zespół cieśni nadgarstka", "Zapalenie stawów", "Uraz mechaniczny", "Przeciążenie"],
+    "symptoms": ["Mrowienie w palcach", "Osłabienie chwytu", "Ból przy zginaniu nadgarstka", "Drętwienie dłoni"],
+    "doctors": ["Ortopeda", "Neurolog", "Reumatolog"],
+    "medications": ["Leki przeciwbólowe", "Maści przeciwzapalne", "Witamina B6"],
+    "first_aid": "Odpoczynek, stabilizacja nadgarstka, zimne okłady."
+  },
+  "nadgarstek_m": {
+    "title": "Nadgarstek (Mężczyzna)",
+    "description": "Ból nadgarstka u mężczyzn często wynika z urazów sportowych lub pracy fizycznej.",
+    "causes": ["Skręcenie nadgarstka", "Złamanie kości nadgarstka", "Zapalenie stawu", "Zespół cieśni nadgarstka"],
+    "symptoms": ["Obrzęk", "Ból przy ruchu", "Trudność w chwytaniu", "Sztywność"],
+    "doctors": ["Ortopeda", "Chirurg ręki"],
+    "medications": ["Ibuprofen", "Ketoprofen żel", "Paracetamol"],
+    "first_aid": "Unieruchomienie, zimny okład, odpoczynek."
   }
 }
