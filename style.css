@@ -498,3 +498,16 @@ Wysłano
   margin-top: 8px;
   font-weight: bold;
 }
+/* ŚRODKOWANIE siatki na stronie kobieta.html */
+#grid-kobieta{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+
+  /* KLUCZ: te dwie linijki centrują całość */
+  max-width: 980px;      /* szerokość „paska” z kafelkami */
+  margin: 24px auto 80px;/* auto = wyśrodkowanie kontenera */
+
+  justify-content: center; /* wyrównanie elementów w środku „paska” */
+  padding: 0 16px;         /* trochę luzu po bokach na małych ekranach */
+}
