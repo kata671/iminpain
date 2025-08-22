@@ -523,3 +523,17 @@ Wysłano
   margin: 0 auto;           /* auto = wyśrodkowanie */
   padding: 20px;
 }
+/* Wyśrodkowanie kafelków dla stron kobieta i mężczyzna */
+#grid-kobieta, 
+#grid-mezczyzna {
+  display: flex !important;
+  justify-content: center !important;  /* środek w poziomie */
+  align-items: center !important;      /* środek w pionie */
+  gap: 24px !important;
+  flex-wrap: wrap !important;
+
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: 20px !important;
+  text-align: center !important;
+}
