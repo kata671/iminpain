@@ -1,0 +1,100 @@
+{
+  "mezczyzna_klatka_pluca": {
+    "tytul": "Mężczyzna — Płuca (ból w klatce)",
+    "podtytul": "Lokalizacja i przyczyny bólu związane z układem oddechowym",
+    "lokalizacja": ["Ucisk/ukłucie w środkowej lub bocznej części klatki", "Nasilenie przy głębokim wdechu lub kaszlu"],
+    "przyczyny": [
+      "Infekcje dróg oddechowych (zapalenie oskrzeli, płuc)",
+      "Zapalenie opłucnej",
+      "Skurcz oskrzeli (astma), POChP",
+      "Zakrzepica/zatorowość płucna (nagły ból + duszność — pilnie!)"
+    ],
+    "objawy": ["Kaszel, gorączka/dreszcze", "Duszność, świszczący oddech", "Ból przy oddychaniu, osłabienie"],
+    "lekarze": ["Lekarz rodzinny/POZ", "Pulmonolog", "W nagłych — SOR / 112"],
+    "leki": [
+      "Paracetamol lub ibuprofen na ból/gorączkę (zgodnie z ulotką)",
+      "Nawilżanie powietrza, inhalacje z 0,9% NaCl"
+    ],
+    "dom": [
+      "Odpoczynek, nawodnienie",
+      "Unikaj wysiłku do czasu ustąpienia duszności/gorączki"
+    ],
+    "pierwsza_pomoc": [
+      "Usiądź w pozycji półsiedzącej, staraj się oddychać spokojnie",
+      "Jeśli masz lek doraźny zalecony wcześniej przez lekarza (np. inhalator) — zastosuj"
+    ],
+    "czerwone_flagi": [
+      "Nagły, silny ból w klatce z dusznością lub krwiopluciem",
+      "Zasinienie ust/palców, splątanie",
+      "<strong>Dzwoń 112/999</strong>"
+    ]
+  },
+
+  "mezczyzna_klatka_serce": {
+    "tytul": "Mężczyzna — Serce (ból w klatce)",
+    "podtytul": "Gdy podejrzewasz problem kardiologiczny",
+    "lokalizacja": ["Ucisk za mostkiem, promieniowanie do lewego ramienia/szyi"],
+    "przyczyny": ["Dławica piersiowa", "Zawał serca", "Zapalenie osierdzia/mięśnia sercowego"],
+    "objawy": ["Zimny pot, nudności, duszność", "Nasilenie przy wysiłku/stresie"],
+    "lekarze": ["Ratownictwo medyczne (112/999)", "Kardiolog"],
+    "leki": [
+      "Jeśli zalecone wcześniej: nitrogliceryna podjęzykowo",
+      "Nie przyjmuj leków „na własną rękę” przy ostrym bólu w klatce"
+    ],
+    "dom": ["Ogranicz wysiłek, usiądź", "Mierz ciśnienie jeśli możesz"],
+    "pierwsza_pomoc": [
+      "Wezwij pomoc, nie prowadź auta",
+      "Aspiryna do rozgryzienia — tylko jeśli nie ma przeciwwskazań i zalecono wcześniej"
+    ],
+    "czerwone_flagi": [
+      "Silny, narastający ból w klatce, duszność, zlewne poty",
+      "<strong>Natychmiast 112/999</strong>"
+    ]
+  },
+
+  "kobieta_glowa_szczeka": {
+    "tytul": "Kobieta — Szczęka",
+    "podtytul": "Ból żuchwy/szczęki",
+    "lokalizacja": ["Okolice stawu skroniowo-żuchwowego, zęby, promieniowanie do ucha/skroni"],
+    "przyczyny": [
+      "Bruksizm (zgrzytanie), stres",
+      "Stan zapalny zęba/ropień",
+      "Dysfunkcja stawu skroniowo-żuchwowego"
+    ],
+    "objawy": ["Trzaski w stawie, ból przy żuciu, ograniczone otwieranie ust", "Nadwrażliwość zębów"],
+    "lekarze": ["Dentysta", "Laryngolog (jeśli promieniuje do ucha)", "Fizjoterapeuta stomatologiczny"],
+    "leki": ["Ibuprofen/ketoprofen (zgodnie z ulotką)", "Żele stomatologiczne przy stanach zapalnych"],
+    "dom": ["Miękka dieta, okłady ciepło/zimno", "Ćwiczenia rozluźniające i higiena snu"],
+    "pierwsza_pomoc": ["Unikaj szerokiego ziewania/gryzienia twardych pokarmów"],
+    "czerwone_flagi": ["Obrzęk, gorączka, trudności z otwieraniem ust — pilna wizyta u dentysty/SOR"]
+  },
+
+  "kobieta_nogi_stopy": {
+    "tytul": "Kobieta — Stopy",
+    "podtytul": "Ból stóp i śródstopia",
+    "lokalizacja": ["Pięta, śródstopie, paluch (hallux)"],
+    "przyczyny": ["Zapalenie rozcięgna podeszwowego", "Przeciążenia, niewygodne obuwie", "Płaskostopie"],
+    "objawy": ["Ból poranny przy pierwszych krokach", "Obrzęk, tkliwość uciskowa"],
+    "lekarze": ["Lekarz rodzinny", "Ortopeda", "Fizjoterapeuta"],
+    "leki": ["NLPZ miejscowo (żele), doustnie krótkotrwale zgodnie z ulotką"],
+    "dom": ["Rozciąganie rozcięgna, rolowanie piłką", "Wkładki, zmiana obuwia, schładzanie 10–15 min"],
+    "pierwsza_pomoc": ["Zasada PRICE: Protection, Rest, Ice, Compression, Elevation"],
+    "czerwone_flagi": ["Silny ból po urazie + niemożność obciążenia — RTG, SOR"]
+  },
+
+  "kobieta_klatka_ciaza": {
+    "tytul": "Kobieta — Ciąża (ból w klatce/brzuchu)",
+    "podtytul": "Bezpieczeństwo mamy i dziecka",
+    "lokalizacja": ["Napięcia mięśniowe klatki, ból podżebrowy, zgaga"],
+    "przyczyny": ["Zmiany hormonalne i mechaniczne", "Zgaga/refluks", "Rozciąganie więzadeł macicy"],
+    "objawy": ["Zgaga, uczucie pełności, bóle przeciążeniowe"],
+    "lekarze": ["Położna/Ginekolog", "Lekarz rodzinny"],
+    "leki": [
+      "Dozwolone: paracetamol (po konsultacji); unikać NLPZ w III trymestrze",
+      "Na zgagę: preparaty zobojętniające, po konsultacji"
+    ],
+    "dom": ["Częste, małe posiłki, unikanie leżenia po jedzeniu", "Delikatny ruch, ćwiczenia oddechowe"],
+    "pierwsza_pomoc": ["Odpoczynek na lewym boku przy duszności/zasłabnięciu"],
+    "czerwone_flagi": ["Krwawienie, ból z twardnieniem brzucha, omdlenia — <strong>pilnie skontaktuj się z lekarzem lub 112</strong>"]
+  }
+}
