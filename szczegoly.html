@@ -1,368 +1,195 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Szczegóły</title>
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
+  <title>Szczegóły</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
   <style>
-    body{max-width:1200px;margin:0 auto;padding:16px}
-    .detail-img{display:block;max-width:560px;width:100%;border-radius:16px;margin:8px 0 20px}
-    h1{margin:12px 0 18px}
-    h3{margin-top:18px}
-    .red{color:#ffb3b3}
-    .chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
-    .chip{padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.18);font-size:.9rem;opacity:.9}
-    .back-link{display:inline-block;margin:6px 0 12px}
-    ul{margin:8px 0 14px 18px}
-    .note{opacity:.85;font-size:.9rem}
+    :root{
+      --bg:#0f1116; --fg:#eaf0ff; --muted:#a7b3c7;
+      --card:#18202e; --card-2:#1d2636;
+      --accent:#3aa3ff; --ok:#1db954; --warn:#ffb020; --danger:#ff4d4f;
+      --border:#2b364a;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background: radial-gradient(ellipse at 20% -20%, #172033, #0f1116 50%) fixed, var(--bg);
+      color:var(--fg); line-height:1.6;
+    }
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    a{color:#6ec0ff;text-decoration:none}
+    a:hover{text-decoration:underline}
+    header h1{
+      margin:10px 0 18px; font-weight:800; letter-spacing:.2px;
+      font-size:clamp(28px,4.5vw,44px);
+    }
+    .lede{color:var(--muted); margin-bottom:18px}
+    .grid{display:grid; gap:14px}
+    .card{
+      background:linear-gradient(180deg,var(--card),var(--card-2));
+      border:1px solid var(--border); border-radius:16px; padding:16px;
+      box-shadow:0 8px 26px rgba(0,0,0,.28);
+    }
+    .card h3{margin:0 0 10px; font-size:20px}
+    .pill{display:inline-block; padding:2px 10px; border-radius:999px; font-size:12px;
+      background:#213147; border:1px solid #2f3f58; color:#a9c9ff; margin-right:6px}
+    ul{margin:0; padding-left:18px}
+    .emergency{
+      border:2px solid var(--danger);
+      background:linear-gradient(180deg,#3a1012 0%, #2a0d10 100%);
+      border-radius:16px; padding:16px; margin:6px 0 8px;
+      box-shadow:0 10px 30px rgba(255,77,79,.15);
+    }
+    .emergency h3{color:#ffd3d4; margin:0 0 10px}
+    .emergency p, .emergency li{color:#ffdede}
+    footer{color:#8aa1bd; margin-top:26px; font-size:14px}
+    @media (min-width:880px){
+      .grid{grid-template-columns:repeat(2,1fr)}
+    }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Strona główna</a>
-  <h1 id="title">Szczegóły</h1>
-  <div id="meta" class="chips"></div>
-  <div id="content"></div>
+  <div class="container">
+    <p><a href="index.html">← Strona główna</a></p>
+    <header>
+      <h1 id="title">Szczegóły</h1>
+      <p class="lede" id="desc"></p>
+    </header>
 
-  <footer>
-    <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
-  </footer>
+    <!-- EMERGENCY -->
+    <section id="emergencyBox" class="emergency" style="display:none">
+      <h3>🆘 Kiedy pilnie po pomoc (112 / SOR)</h3>
+      <ul id="emergencyList"></ul>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <span class="pill">Możliwe przyczyny bólu</span>
+        <ul id="causes"></ul>
+      </div>
+      <div class="card">
+        <span class="pill">Typowe objawy</span>
+        <ul id="symptoms"></ul>
+      </div>
+      <div class="card">
+        <span class="pill">Kto może pomóc</span>
+        <ul id="doctors"></ul>
+      </div>
+      <div class="card">
+        <span class="pill">Co może pomóc (leki / działania)</span>
+        <ul id="medications"></ul>
+      </div>
+      <div class="card" id="firstAidWrap">
+        <span class="pill">Pierwsza pomoc / domowe sposoby</span>
+        <p id="firstAid"></p>
+      </div>
+    </section>
+
+    <footer>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</footer>
+  </div>
 
   <script>
-  /* ================== BAZA TREŚCI ================== */
-  const DATA = {
-    /* ---------- GŁOWA I SZYJA ---------- */
-    "szczeka_m": {t:"Szczęka — Mężczyzna", img:"img/mezczyzna-szczeka.png",
-      chips:["Głowa i szyja","Szczęka / SSŻ"],
-      lead:"Ból w obrębie żuchwy/szczęki bywa zębowy, stawowy (SSŻ) lub rzutowany.",
-      sx:["Ból przy żuciu/ziewaniu","Trzaski w SSŻ","Nadwrażliwość zębów"],
-      causes:["Zapalenie miazgi/ropień","Bruksizm i przeciążenie SSŻ","Dysfunkcja SSŻ","Zapalenie zatok szczękowych","Rzutowanie z serca (rzadko)"],
-      red:["Postępujący obrzęk twarzy + gorączka","Trudność w otwieraniu ust/połykania","Uraz z przemieszczeniem zgryzu"],
-      selfcare:["Miękka dieta","Ciepłe okłady 10–15 min","Ćwiczenia rozluźniające","Płukanki antyseptyczne"],
-      otc:["Paracetamol","Ibuprofen/naproksen (jeśli brak przeciwwskazań)","Żele stomatologiczne"],
-      specs:["Dentysta","Chirurg stomatologiczny","Laryngolog","Fizjoterapeuta stomatologiczny"]
-    },
-    "szczeka_k": {$ref:"szczeka_m", t:"Szczęka — Kobieta", img:"img/kobieta-szczeka.png"},
+    // Pobierz id z query string
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
 
-    "nos_m": {t:"Nos / Zatoki — Mężczyzna", img:"img/mezczyzna-nos.png",
-      chips:["Głowa i szyja","Nos / Zatoki"],
-      lead:"Ucisk w czole/policzkach i ból u nasady nosa najczęściej to zapalenie zatok.",
-      sx:["Ucisk czoła/policzków","Gęsta wydzielina","Gorszy węch","Ból przy pochylaniu"],
-      causes:["Ostre/przewlekłe zapalenie zatok","Alergiczny nieżyt nosa","Skrzywiona przegroda"],
-      red:["Wysoka gorączka > 3 dni","Obrzęk wokół oka","Silny ból z zaburzeniem widzenia"],
-      selfcare:["Płukanie nosa solą hipertoniczną","Nawilżanie","Inhalacje","Nawodnienie"],
-      otc:["Paracetamol/ibuprofen","Krople obkurczające <5 dni","Donosowe GKS przy alergii"],
-      specs:["Laryngolog","Alergolog","Lekarz rodzinny"]
-    },
-    "nos_k": {$ref:"nos_m", t:"Nos / Zatoki — Kobieta", img:"img/kobieta-nos.png"},
+    // Fallback sytuacji nagłych – działa nawet, gdy w JSON nie ma pola "emergency"
+    function emergencyFallback(id){
+      const t = (s)=>({type:'generic', items:s});
+      const chest = [
+        "nagły, silny ucisk w klatce piersiowej",
+        "duszność lub trudności w mówieniu",
+        "ból promieniujący do żuchwy/ramienia",
+        "zawroty głowy, zimne poty, omdlenie"
+      ];
+      const breath = [
+        "spoczynkowa duszność, sinienie warg",
+        "szybkie narastanie kaszlu/duszności",
+        "plwocina z krwią lub ból nasilany oddechem"
+      ];
+      const neuro = [
+        "nagle pojawiający się najsilniejszy ból głowy",
+        "niedowład, drętwienie połowicze, bełkotliwa mowa",
+        "nagłe zaburzenia widzenia lub równowagi"
+      ];
+      const bleed = ["masywny krwotok", "podejrzenie złamania/urazu z deformacją"];
+      const abdomen = [
+        "narastający, stały ból brzucha z gorączką",
+        "twardy brzuch, wymioty treścią krwistą/„fusowatą”",
+        "czarne stolce lub krew w stolcu"
+      ];
+      const pregnancy = [
+        "silny ból podbrzusza, krwawienie",
+        "brak/znaczne osłabienie ruchów płodu",
+        "nagły ból głowy + zaburzenia widzenia + obrzęki (podejrzenie stanu przedrzucawkowego)"
+      ];
 
-    "uszy_m": {t:"Uszy — Mężczyzna", img:"img/mezczyzna-uszy.png",
-      chips:["Głowa i szyja","Ucho"],
-      lead:"Ból ucha bywa zapalny (środkowe/przewodu) lub rzutowany z gardła/SSŻ.",
-      sx:["Kłujący ból","Uczucie zatkania/szum","Gorączka (częściej u dzieci)"],
-      causes:["Zapalenie ucha środkowego","Zapalenie przewodu słuchowego","Korek woskowinowy","Rzutowanie z gardła/SSŻ"],
-      red:["Silny ból z wyciekiem ropy/krwi","Nagła głuchota, zawroty","Uraz z krwawieniem"],
-      selfcare:["Ciepły okład","Nie używaj patyczków","Nawilżanie śluzówek"],
-      otc:["Paracetamol/ibuprofen","Krople znieczulające (jeśli błona cała)"],
-      specs:["Laryngolog","Lekarz rodzinny"]
-    },
-    "uszy_k": {$ref:"uszy_m", t:"Uszy — Kobieta", img:"img/kobieta-uszy.png"},
-
-    "oczy_m": {t:"Oczy — Mężczyzna", img:"img/mezczyzna-oczy.png",
-      chips:["Głowa i szyja","Oko"],
-      lead:"Ból oka to objaw alarmowy, zwłaszcza z pogorszeniem widzenia.",
-      sx:["Ból i światłowstręt","Łzawienie, zaczerwienienie","Pogorszenie ostrości"],
-      causes:["Zapalenie spojówek/rogówki","Zespół suchego oka","Ciało obce/uraz","Ostra jaskra (pilne)"],
-      red:["Nagła utrata widzenia","Uraz chemiczny/ciało obce","Silny ból z twardym okiem, nudności"],
-      selfcare:["Sztuczne łzy","Przerwy 20-20-20","Chłodne okłady przy alergii"],
-      otc:["Krople nawilżające","Miejscowe antyhistaminowe"],
-      specs:["Okulista","SOR (uraz/ostry ból)"]
-    },
-    "oczy_k": {$ref:"oczy_m", t:"Oczy — Kobieta", img:"img/kobieta-oczy.png"},
-
-    "szyja_m": {t:"Szyja / Kark — Mężczyzna", img:"img/mezczyzna-szyja.png",
-      chips:["Głowa i szyja","Szyja / Kark"],
-      lead:"Najczęściej przeciążenia mięśni i zmiany w kręgosłupie szyjnym.",
-      sx:["Sztywność karku","Promieniowanie do barku/ramienia","Bóle głowy napięciowe"],
-      causes:["Napięcie mięśni (ergonomia)","Dyskopatia szyjna","Uraz typu whiplash"],
-      red:["Sztywność karku + gorączka + światłowstręt","Osłabienie/drętwienie rąk","Uraz z objawami neurologicznymi"],
-      selfcare:["Ergonomia (monitor na wprost)","Delikatne rozciąganie + ciepło","Mikroprzerwy ruchowe"],
-      otc:["Paracetamol","Ibuprofen/naproksen","Maści rozgrzewające/NLPZ"],
-      specs:["Lekarz rodzinny","Fizjoterapeuta","Neurolog/Ortopeda"]
-    },
-    "szyja_k": {$ref:"szyja_m", t:"Szyja / Kark — Kobieta", img:"img/kobieta-szyja.png"},
-
-    /* ---------- KLATKA / BRZUCH / PLECY ---------- */
-    "serce_m": {t:"Serce — Mężczyzna", img:"img/mezczyzna-serce.png",
-      chips:["Klatka piersiowa","Narządy"],
-      lead:"Ból sercowy bywa uciskowy, promieniujący do lewej ręki/szczęki.",
-      sx:["Ucisk za mostkiem >5 min","Duszność przy wysiłku","Zimne poty, nudności"],
-      causes:["Choroba wieńcowa/dławica","Zawał mięśnia sercowego","Zapalenie osierdzia/mięśnia sercowego","Refluks/mięśnie (naśladują)"],
-      red:["Silny narastający ucisk","Ból z dusznością/omdleniem","Nowy ból spoczynkowy u osoby z ryzykiem"],
-      selfcare:["Przerwij wysiłek, pozycja półsiedząca","Nitrogliceryna tylko jeśli zalecona","Notuj czas i wyzwalacze"],
-      otc:["Paracetamol przy bólach niesercowych","Unikaj NLPZ przy podejrzeniu OZW"],
-      specs:["Kardiolog","Lekarz rodzinny","112/999 lub SOR w ostrym bólu"]
-    },
-    "serce_k": {$ref:"serce_m", t:"Serce — Kobieta", img:"img/kobieta-serce.png",
-      lead:"U kobiet częstsze nietypowe objawy (duszność, osłabienie, ból pleców/żuchwy) — czujność!"},
-
-    "pluca_m": {t:"Płuca — Mężczyzna", img:"img/mezczyzna-pluca.jpg",
-      chips:["Klatka piersiowa","Narządy"],
-      lead:"Ból nasilany przy wdechu/kaszlu sugeruje przyczynę oddechową.",
-      sx:["Kłujący ból przy oddychaniu","Kaszel, gorączka","Duszność/świsty"],
-      causes:["Zapalenie płuc/opłucnej","Astma/POChP","Odma opłucnowa","Zatorowość płucna","Nadwyrężenie mięśni od kaszlu"],
-      red:["Nagła duszność + ból — 112/999","Krwioplucie, sinica","Wysoka gorączka z ciężką dusznością"],
-      selfcare:["Nawodnienie, odpoczynek","Nawilżanie/inhalacje 0,9% NaCl","Ćwiczenia oddechowe"],
-      otc:["Paracetamol/ibuprofen (gorączka)","Wykrztuśne/przeciwkaszlowe wg typu kaszlu"],
-      specs:["Pulmonolog","Lekarz rodzinny","SOR (ostre)"]
-    },
-    "pluca_k": {$ref:"pluca_m", t:"Płuca — Kobieta", img:"img/kobieta-pluca.jpg"},
-
-    "brzuch_m": {t:"Brzuch — Mężczyzna", img:"img/mezczyzna-brzuch.jpg",
-      chips:["Brzuch"],
-      lead:"Od niestrawności po stany nagłe — lokalizacja bólu jest kluczowa.",
-      sx:["Skurcze/wzdęcia","Nudności/wymioty","Biegunka lub zaparcia"],
-      causes:["Niestrawność, GERD","Zapalenie wyrostka","Kamica żółciowa","Zapalenie trzustki","Zespół jelita drażliwego"],
-      red:["Twardy „deskowaty” brzuch","Krew w stolcu/wymiotach","Narastający ból + gorączka","Brak gazów/stolca"],
-      selfcare:["Dieta lekkostrawna","Nawodnienie/elektrolity","Unikaj alkoholu/tłustych potraw","Dzienniczek produktów"],
-      otc:["Drotaweryna (skurcze)","Symetykon (wzdęcia)","IPP/antacida (zgaga)","Probiotyki (biegunka po infekcji)"],
-      specs:["Lekarz rodzinny","Gastroenterolog","SOR przy alarmowych"]
-    },
-    "brzuch_k": {$ref:"brzuch_m", t:"Brzuch — Kobieta", img:"img/kobieta-brzuch.jpg",
-      causes:["Niestrawność/GERD","Zapalenie wyrostka","Kamica żółciowa","Torbiel jajnika/skret przydatków","Ciąża pozamaciczna (pilne)"]},
-
-    "plecy_m": {t:"Plecy — Mężczyzna", img:"img/mezczyzna-plecy.jpg",
-      chips:["Plecy"],
-      lead:"Najczęstsze są przeciążenia mięśniowo-powięziowe i dyskopatia.",
-      sx:["Ból po dźwiganiu/skręcie","Sztywność poranna","Rwa kulszowa (ból do nogi)"],
-      causes:["Przeciążenie mięśni","Dyskopatia/rwa","Wady postawy/brak ruchu"],
-      red:["Niedowład, zaburzenia zwieraczy, drętwienie krocza","Uraz znaczny","Gorączka + ból kręgosłupa"],
-      selfcare:["Ruch w granicach bólu","Ciepło/zimno (co pomaga)","Ćwiczenia core, rozciąganie"],
-      otc:["Paracetamol","Ibuprofen/naproksen","Maści/plastry NLPZ"],
-      specs:["Lekarz rodzinny","Fizjoterapeuta","Ortopeda/Neurolog"]
-    },
-    "plecy_k": {$ref:"plecy_m", t:"Plecy — Kobieta", img:"img/kobieta-plecy.jpg"},
-
-    "klatka_m": {t:"Klatka (mięśnie/ściana klp) — Mężczyzna", img:"img/mezczyzna-klatka.jpg",
-      chips:["Klatka piersiowa","Mięśnie / Stawy"],
-      lead:"Kłujący ból nasilany ruchem/uciskiem zwykle jest mięśniowo-kostny.",
-      sx:["Tkliwość miejscowa","Ból przy skręcie/unoszeniu ręki","Kłucie przy głębokim wdechu bez duszności"],
-      causes:["Nerwoból międzyżebrowy","Zapalenie chrząstek żeber (Tietze)","Naciągnięcie mięśni klp./barku"],
-      red:["Ból + duszność/omdlenie","Uraz klatki (podejrzenie złamania)","Gorączka z kaszlem ropnym"],
-      selfcare:["Odpoczynek od obciążeń","Okłady ciepłe/zimne","Rozciąganie piersi/pleców"],
-      otc:["Paracetamol","Ibuprofen/Naproksen","Maści przeciwzapalne"],
-      specs:["Lekarz rodzinny","Fizjoterapeuta"]
-    },
-    "klatka_k": {$ref:"klatka_m", t:"Klatka (mięśnie/ściana klp) — Kobieta", img:"img/kobieta-klatka.png"},
-
-    /* ---------- BIODRA / UDA / STOPY ---------- */
-    "biodra_m": {t:"Biodra — Mężczyzna", img:"img/mezczyzna-biodra.jpg",
-      chips:["Kończyna dolna","Biodro"],
-      lead:"Ból może pochodzić ze stawu, ścięgien okołostawowych, kaletek lub kręgosłupa.",
-      sx:["Ból pachwiny/pośladka","Sztywność poranna","Utykanie"],
-      causes:["Tendinopatie (pośladkowe, biodrowo-lędźwiowe)","Choroba zwyrodnieniowa stawu","Zespół pasma biodrowo-piszczelowego","Rzutowanie z L-S"],
-      red:["Gorące, zaczerwienione bardzo bolesne biodro","Uraz z brakiem możliwości obciążenia","Gorączka + ból stawu"],
-      selfcare:["Odpoczynek względny","Lód 15–20 min (ostro)","Ćwiczenia pośladków/mobilizacja"],
-      otc:["Paracetamol","NLPZ doustnie/żel (ostrożnie)"],
-      specs:["Ortopeda","Fizjoterapeuta","Lekarz rodzinny"]
-    },
-    "biodra_k": {$ref:"biodra_m", t:"Biodra — Kobieta", img:"img/kobieta-biodra.jpg"},
-
-    "uda_m": {t:"Uda — Mężczyzna", img:"img/mezczyzna-uda.jpg",
-      chips:["Kończyna dolna","Udo"],
-      lead:"Najczęściej przeciążenia mięśni czworogłowych/przywodzicieli lub rwa udowa.",
-      sx:["Tkliwość mięśni","Ból przy schodzeniu/biegu","Czasem drętwienia (rwa)"],
-      causes:["Naciągnięcie mięśni","Zespół przeciążeniowy biegacza","Rwa udowa (kręgosłup)"],
-      red:["Nagły obrzęk i zaczerwienienie uda (zakrzepica!)","Uraz z krwiakiem i niemożnością chodzenia"],
-      selfcare:["RICE: odpoczynek, lód, ucisk, uniesienie","Delikatne rozciąganie po 48–72h","Stopniowe wzmacnianie"],
-      otc:["Paracetamol/NLPZ (ostrożnie)"],
-      specs:["Ortopeda","Fizjoterapeuta","Lekarz rodzinny"]
-    },
-    "uda_k": {$ref:"uda_m", t:"Uda — Kobieta", img:"img/kobieta-uda.jpg"},
-
-    "stopy_m": {t:"Stopy — Mężczyzna", img:"img/mezczyzna-stopy.png",
-      chips:["Kończyna dolna","Stopa"],
-      lead:"Ból stopy bywa skutkiem przeciążeń, zapaleń ścięgien lub płaskostopia.",
-      sx:["Ból pięty/śródstopia","Sztywność poranna","Nasilenie po długim staniu"],
-      causes:["Zapalenie rozcięgna podeszwowego","Zapalenie ścięgna Achillesa","Metatarsalgia/haluks","Niewłaściwe obuwie"],
-      red:["Nagły obrzęk, zaczerwienienie, ból łydki (zakrzepica?)","Uraz ze zniekształceniem, brak obciążenia"],
-      selfcare:["Odpoczynek, lód 10–15 min","Wkładki/amortyzacja, rozciąganie łydki i rozcięgna","Masaż piłeczką"],
-      otc:["Paracetamol","Żele NLPZ miejscowo"],
-      specs:["Ortopeda","Podolog","Fizjoterapeuta"]
-    },
-    "stopy_k": {$ref:"stopy_m", t:"Stopy — Kobieta", img:"img/kobieta-stopy.jpg"},
-
-    /* ---------- DODANE TERAZ: STAWY I KOŃCZYNY (K + M) ---------- */
-    "kolano_m": {t:"Kolano — Mężczyzna", img:"img/mezczyzna-kolano.jpg",
-      chips:["Kończyna dolna","Staw kolanowy"],
-      lead:"Ból kolana wynika zwykle z przeciążeń, urazu lub zmian zwyrodnieniowych.",
-      sx:["Ból przy schodzeniu/kucaniu","Trzaski/„uciekanie” kolana","Obrzęk po wysiłku/urazie"],
-      causes:["Chondromalacja rzepki/przeciążenie","Uszkodzenie łąkotki/ACL (uraz)","Zapalenie ścięgien/patelarne","Zwyrodnienie stawu"],
-      red:["Nagły duży obrzęk i niemożność obciążenia","Uraz ze zniekształceniem","Gorące zaczerwienione kolano + gorączka"],
-      selfcare:["RICE (odpoczynek, lód, ucisk, uniesienie)","Modyfikacja obciążenia, stabilizacja","Ćwiczenia mięśnia czworogłowego/pośladków"],
-      otc:["Paracetamol","NLPZ doustnie/żele (ostrożnie)"],
-      specs:["Ortopeda","Fizjoterapeuta","Lekarz rodzinny"]
-    },
-    "kolano_k": {$ref:"kolano_m", t:"Kolano — Kobieta", img:"img/kobieta-kolano.jpg"},
-
-    "kostka_m": {t:"Kostka — Mężczyzna", img:"img/mezczyzna-kostka.jpg",
-      chips:["Kończyna dolna","Staw skokowy"],
-      lead:"Najczęstsza przyczyna bólu to skręcenie stawu skokowego i przeciążenia ścięgien.",
-      sx:["Ból i obrzęk po skręceniu","Siniak po bocznej stronie","Ból przy chodzeniu/rotacji"],
-      causes:["Skręcenie stawu skokowego","Zapalenie ścięgien/ścięgno Achillesa","Zespół kanału stępu (rzadziej)"],
-      red:["Brak możliwości obciążenia po urazie","Silny ból z deformacją (złamanie?)","Gorące zaczerwienione stopy + gorączka"],
-      selfcare:["RICE 24–48h, następnie stopniowe rozruchy","Elastyczny opatrunek/stabilizator","Ćwiczenia propriocepcji"],
-      otc:["Paracetamol","Żele NLPZ miejscowo"],
-      specs:["Ortopeda","Fizjoterapeuta","SOR przy podejrzeniu złamania"]
-    },
-    "kostka_k": {$ref:"kostka_m", t:"Kostka — Kobieta", img:"img/kobieta-kostka.jpg"},
-
-    "lydka_m": {t:"Łydka — Mężczyzna", img:"img/mezczyzna-lydka.jpg",
-      chips:["Kończyna dolna","Mięśnie łydki"],
-      lead:"Ból łydki bywa przeciążeniowy, ale pamiętaj o ryzyku zakrzepicy.",
-      sx:["Tkliwość/„ciągnięcie” przy chodzie","Skurcze nocne","Nasilenie po wysiłku"],
-      causes:["Naciągnięcie mięśni/„przeciążenie”","Zapalenie ścięgna Achillesa","Zakrzepica żył głębokich (pilne)"],
-      red:["Nagły obrzęk jednostronny + ból + ocieplenie","Ból łydki z dusznością (zator!)"],
-      selfcare:["Odpoczynek względny","Delikatne rozciąganie po 48–72h","Chłodzenie 10–15 min"],
-      otc:["Paracetamol","NLPZ (ostrożnie)","Żele chłodzące"],
-      specs:["Lekarz rodzinny","Ortopeda/Fizjoterapeuta","SOR przy podejrzeniu ZŻG"]
-    },
-    "lydka_k": {$ref:"lydka_m", t:"Łydka — Kobieta", img:"img/kobieta-lydka.jpg"},
-
-    "bark_m": {t:"Bark — Mężczyzna", img:"img/mezczyzna-bark.jpg",
-      chips:["Kończyna górna","Staw barkowy"],
-      lead:"Ból barku najczęściej wynika z zespołu ciasnoty podbarkowej lub zapaleń ścięgien.",
-      sx:["Ból przy unoszeniu ramienia","Ograniczenie ruchu, ból nocny","Trzaski/przeskakiwanie"],
-      causes:["Zapalenie stożka rotatorów","Ciasnota podbarkowa/konflikt","Zamrożony bark","Naciągnięcie mięśni szyi/barku"],
-      red:["Uraz z osłabieniem czucia/ruchu","Gorące zaczerwienione bolesne stawy","Gorączka + ból stawu"],
-      selfcare:["Odpoczynek od ruchów prowokujących ból","Ćwiczenia zakresu i stożka rotatorów","Pozycja do spania z poduszką pod ramię"],
-      otc:["Paracetamol","NLPZ doustnie/żele","Plastry przeciwbólowe"],
-      specs:["Ortopeda","Fizjoterapeuta"]
-    },
-    "bark_k": {$ref:"bark_m", t:"Bark — Kobieta", img:"img/kobieta-bark.jpg"},
-
-    "lokiec_m": {t:"Łokieć — Mężczyzna", img:"img/mezczyzna-lokiec.jpg",
-      chips:["Kończyna górna","Łokieć"],
-      lead:"Ból łokcia bywa wynikiem przeciążenia przyczepów (łokieć tenisisty/golfisty).",
-      sx:["Ból po zewnętrznej/wewnętrznej stronie łokcia","Nasilenie przy chwytaniu/podnoszeniu","Tkliwość przyczepów"],
-      causes:["Łokieć tenisisty (ECRB)","Łokieć golfisty (FCR/Pronator)","Zapalenia ścięgien, przeciążenia"],
-      red:["Uraz z deformacją i brakiem ruchu","Gorączka + zaczerwienienie stawu"],
-      selfcare:["Ograniczenie obciążenia, orteza opaskowa","Ćwiczenia ekscentryczne przedramienia","Chłodzenie po wysiłku"],
-      otc:["Paracetamol","NLPZ doustnie/żele"],
-      specs:["Ortopeda","Fizjoterapeuta"]
-    },
-    "lokiec_k": {$ref:"lokiec_m", t:"Łokieć — Kobieta", img:"img/kobieta-lokiec.jpg"},
-
-    "nadgarstek_m": {t:"Nadgarstek — Mężczyzna", img:"img/mezczyzna-nadgarstek.jpg",
-      chips:["Kończyna górna","Nadgarstek"],
-      lead:"Ból nadgarstka: przeciążenia ścięgien, zespół cieśni nadgarstka lub uraz.",
-      sx:["Ból przy zginaniu/chwycie","Drętwienie kciuka/palców (cieśń)","Tkliwość po urazie"],
-      causes:["Tendinopatie (De Quervain)","Zespół cieśni nadgarstka","Skręcenie/złamanie kości łódeczkowatej"],
-      red:["Uraz z deformacją/brakiem ruchu","Postępujący niedowład/drętwienie"],
-      selfcare:["Odciążenie, orteza nocna (cieśń)","Przerwy ergonomiczne w pracy","Ćwiczenia ślizgowe nerwu po konsultacji"],
-      otc:["Paracetamol","NLPZ doustnie/żele"],
-      specs:["Ortopeda ręki","Neurolog (EMG przy cieśni)","Fizjoterapeuta"]
-    },
-    "nadgarstek_k": {$ref:"nadgarstek_m", t:"Nadgarstek — Kobieta", img:"img/kobieta-nadgarstek.jpg"},
-
-    /* ---------- UKŁADY ---------- */
-    "uklad_krw_m": {t:"Układ krwionośny — Mężczyzna", img:"img/uklad-k.jpg",
-      chips:["Klatka / Narządy","Układy"],
-      lead:"Obejmuje serce i naczynia. Objawy: bóle klatki, duszność, obrzęki.",
-      sx:["Ucisk zamostkowy","Kołatania serca","Obrzęki kostek","Męczliwość"],
-      causes:["ChNS/Dławica","Niewydolność serca","Zaburzenia rytmu","Nadciśnienie","Zatorowość (nagłe)"],
-      red:["Nagły silny ból/duszność — 112/999","Omdlenie, sinica","Jednostronny silny ból pleców/klatki (aorta)"],
-      selfcare:["Kontrola ciśnienia/cukru/lipidów","Umiarkowany ruch","Dieta DASH/śródziemnomorska","Rzucenie palenia"],
-      otc:["Paracetamol na bóle mięśniowe; nie stosuj samodzielnie aspiryny profilaktycznie"],
-      specs:["Kardiolog","Internista","SOR w ostrych"]
-    },
-    "uklad_krw_k": {$ref:"uklad_krw_m", t:"Układ krwionośny — Kobieta", img:"img/uklad-kk.jpg"},
-
-    "uklad_oddech_m": {t:"Układ oddechowy — Mężczyzna", img:"img/uklad-oddechowy.jpg",
-      chips:["Klatka / Narządy","Układy"],
-      lead:"Nos, krtań, tchawica, oskrzela, płuca — kaszel, duszność, ból wdechowy.",
-      sx:["Kaszel (suchy/mokry)","Duszność","Świsty","Gorączka/stan podgorączkowy"],
-      causes:["Infekcje (oskrzela/płuca)","Astma/POChP","Alergie","Zatorowość/odma (pilne)"],
-      red:["Spoczynkowa duszność, sinienie","Krwioplucie","Wysoka gorączka z dreszczami"],
-      selfcare:["Nawilżanie powietrza","Inhalacje 0,9% NaCl","Nawodnienie, odpoczynek"],
-      otc:["Paracetamol/Ibuprofen (gorączka)","Syropy na kaszel wg typu"],
-      specs:["Pulmonolog","Alergolog","Lekarz rodzinny"]
-    },
-    "uklad_oddech_k": {$ref:"uklad_oddech_m", t:"Układ oddechowy — Kobieta", img:"img/uklad-oddechowyk.jpg"},
-
-    "uklad_pokarm_m": {t:"Układ pokarmowy — Mężczyzna", img:"img/uklad-pokarmowy.jpg",
-      chips:["Brzuch","Układy"],
-      lead:"Zgaga, wzdęcia, bóle skurczowe — typowe dolegliwości przewodu pokarmowego.",
-      sx:["Ból skurczowy/kolkowy","Zgaga/odbijania","Biegunka lub zaparcie","Uczucie pełności"],
-      causes:["Niestrawność/GERD","Zespół jelita drażliwego","Kamica żółciowa","Zapalenie trzustki"],
-      red:["Krew w stolcu/wymiotach","Nagły narastający ból brzucha","Utrata masy ciała bez przyczyny"],
-      selfcare:["Małe, lekkostrawne posiłki","Unikaj tłustych/alkoholu/kawy","Nie kładź się 2–3 h po posiłku"],
-      otc:["Drotaweryna","Symetykon","IPP/antacida","Probiotyk po infekcji"],
-      specs:["Gastroenterolog","Chirurg (kolka żółciowa)","Lekarz rodzinny"]
-    },
-    "uklad_pokarm_k": {$ref:"uklad_pokarm_m", t:"Układ pokarmowy — Kobieta", img:"img/uklad-pokarmowyk.jpg"},
-
-    /* ---------- CIĄŻA ---------- */
-    "ciaza_k": {
-      t:"Ciąża — Kobieta",
-      img:"img/kobieta-ciaza.png",
-      chips:["Ciąża","Brzuch/Plecy"],
-      lead:"Dolegliwości bólowe w ciąży zwykle są fizjologiczne, ale wymagają czujności.",
-      sx:["Ból/ciągnięcie w dole brzucha","Ból krzyża","Skurcze Braxtona-Hicksa","Zgaga, zaparcia"],
-      causes:["Rozciąganie więzadeł macicy","Przeciążenie kręgosłupa","Zgaga i refluks","Zaparcia/wzdęcia"],
-      red:["Krwawienie + ból brzucha","Ból głowy + zaburzenia widzenia + obrzęki","Ból przy oddawaniu moczu + gorączka","Odejście wód lub skurcze <37. tyg."],
-      selfcare:["Odpoczynek na lewym boku","Delikatny ruch/ćwiczenia dla ciężarnych","Małe posiłki, nie leż po jedzeniu","Nawodnienie, błonnik"],
-      otc:["Paracetamol (pierwszy wybór w ciąży) — po konsultacji","Unikaj NLPZ w II/III trymestrze"],
-      specs:["Położnik-ginekolog","Położna","SOR/112 przy objawach alarmowych"]
+      if(!id) return [];
+      const key = id.toLowerCase();
+      if(key.includes('serce') || key.includes('klatka_m') || key.includes('klatka_k')) return chest;
+      if(key.includes('pluca') || key.includes('oddech')) return breath;
+      if(key.includes('oczy') || key.includes('szyja') || key.includes('szczeka') || key.includes('nos')) return neuro;
+      if(key.includes('stopy') || key.includes('kolano') || key.includes('uda') || key.includes('biodra')) return bleed;
+      if(key.includes('brzuch') || key.includes('pokarm')) return abdomen;
+      if(key.includes('ciaza')) return pregnancy;
+      return ["nagłe, silne lub nietypowe objawy; szybkie pogorszenie stanu; utrata przytomności — dzwoń 112."];
     }
-  };
 
-  /* ====== Dziedziczenie przez $ref ====== */
-  function resolve(item){
-    if (!item) return null;
-    if (item.$ref) {
-      const base = resolve(DATA[item.$ref]);
-      return Object.assign({}, base, Object.fromEntries(Object.entries(item).filter(([k])=>k!=="$ref")));
+    // Render lista <ul>
+    function fillList(el, arr){
+      el.innerHTML = '';
+      (arr||[]).forEach(item=>{
+        const li = document.createElement('li');
+        li.textContent = item;
+        el.appendChild(li);
+      });
     }
-    return item;
-  }
 
-  /* ====== Render ====== */
-  const id = new URLSearchParams(window.location.search).get("id");
-  let item = resolve(DATA[id]);
+    fetch('conditions.json')
+      .then(r=>r.json())
+      .then(db=>{
+        const data = db[id];
+        const title = document.getElementById('title');
+        const desc  = document.getElementById('desc');
+        const causes = document.getElementById('causes');
+        const symptoms = document.getElementById('symptoms');
+        const doctors = document.getElementById('doctors');
+        const meds = document.getElementById('medications');
+        const firstAid = document.getElementById('firstAid');
+        const emergencyBox = document.getElementById('emergencyBox');
+        const emergencyList = document.getElementById('emergencyList');
 
-  if (item) {
-    document.getElementById("title").textContent = item.t;
+        if(!data){
+          title.textContent = "Brak danych";
+          desc.textContent = "Nie znaleziono szczegółów dla wskazanego elementu.";
+          document.querySelector('.grid').style.display = 'none';
+          return;
+        }
 
-    const chips = (item.chips||[]).map(c=>`<span class="chip">${c}</span>`).join("");
-    document.getElementById("meta").innerHTML = chips;
+        title.textContent = data.title || "Szczegóły";
+        desc.textContent = data.description || "";
 
-    document.getElementById("content").innerHTML = `
-      <img src="${item.img}" alt="${item.t}" class="detail-img">
-      ${item.lead ? <p>${item.lead}</p> : ""}
+        fillList(causes, data.causes);
+        fillList(symptoms, data.symptoms);
+        fillList(doctors, data.doctors);
+        fillList(meds, data.medications);
+        firstAid.textContent = data.first_aid || data.firstAid || "";
 
-      ${section("Objawy", item.sx)}
-      ${section("Możliwe przyczyny", item.causes)}
-      ${section("Kiedy pilnie do lekarza (112/999)", item.red, true)}
-      ${section("Co możesz zrobić samodzielnie", item.selfcare)}
-      ${section("Leki bez recepty", item.otc)}
-      ${section("Specjaliści", item.specs)}
-      <p class="note">Uwaga: leki OTC stosuj zgodnie z ulotką i przeciwwskazaniami. W razie wątpliwości skonsultuj się z lekarzem.</p>
-    `;
-  } else {
-    document.getElementById("content").innerHTML =
-      "<p>Nie znaleziono danych dla tego elementu.</p>";
-  }
-
-  function section(title, list, danger){
-    if (!list || !list.length) return "";
-    return `
-      <h3 class="${danger ? "red": ""}">${title}</h3>
-      <ul>${list.map(x=>`<li>${x}</li>`).join("")}</ul>
-    `;
-  }
+        // EMERGENCY: użyj pola z JSON jeśli istnieje, w przeciwnym razie fallback
+        const emergencyItems = (data.emergency && data.emergency.length) ? data.emergency
+                               : emergencyFallback(id);
+        if(emergencyItems && emergencyItems.length){
+          fillList(emergencyList, emergencyItems);
+          emergencyBox.style.display = 'block';
+        }
+      })
+      .catch(()=>{
+        document.getElementById('title').textContent = "Błąd wczytywania danych";
+        document.querySelector('.grid').style.display = 'none';
+      });
   </script>
 </body>
 </html>
-Wysłano
-Napisz do:
