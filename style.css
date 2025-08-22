@@ -594,3 +594,40 @@ Wysłano
   object-fit: cover; /* przycięcie, żeby zdjęcie się mieściło */
   border-radius: 10px;
 }
+/* --- szczegóły (cards) --- */
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.card-block {
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  padding: 14px 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.25);
+}
+
+.card-block h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  color: var(--link,#8bd1ff);
+}
+
+.card-body ul {
+  margin: 0 0 0 1.1rem;
+  padding: 0;
+  line-height: 1.45;
+}
+
+.card-body li { margin: .25rem 0; }
+
+.callout.emergency {
+  margin-top: 26px;
+  background: rgba(255,0,0,.08);
+  border: 1px solid rgba(255,0,0,.25);
+  border-radius: 16px;
+  padding: 12px 14px;
+}
