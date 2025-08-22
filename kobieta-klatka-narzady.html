@@ -1,39 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kobieta — Klatka (narządy)</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body data-page="kobieta-klatka-narzady">
-  <div class="container">
-    <a href="kobieta-klatka.html" class="back-link">← Wróć do: Klatka, brzuch, plecy</a> |
-    <a href="index.html" class="home-link">Strona główna</a>
+  <div class="wrap">
+    <header class="topbar">
+      <a class="back" href="kobieta-klatka.html">← Wróć do: Klatka, brzuch, plecy</a> |
+      <a class="home" href="index.html">Strona główna</a>
+    </header>
 
     <h1>Kobieta — Klatka (narządy)</h1>
-    <p>Wybierz układ w obrębie klatki piersiowej:</p>
+    <p class="lead">Wybierz narząd w obrębie klatki piersiowej.</p>
 
-    <div class="grid">
-      <a href="kobieta-uklad-oddechowy.html" class="card">
-        <img src="img/uklad-oddechowyk.jpg" alt="Układ oddechowy" />
-        <span>Układ oddechowy</span>
+    <div class="tiles">
+      <!-- Serce -->
+      <a class="tile" href="szczegoly.html?id=serce_k" aria-label="Serce">
+        <div class="tile__img"><img src="img/mezczyzna-serce.png" alt="Serce" /></div>
+        <div class="tile__title">Serce</div>
       </a>
 
-      <a href="kobieta-uklad-pokarmowy.html" class="card">
-        <img src="img/uklad-pokarmowyk.jpg" alt="Układ pokarmowy" />
-        <span>Układ pokarmowy</span>
+      <!-- Płuca -->
+      <a class="tile" href="szczegoly.html?id=pluca_k" aria-label="Płuca">
+        <div class="tile__img"><img src="img/mezczyzna-pluca.jpg" alt="Płuca" /></div>
+        <div class="tile__title">Płuca</div>
       </a>
 
-      <a href="kobieta-uklad-krwionosny.html" class="card">
-        <img src="img/uklad-kk.jpg" alt="Układ krwionośny" />
-        <span>Układ krwionośny</span>
+      <!-- Układ oddechowy -->
+      <a class="tile" href="szczegoly.html?id=uklad_oddechowy_k" aria-label="Układ oddechowy">
+        <div class="tile__img"><img src="img/uklad-oddechowyk.jpg" alt="Układ oddechowy" /></div>
+        <div class="tile__title">Układ oddechowy</div>
+      </a>
+
+      <!-- Układ pokarmowy -->
+      <a class="tile" href="szczegoly.html?id=uklad_pokarmowy_k" aria-label="Układ pokarmowy">
+        <div class="tile__img"><img src="img/uklad-pokarmowyk.jpg" alt="Układ pokarmowy" /></div>
+        <div class="tile__title">Układ pokarmowy</div>
+      </a>
+
+      <!-- Układ krwionośny -->
+      <a class="tile" href="szczegoly.html?id=uklad_krwionosny_k" aria-label="Układ krwionośny">
+        <div class="tile__img"><img src="img/uklad-kk.jpg" alt="Układ krwionośny" /></div>
+        <div class="tile__title">Układ krwionośny</div>
       </a>
     </div>
-  </div>
 
-  <footer>
-    <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
-  </footer>
+    <footer class="legal">© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</footer>
+  </div>
 </body>
 </html>
