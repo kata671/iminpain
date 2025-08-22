@@ -1,194 +1,152 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Szczegóły</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+
+  <!-- korzysta z Twojego globalnego stylu -->
+  <link rel="stylesheet" href="style.css" />
+
   <style>
-    :root{
-      --bg:#0f1116; --fg:#eaf0ff; --muted:#a7b3c7;
-      --card:#18202e; --card-2:#1d2636;
-      --accent:#3aa3ff; --ok:#1db954; --warn:#ffb020; --danger:#ff4d4f;
-      --border:#2b364a;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background: radial-gradient(ellipse at 20% -20%, #172033, #0f1116 50%) fixed, var(--bg);
-      color:var(--fg); line-height:1.6;
-    }
-    .container{max-width:1100px;margin:0 auto;padding:24px}
-    a{color:#6ec0ff;text-decoration:none}
-    a:hover{text-decoration:underline}
-    header h1{
-      margin:10px 0 18px; font-weight:800; letter-spacing:.2px;
-      font-size:clamp(28px,4.5vw,44px);
-    }
-    .lede{color:var(--muted); margin-bottom:18px}
-    .grid{display:grid; gap:14px}
-    .card{
-      background:linear-gradient(180deg,var(--card),var(--card-2));
-      border:1px solid var(--border); border-radius:16px; padding:16px;
-      box-shadow:0 8px 26px rgba(0,0,0,.28);
-    }
-    .card h3{margin:0 0 10px; font-size:20px}
-    .pill{display:inline-block; padding:2px 10px; border-radius:999px; font-size:12px;
-      background:#213147; border:1px solid #2f3f58; color:#a9c9ff; margin-right:6px}
-    ul{margin:0; padding-left:18px}
-    .emergency{
-      border:2px solid var(--danger);
-      background:linear-gradient(180deg,#3a1012 0%, #2a0d10 100%);
-      border-radius:16px; padding:16px; margin:6px 0 8px;
-      box-shadow:0 10px 30px rgba(255,77,79,.15);
-    }
-    .emergency h3{color:#ffd3d4; margin:0 0 10px}
-    .emergency p, .emergency li{color:#ffdede}
-    footer{color:#8aa1bd; margin-top:26px; font-size:14px}
-    @media (min-width:880px){
-      .grid{grid-template-columns:repeat(2,1fr)}
-    }
+    /* Delikatne style pomocnicze (nie kolidują z Twoim CSS) */
+    .details-wrap { max-width: 1100px; margin: 40px auto 80px; padding: 0 16px; }
+    .details-header h1 { margin: 0 0 8px; }
+    .badge { display:inline-block; padding:4px 10px; border-radius:999px; background:#0b5; color:#fff; font-weight:600; font-size:.85rem; }
+    .cards { display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 24px; }
+    .card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px 18px; }
+    .card h3 { margin: 0 0 10px; font-size: 1.05rem; }
+    .card ul { margin: 0; padding-left: 18px; }
+    .muted { opacity: .8; }
+    .notice { background: rgba(255,60,60,.1); border:1px solid rgba(255,60,60,.35); padding:14px 16px; border-radius:12px; }
+    .backline { margin: 16px 0 8px; }
+    .backline a { color: #68a7ff; text-decoration: none; }
+    .backline a:hover { text-decoration: underline; }
+    .footer-note { margin-top: 28px; font-size: .9rem; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <p><a href="index.html">← Strona główna</a></p>
-    <header>
-      <h1 id="title">Szczegóły</h1>
-      <p class="lede" id="desc"></p>
-    </header>
 
-    <!-- EMERGENCY -->
-    <section id="emergencyBox" class="emergency" style="display:none">
-      <h3>🆘 Kiedy pilnie po pomoc (112 / SOR)</h3>
-      <ul id="emergencyList"></ul>
-    </section>
+  <div class="details-wrap">
+    <div class="backline">
+      <a href="index.html">← Strona główna</a>
+    </div>
 
-    <section class="grid">
-      <div class="card">
-        <span class="pill">Możliwe przyczyny bólu</span>
-        <ul id="causes"></ul>
-      </div>
-      <div class="card">
-        <span class="pill">Typowe objawy</span>
-        <ul id="symptoms"></ul>
-      </div>
-      <div class="card">
-        <span class="pill">Kto może pomóc</span>
-        <ul id="doctors"></ul>
-      </div>
-      <div class="card">
-        <span class="pill">Co może pomóc (leki / działania)</span>
-        <ul id="medications"></ul>
-      </div>
-      <div class="card" id="firstAidWrap">
-        <span class="pill">Pierwsza pomoc / domowe sposoby</span>
-        <p id="firstAid"></p>
-      </div>
-    </section>
+    <div class="details-header">
+      <span class="badge" id="sexBadge" aria-hidden="true" style="display:none"></span>
+      <h1 id="titleH1">Szczegóły</h1>
+      <p class="muted" id="descP"></p>
+    </div>
 
-    <footer>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</footer>
+    <div class="cards">
+      <section class="card">
+        <h3>Możliwe przyczyny bólu</h3>
+        <ul id="causesList"></ul>
+      </section>
+
+      <section class="card">
+        <h3>Typowe objawy</h3>
+        <ul id="symptomsList"></ul>
+      </section>
+
+      <section class="card">
+        <h3>Do jakiego lekarza?</h3>
+        <ul id="doctorsList"></ul>
+      </section>
+
+      <section class="card">
+        <h3>Leki / środki łagodzące</h3>
+        <ul id="medsList"></ul>
+      </section>
+
+      <section class="card">
+        <h3>Pierwsza pomoc (domowe)</h3>
+        <ul id="firstAidList"></ul>
+      </section>
+
+      <section class="card notice">
+        <h3>Natychmiastowa pomoc — dzwoń po 112/999, gdy:</h3>
+        <ul id="emergencyList"></ul>
+      </section>
+    </div>
+
+    <p class="footer-note muted">© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
   </div>
 
   <script>
-    // Pobierz id z query string
-    const params = new URLSearchParams(location.search);
-    const id = params.get('id');
-
-    // Fallback sytuacji nagłych – działa nawet, gdy w JSON nie ma pola "emergency"
-    function emergencyFallback(id){
-      const t = (s)=>({type:'generic', items:s});
-      const chest = [
-        "nagły, silny ucisk w klatce piersiowej",
-        "duszność lub trudności w mówieniu",
-        "ból promieniujący do żuchwy/ramienia",
-        "zawroty głowy, zimne poty, omdlenie"
-      ];
-      const breath = [
-        "spoczynkowa duszność, sinienie warg",
-        "szybkie narastanie kaszlu/duszności",
-        "plwocina z krwią lub ból nasilany oddechem"
-      ];
-      const neuro = [
-        "nagle pojawiający się najsilniejszy ból głowy",
-        "niedowład, drętwienie połowicze, bełkotliwa mowa",
-        "nagłe zaburzenia widzenia lub równowagi"
-      ];
-      const bleed = ["masywny krwotok", "podejrzenie złamania/urazu z deformacją"];
-      const abdomen = [
-        "narastający, stały ból brzucha z gorączką",
-        "twardy brzuch, wymioty treścią krwistą/„fusowatą”",
-        "czarne stolce lub krew w stolcu"
-      ];
-      const pregnancy = [
-        "silny ból podbrzusza, krwawienie",
-        "brak/znaczne osłabienie ruchów płodu",
-        "nagły ból głowy + zaburzenia widzenia + obrzęki (podejrzenie stanu przedrzucawkowego)"
-      ];
-
-      if(!id) return [];
-      const key = id.toLowerCase();
-      if(key.includes('serce') || key.includes('klatka_m') || key.includes('klatka_k')) return chest;
-      if(key.includes('pluca') || key.includes('oddech')) return breath;
-      if(key.includes('oczy') || key.includes('szyja') || key.includes('szczeka') || key.includes('nos')) return neuro;
-      if(key.includes('stopy') || key.includes('kolano') || key.includes('uda') || key.includes('biodra')) return bleed;
-      if(key.includes('brzuch') || key.includes('pokarm')) return abdomen;
-      if(key.includes('ciaza')) return pregnancy;
-      return ["nagłe, silne lub nietypowe objawy; szybkie pogorszenie stanu; utrata przytomności — dzwoń 112."];
-    }
-
-    // Render lista <ul>
-    function fillList(el, arr){
-      el.innerHTML = '';
-      (arr||[]).forEach(item=>{
+    // Pomocnicza funkcja do tworzenia <li>
+    function fillList(listEl, arr) {
+      listEl.innerHTML = '';
+      if (!arr || !arr.length) {
         const li = document.createElement('li');
-        li.textContent = item;
-        el.appendChild(li);
+        li.textContent = '—';
+        listEl.appendChild(li);
+        return;
+      }
+      arr.forEach(txt => {
+        const li = document.createElement('li');
+        li.textContent = txt;
+        listEl.appendChild(li);
       });
     }
 
-    fetch('conditions.json')
-      .then(r=>r.json())
-      .then(db=>{
-        const data = db[id];
-        const title = document.getElementById('title');
-        const desc  = document.getElementById('desc');
-        const causes = document.getElementById('causes');
-        const symptoms = document.getElementById('symptoms');
-        const doctors = document.getElementById('doctors');
-        const meds = document.getElementById('medications');
-        const firstAid = document.getElementById('firstAid');
-        const emergencyBox = document.getElementById('emergencyBox');
-        const emergencyList = document.getElementById('emergencyList');
+    // Odczytaj parametr ?id=...
+    const params = new URLSearchParams(location.search);
+    const itemId = params.get('id');
 
-        if(!data){
-          title.textContent = "Brak danych";
-          desc.textContent = "Nie znaleziono szczegółów dla wskazanego elementu.";
-          document.querySelector('.grid').style.display = 'none';
+    // KLUCZOWA ZMIANA: plik jest w folderze /data
+    fetch('data/conditions.json')
+      .then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(db => {
+        if (!itemId || !db[itemId]) {
+          document.querySelector('.details-wrap').innerHTML = `
+            <div class="backline"><a href="index.html">← Strona główna</a></div>
+            <h1>Błąd wczytywania danych</h1>
+            <p class="muted">Nie znaleziono pozycji o id: <code>${itemId || '(brak)'}</code>.</p>
+          `;
           return;
         }
 
-        title.textContent = data.title || "Szczegóły";
-        desc.textContent = data.description || "";
+        const d = db[itemId];
 
-        fillList(causes, data.causes);
-        fillList(symptoms, data.symptoms);
-        fillList(doctors, data.doctors);
-        fillList(meds, data.medications);
-        firstAid.textContent = data.first_aid || data.firstAid || "";
+        // Nagłówek
+        const h1 = document.getElementById('titleH1');
+        const desc = document.getElementById('descP');
+        h1.textContent = d.title || 'Szczegóły';
+        desc.textContent = d.description || '';
 
-        // EMERGENCY: użyj pola z JSON jeśli istnieje, w przeciwnym razie fallback
-        const emergencyItems = (data.emergency && data.emergency.length) ? data.emergency
-                               : emergencyFallback(id);
-        if(emergencyItems && emergencyItems.length){
-          fillList(emergencyList, emergencyItems);
-          emergencyBox.style.display = 'block';
+        // Odznaka płci (opcjonalnie, jeśli w tytule jest „(Kobieta)” / „(Mężczyzna)”)
+        const sexBadge = document.getElementById('sexBadge');
+        if (/\(Kobieta\)/i.test(d.title || '')) {
+          sexBadge.textContent = 'Kobieta';
+          sexBadge.style.display = 'inline-block';
+        } else if (/\(Mężczyzna\)/i.test(d.title || '')) {
+          sexBadge.textContent = 'Mężczyzna';
+          sexBadge.style.display = 'inline-block';
         }
+
+        // Listy
+        fillList(document.getElementById('causesList'), d.causes);
+        fillList(document.getElementById('symptomsList'), d.symptoms);
+        fillList(document.getElementById('doctorsList'), d.doctors);
+        fillList(document.getElementById('medsList'), d.medications);
+
+        // first_aid może być stringiem albo tablicą
+        const fa = Array.isArray(d.first_aid) ? d.first_aid : (d.first_aid ? [d.first_aid] : []);
+        fillList(document.getElementById('firstAidList'), fa);
+
+        fillList(document.getElementById('emergencyList'), d.emergency);
       })
-      .catch(()=>{
-        document.getElementById('title').textContent = "Błąd wczytywania danych";
-        document.querySelector('.grid').style.display = 'none';
+      .catch(err => {
+        console.error(err);
+        document.querySelector('.details-wrap').innerHTML = `
+          <div class="backline"><a href="index.html">← Strona główna</a></div>
+          <h1>Błąd wczytywania danych</h1>
+          <p class="muted">Szczegóły techniczne: ${err.message}</p>
+        `;
       });
   </script>
 </body>
