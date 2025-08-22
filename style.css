@@ -511,3 +511,15 @@ Wysłano
   justify-content: center; /* wyrównanie elementów w środku „paska” */
   padding: 0 16px;         /* trochę luzu po bokach na małych ekranach */
 }
+/* Siatka dla strony kobieta.html – wyśrodkowana */
+#grid-kobieta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  /* wyrównanie poziome */
+  align-items: center;      /* opcjonalnie wyśrodkowanie w pionie */
+  gap: 24px;
+
+  max-width: 1000px;        /* szerokość całego kontenera */
+  margin: 0 auto;           /* auto = wyśrodkowanie */
+  padding: 20px;
+}
