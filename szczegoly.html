@@ -3,11 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <title>Szczegóły</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* delikatne, gdyby w style.css czegoś brakowało */
+    body{max-width:1200px;margin:0 auto;padding:16px}
+    .detail-img{display:block;max-width:560px;width:100%;border-radius:16px;margin:8px 0 20px}
+    h1{margin:12px 0 18px}
+    h3{margin-top:18px}
+    .red{color:#ffb3b3}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
+    .chip{padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.18);font-size:.9rem;opacity:.9}
+    .back-link{display:inline-block;margin:6px 0 12px}
+    ul{margin:8px 0 14px 18px}
+  </style>
 </head>
 <body>
   <a href="index.html" class="back-link">← Strona główna</a>
   <h1 id="title">Szczegóły</h1>
+  <div id="meta" class="chips"></div>
   <div id="content"></div>
 
   <footer>
@@ -15,154 +29,126 @@
   </footer>
 
   <script>
-  // ====== BAZA DANYCH SZCZEGÓŁÓW ======
+  /* ================== BAZA TREŚCI ================== */
   const DATA = {
-    /* ====== GŁOWA I SZYJA ====== */
-    "szczeka_m": {
-      t: "Szczęka — Mężczyzna",
-      img: "img/mezczyzna-szczeka.png",
-      lead: "Ból w obrębie żuchwy/szczęki bywa zębowy, stawowy (SSŻ) lub rzutowany.",
-      chips: ["Głowa i szyja", "Szczęka/SSŻ"],
-      sx: ["Ból przy żuciu/otwieraniu ust", "Trzaski w stawie skroniowo-żuchwowym", "Nadwrażliwość zębów"],
-      causes: ["Zapalenie miazgi", "Bruksizm", "Zatoki szczękowe", "Rzutowanie z serca (rzadko)"],
-      red: ["Obrzęk twarzy z gorączką", "Trudność w otwieraniu ust", "Uraz ze zmianą zgryzu"],
-      selfcare: ["Miękka dieta", "Ciepłe okłady", "Higiena jamy ustnej"],
-      otc: ["Paracetamol", "Ibuprofen", "Żele stomatologiczne"],
-      specs: ["Dentysta", "Chirurg stomatologiczny", "Laryngolog", "Fizjoterapeuta"]
-    },
-    "szczeka_k": {"$ref":"szczeka_m","t":"Szczęka — Kobieta","img":"img/kobieta-szczeka.png"},
+    /* ---------- GŁOWA I SZYJA (już były, zostawiam w razie linków) ---------- */
+    "szczeka_m": {t:"Szczęka — Mężczyzna", img:"img/mezczyzna-szczeka.png",
+      chips:["Głowa i szyja","Szczęka/SSŻ"],
+      lead:"Ból w obrębie żuchwy/szczęki bywa zębowy, stawowy (SSŻ) lub rzutowany.",
+      sx:["Ból przy żuciu/otwieraniu ust","Trzaski w stawie skroniowo-żuchwowym","Nadwrażliwość zębów"],
+      causes:["Zapalenie miazgi","Bruksizm","Zapalenie zatok szczękowych","Rzutowanie bólu (rzadko z serca)"],
+      red:["Obrzęk twarzy z gorączką","Trudność w otwieraniu ust (szczękościsk)","Uraz ze zmianą zgryzu"],
+      selfcare:["Miękka dieta","Ciepłe okłady","Higiena jamy ustnej, płukanki"],
+      otc:["Paracetamol","Ibuprofen","Żele stomatologiczne z lidokainą"],
+      specs:["Dentysta","Chirurg stomatologiczny","Laryngolog","Fizjoterapeuta (SSŻ)"]},
+    "szczeka_k": {$ref:"szczeka_m", t:"Szczęka — Kobieta", img:"img/kobieta-szczeka.png"},
 
-    "nos_m": {
-      t: "Nos — Mężczyzna",
-      img: "img/mezczyzna-nos.png",
-      lead: "Ból i ucisk u nasady nosa najczęściej towarzyszą zapaleniu zatok.",
-      chips: ["Głowa i szyja","Nos/Zatoki"],
-      sx: ["Ucisk w czole", "Gęsta wydzielina", "Gorszy węch"],
-      causes: ["Zapalenie zatok", "Alergia", "Skrzywiona przegroda"],
-      red: ["Gorączka > 39°C", "Obrzęk oczodołu", "Silny ból z zaburzeniami widzenia"],
-      selfcare: ["Płukanie nosa solą", "Nawilżanie powietrza", "Inhalacje"],
-      otc: ["Paracetamol", "Ibuprofen", "Steryd donosowy"],
-      specs: ["Laryngolog", "Alergolog", "Lekarz rodzinny"]
-    },
-    "nos_k": {"$ref":"nos_m","t":"Nos — Kobieta","img":"img/kobieta-nos.png"},
+    "nos_m": {t:"Nos — Mężczyzna", img:"img/mezczyzna-nos.png",
+      chips:["Głowa i szyja","Nos/Zatoki"],
+      lead:"Ból i ucisk u nasady nosa najczęściej towarzyszą zapaleniu zatok.",
+      sx:["Ucisk w czole/policzkach","Gęsta wydzielina","Gorszy węch"],
+      causes:["Zapalenie zatok","Alergia","Skrzywiona przegroda"],
+      red:["Gorączka > 39°C","Obrzęk oczodołu","Silny ból z zaburzeniami widzenia"],
+      selfcare:["Płukanie nosa solą","Nawilżanie powietrza","Inhalacje"],
+      otc:["Paracetamol","Ibuprofen","Steryd donosowy (np. flutikazon)"],
+      specs:["Laryngolog","Alergolog","Lekarz rodzinny"]},
+    "nos_k": {$ref:"nos_m", t:"Nos — Kobieta", img:"img/kobieta-nos.png"},
 
-    "uszy_m": {
-      t: "Uszy — Mężczyzna",
-      img: "img/mezczyzna-uszy.png",
-      lead: "Ból ucha bywa pochodzenia zapalnego lub rzutowany z gardła.",
-      chips: ["Głowa i szyja","Ucho"],
-      sx: ["Ból kłujący", "Szum", "Uczucie zatkania"],
-      causes: ["Zapalenie ucha środkowego", "Zapalenie przewodu słuchowego", "Korek woskowinowy"],
-      red: ["Silny ból z wyciekiem", "Nagła głuchota", "Uraz z zawrotami głowy"],
-      selfcare: ["Ciepły okład", "Nawilżanie śluzówek", "Unikanie patyczków"],
-      otc: ["Paracetamol", "Ibuprofen", "Krople do ucha"],
-      specs: ["Laryngolog", "Lekarz rodzinny"]
-    },
-    "uszy_k": {"$ref":"uszy_m","t":"Uszy — Kobieta","img":"img/kobieta-uszy.png"},
+    "uszy_m": {t:"Uszy — Mężczyzna", img:"img/mezczyzna-uszy.png",
+      chips:["Głowa i szyja","Ucho"],
+      lead:"Ból ucha bywa pochodzenia zapalnego lub rzutowany z gardła/stawu skroniowo-żuchwowego.",
+      sx:["Ból kłujący","Szum/uczucie zatkania","Gorączka u dzieci"],
+      causes:["Zapalenie ucha środkowego","Zapalenie przewodu słuchowego","Korek woskowinowy"],
+      red:["Silny ból z wyciekiem ropnym/krwawym","Nagła głuchota/zawroty","Uraz i krwawienie"],
+      selfcare:["Ciepły okład","Unikanie patyczków","Nawilżanie śluzówek"],
+      otc:["Paracetamol","Ibuprofen","Krople znieczulające do ucha (krótkotrwale)"],
+      specs:["Laryngolog","Lekarz rodzinny"]},
+    "uszy_k": {$ref:"uszy_m", t:"Uszy — Kobieta", img:"img/kobieta-uszy.png"},
 
-    "oczy_m": {
-      t: "Oczy — Mężczyzna",
-      img: "img/mezczyzna-oczy.png",
-      lead: "Ból oka to pilny objaw, zwłaszcza z pogorszeniem widzenia.",
-      chips: ["Głowa i szyja","Oko"],
-      sx: ["Ból i światłowstręt", "Łzawienie", "Zaczerwienienie"],
-      causes: ["Zapalenie spojówek", "Suche oko", "Ostra jaskra"],
-      red: ["Nagła utrata widzenia", "Uraz chemiczny", "Twarde, bolesne oko"],
-      selfcare: ["Sztuczne łzy", "Przerwy od ekranu", "Okłady"],
-      otc: ["Krople nawilżające", "Leki przeciwalergiczne"],
-      specs: ["Okulista", "SOR"]
-    },
-    "oczy_k": {"$ref":"oczy_m","t":"Oczy — Kobieta","img":"img/kobieta-oczy.png"},
+    "oczy_m": {t:"Oczy — Mężczyzna", img:"img/mezczyzna-oczy.png",
+      chips:["Głowa i szyja","Oko"],
+      lead:"Ból oka to pilny objaw, zwłaszcza jeśli towarzyszy mu pogorszenie widzenia.",
+      sx:["Ból i światłowstręt","Łzawienie","Zaczerwienienie"],
+      causes:["Zapalenie spojówek","Zespół suchego oka","Ostra jaskra (pilne)"],
+      red:["Nagła utrata widzenia","Uraz chemiczny/ciało obce","Twarde bolesne oko"],
+      selfcare:["Sztuczne łzy","Przerwy od ekranu (20-20-20)","Chłodne okłady"],
+      otc:["Krople nawilżające","Leki przeciwalergiczne (krople)"],
+      specs:["Okulista","SOR w nagłych"]},
+    "oczy_k": {$ref:"oczy_m", t:"Oczy — Kobieta", img:"img/kobieta-oczy.png"},
 
-    "szyja_m": {
-      t: "Szyja — Mężczyzna",
-      img: "img/mezczyzna-szyja.png",
-      lead: "Ból karku zwykle wynika z przeciążenia mięśni i kręgosłupa szyjnego.",
-      chips: ["Głowa i szyja","Szyja"],
-      sx: ["Sztywność karku", "Ból promieniujący do barku", "Ból głowy"],
-      causes: ["Napięcie mięśni", "Dyskopatia szyjna", "Uraz komunikacyjny"],
-      red: ["Sztywność karku z gorączką", "Drętwienie rąk", "Uraz z objawami neurologicznymi"],
-      selfcare: ["Ergonomia pracy", "Ćwiczenia rozciągające", "Ciepłe okłady"],
-      otc: ["Paracetamol", "Ibuprofen", "Maści rozgrzewające"],
-      specs: ["Lekarz rodzinny", "Fizjoterapeuta", "Neurolog"]
-    },
-    "szyja_k": {"$ref":"szyja_m","t":"Szyja — Kobieta","img":"img/kobieta-szyja.png"},
+    "szyja_m": {t:"Szyja — Mężczyzna", img:"img/mezczyzna-szyja.png",
+      chips:["Głowa i szyja","Szyja"],
+      lead:"Ból karku zwykle wynika z przeciążenia mięśni i zmian przeciążeniowych kręgosłupa szyjnego.",
+      sx:["Sztywność karku","Promieniowanie do barku/ramienia","Ból głowy potyliczny"],
+      causes:["Napięcie mięśni","Dyskopatia szyjna","Uraz typu whiplash"],
+      red:["Sztywność karku z gorączką","Drętwienie/zanik siły w rękach","Uraz z objawami neurologicznymi"],
+      selfcare:["Ergonomia (monitor na wprost)","Rozciąganie/ćwiczenia szyi","Ciepłe okłady"],
+      otc:["Paracetamol","Ibuprofen","Maści rozgrzewające/NLPZ"],
+      specs:["Lekarz rodzinny","Fizjoterapeuta","Neurolog"]},
+    "szyja_k": {$ref:"szyja_m", t:"Szyja — Kobieta", img:"img/kobieta-szyja.png"},
 
-    /* ====== BIODRA / NOGI / STOPY ====== */
-    "biodra_m": {
-      t: "Biodra — Mężczyzna",
-      img: "img/mezczyzna-biodra.jpg",
-      lead: "Ból biodra może pochodzić ze stawu, ścięgien lub kręgosłupa.",
-      chips: ["Kończyna dolna","Biodro"],
-      sx: ["Ból pachwiny", "Sztywność poranna", "Utykanie"],
-      causes: ["Przeciążenie ścięgien", "Zwyrodnienie", "Rzutowanie z kręgosłupa"],
-      red: ["Nagły ból i obrzęk biodra", "Uraz z niemożnością chodzenia"],
-      selfcare: ["Odpoczynek", "Zimne okłady", "Ćwiczenia wzmacniające"],
-      otc: ["Paracetamol", "NLPZ doustnie/żel"],
-      specs: ["Ortopeda", "Fizjoterapeuta"]
-    },
-    "biodra_k": {"$ref":"biodra_m","t":"Biodra — Kobieta","img":"img/kobieta-biodra.jpg"},
+    /* ---------- KLATKA / BRZUCH / PLECY (obie płcie) ---------- */
+    "serce_m": {t:"Serce — Mężczyzna", img:"img/mezczyzna-serce.png",
+      chips:["Klatka piersiowa","Narządy"],
+      lead:"Ból w klatce pochodzenia sercowego bywa uciskowy, promieniujący do lewej ręki/szczęki.",
+      sx:["Ucisk za mostkiem","Duszność przy wysiłku","Zimny pot, nudności"],
+      causes:["Dławica piersiowa","Zawał mięśnia sercowego","Zapalenie osierdzia","Refluks/mięśnie (naśladują)"],
+      red:["Silny ucisk > 10 min","Duszność/spadek świadomości","Ból połączony z omdleniem"],
+      selfcare:["Odpoczynek, przerwanie wysiłku","Nitrogliceryna — tylko jeśli zalecona przez lekarza","Monitoruj objawy"],
+      otc:["Paracetamol w bólach niesercowych","Unikaj NLPZ przy podejrzeniu serca"],
+      specs:["Ratunek — 112/999 w ostrym bólu","Kardiolog","Lekarz rodzinny"]},
+    "serce_k": {$ref:"serce_m", t:"Serce — Kobieta", img:"img/kobieta-serce.png",
+      lead:"U kobiet zawał częściej daje nietypowe objawy: duszność, nudności, osłabienie, ból pleców."},
 
-    "uda_m": {
-      t: "Uda — Mężczyzna",
-      img: "img/mezczyzna-uda.jpg",
-      lead: "Ból uda zwykle wynika z przeciążenia mięśni.",
-      chips: ["Kończyna dolna","Udo"],
-      sx: ["Tkliwość mięśni", "Ból przy wysiłku", "Drętwienie przy rwie"],
-      causes: ["Naciągnięcie mięśni", "Rwa udowa", "Przeciążenie sportowe"],
-      red: ["Nagły obrzęk uda", "Uraz z krwiakiem i niemożnością chodzenia"],
-      selfcare: ["RICE (odpoczynek, lód, ucisk, uniesienie)", "Rozciąganie", "Wzmacnianie mięśni"],
-      otc: ["Paracetamol", "Ibuprofen"],
-      specs: ["Ortopeda", "Fizjoterapeuta"]
-    },
-    "uda_k": {"$ref":"uda_m","t":"Uda — Kobieta","img":"img/kobieta-uda.jpg"},
+    "pluca_m": {t:"Płuca — Mężczyzna", img:"img/mezczyzna-pluca.jpg",
+      chips:["Klatka piersiowa","Narządy"],
+      lead:"Ból w klatce nasilany przy oddychaniu kaszlu/oddechu często ma przyczynę oddechową.",
+      sx:["Kaszel, duszność","Ból opłucnowy (przy wdechu)","Gorączka w infekcjach"],
+      causes:["Zapalenie płuc/opłucnej","Odma opłucnowa","Zatorowość płucna (nagła duszność/ból)"],
+      red:["Nagła duszność i ból — DZWOŃ 112/999","Krwioplucie","Zasinienie warg"],
+      selfcare:["Nawodnienie","Odpoczynek","Inhalacje/Nawilżanie"],
+      otc:["Paracetamol/Ibuprofen (gorączka)","Syropy wykrztuśne"],
+      specs:["SOR/112 w nagłych","Pulmonolog","Lekarz rodzinny"]},
+    "pluca_k": {$ref:"pluca_m", t:"Płuca — Kobieta", img:"img/kobieta-pluca.jpg"},
 
-    "stopy_m": {
-      t: "Stopy — Mężczyzna",
-      img: "img/mezczyzna-stopy.png",
-      lead: "Ból stopy najczęściej jest skutkiem przeciążeń i zapaleń.",
-      chips: ["Kończyna dolna","Stopa"],
-      sx: ["Ból pięty", "Sztywność poranna", "Ból po staniu"],
-      causes: ["Zapalenie rozcięgna podeszwowego", "Achilles", "Haluks", "Złe obuwie"],
-      red: ["Obrzęk i ból łydki (zakrzepica)", "Uraz z deformacją"],
-      selfcare: ["Odpoczynek", "Lód", "Wkładki i rozciąganie"],
-      otc: ["Paracetamol", "Żele NLPZ"],
-      specs: ["Ortopeda", "Podolog", "Fizjoterapeuta"]
-    },
-    "stopy_k": {"$ref":"stopy_m","t":"Stopy — Kobieta","img":"img/kobieta-stopy.jpg"}
-  };
+    "brzuch_m": {t:"Brzuch — Mężczyzna", img:"img/mezczyzna-brzuch.jpg",
+      chips:["Brzuch"],
+      lead:"Ból brzucha ma wiele przyczyn od niestrawności po stany ostre wymagające pilnej pomocy.",
+      sx:["Skurcze, wzdęcia","Nudności/wymioty","Biegunka lub zaparcie"],
+      causes:["Niestrawność/refluks","Zapalenie wyrostka (prawy dół)","Kamica żółciowa (prawy łuk)","Zapalenie trzustki"],
+      red:["Twardy „deskowaty” brzuch","Krew w stolcu/wymiotach","Uraz brzucha z bólem"],
+      selfcare:["Lekkostrawna dieta","Nawodnienie","Unikanie alkoholu/tłustych potraw"],
+      otc:["Drotaweryna (skurcze)","Symetykon (wzdęcia)","IPP/antacid (zgaga)"],
+      specs:["SOR/112 w ostrym bólu","Chirurg/Internista","Lekarz rodzinny"]},
+    "brzuch_k": {$ref:"brzuch_m", t:"Brzuch — Kobieta", img:"img/kobieta-brzuch.jpg",
+      causes:["Niestrawność/refluks","Zapalenie wyrostka","Kamica żółciowa","Torbiel jajnika/ciąża pozamaciczna (pilne)"]},
 
-  // ====== LOGIKA WYŚWIETLANIA ======
-  const id = new URLSearchParams(window.location.search).get("id");
-  let item = DATA[id];
+    "plecy_m": {t:"Plecy — Mężczyzna", img:"img/mezczyzna-plecy.jpg",
+      chips:["Plecy"],
+      lead:"Najczęstsze są przeciążenia mięśniowo-powięziowe i zmiany przeciążeniowe kręgosłupa.",
+      sx:["Ból po dźwiganiu","Sztywność poranna","Rwa kulszowa (ból do nogi)"],
+      causes:["Przeciążenie mięśni","Dyskopatia/rwa","Wady postawy"],
+      red:["Ból z niedowładem/drętwieniem krocza","Uraz znaczny","Gorączka + ból kręgosłupa"],
+      selfcare:["Ruch w granicach bólu","Ciepło/zimno zależnie co pomaga","Ćwiczenia core"],
+      otc:["Paracetamol","Ibuprofen/Naproksen","Maści/Plastry NLPZ"],
+      specs:["Lekarz rodzinny","Fizjoterapeuta","Ortopeda/Neurolog"]},
+    "plecy_k": {$ref:"plecy_m", t:"Plecy — Kobieta", img:"img/kobieta-plecy.jpg"},
 
-  // Jeśli jest $ref — kopiujemy dane z innego obiektu i nadpisujemy różnice
-  if (item && item.$ref) {
-    item = Object.assign({}, DATA[item.$ref], item);
-    delete item.$ref;
-  }
+    "klatka_m": {t:"Klatka (ściana klp/mięśnie) — Mężczyzna", img:"img/mezczyzna-klatka.jpg",
+      chips:["Klatka piersiowa","Mięśnie/Stawy"],
+      lead:"Ból kłujący nasilany uciskiem/ruchami zwykle pochodzi z mięśni, chrząstek żeber lub nerwobólu.",
+      sx:["Tkliwość przy dotyku","Ból przy skręcie/unoszeniu ręki","Kłucie miejscowe"],
+      causes:["Nerwoból międzyżebrowy","Zapalenie chrząstek żeber (Tietze)","Naciągnięcie mięśni"],
+      red:["Ból + duszność/omdlenie","Uraz klatki z dusznością","Gorączka i kaszel ropny"],
+      selfcare:["Odpoczynek od wysiłku","Okłady ciepłe/zimne","Delikatny stretch piersi/pleców"],
+      otc:["Paracetamol","Ibuprofen/Naproksen","Maści przeciwzapalne"],
+      specs:["Lekarz rodzinny","Fizjoterapeuta"]},
+    "klatka_k": {$ref:"klatka_m", t:"Klatka (ściana klp/mięśnie) — Kobieta", img:"img/kobieta-klatka.png"},
 
-  if (item) {
-    document.getElementById("title").textContent = item.t;
-    document.getElementById("content").innerHTML = `
-      <img src="${item.img}" alt="${item.t}" class="detail-img">
-      <p>${item.lead}</p>
-      <h3>Objawy</h3>
-      <ul>${item.sx.map(x=>`<li>${x}</li>`).join("")}</ul>
-      <h3>Możliwe przyczyny</h3>
-      <ul>${item.causes.map(x=>`<li>${x}</li>`).join("")}</ul>
-      <h3 class="red">Kiedy pilnie do lekarza</h3>
-      <ul>${item.red.map(x=>`<li>${x}</li>`).join("")}</ul>
-      <h3>Co możesz zrobić samodzielnie</h3>
-      <ul>${item.selfcare.map(x=>`<li>${x}</li>`).join("")}</ul>
-      <h3>Leki bez recepty</h3>
-      <ul>${item.otc.map(x=>`<li>${x}</li>`).join("")}</ul>
-      <h3>Specjaliści</h3>
-      <ul>${item.specs.map(x=>`<li>${x}</li>`).join("")}</ul>
-    `;
-  } else {
-    document.getElementById("content").innerHTML = <p>Nie znaleziono danych dla tego elementu.</p>;
-  }
-  </script>
-</body>
-</html>
+    /* ---------- UKŁADY (obie płcie) ---------- */
+    "uklad_krw_m": {t:"Układ krwionośny — Mężczyzna", img:"img/uklad-k.jpg",
+      chips:["Klatka/Narządy","Układy"],
+      lead:"Ból w klatce i duszność mogą wynikać z chorób serca i naczyń.",
+      sx:["Ucisk zamostkowy","Kołatania serca","Obrzęki nóg"],
+      causes:["ChNS/Dławica","Niewydolność serca","Zapalenie osierdzia","Zatorowość płucna (nagłe)"],
+      red:["Nagły silny ból/duszność —
