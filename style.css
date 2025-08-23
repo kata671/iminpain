@@ -4,7 +4,7 @@ body {
   font-family: Arial, sans-serif;
   background-color: #1a1a1a;
   background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-  background-size: 40px 40px; /* większe odstępy kropek */
+  background-size: 40px 40px;
   color: #fff;
   text-align: center;
 }
@@ -25,8 +25,39 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* Układ kart */
-.cards {
+/* Układ siatki */
+.grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Kafelki ogólne (dla stron głównych, wyboru postaci itp.) */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.card img {
+  max-width: 320px;
+  height: auto;
+  border-radius: 20px;
+}
+
+.card span {
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+/* ---- KafelkI TYLKO na szczegoly.html ---- */
+body[data-page="szczegoly"] .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
@@ -34,30 +65,26 @@ h1 {
   margin: 20px;
 }
 
-/* Wygląd kafelków */
-.card {
-  background: rgba(75, 0, 130, 0.6); /* ciemnofioletowy transparentny */
-  border: 1px solid rgba(186, 85, 211, 0.6); /* jaśniejsza fioletowa ramka */
+body[data-page="szczegoly"] .card {
+  background: rgba(75, 0, 130, 0.6);           /* ciemny fiolet półtransparentny */
+  border: 1px solid rgba(186, 85, 211, 0.6);   /* delikatna fioletowa ramka */
   border-radius: 16px;
   padding: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  color: #fff; /* biały tekst */
+  box-shadow: 0 4px 12px rgba(0,0,0,.4);
+  color: #fff;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Efekt hover dla kafelków */
-.card:hover {
+body[data-page="szczegoly"] .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 6px 16px rgba(0,0,0,.6);
 }
 
-/* Tekst w kafelku */
-.card h3 {
+body[data-page="szczegoly"] .card h3 {
   margin: 0 0 12px;
 }
 
-/* Listy w kafelku */
-.card ul {
+body[data-page="szczegoly"] .card ul {
   margin: 0;
   padding-left: 18px;
   text-align: left;
