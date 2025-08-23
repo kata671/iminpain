@@ -631,3 +631,24 @@ Wysłano
   border-radius: 16px;
   padding: 12px 14px;
 }
+/* 🔹 Pasek linków nawigacyjnych */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.nav-links .back-link {
+  color: #00aaff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #222;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.nav-links .back-link:hover {
+  background: #333;
+  transform: scale(1.05);
+}
