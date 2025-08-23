@@ -1,32 +1,129 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Kobieta — wybierz część ciała</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wybierz obszar bólu – Kobieta</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* Siatka kafelków */
+    .grid-container{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      justify-items: center;
+      width: 100%;
+      max-width: 1200px;     /* szerokość dopasowana do nagłówka */
+      margin: 24px auto 0;   /* wyśrodkowanie pod nagłówkiem */
+      padding: 0 16px;
+    }
+
+    .card{
+      width: 100%;
+      max-width: 380px;      /* trochę większe kafelki */
+      background: rgba(255,255,255,0.04);
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.35);
+      overflow: hidden;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .card:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0,0,0,.45);
+    }
+
+    .card a{ 
+      display:block; 
+      color:inherit; 
+      text-decoration:none; 
+    }
+
+    .card-image{
+      display:block;
+      width:100%;
+      aspect-ratio: 16 / 10;  /* stały format poziomy */
+      object-fit:cover;
+    }
+
+    .card-caption{
+      padding:10px 14px;
+      font-weight:600;
+      text-align:center;
+    }
+
+    /* Pasek nawigacji nad nagłówkiem */
+    header .breadcrumbs{
+      display:flex; 
+      gap:12px; 
+      align-items:center;
+      padding:16px 16px 0; 
+      max-width:1200px; 
+      margin:0 auto;
+    }
+
+    header .breadcrumbs a{ 
+      text-decoration:none; 
+    }
+
+    /* Nagłówek strony */
+    main h1{
+      max-width: 1200px;     /* taka sama szerokość jak grid */
+      margin: 8px auto 16px;
+      padding: 0 16px;
+      text-align:center;
+    }
+
+    @media (max-width:480px){
+      .grid-container{ grid-template-columns:1fr; gap:18px; }
+      .card{ max-width:100%; }
+    }
+  </style>
 </head>
+
 <body data-page="kobieta">
-  <div class="nav-links">
-    <a href="index.html" class="back-link">⬅ Strona główna</a>
-  </div>
+  <header>
+    <nav class="breadcrumbs">
+      <a href="index.html">← Strona główna</a>
+    </nav>
+    <h1>Wybierz obszar bólu — Kobieta</h1>
+  </header>
 
-  <h1>Wybierz obszar bólu-Kobieta</h1>
+  <main>
+    <section class="grid-container" aria-label="Wybór sekcji">
+      
+      <!-- Głowa i szyja -->
+      <article class="card">
+        <a href="kobieta-glowa.html">
+          <img class="card-image" src="img/kobieta-glowa.jpg" alt="Głowa i szyja" loading="lazy">
+          <div class="card-caption">Głowa i szyja</div>
+        </a>
+      </article>
 
-  <div class="grid">
-    <a href="kobieta-glowa.html" class="card">
-      <img src="img/kobieta-glowa.jpg" alt="Głowa i szyja">
-      <span>Głowa i szyja</span>
-    </a>
+      <!-- Klatka / Brzuch / Plecy -->
+      <article class="card">
+        <a href="kobieta-klatka.html">
+          <img class="card-image" src="img/kobieta-klatka.jpg" alt="Klatka / Brzuch / Plecy" loading="lazy">
+          <div class="card-caption">Klatka / Brzuch / Plecy</div>
+        </a>
+      </article>
 
-    <a href="kobieta-klatka.html" class="card">
-      <img src="img/kobieta-klatka.jpg" alt="Klatka / Brzuch / Plecy">
-      <span>Klatka / Brzuch / Plecy</span>
-    </a>
+      <!-- Biodra / Nogi / Stopy -->
+      <article class="card">
+        <a href="kobieta-nogi.html">
+          <img class="card-image" src="img/kobieta-nogi.jpg" alt="Biodra / Nogi / Stopy" loading="lazy">
+          <div class="card-caption">Biodra / Nogi / Stopy</div>
+        </a>
+      </article>
 
-    <a href="kobieta-nogi.html" class="card">
-      <img src="img/kobieta-nogi.jpg" alt="Biodra / Nogi / Stopy">
-      <span>Biodra / Nogi / Stopy</span>
-    </a>
-  </div>
+    </section>
+  </main>
+
+  <footer>
+    <p style="text-align:center; opacity:.8; margin:28px 0 18px;">
+      © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
+    </p>
+  </footer>
 </body>
 </html>
