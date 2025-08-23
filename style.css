@@ -1,347 +1,109 @@
-/* =========================
-   Iminpain — style.css (UNIFIKACJA RAMEK + RÓWNE KAFELKI)
-   ========================= */
-
-/* --- Reset & bazowe --- */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* =======================
+   RESET & BAZA
+======================= */
+* { box-sizing: border-box; }
 html, body { height: 100%; }
 body {
+  margin: 0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  color: #e9f0ff;
-  background: #0f1117 radial-gradient(#1d2030 1px, transparent 1px) 0 0 / 12px 12px;
-  line-height: 1.45;
+  color: #e9ecff;
 }
 
-/* Kontener centralny */
-.container {
-  max-width: 1100px;
-  margin: 32px auto 40px;
+/* =======================
+   NAWIGACJA / LINK POWROTU
+======================= */
+.nav-links { margin: 12px 18px; font-size: 15px; }
+.back-link { color: #8fb4ff; text-decoration: none; margin-right: 12px; }
+.back-link:hover { text-decoration: underline; }
+
+/* =======================
+   TYTUŁY
+======================= */
+.title, h1 {
+  text-align: center;
+  margin: 10px 16px 0;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+}
+
+/* =======================
+   SIATKA KAFELKÓW
+   (kobieta.html / mezczyzna.html)
+======================= */
+.grid{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin: 40px auto 24px;
   padding: 0 16px;
 }
 
-/* --- Nagłówki --- */
-h1{
-  font-size: clamp(28px, 4vw, 42px);
-  font-weight: 800;
-  letter-spacing: .3px;
-  color:#cbb2ff;                /* jasny fiolet tylko dla H1 */
-  text-shadow: 0 2px 18px rgba(180,140,255,.25);
-  margin:18px 0 12px;
-  text-align:center;
-}
-h2{
-  font-size: clamp(18px, 2.4vw, 26px);
-  font-weight:700;
-  color:#e9f0ff;
-  opacity:.9;
-  margin:6px 0 22px;
-  text-align:center;
-}
-
-/* --- Linki powrotu --- */
-.nav-links{
-  max-width:1100px;
-  margin:16px auto 10px;
-  padding:0 16px;
-}
-.back-link{
-  color:#8ec9ff;
-  text-decoration:none;
-  margin-right:12px;
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:10px;
-  transition:background .2s, transform .1s;
-}
-.back-link:hover{
-  background:rgba(142,201,255,.12);
-  transform:translateY(-1px);
-}
-
-/* --- Siatka kafelków (jednolite układanie) --- */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
-  gap:22px;
-  align-items:stretch;      /* wszystkie elementy równają wysokością */
-}
-
-/* --- Kafelek (UNIFIKACJA RAMEK) --- */
+/* pojedynczy kafelek */
 .card{
-  display:flex;             /* pozwala wyrównać podpis do dołu */
-  flex-direction:column;
-  justify-content:flex-start;
-  height:100%;              /* wypełnia komórkę siatki */
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(203,178,255,.35);  /* JEDNA ramka: delikatny fiolet */
-  border-radius:16px;
-  padding:12px 12px 14px;
-  text-align:center;
-  text-decoration:none;
-  color:#cfe6ff;
-  box-shadow:0 6px 22px rgba(0,0,0,.25);
-  transition:transform .18s, box-shadow .25s, border-color .25s;
+  display: inline-block;
+  background: rgba(18, 26, 56, .75);
+  border: 2px solid #6ea8ff;
+  border-radius: 24px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,.30);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
 }
+
 .card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 12px 30px rgba(0,0,0,.35);
-  border-color:rgba(203,178,255,.6);
+  transform: scale(1.07);
+  box-shadow: 0 10px 24px rgba(0,0,0,.40);
+  border-color: #9cc3ff;
 }
 
-/* Obraz w kafelku — stałe proporcje i równa wysokość */
+/* obrazek w kafelku */
 .card img{
-  width:100%;
-  aspect-ratio: 4 / 3;      /* równe kafelki niezależnie od pliku */
-  height:auto;
-  object-fit:cover;
-  border-radius:12px;
-  display:block;
-  margin-bottom:10px;
-}
-
-/* Podpis przycisku/kafelka na dole */
-.card span{
-  margin-top:auto;          /* zepchnij na dół */
-  display:block;
-  font-weight:700;
-  color:#79b8ff;
-}
-
-/* --- Strona szczegółów --- */
-.details-wrap{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
-  gap:18px;
-  margin-top:16px;
-}
-.info-box{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(203,178,255,.25); /* spójna ramka */
-  border-radius:16px;
-  padding:14px 16px;
-}
-.info-box h3{
-  color:#b7caff;
-  margin-bottom:8px;
-  font-size:18px;
-}
-.info-box ul{ padding-left:18px; margin-top:6px; }
-.info-box li{ margin:6px 0; }
-
-/* Alarm */
-.alert{
-  background:rgba(255,70,70,.08);
-  border-color:rgba(255,90,90,.28);
-}
-
-/* --- Stopka --- */
-footer{
-  opacity:.8;
-  font-size:13px;
-  text-align:center;
-  margin:36px 0 14px;
-}
-
-/* ==============================
-   Strona główna — glow pod kafelkami
-   ============================== */
-body[data-page="index"] .gender-choice{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
-  gap:26px;
-  justify-items:center;
-  margin-top:8px;
-}
-body[data-page="index"] .gender-choice label{
-  display:inline-block;
-  background:rgba(120,90,200,.18);
-  border:1px solid rgba(203,178,255,.35); /* ta sama ramka co karty */
-  border-radius:18px;
-  padding:12px 14px 10px;
-  box-shadow:0 0 14px rgba(180,140,255,.40);
-  transition:transform .2s, box-shadow .3s;
-  cursor:pointer;
-}
-body[data-page="index"] .gender-choice label:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 20px rgba(200,160,255,.65);
-}
-body[data-page="index"] .gender-choice input[type="radio"]{ display:none; }
-body[data-page="index"] .gender-choice img{
-  width:320px; max-width:90vw;
-  aspect-ratio: 4 / 5;      /* stała proporcja zdjęć na stronie głównej */
-  height:auto; object-fit:cover; border-radius:12px; display:block;
-}
-
-/* ==============================
-   Przycisk 112 (jeśli używasz)
-   ============================== */
-.emergency-btn{
-  position:fixed; bottom:20px; right:20px;
-  background:#e60019; color:#fff; font-weight:800;
-  padding:12px 18px; border-radius:12px; text-decoration:none;
-  box-shadow:0 8px 18px rgba(0,0,0,.35);
-  transition:background .25s, transform .18s; z-index:999;
-}
-.emergency-btn:hover{ background:#b80014; transform:scale(1.05); }
-
-/* --- Responsywność --- */
-@media (max-width: 640px){
-  .grid{ gap:18px; }
-  .card{ padding:10px 10px 12px; }
-  body[data-page="index"] .gender-choice img{ width:270px; }
-}
-/* === Ułożenie kafelków i wygląd (bezpieczny dodatek) === */
-
-/* 1) Strona główna – dwa kafelki obok siebie, wycentrowane */
-.gender-choice{
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  gap: 24px;
-  flex-wrap: nowrap;           /* na mobile przestawi się niżej przez media query */
-  margin-top: 12px;
-}
-
-/* 2) Siatka kafelków na wszystkich podstronach – 4 w rzędzie, wycentrowane */
-.grid{
-  display: grid;
-  grid-template-columns: repeat(4, 260px); /* dokładnie 4 w rzędzie */
-  justify-content: center;                  /* cała siatka na środku */
-  gap: 22px;                                /* odstępy między kafelkami */
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  border-radius: 20px;
   margin: 0 auto;
 }
 
-/* 3) Wygląd kafelków – ciemno-fioletowe tło + delikatna obwódka + glow w hover */
-.card{
-  width: 260px;                              /* spójna szerokość z siatką */
-  background: rgba(82, 48, 140, 0.22);       /* ciemny transparentny fiolet */
-  border: 1px solid rgba(185, 160, 255, 0.25);/* prawie przezroczysta ramka */
-  border-radius: 14px;
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.06),  /* lekka „szklista” krawędź */
-    0 2px 10px rgba(0,0,0,0.25);              /* subtelny cień */
-  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
+/* podpis pod obrazkiem */
+.card span{
+  display: block;
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #f5f7ff;
+  letter-spacing: .2px;
 }
 
-.card:hover{
-  border-color: rgba(200, 175, 255, 0.55);
-  box-shadow:
-    0 0 14px 4px rgba(130, 105, 255, 0.35),  /* zewnętrzny glow */
-    inset 0 0 30px rgba(130, 105, 255, 0.12),
-    0 6px 18px rgba(0,0,0,0.35);
-  transform: translateY(-1px);
+/* =======================
+   STOPKA
+======================= */
+.footer{
+  margin: 24px 16px 40px;
+  text-align: center;
+  font-size: 12px;
+  color: #a6b4e6;
+  opacity: .9;
 }
 
-/* 4) Responsywność – na wąskich ekranach kafelki układają się po 2 lub 1 */
-@media (max-width: 1100px){
-  .grid{ grid-template-columns: repeat(3, 260px); }
-}
-@media (max-width: 860px){
-  .gender-choice{ flex-wrap: wrap; }         /* na bardzo wąskich ekranach może się zawinąć */
-  .grid{ grid-template-columns: repeat(2, 260px); }
-}
-@media (max-width: 580px){
-  .grid{ grid-template-columns: 1fr; }
-  .card{ width: 100%; }
-}
-/* Układ 4 kafelki w pierwszym rzędzie + 5-ty wyśrodkowany poniżej */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 kolumny */
-  gap: 20px; /* odstępy między kafelkami */
-  justify-items: center; /* elementy wyśrodkowane w kolumnach */
+/* =======================
+   RESPONSYWNOŚĆ
+======================= */
+@media (max-width: 640px){
+  .grid{ gap: 22px; margin-top: 28px; }
+  .card{ padding: 14px; border-radius: 20px; }
+  .card img{ max-width: 260px; border-radius: 16px; }
+  .card span{ font-size: 1.05rem; }
 }
 
-.cards .card:nth-child(5) {
-  grid-column: 2 / span 2; /* 5-ty kafelek będzie w 2 i 3 kolumnie */
-}
-.cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  justify-items: center;
-}
-
-.cards .card:last-child {
-  grid-column: 2 / span 2;
-}
-.cards {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 kolumn w jednym rzędzie */
-  gap: 20px;
-  justify-items: center;
-}
-
-.cards .card:last-child {
-  grid-column: 3 / span 1; /* ustawia 6-ty kafelek w 3-ciej kolumnie → środek */
-}
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 kolumny */
-  gap: 20px;
-  justify-items: center; /* wyrównanie do środka */
-}
-/* --- Tapeta tła dla wszystkich stron --- */
+/* =======================
+   TAPETA: Minimalistyczne szklane krople
+======================= */
 body {
-  background-color: #1c1c1c; /* ciemnoszare tło */
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1; /* pod całą treścią */
-  background-image: radial-gradient(#2a2a2a 1px, transparent 1px);
-  background-size: 20px 20px; /* odstęp między kropkami */
-  opacity: 0.9;
-}
-/* --- Tapeta tła w stylu eleganckich kropelek --- */
-body {
-  background-color: #1a1a1a; /* głębokie ciemnoszare tło */
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1; /* zawsze pod całą treścią */
-
-  /* Kropelki — większe, rzadsze */
-  background-image: radial-gradient(rgba(128, 0, 128, 0.25) 3px, transparent 3px);
-  background-size: 40px 40px; /* większy odstęp między kropkami */
-
-  /* Delikatny efekt "deszczu" */
-  filter: drop-shadow(0 0 2px rgba(128, 0, 128, 0.4));
-  opacity: 0.9;
-}
-body {
-  background: radial-gradient(circle at top, #1a1a1a, #0d0d0d); 
-  overflow-x: hidden;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-
-  background-image: radial-gradient(
-      circle at center,
-      rgba(147, 112, 219, 0.45) 0%,  /* pastelowy fiolet */
-      rgba(72, 61, 139, 0.2) 40%,    /* głębszy odcień */
-      transparent 70%
-  );
-
-  background-size: 160px 160px; /* jeszcze rzadziej */
-  background-position: 60px 60px;
-  filter: drop-shadow(0 0 8px rgba(147, 112, 219, 0.5));
-  opacity: 0.9;
-body {
-  background: #111; /* głębokie ciemnoszare tło */
+  background: #111; /* bardzo ciemne eleganckie tło */
   overflow-x: hidden;
 }
 
@@ -356,11 +118,12 @@ body::before {
       circle at center,
       rgba(186, 85, 211, 0.4) 0%,   /* jaśniejszy fioletowy środek */
       rgba(138, 43, 226, 0.2) 35%,  /* półtransparentny fiolet */
-      transparent 70%               /* płynne przejście */
+      transparent 70%
   );
 
-  background-size: 140px 140px; /* większy odstęp kropli */
+  background-size: 140px 140px; /* odstępy między kroplami */
   background-position: 40px 40px;
+
   filter: drop-shadow(0 0 6px rgba(186, 85, 211, 0.4));
   opacity: 0.8;
 }
