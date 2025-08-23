@@ -53,3 +53,16 @@
 }
 Wysłano
 Napisz do:
+/* Bezpieczne poprawki układu + glow */
+.card,
+.gender-choice label,
+.hero-cards label {
+  max-width: 240px;              /* węższe kafelki */
+  margin: 10px auto;             /* ładne wyśrodkowanie */
+}
+
+.card:hover,
+.gender-choice label:hover,
+.hero-cards label:hover {
+  box-shadow: 0 0 25px rgba(178,138,255,0.9); /* mocniejszy glow */
+}
