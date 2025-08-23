@@ -266,3 +266,13 @@ body[data-page="index"] .gender-choice img{
 .cards .card:last-child {
   grid-column: 2 / span 2;
 }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 kolumn w jednym rzędzie */
+  gap: 20px;
+  justify-items: center;
+}
+
+.cards .card:last-child {
+  grid-column: 3 / span 1; /* ustawia 6-ty kafelek w 3-ciej kolumnie → środek */
+}
