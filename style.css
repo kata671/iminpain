@@ -276,3 +276,9 @@ body[data-page="index"] .gender-choice img{
 .cards .card:last-child {
   grid-column: 3 / span 1; /* ustawia 6-ty kafelek w 3-ciej kolumnie → środek */
 }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 kolumny */
+  gap: 20px;
+  justify-items: center; /* wyrównanie do środka */
+}
