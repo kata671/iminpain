@@ -168,3 +168,47 @@ h2{
 /* Drobne utility */
 .center{ text-align:center }
 .muted{ color: var(--muted) }
+/* ===== HOTFIX: przywrócenie strony głównej i uporządkowanie kafelków ===== */
+
+/* Strona główna – używasz .gender-choice (radio + label + img) */
+.gender-choice{
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 12px;
+}
+.gender-choice label{
+  display: inline-block;
+  padding: 10px 10px 12px;
+  border-radius: 16px;
+  background: rgba(110,85,200,0.16);               /* pół-transparentny fiolet */
+  border: 1px solid rgba(178,138,255,0.6);
+  box-shadow:
+    0 0 0 1px rgba(178,138,255,0.6) inset,
+    0 10px 20px rgba(0,0,0,.35);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.gender-choice label:hover{
+  transform: translateY(-3px);
+  border-color: #8e6aff;
+  box-shadow:
+    0 0 0 1px #8e6aff inset,
+    0 0 22px rgba(178,138,255,.55),
+    0 12px 28px rgba(0,0,0,.45);
+}
+.gender-choice img{
+  display: block;
+  width: min(360px, 36vw);
+  height: auto;
+  border-radius: 12px;
+}
+
+/* Równe, zgrabne kafelki w siatkach */
+.grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+.card{ width: 220px; max-width: 100%; }
