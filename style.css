@@ -647,3 +647,40 @@ body[data-page="index"] .card:hover {
   transform: scale(1.05); /* delikatne powiększenie przy najechaniu */
   box-shadow: 0 0 15px rgba(167, 139, 250, 0.6); /* fioletowa poświata */
 }
+/* === KAFELKI NA STRONIE GŁÓWNEJ (tylko tam) === */
+body[data-page="index"] .gender-choice {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+body[data-page="index"] .gender-choice label {
+  display: inline-block;
+  background: rgba(120, 90, 200, 0.18);     /* delikatne, fioletowe tło */
+  border: 1px solid rgba(186, 161, 255, 0.55);
+  border-radius: 18px;
+  padding: 12px 14px 10px;
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.25),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body[data-page="index"] .gender-choice label:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.10);
+}
+
+body[data-page="index"] .gender-choice label img {
+  display: block;
+  width: clamp(220px, 30vw, 360px);  /* responsywnie */
+  height: auto;
+  border-radius: 12px;
+}
+
+body[data-page="index"] .gender-choice label input {
+  display: none; /* ukryj radio */
+}
