@@ -1,239 +1,203 @@
 /* =========================
-   Iminpain — style.css (UNIFIKACJA RAMEK + RÓWNE KAFELKI)
+   Iminpain — style.css (pełny)
    ========================= */
 
-/* --- Reset & bazowe --- */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
-body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  color: #e9f0ff;
-  background: #0f1117 radial-gradient(#1d2030 1px, transparent 1px) 0 0 / 12px 12px;
-  line-height: 1.45;
+/* --- Zmienne kolorów --- */
+:root{
+  --bg: #0b0f16;
+  --dot: rgba(255,255,255,.06);
+  --text: #e9eef9;
+  --muted: #b9c2d6;
+  --accent: #a98cff;           /* jasny fiolet do tytułów */
+  --tile-bg: rgba(110,85,200,.16);   /* ciemny, transparentny fiolet */
+  --tile-glow: rgba(178,138,255,.55);
+  --tile-shadow: rgba(0,0,0,.45);
+  --danger: #ff6464;
 }
 
-/* Kontener centralny */
-.container {
-  max-width: 1100px;
-  margin: 32px auto 40px;
-  padding: 0 16px;
+/* --- Reset i tło --- */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(var(--dot) 1px, transparent 1px) 0 0/18px 18px,
+    linear-gradient(180deg,#0b0f16, #0a0e15);
 }
 
-/* --- Nagłówki --- */
+/* --- Kontener i nagłówki --- */
+.container{
+  width: min(1200px, 92vw);
+  margin: 40px auto 64px;
+}
 h1{
-  font-size: clamp(28px, 4vw, 42px);
-  font-weight: 800;
-  letter-spacing: .3px;
-  color:#cbb2ff;                /* jasny fiolet tylko dla H1 */
-  text-shadow: 0 2px 18px rgba(180,140,255,.25);
-  margin:18px 0 12px;
-  text-align:center;
+  margin: 12px 0 18px;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height:1.15;
+  color: var(--accent);
 }
 h2{
-  font-size: clamp(18px, 2.4vw, 26px);
-  font-weight:700;
-  color:#e9f0ff;
-  opacity:.9;
-  margin:6px 0 22px;
-  text-align:center;
+  margin: 0 0 26px;
+  font-weight:600;
+  color:#dfe6fb;
+  opacity:.95;
 }
 
-/* --- Linki powrotu --- */
-.nav-links{
-  max-width:1100px;
-  margin:16px auto 10px;
-  padding:0 16px;
-}
-.back-link{
-  color:#8ec9ff;
-  text-decoration:none;
-  margin-right:12px;
+/* --- Nawigacja (linki „Wróć…”) --- */
+.nav-links, .back-link{
   display:inline-block;
-  padding:6px 10px;
-  border-radius:10px;
-  transition:background .2s, transform .1s;
+  margin:8px 0 12px;
+  color:#9ec5ff;
+  text-decoration:none;
 }
-.back-link:hover{
-  background:rgba(142,201,255,.12);
-  transform:translateY(-1px);
+.nav-links a, a.back-link{
+  color:#9ec5ff;
+  text-decoration:none;
+  margin-right:10px;
 }
+.nav-links a:hover, a.back-link:hover{ text-decoration:underline }
 
-/* --- Siatka kafelków (jednolite układanie) --- */
+/* --- Siatki kafelków: bardziej estetyczny układ --- */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
-  gap:22px;
-  align-items:stretch;      /* wszystkie elementy równają wysokością */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;                   /* ciaśniej i równo */
+  align-items: stretch;
 }
 
-/* --- Kafelek (UNIFIKACJA RAMEK) --- */
+/* --- Kafelek wspólny (podstrony) --- */
 .card{
-  display:flex;             /* pozwala wyrównać podpis do dołu */
+  display:flex;
   flex-direction:column;
+  align-items:center;
   justify-content:flex-start;
-  height:100%;              /* wypełnia komórkę siatki */
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(203,178,255,.35);  /* JEDNA ramka: delikatny fiolet */
-  border-radius:16px;
-  padding:12px 12px 14px;
-  text-align:center;
+  padding:12px 12px 10px;
+  border-radius:18px;
+  background: var(--tile-bg);  /* ciemny fiolet tło */
+  border:none;                 /* bez jasnej obwódki */
   text-decoration:none;
-  color:#cfe6ff;
-  box-shadow:0 6px 22px rgba(0,0,0,.25);
-  transition:transform .18s, box-shadow .25s, border-color .25s;
+  transition: transform .18s ease, box-shadow .22s ease;
 }
 .card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 12px 30px rgba(0,0,0,.35);
-  border-color:rgba(203,178,255,.6);
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 22px var(--tile-glow),
+    0 12px 28px var(--tile-shadow);   /* glow */
 }
-
-/* Obraz w kafelku — stałe proporcje i równa wysokość */
 .card img{
   width:100%;
-  aspect-ratio: 4 / 3;      /* równe kafelki niezależnie od pliku */
-  height:auto;
+  aspect-ratio: 4 / 3;
   object-fit:cover;
-  border-radius:12px;
+  border-radius:14px;
   display:block;
-  margin-bottom:10px;
+  pointer-events:none;
 }
-
-/* Podpis przycisku/kafelka na dole */
 .card span{
-  margin-top:auto;          /* zepchnij na dół */
   display:block;
-  font-weight:700;
-  color:#79b8ff;
+  width:100%;
+  text-align:center;
+  margin-top:10px;
+  padding:7px 8px 8px;
+  border-radius:10px;
+  font-weight:600;
+  color:#7fc1ff;               /* podpisy jak było */
+  background: rgba(0,0,0,.18);
 }
 
-/* --- Strona szczegółów --- */
-.details-wrap{
+/* --- Strona główna: dwie karty wyboru --- */
+.gender-choice,
+.hero-cards{
   display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
-  gap:18px;
-  margin-top:16px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap:24px;
+}
+.gender-choice label,
+.hero-cards label{
+  display:block;
+  padding:12px 12px 10px;
+  border-radius:18px;
+  background: var(--tile-bg);
+  border:none;
+  cursor:pointer;
+  transition: transform .18s ease, box-shadow .22s ease;
+}
+.gender-choice label:hover,
+.hero-cards label:hover{
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 22px var(--tile-glow),
+    0 12px 28px var(--tile-shadow);
+}
+.gender-choice img,
+.hero-cards img{
+  width:100%;
+  aspect-ratio: 4 / 3;
+  object-fit:cover;
+  border-radius:14px;
+  display:block;
+}
+
+/* ukryte radio na index.html (jeśli są) */
+.gender-choice input[type="radio"],
+.hero-cards input[type="radio"]{ display:none }
+
+/* --- Sekcje „Szczegóły” (karty z listami) — zostawiamy jak było --- */
+.info-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap:20px;
+  margin-top:18px;
 }
 .info-box{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(203,178,255,.25); /* spójna ramka */
-  border-radius:16px;
-  padding:14px 16px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  padding:16px 16px 12px;
 }
 .info-box h3{
-  color:#b7caff;
-  margin-bottom:8px;
+  margin:0 0 10px;
   font-size:18px;
+  color:#eaf0ff;
 }
-.info-box ul{ padding-left:18px; margin-top:6px; }
-.info-box li{ margin:6px 0; }
+.info-box ul{
+  margin:0; padding-left:18px;
+  color: var(--muted);
+}
+.info-box--danger{
+  background: rgba(255,70,70,.06);
+  border-color: rgba(255,90,90,.25);
+}
+.info-box--danger h3{ color:#ffd1d1 }
 
-/* Alarm */
-.alert{
-  background:rgba(255,70,70,.08);
-  border-color:rgba(255,90,90,.28);
+/* --- Przyciski powrotu w wersji „chip” (jeśli użyte) --- */
+.btn-chip{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  background: rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  color:#dfe6fb; text-decoration:none;
+  transition: background .2s ease, box-shadow .2s ease;
+}
+.btn-chip:hover{
+  background: rgba(255,255,255,.1);
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
 }
 
 /* --- Stopka --- */
-footer{
-  opacity:.8;
-  font-size:13px;
+.footer{
+  margin:28px 0 0;
+  color:#9aa4bb;
+  font-size:14px;
   text-align:center;
-  margin:36px 0 14px;
 }
 
-/* ==============================
-   Strona główna — glow pod kafelkami
-   ============================== */
-body[data-page="index"] .gender-choice{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
-  gap:26px;
-  justify-items:center;
-  margin-top:8px;
-}
-body[data-page="index"] .gender-choice label{
-  display:inline-block;
-  background:rgba(120,90,200,.18);
-  border:1px solid rgba(203,178,255,.35); /* ta sama ramka co karty */
-  border-radius:18px;
-  padding:12px 14px 10px;
-  box-shadow:0 0 14px rgba(180,140,255,.40);
-  transition:transform .2s, box-shadow .3s;
-  cursor:pointer;
-}
-body[data-page="index"] .gender-choice label:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 20px rgba(200,160,255,.65);
-}
-body[data-page="index"] .gender-choice input[type="radio"]{ display:none; }
-body[data-page="index"] .gender-choice img{
-  width:320px; max-width:90vw;
-  aspect-ratio: 4 / 5;      /* stała proporcja zdjęć na stronie głównej */
-  height:auto; object-fit:cover; border-radius:12px; display:block;
-}
-
-/* ==============================
-   Przycisk 112 (jeśli używasz)
-   ============================== */
-.emergency-btn{
-  position:fixed; bottom:20px; right:20px;
-  background:#e60019; color:#fff; font-weight:800;
-  padding:12px 18px; border-radius:12px; text-decoration:none;
-  box-shadow:0 8px 18px rgba(0,0,0,.35);
-  transition:background .25s, transform .18s; z-index:999;
-}
-.emergency-btn:hover{ background:#b80014; transform:scale(1.05); }
-
-/* --- Responsywność --- */
-@media (max-width: 640px){
-  .grid{ gap:18px; }
-  .card{ padding:10px 10px 12px; }
-  body[data-page="index"] .gender-choice img{ width:270px; }
-}
-/* === Efekt glow z ciemniejszym fioletem (powrót do poprzedniej wersji) === */
-
-/* Kafelki na podstronach */
-.card {
-  background: rgba(110, 85, 200, 0.16); /* ciemniejszy transparentny fiolet */
-  border: 1px solid rgba(178,138,255,0.6);
-  transition: transform .18s ease, box-shadow .22s ease, border-color .22s ease;
-}
-.card:hover {
-  transform: translateY(-3px);
-  border-color: #8e6aff;
-  box-shadow:
-    0 0 0 1px #8e6aff inset,
-    0 0 22px rgba(178,138,255,0.55),
-    0 12px 28px rgba(0,0,0,.45);
-}
-
-/* Strona główna – jeśli masz gender-choice */
-.gender-choice label {
-  background: rgba(110, 85, 200, 0.16);
-  border: 1px solid rgba(178,138,255,0.6);
-  transition: transform .18s ease, box-shadow .22s ease, border-color .22s ease;
-}
-.gender-choice label:hover {
-  transform: translateY(-3px);
-  border-color: #8e6aff;
-  box-shadow:
-    0 0 0 1px #8e6aff inset,
-    0 0 22px rgba(178,138,255,0.55),
-    0 12px 28px rgba(0,0,0,.45);
-}
-
-/* Strona główna – jeśli masz hero-cards */
-.hero-cards label {
-  background: rgba(110, 85, 200, 0.16);
-  border: 1px solid rgba(178,138,255,0.6);
-  transition: transform .18s ease, box-shadow .22s ease, border-color .22s ease;
-}
-.hero-cards label:hover {
-  transform: translateY(-3px);
-  border-color: #8e6aff;
-  box-shadow:
-    0 0 0 1px #8e6aff inset,
-    0 0 22px rgba(178,138,255,0.55),
-    0 12px 28px rgba(0,0,0,.45);
+/* --- Responsywność drobna --- */
+@media (max-width: 560px){
+  .container{ width: 94vw; margin: 28px auto 56px; }
+  .grid{ gap:16px; }
+  .gender-choice, .hero-cards{ gap:16px }
+  .card{ padding:10px }
 }
