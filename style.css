@@ -1,8 +1,7 @@
 /* =========================
-   Iminpain — style.css (UNIFIKACJA RAMEK + RÓWNE KAFELKI)
+   Iminpain — style.css (subtelne ramki + miękki glow)
    ========================= */
 
-/* --- Reset & bazowe --- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
 body {
@@ -12,7 +11,6 @@ body {
   line-height: 1.45;
 }
 
-/* Kontener centralny */
 .container {
   max-width: 1100px;
   margin: 32px auto 40px;
@@ -24,7 +22,7 @@ h1{
   font-size: clamp(28px, 4vw, 42px);
   font-weight: 800;
   letter-spacing: .3px;
-  color:#cbb2ff;                /* jasny fiolet tylko dla H1 */
+  color:#cbb2ff;
   text-shadow: 0 2px 18px rgba(180,140,255,.25);
   margin:18px 0 12px;
   text-align:center;
@@ -39,11 +37,7 @@ h2{
 }
 
 /* --- Linki powrotu --- */
-.nav-links{
-  max-width:1100px;
-  margin:16px auto 10px;
-  padding:0 16px;
-}
+.nav-links{ max-width:1100px; margin:16px auto 10px; padding:0 16px; }
 .back-link{
   color:#8ec9ff;
   text-decoration:none;
@@ -58,50 +52,47 @@ h2{
   transform:translateY(-1px);
 }
 
-/* --- Siatka kafelków (jednolite układanie) --- */
+/* --- Siatka kafelków --- */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
   gap:22px;
-  align-items:stretch;      /* wszystkie elementy równają wysokością */
+  align-items:stretch;
 }
 
-/* --- Kafelek (UNIFIKACJA RAMEK) --- */
+/* --- Kafelek --- */
 .card{
-  display:flex;             /* pozwala wyrównać podpis do dołu */
+  display:flex;
   flex-direction:column;
   justify-content:flex-start;
-  height:100%;              /* wypełnia komórkę siatki */
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(203,178,255,.35);  /* JEDNA ramka: delikatny fiolet */
-  border-radius:16px;
-  padding:12px 12px 14px;
+  height:100%;
+  background:rgba(255,255,255,.02);
+  border:0.5px solid rgba(110,70,180,.4);   /* cieńsza ramka */
+  border-radius:14px;
+  padding:12px;
   text-align:center;
   text-decoration:none;
   color:#cfe6ff;
-  box-shadow:0 6px 22px rgba(0,0,0,.25);
+  box-shadow:0 4px 14px rgba(0,0,0,.25);
   transition:transform .18s, box-shadow .25s, border-color .25s;
 }
 .card:hover{
   transform:translateY(-4px);
-  box-shadow:0 12px 30px rgba(0,0,0,.35);
-  border-color:rgba(203,178,255,.6);
+  box-shadow:0 0 30px 8px rgba(160,120,255,.35); /* miękki glow */
+  border-color:rgba(180,140,255,.7);
 }
 
-/* Obraz w kafelku — stałe proporcje i równa wysokość */
 .card img{
   width:100%;
-  aspect-ratio: 4 / 3;      /* równe kafelki niezależnie od pliku */
+  aspect-ratio: 4 / 3;
   height:auto;
   object-fit:cover;
-  border-radius:12px;
+  border-radius:10px;
   display:block;
   margin-bottom:10px;
 }
-
-/* Podpis przycisku/kafelka na dole */
 .card span{
-  margin-top:auto;          /* zepchnij na dół */
+  margin-top:auto;
   display:block;
   font-weight:700;
   color:#79b8ff;
@@ -115,36 +106,28 @@ h2{
   margin-top:16px;
 }
 .info-box{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(203,178,255,.25); /* spójna ramka */
-  border-radius:16px;
+  background:rgba(255,255,255,.03);
+  border:0.5px solid rgba(110,70,180,.4);
+  border-radius:14px;
   padding:14px 16px;
+  transition:box-shadow .3s, border-color .3s;
 }
-.info-box h3{
-  color:#b7caff;
-  margin-bottom:8px;
-  font-size:18px;
+.info-box:hover{
+  box-shadow:0 0 26px 6px rgba(160,120,255,.3); /* miękki glow */
+  border-color:rgba(180,140,255,.7);
 }
+.info-box h3{ color:#b7caff; margin-bottom:8px; font-size:18px; }
 .info-box ul{ padding-left:18px; margin-top:6px; }
 .info-box li{ margin:6px 0; }
 
-/* Alarm */
 .alert{
   background:rgba(255,70,70,.08);
   border-color:rgba(255,90,90,.28);
 }
 
-/* --- Stopka --- */
-footer{
-  opacity:.8;
-  font-size:13px;
-  text-align:center;
-  margin:36px 0 14px;
-}
+footer{ opacity:.8; font-size:13px; text-align:center; margin:36px 0 14px; }
 
-/* ==============================
-   Strona główna — glow pod kafelkami
-   ============================== */
+/* --- Strona główna --- */
 body[data-page="index"] .gender-choice{
   display:grid;
   grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
@@ -154,40 +137,38 @@ body[data-page="index"] .gender-choice{
 }
 body[data-page="index"] .gender-choice label{
   display:inline-block;
-  background:rgba(120,90,200,.18);
-  border:1px solid rgba(203,178,255,.35); /* ta sama ramka co karty */
-  border-radius:18px;
-  padding:12px 14px 10px;
-  box-shadow:0 0 14px rgba(180,140,255,.40);
-  transition:transform .2s, box-shadow .3s;
+  background:rgba(120,90,200,.12);
+  border:0.5px solid rgba(110,70,180,.4);
+  border-radius:14px;
+  padding:12px;
+  box-shadow:0 0 12px rgba(180,140,255,.2);
+  transition:transform .2s, box-shadow .3s, border-color .3s;
   cursor:pointer;
 }
 body[data-page="index"] .gender-choice label:hover{
   transform:translateY(-3px);
-  box-shadow:0 0 20px rgba(200,160,255,.65);
+  box-shadow:0 0 28px 10px rgba(180,140,255,.4);
+  border-color:rgba(180,140,255,.7);
 }
 body[data-page="index"] .gender-choice input[type="radio"]{ display:none; }
 body[data-page="index"] .gender-choice img{
   width:320px; max-width:90vw;
-  aspect-ratio: 4 / 5;      /* stała proporcja zdjęć na stronie głównej */
-  height:auto; object-fit:cover; border-radius:12px; display:block;
+  aspect-ratio: 4 / 5;
+  height:auto; object-fit:cover; border-radius:10px; display:block;
 }
 
-/* ==============================
-   Przycisk 112 (jeśli używasz)
-   ============================== */
+/* --- Przycisk 112 --- */
 .emergency-btn{
   position:fixed; bottom:20px; right:20px;
   background:#e60019; color:#fff; font-weight:800;
   padding:12px 18px; border-radius:12px; text-decoration:none;
-  box-shadow:0 8px 18px rgba(0,0,0,.35);
+  box-shadow:0 6px 16px rgba(0,0,0,.35);
   transition:background .25s, transform .18s; z-index:999;
 }
 .emergency-btn:hover{ background:#b80014; transform:scale(1.05); }
 
-/* --- Responsywność --- */
 @media (max-width: 640px){
   .grid{ gap:18px; }
-  .card{ padding:10px 10px 12px; }
+  .card{ padding:10px; }
   body[data-page="index"] .gender-choice img{ width:270px; }
 }
