@@ -2,32 +2,50 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Kobieta — wybór sekcji</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kobieta — Wybierz obszar bólu</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body data-page="kobieta">
-  <!-- 🔹 Pasek nawigacyjny -->
-  <div class="nav-links">
-    <a href="index.html" class="back-link">← Strona główna</a>
-  </div>
+  <header>
+    <nav>
+      <a href="index.html" class="back-link">← Powrót do startu</a> | 
+      <a href="index.html" class="back-link">Strona główna</a>
+    </nav>
+  </header>
 
-  <h1>Kobieta — wybierz część ciała</h1>
+  <main>
+    <h1>Wybierz obszar bólu — Kobieta</h1>
 
-  <div class="grid">
-    <a href="kobieta-glowa.html" class="card">
-      <img src="img/kobieta-glowa.png" alt="Głowa i szyja">
-      <span>Głowa i szyja</span>
-    </a>
+    <div class="kobieta-tiles">
+      <!-- Pierwsze zdjęcie: kobieta-glowa.png -->
+      <div class="card">
+        <a href="kobieta-glowa.html">
+          <img src="img/kobieta-glowa.png?v=2" alt="Głowa i szyja">
+          <p>Głowa i szyja</p>
+        </a>
+      </div>
 
-    <a href="kobieta-klatka.html" class="card">
-      <img src="img/kobieta-klatka.png" alt="Klatka / Brzuch / Plecy">
-      <span>Klatka / Brzuch / Plecy</span>
-    </a>
+      <!-- Drugie zdjęcie -->
+      <div class="card">
+        <a href="kobieta-klatka.html">
+          <img src="img/kobieta-klatka.png" alt="Klatka / brzuch / plecy">
+          <p>Klatka / brzuch / plecy</p>
+        </a>
+      </div>
 
-    <a href="kobieta-nogi.html" class="card">
-      <img src="img/kobieta-biodra-nogi-stopy.png" alt="Biodra / Nogi / Stopy">
-      <span>Biodra / Nogi / Stopy</span>
-    </a>
-  </div>
+      <!-- Trzecie zdjęcie -->
+      <div class="card">
+        <a href="kobieta-nogi.html">
+          <img src="img/kobieta-nogi.png" alt="Biodra / nogi / stopy">
+          <p>Biodra / nogi / stopy</p>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
+  </footer>
 </body>
 </html>

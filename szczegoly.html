@@ -1,41 +1,153 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Szczegóły bólu</title>
-  <link rel="stylesheet" href="style.css">
-  <script>
-    // wybieramy poprawny link "Wróć do wyboru sekcji"
-    function setBackLink() {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get("id");
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Szczegóły</title>
 
-      let backTo = "index.html"; // domyślnie do głównej
-      if (id && id.endsWith("_k")) {
-        backTo = "kobieta.html";
-      } else if (id && id.endsWith("_m")) {
-        backTo = "mezczyzna.html";
-      }
+  <!-- korzysta z Twojego globalnego stylu -->
+  <link rel="stylesheet" href="style.css" />
 
-      document.getElementById("section-back").href = backTo;
-    }
-
-    window.onload = setBackLink;
-  </script>
+  <style>
+    /* Delikatne style pomocnicze (nie kolidują z Twoim CSS) */
+    .details-wrap { max-width: 1100px; margin: 40px auto 80px; padding: 0 16px; }
+    .details-header h1 { margin: 0 0 8px; }
+    .badge { display:inline-block; padding:4px 10px; border-radius:999px; background:#0b5; color:#fff; font-weight:600; font-size:.85rem; }
+    .cards { display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 24px; }
+    .card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px 18px; }
+    .card h3 { margin: 0 0 10px; font-size: 1.05rem; }
+    .card ul { margin: 0; padding-left: 18px; }
+    .muted { opacity: .8; }
+    .notice { background: rgba(255,60,60,.1); border:1px solid rgba(255,60,60,.35); padding:14px 16px; border-radius:12px; }
+    .backline { margin: 16px 0 8px; }
+    .backline a { color: #68a7ff; text-decoration: none; }
+    .backline a:hover { text-decoration: underline; }
+    .footer-note { margin-top: 28px; font-size: .9rem; }
+  </style>
 </head>
 <body>
-  <div class="nav-links">
-    <a href="index.html" class="back-link">← Strona główna</a>
-    <a id="section-back" href="#" class="back-link">← Wróć do wyboru sekcji</a>
+
+  <div class="details-wrap">
+    <div class="backline">
+      <a href="index.html">← Strona główna</a>
+    </div>
+
+    <div class="details-header">
+      <span class="badge" id="sexBadge" aria-hidden="true" style="display:none"></span>
+      <h1 id="titleH1">Szczegóły</h1>
+      <p class="muted" id="descP"></p>
+    </div>
+
+    <div class="cards">
+      <section class="card">
+        <h3>Możliwe przyczyny bólu</h3>
+        <ul id="causesList"></ul>
+      </section>
+
+      <section class="card">
+        <h3>Typowe objawy</h3>
+        <ul id="symptomsList"></ul>
+      </section>
+
+      <section class="card">
+        <h3>Do jakiego lekarza?</h3>
+        <ul id="doctorsList"></ul>
+      </section>
+
+      <section class="card">
+        <h3>Leki / środki łagodzące</h3>
+        <ul id="medsList"></ul>
+      </section>
+
+      <section class="card">
+        <h3>Pierwsza pomoc (domowe)</h3>
+        <ul id="firstAidList"></ul>
+      </section>
+
+      <section class="card notice">
+        <h3>Natychmiastowa pomoc — dzwoń po 112/999, gdy:</h3>
+        <ul id="emergencyList"></ul>
+      </section>
+    </div>
+
+    <p class="footer-note muted">© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
   </div>
 
-  <h1 id="condition-name">Ładowanie...</h1>
-  <div id="condition-content"></div>
+  <script>
+    // Pomocnicza funkcja do tworzenia <li>
+    function fillList(listEl, arr) {
+      listEl.innerHTML = '';
+      if (!arr || !arr.length) {
+        const li = document.createElement('li');
+        li.textContent = '—';
+        listEl.appendChild(li);
+        return;
+      }
+      arr.forEach(txt => {
+        const li = document.createElement('li');
+        li.textContent = txt;
+        listEl.appendChild(li);
+      });
+    }
 
-  <footer>
-    <p>© 2025 Iminpain — Informacje poglądowe, nie zastępują konsultacji z lekarzem.</p>
-  </footer>
+    // Odczytaj parametr ?id=...
+    const params = new URLSearchParams(location.search);
+    const itemId = params.get('id');
 
-  <script src="script.js"></script>
+    // KLUCZOWA ZMIANA: plik jest w folderze /data
+    fetch('data/conditions.json')
+      .then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(db => {
+        if (!itemId || !db[itemId]) {
+          document.querySelector('.details-wrap').innerHTML = `
+            <div class="backline"><a href="index.html">← Strona główna</a></div>
+            <h1>Błąd wczytywania danych</h1>
+            <p class="muted">Nie znaleziono pozycji o id: <code>${itemId || '(brak)'}</code>.</p>
+          `;
+          return;
+        }
+
+        const d = db[itemId];
+
+        // Nagłówek
+        const h1 = document.getElementById('titleH1');
+        const desc = document.getElementById('descP');
+        h1.textContent = d.title || 'Szczegóły';
+        desc.textContent = d.description || '';
+
+        // Odznaka płci (opcjonalnie, jeśli w tytule jest „(Kobieta)” / „(Mężczyzna)”)
+        const sexBadge = document.getElementById('sexBadge');
+        if (/\(Kobieta\)/i.test(d.title || '')) {
+          sexBadge.textContent = 'Kobieta';
+          sexBadge.style.display = 'inline-block';
+        } else if (/\(Mężczyzna\)/i.test(d.title || '')) {
+          sexBadge.textContent = 'Mężczyzna';
+          sexBadge.style.display = 'inline-block';
+        }
+
+        // Listy
+        fillList(document.getElementById('causesList'), d.causes);
+        fillList(document.getElementById('symptomsList'), d.symptoms);
+        fillList(document.getElementById('doctorsList'), d.doctors);
+        fillList(document.getElementById('medsList'), d.medications);
+
+        // first_aid może być stringiem albo tablicą
+        const fa = Array.isArray(d.first_aid) ? d.first_aid : (d.first_aid ? [d.first_aid] : []);
+        fillList(document.getElementById('firstAidList'), fa);
+
+        fillList(document.getElementById('emergencyList'), d.emergency);
+      })
+      .catch(err => {
+        console.error(err);
+        document.querySelector('.details-wrap').innerHTML = `
+          <div class="backline"><a href="index.html">← Strona główna</a></div>
+          <h1>Błąd wczytywania danych</h1>
+          <p class="muted">Szczegóły techniczne: ${err.message}</p>
+        `;
+      });
+  </script>
 </body>
 </html>
