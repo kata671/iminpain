@@ -109,3 +109,25 @@ body::before{
   .card img{ max-width: 260px; border-radius: 16px; }
   .card span{ font-size: 1.05rem; }
 }
+/* =======================
+   Szczegóły (szczegoly.html)
+======================= */
+
+.cards {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  max-width: 1200px;
+  margin: 28px auto;
+  justify-items: center;
+  align-items: start;
+}
+
+.card {
+  width: 100%;
+  max-width: 360px;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 16px;
+  padding: 16px;
+  background: rgba(18, 26, 56, .75);
+}
