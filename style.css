@@ -245,3 +245,14 @@ body[data-page="index"] .gender-choice img{
   .grid{ grid-template-columns: 1fr; }
   .card{ width: 100%; }
 }
+/* Układ 4 kafelki w pierwszym rzędzie + 5-ty wyśrodkowany poniżej */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 kolumny */
+  gap: 20px; /* odstępy między kafelkami */
+  justify-items: center; /* elementy wyśrodkowane w kolumnach */
+}
+
+.cards .card:nth-child(5) {
+  grid-column: 2 / span 2; /* 5-ty kafelek będzie w 2 i 3 kolumnie */
+}
