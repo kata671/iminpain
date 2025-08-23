@@ -280,3 +280,55 @@ body[data-page="index"] .gender-choice img{
   width: 100%;
   max-width: 280px;         /* nie poszerzaj ponad naturalny rozmiar */
 }
+* === WYGLĄD KAFELKÓW === */
+.card {
+  position: relative;
+  background: rgba(60, 30, 90, 0.22);             /* ciemny fiolet, transparent */
+  border: 1px solid rgba(170, 140, 255, 0.18);    /* prawie przezroczysta ramka */
+  border-radius: 14px;
+  box-shadow:
+    0 2px 8px rgba(0,0,0,.25),
+    0 0 0 1px rgba(170,140,255,0.08) inset;
+  transition: transform .18s ease,
+              box-shadow .18s ease,
+              border-color .18s ease,
+              background-color .18s ease;
+}
+.card:hover {
+  border-color: rgba(190, 170, 255, 0.55);
+  background: rgba(60, 30, 90, 0.32);
+  box-shadow:
+    0 4px 16px rgba(0,0,0,.35),
+    0 0 20px rgba(150,120,255,.45);               /* efekt glow */
+  transform: translateY(-2px);
+}
+.card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* === STRONA GŁÓWNA: dwa kafelki obok siebie === */
+.gender-choice {
+  display: flex;
+  justify-content: center;
+  gap: 40px;       /* odstęp między kafelkami */
+  flex-wrap: nowrap;
+}
+.gender-choice .card {
+  max-width: 300px;   /* szerokość kafelka na głównej */
+  flex: 1;
+}
+
+/* === PODSTRONY: 4 kafelki w rzędzie === */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);   /* zawsze 4 w rzędzie */
+  gap: 24px;
+  justify-items: center;
+}
+.grid .card {
+  width: 100%;
+  max-width: 240px;   /* kafelki nie za szerokie */
+}
