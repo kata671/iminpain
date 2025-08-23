@@ -9,29 +9,40 @@
   .nav-links { margin: 10px 0; }
   .back-link { color:#6cf; text-decoration:none; margin-right:12px; }
 
-  /* --- Ustawienie kafelków 3x3 --- */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* dokładnie 3 kolumny */
-    gap: 24px;                             /* odstępy między kafelkami */
-    max-width: 1200px;
-    margin: 28px auto;
-    justify-items: center;                 /* kafelki wyśrodkowane w kolumnach */
+  /* ===== KAFELKI: 3 w rzędzie, wyśrodkowane ===== */
+  .cards{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr); /* ZAWSZE 3 kolumny */
+    gap:24px;
+    max-width:1200px;                      /* szerokość całej sekcji */
+    margin:28px auto;                      /* wyśrodkuj pod tytułem */
+    justify-items:center;                  /* karty na środku kolumn */
+    align-items:start;
   }
 
-  .card {
-    width: 100%;
-    max-width: 340px;                      /* wszystkie równe szerokości */
-    border: 1px solid rgba(255,255,255,.25);
-    border-radius: 16px;
-    padding: 16px;
-    background: rgba(18,26,56,.75);
+  /* pojedyncza karta – przywrócone fioletowe tło */
+  .card{
+    width:100%;
+    max-width:340px;                       /* wszystkie jednakowe */
+    background: rgba(34, 42, 90, .85);     /* FIOLETOWE TŁO (jak wcześniej) */
+    border:2px solid #5463b5;              /* fioletowa obwódka */
+    border-radius:16px;
+    padding:16px;
+    box-shadow:0 6px 16px rgba(0,0,0,.25);
   }
 
   .card h3 { margin:0 0 8px; }
   .error { color:#f99b9b; margin-top:20px; font-size:18px; }
-  ul { margin:0; padding-left: 18px; }
+  ul { margin:0; padding-left:18px; }
   .pill { display:inline-block; height:10px; width:80px; border-radius:20px; background:#6cf; }
+
+  /* (opcjonalnie) responsywność — na wąskich ekranach 2 w rzędzie */
+  @media (max-width: 980px){
+    .cards{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px){
+    .cards{ grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
