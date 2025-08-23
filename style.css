@@ -219,3 +219,10 @@ body[data-page="index"] .gender-choice img{
     0 0 22px rgba(150, 120, 255, 0.9) !important;
   transform: translateY(-3px) !important; /* lekki “lift” */
 }
+/* === Układ kafelków: max 4 w rzędzie === */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;              /* odstęp między kafelkami */
+  justify-content: center;
+}
