@@ -282,3 +282,18 @@ body[data-page="index"] .gender-choice img{
   gap: 20px;
   justify-items: center; /* wyrównanie do środka */
 }
+/* --- Tapeta tła dla wszystkich stron --- */
+body {
+  background-color: #1c1c1c; /* ciemnoszare tło */
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1; /* pod całą treścią */
+  background-image: radial-gradient(#2a2a2a 1px, transparent 1px);
+  background-size: 20px 20px; /* odstęp między kropkami */
+  opacity: 0.9;
+}
