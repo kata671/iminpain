@@ -191,3 +191,49 @@ body[data-page="index"] .gender-choice img{
   .card{ padding:10px 10px 12px; }
   body[data-page="index"] .gender-choice img{ width:270px; }
 }
+/* === Efekt glow z ciemniejszym fioletem (powrót do poprzedniej wersji) === */
+
+/* Kafelki na podstronach */
+.card {
+  background: rgba(110, 85, 200, 0.16); /* ciemniejszy transparentny fiolet */
+  border: 1px solid rgba(178,138,255,0.6);
+  transition: transform .18s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: #8e6aff;
+  box-shadow:
+    0 0 0 1px #8e6aff inset,
+    0 0 22px rgba(178,138,255,0.55),
+    0 12px 28px rgba(0,0,0,.45);
+}
+
+/* Strona główna – jeśli masz gender-choice */
+.gender-choice label {
+  background: rgba(110, 85, 200, 0.16);
+  border: 1px solid rgba(178,138,255,0.6);
+  transition: transform .18s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.gender-choice label:hover {
+  transform: translateY(-3px);
+  border-color: #8e6aff;
+  box-shadow:
+    0 0 0 1px #8e6aff inset,
+    0 0 22px rgba(178,138,255,0.55),
+    0 12px 28px rgba(0,0,0,.45);
+}
+
+/* Strona główna – jeśli masz hero-cards */
+.hero-cards label {
+  background: rgba(110, 85, 200, 0.16);
+  border: 1px solid rgba(178,138,255,0.6);
+  transition: transform .18s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.hero-cards label:hover {
+  transform: translateY(-3px);
+  border-color: #8e6aff;
+  box-shadow:
+    0 0 0 1px #8e6aff inset,
+    0 0 22px rgba(178,138,255,0.55),
+    0 12px 28px rgba(0,0,0,.45);
+}
