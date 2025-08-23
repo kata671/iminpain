@@ -634,3 +634,16 @@ Wysłano
 h1 {
   color: #d8b4fe; /* jasno fioletowy */
 }
+/* Styl tylko dla kart na stronie głównej */
+body[data-page="index"] .card {
+  background: rgba(255, 255, 255, 0.05); /* lekkie półprzezroczyste tło */
+  border: 2px solid #a78bfa;             /* jasno-fioletowa ramka */
+  border-radius: 15px;                   /* zaokrąglenie rogów */
+  padding: 10px;                         /* odstęp od krawędzi */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body[data-page="index"] .card:hover {
+  transform: scale(1.05); /* delikatne powiększenie przy najechaniu */
+  box-shadow: 0 0 15px rgba(167, 139, 250, 0.6); /* fioletowa poświata */
+}
