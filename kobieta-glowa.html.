@@ -7,8 +7,8 @@
 </head>
 <body data-page="kobieta">
   <div class="nav-links">
-    <a href="index.html" class="back-link">← Strona główna</a>
-    <a href="kobieta.html" class="back-link">← Wróć do wyboru sekcji</a>
+    <a href="index.html" class="back-link">⬅ Strona główna</a>
+    <a href="kobieta.html" class="back-link">⬅ Wróć do wyboru sekcji</a>
   </div>
 
   <h1>Kobieta — Głowa i szyja</h1>
@@ -34,9 +34,5 @@
       <span>Szyja / Kark</span>
     </a>
   </div>
-
-  <footer>
-    <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
-  </footer>
 </body>
 </html>
