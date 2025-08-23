@@ -191,3 +191,14 @@ body[data-page="index"] .gender-choice img{
   .card{ padding:10px 10px 12px; }
   body[data-page="index"] .gender-choice img{ width:270px; }
 }
+.grid {
+  display: flex;
+  justify-content: center; /* wyśrodkowanie w poziomie */
+  gap: 40px;               /* odstęp między kafelkami */
+  flex-wrap: wrap;         /* żeby na telefonach się ładnie zawijało */
+  margin-top: 40px;
+}
+
+.card {
+  text-align: center;      /* podpis pod obrazkiem na środku */
+}
