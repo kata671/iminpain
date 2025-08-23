@@ -340,3 +340,27 @@ body::before {
   background-position: 60px 60px;
   filter: drop-shadow(0 0 8px rgba(147, 112, 219, 0.5));
   opacity: 0.9;
+body {
+  background: #111; /* głębokie ciemnoszare tło */
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+
+  background-image: radial-gradient(
+      circle at center,
+      rgba(186, 85, 211, 0.4) 0%,   /* jaśniejszy fioletowy środek */
+      rgba(138, 43, 226, 0.2) 35%,  /* półtransparentny fiolet */
+      transparent 70%               /* płynne przejście */
+  );
+
+  background-size: 140px 140px; /* większy odstęp kropli */
+  background-position: 40px 40px;
+  filter: drop-shadow(0 0 6px rgba(186, 85, 211, 0.4));
+  opacity: 0.8;
+}
