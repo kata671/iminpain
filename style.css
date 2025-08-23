@@ -297,3 +297,23 @@ body::before {
   background-size: 20px 20px; /* odstęp między kropkami */
   opacity: 0.9;
 }
+/* --- Tapeta tła w stylu eleganckich kropelek --- */
+body {
+  background-color: #1a1a1a; /* głębokie ciemnoszare tło */
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1; /* zawsze pod całą treścią */
+
+  /* Kropelki — większe, rzadsze */
+  background-image: radial-gradient(rgba(128, 0, 128, 0.25) 3px, transparent 3px);
+  background-size: 40px 40px; /* większy odstęp między kropkami */
+
+  /* Delikatny efekt "deszczu" */
+  filter: drop-shadow(0 0 2px rgba(128, 0, 128, 0.4));
+  opacity: 0.9;
+}
