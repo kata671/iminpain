@@ -1,214 +1,193 @@
-/* =========================================
-   Iminpain — global styles (bezpieczna wersja)
-   ========================================= */
+/* =========================
+   Iminpain — style.css (UNIFIKACJA RAMEK + RÓWNE KAFELKI)
+   ========================= */
 
-/* Kolory i zmienne */
-:root{
-  --bg: #0b0f17;
-  --text: #e8f0ff;
-  --muted: #9bb0d0;
-
-  /* fiolet (trochę ciemniejszy) */
-  --accent: #b28aff;                 /* nagłówki */
-  --accent-strong: #8e6aff;          /* obwódki/hover */
-  --card-bg: rgba(110, 85, 200, 0.16);/* tło kart (transparent) */
-  --card-border: rgba(178,138,255,0.6);
-  --card-shadow: 0 0 0 1px var(--card-border) inset,
-                 0 10px 20px rgba(0,0,0,.35);
-  --card-glow: 0 0 0 1px var(--accent-strong) inset,
-               0 0 22px rgba(178,138,255,.55),
-               0 12px 28px rgba(0,0,0,.45);
+/* --- Reset & bazowe --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #e9f0ff;
+  background: #0f1117 radial-gradient(#1d2030 1px, transparent 1px) 0 0 / 12px 12px;
+  line-height: 1.45;
 }
 
-/* Reset / bazowe */
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-  background:
-    radial-gradient(1px 1px at 12px 12px, rgba(255,255,255,.06) 0 1px, transparent 1px) repeat,
-    var(--bg);
-  background-size: 24px 24px;
-  color: var(--text);
-  line-height:1.5;
-}
-
-/* Kontener stron */
-.container{
+/* Kontener centralny */
+.container {
   max-width: 1100px;
-  margin: 0 auto;
-  padding: 24px 18px 40px;
+  margin: 32px auto 40px;
+  padding: 0 16px;
 }
 
-/* Linki nawigacyjne (u góry) */
-.nav-links{
-  margin: 6px 0 12px;
-  display:flex; gap:10px; flex-wrap:wrap;
-  font-size: 14px;
-}
-.back-link{
-  color: var(--accent);
-  text-decoration:none;
-  padding:6px 10px;
-  border-radius:10px;
-  background: rgba(178,138,255,.12);
-  border: 1px solid rgba(178,138,255,.35);
-}
-.back-link:hover{ filter:brightness(1.08) }
-
-/* Nagłówki – TYLKO główne kolorem */
+/* --- Nagłówki --- */
 h1{
-  font-size: clamp(28px, 5vw, 42px);
-  line-height:1.15;
-  margin: 8px 0 8px;
-  color: var(--accent);
-  text-shadow: 0 1px 0 rgba(0,0,0,.5);
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  letter-spacing: .3px;
+  color:#cbb2ff;                /* jasny fiolet tylko dla H1 */
+  text-shadow: 0 2px 18px rgba(180,140,255,.25);
+  margin:18px 0 12px;
+  text-align:center;
 }
 h2{
-  font-size: clamp(18px, 2.6vw, 22px);
-  margin: 0 0 18px;
-  color: var(--text); /* reszta bez zmian */
+  font-size: clamp(18px, 2.4vw, 26px);
+  font-weight:700;
+  color:#e9f0ff;
   opacity:.9;
+  margin:6px 0 22px;
+  text-align:center;
 }
 
-/* =========================================
-   GRID KAFELKÓW — równo i zgrabnie
-   ========================================= */
+/* --- Linki powrotu --- */
+.nav-links{
+  max-width:1100px;
+  margin:16px auto 10px;
+  padding:0 16px;
+}
+.back-link{
+  color:#8ec9ff;
+  text-decoration:none;
+  margin-right:12px;
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:10px;
+  transition:background .2s, transform .1s;
+}
+.back-link:hover{
+  background:rgba(142,201,255,.12);
+  transform:translateY(-1px);
+}
+
+/* --- Siatka kafelków (jednolite układanie) --- */
 .grid{
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* stała szerokość wizualna */
-  gap: 20px;
-  justify-items: center; /* wyśrodkowanie kafelków w kolumnie */
+  grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+  gap:22px;
+  align-items:stretch;      /* wszystkie elementy równają wysokością */
 }
 
-/* Kafelek (używany w <a class="card">) */
+/* --- Kafelek (UNIFIKACJA RAMEK) --- */
 .card{
-  width: 220px;               /* klucz do równych rzędów */
-  max-width: 100%;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  box-shadow: var(--card-shadow);
-  border-radius: 16px;
-  padding: 10px 10px 12px;
-  text-decoration: none;
-  color: var(--text);
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  display:flex;             /* pozwala wyrównać podpis do dołu */
+  flex-direction:column;
+  justify-content:flex-start;
+  height:100%;              /* wypełnia komórkę siatki */
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(203,178,255,.35);  /* JEDNA ramka: delikatny fiolet */
+  border-radius:16px;
+  padding:12px 12px 14px;
+  text-align:center;
+  text-decoration:none;
+  color:#cfe6ff;
+  box-shadow:0 6px 22px rgba(0,0,0,.25);
+  transition:transform .18s, box-shadow .25s, border-color .25s;
 }
 .card:hover{
-  transform: translateY(-3px);
-  border-color: var(--accent-strong);
-  box-shadow: var(--card-glow);
+  transform:translateY(-4px);
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  border-color:rgba(203,178,255,.6);
 }
 
-/* obraz w kafelku */
+/* Obraz w kafelku — stałe proporcje i równa wysokość */
 .card img{
-  display:block;
   width:100%;
+  aspect-ratio: 4 / 3;      /* równe kafelki niezależnie od pliku */
   height:auto;
-  border-radius: 12px;
-  margin-bottom: 8px;
-}
-
-/* podpis kafelka */
-.card span{
-  display:block;
-  text-align:center;
-  font-weight: 600;
-  font-size: 14px;
-  letter-spacing:.2px;
-  color:#9ec6ff; /* jak było – nie zmieniamy */
-}
-
-/* =========================================
-   STRONA GŁÓWNA – ramki dla dwóch obrazów
-   (działają, gdy index.html zawiera <div class="hero-cards"> ... )
-   ========================================= */
-.hero-cards{
-  margin-top: 12px;
-  display:flex; gap: 28px; flex-wrap:wrap;
-  justify-content:center;
-}
-.hero-cards label{
-  display:inline-block;
-  padding: 10px 10px 12px;
-  border-radius:16px;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  box-shadow: var(--card-shadow);
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-.hero-cards label:hover{
-  transform: translateY(-3px);
-  border-color: var(--accent-strong);
-  box-shadow: var(--card-glow);
-}
-.hero-cards img{
-  display:block;
-  width:min(360px, 36vw);
-  height:auto;
+  object-fit:cover;
   border-radius:12px;
+  display:block;
+  margin-bottom:10px;
 }
 
-/* Układ formularzowych wyborów (jeśli użyte) */
-.gender-choice{ display:none } /* ukrywamy, jeśli korzystasz z .hero-cards */
-
-/* =========================================
-   Panele „Szczegóły” (klocki z listami)
-   — delikatny wygląd, bez zmian funkcji
-   ========================================= */
-.panel{
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 14px;
-  padding: 16px;
-  box-shadow: 0 8px 18px rgba(0,0,0,.35);
+/* Podpis przycisku/kafelka na dole */
+.card span{
+  margin-top:auto;          /* zepchnij na dół */
+  display:block;
+  font-weight:700;
+  color:#79b8ff;
 }
 
-/* Drobne utility */
-.center{ text-align:center }
-.muted{ color: var(--muted) }
-/* ===== HOTFIX: przywrócenie strony głównej i uporządkowanie kafelków ===== */
+/* --- Strona szczegółów --- */
+.details-wrap{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  gap:18px;
+  margin-top:16px;
+}
+.info-box{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(203,178,255,.25); /* spójna ramka */
+  border-radius:16px;
+  padding:14px 16px;
+}
+.info-box h3{
+  color:#b7caff;
+  margin-bottom:8px;
+  font-size:18px;
+}
+.info-box ul{ padding-left:18px; margin-top:6px; }
+.info-box li{ margin:6px 0; }
 
-/* Strona główna – używasz .gender-choice (radio + label + img) */
-.gender-choice{
-  display: flex;
-  gap: 28px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 12px;
-}
-.gender-choice label{
-  display: inline-block;
-  padding: 10px 10px 12px;
-  border-radius: 16px;
-  background: rgba(110,85,200,0.16);               /* pół-transparentny fiolet */
-  border: 1px solid rgba(178,138,255,0.6);
-  box-shadow:
-    0 0 0 1px rgba(178,138,255,0.6) inset,
-    0 10px 20px rgba(0,0,0,.35);
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-.gender-choice label:hover{
-  transform: translateY(-3px);
-  border-color: #8e6aff;
-  box-shadow:
-    0 0 0 1px #8e6aff inset,
-    0 0 22px rgba(178,138,255,.55),
-    0 12px 28px rgba(0,0,0,.45);
-}
-.gender-choice img{
-  display: block;
-  width: min(360px, 36vw);
-  height: auto;
-  border-radius: 12px;
+/* Alarm */
+.alert{
+  background:rgba(255,70,70,.08);
+  border-color:rgba(255,90,90,.28);
 }
 
-/* Równe, zgrabne kafelki w siatkach */
-.grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-  justify-items: center;
+/* --- Stopka --- */
+footer{
+  opacity:.8;
+  font-size:13px;
+  text-align:center;
+  margin:36px 0 14px;
 }
-.card{ width: 220px; max-width: 100%; }
+
+/* ==============================
+   Strona główna — glow pod kafelkami
+   ============================== */
+body[data-page="index"] .gender-choice{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  gap:26px;
+  justify-items:center;
+  margin-top:8px;
+}
+body[data-page="index"] .gender-choice label{
+  display:inline-block;
+  background:rgba(120,90,200,.18);
+  border:1px solid rgba(203,178,255,.35); /* ta sama ramka co karty */
+  border-radius:18px;
+  padding:12px 14px 10px;
+  box-shadow:0 0 14px rgba(180,140,255,.40);
+  transition:transform .2s, box-shadow .3s;
+  cursor:pointer;
+}
+body[data-page="index"] .gender-choice label:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 20px rgba(200,160,255,.65);
+}
+body[data-page="index"] .gender-choice input[type="radio"]{ display:none; }
+body[data-page="index"] .gender-choice img{
+  width:320px; max-width:90vw;
+  aspect-ratio: 4 / 5;      /* stała proporcja zdjęć na stronie głównej */
+  height:auto; object-fit:cover; border-radius:12px; display:block;
+}
+
+/* ==============================
+   Przycisk 112 (jeśli używasz)
+   ============================== */
+.emergency-btn{
+  position:fixed; bottom:20px; right:20px;
+  background:#e60019; color:#fff; font-weight:800;
+  padding:12px 18px; border-radius:12px; text-decoration:none;
+  box-shadow:0 8px 18px rgba(0,0,0,.35);
+  transition:background .25s, transform .18s; z-index:999;
+}
+.emergency-btn:hover{ background:#b80014; transform:scale(1.05); }
+
+/* --- Responsywność --- */
+@media (max-width: 640px){
+  .grid{ gap:18px; }
+  .card{ padding:10px 10px 12px; }
+  body[data-page="index"] .gender-choice img{ width:270px; }
+}
