@@ -5,16 +5,34 @@
   <title>Szczegóły</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
-  <style>
-    .nav-links { margin: 10px 0; }
-    .back-link { color:#6cf; text-decoration:none; margin-right:12px; }
-    .cards { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); margin-top:24px; }
-    .card { border:1px solid rgba(255,255,255,.2); border-radius:14px; padding:16px; }
-    .card h3 { margin:0 0 8px; }
-    .error { color:#ff9b9b; margin-top:20px; font-size:18px; }
-    ul { margin: 0; padding-left: 18px; }
-    .pill { display:inline-block; height:10px; width:80px; border-radius:20px; background:#35d; box-shadow:0 0 0 4px rgba(53,93,221,.15) inset; }
-  </style>
+<style>
+  .nav-links { margin: 10px 0; }
+  .back-link { color:#6cf; text-decoration:none; margin-right:12px; }
+
+  /* --- Ustawienie kafelków 3x3 --- */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* dokładnie 3 kolumny */
+    gap: 24px;                             /* odstępy między kafelkami */
+    max-width: 1200px;
+    margin: 28px auto;
+    justify-items: center;                 /* kafelki wyśrodkowane w kolumnach */
+  }
+
+  .card {
+    width: 100%;
+    max-width: 340px;                      /* wszystkie równe szerokości */
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 16px;
+    padding: 16px;
+    background: rgba(18,26,56,.75);
+  }
+
+  .card h3 { margin:0 0 8px; }
+  .error { color:#f99b9b; margin-top:20px; font-size:18px; }
+  ul { margin:0; padding-left: 18px; }
+  .pill { display:inline-block; height:10px; width:80px; border-radius:20px; background:#6cf; }
+</style>
 </head>
 <body>
   <div class="nav-links">
