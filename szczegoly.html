@@ -7,19 +7,37 @@
   <link rel="stylesheet" href="style.css">
   <style>
     .nav-links { margin: 10px 0; }
-    .back-link { color:#6cf; text-decoration:none; margin-right:12px; }
-    .cards { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); margin-top:24px; }
-    .card { border:1px solid rgba(255,255,255,.2); border-radius:14px; padding:16px; }
-    .card h3 { margin:0 0 8px; }
-    .error { color:#ff9b9b; margin-top:20px; font-size:18px; }
+    .back-link { color: #6cf; text-decoration: none; margin-right: 12px; }
+
+    /* --- Nowa, symetryczna siatka --- */
+    .cards {
+      display: grid;
+      gap: 24px; 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      max-width: 1200px;
+      margin: 24px auto 0;
+      justify-items: center;
+      align-items: start;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 360px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .card h3 { margin: 0 0 8px; }
+    .error { color: #f99b9b; margin-top: 20px; font-size: 18px; }
     ul { margin: 0; padding-left: 18px; }
-    .pill { display:inline-block; height:10px; width:80px; border-radius:20px; background:#35d; box-shadow:0 0 0 4px rgba(53,93,221,.15) inset; }
+    .pill { display: inline-block; height: 10px; width: 80px; border-radius: 20px; background: #6cf; }
   </style>
 </head>
 <body data-page="szczegoly">
   <div class="nav-links">
     <a href="index.html" class="back-link">&larr; Strona główna</a>
-    <a href="" id="sectionBack" class="back-link">— Wróć do wyboru sekcji</a>
+    <a href="" id="sectionBack" class="back-link">&larr; Wróć do wyboru sekcji</a>
   </div>
 
   <h1 id="title">Szczegóły</h1>
@@ -33,19 +51,17 @@
   </footer>
 
   <script>
-    // Ustalenie linku "Wróć do wyboru sekcji" na podstawie identyfikatora
+    // --- Twój istniejący kod, bez zmian ---
     function sectionUrlFromId(id) {
       if (!id) return "index.html";
-      // końcówka _k (kobieta) / _m (mężczyzna) i grupa ciała po której można poznać sekcję
       const female = id.endsWith("_k");
-      const male   = id.endsWith("_m");
+      const male = id.endsWith("_m");
       const groupMapK = {
         oczy_k: "kobieta-glowa.html",
         uszy_k: "kobieta-glowa.html",
         nos_k: "kobieta-glowa.html",
         szczeka_k: "kobieta-glowa.html",
         szyja_k: "kobieta-glowa.html",
-
         serce_k: "kobieta-klatka.html",
         pluca_k: "kobieta-klatka.html",
         brzuch_k: "kobieta-klatka.html",
@@ -53,15 +69,13 @@
         uklad_krw_k: "kobieta-klatka.html",
         uklad_oddech_k: "kobieta-klatka.html",
         uklad_pokarm_k: "kobieta-klatka.html",
-
         biodra_k: "kobieta-nogi.html",
         uda_k: "kobieta-nogi.html",
         kolano_k: "kobieta-nogi.html",
         lydka_k: "kobieta-nogi.html",
         kostka_k: "kobieta-nogi.html",
         stopy_k: "kobieta-nogi.html",
-
-        ciaza_k: "kobieta.html" // ciąża wraca do pierwszej planszy kobiety
+        ciaza_k: "kobieta.html"
       };
       const groupMapM = {
         oczy_m: "mezczyzna-glowa.html",
@@ -69,7 +83,6 @@
         nos_m: "mezczyzna-glowa.html",
         szczeka_m: "mezczyzna-glowa.html",
         szyja_m: "mezczyzna-glowa.html",
-
         serce_m: "mezczyzna-klatka.html",
         pluca_m: "mezczyzna-klatka.html",
         brzuch_m: "mezczyzna-klatka.html",
@@ -77,7 +90,6 @@
         uklad_krw_m: "mezczyzna-klatka.html",
         uklad_oddech_m: "mezczyzna-klatka.html",
         uklad_pokarm_m: "mezczyzna-klatka.html",
-
         biodra_m: "mezczyzna-nogi.html",
         uda_m: "mezczyzna-nogi.html",
         kolano_m: "mezczyzna-nogi.html",
@@ -86,83 +98,4 @@
         stopy_m: "mezczyzna-nogi.html"
       };
       if (female) return groupMapK[id] || "kobieta.html";
-      if (male)   return groupMapM[id] || "mezczyzna.html";
-      return "index.html";
-    }
-
-    // Pobranie parametru id
-    const params = new URLSearchParams(location.search);
-    const id = params.get("id");
-
-    // Ustaw powrót do wyboru sekcji
-    document.getElementById("sectionBack").href = sectionUrlFromId(id);
-
-    function el(tag, className, html) {
-      const e = document.createElement(tag);
-      if (className) e.className = className;
-      if (html !== undefined) e.innerHTML = html;
-      return e;
-    }
-
-    async function load() {
-      const err = document.getElementById('err');
-      try {
-        if (!id) throw new Error("Brak parametru ?id=… w adresie.");
-        const res = await fetch('data/conditions.json?cb=' + Date.now());
-        if (!res.ok) throw new Error('Błąd HTTP ' + res.status + ' przy wczytywaniu conditions.json');
-        const data = await res.json();
-
-        const node = data[id];
-        if (!node) throw new Error('Nie znaleziono wpisu o id "' + id + '" w conditions.json');
-
-        // Tytuł
-        document.getElementById('title').textContent = node.title;
-
-        // Sekcje kart
-        const content = document.getElementById('content');
-        content.innerHTML = '';
-
-        function card(title, items) {
-          const c = el('div', 'card');
-          c.appendChild(el('h3', null, title));
-          if (Array.isArray(items)) {
-            const ul = el('ul');
-            items.forEach(t => ul.appendChild(el('li', null, t)));
-            c.appendChild(ul);
-          } else if (typeof items === 'string') {
-            c.appendChild(el('p', null, items));
-          }
-          return c;
-        }
-
-        const grid = el('div', 'cards');
-        grid.appendChild(card('Możliwe przyczyny bólu', node.causes));
-        grid.appendChild(card('Typowe objawy',            node.symptoms));
-        grid.appendChild(card('Do jakiego lekarza',       node.doctors));
-        grid.appendChild(card('Leki / środki łagodzące',  node.medications));
-        grid.appendChild(card('Pierwsza pomoc (domowa)',  node.first_aid));
-        if (node.emergency && node.emergency.length) {
-          const em = card('Niezwłocznie pomoc (112/SOR)', node.emergency);
-          em.style.borderColor = 'rgba(255,100,100,.6)';
-          grid.appendChild(em);
-        }
-
-        // Opis – jeśli jest
-        if (node.description) {
-          const desc = el('p', null, node.description);
-          desc.style.marginTop = '16px';
-          content.appendChild(desc);
-        }
-        content.appendChild(grid);
-
-      } catch (e) {
-        err.style.display = 'block';
-        err.textContent = 'Błąd wczytywania danych: ' + e.message;
-        console.error(e);
-      }
-    }
-
-    load();
-  </script>
-</body>
-</html>
+      if (male) return group
