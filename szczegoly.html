@@ -1,111 +1,168 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Szczegóły</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
   <style>
-    .error-box{
-      margin:24px auto;
-      max-width:1000px;
-      padding:16px 20px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.15);
-      background:rgba(255,80,80,.08);
-    }
+    .nav-links { margin: 10px 0; }
+    .back-link { color:#6cf; text-decoration:none; margin-right:12px; }
+    .cards { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); margin-top:24px; }
+    .card { border:1px solid rgba(255,255,255,.2); border-radius:14px; padding:16px; }
+    .card h3 { margin:0 0 8px; }
+    .error { color:#ff9b9b; margin-top:20px; font-size:18px; }
+    ul { margin: 0; padding-left: 18px; }
+    .pill { display:inline-block; height:10px; width:80px; border-radius:20px; background:#35d; box-shadow:0 0 0 4px rgba(53,93,221,.15) inset; }
   </style>
 </head>
 <body>
   <div class="nav-links">
-    <a href="index.html" class="back-link">← Strona główna</a> |
-    <a id="back-section" href="#" class="back-link">← Wróć do wyboru sekcji</a>
+    <a href="index.html" class="back-link">&larr; Strona główna</a>
+    <a href="" id="sectionBack" class="back-link">— Wróć do wyboru sekcji</a>
   </div>
 
   <h1 id="title">Szczegóły</h1>
-  <p id="description"></p>
+  <div class="pill" aria-hidden="true"></div>
 
-  <div id="cards" class="grid"></div>
+  <div id="content"></div>
+  <div id="err" class="error" style="display:none"></div>
 
-  <div id="emergency" class="card danger" style="display:none"></div>
+  <footer style="margin-top:40px">
+    <p>&copy; 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
+  </footer>
 
   <script>
-    // pobierz id z URL
+    // Ustalenie linku "Wróć do wyboru sekcji" na podstawie identyfikatora
+    function sectionUrlFromId(id) {
+      if (!id) return "index.html";
+      // końcówka _k (kobieta) / _m (mężczyzna) i grupa ciała po której można poznać sekcję
+      const female = id.endsWith("_k");
+      const male   = id.endsWith("_m");
+      const groupMapK = {
+        oczy_k: "kobieta-glowa.html",
+        uszy_k: "kobieta-glowa.html",
+        nos_k: "kobieta-glowa.html",
+        szczeka_k: "kobieta-glowa.html",
+        szyja_k: "kobieta-glowa.html",
+
+        serce_k: "kobieta-klatka.html",
+        pluca_k: "kobieta-klatka.html",
+        brzuch_k: "kobieta-klatka.html",
+        plecy_k: "kobieta-klatka.html",
+        uklad_krw_k: "kobieta-klatka.html",
+        uklad_oddech_k: "kobieta-klatka.html",
+        uklad_pokarm_k: "kobieta-klatka.html",
+
+        biodra_k: "kobieta-nogi.html",
+        uda_k: "kobieta-nogi.html",
+        kolano_k: "kobieta-nogi.html",
+        lydka_k: "kobieta-nogi.html",
+        kostka_k: "kobieta-nogi.html",
+        stopy_k: "kobieta-nogi.html",
+
+        ciaza_k: "kobieta.html" // ciąża wraca do pierwszej planszy kobiety
+      };
+      const groupMapM = {
+        oczy_m: "mezczyzna-glowa.html",
+        uszy_m: "mezczyzna-glowa.html",
+        nos_m: "mezczyzna-glowa.html",
+        szczeka_m: "mezczyzna-glowa.html",
+        szyja_m: "mezczyzna-glowa.html",
+
+        serce_m: "mezczyzna-klatka.html",
+        pluca_m: "mezczyzna-klatka.html",
+        brzuch_m: "mezczyzna-klatka.html",
+        plecy_m: "mezczyzna-klatka.html",
+        uklad_krw_m: "mezczyzna-klatka.html",
+        uklad_oddech_m: "mezczyzna-klatka.html",
+        uklad_pokarm_m: "mezczyzna-klatka.html",
+
+        biodra_m: "mezczyzna-nogi.html",
+        uda_m: "mezczyzna-nogi.html",
+        kolano_m: "mezczyzna-nogi.html",
+        lydka_m: "mezczyzna-nogi.html",
+        kostka_m: "mezczyzna-nogi.html",
+        stopy_m: "mezczyzna-nogi.html"
+      };
+      if (female) return groupMapK[id] || "kobieta.html";
+      if (male)   return groupMapM[id] || "mezczyzna.html";
+      return "index.html";
+    }
+
+    // Pobranie parametru id
     const params = new URLSearchParams(location.search);
-    const id = params.get('id');
+    const id = params.get("id");
 
-    // ustaw poprawny link „Wróć do wyboru sekcji” na podstawie sufiksu _k / _m
-    const backSection = document.getElementById('back-section');
-    if (id && id.endsWith('_k')) {
-      backSection.href = 'kobieta.html';
-    } else if (id && id.endsWith('_m')) {
-      backSection.href = 'mezczyzna.html';
-    } else {
-      backSection.href = 'index.html';
+    // Ustaw powrót do wyboru sekcji
+    document.getElementById("sectionBack").href = sectionUrlFromId(id);
+
+    function el(tag, className, html) {
+      const e = document.createElement(tag);
+      if (className) e.className = className;
+      if (html !== undefined) e.innerHTML = html;
+      return e;
     }
 
-    // pomocnicza funkcja tworzenia „pudełek” (jak dotąd)
-    function createBox(title, items) {
-      const box = document.createElement('div');
-      box.className = 'card';
-      const h3 = document.createElement('h3');
-      h3.textContent = title;
-      box.appendChild(h3);
+    async function load() {
+      const err = document.getElementById('err');
+      try {
+        if (!id) throw new Error("Brak parametru ?id=… w adresie.");
+        const res = await fetch('data/conditions.json?cb=' + Date.now());
+        if (!res.ok) throw new Error('Błąd HTTP ' + res.status + ' przy wczytywaniu conditions.json');
+        const data = await res.json();
 
-      const ul = document.createElement('ul');
-      items.forEach(t => {
-        const li = document.createElement('li');
-        li.textContent = t;
-        ul.appendChild(li);
-      });
-      box.appendChild(ul);
-      return box;
-    }
+        const node = data[id];
+        if (!node) throw new Error('Nie znaleziono wpisu o id "' + id + '" w conditions.json');
 
-    // wczytaj dane
-    fetch('data/conditions.json')
-      .then(r => r.json())
-      .then(all => {
-        const data = all[id];
-        if (!data) throw new Error('Brak wpisu w conditions.json dla id=' + id);
+        // Tytuł
+        document.getElementById('title').textContent = node.title;
 
-        // tytuł + opis
-        document.getElementById('title').textContent = data.title || 'Szczegóły';
-        document.getElementById('description').textContent = data.description || '';
+        // Sekcje kart
+        const content = document.getElementById('content');
+        content.innerHTML = '';
 
-        // boxy
-        const cards = document.getElementById('cards');
-        cards.innerHTML = '';
-
-        if (data.causes?.length) cards.appendChild(createBox('Możliwe przyczyny bólu', data.causes));
-        if (data.symptoms?.length) cards.appendChild(createBox('Typowe objawy', data.symptoms));
-        if (data.doctors?.length) cards.appendChild(createBox('Do jakiego lekarza iść', data.doctors));
-        if (data.medications?.length) cards.appendChild(createBox('Leki / działania łagodzące', data.medications));
-        if (data.first_aid?.length) cards.appendChild(createBox('Pierwsza pomoc (doraźnie)', Array.isArray(data.first_aid)?data.first_aid:[data.first_aid]));
-
-        if (data.emergency?.length) {
-          const danger = document.getElementById('emergency');
-          danger.style.display = '';
-          const h3 = document.createElement('h3');
-          h3.textContent = 'Natychmiastowa pomoc — wezwij po 112/999, gdy:';
-          danger.appendChild(h3);
-
-          const ul = document.createElement('ul');
-          data.emergency.forEach(t => {
-            const li = document.createElement('li');
-            li.textContent = t;
-            ul.appendChild(li);
-          });
-          danger.appendChild(ul);
+        function card(title, items) {
+          const c = el('div', 'card');
+          c.appendChild(el('h3', null, title));
+          if (Array.isArray(items)) {
+            const ul = el('ul');
+            items.forEach(t => ul.appendChild(el('li', null, t)));
+            c.appendChild(ul);
+          } else if (typeof items === 'string') {
+            c.appendChild(el('p', null, items));
+          }
+          return c;
         }
-      })
-      .catch(err => {
-        document.body.insertAdjacentHTML(
-          'beforeend',
-          <div class="error-box"><strong>Błąd wczytywania danych</strong><br>${err.message}</div>
-        );
-      });
-  </script>
 
-  <p class="disclaimer">© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
+        const grid = el('div', 'cards');
+        grid.appendChild(card('Możliwe przyczyny bólu', node.causes));
+        grid.appendChild(card('Typowe objawy',            node.symptoms));
+        grid.appendChild(card('Do jakiego lekarza',       node.doctors));
+        grid.appendChild(card('Leki / środki łagodzące',  node.medications));
+        grid.appendChild(card('Pierwsza pomoc (domowa)',  node.first_aid));
+        if (node.emergency && node.emergency.length) {
+          const em = card('Niezwłocznie pomoc (112/SOR)', node.emergency);
+          em.style.borderColor = 'rgba(255,100,100,.6)';
+          grid.appendChild(em);
+        }
+
+        // Opis – jeśli jest
+        if (node.description) {
+          const desc = el('p', null, node.description);
+          desc.style.marginTop = '16px';
+          content.appendChild(desc);
+        }
+        content.appendChild(grid);
+
+      } catch (e) {
+        err.style.display = 'block';
+        err.textContent = 'Błąd wczytywania danych: ' + e.message;
+        console.error(e);
+      }
+    }
+
+    load();
+  </script>
 </body>
 </html>
