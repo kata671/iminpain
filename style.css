@@ -1,5 +1,5 @@
 /* =========================
-   Iminpain — style.css (pełny)
+   Iminpain — style.css (UNIFIKACJA RAMEK + RÓWNE KAFELKI)
    ========================= */
 
 /* --- Reset & bazowe --- */
@@ -12,7 +12,7 @@ body {
   line-height: 1.45;
 }
 
-/* Kontener centralny (główne strony) */
+/* Kontener centralny */
 .container {
   max-width: 1100px;
   margin: 32px auto 40px;
@@ -20,188 +20,174 @@ body {
 }
 
 /* --- Nagłówki --- */
-/* Tylko H1 ma mieć jasny fiolet */
-h1 {
+h1{
   font-size: clamp(28px, 4vw, 42px);
   font-weight: 800;
-  letter-spacing: 0.3px;
-  color: #cbb2ff;            /* jasny fiolet */
-  text-shadow: 0 2px 18px rgba(180,140,255,0.25);
-  margin: 18px 0 12px;
-  text-align: center;
+  letter-spacing: .3px;
+  color:#cbb2ff;                /* jasny fiolet tylko dla H1 */
+  text-shadow: 0 2px 18px rgba(180,140,255,.25);
+  margin:18px 0 12px;
+  text-align:center;
 }
-h2 {
+h2{
   font-size: clamp(18px, 2.4vw, 26px);
-  font-weight: 700;
-  color: #e9f0ff;            /* reszta tytułów bez zmian */
-  opacity: 0.9;
-  margin: 6px 0 22px;
-  text-align: center;
+  font-weight:700;
+  color:#e9f0ff;
+  opacity:.9;
+  margin:6px 0 22px;
+  text-align:center;
 }
 
-/* --- Nawigacja u góry (linki „Wróć / Strona główna / Wróć do wyboru sekcji”) --- */
-.nav-links {
-  max-width: 1100px;
-  margin: 16px auto 10px;
-  padding: 0 16px;
+/* --- Linki powrotu --- */
+.nav-links{
+  max-width:1100px;
+  margin:16px auto 10px;
+  padding:0 16px;
 }
-.back-link {
-  color: #8ec9ff;
-  text-decoration: none;
-  margin-right: 12px;
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 10px;
-  transition: background 0.2s ease, transform 0.1s ease;
+.back-link{
+  color:#8ec9ff;
+  text-decoration:none;
+  margin-right:12px;
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:10px;
+  transition:background .2s, transform .1s;
 }
-.back-link:hover {
-  background: rgba(142, 201, 255, 0.12);
-  transform: translateY(-1px);
-}
-
-/* --- Siatka kafelków --- */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 22px;
-  margin-top: 16px;
+.back-link:hover{
+  background:rgba(142,201,255,.12);
+  transform:translateY(-1px);
 }
 
-/* Karta (link) z obrazkiem i podpisem */
-.card {
-  display: block;
-  background: rgba(255,255,255,0.03);
-  border-radius: 18px;
-  padding: 10px 10px 12px;
-  text-align: center;
-  text-decoration: none;
-  color: #cfe6ff;
-  border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
-  transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-  border-color: rgba(200,160,255,0.28);
-}
-.card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 14px;
-  display: block;
-  margin-bottom: 10px;
-}
-.card span {
-  display: block;
-  font-weight: 700;
-  color: #79b8ff;
+/* --- Siatka kafelków (jednolite układanie) --- */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+  gap:22px;
+  align-items:stretch;      /* wszystkie elementy równają wysokością */
 }
 
-/* --- Strona szczegółów (szare karty/kolumny) --- */
-.details-wrap {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
-  margin-top: 16px;
+/* --- Kafelek (UNIFIKACJA RAMEK) --- */
+.card{
+  display:flex;             /* pozwala wyrównać podpis do dołu */
+  flex-direction:column;
+  justify-content:flex-start;
+  height:100%;              /* wypełnia komórkę siatki */
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(203,178,255,.35);  /* JEDNA ramka: delikatny fiolet */
+  border-radius:16px;
+  padding:12px 12px 14px;
+  text-align:center;
+  text-decoration:none;
+  color:#cfe6ff;
+  box-shadow:0 6px 22px rgba(0,0,0,.25);
+  transition:transform .18s, box-shadow .25s, border-color .25s;
 }
-.info-box {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px;
-  padding: 14px 16px;
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  border-color:rgba(203,178,255,.6);
 }
-.info-box h3 {
-  color: #b7caff;
-  margin-bottom: 8px;
-  font-size: 18px;
-}
-.info-box ul { padding-left: 18px; margin-top: 6px; }
-.info-box li { margin: 6px 0; }
 
-/* Sekcja alarmowa na czerwono */
-.alert {
-  background: rgba(255, 70, 70, 0.08);
-  border-color: rgba(255, 90, 90, 0.28);
+/* Obraz w kafelku — stałe proporcje i równa wysokość */
+.card img{
+  width:100%;
+  aspect-ratio: 4 / 3;      /* równe kafelki niezależnie od pliku */
+  height:auto;
+  object-fit:cover;
+  border-radius:12px;
+  display:block;
+  margin-bottom:10px;
+}
+
+/* Podpis przycisku/kafelka na dole */
+.card span{
+  margin-top:auto;          /* zepchnij na dół */
+  display:block;
+  font-weight:700;
+  color:#79b8ff;
+}
+
+/* --- Strona szczegółów --- */
+.details-wrap{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  gap:18px;
+  margin-top:16px;
+}
+.info-box{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(203,178,255,.25); /* spójna ramka */
+  border-radius:16px;
+  padding:14px 16px;
+}
+.info-box h3{
+  color:#b7caff;
+  margin-bottom:8px;
+  font-size:18px;
+}
+.info-box ul{ padding-left:18px; margin-top:6px; }
+.info-box li{ margin:6px 0; }
+
+/* Alarm */
+.alert{
+  background:rgba(255,70,70,.08);
+  border-color:rgba(255,90,90,.28);
 }
 
 /* --- Stopka --- */
-footer {
-  opacity: 0.8;
-  font-size: 13px;
-  text-align: center;
-  margin: 36px 0 14px;
+footer{
+  opacity:.8;
+  font-size:13px;
+  text-align:center;
+  margin:36px 0 14px;
 }
 
 /* ==============================
-   Strona główna (index) — glow pod kafelkami
+   Strona główna — glow pod kafelkami
    ============================== */
-body[data-page="index"] .gender-choice {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 26px;
-  justify-items: center;
-  margin-top: 8px;
+body[data-page="index"] .gender-choice{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  gap:26px;
+  justify-items:center;
+  margin-top:8px;
 }
-
-/* Każdy label jest kafelkiem wyboru */
-body[data-page="index"] .gender-choice label {
-  display: inline-block;
-  background: rgba(120, 90, 200, 0.18);           /* fioletowy transparent */
-  border: none;                                    /* bez ramki */
-  border-radius: 18px;
-  padding: 12px 14px 10px;
-  box-shadow: 0 0 14px rgba(180, 140, 255, 0.40);  /* delikatny glow */
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-  cursor: pointer;
+body[data-page="index"] .gender-choice label{
+  display:inline-block;
+  background:rgba(120,90,200,.18);
+  border:1px solid rgba(203,178,255,.35); /* ta sama ramka co karty */
+  border-radius:18px;
+  padding:12px 14px 10px;
+  box-shadow:0 0 14px rgba(180,140,255,.40);
+  transition:transform .2s, box-shadow .3s;
+  cursor:pointer;
 }
-body[data-page="index"] .gender-choice label:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 20px rgba(200, 160, 255, 0.65);  /* mocniejszy glow */
+body[data-page="index"] .gender-choice label:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 20px rgba(200,160,255,.65);
 }
-
-/* Ukryte radio przy obrazkach */
-body[data-page="index"] .gender-choice input[type="radio"] { display: none; }
-
-/* Obrazki w wyborze płci */
-body[data-page="index"] .gender-choice img {
-  width: 320px;
-  max-width: 90vw;
-  height: 360px;
-  object-fit: cover;
-  border-radius: 12px;
-  display: block;
+body[data-page="index"] .gender-choice input[type="radio"]{ display:none; }
+body[data-page="index"] .gender-choice img{
+  width:320px; max-width:90vw;
+  aspect-ratio: 4 / 5;      /* stała proporcja zdjęć na stronie głównej */
+  height:auto; object-fit:cover; border-radius:12px; display:block;
 }
 
 /* ==============================
-   Przycisk awaryjny 112 (jeśli dodasz w index.html)
+   Przycisk 112 (jeśli używasz)
    ============================== */
-.emergency-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #e60019;
-  color: #fff;
-  font-weight: 800;
-  padding: 12px 18px;
-  border-radius: 12px;
-  text-decoration: none;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.35);
-  transition: background 0.25s ease, transform 0.18s ease;
-  z-index: 999;
+.emergency-btn{
+  position:fixed; bottom:20px; right:20px;
+  background:#e60019; color:#fff; font-weight:800;
+  padding:12px 18px; border-radius:12px; text-decoration:none;
+  box-shadow:0 8px 18px rgba(0,0,0,.35);
+  transition:background .25s, transform .18s; z-index:999;
 }
-.emergency-btn:hover {
-  background: #b80014;
-  transform: scale(1.05);
-}
+.emergency-btn:hover{ background:#b80014; transform:scale(1.05); }
 
-/* ==============================
-   Responsywność
-   ============================== */
-@media (max-width: 640px) {
-  .card img { height: 160px; }
-  body[data-page="index"] .gender-choice img {
-    width: 270px; height: 320px;
-  }
+/* --- Responsywność --- */
+@media (max-width: 640px){
+  .grid{ gap:18px; }
+  .card{ padding:10px 10px 12px; }
+  body[data-page="index"] .gender-choice img{ width:270px; }
 }
