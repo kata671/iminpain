@@ -1,193 +1,168 @@
-/* =========================
-   Iminpain — style.css (UNIFIKACJA RAMEK + RÓWNE KAFELKI)
-   ========================= */
+/* ========== style.css (pełny) ========== */
 
-/* --- Reset & bazowe --- */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
-body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  color: #e9f0ff;
-  background: #0f1117 radial-gradient(#1d2030 1px, transparent 1px) 0 0 / 12px 12px;
+/* Kolor przewodni – fiolet (RGB), łatwo podkręcisz w jednym miejscu */
+:root {
+  --accent: 178, 138, 255; /* jasny fiolet */
+  --text: #eaf2ff;
+  --muted: #a9b4c7;
+  --bg: #0c0f17;
+}
+
+/* Reset – tylko najdelikatniejszy, żeby nic nie popsuć */
+* { box-sizing: border-box; }
+img { max-width: 100%; display: block; }
+
+/* Tło i typografia */
+html, body {
+  height: 100%;
+  margin: 0;
+  background: radial-gradient(transparent 1px, var(--bg) 1px) 0 0 / 18px 18px,
+              radial-gradient(transparent 1px, #0a0d14 1px) 9px 9px / 18px 18px,
+              #0a0d14;
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
   line-height: 1.45;
 }
 
-/* Kontener centralny */
+/* Kontener strony */
 .container {
-  max-width: 1100px;
-  margin: 32px auto 40px;
-  padding: 0 16px;
+  width: min(1200px, 92vw);
+  margin: 28px auto 64px;
 }
 
-/* --- Nagłówki --- */
-h1{
-  font-size: clamp(28px, 4vw, 42px);
+/* Nagłówki – tylko kolor (reszta bez zmian) */
+h1 {
+  margin: 18px 0 8px;
+  font-size: clamp(28px, 4.5vw, 48px);
   font-weight: 800;
-  letter-spacing: .3px;
-  color:#cbb2ff;                /* jasny fiolet tylko dla H1 */
-  text-shadow: 0 2px 18px rgba(180,140,255,.25);
-  margin:18px 0 12px;
-  text-align:center;
+  color: rgb(var(--accent));
+  text-shadow: 0 0 18px rgba(var(--accent), 0.35);
 }
-h2{
-  font-size: clamp(18px, 2.4vw, 26px);
-  font-weight:700;
-  color:#e9f0ff;
-  opacity:.9;
-  margin:6px 0 22px;
-  text-align:center;
+h2 {
+  margin: 0 0 14px;
+  font-size: clamp(16px, 2.5vw, 24px);
+  color: var(--muted);
+  font-weight: 700;
 }
 
-/* --- Linki powrotu --- */
-.nav-links{
-  max-width:1100px;
-  margin:16px auto 10px;
-  padding:0 16px;
+/* Linki nawigacyjne u góry (Powrót do startu | Wróć do wyboru sekcji) */
+.nav-links {
+  width: min(1200px, 92vw);
+  margin: 12px auto 2px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
-.back-link{
-  color:#8ec9ff;
-  text-decoration:none;
-  margin-right:12px;
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:10px;
-  transition:background .2s, transform .1s;
+.back-link {
+  color: #9fd3ff;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 6px 0;
 }
-.back-link:hover{
-  background:rgba(142,201,255,.12);
-  transform:translateY(-1px);
+.back-link::before { content: "← "; opacity: .85; }
+.back-link:hover { text-decoration: underline; }
+
+/* Siatka kafelków na podstronach */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* wyśrodkowanie */
+  gap: 18px;
+  margin-top: 22px;
 }
 
-/* --- Siatka kafelków (jednolite układanie) --- */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
-  gap:22px;
-  align-items:stretch;      /* wszystkie elementy równają wysokością */
+/* Kafelki – wspólny wygląd (sekcje oraz strona główna) */
+.card,
+.gender-choice label,
+.hero-cards label {
+  background: rgba(var(--accent), 0.08);             /* ciemny fiolet, transparentny */
+  border: 2px solid rgba(var(--accent), 0.42);       /* cienka ramka */
+  border-radius: 14px;
+  box-shadow: 0 0 12px rgba(var(--accent), 0.45);    /* delikatny glow stale */
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  width: 240px;                                      /* nie zmieniamy rozmiaru kafelków */
+  padding: 10px;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
-/* --- Kafelek (UNIFIKACJA RAMEK) --- */
-.card{
-  display:flex;             /* pozwala wyrównać podpis do dołu */
-  flex-direction:column;
-  justify-content:flex-start;
-  height:100%;              /* wypełnia komórkę siatki */
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(203,178,255,.35);  /* JEDNA ramka: delikatny fiolet */
-  border-radius:16px;
-  padding:12px 12px 14px;
-  text-align:center;
-  text-decoration:none;
-  color:#cfe6ff;
-  box-shadow:0 6px 22px rgba(0,0,0,.25);
-  transition:transform .18s, box-shadow .25s, border-color .25s;
-}
-.card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 12px 30px rgba(0,0,0,.35);
-  border-color:rgba(203,178,255,.6);
+/* Podświetlenie po najechaniu */
+.card:hover,
+.gender-choice label:hover,
+.hero-cards label:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 26px rgba(var(--accent), 0.95);
+  border-color: rgba(var(--accent), 0.92);
 }
 
-/* Obraz w kafelku — stałe proporcje i równa wysokość */
-.card img{
-  width:100%;
-  aspect-ratio: 4 / 3;      /* równe kafelki niezależnie od pliku */
-  height:auto;
-  object-fit:cover;
-  border-radius:12px;
-  display:block;
-  margin-bottom:10px;
+/* Obrazki w kafelkach */
+.card img,
+.gender-choice img,
+.hero-cards img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
 }
 
-/* Podpis przycisku/kafelka na dole */
-.card span{
-  margin-top:auto;          /* zepchnij na dół */
-  display:block;
-  font-weight:700;
-  color:#79b8ff;
+/* Podpis kafelka (np. „Nos / Zatoki”) */
+.card span {
+  display: block;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: 700;
+  color: #7fd0ff; /* zostawiamy dotychczasowy niebieski podpis */
 }
 
-/* --- Strona szczegółów --- */
-.details-wrap{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
-  gap:18px;
-  margin-top:16px;
-}
-.info-box{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(203,178,255,.25); /* spójna ramka */
-  border-radius:16px;
-  padding:14px 16px;
-}
-.info-box h3{
-  color:#b7caff;
-  margin-bottom:8px;
-  font-size:18px;
-}
-.info-box ul{ padding-left:18px; margin-top:6px; }
-.info-box li{ margin:6px 0; }
-
-/* Alarm */
-.alert{
-  background:rgba(255,70,70,.08);
-  border-color:rgba(255,90,90,.28);
+/* Strona główna – blok z 2 kafelkami */
+.gender-choice,
+.hero-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* wyśrodkowane */
+  gap: 22px;
+  margin-top: 24px;
 }
 
-/* --- Stopka --- */
-footer{
-  opacity:.8;
-  font-size:13px;
-  text-align:center;
-  margin:36px 0 14px;
+/* Przycisk/odsyłacz wyglądający jak guzik (jeśli gdzieś użyty) */
+.btn {
+  appearance: none;
+  border: 1px solid rgba(var(--accent), .35);
+  background: rgba(var(--accent), .12);
+  color: #dfe9ff;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 0 8px rgba(var(--accent), .25) inset;
+}
+.btn:hover {
+  border-color: rgba(var(--accent), .7);
+  box-shadow: 0 0 16px rgba(var(--accent), .55);
 }
 
-/* ==============================
-   Strona główna — glow pod kafelkami
-   ============================== */
-body[data-page="index"] .gender-choice{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
-  gap:26px;
-  justify-items:center;
-  margin-top:8px;
-}
-body[data-page="index"] .gender-choice label{
-  display:inline-block;
-  background:rgba(120,90,200,.18);
-  border:1px solid rgba(203,178,255,.35); /* ta sama ramka co karty */
-  border-radius:18px;
-  padding:12px 14px 10px;
-  box-shadow:0 0 14px rgba(180,140,255,.40);
-  transition:transform .2s, box-shadow .3s;
-  cursor:pointer;
-}
-body[data-page="index"] .gender-choice label:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 20px rgba(200,160,255,.65);
-}
-body[data-page="index"] .gender-choice input[type="radio"]{ display:none; }
-body[data-page="index"] .gender-choice img{
-  width:320px; max-width:90vw;
-  aspect-ratio: 4 / 5;      /* stała proporcja zdjęć na stronie głównej */
-  height:auto; object-fit:cover; border-radius:12px; display:block;
+/* Stopka (jeśli jest) */
+.footer {
+  margin: 36px 0 10px;
+  text-align: center;
+  font-size: 13px;
+  color: #9aa6bf;
 }
 
-/* ==============================
-   Przycisk 112 (jeśli używasz)
-   ============================== */
-.emergency-btn{
-  position:fixed; bottom:20px; right:20px;
-  background:#e60019; color:#fff; font-weight:800;
-  padding:12px 18px; border-radius:12px; text-decoration:none;
-  box-shadow:0 8px 18px rgba(0,0,0,.35);
-  transition:background .25s, transform .18s; z-index:999;
+/* Responsywność – na telefonie: 2 kolumny */
+@media (max-width: 768px) {
+  .card,
+  .gender-choice label,
+  .hero-cards label {
+    width: calc(50% - 18px); /* dwie kolumny */
+  }
 }
-.emergency-btn:hover{ background:#b80014; transform:scale(1.05); }
 
-/* --- Responsywność --- */
-@media (max-width: 640px){
-  .grid{ gap:18px; }
-  .card{ padding:10px 10px 12px; }
-  body[data-page="index"] .gender-choice img{ width:270px; }
+/* Bardzo małe ekrany – jedna kolumna */
+@media (max-width: 480px) {
+  .card,
+  .gender-choice label,
+  .hero-cards label {
+    width: 100%;
+  }
 }
