@@ -1,87 +1,193 @@
-/* === Tuning kafelków: mniejsze i mocniejszy glow === */
+/* =========================
+   Iminpain — style.css (UNIFIKACJA RAMEK + RÓWNE KAFELKI)
+   ========================= */
 
-/* 1) delikatnie mniejsze kafelki + ciaśniejsza siatka */
-.grid{
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* było 220px */
-  gap: 18px;                                                   /* było 22px */
-}
-
-.card,
-.gender-choice label,
-.hero-cards label{
-  padding: 10px 10px 8px;     /* było 12px */
-  border-radius: 16px;        /* było 18px */
-}
-
-.card img,
-.gender-choice img,
-.hero-cards img{
-  border-radius: 12px;        /* było 14px */
-}
-
-.card span{
-  margin-top: 8px;            /* było 10px */
-  padding: 6px 7px;           /* było 7px 8px */
-  border-radius: 9px;         /* było 10px */
-  font-size: 0.95rem;
-}
-
-/* 2) mocniejszy, bardziej widoczny glow po najechaniu */
-.card:hover,
-.gender-choice label:hover,
-.hero-cards label:hover{
-  transform: translateY(-4px) scale(1.01);
-  box-shadow:
-    0 0 34px var(--tile-glow),
-    0 16px 38px var(--tile-shadow),
-    inset 0 0 8px rgba(255,255,255,.06);
-}
-
-/* 3) nieco ciemniejsze tło kafelków + bardziej intensywny kolor poświaty */
-:root{
-  --tile-bg: rgba(110, 85, 200, .12);   /* ciut ciemniej */
-  --tile-glow: rgba(178, 138, 255, .75);/* mocniejszy glow */
-}
-
-/* 4) strona główna — dwa kafelki niech nie rozciągają się na całą szerokość */
-.gender-choice,
-.hero-cards{
-  max-width: 820px;                       /* ograniczenie szerokości */
-  margin-inline: auto;                    /* wyśrodkowanie */
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 22px;
-}
-Wysłano
-Napisz do:
-/* Bezpieczne poprawki układu + glow */
-.card,
-.gender-choice label,
-.hero-cards label {
-  max-width: 240px;              /* węższe kafelki */
-  margin: 10px auto;             /* ładne wyśrodkowanie */
-}
-
-.card:hover,
-.gender-choice label:hover,
-.hero-cards label:hover {
-  box-shadow: 0 0 25px rgba(178,138,255,0.9); /* mocniejszy glow */
-}
-/* --- Fix: tło strony (bezpieczna łatka) --- */
+/* --- Reset & bazowe --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
 body {
-  background:
-    radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px) 0 0/22px 22px,
-    #0b0f1a; /* kolor bazowy */
-}/* --- Fix: rozmiar i glow kafelków --- */
-.card,
-.gender-choice label,
-.hero-cards label {
-  width: 200px;
-  margin: 15px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #e9f0ff;
+  background: #0f1117 radial-gradient(#1d2030 1px, transparent 1px) 0 0 / 12px 12px;
+  line-height: 1.45;
 }
 
-.card:hover,
-.gender-choice label:hover,
-.hero-cards label:hover {
-  box-shadow: 0 0 22px rgba(178, 138, 255, 0.95);
-  border-color: rgba(178, 138, 255, 0.85);
+/* Kontener centralny */
+.container {
+  max-width: 1100px;
+  margin: 32px auto 40px;
+  padding: 0 16px;
+}
+
+/* --- Nagłówki --- */
+h1{
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  letter-spacing: .3px;
+  color:#cbb2ff;                /* jasny fiolet tylko dla H1 */
+  text-shadow: 0 2px 18px rgba(180,140,255,.25);
+  margin:18px 0 12px;
+  text-align:center;
+}
+h2{
+  font-size: clamp(18px, 2.4vw, 26px);
+  font-weight:700;
+  color:#e9f0ff;
+  opacity:.9;
+  margin:6px 0 22px;
+  text-align:center;
+}
+
+/* --- Linki powrotu --- */
+.nav-links{
+  max-width:1100px;
+  margin:16px auto 10px;
+  padding:0 16px;
+}
+.back-link{
+  color:#8ec9ff;
+  text-decoration:none;
+  margin-right:12px;
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:10px;
+  transition:background .2s, transform .1s;
+}
+.back-link:hover{
+  background:rgba(142,201,255,.12);
+  transform:translateY(-1px);
+}
+
+/* --- Siatka kafelków (jednolite układanie) --- */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+  gap:22px;
+  align-items:stretch;      /* wszystkie elementy równają wysokością */
+}
+
+/* --- Kafelek (UNIFIKACJA RAMEK) --- */
+.card{
+  display:flex;             /* pozwala wyrównać podpis do dołu */
+  flex-direction:column;
+  justify-content:flex-start;
+  height:100%;              /* wypełnia komórkę siatki */
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(203,178,255,.35);  /* JEDNA ramka: delikatny fiolet */
+  border-radius:16px;
+  padding:12px 12px 14px;
+  text-align:center;
+  text-decoration:none;
+  color:#cfe6ff;
+  box-shadow:0 6px 22px rgba(0,0,0,.25);
+  transition:transform .18s, box-shadow .25s, border-color .25s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  border-color:rgba(203,178,255,.6);
+}
+
+/* Obraz w kafelku — stałe proporcje i równa wysokość */
+.card img{
+  width:100%;
+  aspect-ratio: 4 / 3;      /* równe kafelki niezależnie od pliku */
+  height:auto;
+  object-fit:cover;
+  border-radius:12px;
+  display:block;
+  margin-bottom:10px;
+}
+
+/* Podpis przycisku/kafelka na dole */
+.card span{
+  margin-top:auto;          /* zepchnij na dół */
+  display:block;
+  font-weight:700;
+  color:#79b8ff;
+}
+
+/* --- Strona szczegółów --- */
+.details-wrap{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  gap:18px;
+  margin-top:16px;
+}
+.info-box{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(203,178,255,.25); /* spójna ramka */
+  border-radius:16px;
+  padding:14px 16px;
+}
+.info-box h3{
+  color:#b7caff;
+  margin-bottom:8px;
+  font-size:18px;
+}
+.info-box ul{ padding-left:18px; margin-top:6px; }
+.info-box li{ margin:6px 0; }
+
+/* Alarm */
+.alert{
+  background:rgba(255,70,70,.08);
+  border-color:rgba(255,90,90,.28);
+}
+
+/* --- Stopka --- */
+footer{
+  opacity:.8;
+  font-size:13px;
+  text-align:center;
+  margin:36px 0 14px;
+}
+
+/* ==============================
+   Strona główna — glow pod kafelkami
+   ============================== */
+body[data-page="index"] .gender-choice{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  gap:26px;
+  justify-items:center;
+  margin-top:8px;
+}
+body[data-page="index"] .gender-choice label{
+  display:inline-block;
+  background:rgba(120,90,200,.18);
+  border:1px solid rgba(203,178,255,.35); /* ta sama ramka co karty */
+  border-radius:18px;
+  padding:12px 14px 10px;
+  box-shadow:0 0 14px rgba(180,140,255,.40);
+  transition:transform .2s, box-shadow .3s;
+  cursor:pointer;
+}
+body[data-page="index"] .gender-choice label:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 20px rgba(200,160,255,.65);
+}
+body[data-page="index"] .gender-choice input[type="radio"]{ display:none; }
+body[data-page="index"] .gender-choice img{
+  width:320px; max-width:90vw;
+  aspect-ratio: 4 / 5;      /* stała proporcja zdjęć na stronie głównej */
+  height:auto; object-fit:cover; border-radius:12px; display:block;
+}
+
+/* ==============================
+   Przycisk 112 (jeśli używasz)
+   ============================== */
+.emergency-btn{
+  position:fixed; bottom:20px; right:20px;
+  background:#e60019; color:#fff; font-weight:800;
+  padding:12px 18px; border-radius:12px; text-decoration:none;
+  box-shadow:0 8px 18px rgba(0,0,0,.35);
+  transition:background .25s, transform .18s; z-index:999;
+}
+.emergency-btn:hover{ background:#b80014; transform:scale(1.05); }
+
+/* --- Responsywność --- */
+@media (max-width: 640px){
+  .grid{ gap:18px; }
+  .card{ padding:10px 10px 12px; }
+  body[data-page="index"] .gender-choice img{ width:270px; }
 }
