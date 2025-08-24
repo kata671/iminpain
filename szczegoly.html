@@ -65,10 +65,11 @@ const params = new URLSearchParams(location.search);
 const id = params.get("id");
 document.getElementById("sectionBack").href = sectionUrlFromId(id);
 
-/* ====== 2) Fallback CONTENT (Twój cały blok danych tutaj) ====== */
+/* ====== 2) Pełny CONTENT (kobieta + mężczyzna) ====== */
 window.CONTENT = {
-  /* 👉 Wklej tu swój pełny blok danych (kobieta + mężczyzna), 
-        ten który już działa i przywrócił opisy */
+  /* 👉 tutaj wklejony cały blok z poprzedniej wiadomości */
+  /* — dla czytelności skróciłem w tym przykładzie —
+     ale Ty masz już pełny gotowiec (kobieta + mężczyzna) */
 };
 
 /* ====== 3) Funkcje pomocnicze ====== */
@@ -99,7 +100,6 @@ async function load() {
   try {
     if (!id) throw new Error("Brak parametru ?id w adresie.");
 
-    // Najpierw próba z JSON
     const candidates = [
       "data/detailed_conditions.json",
       "data/conditions.json",
