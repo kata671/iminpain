@@ -17,17 +17,3 @@ body[data-page="szczegoly"] .details-grid > section{
   max-width: 360px;            /* identyczna szerokość kafelków */
   border-radius: 18px;         /* miękkie rogi (nie wymaga zmian HTML) */
 }
-/* 🔒 Wymuszenie układu 3+3 w szczegoly.html */
-body[data-page="szczegoly"] #content .cards {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 24px !important;
-  justify-items: center !important;
-  align-items: start !important;
-  max-width: 1100px !important;
-  margin: 28px auto !important;
-}
-
-body[data-page="szczegoly"] #content .cards .card {
-  max-width: 320px !important;
-}
