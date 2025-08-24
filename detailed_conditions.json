@@ -2,20 +2,22 @@
   "oczy_k": {
     "title": "Oczy — kobieta",
     "causes": [
-      "Przykładowa przyczyna 1",
-      "Przykładowa przyczyna 2"
+      "Zespół suchego oka",
+      "Alergia",
+      "Zapalenie spojówek"
     ],
     "symptoms": [
-      "Przykładowy objaw 1",
-      "Przykładowy objaw 2"
+      "Swędzenie oczu",
+      "Piecznie i łzawienie",
+      "Pogorszenie ostrości widzenia"
     ],
     "concerns": [
-      "⚠️ Obawy/pilne sygnały np. nagła utrata wzroku",
-      "⚠️ Silny ból oka"
+      "⚠️ Nagła utrata widzenia",
+      "⚠️ Silny ból oka po urazie"
     ],
     "doctors": [
       "Okulista",
-      "POZ"
+      "Lekarz rodzinny"
     ],
     "medications": [
       "Sztuczne łzy",
@@ -26,24 +28,26 @@
       "Unikanie alergenów"
     ],
     "emergency": [
-      "Nagła utrata wzroku — natychmiast 112",
-      "Silny ból oka po urazie — SOR"
+      "Nagła utrata wzroku — natychmiast wezwij 112",
+      "Uraz oka z silnym bólem — pilny SOR"
     ],
-    "description": "Tu możesz dodać dodatkowy opis np. o profilaktyce, diecie, stylu życia."
+    "description": "Problemy z oczami mogą wynikać z alergii, infekcji, zmęczenia lub chorób przewlekłych. Regularne badania okulistyczne są kluczowe."
   },
 
   "serce_m": {
     "title": "Serce — mężczyzna",
     "causes": [
       "Choroba wieńcowa",
-      "Zawał"
+      "Zawał serca",
+      "Niewydolność serca"
     ],
     "symptoms": [
       "Ból w klatce piersiowej",
-      "Duszność"
+      "Duszność",
+      "Kołatanie serca"
     ],
     "concerns": [
-      "⚠️ Ból w klatce z promieniowaniem do ręki — wezwij 112",
+      "⚠️ Ból w klatce z promieniowaniem do ręki",
       "⚠️ Nagłe zimne poty i osłabienie"
     ],
     "doctors": [
@@ -59,8 +63,79 @@
       "Wezwanie pomocy"
     ],
     "emergency": [
-      "Silny, uciskający ból w klatce + duszność — 112",
+      "Silny ucisk w klatce + duszność — 112",
       "Utrata przytomności — 112"
     ],
-    "description": "Tu dodatkowe informacje o chorobach serca i stylu życia."
+    "description": "Choroby serca są jedną z głównych przyczyn zgonów. Wczesne rozpoznanie objawów i szybka reakcja mogą uratować życie."
+  },
+
+  "brzuch_k": {
+    "title": "Brzuch — kobieta",
+    "causes": [
+      "Zatrucie pokarmowe",
+      "Refluks żołądkowy",
+      "Zespół jelita drażliwego (IBS)"
+    ],
+    "symptoms": [
+      "Ból brzucha",
+      "Wzdęcia",
+      "Nudności"
+    ],
+    "concerns": [
+      "⚠️ Silny ból z gorączką",
+      "⚠️ Krew w stolcu"
+    ],
+    "doctors": [
+      "Gastroenterolog",
+      "Lekarz rodzinny"
+    ],
+    "medications": [
+      "Leki rozkurczowe",
+      "Leki zobojętniające kwas żołądkowy"
+    ],
+    "first_aid": [
+      "Dieta lekkostrawna",
+      "Unikanie alkoholu i ostrych potraw"
+    ],
+    "emergency": [
+      "Nagły, silny ból brzucha + wymioty — 112",
+      "Podejrzenie zapalenia wyrostka robaczkowego — pilny SOR"
+    ],
+    "description": "Ból brzucha może mieć wiele przyczyn od błahych do zagrażających życiu. Ważna jest obserwacja towarzyszących objawów."
+  },
+
+  "uda_k": {
+    "title": "Uda — kobieta",
+    "causes": [
+      "Przeciążenie mięśni",
+      "Zakrzepica żył głębokich",
+      "Urazy sportowe"
+    ],
+    "symptoms": [
+      "Ból mięśni uda",
+      "Obrzęk",
+      "Zaczerwienienie skóry"
+    ],
+    "concerns": [
+      "⚠️ Nagły obrzęk i ból uda",
+      "⚠️ Trudności w chodzeniu"
+    ],
+    "doctors": [
+      "Ortopeda",
+      "Chirurg naczyniowy"
+    ],
+    "medications": [
+      "Leki przeciwzapalne",
+      "Leki przeciwzakrzepowe (na zlecenie lekarza)"
+    ],
+    "first_aid": [
+      "Odpoczynek i uniesienie nogi",
+      "Chłodzenie bolącego miejsca"
+    ],
+    "emergency": [
+      "Podejrzenie zakrzepicy — pilna wizyta w SOR",
+      "Nagły uraz z niemożnością obciążenia nogi — 112"
+    ],
+    "description": "Bóle uda mogą wynikać z przeciążeń lub poważnych chorób naczyniowych. Wczesna diagnostyka jest kluczowa."
   }
+}
