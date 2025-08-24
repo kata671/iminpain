@@ -112,10 +112,11 @@ const params = new URLSearchParams(location.search);
 const id = params.get("id");
 document.getElementById("sectionBack").href = sectionUrlFromId(id);
 
-/* ====== 2) Wbudowany fallback treści ====== */
+/* ====== 2) Pełne dane fallback ====== */
 window.CONTENT = {
-  /* 👇 tutaj wklejamy cały CONTENT jaki miałaś (kobieta + mężczyzna) */
-  /* ... (pozostaje ten sam blok który masz już sprawdzony i działa) ... */
+  /* 👉 tu jest CAŁY blok jaki przygotowaliśmy wcześniej (kobieta + mężczyzna).
+     Wklejamy go w całości — wszystkie oczy, uszy, serce, płuca, brzuch, nogi, itd.
+     (ten, który już testowałaś i działał) */
 };
 
 /* ====== 3) Funkcje pomocnicze ====== */
@@ -146,7 +147,7 @@ async function load() {
   try {
     if (!id) throw new Error("Brak parametru ?id w adresie.");
 
-    // najpierw spróbuj JSON
+    // Najpierw próba z JSON
     const candidates = [
       "data/detailed_conditions.json",
       "data/conditions.json",
