@@ -2,16 +2,44 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Mężczyzna — Klatka, Brzuch, Plecy</title>
+  <title>Mężczyzna — Klatka, brzuch, plecy</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      justify-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .card {
+      width: 100%;
+      max-width: 320px;
+      background: rgba(86,51,142,.18);
+      border-radius: 16px;
+      border: 1px solid rgba(165,140,255,.12);
+      box-shadow: inset 0 0 1px rgba(165,140,255,.22),
+                  0 6px 18px rgba(0,0,0,.35);
+      overflow: hidden;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0,0,0,.45),
+                  0 0 20px rgba(165,140,255,.25);
+    }
+    .card img { display:block; width:100%; height:auto; }
+    .card span { display:block; padding:10px; text-align:center; font-weight:600; }
+  </style>
 </head>
-<body data-page="mezczyzna">
+<body data-page="mezczyzna-klatka">
   <div class="nav-links">
     <a href="index.html" class="back-link">← Powrót do startu</a> |
     <a href="mezczyzna.html" class="back-link">← Wróć do wyboru sekcji</a>
   </div>
 
-  <h1>Wybierz narząd / część ciała</h1>
+  <h1>Mężczyzna — Klatka, brzuch, plecy</h1>
 
   <div class="grid">
     <a href="szczegoly.html?id=serce_m" class="card">
@@ -24,6 +52,11 @@
       <span>Płuca</span>
     </a>
 
+    <a href="szczegoly.html?id=klatka_piersiowa_m" class="card">
+      <img src="img/mezczyzna-klatka.jpg" alt="Klatka piersiowa">
+      <span>Klatka piersiowa</span>
+    </a>
+
     <a href="szczegoly.html?id=brzuch_m" class="card">
       <img src="img/mezczyzna-brzuch.jpg" alt="Brzuch">
       <span>Brzuch</span>
@@ -34,14 +67,9 @@
       <span>Plecy</span>
     </a>
 
-    <a href="szczegoly.html?id=klatka_m" class="card">
-      <img src="img/mezczyzna-klatka.jpg" alt="Klatka piersiowa">
-      <span>Klatka (ściana klp/mięśnie)</span>
-    </a>
-
     <a href="szczegoly.html?id=uklad_krw_m" class="card">
-      <img src="img/uklad-k.jpg" alt="Układ krwionośny">
-      <span>Układ krwionośny</span>
+      <img src="img/uklad-krwionosny.png" alt="Układ krążenia">
+      <span>Układ krążenia</span>
     </a>
 
     <a href="szczegoly.html?id=uklad_oddech_m" class="card">
@@ -50,7 +78,7 @@
     </a>
 
     <a href="szczegoly.html?id=uklad_pokarm_m" class="card">
-      <img src="img/uklad-pokarmowy.jpg" alt="Układ pokarmowy">
+      <img src="img/uklad-pokarmowy.png" alt="Układ pokarmowy">
       <span>Układ pokarmowy</span>
     </a>
   </div>
