@@ -64,10 +64,391 @@ const params = new URLSearchParams(location.search);
 const id = params.get("id");
 document.getElementById("sectionBack").href = sectionUrlFromId(id);
 
-/* ====== 2) Fallback CONTENT ====== */
-/* ⬇️ tutaj wklejasz cały blok window.CONTENT (kobieta + mężczyzna) z opisami */
+/* ====== 2) Pełny CONTENT ====== */
 window.CONTENT = {
-  /* — wklej pełny CONTENT, który już masz (kobieta i mężczyzna) — */
+  /* ==== GŁOWA KOBIETA ==== */
+  oczy_k: {
+    title: "Oczy — kobieta",
+    causes: ["Zapalenie spojówek", "Zespół suchego oka", "Alergie"],
+    symptoms: ["Łzawienie", "Piecznie", "Świąd", "Zaczerwienienie"],
+    doctors: ["Okulista", "POZ"],
+    medications: ["Sztuczne łzy", "Krople antyhistaminowe"],
+    first_aid: ["Unikanie alergenów", "Płukanie oczu solą fizjologiczną"],
+    emergency: ["Nagła utrata wzroku — dzwoń 112"],
+    description: "Oczy są wrażliwe i reagują na infekcje, alergie i zmęczenie."
+  },
+  uszy_k: {
+    title: "Uszy — kobieta",
+    causes: ["Infekcje ucha", "Nagromadzenie woskowiny", "Urazy"],
+    symptoms: ["Ból ucha", "Szumy", "Upośledzenie słuchu"],
+    doctors: ["Laryngolog"],
+    medications: ["Krople do uszu", "Antybiotyki"],
+    first_aid: ["Ciepły kompres", "Unikanie wody w uchu"],
+    emergency: ["Nagła utrata słuchu — 112"],
+    description: "Problemy z uszami często są infekcyjne."
+  },
+  nos_k: {
+    title: "Nos — kobieta",
+    causes: ["Infekcje wirusowe", "Alergie", "Polipy"],
+    symptoms: ["Katar", "Niedrożność nosa", "Ból zatok"],
+    doctors: ["Laryngolog", "Alergolog"],
+    medications: ["Krople obkurczające", "Sterydy donosowe"],
+    first_aid: ["Płukanie solą fizjologiczną"],
+    description: "Nos reaguje na alergie i infekcje."
+  },
+  szczeka_k: {
+    title: "Szczęka — kobieta",
+    causes: ["Bruksizm", "Zapalenie stawu skroniowo-żuchwowego"],
+    symptoms: ["Ból przy żuciu", "Trzaski w stawie"],
+    doctors: ["Dentysta", "Ortodonta"],
+    medications: ["NLPZ", "Szyny relaksacyjne"],
+    first_aid: ["Unikanie twardych pokarmów"],
+    description: "Częste u osób z napięciem nerwowym."
+  },
+  szyja_k: {
+    title: "Szyja — kobieta",
+    causes: ["Przeciążenie mięśni", "Stres", "Urazy"],
+    symptoms: ["Ból karku", "Sztywność"],
+    doctors: ["Neurolog", "Fizjoterapeuta"],
+    medications: ["NLPZ", "Maści rozgrzewające"],
+    first_aid: ["Rozluźnianie mięśni", "Ćwiczenia"],
+    description: "Ból szyi zwykle wynika z napięcia mięśniowego."
+  },
+  glowa_k: {
+    title: "Głowa — kobieta",
+    causes: ["Migrena", "Napięciowy ból głowy"],
+    symptoms: ["Ból jednostronny", "Światłowstręt"],
+    doctors: ["Neurolog"],
+    medications: ["Leki przeciwbólowe", "Tryptany"],
+    first_aid: ["Odpoczynek w ciemnym pokoju"],
+    description: "Najczęstsze bóle głowy to napięciowe i migrenowe."
+  },
+
+  /* ==== KLATKA KOBIETA ==== */
+  serce_k: {
+    title: "Serce — kobieta",
+    causes: ["Nadciśnienie", "Choroba wieńcowa", "Zawał"],
+    symptoms: ["Ból w klatce", "Duszność"],
+    doctors: ["Kardiolog"],
+    medications: ["Nitrogliceryna", "Beta-blokery"],
+    first_aid: ["Spoczynek", "Wezwij pogotowie"],
+    emergency: ["Silny ból za mostkiem — 112"],
+    description: "Choroby serca wymagają pilnej diagnostyki."
+  },
+  pluca_k: {
+    title: "Płuca — kobieta",
+    causes: ["Zapalenie płuc", "Astma", "POChP"],
+    symptoms: ["Kaszel", "Duszność"],
+    doctors: ["Pulmonolog"],
+    medications: ["Antybiotyki", "Sterydy wziewne"],
+    first_aid: ["Spoczynek", "Nawodnienie"],
+    description: "Choroby płuc mogą być ostre i przewlekłe."
+  },
+  klatka_piersiowa_k: {
+    title: "Klatka piersiowa — kobieta",
+    causes: ["Zapalenie mięśni", "Kostochondritis"],
+    symptoms: ["Ból przy ruchu"],
+    doctors: ["Ortopeda", "Fizjoterapeuta"],
+    medications: ["NLPZ", "Maści przeciwzapalne"],
+    first_aid: ["Odpoczynek", "Ciepłe okłady"],
+    description: "Najczęściej podłoże mięśniowo-szkieletowe."
+  },
+  brzuch_k: {
+    title: "Brzuch — kobieta",
+    causes: ["Niestrawność", "ZJD", "Zapalenie żołądka"],
+    symptoms: ["Ból brzucha", "Wzdęcia"],
+    doctors: ["Gastroenterolog"],
+    medications: ["Leki rozkurczowe", "Probiotyki"],
+    first_aid: ["Dieta lekkostrawna", "Nawodnienie"],
+    description: "Wiele możliwych przyczyn."
+  },
+  plecy_k: {
+    title: "Plecy — kobieta",
+    causes: ["Przeciążenie", "Dyskopatia"],
+    symptoms: ["Ból przy ruchu", "Sztywność"],
+    doctors: ["Ortopeda", "Neurolog"],
+    medications: ["NLPZ"],
+    first_aid: ["Odpoczynek", "Delikatne rozciąganie"],
+    description: "Najczęściej przeciążeniowe."
+  },
+  uklad_krw_k: {
+    title: "Układ krążenia — kobieta",
+    causes: ["Nadciśnienie", "Arytmia"],
+    symptoms: ["Zawroty", "Obrzęki"],
+    doctors: ["Kardiolog"],
+    medications: ["Leki na ciśnienie"],
+    first_aid: ["Kontrola ciśnienia"],
+    description: "Układ krążenia transportuje krew."
+  },
+  uklad_oddech_k: {
+    title: "Układ oddechowy — kobieta",
+    causes: ["Infekcje", "Astma"],
+    symptoms: ["Kaszel", "Świsty"],
+    doctors: ["Pulmonolog"],
+    medications: ["Leki wziewne"],
+    first_aid: ["Spokój", "Nawodnienie"],
+    description: "Odpowiada za wymianę gazową."
+  },
+  uklad_pokarm_k: {
+    title: "Układ pokarmowy — kobieta",
+    causes: ["Zatrucie", "Refluks", "ZJD"],
+    symptoms: ["Ból brzucha", "Zgaga"],
+    doctors: ["Gastroenterolog"],
+    medications: ["Leki rozkurczowe"],
+    first_aid: ["Dieta lekkostrawna"],
+    description: "Układ trawienny odpowiada za trawienie pokarmów."
+  },
+  ciaza_k: {
+    title: "Ciąża — kobieta",
+    causes: ["Fizjologiczne zmiany", "Powikłania ciąży"],
+    symptoms: ["Bóle brzucha", "Obrzęki"],
+    doctors: ["Ginekolog"],
+    medications: ["Suplementy", "Leki wg zaleceń lekarza"],
+    first_aid: ["Odpoczynek", "Konsultacja"],
+    description: "Ciąża wymaga stałej kontroli medycznej."
+  },
+
+  /* ==== NOGI KOBIETA ==== */
+  biodra_k: {
+    title: "Biodra — kobieta",
+    causes: ["Przeciążenie", "Zapalenie stawu biodrowego"],
+    symptoms: ["Ból pachwiny", "Ograniczenie ruchu"],
+    doctors: ["Ortopeda", "Fizjoterapeuta"],
+    medications: ["Paracetamol", "NLPZ"],
+    first_aid: ["Odpoczynek", "Chłodzenie"],
+    description: "Ból bioder częsty przy przeciążeniu."
+  },
+  uda_k: {
+    title: "Uda — kobieta",
+    causes: ["Naciągnięcie mięśni", "Uraz sportowy"],
+    symptoms: ["Ból przy ruchu", "Siniaki"],
+    doctors: ["Ortopeda", "Fizjoterapeuta"],
+    medications: ["NLPZ"],
+    first_aid: ["RICE", "Rozciąganie"],
+    description: "Najczęściej przeciążenie."
+  },
+  kolano_k: {
+    title: "Kolano — kobieta",
+    causes: ["Przeciążenie", "Uszkodzenie łąkotki"],
+    symptoms: ["Ból przy schodzeniu", "Obrzęk"],
+    doctors: ["Ortopeda"],
+    medications: ["NLPZ"],
+    first_aid: ["Odpoczynek", "Stabilizacja"],
+    description: "Kolano często boli przy urazach sportowych."
+  },
+  lydka_k: {
+    title: "Łydka — kobieta",
+    causes: ["Skurcz", "Naciągnięcie mięśnia", "(Rzadko) zakrzepica"],
+    symptoms: ["Ból kłujący", "Tkliwość"],
+    doctors: ["POZ", "Fizjoterapeuta"],
+    medications: ["Magnez", "NLPZ"],
+    first_aid: ["Rozciąganie", "Chłodzenie"],
+    description: "Najczęściej przeciążenie mięśnia."
+  },
+  kostka_k: {
+    title: "Kostka — kobieta",
+    causes: ["Skręcenie", "Naciągnięcie więzadeł"],
+    symptoms: ["Obrzęk", "Ból przy obciążaniu"],
+    doctors: ["Ortopeda"],
+    medications: ["NLPZ"],
+    first_aid: ["RICE", "Unieruchomienie"],
+    description: "Skręcenia kostki zwykle łagodne."
+  },
+  stopy_k: {
+    title: "Stopy — kobieta",
+    causes: ["Zapalenie rozcięgna", "Złe obuwie"],
+    symptoms: ["Ból pięty", "Poranny ból"],
+    doctors: ["Ortopeda"],
+    medications: ["Wkładki", "NLPZ"],
+    first_aid: ["Rozciąganie", "Odpoczynek"],
+    description: "Stopy są bardzo obciążane w codzienności."
+  },
+  /* ==== GŁOWA MĘŻCZYZNA ==== */
+  oczy_m: {
+    title: "Oczy — mężczyzna",
+    causes: ["Zapalenie spojówek", "Alergie"],
+    symptoms: ["Świąd", "Piecznie"],
+    doctors: ["Okulista"],
+    medications: ["Sztuczne łzy"],
+    first_aid: ["Płukanie solą"],
+    description: "Najczęściej alergie lub infekcje."
+  },
+  uszy_m: {
+    title: "Uszy — mężczyzna",
+    causes: ["Infekcje", "Woskowina"],
+    symptoms: ["Ból ucha", "Szumy"],
+    doctors: ["Laryngolog"],
+    medications: ["Krople"],
+    first_aid: ["Ciepły kompres"],
+    description: "Ból uszu zwykle infekcyjny."
+  },
+  nos_m: {
+    title: "Nos — mężczyzna",
+    causes: ["Infekcje wirusowe", "Alergie"],
+    symptoms: ["Katar", "Niedrożność"],
+    doctors: ["Laryngolog"],
+    medications: ["Krople donosowe"],
+    first_aid: ["Płukanie nosa"],
+    description: "Nos często reaguje na alergeny."
+  },
+  szczeka_m: {
+    title: "Szczęka — mężczyzna",
+    causes: ["Bruksizm", "Urazy"],
+    symptoms: ["Ból przy żuciu"],
+    doctors: ["Dentysta"],
+    medications: ["NLPZ"],
+    first_aid: ["Unikanie twardych pokarmów"],
+    description: "Ból szczęki najczęściej zęby lub staw skroniowy."
+  },
+  szyja_m: {
+    title: "Szyja — mężczyzna",
+    causes: ["Przeciążenie", "Stres"],
+    symptoms: ["Ból karku"],
+    doctors: ["Neurolog"],
+    medications: ["NLPZ"],
+    first_aid: ["Ćwiczenia rozciągające"],
+    description: "Częste przy siedzącym trybie pracy."
+  },
+  glowa_m: {
+    title: "Głowa — mężczyzna",
+    causes: ["Migrena", "Ból napięciowy"],
+    symptoms: ["Światłowstręt", "Ból uciskowy"],
+    doctors: ["Neurolog"],
+    medications: ["Leki p/bólowe"],
+    first_aid: ["Cisza, odpoczynek"],
+    description: "Najczęstsze bóle głowy to napięciowe i migrenowe."
+  },
+
+  /* ==== KLATKA MĘŻCZYZNA ==== */
+  serce_m: {
+    title: "Serce — mężczyzna",
+    causes: ["Choroba wieńcowa", "Zawał"],
+    symptoms: ["Ból w klatce", "Duszność"],
+    doctors: ["Kardiolog"],
+    medications: ["Nitrogliceryna"],
+    first_aid: ["Spoczynek", "Wezwij pogotowie"],
+    emergency: ["Silny ból w klatce — 112"],
+    description: "Choroby serca wymagają pilnej diagnostyki."
+  },
+  pluca_m: {
+    title: "Płuca — mężczyzna",
+    causes: ["Zapalenie płuc", "Astma"],
+    symptoms: ["Kaszel", "Duszność"],
+    doctors: ["Pulmonolog"],
+    medications: ["Antybiotyki", "Sterydy wziewne"],
+    first_aid: ["Spokój", "Nawodnienie"],
+    description: "Choroby płuc mogą być poważne."
+  },
+  klatka_piersiowa_m: {
+    title: "Klatka piersiowa — mężczyzna",
+    causes: ["Zapalenie mięśni", "Kostochondritis"],
+    symptoms: ["Ból przy ruchu"],
+    doctors: ["Ortopeda"],
+    medications: ["NLPZ"],
+    first_aid: ["Odpoczynek"],
+    description: "Bóle klatki często mięśniowo-szkieletowe."
+  },
+  brzuch_m: {
+    title: "Brzuch — mężczyzna",
+    causes: ["Niestrawność", "Refluks"],
+    symptoms: ["Ból brzucha", "Wzdęcia"],
+    doctors: ["Gastroenterolog"],
+    medications: ["Leki rozkurczowe"],
+    first_aid: ["Dieta lekkostrawna"],
+    description: "Wiele możliwych przyczyn."
+  },
+  plecy_m: {
+    title: "Plecy — mężczyzna",
+    causes: ["Przeciążenie", "Dyskopatia"],
+    symptoms: ["Ból przy ruchu", "Sztywność"],
+    doctors: ["Ortopeda"],
+    medications: ["NLPZ"],
+    first_aid: ["Odpoczynek"],
+    description: "Najczęściej przeciążeniowe."
+  },
+  uklad_krw_m: {
+    title: "Układ krążenia — mężczyzna",
+    causes: ["Nadciśnienie", "Miażdżyca"],
+    symptoms: ["Zawroty", "Obrzęki"],
+    doctors: ["Kardiolog"],
+    medications: ["Leki na ciśnienie"],
+    first_aid: ["Kontrola ciśnienia"],
+    description: "Układ krążenia transportuje krew."
+  },
+  uklad_oddech_m: {
+    title: "Układ oddechowy — mężczyzna",
+    causes: ["Infekcje", "Astma"],
+    symptoms: ["Kaszel", "Świsty"],
+    doctors: ["Pulmonolog"],
+    medications: ["Leki wziewne"],
+    first_aid: ["Spokój"],
+    description: "Odpowiada za wymianę gazową."
+  },
+  uklad_pokarm_m: {
+    title: "Układ pokarmowy — mężczyzna",
+    causes: ["Zatrucie", "Refluks"],
+    symptoms: ["Ból brzucha", "Zgaga"],
+    doctors: ["Gastroenterolog"],
+    medications: ["Leki rozkurczowe"],
+    first_aid: ["Dieta lekkostrawna"],
+    description: "Układ trawienny odpowiada za trawienie pokarmów."
+  },
+
+  /* ==== NOGI MĘŻCZYZNA ==== */
+  biodra_m: {
+    title: "Biodra — mężczyzna",
+    causes: ["Przeciążenie", "Zapalenie stawu biodrowego"],
+    symptoms: ["Ból pachwiny", "Ograniczenie ruchu"],
+    doctors: ["Ortopeda", "Fizjoterapeuta"],
+    medications: ["Paracetamol", "NLPZ"],
+    first_aid: ["Odpoczynek", "Chłodzenie"],
+    description: "Ból bioder częsty przy przeciążeniu."
+  },
+  uda_m: {
+    title: "Uda — mężczyzna",
+    causes: ["Naciągnięcie mięśni", "Uraz sportowy"],
+    symptoms: ["Ból przy ruchu", "Siniaki"],
+    doctors: ["Ortopeda", "Fizjoterapeuta"],
+    medications: ["NLPZ"],
+    first_aid: ["RICE", "Rozciąganie"],
+    description: "Najczęściej przeciążenie."
+  },
+  kolano_m: {
+    title: "Kolano — mężczyzna",
+    causes: ["Przeciążenie", "Uszkodzenie łąkotki"],
+    symptoms: ["Ból przy schodzeniu", "Obrzęk"],
+    doctors: ["Ortopeda"],
+    medications: ["NLPZ"],
+    first_aid: ["Odpoczynek", "Stabilizacja"],
+    description: "Kolano często boli przy urazach sportowych."
+  },
+  lydka_m: {
+    title: "Łydka — mężczyzna",
+    causes: ["Skurcz", "Naciągnięcie mięśnia", "(Rzadko) zakrzepica"],
+    symptoms: ["Ból kłujący", "Tkliwość"],
+    doctors: ["POZ", "Fizjoterapeuta"],
+    medications: ["Magnez", "NLPZ"],
+    first_aid: ["Rozciąganie", "Chłodzenie"],
+    description: "Najczęściej przeciążenie mięśnia."
+  },
+  kostka_m: {
+    title: "Kostka — mężczyzna",
+    causes: ["Skręcenie", "Naciągnięcie więzadeł"],
+    symptoms: ["Obrzęk", "Ból przy obciążaniu"],
+    doctors: ["Ortopeda"],
+    medications: ["NLPZ"],
+    first_aid: ["RICE", "Unieruchomienie"],
+    description: "Skręcenia kostki zwykle łagodne."
+  },
+  stopy_m: {
+    title: "Stopy — mężczyzna",
+    causes: ["Zapalenie rozcięgna", "Złe obuwie"],
+    symptoms: ["Ból pięty", "Poranny ból"],
+    doctors: ["Ortopeda"],
+    medications: ["Wkładki", "NLPZ"],
+    first_aid: ["Rozciąganie", "Odpoczynek"],
+    description: "Stopy są bardzo obciążane w codzienności."
+  }
 };
 
 /* ====== 3) Funkcje pomocnicze ====== */
