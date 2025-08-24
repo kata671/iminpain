@@ -2,42 +2,94 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <title>Kobieta — Klatka piersiowa</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kobieta — Klatka, brzuch, plecy</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body data-page="kobieta">
-  <div class="nav-links">
-    <a href="index.html" class="back-link">← Powrót do startu</a> |
-    <a href="kobieta.html" class="back-link">← Wróć do wyboru sekcji</a>
-  </div>
+<body data-page="kobieta-klatka">
 
-  <h1>Kobieta — Klatka piersiowa</h1>
+  <header>
+    <nav class="breadcrumbs">
+      <a href="index.html">← Powrót do startu</a>
+      <span>|</span>
+      <a href="kobieta.html">Wróć do wyboru sekcji</a>
+    </nav>
+    <h1>Kobieta — Klatka, brzuch, plecy</h1>
+  </header>
 
-  <!-- Jedyne co zmieniamy: class="grid" -> class="kafelki" -->
-  <div class="kafelki">
+  <main>
+    <!-- zmiana: było class="grid-container" → teraz class="kafelki" -->
+    <section class="kafelki" aria-label="Wybór sekcji">
 
-    <!-- Wklej tutaj SWOJE działające kafelki 
-         (np. układ pokarmowy, układ oddechowy, układ krążenia itd.)
-         dokładnie tak jak były, bez zmiany href/src/alt/span -->
+      <article class="card">
+        <a href="kobieta-serce.html">
+          <img class="card-image" src="img/kobieta-serce.jpg" alt="Serce" loading="lazy">
+          <div class="card-caption">Serce</div>
+        </a>
+      </article>
 
-    <!-- przykład na podstawie Twojego opisu -->
-    <a href="szczegoly.html?id=uklad_pokarmowy_k" class="card">
-      <img src="img/kobieta-uklad-pokarmowy.jpg" alt="Układ pokarmowy">
-      <span>Układ pokarmowy</span>
-    </a>
+      <article class="card">
+        <a href="kobieta-pluca.html">
+          <img class="card-image" src="img/kobieta-pluca.jpg" alt="Płuca" loading="lazy">
+          <div class="card-caption">Płuca</div>
+        </a>
+      </article>
 
-    <a href="szczegoly.html?id=uklad_oddechowy_k" class="card">
-      <img src="img/kobieta-uklad-oddechowy.jpg" alt="Układ oddechowy">
-      <span>Układ oddechowy</span>
-    </a>
+      <article class="card">
+        <a href="kobieta-klatka-piersiowa.html">
+          <img class="card-image" src="img/kobieta-klatka.jpg" alt="Klatka piersiowa" loading="lazy">
+          <div class="card-caption">Klatka piersiowa</div>
+        </a>
+      </article>
 
-    <a href="szczegoly.html?id=uklad_krazenia_k" class="card">
-      <img src="img/kobieta-uklad-krazenia.jpg" alt="Układ krążenia">
-      <span>Układ krążenia</span>
-    </a>
+      <article class="card">
+        <a href="kobieta-brzuch.html">
+          <img class="card-image" src="img/kobieta-brzuch.jpg" alt="Brzuch" loading="lazy">
+          <div class="card-caption">Brzuch</div>
+        </a>
+      </article>
 
-    <!-- jeśli masz więcej kafli, po prostu doklej je tutaj -->
-    
-  </div>
+      <article class="card">
+        <a href="kobieta-plecy.html">
+          <img class="card-image" src="img/kobieta-plecy.jpg" alt="Plecy" loading="lazy">
+          <div class="card-caption">Plecy</div>
+        </a>
+      </article>
+
+      <article class="card">
+        <a href="kobieta-uklad-krwionosny.html">
+          <img class="card-image" src="img/uklad-krwionosny.png" alt="Układ krwionośny" loading="lazy">
+          <div class="card-caption">Układ krwionośny</div>
+        </a>
+      </article>
+
+      <article class="card">
+        <a href="kobieta-uklad-oddechowy.html">
+          <img class="card-image" src="img/uklad-oddechowy.jpg" alt="Układ oddechowy" loading="lazy">
+          <div class="card-caption">Układ oddechowy</div>
+        </a>
+      </article>
+
+      <article class="card">
+        <a href="kobieta-uklad-pokarmowy.html">
+          <img class="card-image" src="img/uklad-pokarmowy.png" alt="Układ pokarmowy" loading="lazy">
+          <div class="card-caption">Układ pokarmowy</div>
+        </a>
+      </article>
+
+      <article class="card emergency">
+        <a href="szczegoly.html?id=pomoc">
+          <img class="card-image" src="img/nagla-pomoc.jpg" alt="Nagła pomoc" loading="lazy">
+          <div class="card-caption">Nagła pomoc</div>
+        </a>
+      </article>
+
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  </footer>
+
 </body>
 </html>
