@@ -4,16 +4,57 @@
   <meta charset="UTF-8" />
   <title>Szczegóły</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Twój główny CSS (nie zmieniamy go) -->
+  <!-- Twój główny CSS (zostaw bez zmian) -->
   <link rel="stylesheet" href="style.css" />
-  <!-- Drobne style pomocnicze strony (bezpieczne) -->
+  <!-- Minimalne, lokalne style tylko dla tej strony -->
   <style>
     .nav-links { margin: 10px 0; }
     .back-link { color:#6cf; text-decoration:none; margin-right:12px; }
     .card h3 { margin:0 0 8px; }
-    ul { margin:0; padding-left: 18px; }
+    ul { margin:0; padding-left:18px; }
     .pill { display:inline-block; height:10px; width:80px; border-radius:20px; background:#6cf; }
     .error { color:#f99; margin-top:20px; font-size:18px; }
+
+    /* ✅ Układ i styl tylko na tej stronie */
+    body[data-page="szczegoly"] #content .cards{
+      display:grid !important;
+      grid-template-columns:repeat(3, minmax(0,1fr)) !important;
+      gap:24px !important;
+      justify-items:center !important;
+      align-items:start !important;
+      max-width:1100px !important;
+      margin:28px auto !important;
+      padding:0 8px !important;
+    }
+    body[data-page="szczegoly"] #content .cards .card{
+      max-width:320px;
+      border-radius:16px;
+      background:rgba(34,42,90,.85);
+      border:2px solid #5463b5;
+      box-shadow:0 6px 16px rgba(0,0,0,.25);
+      transition:transform .15s, box-shadow .15s, background .15s;
+      padding:16px;
+    }
+    body[data-page="szczegoly"] #content .cards .card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 24px rgba(255,255,255,.12), 0 0 20px rgba(165,140,255,.25);
+    }
+    body[data-page="szczegoly"] #content .cards .card.emergency{
+      background:rgba(120,8,8,.22);
+      border:2px solid #ff3c3c;
+      box-shadow:inset 0 0 2px rgba(255,60,60,.5), 0 6px 18px rgba(0,0,0,.35);
+    }
+    body[data-page="szczegoly"] #content .cards .card.emergency:hover{
+      box-shadow:0 10px 28px rgba(0,0,0,.5), 0 0 28px rgba(255,40,40,.9);
+    }
+
+    /* 📱 RWD */
+    @media (max-width:980px){
+      body[data-page="szczegoly"] #content .cards{ grid-template-columns:repeat(2, minmax(0,1fr)) !important; }
+    }
+    @media (max-width:640px){
+      body[data-page="szczegoly"] #content .cards{ grid-template-columns:minmax(0,1fr) !important; }
+    }
   </style>
 </head>
 <body data-page="szczegoly">
@@ -30,53 +71,43 @@
   <div id="err" class="error" style="display:none"></div>
 
   <footer style="margin-top:40px">
-    <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
+    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
   </footer>
 
 <script>
-/* ====== 1) Routing powrotu do właściwej sekcji ====== */
+/* ===== 1) Link „Wróć do wyboru sekcji” na podstawie ?id= ===== */
 function sectionUrlFromId(id) {
   if (!id) return "index.html";
   const female = id.endsWith("_k");
   const male = id.endsWith("_m");
-
   const groupMapK = {
-    // Głowa
     oczy_k:"kobieta-glowa.html", uszy_k:"kobieta-glowa.html", nos_k:"kobieta-glowa.html",
     szczeka_k:"kobieta-glowa.html", szyja_k:"kobieta-glowa.html", glowa_k:"kobieta-glowa.html",
-    // Klatka/Brzuch/Plecy i układy
     serce_k:"kobieta-klatka.html", pluca_k:"kobieta-klatka.html",
     klatka_piersiowa_k:"kobieta-klatka.html", brzuch_k:"kobieta-klatka.html", plecy_k:"kobieta-klatka.html",
     uklad_krw_k:"kobieta-klatka.html", uklad_oddech_k:"kobieta-klatka.html", uklad_pokarm_k:"kobieta-klatka.html",
-    // Nogi
     biodra_k:"kobieta-nogi.html", uda_k:"kobieta-nogi.html", kolano_k:"kobieta-nogi.html",
     lydka_k:"kobieta-nogi.html", kostka_k:"kobieta-nogi.html", stopy_k:"kobieta-nogi.html",
-    // Inne
     ciaza_k:"kobieta.html"
   };
-
   const groupMapM = {
-    // Głowa
     oczy_m:"mezczyzna-glowa.html", uszy_m:"mezczyzna-glowa.html", nos_m:"mezczyzna-glowa.html",
     szczeka_m:"mezczyzna-glowa.html", szyja_m:"mezczyzna-glowa.html", glowa_m:"mezczyzna-glowa.html",
-    // Klatka/Brzuch/Plecy i układy
     serce_m:"mezczyzna-klatka.html", pluca_m:"mezczyzna-klatka.html",
     klatka_piersiowa_m:"mezczyzna-klatka.html", brzuch_m:"mezczyzna-klatka.html", plecy_m:"mezczyzna-klatka.html",
     uklad_krw_m:"mezczyzna-klatka.html", uklad_oddech_m:"mezczyzna-klatka.html", uklad_pokarm_m:"mezczyzna-klatka.html",
-    // Nogi
     biodra_m:"mezczyzna-nogi.html", uda_m:"mezczyzna-nogi.html", kolano_m:"mezczyzna-nogi.html",
     lydka_m:"mezczyzna-nogi.html", kostka_m:"mezczyzna-nogi.html", stopy_m:"mezczyzna-nogi.html"
   };
-
   if (female) return groupMapK[id] || "kobieta.html";
   if (male) return groupMapM[id] || "mezczyzna.html";
   return "index.html";
 }
 const params = new URLSearchParams(location.search);
-const id = params.get("id");
-document.getElementById("sectionBack").href = sectionUrlFromId(id);
+const QID = params.get("id");
+document.getElementById("sectionBack").href = sectionUrlFromId(QID);
 
-/* ====== 2) Helpery UI ====== */
+/* ===== 2) Helpery elementów ===== */
 function el(tag, className, html) {
   const e = document.createElement(tag);
   if (className) e.className = className;
@@ -96,34 +127,44 @@ function card(title, items) {
   return c;
 }
 
-/* ====== 3) Render z JSON (data/detailed_conditions.json) ====== */
+/* ===== 3) Loader z JSON (z fallbackami i cache-busterem) ===== */
 async function load() {
   const err = document.getElementById("err");
   const content = document.getElementById("content");
   const titleEl = document.getElementById("title");
 
   try {
-    if (!id) throw new Error("Brak parametru ?id w adresie.");
+    if (!QID) throw new Error("Brak parametru ?id w adresie.");
+    const sources = [
+      "/data/detailed_conditions.json",
+      "data/detailed_conditions.json",
+      "/data/conditions.json",
+      "data/conditions.json",
+      "/detailed_conditions.json",
+      "detailed_conditions.json"
+    ];
 
-    // Pobierz dane (cache-buster, aby ominąć cache GH Pages)
-    const resp = await fetch("data/detailed_conditions.json?ts=" + Date.now(), { cache: "no-store" });
-    if (!resp.ok) throw new Error("Nie udało się pobrać danych JSON (HTTP " + resp.status + ").");
-    const allData = await resp.json();
+    let node = null, lastError = null;
+    for (const src of sources) {
+      try {
+        const r = await fetch(src + "?ts=" + Date.now(), { cache:"no-store" });
+        if (!r.ok) { lastError = "HTTP " + r.status + " @ " + src; continue; }
+        const json = await r.json();
+        if (json && json[QID]) { node = json[QID]; break; }
+      } catch (e) { lastError = e.message || String(e); }
+    }
 
-    const node = allData[id];
     if (!node) {
-      titleEl.textContent = "Brak danych: " + id;
-      content.innerHTML = "<p style='color:#f99'>Nie znaleziono treści dla tego obszaru.</p>";
+      titleEl.textContent = "Brak danych: " + QID;
+      content.innerHTML =
+        "<p style='color:#f99'>Nie znaleziono wpisu <code>"+QID+
+        "</code> w pliku JSON. "+(lastError?("("+lastError+")"):"")+"</p>";
       return;
     }
 
-    // Tytuł
-    titleEl.textContent = node.title || id;
+    titleEl.textContent = node.title || QID;
 
-    // Siatka kart (kolejność: przyczyny, objawy, obawy/pilne, lekarze, leki, pierwsza pomoc)
-    const grid = document.createElement("div");
-    grid.className = "cards";
-
+    const grid = el("div","cards");
     if (node.causes)      grid.appendChild(card("Możliwe przyczyny bólu", node.causes));
     if (node.symptoms)    grid.appendChild(card("Typowe objawy", node.symptoms));
     if (node.concerns)    grid.appendChild(card("⚠️ Obawy / pilne sygnały", node.concerns));
@@ -131,7 +172,6 @@ async function load() {
     if (node.medications) grid.appendChild(card("Leki / środki łagodzące", node.medications));
     if (node.first_aid)   grid.appendChild(card("Pierwsza pomoc (domowa)", node.first_aid));
 
-    // Zawsze dokładamy awaryjny kafelek (treść z node.emergency albo domyślna)
     const emergencyList = Array.isArray(node.emergency) ? node.emergency : [
       "Silny, narastający ból, duszność, zlewne poty, omdlenie.",
       "Objawy udaru: osłabienie, bełkotliwa mowa, opadnięty kącik ust.",
@@ -142,17 +182,18 @@ async function load() {
     em.classList.add("emergency");
     grid.appendChild(em);
 
-    // Wstaw na stronę
     content.innerHTML = "";
     content.appendChild(grid);
 
-    // Długi opis (opcjonalnie)
     if (node.description) {
       const desc = document.createElement("p");
       desc.style.marginTop = "16px";
       desc.textContent = node.description;
       content.appendChild(desc);
     }
+
+    // Ustaw „awaryjny” kafel na pozycję 5 (index 4)
+    placeEmergencyAtIndex5();
 
   } catch (e) {
     const errEl = document.getElementById("err");
@@ -161,209 +202,52 @@ async function load() {
   }
 }
 load();
-</script>
 
-<!-- ====== 4) ULTRA-bezpieczny hotfix wyglądu i układu ====== -->
-<script>
-/*
-  Ten blok NIC nie zmienia w danych.
-  Tylko:
-   - ustawia stały układ 3 kolumn (3+3),
-   - przenosi/dokłada czerwony kafelek na pozycję 5,
-   - dodaje efekty hover (biały/czerwony glow).
-*/
-(function hotfixSzczegolyLayout(){
-  const EMERGENCY_TITLE = "Niezwłoczna pomoc (112/SOR)";
-  const DEFAULT_EM_LIST = [
-    "Silny, narastający ból, duszność, zlewne poty, omdlenie.",
-    "Objawy udaru: osłabienie, bełkotliwa mowa, opadnięty kącik ust.",
-    "Ostra duszność, sinica, krwawienie, silny uraz.",
-    "W razie wątpliwości: natychmiast zadzwoń 112."
-  ];
+/* ===== 4) Pozycjonowanie czerwonego kafla na index 4 (pozycja 5) ===== */
+function placeEmergencyAtIndex5(){
+  const grid = document.querySelector('#content .cards');
+  if (!grid) return;
+  const em = Array.from(grid.children).find(c => c.classList && c.classList.contains('emergency'));
+  if (!em) return;
+  const targetIndex = 4;
+  if (grid.children.length <= targetIndex) grid.appendChild(em);
+  else grid.insertBefore(em, grid.children[targetIndex]);
+}
 
-  function ensureHoverCSS(){
-    if (document.getElementById('szczegoly-hover-css')) return;
-    const s = document.createElement('style');
-    s.id = 'szczegoly-hover-css';
-    s.textContent = `
-      body[data-page="szczegoly"] .card{
-        transition: transform .15s, box-shadow .15s, background .15s;
-        border-radius: 16px;
-      }
-      body[data-page="szczegoly"] .card:hover{
-        transform: translateY(-2px);
-        box-shadow: 0 10px 24px rgba(255,255,255,.12), 0 0 20px rgba(165,140,255,.25);
-      }
-      body[data-page="szczegoly"] .card.emergency{
-        background: rgba(120, 8, 8, .22);
-        border: 2px solid #ff3c3c;
-        box-shadow: inset 0 0 2px rgba(255,60,60,.5), 0 6px 18px rgba(0,0,0,.35);
-      }
-      body[data-page="szczegoly"] .card.emergency:hover{
-        box-shadow: 0 10px 28px rgba(0,0,0,.5), 0 0 28px rgba(255,40,40,.9);
-      }
-    `;
-    document.head.appendChild(s);
-  }
+/* ===== 5) Sticky/rescue: jeśli coś wyczyści #content, przywróć ===== */
+(function stickyRescue(){
+  const content = document.getElementById('content');
+  if (!content || !('MutationObserver' in window)) return;
 
-  function makeEmergencyCard(){
-    const wrap = document.createElement('div');
-    wrap.className = 'card emergency';
-    const h = document.createElement('h3');
-    h.textContent = EMERGENCY_TITLE;
-    wrap.appendChild(h);
-    const ul = document.createElement('ul');
-    DEFAULT_EM_LIST.forEach(t => { const li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
-    wrap.appendChild(ul);
-    return wrap;
-  }
+  let lastHTML = null, restoring = false;
 
-  function apply(){
-    ensureHoverCSS();
-
-    const grid = document.querySelector('#content .cards');
-    if (!grid) return;
-
-    // 1) Wymuś layout 3 kolumn (inline style przebija wszystko)
-    grid.style.display = 'grid';
-    grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
-    grid.style.gap = '24px';
-    grid.style.justifyItems = 'center';
-    grid.style.alignItems = 'start';
-    grid.style.maxWidth = '1100px';
-    grid.style.margin = '28px auto';
-    grid.style.padding = '0 8px';
-
-    // 2) Delikatne „ramki” jeśli ich nie ma (bez zmiany Twojego designu, tylko minimum)
-    Array.from(grid.children).forEach(c => {
-      if (!(c instanceof HTMLElement)) return;
-      c.classList.add('card');
-      c.style.maxWidth = c.style.maxWidth || '320px';
-    });
-
-    // 3) Znajdź lub dodaj czerwony kafelek
-    let emergency = Array.from(grid.children).find(c =>
-      c.classList?.contains('emergency') ||
-      (c.querySelector && (c.querySelector('h3')?.textContent || '').trim().toLowerCase().startsWith(EMERGENCY_TITLE.toLowerCase()))
-    );
-    if (!emergency) emergency = makeEmergencyCard();
-    emergency.classList.add('emergency');
-
-    // 4) Ustaw na pozycji 5 (index 4)
-    const targetIndex = 4;
-    if (grid.children.length <= targetIndex) {
-      grid.appendChild(emergency);
-    } else {
-      grid.insertBefore(emergency, grid.children[targetIndex]);
+  function snapshot(){ lastHTML = content.innerHTML; }
+  function restoreIfEmpty(){
+    if (restoring) return;
+    if (!content.querySelector('.cards') && lastHTML) {
+      restoring = true;
+      content.innerHTML = lastHTML;
+      placeEmergencyAtIndex5();
+      restoring = false;
     }
   }
 
-  // Uruchom po załadowaniu treści (i krótko później – gdyby coś doładowało layout)
+  // zapisuj dobry stan po każdym renderze
+  const saveInterval = setInterval(() => {
+    if (content.querySelector('.cards')) snapshot();
+  }, 500);
+
+  const mo = new MutationObserver(() => restoreIfEmpty());
+  mo.observe(content, { childList:true, subtree:false });
+
+  // lekkie retry po starcie (na wypadek opóźnień)
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { apply(); setTimeout(apply, 150); });
+    document.addEventListener('DOMContentLoaded', () => { setTimeout(restoreIfEmpty, 200); });
   } else {
-    apply(); setTimeout(apply, 150);
+    setTimeout(restoreIfEmpty, 200);
   }
 })();
 </script>
 
 </body>
 </html>
-<script>
-/* 🆘 Rescue loader — działa tylko, gdy nic się nie wyrenderowało */
-(async function rescueLoader(){
-  try {
-    // jeśli już są kafelki, nic nie rób
-    if (document.querySelector('#content .cards')) return;
-
-    const idParam = new URLSearchParams(location.search).get('id');
-    if (!idParam) return;
-
-    // spróbuj kilku ścieżek (absolute + relative)
-    const sources = [
-      '/data/detailed_conditions.json',
-      'data/detailed_conditions.json',
-      '/data/conditions.json',
-      'data/conditions.json'
-    ];
-
-    let data = null, lastErr = null;
-    for (const src of sources) {
-      try {
-        const r = await fetch(src + '?ts=' + Date.now(), { cache: 'no-store' });
-        if (!r.ok) { lastErr = 'HTTP ' + r.status + ' @ ' + src; continue; }
-        data = await r.json();
-        if (data) break;
-      } catch(e) { lastErr = e.message; }
-    }
-    if (!data) {
-      const err = document.getElementById('err');
-      if (err) { err.style.display='block'; err.textContent = 'Nie mogę wczytać danych JSON. ' + (lastErr||''); }
-      return;
-    }
-
-    const node = data[idParam];
-    if (!node) {
-      const err = document.getElementById('err');
-      if (err) { err.style.display='block'; err.textContent = 'Brak wpisu w JSON dla id=' + idParam; }
-      return;
-    }
-
-    // pomocnicze
-    const content = document.getElementById('content');
-    const titleEl = document.getElementById('title');
-    function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; }
-    function card(t, items){
-      const c = el('div','card'); c.appendChild(el('h3',null,t));
-      if (Array.isArray(items)) { const ul = el('ul'); items.forEach(x=>ul.appendChild(el('li',null,x))); c.appendChild(ul); }
-      else if (typeof items === 'string') { c.appendChild(el('p',null,items)); }
-      return c;
-    }
-
-    // tytuł
-    if (titleEl) titleEl.textContent = node.title || idParam;
-
-    // siatka
-    const grid = el('div','cards');
-    if (node.causes)      grid.appendChild(card('Możliwe przyczyny bólu', node.causes));
-    if (node.symptoms)    grid.appendChild(card('Typowe objawy', node.symptoms));
-    if (node.concerns)    grid.appendChild(card('⚠️ Obawy / pilne sygnały', node.concerns));
-    if (node.doctors)     grid.appendChild(card('Do jakiego lekarza', node.doctors));
-    if (node.medications) grid.appendChild(card('Leki / środki łagodzące', node.medications));
-    if (node.first_aid)   grid.appendChild(card('Pierwsza pomoc (domowa)', node.first_aid));
-
-    const emergencyList = Array.isArray(node.emergency) ? node.emergency : [
-      'Silny, narastający ból, duszność, zlewne poty, omdlenie.',
-      'Objawy udaru: osłabienie, bełkotliwa mowa, opadnięty kącik ust.',
-      'Ostra duszność, sinica, krwawienie, silny uraz.',
-      'W razie wątpliwości: natychmiast zadzwoń 112.'
-    ];
-    const em = card('Niezwłoczna pomoc (112/SOR)', emergencyList);
-    em.classList.add('emergency');
-    grid.appendChild(em);
-
-    content.innerHTML = '';
-    content.appendChild(grid);
-
-    if (node.description) {
-      const p = document.createElement('p');
-      p.style.marginTop = '16px';
-      p.textContent = node.description;
-      content.appendChild(p);
-    }
-
-    // minimalny układ 3 kolumn (gdyby CSS nie doszedł)
-    grid.style.display='grid';
-    grid.style.gridTemplateColumns='repeat(3,1fr)';
-    grid.style.gap='24px';
-    grid.style.maxWidth='1100px';
-    grid.style.margin='28px auto';
-    grid.style.justifyItems='center';
-    grid.style.alignItems='start';
-
-  } catch(e){
-    const err = document.getElementById('err');
-    if (err) { err.style.display='block'; err.textContent = 'Rescue loader error: ' + e.message; }
-  }
-})();
-</script>
