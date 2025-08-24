@@ -67,9 +67,149 @@ document.getElementById("sectionBack").href = sectionUrlFromId(id);
 
 /* ====== 2) Pełny CONTENT (kobieta + mężczyzna) ====== */
 window.CONTENT = {
-  /* 👉 tutaj wklejony cały blok z poprzedniej wiadomości */
-  /* — dla czytelności skróciłem w tym przykładzie —
-     ale Ty masz już pełny gotowiec (kobieta + mężczyzna) */
+  window.CONTENT = {
+  /* ==== GŁOWA KOBIETA ==== */
+  oczy_k: {
+    title: "Oczy — kobieta",
+    causes: ["Zapalenie spojówek", "Zespół suchego oka", "Alergie"],
+    symptoms: ["Łzawienie", "Piecznie", "Świąd", "Zaczerwienienie"],
+    doctors: ["Okulista", "POZ"],
+    medications: ["Sztuczne łzy", "Krople antyhistaminowe"],
+    first_aid: ["Unikanie alergenów", "Płukanie oczu solą fizjologiczną"],
+    emergency: ["Nagła utrata wzroku — dzwoń 112"],
+    description: "Oczy są wrażliwe i reagują na infekcje, alergie i zmęczenie."
+  },
+  uszy_k: {
+    title: "Uszy — kobieta",
+    causes: ["Infekcje ucha", "Nagromadzenie woskowiny", "Urazy"],
+    symptoms: ["Ból ucha", "Szumy", "Upośledzenie słuchu"],
+    doctors: ["Laryngolog"],
+    medications: ["Krople do uszu", "Antybiotyki"],
+    first_aid: ["Ciepły kompres", "Unikanie wody w uchu"],
+    emergency: ["Nagła utrata słuchu — 112"],
+    description: "Problemy z uszami często są infekcyjne."
+  },
+  nos_k: {
+    title: "Nos — kobieta",
+    causes: ["Infekcje wirusowe", "Alergie", "Polipy"],
+    symptoms: ["Katar", "Niedrożność nosa", "Ból zatok"],
+    doctors: ["Laryngolog", "Alergolog"],
+    medications: ["Krople obkurczające", "Sterydy donosowe"],
+    first_aid: ["Płukanie solą fizjologiczną"],
+    description: "Nos reaguje na alergie i infekcje."
+  },
+  szczeka_k: {
+    title: "Szczęka — kobieta",
+    causes: ["Bruksizm", "Zapalenie stawu skroniowo-żuchwowego"],
+    symptoms: ["Ból przy żuciu", "Trzaski w stawie"],
+    doctors: ["Dentysta", "Ortodonta"],
+    medications: ["NLPZ", "Szyny relaksacyjne"],
+    first_aid: ["Unikanie twardych pokarmów"],
+    description: "Częste u osób z napięciem nerwowym."
+  },
+  szyja_k: {
+    title: "Szyja — kobieta",
+    causes: ["Przeciążenie mięśni", "Stres", "Urazy"],
+    symptoms: ["Ból karku", "Sztywność"],
+    doctors: ["Neurolog", "Fizjoterapeuta"],
+    medications: ["NLPZ", "Maści rozgrzewające"],
+    first_aid: ["Rozluźnianie mięśni", "Ćwiczenia"],
+    description: "Ból szyi zwykle wynika z napięcia mięśniowego."
+  },
+  glowa_k: {
+    title: "Głowa — kobieta",
+    causes: ["Migrena", "Napięciowy ból głowy"],
+    symptoms: ["Ból jednostronny", "Światłowstręt"],
+    doctors: ["Neurolog"],
+    medications: ["Leki przeciwbólowe", "Tryptany"],
+    first_aid: ["Odpoczynek w ciemnym pokoju"],
+    description: "Najczęstsze bóle głowy to napięciowe i migrenowe."
+  },
+
+  /* ==== KLATKA KOBIETA ==== */
+  serce_k: {
+    title: "Serce — kobieta",
+    causes: ["Nadciśnienie", "Choroba wieńcowa", "Zawał"],
+    symptoms: ["Ból w klatce", "Duszność"],
+    doctors: ["Kardiolog"],
+    medications: ["Nitrogliceryna", "Beta-blokery"],
+    first_aid: ["Spoczynek", "Wezwij pogotowie"],
+    emergency: ["Silny ból za mostkiem — 112"],
+    description: "Choroby serca wymagają pilnej diagnostyki."
+  },
+  pluca_k: {
+    title: "Płuca — kobieta",
+    causes: ["Zapalenie płuc", "Astma", "POChP"],
+    symptoms: ["Kaszel", "Duszność"],
+    doctors: ["Pulmonolog"],
+    medications: ["Antybiotyki", "Sterydy wziewne"],
+    first_aid: ["Spoczynek", "Nawodnienie"],
+    description: "Choroby płuc mogą być ostre i przewlekłe."
+  },
+  klatka_piersiowa_k: {
+    title: "Klatka piersiowa — kobieta",
+    causes: ["Zapalenie mięśni", "Kostochondritis"],
+    symptoms: ["Ból przy ruchu"],
+    doctors: ["Ortopeda", "Fizjoterapeuta"],
+    medications: ["NLPZ", "Maści przeciwzapalne"],
+    first_aid: ["Odpoczynek", "Ciepłe okłady"],
+    description: "Najczęściej podłoże mięśniowo-szkieletowe."
+  },
+  brzuch_k: {
+    title: "Brzuch — kobieta",
+    causes: ["Niestrawność", "ZJD", "Zapalenie żołądka"],
+    symptoms: ["Ból brzucha", "Wzdęcia"],
+    doctors: ["Gastroenterolog"],
+    medications: ["Leki rozkurczowe", "Probiotyki"],
+    first_aid: ["Dieta lekkostrawna", "Nawodnienie"],
+    description: "Wiele możliwych przyczyn."
+  },
+  plecy_k: {
+    title: "Plecy — kobieta",
+    causes: ["Przeciążenie", "Dyskopatia"],
+    symptoms: ["Ból przy ruchu", "Sztywność"],
+    doctors: ["Ortopeda", "Neurolog"],
+    medications: ["NLPZ"],
+    first_aid: ["Odpoczynek", "Delikatne rozciąganie"],
+    description: "Najczęściej przeciążeniowe."
+  },
+  uklad_krw_k: {
+    title: "Układ krążenia — kobieta",
+    causes: ["Nadciśnienie", "Arytmia"],
+    symptoms: ["Zawroty", "Obrzęki"],
+    doctors: ["Kardiolog"],
+    medications: ["Leki na ciśnienie"],
+    first_aid: ["Kontrola ciśnienia"],
+    description: "Układ krążenia transportuje krew."
+  },
+  uklad_oddech_k: {
+    title: "Układ oddechowy — kobieta",
+    causes: ["Infekcje", "Astma"],
+    symptoms: ["Kaszel", "Świsty"],
+    doctors: ["Pulmonolog"],
+    medications: ["Leki wziewne"],
+    first_aid: ["Spokój", "Nawodnienie"],
+    description: "Odpowiada za wymianę gazową."
+  },
+  uklad_pokarm_k: {
+    title: "Układ pokarmowy — kobieta",
+    causes: ["Zatrucie", "Refluks", "ZJD"],
+    symptoms: ["Ból brzucha", "Zgaga"],
+    doctors: ["Gastroenterolog"],
+    medications: ["Leki rozkurczowe"],
+    first_aid: ["Dieta lekkostrawna"],
+    description: "Układ trawienny odpowiada za trawienie pokarmów."
+  },
+  ciaza_k: {
+    title: "Ciąża — kobieta",
+    causes: ["Fizjologiczne zmiany", "Powikłania ciąży"],
+    symptoms: ["Bóle brzucha", "Obrzęki"],
+    doctors: ["Ginekolog"],
+    medications: ["Suplementy", "Leki wg zaleceń lekarza"],
+    first_aid: ["Odpoczynek", "Konsultacja"],
+    description: "Ciąża wymaga stałej kontroli medycznej."
+  },
+
 };
 
 /* ====== 3) Funkcje pomocnicze ====== */
