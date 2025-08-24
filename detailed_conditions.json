@@ -25,6 +25,10 @@
       "Płukanie oczu solą fizjologiczną",
       "Unikanie alergenów"
     ],
+    "emergency": [
+      "Nagła utrata wzroku — natychmiast 112",
+      "Silny ból oka po urazie — SOR"
+    ],
     "description": "Tu możesz dodać dodatkowy opis np. o profilaktyce, diecie, stylu życia."
   },
 
@@ -54,8 +58,10 @@
       "Pozycja siedząca z oparciem",
       "Wezwanie pomocy"
     ],
+    "emergency": [
+      "Silny, uciskający ból w klatce + duszność — 112",
+      "Utrata przytomności — 112"
+    ],
     "description": "Tu dodatkowe informacje o chorobach serca i stylu życia."
   }
-
-  /* … i tak dalej dla wszystkich obszarów ciała (kobieta i mężczyzna) */
 }
