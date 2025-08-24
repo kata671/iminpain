@@ -4,8 +4,12 @@
   <meta charset="UTF-8" />
   <title>Szczegóły</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <!-- Twój główny CSS -->
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Dodatkowy bezpieczny CSS do układu kafelków -->
+  <link rel="stylesheet" href="style-overrides.css" />
 </head>
 <body data-page="szczegoly">
 
@@ -19,7 +23,7 @@
   <h1 id="title">Szczegóły</h1>
   <div class="pill" aria-hidden="true"></div>
 
-  <!-- Zawartość dynamiczna -->
+  <!-- Zawartość dynamiczna (ładowana z JSON) -->
   <div id="content"></div>
   <div id="err" class="error" style="display:none"></div>
 
@@ -28,7 +32,7 @@
     <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
   </footer>
 
-  <!-- Skrypt loadera -->
+  <!-- Twój obecny skrypt, który już masz i działa -->
   <script defer src="szczegoly.js"></script>
 
 </body>
