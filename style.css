@@ -385,3 +385,17 @@ body[data-page="szczegoly"] .cards {
     grid-template-columns: 1fr !important;
   }
 }
+/* 🔒 Wymuszenie układu 3+3 w szczegoly.html */
+body[data-page="szczegoly"] #content .cards {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 24px !important;
+  justify-items: center !important;
+  align-items: start !important;
+  max-width: 1100px !important;
+  margin: 28px auto !important;
+}
+
+body[data-page="szczegoly"] #content .cards .card {
+  max-width: 320px !important;
+}
