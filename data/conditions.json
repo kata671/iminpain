@@ -1,372 +1,112 @@
 {
-  "oczy_k": {
-    "title": "Oczy (Kobieta)",
-    "description": "Ból oczu i okolic.",
-    "causes": ["Zapalenie spojówek", "Jaskra", "Suchość oka", "Migrena oczna"],
-    "symptoms": ["Ból gałki ocznej", "Światłowstręt", "Łzawienie", "Zaczerwienienie"],
-    "doctors": ["Okulista", "Neurolog"],
-    "medications": ["Sztuczne łzy", "Leki przeciwbólowe", "Krople przeciwzapalne"],
-    "first_aid": ["Odpocznij od ekranów, stosuj krople nawilżające."],
-    "emergency": ["Nagła utrata widzenia.", "Silny ból oka z nudnościami.", "Uraz oka, ciało obce, krwawienie."]
-  },
-  "uszy_k": {
-    "title": "Uszy (Kobieta)",
-    "description": "Ból ucha i okolic.",
-    "causes": ["Zapalenie ucha środkowego", "Zatkane ucho woskowiną", "Infekcja gardła"],
-    "symptoms": ["Ból ucha", "Wyciek", "Pogorszenie słuchu", "Gorączka"],
-    "doctors": ["Laryngolog", "Lekarz rodzinny"],
-    "medications": ["Krople do uszu", "Leki przeciwbólowe", "Antybiotyki (na receptę)"],
-    "first_aid": ["Unikaj wody w uchu, można zastosować ciepły okład."],
-    "emergency": ["Nagły ból z wysoką gorączką.", "Silny zawrót głowy, zaburzenia równowagi.", "Uraz ucha, krwawienie."]
-  },
-  "nos_k": {
-    "title": "Nos / Zatoki (Kobieta)",
-    "description": "Ból w obrębie nosa i zatok.",
-    "causes": ["Zapalenie zatok", "Alergia", "Infekcja wirusowa", "Skrzywiona przegroda"],
-    "symptoms": ["Ucisk w twarzy", "Katar", "Zaciek po tylnej ścianie gardła", "Ból przy pochylaniu"],
-    "doctors": ["Laryngolog", "Lekarz rodzinny"],
-    "medications": ["Płukanki soli", "Steryd donosowy", "Leki przeciwbólowe", "Leki przeciwhistaminowe"],
-    "first_aid": ["Nawilżaj powietrze, płucz nos roztworem soli, pij ciepłe płyny."],
-    "emergency": ["Silny obrzęk twarzy z gorączką.", "Zaburzenia widzenia, podwójne widzenie.", "Podejrzenie powikłań okołooczodołowych."]
-  },
-  "szczeka_k": {
-    "title": "Szczęka (Kobieta)",
-    "description": "Ból żuchwy/szczęki.",
-    "causes": ["Bruksizm", "Dysfunkcja stawu skroniowo-żuchwowego", "Problem stomatologiczny"],
-    "symptoms": ["Ból przy żuciu", "Trzaski w stawie", "Ból głowy", "Napięcie mięśni"],
-    "doctors": ["Stomatolog", "Chirurg szczękowy", "Fizjoterapeuta"],
-    "medications": ["NLPZ", "Relaksacja mięśni", "Szyna zgryzowa"],
-    "first_aid": ["Ogranicz twarde pokarmy, ciepły okład na staw, ćwiczenia rozluźniające."],
-    "emergency": ["Szczękościsk po urazie.", "Gorączka, obrzęk i trudności z otwieraniem ust.", "Rozprzestrzeniający się ropień zębopochodny."]
-  },
-  "szyja_k": {
-    "title": "Szyja / Kark (Kobieta)",
-    "description": "Ból szyi i karku.",
-    "causes": ["Napięcie mięśniowe", "Przeciążenie", "Dyskopatia szyjna"],
-    "symptoms": ["Sztywność karku", "Ograniczenie ruchu", "Ból promieniujący do barku"],
-    "doctors": ["Lekarz rodzinny", "Ortopeda", "Neurolog", "Fizjoterapeuta"],
-    "medications": ["NLPZ", "Maści rozgrzewające", "Leki rozluźniające mięśnie (na receptę)"],
-    "first_aid": ["Delikatne rozciąganie, przerwy od pracy siedzącej, ciepły okład."],
-    "emergency": ["Nagła sztywność karku z gorączką (podejrzenie opon).", "Objawy neurologiczne (drętwienie, niedowład).", "Uraz komunikacyjny z bólem szyi."]
-  },
   "serce_k": {
-    "title": "Serce (Kobieta)",
-    "description": "Ból w klatce piersiowej pochodzenia sercowego – możliwe przyczyny.",
-    "causes": ["Dławica", "Zawał serca", "Zapalenie osierdzia", "Skurcz naczyń"],
-    "symptoms": ["Ucisk za mostkiem", "Duszność", "Poty, nudności", "Ból promieniujący do ramienia/szczęki"],
-    "doctors": ["Kardiolog", "SOR/NPL (w ostrych dolegliwościach)"],
-    "medications": ["NLPZ (nie w podejrzeniu zawału)", "Nitrogliceryna (wg zaleceń lek.)"],
-    "first_aid": ["W spoczynku obserwuj objawy; w razie podejrzenia zawału – natychmiast 112."],
-    "emergency": ["Nagły, silny ucisk w klatce z dusznością.", "Omdlenie, bladość, poty.", "Ból nie ustępuje >5–10 minut lub nawraca."]
+    "title": "Serce — kobieta",
+    "causes": ["Choroba wieńcowa", "Zawał serca", "Stres", "Nadciśnienie tętnicze"],
+    "symptoms": ["Ból w klatce piersiowej", "Duszność", "Promieniowanie do lewej ręki"],
+    "doctors": ["Kardiolog", "Lekarz rodzinny"],
+    "medications": ["Nitrogliceryna", "Beta-blokery"],
+    "first_aid": ["Wezwij pogotowie (112)", "Odpoczynek", "Uspokojenie"],
+    "emergency": ["Silny ból klatki piersiowej, zimne poty — natychmiast 112"],
+    "description": "Objawy sercowe wymagają pilnej konsultacji lekarskiej."
   },
+
   "pluca_k": {
-    "title": "Płuca (Kobieta)",
-    "description": "Ból/ucisk związany z układem oddechowym.",
-    "causes": ["Zapalenie płuc", "Zapalenie opłucnej", "Zatorowość płucna", "Astma"],
-    "symptoms": ["Kaszel", "Gorączka", "Duszność", "Ból przy głębokim wdechu"],
-    "doctors": ["Lekarz rodzinny", "Pulmonolog", "SOR (w duszności)"],
-    "medications": ["Leki przeciwbólowe", "Antybiotyki/antywirusowe (wg lekarza)", "Wziewy w astmie"],
-    "first_aid": ["Odpoczywaj, nawadniaj się; zgłoś się pilnie w razie duszności."],
-    "emergency": ["Nagła duszność, sinica, ból w klatce piersiowej.", "Krwioplucie.", "Podejrzenie zatorowości."]
+    "title": "Płuca — kobieta",
+    "causes": ["Zapalenie płuc", "Astma", "POChP"],
+    "symptoms": ["Kaszel", "Duszność", "Ból w klatce piersiowej przy oddychaniu"],
+    "doctors": ["Pulmonolog", "Lekarz rodzinny"],
+    "medications": ["Antybiotyki", "Sterydy wziewne"],
+    "first_aid": ["Odpoczynek", "Nawodnienie"],
+    "emergency": ["Ostra duszność, sinica — natychmiast wezwij pomoc"],
+    "description": "Choroby płuc mogą mieć poważny przebieg — konieczna konsultacja lekarska."
   },
+
+  "klatka_k": {
+    "title": "Klatka piersiowa (ściana klp / mięśnie) — kobieta",
+    "causes": [
+      "Nadwyrężenie mięśni międzyżebrowych",
+      "Zapalenie chrząstek żebrowych (kostochondritis)",
+      "Ból mięśniowo-powięziowy po wysiłku lub kaszlu"
+    ],
+    "symptoms": [
+      "Ból nasila się przy ruchu, kaszlu lub głębokim wdechu",
+      "Tkliwość przy ucisku określonego miejsca",
+      "Brak duszności/omdleń (jeśli są → pilna konsultacja)"
+    ],
+    "doctors": ["Lekarz rodzinny (POZ)", "Ortopeda", "Fizjoterapeuta"],
+    "medications": [
+      "Paracetamol",
+      "Ibuprofen/Naproksen (jeśli brak przeciwwskazań)",
+      "Maści/żele przeciwzapalne"
+    ],
+    "first_aid": [
+      "Odpoczynek, unikanie dźwigania",
+      "Ciepłe okłady 10–15 min kilka razy dziennie",
+      "Delikatne ćwiczenia rozciągające po ustąpieniu ostrego bólu"
+    ],
+    "emergency": [
+      "Silny ból klatki z dusznością, nudnościami, zimnym potem lub promieniujący do lewej ręki/szczęki — natychmiast 112"
+    ],
+    "description": "Najczęstsze dolegliwości ściany klatki piersiowej mają podłoże mięśniowo-szkieletowe."
+  },
+
   "brzuch_k": {
-    "title": "Brzuch (Kobieta)",
-    "description": "Ból brzucha.",
-    "causes": ["Niestrawność", "Wirus żołądkowo-jelitowy", "Zapalenie wyrostka", "Choroby ginekologiczne"],
-    "symptoms": ["Nudności", "Wymioty", "Biegunka", "Gorączka", "Nasilanie przy ucisku"],
-    "doctors": ["Lekarz rodzinny", "Gastroenterolog", "Ginekolog"],
-    "medications": ["Nawadnianie", "Leki przeciwbólowe", "Leki rozkurczowe"],
-    "first_aid": ["Unikaj ciężkostrawnych potraw, pij małe porcje płynów; obserwuj objawy."],
-    "emergency": ["Ostry, narastający ból z twardym brzuchem.", "Krew w wymiotach lub stolcu, czarne stolce.", "Wysoka gorączka, uporczywe wymioty."]
+    "title": "Brzuch — kobieta",
+    "causes": ["Niestrawność", "Zespół jelita drażliwego", "Zapalenie żołądka"],
+    "symptoms": ["Ból brzucha", "Wzdęcia", "Nudności"],
+    "doctors": ["Gastroenterolog", "Lekarz rodzinny"],
+    "medications": ["Leki rozkurczowe", "Probiotyki"],
+    "first_aid": ["Unikanie ciężkich posiłków", "Nawodnienie"],
+    "description": "Ból brzucha może mieć wiele przyczyn — wymaga obserwacji i konsultacji."
   },
+
   "plecy_k": {
-    "title": "Plecy (Kobieta)",
-    "description": "Ból pleców.",
-    "causes": ["Przeciążenie mięśni", "Dyskopatia", "Zespół bólu krzyża"],
-    "symptoms": ["Ból przy schylaniu", "Sztywność", "Promieniowanie do nogi"],
-    "doctors": ["Lekarz rodzinny", "Ortopeda", "Fizjoterapeuta"],
-    "medications": ["NLPZ", "Maści/przeciwzapalne", "Leki rozluźniające (na receptę)"],
-    "first_aid": ["Oszczędzaj się krótko, potem łagodne ćwiczenia; ciepły okład."],
-    "emergency": ["Niedowład, zaburzenia czucia w nodze.", "Zaburzenia zwieraczy (nietrzymanie).", "Silny ból po urazie."]
+    "title": "Plecy — kobieta",
+    "causes": ["Przeciążenie mięśni", "Dyskopatia", "Wady postawy"],
+    "symptoms": ["Ból przy ruchu", "Sztywność", "Promieniowanie do nóg"],
+    "doctors": ["Ortopeda", "Neurolog"],
+    "medications": ["Leki przeciwbólowe", "Maści rozgrzewające"],
+    "first_aid": ["Odpoczynek", "Delikatne ćwiczenia rozciągające"],
+    "description": "Najczęstsze są bóle mięśniowo-szkieletowe wynikające z przeciążeń."
   },
-  "biodra_k": {
-    "title": "Biodra (Kobieta)",
-    "description": "Ból w okolicy biodra.",
-    "causes": ["Zapalenie kaletki", "Przeciążenie pasma biodrowo-piszczelowego", "Zmiany zwyrodnieniowe"],
-    "symptoms": ["Ból bocznej części uda", "Sztywność", "Nasilenie przy chodzeniu/po leżeniu na boku"],
-    "doctors": ["Ortopeda", "Fizjoterapeuta"],
-    "medications": ["NLPZ", "Zastrzyki sterydowe (wg lekarza)"],
-    "first_aid": ["Ogranicz obciążenie, zimny okład po wysiłku, rozciąganie."],
-    "emergency": ["Uraz z niemożnością obciążenia kończyny.", "Gorący, czerwony staw z gorączką.", "Nagły ból po upadku."]
-  },
-  "uda_k": {
-    "title": "Uda (Kobieta)",
-    "description": "Ból uda.",
-    "causes": ["Naciągnięcie mięśnia", "Zakrzepica żył głębokich", "Zespół pasma biodrowo-piszczelowego"],
-    "symptoms": ["Tkliwość mięśni", "Obrzęk", "Nasilenie przy chodzie/biegu"],
-    "doctors": ["Lekarz rodzinny", "Ortopeda", "Chirurg naczyniowy"],
-    "medications": ["NLPZ", "Maści", "Elastyczny bandaż (wg lekarza)"],
-    "first_aid": ["Odpoczynek, schładzanie 15–20 min, uniesienie kończyny."],
-    "emergency": ["Nagły obrzęk i ból łydki/uda (podejrzenie ZŻG).", "Uraz z krwiakiem i niemożnością chodzenia.", "Gorączka i zaczerwienienie skóry."]
-  },
-  "kolano_k": {
-    "title": "Kolano (Kobieta)",
-    "description": "Ból kolana.",
-    "causes": ["Uraz więzadeł/łąkotki", "Chondromalacja", "Zapalenie kaletki"],
-    "symptoms": ["Obrzęk", "Trzaski", "Niestabilność", "Ból przy schodzeniu"],
-    "doctors": ["Ortopeda", "Fizjoterapeuta"],
-    "medications": ["NLPZ", "Stabilizator (wg lekarza)"],
-    "first_aid": ["RICE: odpoczynek, chłodzenie, ucisk, uniesienie."],
-    "emergency": ["Zablokowanie stawu, brak możliwości wyprostowania.", "Uraz z deformacją.", "Gorący, zaczerwieniony staw z gorączką."]
-  },
-  "lydka_k": {
-    "title": "Łydka (Kobieta)",
-    "description": "Ból łydki.",
-    "causes": ["Naciągnięcie mięśnia", "Skurcze", "Zakrzepica"],
-    "symptoms": ["Ból przy chodzeniu", "Tkliwość", "Obrzęk"],
-    "doctors": ["Lekarz rodzinny", "Chirurg naczyniowy"],
-    "medications": ["NLPZ", "Magnez (na skurcze – wg lekarza)"],
-    "first_aid": ["Odpoczynek, chłodzenie, delikatne rozciąganie mięśni."],
-    "emergency": ["Nagły, jednostronny obrzęk i ból (podejrzenie ZŻG).", "Uraz z masywnym krwiakiem.", "Duszność/ból w klatce (ryzyko zatorowości) – 112."]
-  },
-  "kostka_k": {
-    "title": "Kostka (Kobieta)",
-    "description": "Ból w obrębie stawu skokowego.",
-    "causes": ["Skręcenie", "Naciągnięcie więzadeł", "Zapalenie ścięgien"],
-    "symptoms": ["Obrzęk", "Siniak", "Ból przy obciążaniu"],
-    "doctors": ["Ortopeda", "Lekarz rodzinny", "Fizjoterapeuta"],
-    "medications": ["NLPZ", "Stabilizator (wg lekarza)"],
-    "first_aid": ["RICE: odpoczynek, chłodzenie, ucisk, uniesienie."],
-    "emergency": ["Podejrzenie złamania (niemożność obciążenia, deformacja).", "Silny ból z drętwieniem stopy.", "Uraz z rozległą raną."]
-  },
-  "stopy_k": {
-    "title": "Stopy (Kobieta)",
-    "description": "Ból stopy.",
-    "causes": ["Płaskostopie", "Zapalenie rozcięgna podeszwowego", "Urazy"],
-    "symptoms": ["Ból przy chodzeniu", "Obrzęk", "Zaczerwienienie"],
-    "doctors": ["Ortopeda", "Podolog"],
-    "medications": ["NLPZ", "Wkładki ortopedyczne"],
-    "first_aid": ["Odciąż stopę, stosuj zimne okłady."],
-    "emergency": ["Masywny krwotok lub zmiażdżenie stopy.", "Nagłe zblednięcie i utrata czucia w stopie.", "Podejrzenie złamania otwartego."]
-  },
-  "ciaza_k": {
-    "title": "Ciąża (Kobieta)",
-    "description": "Ból i dolegliwości w ciąży – najczęstsze przyczyny i kiedy zgłosić się pilnie.",
-    "causes": ["Rozciąganie więzadeł macicznych", "Refluks", "Zaparcia", "Infekcje dróg moczowych"],
-    "symptoms": ["Ból podbrzusza", "Zgaga", "Ból krzyża", "Częstsze oddawanie moczu"],
-    "doctors": ["Położnik-ginekolog", "Położna"],
-    "medications": ["Paracetamol (zalecany w ciąży)", "Preparaty na zgagę bezpieczne w ciąży"],
-    "first_aid": ["Odpoczynek na lewym boku, nawodnienie, delikatny ruch/ćwiczenia dla ciężarnych."],
-    "emergency": ["Krwawienie z dróg rodnych.", "Silny ból brzucha, twardnienie brzucha.", "Ból głowy z zaburzeniami widzenia i obrzękami.", "Zmniejszenie/zanik ruchów dziecka."]
-  },
+
   "uklad_krw_k": {
-    "title": "Układ krwionośny (Kobieta)",
-    "description": "Dolegliwości związane z krążeniem.",
-    "causes": ["Nadciśnienie", "Niedokrwistość", "Niewydolność serca", "Żylaki"],
-    "symptoms": ["Kołatania serca", "Zmęczenie", "Obrzęki kończyn", "Zawroty głowy"],
-    "doctors": ["Kardiolog", "Lekarz rodzinny", "Angiolog"],
-    "medications": ["Leki zgodnie z zaleceniem lekarza (nie modyfikuj samodzielnie)"],
-    "first_aid": ["Odpoczynek, kontrola ciśnienia, nawodnienie; w ostrych objawach 112."],
-    "emergency": ["Objawy zawału/udaru", "Ostra duszność", "Omdlenie."]
+    "title": "Układ krążenia — kobieta",
+    "causes": ["Nadciśnienie", "Miażdżyca", "Zaburzenia rytmu serca"],
+    "symptoms": ["Zawroty głowy", "Obrzęki nóg", "Duszność przy wysiłku"],
+    "doctors": ["Kardiolog"],
+    "medications": ["Leki na ciśnienie", "Leki przeciwzakrzepowe"],
+    "first_aid": ["Kontrola ciśnienia", "Unikanie stresu"],
+    "description": "Układ krążenia odpowiada za transport krwi i tlenu w organizmie."
   },
+
   "uklad_oddech_k": {
-    "title": "Układ oddechowy (Kobieta)",
-    "description": "Kaszel, duszność, ból przy oddychaniu.",
-    "causes": ["Infekcja wirusowa", "Astma", "POChP", "Zapalenie płuc"],
-    "symptoms": ["Kaszel", "Duszność", "Gorączka", "Ból w klatce przy wdechu"],
-    "doctors": ["Lekarz rodzinny", "Pulmonolog"],
-    "medications": ["Leki rozszerzające oskrzela (wg lekarza)", "Leki przeciwgorączkowe"],
-    "first_aid": ["Odpoczynek, nawodnienie; w nasilonej duszności pilna pomoc."],
-    "emergency": ["Silna duszność/spadek saturacji", "Krwioplucie", "Nagły ból w klatce."]
+    "title": "Układ oddechowy — kobieta",
+    "causes": ["Infekcje wirusowe", "Astma", "POChP"],
+    "symptoms": ["Kaszel", "Świszczący oddech", "Duszność"],
+    "doctors": ["Pulmonolog"],
+    "medications": ["Leki wziewne", "Antybiotyki (jeśli bakteryjne)"],
+    "first_aid": ["Spokój", "Nawodnienie"],
+    "description": "Układ oddechowy odpowiada za wymianę gazową w płucach."
   },
+
   "uklad_pokarm_k": {
-    "title": "Układ pokarmowy (Kobieta)",
-    "description": "Bóle i dolegliwości przewodu pokarmowego.",
-    "causes": ["Niestrawność", "Wrzody", "Zespół jelita drażliwego", "Zapalenie pęcherzyka żółciowego"],
-    "symptoms": ["Zgaga", "Bóle skurczowe", "Wzdęcia", "Biegunka/zaparcia"],
-    "doctors": ["Gastroenterolog", "Lekarz rodzinny"],
-    "medications": ["Leki osłonowe / IPP (wg lekarza)", "Leki rozkurczowe", "Probiotyki"],
-    "first_aid": ["Dieta lekkostrawna, nawadnianie, unikanie alkoholu i ciężkich posiłków."],
-    "emergency": ["Krwawienie z przewodu pokarmowego", "Silny, stały ból z gorączką", "Wymioty treścią fusowatą."]
+    "title": "Układ pokarmowy — kobieta",
+    "causes": ["Zatrucie pokarmowe", "Refluks żołądkowo-przełykowy", "Zespół jelita drażliwego"],
+    "symptoms": ["Ból brzucha", "Zgaga", "Biegunka"],
+    "doctors": ["Gastroenterolog"],
+    "medications": ["Leki rozkurczowe", "Leki osłonowe"],
+    "first_aid": ["Dieta lekkostrawna", "Nawodnienie"],
+    "description": "Układ pokarmowy odpowiada za trawienie i wchłanianie składników odżywczych."
   },
-  "oczy_m": {
-    "title": "Oczy (Mężczyzna)",
-    "description": "Ból oczu i okolic.",
-    "causes": ["Zapalenie spojówek", "Jaskra", "Suchość oka", "Migrena oczna"],
-    "symptoms": ["Ból gałki ocznej", "Światłowstręt", "Łzawienie", "Zaczerwienienie"],
-    "doctors": ["Okulista", "Neurolog"],
-    "medications": ["Sztuczne łzy", "Leki przeciwbólowe", "Krople przeciwzapalne"],
-    "first_aid": ["Odpocznij od ekranów, stosuj krople nawilżające."],
-    "emergency": ["Nagła utrata widzenia.", "Silny ból oka z nudnościami.", "Uraz oka, krwawienie."]
-  },
-  "uszy_m": {
-    "title": "Uszy (Mężczyzna)",
-    "description": "Ból ucha i okolic.",
-    "causes": ["Zapalenie ucha środkowego", "Zatkane ucho woskowiną", "Infekcja gardła"],
-    "symptoms": ["Ból ucha", "Wyciek", "Pogorszenie słuchu", "Gorączka"],
-    "doctors": ["Laryngolog", "Lekarz rodzinny"],
-    "medications": ["Krople do uszu", "Leki przeciwbólowe", "Antybiotyki (na receptę)"],
-    "first_aid": ["Unikaj wody w uchu, ciepły okład."],
-    "emergency": ["Nagły ból z wysoką gorączką.", "Silny zawrót głowy.", "Uraz ucha, krwawienie."]
-  },
-  "nos_m": {
-    "title": "Nos / Zatoki (Mężczyzna)",
-    "description": "Ból w obrębie nosa i zatok.",
-    "causes": ["Zapalenie zatok", "Alergia", "Infekcja wirusowa", "Skrzywiona przegroda"],
-    "symptoms": ["Ucisk w twarzy", "Katar", "Zaciek po tylnej ścianie gardła", "Ból przy pochylaniu"],
-    "doctors": ["Laryngolog", "Lekarz rodzinny"],
-    "medications": ["Płukanki soli", "Steryd donosowy", "Leki przeciwbólowe", "Leki p/histaminowe"],
-    "first_aid": ["Nawilżanie powietrza, płukanie nosa solą."],
-    "emergency": ["Silny obrzęk twarzy z gorączką.", "Zaburzenia widzenia.", "Podejrzenie powikłań."]
-  },
-  "szczeka_m": {
-    "title": "Szczęka (Mężczyzna)",
-    "description": "Ból żuchwy/szczęki.",
-    "causes": ["Bruksizm", "Dysfunkcja SSŻ", "Problem stomatologiczny"],
-    "symptoms": ["Ból przy żuciu", "Trzaski w stawie", "Ból głowy"],
-    "doctors": ["Stomatolog", "Chirurg szczękowy", "Fizjoterapeuta"],
-    "medications": ["NLPZ", "Szyna zgryzowa (stomatolog)"],
-    "first_aid": ["Miękka dieta, ciepły okład, ćwiczenia rozluźniające."],
-    "emergency": ["Szczękościsk po urazie.", "Gorączka z obrzękiem.", "Rozprzestrzeniający się ropień."]
-  },
-  "szyja_m": {
-    "title": "Szyja / Kark (Mężczyzna)",
-    "description": "Ból szyi i karku.",
-    "causes": ["Napięcie mięśni", "Przeciążenie", "Dyskopatia"],
-    "symptoms": ["Sztywność", "Ból przy ruchach", "Promieniowanie do barku"],
-    "doctors": ["Lekarz rodzinny", "Ortopeda", "Neurolog", "Fizjoterapeuta"],
-    "medications": ["NLPZ", "Maści rozgrzewające"],
-    "first_aid": ["Rozciąganie, przerwy od pracy siedzącej, ciepły okład."],
-    "emergency": ["Sztywność karku z gorączką.", "Niedowład/drętwienie.", "Uraz komunikacyjny."]
-  },
-  "serce_m": {
-    "title": "Serce (Mężczyzna)",
-    "description": "Ból w klatce piersiowej pochodzenia sercowego.",
-    "causes": ["Dławica", "Zawał serca", "Zapalenie osierdzia", "Skurcz naczyń"],
-    "symptoms": ["Ucisk za mostkiem", "Duszność", "Poty, nudności", "Ból do ramienia/szczęki"],
-    "doctors": ["Kardiolog", "SOR/NPL (ostre objawy)"],
-    "medications": ["NLPZ (nie w podejrzeniu zawału)", "Nitrogliceryna (wg zaleceń)"],
-    "first_aid": ["W razie podejrzenia zawału – natychmiast 112."],
-    "emergency": ["Silny ucisk w klatce", "Omdlenie", "Ból >5–10 min lub nawracający."]
-  },
-  "pluca_m": {
-    "title": "Płuca (Mężczyzna)",
-    "description": "Dolegliwości oddechowe.",
-    "causes": ["Zapalenie płuc", "Zapalenie opłucnej", "Zatorowość", "Astma"],
-    "symptoms": ["Kaszel", "Duszność", "Gorączka", "Ból przy wdechu"],
-    "doctors": ["Lekarz rodzinny", "Pulmonolog", "SOR"],
-    "medications": ["Leki przeciwbólowe", "Wziewy", "Antybiotyki (wg lekarza)"],
-    "first_aid": ["Odpoczynek i nawadnianie."],
-    "emergency": ["Nagła duszność", "Krwioplucie", "Silny ból klp."]
-  },
-  "brzuch_m": {
-    "title": "Brzuch (Mężczyzna)",
-    "description": "Ból brzucha.",
-    "causes": ["Niestrawność", "Wirus żołądkowo-jelitowy", "Wyrostek", "Kamica żółciowa"],
-    "symptoms": ["Nudności", "Wymioty", "Biegunka", "Gorączka"],
-    "doctors": ["Lekarz rodzinny", "Gastroenterolog"],
-    "medications": ["Nawadnianie", "Leki przeciwbólowe", "Rozkurczowe"],
-    "first_aid": ["Dieta lekkostrawna, obserwacja."],
-    "emergency": ["Silny, narastający ból", "Krew w stolcu/wymiotach", "Odwodnienie."]
-  },
-  "plecy_m": {
-    "title": "Plecy (Mężczyzna)",
-    "description": "Ból pleców.",
-    "causes": ["Przeciążenie", "Dyskopatia", "Zespół bólu krzyża"],
-    "symptoms": ["Ból przy ruchu", "Sztywność", "Rwa kulszowa"],
-    "doctors": ["Lekarz rodzinny", "Ortopeda", "Fizjoterapeuta"],
-    "medications": ["NLPZ", "Maści", "Leki rozluźniające (na receptę)"],
-    "first_aid": ["Krótki odpoczynek + stopniowy ruch; ciepło."],
-    "emergency": ["Niedowład", "Zaburzenia zwieraczy", "Uraz z silnym bólem."]
-  },
-  "biodra_m": {
-    "title": "Biodra (Mężczyzna)",
-    "description": "Ból w okolicy biodra.",
-    "causes": ["Zapalenie kaletki", "Zmiany zwyrodnieniowe", "Przeciążenie"],
-    "symptoms": ["Ból bocznej części uda", "Sztywność"],
-    "doctors": ["Ortopeda", "Fizjoterapeuta"],
-    "medications": ["NLPZ", "Iniekcje sterydowe (wg lekarza)"],
-    "first_aid": ["Ogranicz obciążenie, okłady, rozciąganie."],
-    "emergency": ["Uraz z niemożnością chodzenia.", "Gorący staw z gorączką."]
-  },
-  "uda_m": {
-    "title": "Uda (Mężczyzna)",
-    "description": "Ból uda.",
-    "causes": ["Naciągnięcie mięśnia", "Zakrzepica", "Zespół pasma biodrowo-piszczelowego"],
-    "symptoms": ["Tkliwość", "Obrzęk", "Ból przy wysiłku"],
-    "doctors": ["Lekarz rodzinny", "Ortopeda", "Chirurg naczyniowy"],
-    "medications": ["NLPZ", "Maści"],
-    "first_aid": ["RICE + uniesienie nogi."],
-    "emergency": ["Jednostronny obrzęk/ból (podejrzenie ZŻG).", "Uraz z krwiakiem."]
-  },
-  "kolano_m": {
-    "title": "Kolano (Mężczyzna)",
-    "description": "Ból kolana.",
-    "causes": ["Uraz więzadeł/łąkotki", "Chondromalacja", "Zapalenie kaletki"],
-    "symptoms": ["Obrzęk", "Trzaski", "Niestabilność"],
-    "doctors": ["Ortopeda", "Fizjoterapeuta"],
-    "medications": ["NLPZ", "Stabilizator (wg lekarza)"],
-    "first_aid": ["RICE – odpoczynek, chłodzenie, ucisk, uniesienie."],
-    "emergency": ["Zablokowanie stawu.", "Podejrzenie złamania.", "Gorący, czerwony staw."]
-  },
-  "lydka_m": {
-    "title": "Łydka (Mężczyzna)",
-    "description": "Ból łydki.",
-    "causes": ["Naciągnięcie mięśnia", "Skurcze", "Zakrzepica"],
-    "symptoms": ["Ból przy chodzeniu", "Tkliwość", "Obrzęk"],
-    "doctors": ["Lekarz rodzinny", "Chirurg naczyniowy"],
-    "medications": ["NLPZ", "Magnez (wg lekarza)"],
-    "first_aid": ["Odpoczynek, chłodzenie, rozciąganie."],
-    "emergency": ["Nagły obrzęk i ból (ZŻG).", "Duszność/ból klp (112)."]
-  },
-  "kostka_m": {
-    "title": "Kostka (Mężczyzna)",
-    "description": "Ból stawu skokowego.",
-    "causes": ["Skręcenie", "Naciągnięcie więzadeł", "Zapalenie ścięgien"],
-    "symptoms": ["Obrzęk", "Siniak", "Ból przy obciążaniu"],
-    "doctors": ["Ortopeda", "Lekarz rodzinny", "Fizjoterapeuta"],
-    "medications": ["NLPZ", "Stabilizator (wg lekarza)"],
-    "first_aid": ["RICE: odpoczynek, lód, ucisk, uniesienie."],
-    "emergency": ["Deformacja/podejrzenie złamania.", "Drętwienie stopy po urazie."]
-  },
-  "stopy_m": {
-    "title": "Stopy (Mężczyzna)",
-    "description": "Ból stopy.",
-    "causes": ["Płaskostopie", "Zapalenie rozcięgna podeszwowego", "Urazy"],
-    "symptoms": ["Ból przy chodzeniu", "Obrzęk", "Zaczerwienienie"],
-    "doctors": ["Ortopeda", "Podolog"],
-    "medications": ["NLPZ", "Wkładki ortopedyczne"],
-    "first_aid": ["Odciąż stopę, chłodź 15–20 min."],
-    "emergency": ["Masywny krwotok/zmiażdżenie.", "Utrata czucia/stopy zimne."]
-  },
-  "uklad_krw_m": {
-    "title": "Układ krwionośny (Mężczyzna)",
-    "description": "Dolegliwości związane z krążeniem.",
-    "causes": ["Nadciśnienie", "Niedokrwistość", "Niewydolność serca", "Żylaki"],
-    "symptoms": ["Kołatania", "Zmęczenie", "Obrzęki", "Zawroty głowy"],
-    "doctors": ["Kardiolog", "Lekarz rodzinny", "Angiolog"],
-    "medications": ["Leki kardiologiczne wyłącznie wg zaleceń lekarza"],
-    "first_aid": ["Odpoczynek, kontrola ciśnienia; w ciężkich objawach 112."],
-    "emergency": ["Objawy zawału/udaru", "Omdlenie", "Ostra duszność/obrzęk."]
-  },
-  "uklad_oddech_m": {
-    "title": "Układ oddechowy (Mężczyzna)",
-    "description": "Kaszel, duszność, ból przy oddychaniu.",
-    "causes": ["Infekcja", "Astma", "POChP", "Zapalenie płuc"],
-    "symptoms": ["Kaszel", "Duszność", "Gorączka", "Ból w klp"],
-    "doctors": ["Lekarz rodzinny", "Pulmonolog"],
-    "medications": ["Leki rozszerzające oskrzela", "Leki przeciwgorączkowe (wg lekarza)"],
-    "first_aid": ["Odpoczynek, nawodnienie."],
-    "emergency": ["Silna duszność", "Krwioplucie", "Nagły ból w klp."]
-  },
-  "uklad_pokarm_m": {
-    "title": "Układ pokarmowy (Mężczyzna)",
-    "description": "Bóle i dolegliwości przewodu pokarmowego.",
-    "causes": ["Niestrawność", "Wrzody", "ZJD", "Zapalenie pęcherzyka żółciowego"],
-    "symptoms": ["Zgaga", "Bóle skurczowe", "Wzdęcia", "Biegunka/zaparcia"],
-    "doctors": ["Gastroenterolog", "Lekarz rodzinny"],
-    "medications": ["IPP/osłonowe (wg lekarza)", "Rozkurczowe", "Probiotyki"],
-    "first_aid": ["Dieta lekkostrawna, nawadnianie."],
-    "emergency": ["Krwawienie z p.pokarmowego", "Silny ból z gorączką", "Wymioty fusowate."]
+
+  "ciaza_k": {
+    "title": "Ciąża",
+    "causes": ["Naturalny proces fizjologiczny"],
+    "symptoms": ["Nudności", "Zawroty głowy", "Zmienność nastroju"],
+    "doctors": ["Ginekolog-położnik"],
+    "medications": ["Suplementacja kwasem foliowym"],
+    "first_aid": ["Regularne wizyty kontrolne", "Zdrowa dieta"],
+    "description": "Ciąża wymaga regularnych kontroli lekarskich."
   }
 }
