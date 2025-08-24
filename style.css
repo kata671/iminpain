@@ -327,3 +327,35 @@ body::before {
 @media (max-width: 600px){
   .grid-container{ grid-template-columns: 1fr; }
 }
+/* --- Wymuszenie układu 3 w rzędzie, wyśrodkowane --- */
+main .grid-container{
+  display:grid !important;
+  grid-template-columns:repeat(3, minmax(0, 1fr)) !important;
+  gap:24px !important;
+  justify-content:center !important;   /* siatka na środku */
+  justify-items:center !important;     /* kafelki na środku kolumn */
+  max-width:1100px !important;
+  margin:24px auto !important;
+}
+
+/* Rozmiar kafelka jak na zdjęciu */
+main .grid-container .card{
+  width:320px !important;      /* możesz podbić do 340 jeśli chcesz większe */
+  max-width:340px !important;
+}
+
+/* Obraz w środku kafelka – stałe proporcje */
+main .grid-container .card-image{
+  display:block !important;
+  width:100% !important;
+  aspect-ratio:16 / 10 !important;
+  object-fit:cover !important;
+}
+
+/* Responsywność (opcjonalnie) */
+@media (max-width: 1024px){
+  main .grid-container{ grid-template-columns:repeat(2, 1fr) !important; }
+}
+@media (max-width: 640px){
+  main .grid-container{ grid-template-columns:1fr !important; }
+}
