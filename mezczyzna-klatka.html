@@ -10,21 +10,21 @@
   <style>
     .grid-container{
       display:grid;
-      grid-template-columns:repeat(3,1fr); /* 3 kafelki w rzędzie */
+      grid-template-columns:repeat(3,1fr);
       gap:24px;
       align-items:start;
       justify-items:center;
       width:100%;
       max-width:1100px;
-      margin:24px auto;
+      margin:24px auto 12px;
       padding:0 16px;
     }
     .card{
       width:100%;
       max-width:340px;
-      background:rgba(86,51,142,.18);        /* ciemny, półprzezroczysty fiolet */
+      background:rgba(86,51,142,.18);
       border-radius:16px;
-      border:1px solid rgba(165,140,255,.12); /* delikatna obwódka */
+      border:1px solid rgba(165,140,255,.12);
       box-shadow:
         inset 0 0 1px rgba(165,140,255,.22),
         0 6px 18px rgba(0,0,0,.35);
@@ -33,91 +33,96 @@
     }
     .card:hover{
       transform:translateY(-2px);
-      box-shadow:
-        0 10px 24px rgba(0,0,0,.45),
-        0 0 20px rgba(165,140,255,.25);       /* glow */
+      box-shadow:0 10px 24px rgba(0,0,0,.45), 0 0 20px rgba(165,140,255,.25);
     }
     .card a{ display:block; color:inherit; text-decoration:none; }
-    .card-image{
-      display:block;
-      width:100%;
-      aspect-ratio:16/10;                     /* poziomy format */
-      object-fit:cover;
-    }
+    .card-image{ display:block; width:100%; aspect-ratio:16/10; object-fit:cover; }
     .card-caption{ padding:10px 14px; font-weight:600; text-align:center; }
 
-    header .breadcrumbs{
-      display:flex; gap:12px; align-items:center;
-      padding:16px 16px 0; max-width:1100px; margin:0 auto;
+    .card.emergency{
+      background:rgba(120, 8, 8, .22);
+      border-color:rgba(255,90,90,.45);
+      box-shadow:inset 0 0 1px rgba(255,120,120,.28), 0 6px 18px rgba(0,0,0,.35);
     }
-    header .breadcrumbs a{ text-decoration:none; }
-    main h1{ max-width:1100px; margin:8px auto 0; padding:0 16px; text-align:center; }
-
-    @media (max-width:480px){
+    .card.emergency:hover{
+      box-shadow:0 10px 24px rgba(0,0,0,.45), 0 0 22px rgba(255,80,80,.45);
+    }
+    @media (max-width: 480px){
       .grid-container{ grid-template-columns:1fr; gap:18px; }
       .card{ max-width:100%; }
+    }
+    main h1{
+      max-width:1100px; margin:8px auto 12px; padding:0 16px; text-align:center;
     }
   </style>
 </head>
 
 <body data-page="mezczyzna-klatka">
-  <header>
-    <nav class="breadcrumbs">
-      <a href="index.html">← Powrót do startu</a>
-      <span>|</span>
-      <a href="mezczyzna.html">Wróć do wyboru sekcji</a>
-    </nav>
-    <h1>Mężczyzna — Klatka, brzuch, plecy</h1>
-  </header>
+<header>
+  <nav class="breadcrumbs">
+    <a href="index.html">← Powrót do startu</a>
+    <span> | </span>
+    <a href="mezczyzna.html">Wróć do wyboru sekcji</a>
+  </nav>
+  <h1>Mężczyzna — Klatka, brzuch, plecy</h1>
+</header>
 
-  <main>
-    <section class="grid-container" aria-label="Wybór narządów">
-      <!-- Serce -->
-      <article class="card">
-        <a href="mezczyzna-serce.html">
-          <img class="card-image" src="img/mezczyzna-serce.jpg" alt="Serce" loading="lazy" />
-          <div class="card-caption">Serce</div>
-        </a>
-      </article>
+<main>
+  <section class="grid-container" aria-label="Wybór sekcji">
+    <!-- 1. Serce -->
+    <article class="card">
+      <a href="mezczyzna-serce.html">
+        <img class="card-image" src="img/mezczyzna-serce.jpg" alt="Serce" loading="lazy">
+        <div class="card-caption">Serce</div>
+      </a>
+    </article>
 
-      <!-- Płuca -->
-      <article class="card">
-        <a href="mezczyzna-pluca.html">
-          <img class="card-image" src="img/mezczyzna-pluca.jpg" alt="Płuca" loading="lazy" />
-          <div class="card-caption">Płuca</div>
-        </a>
-      </article>
+    <!-- 2. Płuca -->
+    <article class="card">
+      <a href="mezczyzna-pluca.html">
+        <img class="card-image" src="img/mezczyzna-pluca.jpg" alt="Płuca" loading="lazy">
+        <div class="card-caption">Płuca</div>
+      </a>
+    </article>
 
-      <!-- Układ pokarmowy -->
-      <article class="card">
-        <a href="mezczyzna-uklad-pokarmowy.html">
-          <img class="card-image" src="img/mezczyzna-uklad-pokarmowy.jpg" alt="Układ pokarmowy" loading="lazy" />
-          <div class="card-caption">Układ pokarmowy</div>
-        </a>
-      </article>
+    <!-- 3. Klatka piersiowa (ściana klp/mięśnie) -->
+    <article class="card">
+      <a href="mezczyzna-klatka-piersiowa.html">
+        <img class="card-image" src="img/mezczyzna-klatka.jpg" alt="Klatka piersiowa" loading="lazy">
+        <div class="card-caption">Klatka (ściana klp/mięśnie)</div>
+      </a>
+    </article>
 
-      <!-- Układ krwionośny -->
-      <article class="card">
-        <a href="mezczyzna-uklad-krwionosny.html">
-          <img class="card-image" src="img/mezczyzna-uklad-krwionosny.jpg" alt="Układ krwionośny" loading="lazy" />
-          <div class="card-caption">Układ krwionośny</div>
-        </a>
-      </article>
+    <!-- 4. Brzuch -->
+    <article class="card">
+      <a href="mezczyzna-brzuch.html">
+        <img class="card-image" src="img/mezczyzna-brzuch.jpg" alt="Brzuch" loading="lazy">
+        <div class="card-caption">Brzuch</div>
+      </a>
+    </article>
 
-      <!-- Układ oddechowy -->
-      <article class="card">
-        <a href="mezczyzna-uklad-oddechowy.html">
-          <img class="card-image" src="img/mezczyzna-uklad-oddechowy.jpg" alt="Układ oddechowy" loading="lazy" />
-          <div class="card-caption">Układ oddechowy</div>
-        </a>
-      </article>
-    </section>
-  </main>
+    <!-- 5. Plecy -->
+    <article class="card">
+      <a href="mezczyzna-plecy.html">
+        <img class="card-image" src="img/mezczyzna-plecy.jpg" alt="Plecy" loading="lazy">
+        <div class="card-caption">Plecy</div>
+      </a>
+    </article>
 
-  <footer>
-    <p style="text-align:center; opacity:.8; margin:28px 0 18px;">
-      © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
-    </p>
-  </footer>
+    <!-- 6. Nagła pomoc -->
+    <article class="card emergency">
+      <a href="szczegoly.html?id=pomoc">
+        <img class="card-image" src="img/nagla-pomoc.jpg" alt="Nagła pomoc" loading="lazy">
+        <div class="card-caption">Nagła pomoc</div>
+      </a>
+    </article>
+  </section>
+</main>
+
+<footer>
+  <p style="text-align:center; opacity:.8; margin:28px 0 18px;">
+    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
+  </p>
+</footer>
 </body>
 </html>
