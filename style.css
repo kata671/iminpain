@@ -297,3 +297,33 @@ body::before {
   background-size: 20px 20px; /* odstęp między kropkami */
   opacity: 0.9;
 }
+/* === UKŁAD KAFELKÓW: 3 w rzędzie, wyśrodkowane === */
+.grid-container{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 kolumny na dużych ekranach */
+  gap: 24px;
+  justify-items: center;        /* każdy kafelek wyrównany do środka kolumny */
+  width: 100%;
+  max-width: 1200px;            /* szerokość bloku z kafelkami */
+  margin: 24px auto 0;          /* wyśrodkowanie pod nagłówkiem */
+  padding: 0 16px;
+}
+
+/* delikatnie ustalamy maksymalny rozmiar kafelka (jak na zdjęciu) */
+.card{ 
+  width: 100%;
+  max-width: 360px;             /* możesz podbić do 380px jeśli chcesz ciut większe */
+}
+.card-image{
+  width: 100%;
+  aspect-ratio: 16 / 10;        /* stały poziomy format */
+  object-fit: cover;
+}
+
+/* RESPONSYWNOŚĆ: na tabletach 2 w rzędzie, na telefonie 1 */
+@media (max-width: 1024px){
+  .grid-container{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px){
+  .grid-container{ grid-template-columns: 1fr; }
+}
