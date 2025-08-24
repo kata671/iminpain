@@ -1,184 +1,124 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Szczegóły</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Szczegóły — Informacje medyczne</title>
+
+  <link rel="stylesheet" href="style.css" />
+
   <style>
-    .nav-links { margin: 10px 0; }
-    .back-link { color:#6cf; text-decoration:none; margin-right:12px; }
-
-    /* --- KAFELKI: 3 w rzędzie --- */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      max-width: 1200px;
-      margin: 28px auto;
-      justify-items: center;
-      align-items: start;
+    main {
+      max-width: 1000px;
+      margin: 32px auto;
+      padding: 0 20px;
+      line-height: 1.6;
     }
 
-    .card {
-      width: 100%;
-      max-width: 340px;
-      background: rgba(34, 42, 90, .85);
-      border: 2px solid #5463b5;
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 6px 16px rgba(0,0,0,.25);
+    h1 {
+      text-align: center;
+      color: #c8a2ff;
+      margin-bottom: 24px;
     }
 
-    .card h3 { margin:0 0 8px; }
-    .error { color:#f99b9b; margin-top:20px; font-size:18px; }
-    ul { margin:0; padding-left: 18px; }
-    .pill { display:inline-block; height:10px; width:80px; border-radius:20px; background:#6cf; }
-
-    /* Responsywność */
-    @media (max-width: 980px){
-      .cards{ grid-template-columns: repeat(2, 1fr); }
+    section {
+      margin-bottom: 32px;
+      background: rgba(86,51,142,.18);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: inset 0 0 1px rgba(165,140,255,.22),
+                  0 6px 18px rgba(0,0,0,.35);
     }
-    @media (max-width: 640px){
-      .cards{ grid-template-columns: 1fr; }
+
+    section h2 {
+      color: #c8a2ff;
+      margin-bottom: 12px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      max-width: 1000px;
+      margin: 20px auto 0;
+      padding: 0 20px;
+    }
+
+    .breadcrumbs a {
+      text-decoration: none;
     }
   </style>
 </head>
-<body data-page="szczegoly">
-  <div class="nav-links">
-    <a href="index.html" class="back-link">&larr; Strona główna</a>
-    <a href="#" id="sectionBack" class="back-link">← Wróć do wyboru sekcji</a>
-  </div>
 
-  <h1 id="title">Szczegóły</h1>
-  <div class="pill" aria-hidden="true"></div>
+<body>
+  <header>
+    <nav class="breadcrumbs">
+      <a href="index.html">← Powrót do startu</a>
+      <span>|</span>
+      <a href="mezczyzna.html">Wróć do wyboru sekcji</a>
+    </nav>
+    <h1>Serce — Szczegóły</h1>
+  </header>
 
-  <div id="content"></div>
-  <div id="err" class="error" style="display:none"></div>
+  <main>
+    <section>
+      <h2>Możliwe przyczyny bólu</h2>
+      <ul>
+        <li>Dławica piersiowa</li>
+        <li>Zawał mięśnia sercowego</li>
+        <li>Zapalenie mięśnia sercowego</li>
+        <li>Stres i nerwica</li>
+        <li>Refluks żołądkowy (ból podobny do sercowego)</li>
+      </ul>
+    </section>
 
-  <footer style="margin-top:40px">
-    <p>&copy; 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
+    <section>
+      <h2>Objawy towarzyszące</h2>
+      <ul>
+        <li>Duszność, ucisk w klatce piersiowej</li>
+        <li>Ból promieniujący do ramienia lub żuchwy</li>
+        <li>Kołatanie serca</li>
+        <li>Nudności, zimne poty</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Specjaliści</h2>
+      <ul>
+        <li>Kardiolog</li>
+        <li>Internista</li>
+        <li>Pulmonolog (jeśli przyczyna dotyczy płuc)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Leki łagodzące ból</h2>
+      <ul>
+        <li>Nitrogliceryna (w dławicy — tylko z zalecenia lekarza)</li>
+        <li>Leki przeciwbólowe dostępne bez recepty (paracetamol)</li>
+        <li>Unikać samodzielnego stosowania silnych leków bez konsultacji</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Pierwsza pomoc i co robić</h2>
+      <ul>
+        <li>Natychmiast wezwać pomoc — numer alarmowy 112/999 w razie ostrego bólu</li>
+        <li>Usiąść w wygodnej pozycji, unikać wysiłku</li>
+        <li>Jeśli pacjent ma przepisane leki, zażyć zgodnie z zaleceniami lekarza</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p style="text-align:center; opacity:.8; margin:28px 0 18px;">
+      © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
+    </p>
   </footer>
-
-<script>
-  function sectionUrlFromId(id) {
-    if (!id) return "index.html";
-    const female = id.endsWith("_k");
-    const male = id.endsWith("_m");
-    const groupMapK = {
-      oczy_k: "kobieta-glowa.html",
-      uszy_k: "kobieta-glowa.html",
-      nos_k: "kobieta-glowa.html",
-      szczeka_k: "kobieta-glowa.html",
-      szyja_k: "kobieta-glowa.html",
-      serce_k: "kobieta-klatka.html",
-      pluca_k: "kobieta-klatka.html",
-      brzuch_k: "kobieta-klatka.html",
-      plecy_k: "kobieta-klatka.html",
-      uklad_krw_k: "kobieta-klatka.html",
-      uklad_oddech_k: "kobieta-klatka.html",
-      uklad_pokarm_k: "kobieta-klatka.html",
-      biodra_k: "kobieta-nogi.html",
-      uda_k: "kobieta-nogi.html",
-      kolano_k: "kobieta-nogi.html",
-      lydka_k: "kobieta-nogi.html",
-      kostka_k: "kobieta-nogi.html",
-      stopy_k: "kobieta-nogi.html",
-      ciaza_k: "kobieta.html"
-    };
-    const groupMapM = {
-      oczy_m: "mezczyzna-glowa.html",
-      uszy_m: "mezczyzna-glowa.html",
-      nos_m: "mezczyzna-glowa.html",
-      szczeka_m: "mezczyzna-glowa.html",
-      szyja_m: "mezczyzna-glowa.html",
-      serce_m: "mezczyzna-klatka.html",
-      pluca_m: "mezczyzna-klatka.html",
-      brzuch_m: "mezczyzna-klatka.html",
-      plecy_m: "mezczyzna-klatka.html",
-      uklad_krw_m: "mezczyzna-klatka.html",
-      uklad_oddech_m: "mezczyzna-klatka.html",
-      uklad_pokarm_m: "mezczyzna-klatka.html",
-      biodra_m: "mezczyzna-nogi.html",
-      uda_m: "mezczyzna-nogi.html",
-      kolano_m: "mezczyzna-nogi.html",
-      lydka_m: "mezczyzna-nogi.html",
-      kostka_m: "mezczyzna-nogi.html",
-      stopy_m: "mezczyzna-nogi.html"
-    };
-    if (female) return groupMapK[id] || "kobieta.html";
-    if (male) return groupMapM[id] || "mezczyzna.html";
-    return "index.html";
-  }
-
-  const params = new URLSearchParams(location.search);
-  const id = params.get("id");
-  document.getElementById("sectionBack").href = sectionUrlFromId(id);
-
-  function el(tag, className, html) {
-    const e = document.createElement(tag);
-    if (className) e.className = className;
-    if (html !== undefined) e.innerHTML = html;
-    return e;
-  }
-
-  async function load() {
-    const err = document.getElementById("err");
-    try {
-      if (!id) throw new Error("Brak parametru ?id= w adresie.");
-      const res = await fetch("data/conditions.json?cb=" + Date.now());
-      if (!res.ok) throw new Error("Błąd HTTP " + res.status);
-      const data = await res.json();
-      const node = data[id];
-      if (!node) throw new Error("Nie znaleziono wpisu o id " + id);
-
-      document.getElementById("title").textContent = node.title;
-      const content = document.getElementById("content");
-      content.innerHTML = '';
-
-      function card(title, items) {
-        const c = el('div', 'card');
-        c.appendChild(el('h3', null, title));
-        if (Array.isArray(items)) {
-          const ul = el('ul');
-          items.forEach(t => ul.appendChild(el('li', null, t)));
-          c.appendChild(ul);
-        } else if (typeof items === 'string') {
-          c.appendChild(el('p', null, items));
-        }
-        return c;
-      }
-
-      const grid = el('div', 'cards');
-
-      // --- KOLEJNOŚĆ KAFELKÓW ---
-      grid.appendChild(card('Możliwe przyczyny bólu', node.causes));
-      grid.appendChild(card('Typowe objawy', node.symptoms));
-      grid.appendChild(card('Do jakiego lekarza', node.doctors));
-      grid.appendChild(card('Leki / środki łagodzące', node.medications));
-      grid.appendChild(card('Pierwsza pomoc (domowa)', node.first_aid));
-
-      if (node.emergency && node.emergency.length) {
-        const em = card('Niezłocznie pomoc (112/SOR)', node.emergency);
-        em.style.borderColor = 'rgba(255,100,100,.6)';
-        grid.appendChild(em);
-      }
-
-      content.appendChild(grid);
-
-      if (node.description) {
-        const desc = el('p', null, node.description);
-        desc.style.marginTop = '16px';
-        content.appendChild(desc);
-      }
-    } catch (e) {
-      err.style.display = 'block';
-      err.textContent = 'Błąd wczytywania danych: ' + e.message;
-      console.error(e);
-    }
-  }
-
-  load();
-</script>
 </body>
 </html>
