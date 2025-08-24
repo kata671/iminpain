@@ -1,66 +1,110 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Kobieta — Klatka, Brzuch, Plecy</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kobieta — Klatka, brzuch, plecy</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .grid-container{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:24px;
+      justify-items:center;
+      max-width:1100px;
+      margin:24px auto 0;
+      padding:0 16px;
+    }
+    .card{
+      width:100%;
+      max-width:260px;
+      background:rgba(86,51,142,.18);
+      border-radius:16px;
+      border:1px solid rgba(165,140,255,.12);
+      box-shadow:
+        inset 0 0 1px rgba(165,140,255,.22),
+        0 6px 18px rgba(0,0,0,.35);
+      overflow:hidden;
+      transition:transform .15s ease,box-shadow .15s ease,background .15s ease;
+    }
+    .card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 24px rgba(0,0,0,.45),
+                 0 0 20px rgba(165,140,255,.25);
+    }
+    .card a{display:block;color:inherit;text-decoration:none;}
+    .card-image{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;}
+    .card-caption{padding:10px 14px;font-weight:600;text-align:center;}
+    header .breadcrumbs{display:flex;gap:12px;align-items:center;padding:16px 16px 0;max-width:1100px;margin:0 auto;}
+    header .breadcrumbs a{text-decoration:none;}
+    main h1{max-width:1100px;margin:8px auto 0;padding:0 16px;text-align:center;}
+    @media(max-width:480px){
+      .grid-container{grid-template-columns:1fr;gap:18px;}
+      .card{max-width:100%;}
+    }
+  </style>
 </head>
-<body data-page="kobieta">
-  <div class="nav-links">
-    <a href="index.html" class="back-link">← Powrót do startu</a> |
-    <a href="kobieta.html" class="back-link">← Wróć do wyboru sekcji</a>
-  </div>
 
-  <h1>Wybierz narząd / część ciała</h1>
+<body data-page="kobieta-klatka">
+  <header>
+    <nav class="breadcrumbs">
+      <a href="index.html">← Powrót do startu</a>
+      <span>|</span>
+      <a href="kobieta.html">Wróć do wyboru sekcji</a>
+    </nav>
+    <h1>Kobieta — Klatka, brzuch, plecy</h1>
+  </header>
 
-  <div class="grid">
-    <a href="szczegoly.html?id=serce_k" class="card">
-      <img src="img/kobieta-serce.jpg" alt="Serce">
-      <span>Serce</span>
-    </a>
+  <main>
+    <section class="grid-container" aria-label="Wybór narządów ciała">
+      <!-- Serce -->
+      <article class="card">
+        <a href="kobieta-serce.html">
+          <img class="card-image" src="img/kobieta-serce.jpg" alt="Serce" loading="lazy">
+          <div class="card-caption">Serce</div>
+        </a>
+      </article>
 
-    <a href="szczegoly.html?id=pluca_k" class="card">
-      <img src="img/kobieta-pluca.jpg" alt="Płuca">
-      <span>Płuca</span>
-    </a>
+      <!-- Płuca -->
+      <article class="card">
+        <a href="kobieta-pluca.html">
+          <img class="card-image" src="img/kobieta-pluca.jpg" alt="Płuca" loading="lazy">
+          <div class="card-caption">Płuca</div>
+        </a>
+      </article>
 
-    <a href="szczegoly.html?id=brzuch_k" class="card">
-      <img src="img/kobieta-brzuch.jpg" alt="Brzuch">
-      <span>Brzuch</span>
-    </a>
+      <!-- Układ pokarmowy -->
+      <article class="card">
+        <a href="kobieta-uklad-pokarmowy.html">
+          <img class="card-image" src="img/kobieta-uklad-pokarmowy.jpg" alt="Układ pokarmowy" loading="lazy">
+          <div class="card-caption">Układ pokarmowy</div>
+        </a>
+      </article>
 
-    <a href="szczegoly.html?id=plecy_k" class="card">
-      <img src="img/kobieta-plecy.jpg" alt="Plecy">
-      <span>Plecy</span>
-    </a>
+      <!-- Układ krwionośny -->
+      <article class="card">
+        <a href="kobieta-uklad-krwionosny.html">
+          <img class="card-image" src="img/kobieta-uklad-krwionosny.jpg" alt="Układ krwionośny" loading="lazy">
+          <div class="card-caption">Układ krwionośny</div>
+        </a>
+      </article>
 
-    <a href="szczegoly.html?id=klatka_k" class="card">
-      <img src="img/kobieta-klatka.jpg" alt="Klatka piersiowa">
-      <span>Klatka (ściana klp/mięśnie)</span>
-    </a>
+      <!-- Układ oddechowy -->
+      <article class="card">
+        <a href="kobieta-uklad-oddechowy.html">
+          <img class="card-image" src="img/kobieta-uklad-oddechowy.jpg" alt="Układ oddechowy" loading="lazy">
+          <div class="card-caption">Układ oddechowy</div>
+        </a>
+      </article>
+    </section>
+  </main>
 
-    <!-- NOWA kafelka: CIĄŻA -->
-    <a href="szczegoly.html?id=ciaza_k" class="card">
-      <img src="img/kobieta-ciaza.png" alt="Ciąża">
-      <span>Ciąża</span>
-    </a>
-
-    <a href="szczegoly.html?id=uklad_krw_k" class="card">
-      <img src="img/uklad-k.jpg" alt="Układ krwionośny">
-      <span>Układ krwionośny</span>
-    </a>
-
-    <a href="szczegoly.html?id=uklad_oddech_k" class="card">
-      <img src="img/uklad-oddechowy.jpg" alt="Układ oddechowy">
-      <span>Układ oddechowy</span>
-    </a>
-
-    <a href="szczegoly.html?id=uklad_pokarm_k" class="card">
-      <img src="img/uklad-pokarmowy.jpg" alt="Układ pokarmowy">
-      <span>Układ pokarmowy</span>
-    </a>
-  </div>
-
-  <p class="disclaimer">© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
+  <footer>
+    <p style="text-align:center;opacity:.8;margin:28px 0 18px;">
+      © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
+    </p>
+  </footer>
 </body>
 </html>
