@@ -245,5 +245,70 @@ async function load() {
 
 load();
 </script>
+<script>
+/* Ultra-bezpieczny hotfix układu i czerwonego kafelka tylko dla szczegoly.html */
+(function fixSzczegolyLayout(){
+  function apply(){
+    // Znajdź siatki kart (działa z #content .cards lub dowolnym .cards)
+    const grids = document.querySelectorAll('#content .cards, .cards');
+    grids.forEach(g => {
+      // Wymuś układ 3+3 (inline style przebija wszystko)
+      g.style.display = 'grid';
+      g.style.gridTemplateColumns = 'repeat(3, 1fr)';
+      g.style.gap = '24px';
+      g.style.justifyItems = 'center';
+      g.style.alignItems = 'start';
+      g.style.maxWidth = '1100px';
+      g.style.margin = '28px auto';
+      g.style.padding = '0 8px';
+
+      // Upewnij się, że dzieci wyglądają jak kafelki
+      Array.from(g.children).forEach(c => {
+        if (c && c.nodeType === 1) {
+          c.classList && c.classList.add('card');
+          c.style.maxWidth = '320px';
+          c.style.background = 'rgba(34,42,90,.85)';
+          c.style.border = '2px solid #5463b5';
+          c.style.borderRadius = '16px';
+          c.style.padding = '16px';
+          c.style.boxShadow = '0 6px 16px rgba(0,0,0,.25)';
+          c.style.transition = 'transform .15s, box-shadow .15s, background .15s';
+        }
+      });
+
+      // Ostatni kafelek = "Niezwłoczna pomoc" (czerwony)
+      const last = g.lastElementChild;
+      if (last) {
+        last.classList && last.classList.add('emergency');
+        last.style.background = 'rgba(120,8,8,.22)';
+        last.style.border = '2px solid #ff3c3c';
+        last.style.boxShadow = 'inset 0 0 2px rgba(255,60,60,.5), 0 6px 18px rgba(0,0,0,.35)';
+      }
+    });
+
+    // Dodaj regułę hover dla czerwonego kafelka (bo inline nie ogarnia :hover)
+    if (!document.getElementById('emergency-hover-css')) {
+      const s = document.createElement('style');
+      s.id = 'emergency-hover-css';
+      s.textContent =
+        'body[data-page="szczegoly"] .card.emergency:hover{' +
+        'box-shadow:0 10px 28px rgba(0,0,0,.5),0 0 28px rgba(255,40,40,.85)' +
+        '}';
+      document.head.appendChild(s);
+    }
+  }
+
+  // Uruchom po załadowaniu DOM (i jeszcze raz chwilę później – na wszelki wypadek)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(apply, 0);
+      setTimeout(apply, 300);
+    });
+  } else {
+    setTimeout(apply, 0);
+    setTimeout(apply, 300);
+  }
+})();
+</script>
 </body>
 </html>
