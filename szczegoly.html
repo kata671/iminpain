@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Szczegóły</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css">
+  <!-- style bazowy + nadpisania -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style-overrides.css" />
   <style>
     .nav-links { margin: 10px 0; }
     .back-link { color:#6cf; text-decoration:none; margin-right:12px; }
@@ -15,24 +17,23 @@
   </style>
 </head>
 <body data-page="szczegoly">
+  <div class="nav-links">
+    <a href="index.html" class="back-link">← Strona główna</a>
+    <a href="#" id="sectionBack" class="back-link">← Wróć do wyboru sekcji</a>
+  </div>
 
-<div class="nav-links">
-  <a href="index.html" class="back-link">← Strona główna</a>
-  <a href="#" id="sectionBack" class="back-link">← Wróć do wyboru sekcji</a>
-</div>
+  <h1 id="title">Szczegóły</h1>
+  <div class="pill" aria-hidden="true"></div>
 
-<h1 id="title">Szczegóły</h1>
-<div class="pill" aria-hidden="true"></div>
+  <div id="content"></div>
+  <div id="err" class="error" style="display:none"></div>
 
-<div id="content"></div>
-<div id="err" class="error" style="display:none"></div>
-
-<footer style="margin-top:40px">
-  <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
-</footer>
+  <footer style="margin-top:40px">
+    <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
+  </footer>
 
 <script>
-/* ====== 1) Powrót do właściwej strony sekcji ====== */
+/* ====== 1) Routing powrotu do właściwej sekcji ====== */
 function sectionUrlFromId(id) {
   if (!id) return "index.html";
   const female = id.endsWith("_k");
@@ -64,7 +65,7 @@ const params = new URLSearchParams(location.search);
 const id = params.get("id");
 document.getElementById("sectionBack").href = sectionUrlFromId(id);
 
-/* ====== 2) Pełny CONTENT ====== */
+/* ====== 2) Pełny CONTENT — KOBIETA ====== */
 window.CONTENT = {
   /* ==== GŁOWA KOBIETA ==== */
   oczy_k: {
@@ -97,172 +98,283 @@ window.CONTENT = {
     description: "Nos reaguje na alergie i infekcje."
   },
   szczeka_k: {
-    title: "Szczęka — kobieta",
-    causes: ["Bruksizm", "Zapalenie stawu skroniowo-żuchwowego"],
+    title: "Szczęka / SSŻ — kobieta",
+    causes: ["Bruksizm", "Dysfunkcja stawu skroniowo-żuchwowego"],
     symptoms: ["Ból przy żuciu", "Trzaski w stawie"],
-    doctors: ["Dentysta", "Ortodonta"],
-    medications: ["NLPZ", "Szyny relaksacyjne"],
+    doctors: ["Dentysta", "Fizjoterapeuta stomatologiczny"],
+    medications: ["NLPZ", "Szyna relaksacyjna"],
     first_aid: ["Unikanie twardych pokarmów"],
-    description: "Częste u osób z napięciem nerwowym."
+    description: "Często związane z napięciem i zgrzytaniem zębami."
   },
   szyja_k: {
     title: "Szyja — kobieta",
-    causes: ["Przeciążenie mięśni", "Stres", "Urazy"],
+    causes: ["Przeciążenie mięśni", "Stres", "Wady postawy"],
     symptoms: ["Ból karku", "Sztywność"],
     doctors: ["Neurolog", "Fizjoterapeuta"],
     medications: ["NLPZ", "Maści rozgrzewające"],
     first_aid: ["Rozluźnianie mięśni", "Ćwiczenia"],
-    description: "Ból szyi zwykle wynika z napięcia mięśniowego."
+    description: "Najczęściej napięciowo–przeciążeniowe."
   },
   glowa_k: {
-    title: "Głowa — kobieta",
-    causes: ["Migrena", "Napięciowy ból głowy"],
-    symptoms: ["Ból jednostronny", "Światłowstręt"],
-    doctors: ["Neurolog"],
-    medications: ["Leki przeciwbólowe", "Tryptany"],
-    first_aid: ["Odpoczynek w ciemnym pokoju"],
-    description: "Najczęstsze bóle głowy to napięciowe i migrenowe."
+    title: "Głowa — kobieta (bóle głowy)",
+    causes: ["Napięciowy ból głowy", "Migrena", "Odwodnienie"],
+    symptoms: ["Ucisk", "Pulsowanie", "Światłowstręt"],
+    doctors: ["Neurolog", "POZ"],
+    medications: ["Paracetamol/ibuprofen", "Tryptany"],
+    first_aid: ["Odpoczynek w ciemnym, cichym miejscu", "Nawodnienie"],
+    description: "Większość bólów głowy jest łagodna."
   },
 
-  /* ==== KLATKA KOBIETA ==== */
+  /* ==== KLATKA / BRZUCH / PLECY KOBIETA ==== */
   serce_k: {
     title: "Serce — kobieta",
-    causes: ["Nadciśnienie", "Choroba wieńcowa", "Zawał"],
-    symptoms: ["Ból w klatce", "Duszność"],
-    doctors: ["Kardiolog"],
+    causes: ["Choroba wieńcowa", "Zawał", "Stres", "Nadciśnienie"],
+    symptoms: ["Ból w klatce", "Duszność", "Promieniowanie do barku/ramienia"],
+    doctors: ["Kardiolog", "Lekarz rodzinny"],
     medications: ["Nitrogliceryna", "Beta-blokery"],
-    first_aid: ["Spoczynek", "Wezwij pogotowie"],
-    emergency: ["Silny ból za mostkiem — 112"],
-    description: "Choroby serca wymagają pilnej diagnostyki."
+    first_aid: ["Wezwij 112", "Odpoczynek w pozycji siedzącej"],
+    emergency: ["Silny ból klatki + zimne poty — 112"],
+    description: "Objawy sercowe wymagają pilnej konsultacji."
   },
   pluca_k: {
     title: "Płuca — kobieta",
     causes: ["Zapalenie płuc", "Astma", "POChP"],
-    symptoms: ["Kaszel", "Duszność"],
-    doctors: ["Pulmonolog"],
-    medications: ["Antybiotyki", "Sterydy wziewne"],
-    first_aid: ["Spoczynek", "Nawodnienie"],
-    description: "Choroby płuc mogą być ostre i przewlekłe."
+    symptoms: ["Kaszel", "Duszność", "Ból przy oddychaniu"],
+    doctors: ["Pulmonolog", "POZ"],
+    medications: ["Antybiotyki (jeśli bakteryjne)", "Sterydy wziewne"],
+    first_aid: ["Odpoczynek", "Nawodnienie"],
+    emergency: ["Ostra duszność/sinica — 112"],
+    description: "Choroby płuc mogą mieć ciężki przebieg."
   },
   klatka_piersiowa_k: {
-    title: "Klatka piersiowa — kobieta",
-    causes: ["Zapalenie mięśni", "Kostochondritis"],
-    symptoms: ["Ból przy ruchu"],
-    doctors: ["Ortopeda", "Fizjoterapeuta"],
-    medications: ["NLPZ", "Maści przeciwzapalne"],
-    first_aid: ["Odpoczynek", "Ciepłe okłady"],
-    description: "Najczęściej podłoże mięśniowo-szkieletowe."
+    title: "Klatka piersiowa (ściana klp / mięśnie) — kobieta",
+    causes: ["Nadwyrężenie mięśni", "Kostochondritis", "Ból mięśniowo–powięziowy"],
+    symptoms: ["Ból przy ruchu/kaszlu/wdechu", "Tkliwość przy ucisku"],
+    doctors: ["POZ", "Ortopeda", "Fizjoterapeuta"],
+    medications: ["Paracetamol", "Ibuprofen/Naproksen", "Żele przeciwzapalne"],
+    first_aid: ["Odpoczynek", "Ciepłe okłady", "Łagodne rozciąganie"],
+    emergency: ["Ból klatki z dusznością/nudnościami — 112"],
+    description: "Najczęściej podłoże mięśniowo–szkieletowe."
   },
   brzuch_k: {
     title: "Brzuch — kobieta",
-    causes: ["Niestrawność", "ZJD", "Zapalenie żołądka"],
-    symptoms: ["Ból brzucha", "Wzdęcia"],
-    doctors: ["Gastroenterolog"],
-    medications: ["Leki rozkurczowe", "Probiotyki"],
+    causes: ["Niestrawność", "Zespół jelita drażliwego", "Zapalenie żołądka", "Refluks"],
+    symptoms: ["Ból brzucha", "Wzdęcia", "Nudności"],
+    doctors: ["Gastroenterolog", "POZ"],
+    medications: ["Leki rozkurczowe", "Probiotyki", "IPP (refluks)"],
     first_aid: ["Dieta lekkostrawna", "Nawodnienie"],
-    description: "Wiele możliwych przyczyn."
+    description: "Wiele możliwych przyczyn — obserwacja i konsultacja przy niepokojących objawach."
   },
   plecy_k: {
     title: "Plecy — kobieta",
-    causes: ["Przeciążenie", "Dyskopatia"],
-    symptoms: ["Ból przy ruchu", "Sztywność"],
-    doctors: ["Ortopeda", "Neurolog"],
-    medications: ["NLPZ"],
+    causes: ["Przeciążenie", "Dyskopatia", "Wady postawy"],
+    symptoms: ["Ból przy ruchu", "Sztywność", "Promieniowanie"],
+    doctors: ["Ortopeda", "Neurolog", "Fizjoterapeuta"],
+    medications: ["NLPZ", "Maści rozgrzewające"],
     first_aid: ["Odpoczynek", "Delikatne rozciąganie"],
-    description: "Najczęściej przeciążeniowe."
+    description: "Najczęściej przeciążenia mięśniowo–szkieletowe."
   },
   uklad_krw_k: {
     title: "Układ krążenia — kobieta",
-    causes: ["Nadciśnienie", "Arytmia"],
-    symptoms: ["Zawroty", "Obrzęki"],
+    causes: ["Nadciśnienie", "Miażdżyca", "Arytmie"],
+    symptoms: ["Zawroty", "Obrzęki", "Duszność przy wysiłku"],
     doctors: ["Kardiolog"],
-    medications: ["Leki na ciśnienie"],
-    first_aid: ["Kontrola ciśnienia"],
-    description: "Układ krążenia transportuje krew."
+    medications: ["Leki na ciśnienie", "Przeciwzakrzepowe (wg zaleceń)"],
+    first_aid: ["Kontrola ciśnienia", "Redukcja stresu"],
+    description: "Układ krążenia transportuje krew i tlen."
   },
   uklad_oddech_k: {
     title: "Układ oddechowy — kobieta",
-    causes: ["Infekcje", "Astma"],
-    symptoms: ["Kaszel", "Świsty"],
+    causes: ["Infekcje", "Astma", "POChP"],
+    symptoms: ["Kaszel", "Świsty", "Duszność"],
     doctors: ["Pulmonolog"],
-    medications: ["Leki wziewne"],
+    medications: ["Leki wziewne", "Antybiotyki (gdy bakteryjne)"],
     first_aid: ["Spokój", "Nawodnienie"],
     description: "Odpowiada za wymianę gazową."
   },
   uklad_pokarm_k: {
     title: "Układ pokarmowy — kobieta",
     causes: ["Zatrucie", "Refluks", "ZJD"],
-    symptoms: ["Ból brzucha", "Zgaga"],
+    symptoms: ["Ból brzucha", "Zgaga", "Biegunka"],
     doctors: ["Gastroenterolog"],
-    medications: ["Leki rozkurczowe"],
-    first_aid: ["Dieta lekkostrawna"],
-    description: "Układ trawienny odpowiada za trawienie pokarmów."
+    medications: ["Leki rozkurczowe", "Osłonowe"],
+    first_aid: ["Dieta lekkostrawna", "Nawodnienie"],
+    description: "Trawienie i wchłanianie składników odżywczych."
   },
   ciaza_k: {
-    title: "Ciąża — kobieta",
-    causes: ["Fizjologiczne zmiany", "Powikłania ciąży"],
-    symptoms: ["Bóle brzucha", "Obrzęki"],
-    doctors: ["Ginekolog"],
-    medications: ["Suplementy", "Leki wg zaleceń lekarza"],
-    first_aid: ["Odpoczynek", "Konsultacja"],
-    description: "Ciąża wymaga stałej kontroli medycznej."
+    title: "Ciąża",
+    causes: ["Proces fizjologiczny"],
+    symptoms: ["Nudności", "Zawroty", "Zmiany nastroju"],
+    doctors: ["Ginekolog–położnik"],
+    medications: ["Kwas foliowy", "Suplementy wg lekarza"],
+    first_aid: ["Kontrole u lekarza", "Zdrowa dieta", "Odpoczynek"],
+    description: "Ciąża wymaga regularnych kontroli lekarskich."
   },
 
   /* ==== NOGI KOBIETA ==== */
   biodra_k: {
     title: "Biodra — kobieta",
-    causes: ["Przeciążenie", "Zapalenie stawu biodrowego"],
-    symptoms: ["Ból pachwiny", "Ograniczenie ruchu"],
+    causes: ["Przeciążenie stawu", "Zapalenie ścięgien", "Uraz"],
+    symptoms: ["Ból pachwiny/boczny", "Ograniczenie ruchu", "Tkliwość"],
     doctors: ["Ortopeda", "Fizjoterapeuta"],
-    medications: ["Paracetamol", "NLPZ"],
-    first_aid: ["Odpoczynek", "Chłodzenie"],
-    description: "Ból bioder częsty przy przeciążeniu."
+    medications: ["Paracetamol", "NLPZ miejscowo"],
+    first_aid: ["Odpoczynek", "Chłodzenie", "Unikanie przeciążeń"],
+    description: "Często przeciążeniowe."
   },
   uda_k: {
     title: "Uda — kobieta",
-    causes: ["Naciągnięcie mięśni", "Uraz sportowy"],
-    symptoms: ["Ból przy ruchu", "Siniaki"],
-    doctors: ["Ortopeda", "Fizjoterapeuta"],
-    medications: ["NLPZ"],
-    first_aid: ["RICE", "Rozciąganie"],
-    description: "Najczęściej przeciążenie."
+    causes: ["Naciągnięcie mięśni", "ITBS", "Uraz sportowy"],
+    symptoms: ["Ból przy chodzeniu/biegu", "Tkliwość", "Siniaki"],
+    doctors: ["Fizjoterapeuta", "Ortopeda"],
+    medications: ["NLPZ", "Maści przeciwzapalne"],
+    first_aid: ["RICE (Rest, Ice, Compression, Elevation)"],
+    description: "Najczęściej przeciążenie/uraz."
   },
   kolano_k: {
     title: "Kolano — kobieta",
-    causes: ["Przeciążenie", "Uszkodzenie łąkotki"],
-    symptoms: ["Ból przy schodzeniu", "Obrzęk"],
-    doctors: ["Ortopeda"],
-    medications: ["NLPZ"],
+    causes: ["Przeciążenie rzepki", "Zapalenie ścięgien", "Uszkodzenie łąkotki"],
+    symptoms: ["Ból przy schodzeniu", "Trzaski", "Obrzęk"],
+    doctors: ["Ortopeda", "Fizjoterapeuta"],
+    medications: ["NLPZ", "Chłodzenie"],
     first_aid: ["Odpoczynek", "Stabilizacja"],
-    description: "Kolano często boli przy urazach sportowych."
+    description: "Częste w sportach biegowych."
   },
   lydka_k: {
     title: "Łydka — kobieta",
     causes: ["Skurcz", "Naciągnięcie mięśnia", "(Rzadko) zakrzepica"],
-    symptoms: ["Ból kłujący", "Tkliwość"],
+    symptoms: ["Ból kłujący/ciągnący", "Nasilenie przy wspięciach", "Tkliwość"],
     doctors: ["POZ", "Fizjoterapeuta"],
-    medications: ["Magnez", "NLPZ"],
-    first_aid: ["Rozciąganie", "Chłodzenie"],
-    description: "Najczęściej przeciążenie mięśnia."
+    medications: ["Magnez", "NLPZ miejscowo"],
+    first_aid: ["Rozciąganie", "Chłodzenie", "Odpoczynek"],
+    description: "Najczęściej przeciążenie; przy obrzęku/ociepleniu — pilna konsultacja."
   },
   kostka_k: {
     title: "Kostka — kobieta",
-    causes: ["Skręcenie", "Naciągnięcie więzadeł"],
-    symptoms: ["Obrzęk", "Ból przy obciążaniu"],
+    causes: ["Skręcenie stawu skokowego", "Naciągnięcie więzadeł"],
+    symptoms: ["Obrzęk", "Ból przy obciążaniu", "Siniak"],
     doctors: ["Ortopeda"],
-    medications: ["NLPZ"],
-    first_aid: ["RICE", "Unieruchomienie"],
-    description: "Skręcenia kostki zwykle łagodne."
+    medications: ["NLPZ", "Maści chłodzące"],
+    first_aid: ["RICE", "Krótkie unieruchomienie"],
+    description: "Skręcenia zwykle łagodne — kontrola jeśli nie ustępuje."
   },
   stopy_k: {
     title: "Stopy — kobieta",
-    causes: ["Zapalenie rozcięgna", "Złe obuwie"],
-    symptoms: ["Ból pięty", "Poranny ból"],
-    doctors: ["Ortopeda"],
-    medications: ["Wkładki", "NLPZ"],
-    first_aid: ["Rozciąganie", "Odpoczynek"],
-    description: "Stopy są bardzo obciążane w codzienności."
-  },
+    causes: ["Zapalenie rozcięgna podeszwowego", "Nadmierne obciążenie", "Złe obuwie"],
+    symptoms: ["Ból pięty/przodostopia", "Poranny ból startowy"],
+    doctors: ["Ortopeda", "Fizjoterapeuta"],
+    medications: ["NLPZ miejscowo", "Wkładki"],
+    first_aid: ["Rozciąganie rozcięgna", "Odpoczynek"],
+    description: "Najczęściej przeciążenia wynikające z obciążenia."
+  }
+}; // --- KONIEC danych KOBIETA
+
+/* ====== 3) Pomocnicze ====== */
+function el(tag, className, html) {
+  const e = document.createElement(tag);
+  if (className) e.className = className;
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+}
+function card(title, items) {
+  const c = el("div", "card");
+  c.appendChild(el("h3", null, title));
+  if (Array.isArray(items)) {
+    const ul = el("ul");
+    items.forEach(it => ul.appendChild(el("li", null, it)));
+    c.appendChild(ul);
+  } else if (typeof items === "string") {
+    c.appendChild(el("p", null, items));
+  }
+  return c;
+}
+
+/* ====== 4) Render ====== */
+async function load() {
+  const err = document.getElementById("err");
+  const content = document.getElementById("content");
+  const titleEl = document.getElementById("title");
+  try {
+    if (!id) throw new Error("Brak parametru ?id w adresie.");
+
+    // Najpierw spróbuj z JSON (jeśli istnieje w /data)
+    const candidates = [
+      "data/detailed_conditions.json",
+      "data/conditions.json",
+      "/data/detailed_conditions.json",
+      "/data/conditions.json"
+    ];
+    let dataFromJson = null;
+    for (const path of candidates) {
+      try {
+        const res = await fetch(path + "?" + Date.now(), { cache: "no-store" });
+        if (!res.ok) continue;
+        const json = await res.json();
+        if (json && json[id]) { dataFromJson = json[id]; break; }
+      } catch (e) { /* ignoruj */ }
+    }
+
+    const node = dataFromJson || (window.CONTENT && window.CONTENT[id]) || null;
+    if (!node) {
+      titleEl.textContent = "Brak danych: " + id;
+      content.innerHTML = "<p style='color:#f99'>Nie znaleziono treści dla tego obszaru.</p>";
+      return;
+    }
+
+    // Tytuł
+    titleEl.textContent = node.title || id;
+
+    // Siatka
+    const grid = document.createElement("div");
+    grid.className = "cards";
+
+    // Ultra-pewne wymuszenie układu 3+3 (inline styles przebiją wszystko)
+    grid.style.display = "grid";
+    grid.style.gridTemplateColumns = "repeat(3, 1fr)";
+    grid.style.gap = "24px";
+    grid.style.justifyItems = "center";
+    grid.style.alignItems = "start";
+    grid.style.maxWidth = "1100px";
+    grid.style.margin = "28px auto";
+
+    // 5 standardowych kafelków
+    grid.appendChild(card("Możliwe przyczyny bólu", node.causes));
+    grid.appendChild(card("Typowe objawy", node.symptoms));
+    grid.appendChild(card("Do jakiego lekarza", node.doctors));
+    grid.appendChild(card("Leki / środki łagodzące", node.medications));
+    grid.appendChild(card("Pierwsza pomoc (domowa)", node.first_aid));
+
+    // 🔴 Zawsze ostatni: Niezwłoczna pomoc
+    const emergencyList = Array.isArray(node.emergency) && node.emergency.length
+      ? node.emergency
+      : [
+          "Silny, narastający ból, duszność, zlewne poty, omdlenie.",
+          "Objawy udaru: osłabienie, bełkotliwa mowa, opadnięty kącik ust.",
+          "Ostra duszność, sinica, krwawienie, silny uraz.",
+          "W razie wątpliwości: natychmiast zadzwoń 112."
+        ];
+    const em = card("Niezwłoczna pomoc (112/SOR)", emergencyList);
+    em.classList.add("emergency");
+    grid.appendChild(em);
+
+    content.innerHTML = "";
+    content.appendChild(grid);
+
+    if (node.description) {
+      const desc = document.createElement("p");
+      desc.style.marginTop = "16px";
+      desc.textContent = node.description;
+      content.appendChild(desc);
+    }
+  } catch (e) {
+    const errEl = document.getElementById("err");
+    errEl.style.display = "block";
+    errEl.textContent = "Błąd wczytywania: " + e.message;
+  }
+}
+load();
+</script>
+</body>
+</html>
   /* ==== GŁOWA MĘŻCZYZNA ==== */
   oczy_m: {
     title: "Oczy — mężczyzna",
@@ -449,110 +561,4 @@ window.CONTENT = {
     first_aid: ["Rozciąganie", "Odpoczynek"],
     description: "Stopy są bardzo obciążane w codzienności."
   }
-};
-
-/* ====== 3) Funkcje pomocnicze ====== */
-function el(tag, className, html) {
-  const e = document.createElement(tag);
-  if (className) e.className = className;
-  if (html !== undefined) e.innerHTML = html;
-  return e;
-}
-function card(title, items) {
-  const c = el("div", "card");
-  c.appendChild(el("h3", null, title));
-  if (Array.isArray(items)) {
-    const ul = el("ul");
-    items.forEach(it => ul.appendChild(el("li", null, it)));
-    c.appendChild(ul);
-  } else if (typeof items === 'string') {
-    c.appendChild(el("p", null, items));
-  }
-  return c;
-}
-
-/* ====== 4) Render ====== */
-async function load() {
-  const err = document.getElementById("err");
-  const content = document.getElementById("content");
-  const titleEl = document.getElementById("title");
-  try {
-    if (!id) throw new Error("Brak parametru ?id w adresie.");
-
-    const candidates = [
-      "data/detailed_conditions.json",
-      "data/conditions.json",
-      "/data/detailed_conditions.json",
-      "/data/conditions.json"
-    ];
-    let dataFromJson = null;
-    for (const path of candidates) {
-      try {
-        const res = await fetch(path + "?" + Date.now(), { cache: "no-store" });
-        if (!res.ok) continue;
-        const json = await res.json();
-        if (json && json[id]) { dataFromJson = json[id]; break; }
-      } catch(e) {}
-    }
-
-    const node = dataFromJson || (window.CONTENT && window.CONTENT[id]) || null;
-    if (!node) {
-      titleEl.textContent = "Brak danych: " + id;
-      content.innerHTML = "<p style='color:#f99'>Nie znaleziono treści dla tego obszaru.</p>";
-      return;
-    }
-
-    // ====== Render ======
-    titleEl.textContent = node.title || id;
-    content.innerHTML = '';
-    const grid = document.createElement("div");
-    grid.className = "cards";
-
-    // 🔧 wymuszenie układu 3+3
-    Object.assign(grid.style, {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(3, minmax(0,1fr))',
-      gap: '24px',
-      justifyItems: 'center',
-      alignItems: 'start',
-      maxWidth: '1100px',
-      margin: '28px auto'
-    });
-
-    grid.appendChild(card("Możliwe przyczyny bólu", node.causes));
-    grid.appendChild(card("Typowe objawy", node.symptoms));
-    grid.appendChild(card("Do jakiego lekarza", node.doctors));
-    grid.appendChild(card("Leki / środki łagodzące", node.medications));
-    grid.appendChild(card("Pierwsza pomoc (domowa)", node.first_aid));
-
-    // 🔴 ostatni kafelek: Niezwłoczna pomoc
-    const emergencyList = Array.isArray(node.emergency) && node.emergency.length
-      ? node.emergency
-      : [
-          "Silny, narastający ból, duszność, zlewne poty, omdlenie.",
-          "Objawy udaru: osłabienie, bełkotliwa mowa, opadnięty kącik ust.",
-          "Ostra duszność, sinica, krwawienie, silny uraz.",
-          "W razie wątpliwości: natychmiast zadzwoń 112."
-        ];
-    const em = card("Niezwłoczna pomoc (112/SOR)", emergencyList);
-    em.classList.add("emergency");
-    grid.appendChild(em);
-
-    content.appendChild(grid);
-
-    if (node.description) {
-      const desc = document.createElement("p");
-      desc.style.marginTop = "16px";
-      desc.textContent = node.description;
-      content.appendChild(desc);
-    }
-
-  } catch (e) {
-    err.style.display = 'block';
-    err.textContent = "Błąd wczytywania: " + e.message;
-  }
-}
-load();
-</script>
-</body>
-</html>
+}; // ⬅️ tu zamyka się window.CONTENT
