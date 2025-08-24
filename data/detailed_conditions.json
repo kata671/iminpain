@@ -1,85 +1,51 @@
 {
-  "oczy_k": {
-    "title": "Oczy — kobieta",
-    "causes": ["Zespół suchego oka", "Alergia", "Zapalenie spojówek"],
-    "symptoms": ["Swędzenie oczu", "Łzawienie", "Pogorszenie widzenia"],
-    "concerns": ["⚠️ Nagła utrata widzenia", "⚠️ Silny ból oka"],
-    "doctors": ["Okulista", "Lekarz rodzinny"],
-    "medications": ["Sztuczne łzy", "Krople antyhistaminowe"],
-    "first_aid": ["Płukanie oczu solą fizjologiczną", "Unikanie alergenów"],
-    "emergency": ["Nagła utrata wzroku — 112", "Uraz oka z silnym bólem — pilny SOR"],
-    "description": "Problemy z oczami mogą wynikać z alergii, infekcji lub zmęczenia. Regularne badania są ważne."
-  },
+  "oczy_k": { "title": "Oczy — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "uszy_k": { "title": "Uszy — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "nos_k": { "title": "Nos — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "szczeka_k": { "title": "Szczęka / SSŻ — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "szyja_k": { "title": "Szyja — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "glowa_k": { "title": "Głowa — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
 
-  "serce_m": {
-    "title": "Serce — mężczyzna",
-    "causes": ["Choroba wieńcowa", "Zawał serca", "Niewydolność serca"],
-    "symptoms": ["Ból w klatce", "Duszność", "Kołatanie"],
-    "concerns": ["⚠️ Ból promieniujący do ręki", "⚠️ Nagłe poty i osłabienie"],
-    "doctors": ["Kardiolog", "Lekarz rodzinny"],
-    "medications": ["Nitrogliceryna", "Beta-blokery"],
-    "first_aid": ["Pozycja siedząca", "Wezwanie pomocy"],
-    "emergency": ["Silny ból klatki — 112", "Utrata przytomności — 112"],
-    "description": "Choroby serca są jedną z głównych przyczyn zgonów. Wczesna reakcja ratuje życie."
-  },
+  "serce_k": { "title": "Serce — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "pluca_k": { "title": "Płuca — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "klatka_piersiowa_k": { "title": "Klatka piersiowa — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "brzuch_k": { "title": "Brzuch — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "plecy_k": { "title": "Plecy — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
 
-  "brzuch_k": {
-    "title": "Brzuch — kobieta",
-    "causes": ["Zatrucie pokarmowe", "Refluks", "IBS"],
-    "symptoms": ["Ból brzucha", "Wzdęcia", "Nudności"],
-    "concerns": ["⚠️ Silny ból z gorączką", "⚠️ Krew w stolcu"],
-    "doctors": ["Gastroenterolog", "Lekarz rodzinny"],
-    "medications": ["Leki rozkurczowe", "Leki zobojętniające"],
-    "first_aid": ["Dieta lekkostrawna", "Nawodnienie"],
-    "emergency": ["Nagły silny ból + wymioty — 112", "Podejrzenie wyrostka — pilny SOR"],
-    "description": "Ból brzucha ma wiele przyczyn od błahych po zagrażające życiu."
-  },
+  "uklad_krw_k": { "title": "Układ krążenia — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "uklad_oddech_k": { "title": "Układ oddechowy — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "uklad_pokarm_k": { "title": "Układ pokarmowy — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
 
-  "uda_k": {
-    "title": "Uda — kobieta",
-    "causes": ["Przeciążenie mięśni", "Zakrzepica żył", "Urazy"],
-    "symptoms": ["Ból uda", "Obrzęk", "Zaczerwienienie"],
-    "concerns": ["⚠️ Nagły obrzęk i ból", "⚠️ Trudności w chodzeniu"],
-    "doctors": ["Ortopeda", "Chirurg naczyniowy"],
-    "medications": ["Leki przeciwzapalne", "Leki przeciwzakrzepowe (lekarz)"],
-    "first_aid": ["Odpoczynek", "Chłodzenie"],
-    "emergency": ["Podejrzenie zakrzepicy — SOR", "Silny uraz nogi — 112"],
-    "description": "Bóle uda mogą wynikać z przeciążeń lub poważnych chorób naczyniowych."
-  },
+  "biodra_k": { "title": "Biodra — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "uda_k": { "title": "Uda — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "kolano_k": { "title": "Kolano — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "lydka_k": { "title": "Łydka — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "kostka_k": { "title": "Kostka — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "stopy_k": { "title": "Stopy — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
 
-  "ciaza_k": {
-    "title": "Ciąża — kobieta",
-    "causes": ["Zmiany hormonalne", "Przeciążenie organizmu", "Niedobory"],
-    "symptoms": ["Nudności", "Bóle kręgosłupa", "Zawroty głowy", "Zmęczenie"],
-    "concerns": ["⚠️ Krwawienie w ciąży", "⚠️ Silny ból brzucha", "⚠️ Nagłe obrzęki i ciśnienie"],
-    "doctors": ["Ginekolog-położnik"],
-    "medications": ["Suplementy witaminowe (po konsultacji)", "Preparaty żelaza (po konsultacji)"],
-    "first_aid": ["Odpoczynek", "Nawodnienie", "Unikanie stresu"],
-    "emergency": ["Krwawienie + ból — 112", "Utrata przytomności — SOR"],
-    "description": "Ciąża wymaga szczególnej troski. Każdy niepokojący objaw konsultuj z lekarzem."
-  },
+  "ciaza_k": { "title": "Ciąża — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
 
-  "pluca_m": {
-    "title": "Płuca — mężczyzna",
-    "causes": ["Infekcje", "POChP", "Astma"],
-    "symptoms": ["Kaszel", "Duszność", "Ból w klatce przy oddychaniu"],
-    "concerns": ["⚠️ Nagła duszność", "⚠️ Krwioplucie"],
-    "doctors": ["Pulmonolog", "Lekarz rodzinny"],
-    "medications": ["Inhalatory", "Antybiotyki (lekarz)"],
-    "first_aid": ["Pozycja siedząca", "Dostęp do świeżego powietrza"],
-    "emergency": ["Silna duszność — 112", "Sinica — 112"],
-    "description": "Problemy z płucami mogą mieć różne podłoże, od infekcji po przewlekłe choroby."
-  },
+  "oczy_m": { "title": "Oczy — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "uszy_m": { "title": "Uszy — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "nos_m": { "title": "Nos — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "szczeka_m": { "title": "Szczęka / SSŻ — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "szyja_m": { "title": "Szyja — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "glowa_m": { "title": "Głowa — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
 
-  "klatka_piersiowa_m": {
-    "title": "Klatka piersiowa — mężczyzna",
-    "causes": ["Urazy", "Zapalenie mięśni", "Problemy kardiologiczne"],
-    "symptoms": ["Ból przy oddychaniu", "Tkliwość mięśni"],
-    "concerns": ["⚠️ Silny ból klatki", "⚠️ Trudności w oddychaniu"],
-    "doctors": ["Ortopeda", "Kardiolog"],
-    "medications": ["Leki przeciwbólowe", "Leki rozkurczowe"],
-    "first_aid": ["Odpoczynek", "Unikanie wysiłku"],
-    "emergency": ["Silny ból + duszność — 112", "Uraz klatki z problemem oddychania — 112"],
-    "description": "Ból klatki piersiowej wymaga zawsze uważnej oceny, by wykluczyć serce i płuca."
-  }
+  "serce_m": { "title": "Serce — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "pluca_m": { "title": "Płuca — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "klatka_piersiowa_m": { "title": "Klatka piersiowa — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "brzuch_m": { "title": "Brzuch — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "plecy_m": { "title": "Plecy — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+
+  "uklad_krw_m": { "title": "Układ krążenia — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "uklad_oddech_m": { "title": "Układ oddechowy — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "uklad_pokarm_m": { "title": "Układ pokarmowy — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+
+  "biodra_m": { "title": "Biodra — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "uda_m": { "title": "Uda — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "kolano_m": { "title": "Kolano — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "lydka_m": { "title": "Łydka — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "kostka_m": { "title": "Kostka — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "stopy_m": { "title": "Stopy — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" }
 }
