@@ -50,21 +50,28 @@ function sectionUrlFromId(id) {
   const female = id.endsWith("_k");
   const male = id.endsWith("_m");
   const groupMapK = {
+    /* GŁOWA (kobieta) */
     oczy_k:"kobieta-glowa.html", uszy_k:"kobieta-glowa.html", nos_k:"kobieta-glowa.html",
     szczeka_k:"kobieta-glowa.html", szyja_k:"kobieta-glowa.html", glowa_k:"kobieta-glowa.html",
+    /* KLATKA (kobieta) */
     serce_k:"kobieta-klatka.html", pluca_k:"kobieta-klatka.html",
     klatka_piersiowa_k:"kobieta-klatka.html", brzuch_k:"kobieta-klatka.html", plecy_k:"kobieta-klatka.html",
     uklad_krw_k:"kobieta-klatka.html", uklad_oddech_k:"kobieta-klatka.html", uklad_pokarm_k:"kobieta-klatka.html",
+    /* NOGI (kobieta) */
     biodra_k:"kobieta-nogi.html", uda_k:"kobieta-nogi.html", kolano_k:"kobieta-nogi.html",
     lydka_k:"kobieta-nogi.html", kostka_k:"kobieta-nogi.html", stopy_k:"kobieta-nogi.html",
+    /* INNE */
     ciaza_k:"kobieta.html"
   };
   const groupMapM = {
+    /* GŁOWA (mężczyzna) – dla spójności, choć tu nie zmieniamy fallbacków */
     oczy_m:"mezczyzna-glowa.html", uszy_m:"mezczyzna-glowa.html", nos_m:"mezczyzna-glowa.html",
     szczeka_m:"mezczyzna-glowa.html", szyja_m:"mezczyzna-glowa.html", glowa_m:"mezczyzna-glowa.html",
+    /* KLATKA (mężczyzna) */
     serce_m:"mezczyzna-klatka.html", pluca_m:"mezczyzna-klatka.html",
     brzuch_m:"mezczyzna-klatka.html", plecy_m:"mezczyzna-klatka.html",
     uklad_krw_m:"mezczyzna-klatka.html", uklad_oddech_m:"mezczyzna-klatka.html", uklad_pokarm_m:"mezczyzna-klatka.html",
+    /* NOGI (mężczyzna) */
     biodra_m:"mezczyzna-nogi.html", uda_m:"mezczyzna-nogi.html", kolano_m:"mezczyzna-nogi.html",
     lydka_m:"mezczyzna-nogi.html", kostka_m:"mezczyzna-nogi.html", stopy_m:"mezczyzna-nogi.html"
   };
@@ -78,8 +85,64 @@ const params = new URLSearchParams(location.search);
 const id = params.get("id");
 document.getElementById("sectionBack").href = sectionUrlFromId(id);
 
-/* ====== 3) AWARYJNE DANE WBUDOWANE (Klatka + Nogi) ====== */
+/* ====== 3) AWARYJNE DANE WBUDOWANE (GŁOWA + KLATKA + NOGI, kobieta) ====== */
 window.CONTENT = {
+  /* ---- GŁOWA (6) ---- */
+  "oczy_k": {
+    "title": "Oczy — kobieta",
+    "causes": ["Zespół suchego oka", "Zapalenie spojówek", "Alergia", "Przemęczenie wzroku"],
+    "symptoms": ["Piecznie/świąd", "Łzawienie", "Światłowstręt", "Zaczerwienienie"],
+    "doctors": ["Okulista", "Lekarz rodzinny"],
+    "medications": ["Sztuczne łzy", "Krople antyhistaminowe (alergia)"],
+    "first_aid": ["Odpoczynek od ekranów", "Nawilżanie powietrza"],
+    "description": "Najczęstsze dolegliwości mają tło środowiskowe lub alergiczne."
+  },
+  "uszy_k": {
+    "title": "Uszy — kobieta",
+    "causes": ["Zapalenie ucha zewnętrznego/środkowego", "Korek woskowinowy"],
+    "symptoms": ["Ból ucha", "Niedosłuch", "Szumy uszne", "Gorączka (czasem)"],
+    "doctors": ["Laryngolog", "Lekarz rodzinny"],
+    "medications": ["Krople przeciwzapalne", "Antybiotyk (jeśli bakteryjne)"],
+    "first_aid": ["Nie wkładaj patyczków!", "Delikatne zmiękczanie woskowiny preparatem aptecznym"],
+    "description": "Uciążliwe objawy wymagają oceny u laryngologa."
+  },
+  "nos_k": {
+    "title": "Nos i zatoki — kobieta",
+    "causes": ["Nieżyt nosa", "Alergia", "Zapalenie zatok"],
+    "symptoms": ["Katar/obrzęk", "Ból głowy/ucisk zatok", "Kichanie"],
+    "doctors": ["Laryngolog", "Alergolog"],
+    "medications": ["Irygacje solą", "Steryd donosowy", "Leki antyhistaminowe"],
+    "first_aid": ["Nawilżanie śluzówek", "Unikanie alergenów"],
+    "description": "Często związane z alergią lub infekcją wirusową."
+  },
+  "szczeka_k": {
+    "title": "Szczęka / staw skroniowo-żuchwowy — kobieta",
+    "causes": ["Bruksizm", "Dysfunkcja SSŻ", "Przeciążenie mięśni żucia"],
+    "symptoms": ["Trzaski w stawie", "Ból przy żuciu", "Bóle głowy"],
+    "doctors": ["Stomatolog", "Fizjoterapeuta stomatologiczny"],
+    "medications": ["NLPZ doraźnie", "Szyna relaksacyjna (u dentysty)"],
+    "first_aid": ["Unikanie twardych pokarmów", "Ćwiczenia rozluźniające"],
+    "description": "Dolegliwości SSŻ często wynikają z napięcia i zgrzytania zębami."
+  },
+  "szyja_k": {
+    "title": "Szyja — kobieta",
+    "causes": ["Napięcie mięśniowe", "Zespół przeciążeniowy (telefon/komputer)", "Wady postawy"],
+    "symptoms": ["Sztywność", "Ból promieniujący do barku/głowy", "Ograniczenie ruchu"],
+    "doctors": ["Fizjoterapeuta", "Ortopeda"],
+    "medications": ["NLPZ miejscowo", "Rozgrzewające maści"],
+    "first_aid": ["Mikroprzerwy przy pracy", "Delikatne rozciąganie"],
+    "description": "Najczęściej przeciążenie mięśniowo-powięziowe."
+  },
+  "glowa_k": {
+    "title": "Głowa — kobieta (bóle głowy)",
+    "causes": ["Napięciowy ból głowy", "Migrena", "Odwodnienie", "Wzrok/przeciążenie"],
+    "symptoms": ["Uciskowa opaska", "Pulsujący ból (migrena)", "Nudności/fotofobia"],
+    "doctors": ["Neurolog", "Lekarz rodzinny"],
+    "medications": ["Paracetamol/ibuprofen", "Tryptany (migrena)"],
+    "first_aid": ["Sen/wypoczynek", "Nawodnienie", "Chłodny okład"],
+    "description": "Większość bólów głowy ma przebieg łagodny; alarmowe objawy wymagają pilnej diagnostyki."
+  },
+
   /* ---- KLATKA (9) ---- */
   "serce_k": {
     "title": "Serce — kobieta",
@@ -103,8 +166,8 @@ window.CONTENT = {
   },
   "klatka_piersiowa_k": {
     "title": "Klatka piersiowa (ściana klp / mięśnie) — kobieta",
-    "causes": ["Nadwyrężenie mięśni międzyżebrowych","Zapalenie chrząstek żebrowych (kostochondritis)","Ból mięśniowo-powięziowy po wysiłku lub kaszlu"],
-    "symptoms": ["Ból nasila się przy ruchu, kaszlu lub głębokim wdechu","Tkliwość przy ucisku miejsca","Brak duszności/omdleń (jeśli są → pilna konsultacja)"],
+    "causes": ["Nadwyrężenie mięśni międzyżebrowych", "Zapalenie chrząstek żebrowych (kostochondritis)", "Ból mięśniowo-powięziowy po wysiłku lub kaszlu"],
+    "symptoms": ["Ból nasila się przy ruchu/kaszlu/głębokim wdechu", "Tkliwość przy ucisku", "Brak duszności/omdleń (jeśli są → pilna konsultacja)"],
     "doctors": ["Lekarz rodzinny (POZ)", "Ortopeda", "Fizjoterapeuta"],
     "medications": ["Paracetamol", "Ibuprofen/Naproksen", "Maści/żele przeciwzapalne"],
     "first_aid": ["Odpoczynek", "Ciepłe okłady 10–15 min", "Delikatne rozciąganie po ustąpieniu ostrego bólu"],
@@ -243,7 +306,7 @@ function card(title, items) {
   return c;
 }
 
-/* ====== 5) ŁADOWANIE: NAJPIERW SPRÓBUJ JSON, POTEM FALLBACK ====== */
+/* ====== 5) ŁADOWANIE: najpierw próbuj JSON, potem fallback ====== */
 async function load() {
   const err = document.getElementById("err");
   const content = document.getElementById("content");
