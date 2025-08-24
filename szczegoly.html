@@ -269,3 +269,101 @@ load();
 
 </body>
 </html>
+<script>
+/* 🆘 Rescue loader — działa tylko, gdy nic się nie wyrenderowało */
+(async function rescueLoader(){
+  try {
+    // jeśli już są kafelki, nic nie rób
+    if (document.querySelector('#content .cards')) return;
+
+    const idParam = new URLSearchParams(location.search).get('id');
+    if (!idParam) return;
+
+    // spróbuj kilku ścieżek (absolute + relative)
+    const sources = [
+      '/data/detailed_conditions.json',
+      'data/detailed_conditions.json',
+      '/data/conditions.json',
+      'data/conditions.json'
+    ];
+
+    let data = null, lastErr = null;
+    for (const src of sources) {
+      try {
+        const r = await fetch(src + '?ts=' + Date.now(), { cache: 'no-store' });
+        if (!r.ok) { lastErr = 'HTTP ' + r.status + ' @ ' + src; continue; }
+        data = await r.json();
+        if (data) break;
+      } catch(e) { lastErr = e.message; }
+    }
+    if (!data) {
+      const err = document.getElementById('err');
+      if (err) { err.style.display='block'; err.textContent = 'Nie mogę wczytać danych JSON. ' + (lastErr||''); }
+      return;
+    }
+
+    const node = data[idParam];
+    if (!node) {
+      const err = document.getElementById('err');
+      if (err) { err.style.display='block'; err.textContent = 'Brak wpisu w JSON dla id=' + idParam; }
+      return;
+    }
+
+    // pomocnicze
+    const content = document.getElementById('content');
+    const titleEl = document.getElementById('title');
+    function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; }
+    function card(t, items){
+      const c = el('div','card'); c.appendChild(el('h3',null,t));
+      if (Array.isArray(items)) { const ul = el('ul'); items.forEach(x=>ul.appendChild(el('li',null,x))); c.appendChild(ul); }
+      else if (typeof items === 'string') { c.appendChild(el('p',null,items)); }
+      return c;
+    }
+
+    // tytuł
+    if (titleEl) titleEl.textContent = node.title || idParam;
+
+    // siatka
+    const grid = el('div','cards');
+    if (node.causes)      grid.appendChild(card('Możliwe przyczyny bólu', node.causes));
+    if (node.symptoms)    grid.appendChild(card('Typowe objawy', node.symptoms));
+    if (node.concerns)    grid.appendChild(card('⚠️ Obawy / pilne sygnały', node.concerns));
+    if (node.doctors)     grid.appendChild(card('Do jakiego lekarza', node.doctors));
+    if (node.medications) grid.appendChild(card('Leki / środki łagodzące', node.medications));
+    if (node.first_aid)   grid.appendChild(card('Pierwsza pomoc (domowa)', node.first_aid));
+
+    const emergencyList = Array.isArray(node.emergency) ? node.emergency : [
+      'Silny, narastający ból, duszność, zlewne poty, omdlenie.',
+      'Objawy udaru: osłabienie, bełkotliwa mowa, opadnięty kącik ust.',
+      'Ostra duszność, sinica, krwawienie, silny uraz.',
+      'W razie wątpliwości: natychmiast zadzwoń 112.'
+    ];
+    const em = card('Niezwłoczna pomoc (112/SOR)', emergencyList);
+    em.classList.add('emergency');
+    grid.appendChild(em);
+
+    content.innerHTML = '';
+    content.appendChild(grid);
+
+    if (node.description) {
+      const p = document.createElement('p');
+      p.style.marginTop = '16px';
+      p.textContent = node.description;
+      content.appendChild(p);
+    }
+
+    // minimalny układ 3 kolumn (gdyby CSS nie doszedł)
+    grid.style.display='grid';
+    grid.style.gridTemplateColumns='repeat(3,1fr)';
+    grid.style.gap='24px';
+    grid.style.maxWidth='1100px';
+    grid.style.margin='28px auto';
+    grid.style.justifyItems='center';
+    grid.style.alignItems='start';
+
+  } catch(e){
+    const err = document.getElementById('err');
+    if (err) { err.style.display='block'; err.textContent = 'Rescue loader error: ' + e.message; }
+  }
+})();
+</script>
