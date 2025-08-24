@@ -1,141 +1,85 @@
 {
   "oczy_k": {
     "title": "Oczy — kobieta",
-    "causes": [
-      "Zespół suchego oka",
-      "Alergia",
-      "Zapalenie spojówek"
-    ],
-    "symptoms": [
-      "Swędzenie oczu",
-      "Piecznie i łzawienie",
-      "Pogorszenie ostrości widzenia"
-    ],
-    "concerns": [
-      "⚠️ Nagła utrata widzenia",
-      "⚠️ Silny ból oka po urazie"
-    ],
-    "doctors": [
-      "Okulista",
-      "Lekarz rodzinny"
-    ],
-    "medications": [
-      "Sztuczne łzy",
-      "Krople antyhistaminowe"
-    ],
-    "first_aid": [
-      "Płukanie oczu solą fizjologiczną",
-      "Unikanie alergenów"
-    ],
-    "emergency": [
-      "Nagła utrata wzroku — natychmiast wezwij 112",
-      "Uraz oka z silnym bólem — pilny SOR"
-    ],
-    "description": "Problemy z oczami mogą wynikać z alergii, infekcji, zmęczenia lub chorób przewlekłych. Regularne badania okulistyczne są kluczowe."
+    "causes": ["Zespół suchego oka", "Alergia", "Zapalenie spojówek"],
+    "symptoms": ["Swędzenie oczu", "Łzawienie", "Pogorszenie widzenia"],
+    "concerns": ["⚠️ Nagła utrata widzenia", "⚠️ Silny ból oka"],
+    "doctors": ["Okulista", "Lekarz rodzinny"],
+    "medications": ["Sztuczne łzy", "Krople antyhistaminowe"],
+    "first_aid": ["Płukanie oczu solą fizjologiczną", "Unikanie alergenów"],
+    "emergency": ["Nagła utrata wzroku — 112", "Uraz oka z silnym bólem — pilny SOR"],
+    "description": "Problemy z oczami mogą wynikać z alergii, infekcji lub zmęczenia. Regularne badania są ważne."
   },
 
   "serce_m": {
     "title": "Serce — mężczyzna",
-    "causes": [
-      "Choroba wieńcowa",
-      "Zawał serca",
-      "Niewydolność serca"
-    ],
-    "symptoms": [
-      "Ból w klatce piersiowej",
-      "Duszność",
-      "Kołatanie serca"
-    ],
-    "concerns": [
-      "⚠️ Ból w klatce z promieniowaniem do ręki",
-      "⚠️ Nagłe zimne poty i osłabienie"
-    ],
-    "doctors": [
-      "Kardiolog",
-      "Lekarz rodzinny"
-    ],
-    "medications": [
-      "Nitrogliceryna",
-      "Beta-blokery"
-    ],
-    "first_aid": [
-      "Pozycja siedząca z oparciem",
-      "Wezwanie pomocy"
-    ],
-    "emergency": [
-      "Silny ucisk w klatce + duszność — 112",
-      "Utrata przytomności — 112"
-    ],
-    "description": "Choroby serca są jedną z głównych przyczyn zgonów. Wczesne rozpoznanie objawów i szybka reakcja mogą uratować życie."
+    "causes": ["Choroba wieńcowa", "Zawał serca", "Niewydolność serca"],
+    "symptoms": ["Ból w klatce", "Duszność", "Kołatanie"],
+    "concerns": ["⚠️ Ból promieniujący do ręki", "⚠️ Nagłe poty i osłabienie"],
+    "doctors": ["Kardiolog", "Lekarz rodzinny"],
+    "medications": ["Nitrogliceryna", "Beta-blokery"],
+    "first_aid": ["Pozycja siedząca", "Wezwanie pomocy"],
+    "emergency": ["Silny ból klatki — 112", "Utrata przytomności — 112"],
+    "description": "Choroby serca są jedną z głównych przyczyn zgonów. Wczesna reakcja ratuje życie."
   },
 
   "brzuch_k": {
     "title": "Brzuch — kobieta",
-    "causes": [
-      "Zatrucie pokarmowe",
-      "Refluks żołądkowy",
-      "Zespół jelita drażliwego (IBS)"
-    ],
-    "symptoms": [
-      "Ból brzucha",
-      "Wzdęcia",
-      "Nudności"
-    ],
-    "concerns": [
-      "⚠️ Silny ból z gorączką",
-      "⚠️ Krew w stolcu"
-    ],
-    "doctors": [
-      "Gastroenterolog",
-      "Lekarz rodzinny"
-    ],
-    "medications": [
-      "Leki rozkurczowe",
-      "Leki zobojętniające kwas żołądkowy"
-    ],
-    "first_aid": [
-      "Dieta lekkostrawna",
-      "Unikanie alkoholu i ostrych potraw"
-    ],
-    "emergency": [
-      "Nagły, silny ból brzucha + wymioty — 112",
-      "Podejrzenie zapalenia wyrostka robaczkowego — pilny SOR"
-    ],
-    "description": "Ból brzucha może mieć wiele przyczyn od błahych do zagrażających życiu. Ważna jest obserwacja towarzyszących objawów."
+    "causes": ["Zatrucie pokarmowe", "Refluks", "IBS"],
+    "symptoms": ["Ból brzucha", "Wzdęcia", "Nudności"],
+    "concerns": ["⚠️ Silny ból z gorączką", "⚠️ Krew w stolcu"],
+    "doctors": ["Gastroenterolog", "Lekarz rodzinny"],
+    "medications": ["Leki rozkurczowe", "Leki zobojętniające"],
+    "first_aid": ["Dieta lekkostrawna", "Nawodnienie"],
+    "emergency": ["Nagły silny ból + wymioty — 112", "Podejrzenie wyrostka — pilny SOR"],
+    "description": "Ból brzucha ma wiele przyczyn od błahych po zagrażające życiu."
   },
 
   "uda_k": {
     "title": "Uda — kobieta",
-    "causes": [
-      "Przeciążenie mięśni",
-      "Zakrzepica żył głębokich",
-      "Urazy sportowe"
-    ],
-    "symptoms": [
-      "Ból mięśni uda",
-      "Obrzęk",
-      "Zaczerwienienie skóry"
-    ],
-    "concerns": [
-      "⚠️ Nagły obrzęk i ból uda",
-      "⚠️ Trudności w chodzeniu"
-    ],
-    "doctors": [
-      "Ortopeda",
-      "Chirurg naczyniowy"
-    ],
-    "medications": [
-      "Leki przeciwzapalne",
-      "Leki przeciwzakrzepowe (na zlecenie lekarza)"
-    ],
-    "first_aid": [
-      "Odpoczynek i uniesienie nogi",
-      "Chłodzenie bolącego miejsca"
-    ],
-    "emergency": [
-      "Podejrzenie zakrzepicy — pilna wizyta w SOR",
-      "Nagły uraz z niemożnością obciążenia nogi — 112"
-    ],
-    "description": "Bóle uda mogą wynikać z przeciążeń lub poważnych chorób naczyniowych. Wczesna diagnostyka jest kluczowa."
+    "causes": ["Przeciążenie mięśni", "Zakrzepica żył", "Urazy"],
+    "symptoms": ["Ból uda", "Obrzęk", "Zaczerwienienie"],
+    "concerns": ["⚠️ Nagły obrzęk i ból", "⚠️ Trudności w chodzeniu"],
+    "doctors": ["Ortopeda", "Chirurg naczyniowy"],
+    "medications": ["Leki przeciwzapalne", "Leki przeciwzakrzepowe (lekarz)"],
+    "first_aid": ["Odpoczynek", "Chłodzenie"],
+    "emergency": ["Podejrzenie zakrzepicy — SOR", "Silny uraz nogi — 112"],
+    "description": "Bóle uda mogą wynikać z przeciążeń lub poważnych chorób naczyniowych."
+  },
+
+  "ciaza_k": {
+    "title": "Ciąża — kobieta",
+    "causes": ["Zmiany hormonalne", "Przeciążenie organizmu", "Niedobory"],
+    "symptoms": ["Nudności", "Bóle kręgosłupa", "Zawroty głowy", "Zmęczenie"],
+    "concerns": ["⚠️ Krwawienie w ciąży", "⚠️ Silny ból brzucha", "⚠️ Nagłe obrzęki i ciśnienie"],
+    "doctors": ["Ginekolog-położnik"],
+    "medications": ["Suplementy witaminowe (po konsultacji)", "Preparaty żelaza (po konsultacji)"],
+    "first_aid": ["Odpoczynek", "Nawodnienie", "Unikanie stresu"],
+    "emergency": ["Krwawienie + ból — 112", "Utrata przytomności — SOR"],
+    "description": "Ciąża wymaga szczególnej troski. Każdy niepokojący objaw konsultuj z lekarzem."
+  },
+
+  "pluca_m": {
+    "title": "Płuca — mężczyzna",
+    "causes": ["Infekcje", "POChP", "Astma"],
+    "symptoms": ["Kaszel", "Duszność", "Ból w klatce przy oddychaniu"],
+    "concerns": ["⚠️ Nagła duszność", "⚠️ Krwioplucie"],
+    "doctors": ["Pulmonolog", "Lekarz rodzinny"],
+    "medications": ["Inhalatory", "Antybiotyki (lekarz)"],
+    "first_aid": ["Pozycja siedząca", "Dostęp do świeżego powietrza"],
+    "emergency": ["Silna duszność — 112", "Sinica — 112"],
+    "description": "Problemy z płucami mogą mieć różne podłoże, od infekcji po przewlekłe choroby."
+  },
+
+  "klatka_piersiowa_m": {
+    "title": "Klatka piersiowa — mężczyzna",
+    "causes": ["Urazy", "Zapalenie mięśni", "Problemy kardiologiczne"],
+    "symptoms": ["Ból przy oddychaniu", "Tkliwość mięśni"],
+    "concerns": ["⚠️ Silny ból klatki", "⚠️ Trudności w oddychaniu"],
+    "doctors": ["Ortopeda", "Kardiolog"],
+    "medications": ["Leki przeciwbólowe", "Leki rozkurczowe"],
+    "first_aid": ["Odpoczynek", "Unikanie wysiłku"],
+    "emergency": ["Silny ból + duszność — 112", "Uraz klatki z problemem oddychania — 112"],
+    "description": "Ból klatki piersiowej wymaga zawsze uważnej oceny, by wykluczyć serce i płuca."
   }
 }
