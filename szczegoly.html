@@ -44,7 +44,7 @@
 </footer>
 
 <script>
-/* ====== 1) MAPA POWROTU DO SEKCJI (KOBIETA/MĘŻCZYZNA) ====== */
+/* ====== 1) MAPA POWROTU DO SEKCJI ====== */
 function sectionUrlFromId(id) {
   if (!id) return "index.html";
   const female = id.endsWith("_k");
@@ -73,14 +73,14 @@ function sectionUrlFromId(id) {
   return "index.html";
 }
 
-/* ====== 2) ODCZYT PARAMETRU id Z URL ====== */
+/* ====== 2) ODCZYT PARAMETRU id ====== */
 const params = new URLSearchParams(location.search);
 const id = params.get("id");
 document.getElementById("sectionBack").href = sectionUrlFromId(id);
 
-/* ====== 3) AWARYJNE DANE WBUDOWANE (PEWNY FALLBACK) ====== */
+/* ====== 3) AWARYJNE DANE WBUDOWANE (Klatka + Nogi) ====== */
 window.CONTENT = {
-  /* 9 KLUCZY – DOKŁADNIE TE, KTÓRE MASZ NA STRONIE KOBIETA-KLATKA */
+  /* ---- KLATKA (9) ---- */
   "serce_k": {
     "title": "Serce — kobieta",
     "causes": ["Choroba wieńcowa", "Zawał serca", "Stres", "Nadciśnienie tętnicze"],
@@ -103,20 +103,12 @@ window.CONTENT = {
   },
   "klatka_piersiowa_k": {
     "title": "Klatka piersiowa (ściana klp / mięśnie) — kobieta",
-    "causes": [
-      "Nadwyrężenie mięśni międzyżebrowych",
-      "Zapalenie chrząstek żebrowych (kostochondritis)",
-      "Ból mięśniowo-powięziowy po wysiłku lub kaszlu"
-    ],
-    "symptoms": [
-      "Ból nasila się przy ruchu, kaszlu lub głębokim wdechu",
-      "Tkliwość przy ucisku określonego miejsca",
-      "Brak duszności/omdleń (jeśli są → pilna konsultacja)"
-    ],
+    "causes": ["Nadwyrężenie mięśni międzyżebrowych","Zapalenie chrząstek żebrowych (kostochondritis)","Ból mięśniowo-powięziowy po wysiłku lub kaszlu"],
+    "symptoms": ["Ból nasila się przy ruchu, kaszlu lub głębokim wdechu","Tkliwość przy ucisku miejsca","Brak duszności/omdleń (jeśli są → pilna konsultacja)"],
     "doctors": ["Lekarz rodzinny (POZ)", "Ortopeda", "Fizjoterapeuta"],
     "medications": ["Paracetamol", "Ibuprofen/Naproksen", "Maści/żele przeciwzapalne"],
     "first_aid": ["Odpoczynek", "Ciepłe okłady 10–15 min", "Delikatne rozciąganie po ustąpieniu ostrego bólu"],
-    "emergency": ["Silny ból klatki z dusznością / nudnościami / zimnym potem — 112"],
+    "emergency": ["Silny ból klatki z dusznością/nudnościami/zimnym potem — 112"],
     "description": "Najczęstsze dolegliwości ściany klatki piersiowej mają podłoże mięśniowo-szkieletowe."
   },
   "brzuch_k": {
@@ -144,7 +136,7 @@ window.CONTENT = {
     "doctors": ["Kardiolog"],
     "medications": ["Leki na ciśnienie", "Leki przeciwzakrzepowe"],
     "first_aid": ["Kontrola ciśnienia", "Unikanie stresu"],
-    "description": "Układ krążenia transportuje krew i tlen po organizmie."
+    "description": "Układ krążenia transportuje krew i tlen."
   },
   "uklad_oddech_k": {
     "title": "Układ oddechowy — kobieta",
@@ -153,7 +145,7 @@ window.CONTENT = {
     "doctors": ["Pulmonolog"],
     "medications": ["Leki wziewne", "Antybiotyki (jeśli bakteryjne)"],
     "first_aid": ["Spokój", "Nawodnienie"],
-    "description": "Układ oddechowy odpowiada za wymianę gazową w płucach."
+    "description": "Układ oddechowy odpowiada za wymianę gazową."
   },
   "uklad_pokarm_k": {
     "title": "Układ pokarmowy — kobieta",
@@ -172,6 +164,62 @@ window.CONTENT = {
     "medications": ["Kwas foliowy (suplementacja)"],
     "first_aid": ["Regularne wizyty kontrolne", "Zdrowa dieta"],
     "description": "Ciąża wymaga regularnych kontroli lekarskich."
+  },
+
+  /* ---- NOGI (6) ---- */
+  "biodra_k": {
+    "title": "Biodra — kobieta",
+    "causes": ["Przeciążenie stawu biodrowego", "Zapalenie ścięgien", "Uraz"],
+    "symptoms": ["Ból w pachwinie lub bocznie", "Ograniczenie ruchu", "Tkliwość"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Paracetamol", "NLPZ miejscowo"],
+    "first_aid": ["Odpoczynek", "Chłodzenie 10–15 min", "Unikanie przeciążeń"],
+    "description": "Ból biodra często ma podłoże przeciążeniowe."
+  },
+  "uda_k": {
+    "title": "Uda — kobieta",
+    "causes": ["Naciągnięcie mięśni", "Zespół pasma biodrowo-piszczelowego", "Uraz sportowy"],
+    "symptoms": ["Ból przy chodzeniu/biegu", "Tkliwość", "Siniaki"],
+    "doctors": ["Fizjoterapeuta", "Ortopeda"],
+    "medications": ["NLPZ", "Maści przeciwzapalne"],
+    "first_aid": ["RICE: odpoczynek, lód, ucisk, uniesienie"],
+    "description": "Najczęściej przeciążenie lub drobny uraz."
+  },
+  "kolano_k": {
+    "title": "Kolano — kobieta",
+    "causes": ["Przeciążenie rzepki", "Zapalenie ścięgien", "Uszkodzenie łąkotki"],
+    "symptoms": ["Ból przy schodzeniu", "Trzaski", "Obrzęk"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["NLPZ", "Okłady chłodzące"],
+    "first_aid": ["Odpoczynek", "Stabilizacja elastyczna"],
+    "description": "Częste w sportach biegowych i skocznych."
+  },
+  "lydka_k": {
+    "title": "Łydka — kobieta",
+    "causes": ["Skurcz mięśni", "Naciągnięcie brzuchatego łydki", "Zakrzepica (rzadziej)"],
+    "symptoms": ["Ból kłujący/ciągnący", "Nasilenie przy wspięciach", "Tkliwość"],
+    "doctors": ["Fizjoterapeuta", "Lekarz rodzinny"],
+    "medications": ["Magnez (skurcze)", "NLPZ miejscowo"],
+    "first_aid": ["Delikatne rozciąganie", "Chłodzenie", "Odpoczynek"],
+    "description": "Najczęściej przeciążenie mięśniowe; przy obrzęku/ociepleniu — pilna konsultacja."
+  },
+  "kostka_k": {
+    "title": "Kostka — kobieta",
+    "causes": ["Skręcenie stawu skokowego", "Naciągnięcie więzadeł"],
+    "symptoms": ["Obrzęk", "Ból przy obciążaniu", "Siniak"],
+    "doctors": ["Ortopeda"],
+    "medications": ["NLPZ", "Maści chłodzące"],
+    "first_aid": ["RICE", "Unieruchomienie krótkotrwałe"],
+    "description": "Skręcenia są najczęściej łagodne — kontrola jeśli ból/obrzęk nie ustępuje."
+  },
+  "stopy_k": {
+    "title": "Stopy — kobieta",
+    "causes": ["Zapalenie rozcięgna podeszwowego", "Nadmierne obciążenie", "Nieodpowiednie obuwie"],
+    "symptoms": ["Ból pięty/przodostopia", "Poranny ból startowy"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["NLPZ miejscowo", "Wkładki odciążające"],
+    "first_aid": ["Rozciąganie rozcięgna", "Odpoczynek"],
+    "description": "Najczęściej przeciążenia związane z obciążeniem."
   }
 };
 
@@ -195,7 +243,7 @@ function card(title, items) {
   return c;
 }
 
-/* ====== 5) ŁADOWANIE: NAJPIERW INLINE (PEWNE), POTEM PRÓBA JSON ====== */
+/* ====== 5) ŁADOWANIE: NAJPIERW SPRÓBUJ JSON, POTEM FALLBACK ====== */
 async function load() {
   const err = document.getElementById("err");
   const content = document.getElementById("content");
@@ -204,73 +252,65 @@ async function load() {
   try {
     if (!id) throw new Error("Brak parametru ?id w adresie.");
 
-    // 5a) Render od razu z wbudowanych danych (pewne)
-    let node = (window.CONTENT && window.CONTENT[id]) || null;
-    let usedUrl = "(inline)";
-
-    render(node);
-
-    // 5b) Spróbuj nadpisać danymi z pliku JSON (jeśli jest)
+    // Najpierw spróbuj pobrać dane z JSON (jeśli jest)
     const candidates = [
       "data/detailed_conditions.json",
       "data/conditions.json",
       "/data/detailed_conditions.json",
       "/data/conditions.json"
     ];
+
+    let dataFromJson = null;
     for (const path of candidates) {
       try {
         const res = await fetch(path + "?" + Date.now(), { cache: "no-store" });
         if (!res.ok) continue;
-        const data = await res.json();
-        if (data && data[id]) {
-          usedUrl = path;
-          node = data[id];
-          render(node); // nadpisz lepszymi danymi z pliku
-          break;
-        }
+        const json = await res.json();
+        if (json && json[id]) { dataFromJson = json[id]; break; }
       } catch(e) { /* ignoruj */ }
     }
 
-    function render(nodeData) {
-      if (!nodeData) {
-        // Gdy nie ma nawet w inline – pokaż czytelny komunikat z id
-        titleEl.textContent = "Brak danych: " + id;
-        content.innerHTML = "";
-        const info = document.createElement("div");
-        info.style.cssText = "max-width:1100px;margin:24px auto;padding:12px 16px;background:#2a223b;border:1px solid #624ea8;border-radius:12px;color:#e9e6ff";
-        info.innerHTML = `
-          <h2>Nie znaleziono treści dla <code>${id}</code></h2>
-          <p>Sprawdź, czy istnieje wpis w danych (inline/JSON) dla tego identyfikatora.</p>
-        `;
-        content.appendChild(info);
-        return;
-      }
+    // Jeśli JSON nie dał wpisu – użyj fallbacku inline
+    const node = dataFromJson || (window.CONTENT && window.CONTENT[id]) || null;
 
-      titleEl.textContent = nodeData.title || id;
-      content.innerHTML = '';
-      const grid = document.createElement("div");
-      grid.className = "cards";
+    if (!node) {
+      titleEl.textContent = "Brak danych: " + id;
+      content.innerHTML = "";
+      const info = document.createElement("div");
+      info.style.cssText = "max-width:1100px;margin:24px auto;padding:12px 16px;background:#2a223b;border:1px solid #624ea8;border-radius:12px;color:#e9e6ff";
+      info.innerHTML = `
+        <h2>Nie znaleziono treści dla <code>${id}</code></h2>
+        <p>Sprawdź, czy istnieje wpis w pliku JSON lub w sekcji inline CONTENT.</p>
+      `;
+      content.appendChild(info);
+      return;
+    }
 
-      grid.appendChild(card("Możliwe przyczyny bólu", nodeData.causes));
-      grid.appendChild(card("Typowe objawy", nodeData.symptoms));
-      grid.appendChild(card("Do jakiego lekarza", nodeData.doctors));
-      grid.appendChild(card("Leki / środki łagodzące", nodeData.medications));
-      grid.appendChild(card("Pierwsza pomoc (domowa)", nodeData.first_aid));
+    // Render
+    titleEl.textContent = node.title || id;
+    content.innerHTML = '';
+    const grid = document.createElement("div");
+    grid.className = "cards";
 
-      if (nodeData.emergency && nodeData.emergency.length) {
-        const em = card("Niezwłoczna pomoc (112/SOR)", nodeData.emergency);
-        em.style.borderColor = "rgba(255,100,100,.6)";
-        grid.appendChild(em);
-      }
+    grid.appendChild(card("Możliwe przyczyny bólu", node.causes));
+    grid.appendChild(card("Typowe objawy", node.symptoms));
+    grid.appendChild(card("Do jakiego lekarza", node.doctors));
+    grid.appendChild(card("Leki / środki łagodzące", node.medications));
+    grid.appendChild(card("Pierwsza pomoc (domowa)", node.first_aid));
 
-      content.appendChild(grid);
+    if (node.emergency && node.emergency.length) {
+      const em = card("Niezwłoczna pomoc (112/SOR)", node.emergency);
+      em.style.borderColor = "rgba(255,100,100,.6)";
+      grid.appendChild(em);
+    }
 
-      if (nodeData.description) {
-        const desc = document.createElement("p");
-        desc.style.marginTop = "16px";
-        desc.textContent = nodeData.description;
-        content.appendChild(desc);
-      }
+    content.appendChild(grid);
+
+    if (node.description) {
+      const desc = document.createElement("p");
+      desc.style.marginTop = "16px";
+      desc.textContent = node.description;
+      content.appendChild(desc);
     }
 
   } catch (e) {
