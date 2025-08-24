@@ -6,59 +6,49 @@
   <title>Kobieta — Biodra / Nogi / Stopy</title>
 
   <style>
-    /* --- GLOBALNIE DLA KAŻDEJ STRONY Z KAFELKAMI --- */
-    .kafelki{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);  /* 3 w rzędzie */
-      gap:24px;                              /* odstępy */
-      max-width:1100px;                      /* szerokość całego bloku */
-      margin:24px auto 60px;                 /* wyśrodkowanie */
-      padding:0 16px;                        /* oddech od krawędzi ekranu */
-      justify-items:center;                  /* kafle na środku kolumn */
-      align-items:stretch;
-    }
-    .kafelki .kafel{
-      display:block;
-      width:100%;
-      max-width:320px;                       /* opcjonalne ograniczenie szerokości */
-      text-decoration:none;
-      border-radius:16px;
-      background:rgba(74, 34, 104, 0.18);    /* delikatny, półprzezroczysty fiolet */
-      box-shadow:0 6px 18px rgba(0,0,0,.25);
-      overflow:hidden;
-      transition:transform .15s ease, box-shadow .15s ease;
-    }
-    .kafelki .kafel:hover{ transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.3); }
-
-    .kafelki .kafel img{
-      display:block;
-      width:100%;
-      height:auto;
-    }
-    .kafelki .kafel figcaption{
-      padding:10px 14px;
-      font-weight:700;
-      color:#cfc5ff;                         /* podpis kafla */
-      text-align:center;
+    /* --- Układ 3-kolumnowy dla wszystkich kafelków --- */
+    .kafelki {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 24px auto 60px;
+      padding: 0 16px;
     }
 
-    /* RESPONSYWNOŚĆ */
-    @media (max-width: 980px){
-      .kafelki{ grid-template-columns:repeat(2,1fr); }
-    }
-    @media (max-width: 620px){
-      .kafelki{ grid-template-columns:1fr; }
+    /* Każdy kafel (zachowuje swój wygląd w środku) */
+    .kafelki > * {
+      justify-self: center;
+      width: 100%;
+      max-width: 320px;
     }
 
-    /* --- TYLKO KOSMETYKA STRONY (opcjonalne) --- */
-    body{
-      margin:0; background:#0f1220; color:#e9e6ff; font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
+    /* Responsywność */
+    @media (max-width: 980px) {
+      .kafelki { grid-template-columns: repeat(2, 1fr); }
     }
-    header{
-      max-width:1100px; margin:24px auto 0; padding:0 16px;
+    @media (max-width: 620px) {
+      .kafelki { grid-template-columns: 1fr; }
     }
-    .breadcrumbs a{ color:#8fb5ff; text-decoration:none; margin-right:12px; }
-    h1{ text-align:center; margin:16px 0 12px; }
+
+    body {
+      margin: 0;
+      background: #0f1220;
+      color: #e9e6ff;
+      font-family: system-ui, Arial, sans-serif;
+    }
+    header {
+      max-width: 1100px;
+      margin: 24px auto 0;
+      padding: 0 16px;
+      text-align: center;
+    }
+    .breadcrumbs a {
+      color: #8fb5ff;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+    h1 { margin: 16px 0 12px; }
   </style>
 </head>
 <body>
@@ -71,49 +61,37 @@
     <h1>Kobieta — Biodra / Nogi / Stopy</h1>
   </header>
 
-  <!-- KAFELKI: zostaw strukturę, podmień href/src/alt i podpisy -->
+  <!-- KAFELKI -->
   <section class="kafelki">
 
-    <a class="kafel" href="biodra.html">
-      <figure>
-        <img src="assets/kobieta/biodra.jpg" alt="Biodra — anatomia" />
-        <figcaption>Biodra</figcaption>
-      </figure>
+    <a href="biodra.html">
+      <img src="obrazy/biodra.jpg" alt="Biodra" />
+      <p>Biodra</p>
     </a>
 
-    <a class="kafel" href="uda.html">
-      <figure>
-        <img src="assets/kobieta/uda.jpg" alt="Uda — anatomia" />
-        <figcaption>Uda</figcaption>
-      </figure>
+    <a href="uda.html">
+      <img src="obrazy/uda.jpg" alt="Uda" />
+      <p>Uda</p>
     </a>
 
-    <a class="kafel" href="kolano.html">
-      <figure>
-        <img src="assets/kobieta/kolano.jpg" alt="Kolano — anatomia" />
-        <figcaption>Kolano</figcaption>
-      </figure>
+    <a href="kolano.html">
+      <img src="obrazy/kolano.jpg" alt="Kolano" />
+      <p>Kolano</p>
     </a>
 
-    <a class="kafel" href="lydka.html">
-      <figure>
-        <img src="assets/kobieta/lydka.jpg" alt="Łydka — anatomia" />
-        <figcaption>Łydka</figcaption>
-      </figure>
+    <a href="lydka.html">
+      <img src="obrazy/lydka.jpg" alt="Łydka" />
+      <p>Łydka</p>
     </a>
 
-    <a class="kafel" href="kostka.html">
-      <figure>
-        <img src="assets/kobieta/kostka.jpg" alt="Kostka — anatomia" />
-        <figcaption>Kostka</figcaption>
-      </figure>
+    <a href="kostka.html">
+      <img src="obrazy/kostka.jpg" alt="Kostka" />
+      <p>Kostka</p>
     </a>
 
-    <a class="kafel" href="stopy.html">
-      <figure>
-        <img src="assets/kobieta/stopy.jpg" alt="Stopy — anatomia" />
-        <figcaption>Stopy</figcaption>
-      </figure>
+    <a href="stopy.html">
+      <img src="obrazy/stopy.jpg" alt="Stopy" />
+      <p>Stopy</p>
     </a>
 
   </section>
