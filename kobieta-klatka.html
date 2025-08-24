@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kobieta — Klatka, brzuch, plecy</title>
 
-  <!-- globalny CSS -->
+  <!-- globalny CSS strony -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- CSS lokalny tylko dla układu kafelków -->
+  <!-- Lokalne style dla układu kafelków -->
   <style>
     .grid-container {
       display: grid;
@@ -17,29 +17,32 @@
       align-items: start;
       justify-items: center;
       width: 100%;
-      max-width: 1100px;
-      margin: 24px auto;
+      max-width: 1100px; /* szerokość całego rzędu */
+      margin: 24px auto; /* wyśrodkowanie */
       padding: 0 16px;
     }
 
     .card {
       width: 100%;
-      max-width: 340px;
-      background: rgba(86, 51, 142, 0.18); /* ciemny półprzezroczysty fiolet */
+      max-width: 340px; /* docelowa szerokość kafelka */
+      background: rgba(86, 51, 142, .18); /* ciemny, półprzezroczysty fiolet */
       border-radius: 16px;
-      border: 1px solid rgba(165,140,255,0.12);
+      border: 1px solid rgba(165, 140, 255, .12);
       box-shadow:
-        inset 0 0 1px rgba(165,140,255,0.22),
-        0 6px 18px rgba(0,0,0,0.35);
+        inset 0 0 1px rgba(165, 140, 255, .22),
+        0 6px 18px rgba(0,0,0,.35);
       overflow: hidden;
-      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        background .15s ease;
     }
 
     .card:hover {
       transform: translateY(-2px);
       box-shadow:
-        0 10px 24px rgba(0,0,0,0.45),
-        0 0 20px rgba(165,140,255,0.25); /* glow przy hover */
+        0 10px 24px rgba(0,0,0,.45),
+        0 0 20px rgba(165,140,255,.25); /* glow przy hover */
     }
 
     .card a {
@@ -51,7 +54,7 @@
     .card-image {
       display: block;
       width: 100%;
-      aspect-ratio: 16/10;
+      aspect-ratio: 16 / 10; /* stały format */
       object-fit: cover;
     }
 
@@ -81,7 +84,7 @@
       text-align: center;
     }
 
-    /* Na bardzo wąskich ekranach 1 kolumna */
+    /* dla wąskich ekranów */
     @media (max-width: 480px) {
       .grid-container {
         grid-template-columns: 1fr;
@@ -93,65 +96,60 @@
     }
   </style>
 </head>
-
 <body data-page="kobieta-klatka">
-  <header>
-    <nav class="breadcrumbs">
-      <a href="index.html">← Powrót do startu</a>
-      <span>|</span>
-      <a href="kobieta.html">Wróć do wyboru sekcji</a>
-    </nav>
-    <h1>Kobieta — Klatka, brzuch, plecy</h1>
-  </header>
 
-  <main>
-    <section class="grid-container" aria-label="Wybór sekcji">
-      <!-- Serce -->
-      <article class="card">
-        <a href="kobieta-serce.html">
-          <img class="card-image" src="img/kobieta-serce.jpg" alt="Serce" loading="lazy" />
-          <div class="card-caption">Serce</div>
-        </a>
-      </article>
+<header>
+  <nav class="breadcrumbs">
+    <a href="index.html">← Powrót do startu</a>
+    <span>|</span>
+    <a href="kobieta.html">Wróć do wyboru sekcji</a>
+  </nav>
+  <h1>Kobieta — Klatka, brzuch, plecy</h1>
+</header>
 
-      <!-- Płuca -->
-      <article class="card">
-        <a href="kobieta-pluca.html">
-          <img class="card-image" src="img/kobieta-pluca.jpg" alt="Płuca" loading="lazy" />
-          <div class="card-caption">Płuca</div>
-        </a>
-      </article>
+<main>
+  <section class="grid-container" aria-label="Wybór sekcji">
 
-      <!-- Układ pokarmowy -->
-      <article class="card">
-        <a href="kobieta-uklad-pokarmowy.html">
-          <img class="card-image" src="img/kobieta-uklad-pokarmowy.jpg" alt="Układ pokarmowy" loading="lazy" />
-          <div class="card-caption">Układ pokarmowy</div>
-        </a>
-      </article>
+    <!-- KLATKA -->
+    <article class="card">
+      <a href="kobieta-klatka-piersiowa.html">
+        <img class="card-image" src="img/kobieta-klatka.jpg" alt="Klatka" loading="lazy">
+        <div class="card-caption">Klatka</div>
+      </a>
+    </article>
 
-      <!-- Układ krwionośny -->
-      <article class="card">
-        <a href="kobieta-uklad-krwionosny.html">
-          <img class="card-image" src="img/kobieta-uklad-krwionosny.jpg" alt="Układ krwionośny" loading="lazy" />
-          <div class="card-caption">Układ krwionośny</div>
-        </a>
-      </article>
+    <!-- BRZUCH -->
+    <article class="card">
+      <a href="kobieta-uklad-pokarmowy.html">
+        <img class="card-image" src="img/kobieta-brzuch.jpg" alt="Brzuch" loading="lazy">
+        <div class="card-caption">Brzuch</div>
+      </a>
+    </article>
 
-      <!-- Układ oddechowy -->
-      <article class="card">
-        <a href="kobieta-uklad-oddechowy.html">
-          <img class="card-image" src="img/kobieta-uklad-oddechowy.jpg" alt="Układ oddechowy" loading="lazy" />
-          <div class="card-caption">Układ oddechowy</div>
-        </a>
-      </article>
-    </section>
-  </main>
+    <!-- PLECY -->
+    <article class="card">
+      <a href="kobieta-plecy.html">
+        <img class="card-image" src="img/kobieta-plecy.jpg" alt="Plecy" loading="lazy">
+        <div class="card-caption">Plecy</div>
+      </a>
+    </article>
 
-  <footer>
-    <p style="text-align:center; opacity:.8; margin:28px 0 18px;">
-      © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
-    </p>
-  </footer>
+    <!-- CIĄŻA -->
+    <article class="card">
+      <a href="kobieta-ciaza.html">
+        <img class="card-image" src="img/kobieta-ciaza.jpg" alt="Ciąża" loading="lazy">
+        <div class="card-caption">Ciąża</div>
+      </a>
+    </article>
+
+  </section>
+</main>
+
+<footer>
+  <p style="text-align:center; opacity:.8; margin:28px 0 18px;">
+    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
+  </p>
+</footer>
+
 </body>
 </html>
