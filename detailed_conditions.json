@@ -1,0 +1,61 @@
+{
+  "oczy_k": {
+    "title": "Oczy — kobieta",
+    "causes": [
+      "Przykładowa przyczyna 1",
+      "Przykładowa przyczyna 2"
+    ],
+    "symptoms": [
+      "Przykładowy objaw 1",
+      "Przykładowy objaw 2"
+    ],
+    "concerns": [
+      "⚠️ Obawy/pilne sygnały np. nagła utrata wzroku",
+      "⚠️ Silny ból oka"
+    ],
+    "doctors": [
+      "Okulista",
+      "POZ"
+    ],
+    "medications": [
+      "Sztuczne łzy",
+      "Krople antyhistaminowe"
+    ],
+    "first_aid": [
+      "Płukanie oczu solą fizjologiczną",
+      "Unikanie alergenów"
+    ],
+    "description": "Tu możesz dodać dodatkowy opis np. o profilaktyce, diecie, stylu życia."
+  },
+
+  "serce_m": {
+    "title": "Serce — mężczyzna",
+    "causes": [
+      "Choroba wieńcowa",
+      "Zawał"
+    ],
+    "symptoms": [
+      "Ból w klatce piersiowej",
+      "Duszność"
+    ],
+    "concerns": [
+      "⚠️ Ból w klatce z promieniowaniem do ręki — wezwij 112",
+      "⚠️ Nagłe zimne poty i osłabienie"
+    ],
+    "doctors": [
+      "Kardiolog",
+      "Lekarz rodzinny"
+    ],
+    "medications": [
+      "Nitrogliceryna",
+      "Beta-blokery"
+    ],
+    "first_aid": [
+      "Pozycja siedząca z oparciem",
+      "Wezwanie pomocy"
+    ],
+    "description": "Tu dodatkowe informacje o chorobach serca i stylu życia."
+  }
+
+  /* … i tak dalej dla wszystkich obszarów ciała (kobieta i mężczyzna) */
+}
