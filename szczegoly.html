@@ -1,48 +1,179 @@
-/* === Styl awaryjny dla strony szczegółów === */
-body[data-page="szczegoly"] .cards {
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  gap: 24px !important;
-  max-width: 1100px !important;
-  margin: 28px auto !important;
-  justify-items: center !important;
-  align-items: start !important;
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Szczegóły</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .nav-links { margin: 10px 0; }
+    .back-link { color:#6cf; text-decoration:none; margin-right:12px; }
+
+    .card h3 { margin:0 0 8px; }
+    ul { margin:0; padding-left: 18px; }
+    .pill { display:inline-block; height:10px; width:80px; border-radius:20px; background:#6cf; }
+    .error { color:#f99; margin-top:20px; font-size:18px; }
+  </style>
+</head>
+<body data-page="szczegoly">
+
+<div class="nav-links">
+  <a href="index.html" class="back-link">← Strona główna</a>
+  <a href="#" id="sectionBack" class="back-link">← Wróć do wyboru sekcji</a>
+</div>
+
+<h1 id="title">Szczegóły</h1>
+<div class="pill" aria-hidden="true"></div>
+
+<div id="content"></div>
+<div id="err" class="error" style="display:none"></div>
+
+<footer style="margin-top:40px">
+  <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
+</footer>
+
+<script>
+/* ====== 1) Powrót do właściwej strony sekcji ====== */
+function sectionUrlFromId(id) {
+  if (!id) return "index.html";
+  const female = id.endsWith("_k");
+  const male = id.endsWith("_m");
+  const groupMapK = {
+    oczy_k:"kobieta-glowa.html", uszy_k:"kobieta-glowa.html", nos_k:"kobieta-glowa.html",
+    szczeka_k:"kobieta-glowa.html", szyja_k:"kobieta-glowa.html", glowa_k:"kobieta-glowa.html",
+    serce_k:"kobieta-klatka.html", pluca_k:"kobieta-klatka.html",
+    klatka_piersiowa_k:"kobieta-klatka.html", brzuch_k:"kobieta-klatka.html", plecy_k:"kobieta-klatka.html",
+    uklad_krw_k:"kobieta-klatka.html", uklad_oddech_k:"kobieta-klatka.html", uklad_pokarm_k:"kobieta-klatka.html",
+    biodra_k:"kobieta-nogi.html", uda_k:"kobieta-nogi.html", kolano_k:"kobieta-nogi.html",
+    lydka_k:"kobieta-nogi.html", kostka_k:"kobieta-nogi.html", stopy_k:"kobieta-nogi.html",
+    ciaza_k:"kobieta.html"
+  };
+  const groupMapM = {
+    oczy_m:"mezczyzna-glowa.html", uszy_m:"mezczyzna-glowa.html", nos_m:"mezczyzna-glowa.html",
+    szczeka_m:"mezczyzna-glowa.html", szyja_m:"mezczyzna-glowa.html", glowa_m:"mezczyzna-glowa.html",
+    serce_m:"mezczyzna-klatka.html", pluca_m:"mezczyzna-klatka.html",
+    klatka_piersiowa_m:"mezczyzna-klatka.html", brzuch_m:"mezczyzna-klatka.html", plecy_m:"mezczyzna-klatka.html",
+    uklad_krw_m:"mezczyzna-klatka.html", uklad_oddech_m:"mezczyzna-klatka.html", uklad_pokarm_m:"mezczyzna-klatka.html",
+    biodra_m:"mezczyzna-nogi.html", uda_m:"mezczyzna-nogi.html", kolano_m:"mezczyzna-nogi.html",
+    lydka_m:"mezczyzna-nogi.html", kostka_m:"mezczyzna-nogi.html", stopy_m:"mezczyzna-nogi.html"
+  };
+  if (female) return groupMapK[id] || "kobieta.html";
+  if (male) return groupMapM[id] || "mezczyzna.html";
+  return "index.html";
+}
+const params = new URLSearchParams(location.search);
+const id = params.get("id");
+document.getElementById("sectionBack").href = sectionUrlFromId(id);
+
+/* ====== 2) Fallback CONTENT (Twój cały blok danych tutaj) ====== */
+window.CONTENT = {
+  /* 👉 Wklej tu swój pełny blok danych (kobieta + mężczyzna), 
+        ten który już działa i przywrócił opisy */
+};
+
+/* ====== 3) Funkcje pomocnicze ====== */
+function el(tag, className, html) {
+  const e = document.createElement(tag);
+  if (className) e.className = className;
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+}
+function card(title, items) {
+  const c = el("div", "card");
+  c.appendChild(el("h3", null, title));
+  if (Array.isArray(items)) {
+    const ul = el("ul");
+    items.forEach(it => ul.appendChild(el("li", null, it)));
+    c.appendChild(ul);
+  } else if (typeof items === 'string') {
+    c.appendChild(el("p", null, items));
+  }
+  return c;
 }
 
-body[data-page="szczegoly"] .card {
-  width: 100% !important;
-  max-width: 320px !important;
-  background: rgba(34,42,90,.85);
-  border: 2px solid #5463b5;
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 6px 16px rgba(0,0,0,.25);
-  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-}
+/* ====== 4) Render ====== */
+async function load() {
+  const err = document.getElementById("err");
+  const content = document.getElementById("content");
+  const titleEl = document.getElementById("title");
+  try {
+    if (!id) throw new Error("Brak parametru ?id w adresie.");
 
-body[data-page="szczegoly"] .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0,0,0,.45),
-              0 0 20px rgba(165,140,255,.25);
-}
+    // Najpierw próba z JSON
+    const candidates = [
+      "data/detailed_conditions.json",
+      "data/conditions.json",
+      "/data/detailed_conditions.json",
+      "/data/conditions.json"
+    ];
+    let dataFromJson = null;
+    for (const path of candidates) {
+      try {
+        const res = await fetch(path + "?" + Date.now(), { cache: "no-store" });
+        if (!res.ok) continue;
+        const json = await res.json();
+        if (json && json[id]) { dataFromJson = json[id]; break; }
+      } catch(e) {}
+    }
 
-/* 🔴 Specjalny wygląd dla "Niezwłoczna pomoc" */
-body[data-page="szczegoly"] .card.emergency {
-  background: rgba(120, 8, 8, .2) !important;
-  border: 2px solid #ff3c3c !important;
-  box-shadow: inset 0 0 2px rgba(255,60,60,.5),
-              0 6px 18px rgba(0,0,0,.35) !important;
-}
+    const node = dataFromJson || (window.CONTENT && window.CONTENT[id]) || null;
+    if (!node) {
+      titleEl.textContent = "Brak danych: " + id;
+      content.innerHTML = "<p style='color:#f99'>Nie znaleziono treści dla tego obszaru.</p>";
+      return;
+    }
 
-body[data-page="szczegoly"] .card.emergency:hover {
-  box-shadow: 0 10px 28px rgba(0,0,0,.5),
-              0 0 28px rgba(255,40,40,.85) !important;
-}
+    // ====== Render ======
+    titleEl.textContent = node.title || id;
+    content.innerHTML = '';
+    const grid = document.createElement("div");
+    grid.className = "cards";
 
-/* Responsywność */
-@media (max-width: 980px) {
-  body[data-page="szczegoly"] .cards { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    // 🔧 wymuszenie układu 3+3
+    Object.assign(grid.style, {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, minmax(0,1fr))',
+      gap: '24px',
+      justifyItems: 'center',
+      alignItems: 'start',
+      maxWidth: '1100px',
+      margin: '28px auto'
+    });
+
+    grid.appendChild(card("Możliwe przyczyny bólu", node.causes));
+    grid.appendChild(card("Typowe objawy", node.symptoms));
+    grid.appendChild(card("Do jakiego lekarza", node.doctors));
+    grid.appendChild(card("Leki / środki łagodzące", node.medications));
+    grid.appendChild(card("Pierwsza pomoc (domowa)", node.first_aid));
+
+    // 🔴 zawsze dodajemy „Niezwłoczną pomoc” jako ostatni kafelek
+    const emergencyList = Array.isArray(node.emergency) && node.emergency.length
+      ? node.emergency
+      : [
+          "Silny, narastający ból, duszność, zlewne poty, omdlenie.",
+          "Objawy udaru: osłabienie, bełkotliwa mowa, opadnięty kącik ust.",
+          "Ostra duszność, sinica, krwawienie, silny uraz.",
+          "W razie wątpliwości: natychmiast zadzwoń 112."
+        ];
+    const em = card("Niezwłoczna pomoc (112/SOR)", emergencyList);
+    em.classList.add("emergency");
+    grid.appendChild(em);
+
+    content.appendChild(grid);
+
+    if (node.description) {
+      const desc = document.createElement("p");
+      desc.style.marginTop = "16px";
+      desc.textContent = node.description;
+      content.appendChild(desc);
+    }
+
+  } catch (e) {
+    err.style.display = 'block';
+    err.textContent = "Błąd wczytywania: " + e.message;
+  }
 }
-@media (max-width: 640px) {
-  body[data-page="szczegoly"] .cards { grid-template-columns: 1fr !important; }
-}
+load();
+</script>
+</body>
+</html>
