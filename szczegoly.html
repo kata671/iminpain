@@ -1,231 +1,105 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title id="title">Szczegóły</title>
+  <meta charset="UTF-8" />
+  <title>Szczegóły</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, initial-scale=1" />
 
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="style-overrides.css?v=12">
+  <!-- style bazowe -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style-overrides.css" />
+  <link rel="stylesheet" href="fix.szczegoly.css" />
 
-  <style>
-    /* Siatka 3 kolumny */
-    body[data-page="szczegoly"] .cards{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(320px,1fr));
-      grid-auto-flow:dense;
-      justify-content:center;
-      gap:22px;
-      max-width:1120px;
-      margin:24px auto 40px;
-      padding:0 12px;
+  <style id="enh-szczegoly-css">
+    /* tytuły w kafelkach odrobinkę większe */
+    body[data-page="szczegoly"] .card .card-caption {
+      font-size: 1.06rem;
+      font-weight: 700;
+      letter-spacing: .2px;
+      text-align: center;
+      margin-bottom: 8px;
     }
-    @media (max-width:920px){ body[data-page="szczegoly"] .cards{ grid-template-columns:repeat(2,minmax(300px,1fr)); } }
-    @media (max-width:560px){ body[data-page="szczegoly"] .cards{ grid-template-columns:1fr; } }
-
-    body[data-page="szczegoly"] .card{ display:flex; flex-direction:column; box-sizing:border-box; min-height:340px; }
-    body[data-page="szczegoly"] .card .card-caption{
-      min-height:52px; display:flex; align-items:center; justify-content:center;
-      text-align:center; font-weight:700; border-bottom:1px solid rgba(255,255,255,.08); padding:8px 10px;
+    /* punkty zawsze równo przy lewej krawędzi, nic nie „wychodzi” */
+    body[data-page="szczegoly"] .card ul {
+      list-style: disc;
+      list-style-position: outside;
+      margin: 0 0 0 18px;
+      padding-left: 0;
     }
-    body[data-page="szczegoly"] .card ul, body[data-page="szczegoly"] .card p{ margin:12px 12px 14px; padding:0; flex:1; overflow:auto; }
-    body[data-page="szczegoly"] .card li{ list-style:disc inside; margin:6px 0; }
-
-    /* czerwony */
-    body[data-page="szczegoly"] .card.emergency{ border:2px solid #ff4d4d; background:rgba(120,20,20,.88); color:#fff; font-weight:700; }
-    body[data-page="szczegoly"] .card.emergency:hover{ box-shadow:0 0 28px rgba(255,30,30,.9); }
-
-    /* mała nawigacja */
-    .nav-links{ max-width:1120px; margin:10px auto 0; padding:0 12px; }
-    .nav-links a{ color:#66c; text-decoration:none; margin-right:12px; }
+    body[data-page="szczegoly"] .card li {
+      margin: 4px 0;
+      line-height: 1.5;
+    }
+    /* kolory etykiet w treści */
+    .otc { color:#2ecc71; font-weight:700; } /* Bez recepty */
+    .rx  { color:#e74c3c; font-weight:700; } /* Na receptę */
   </style>
 </head>
 <body data-page="szczegoly">
+
   <div class="nav-links">
-    <a href="index.html">← Strona główna</a>
-    <a id="sectionBack" href="index.html">← Wróć do wyboru sekcji</a>
+    <a href="index.html" class="back-link">← Strona główna</a>
+    <a href="index.html#sectionBack" class="back-link">← Wróć do wyboru sekcji</a>
   </div>
 
-  <h1 id="title" style="text-align:center; margin:12px 0 6px;">Szczegóły</h1>
+  <h1 id="title">Szczegóły</h1>
+  <div class="pill" aria-hidden="true"></div>
+  <div id="content"></div>
+  <div class="error" style="display:none;"></div>
 
-  <main id="content" style="min-height:320px; display:flex; justify-content:center; align-items:flex-start; padding:8px;">
-    <p>Ładowanie…</p>
-  </main>
-
-  <footer style="margin:40px 0; text-align:center; opacity:.8;">
-    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  <footer style="margin-top:40px">
+    <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
   </footer>
 
-  <script>
-  (function () {
-    function uniq(arr){ return Array.from(new Set((arr||[]).filter(Boolean))); }
-    function mergeNodes(detailed, base){
-      const src = detailed || {}, fall = base || {};
-      const out = { title: src.title || fall.title || "Szczegóły" };
-      const keys = ["causes","symptoms","concerns","doctors","medications","first_aid","emergency","rehabilitation","avoid","prevention","mistakes"];
-      keys.forEach(k => out[k] = uniq([...(fall[k]||[]), ...(src[k]||[])]));
-      out.description = (src.description || "") || (fall.description || "");
-      return out;
-    }
-    function card(title, items){
-      const div = document.createElement("article");
-      div.className = "card";
-      let html = `<div class="card-caption">${title}</div>`;
-      if(Array.isArray(items)){
-        html += "<ul>"; for(const it of items) html += `<li>${it}</li>`; html += "</ul>";
-      }else if(typeof items==="string" && items.trim()){
-        html += `<p>${items}</p>`;
-      }else{
-        html += `<p>Brak danych.</p>`;
-      }
-      div.innerHTML = html;
-      return div;
-    }
-    function emergencyCard(items){
-      const list = (items && items.length)?items:[
-        "Silny, narastający ból lub zniekształcenie stawu.",
-        "Duszność, omdlenie, objawy udaru.",
-        "Gorączka + silny ból/obrzęk stawu."
-      ];
-      const div = card("🚨 Niezwłoczna pomoc (112/SOR)", list);
-      div.classList.add("emergency");
-      return div;
-    }
-    function fillerCard(type, descriptionText){
-      if(type==="tips"){
-        return card("ℹ️ Porady ogólne", [
-          "Odpoczywaj, ale unikaj całkowitej bezczynności.",
-          "Zimno lub ciepło miejscowo — według komfortu.",
-          "Delikatna mobilizacja w granicach bólu."
-        ]);
-      }
-      if(type==="prevention"){
-        return card("✅ Profilaktyka (ogólna)", [
-          "Regularny, umiarkowany ruch 150 min/tydz.",
-          "Wzmacnianie core i stabilizacji.",
-          "Higiena snu, ergonomia dnia."
-        ]);
-      }
-      // fallback – użyj opisu jeśli jest
-      return card("ℹ️ Dodatkowe informacje", descriptionText || "Brak dodatkowych informacji.");
+  <!-- Skrypty -->
+  <script src="szczegoly.js"></script>
+
+  <script id="enh-szczegoly-js">
+  (function(){
+    function colorLabels(root){
+      const nodes = root.querySelectorAll('.card ul li, .card p');
+      nodes.forEach(n=>{
+        let html = n.innerHTML;
+        html = html.replace(/(^|\s)(Bez\s+recepty)\s*:/gi,
+          '$1<strong class="otc">$2</strong>:');
+        html = html.replace(/(^|\s)(Na\s+receptę)\s*:/gi,
+          '$1<strong class="rx">$2</strong>:');
+        if(html!==n.innerHTML) n.innerHTML = html;
+      });
     }
 
-    async function getJSON(url){
-      const res=await fetch(`${url}?ts=${Date.now()}`,{cache:"no-store"});
-      if(!res.ok) throw new Error(`HTTP ${res.status} @ ${url}`);
-      return res.json();
+    function addEmojis(root){
+      const caps = root.querySelectorAll('.card .card-caption');
+      caps.forEach(c=>{
+        let t = c.textContent.trim();
+        if (/^Możliwe przyczyny/i.test(t)) t = "🌀 " + t;
+        else if (/^Objawy/i.test(t)) t = "🤒 " + t;
+        else if (/^Kiedy się niepokoić/i.test(t)) t = "⚠️ " + t;
+        else if (/^Lekarze/i.test(t)) t = "👨‍⚕️ " + t;
+        else if (/^Leki/i.test(t)) t = "💊 " + t;
+        else if (/^Pierwsza pomoc/i.test(t)) t = "🛟 " + t;
+        else if (/^Rehabilitacja/i.test(t)) t = "🏃 " + t;
+        else if (/^Czego unikać/i.test(t)) t = "❌ " + t;
+        else if (/^Profilaktyka/i.test(t)) t = "✅ " + t;
+        else if (/^Najczęstsze błędy/i.test(t)) t = "⚠️ " + t;
+        else if (/^Dodatkowe informacje/i.test(t)) t = "ℹ️ " + t;
+        else if (/^Niezwłoczna pomoc/i.test(t)) t = "🚨 " + t;
+        c.textContent = t;
+      });
     }
 
-    function sectionUrlFromId(id){
-      if(!id) return "index.html";
-      const isK=id.endsWith("_k"), isM=id.endsWith("_m");
-      const mapK={
-        oczy_k:"kobieta-glowa.html",uszy_k:"kobieta-glowa.html",nos_k:"kobieta-glowa.html",
-        szczeka_k:"kobieta-glowa.html",szyja_k:"kobieta-glowa.html",glowa_k:"kobieta-glowa.html",
-        serce_k:"kobieta-klatka.html",pluca_k:"kobieta-klatka.html",klatka_piersiowa_k:"kobieta-klatka.html",
-        brzuch_k:"kobieta-klatka.html",plecy_k:"kobieta-klatka.html",
-        uklad_krw_k:"kobieta-klatka.html",uklad_oddech_k:"kobieta-klatka.html",uklad_pokarm_k:"kobieta-klatka.html",
-        biodra_k:"kobieta-nogi.html",uda_k:"kobieta-nogi.html",kolano_k:"kobieta-nogi.html",
-        lydka_k:"kobieta-nogi.html",kostka_k:"kobieta-nogi.html",stopy_k:"kobieta-nogi.html",
-        ciaza_k:"kobieta.html"
-      };
-      const mapM={
-        oczy_m:"mezczyzna-glowa.html",uszy_m:"mezczyzna-glowa.html",nos_m:"mezczyzna-glowa.html",
-        szczeka_m:"mezczyzna-glowa.html",szyja_m:"mezczyzna-glowa.html",glowa_m:"mezczyzna-glowa.html",
-        serce_m:"mezczyzna-klatka.html",pluca_m:"mezczyzna-klatka.html",klatka_piersiowa_m:"mezczyzna-klatka.html",
-        brzuch_m:"mezczyzna-klatka.html",plecy_m:"mezczyzna-klatka.html",
-        uklad_krw_m:"mezczyzna-klatka.html",uklad_oddech_m:"mezczyzna-klatka.html",uklad_pokarm_m:"mezczyzna-klatka.html",
-        biodra_m:"mezczyzna-nogi.html",uda_m:"mezczyzna-nogi.html",kolano_m:"mezczyzna-nogi.html",
-        lydka_m:"mezczyzna-nogi.html",kostka_m:"mezczyzna-nogi.html",stopy_m:"mezczyzna-nogi.html"
-      };
-      if(isK) return mapK[id]||"kobieta.html";
-      if(isM) return mapM[id]||"mezczyzna.html";
-      return "index.html";
+    function enhance(){
+      const root = document.getElementById('content') || document.body;
+      colorLabels(root);
+      addEmojis(root);
     }
 
-    async function render(){
-      const params=new URLSearchParams(location.search);
-      const id=params.get("id");
-      const content=document.getElementById("content");
-      const titleEl=document.getElementById("title");
-      const back=document.getElementById("sectionBack");
-      if(!id||!content) return;
-      if(back) back.href=sectionUrlFromId(id);
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', enhance);
+    else enhance();
 
-      try{
-        const detailed=await getJSON("data/detailed_conditions.json");
-        const base=await getJSON("data/conditions.json");
-        const merged=mergeNodes(detailed[id], base[id]);
-        if(!merged.title && !merged.causes?.length){
-          content.innerHTML="<p>Brak danych dla tego obszaru.</p>";
-          return;
-        }
-        if(titleEl) titleEl.textContent=merged.title;
-
-        const tiles=[];
-        if(merged.causes?.length)      tiles.push(card("🌀 Możliwe przyczyny", merged.causes));
-        if(merged.symptoms?.length)    tiles.push(card("🤒 Objawy", merged.symptoms));
-        if(merged.concerns?.length)    tiles.push(card("⚠️ Kiedy się niepokoić", merged.concerns));
-        if(merged.doctors?.length)     tiles.push(card("👨‍⚕️ Lekarze", merged.doctors));
-        if(merged.medications?.length) tiles.push(card("💊 Leki", merged.medications));
-        if(merged.first_aid?.length)   tiles.push(card("⛑️ Pierwsza pomoc", merged.first_aid));
-        if(merged.rehabilitation?.length) tiles.push(card("🏃 Rehabilitacja / Ćwiczenia", merged.rehabilitation));
-        if(merged.avoid?.length)          tiles.push(card("❌ Czego unikać", merged.avoid));
-        if(merged.prevention?.length)     tiles.push(card("✅ Profilaktyka", merged.prevention));
-        if(merged.mistakes?.length)       tiles.push(card("⚠️ Najczęstsze błędy", merged.mistakes));
-
-        // czerwony kafel na pozycji 4
-        const em=emergencyCard(merged.emergency);
-        const targetIndex=Math.min(3, tiles.length);
-        tiles.splice(targetIndex,0,em);
-
-        // opis jako dodatkowy kafel (jeśli jest)
-        if(merged.description && merged.description.trim()){
-          tiles.push(card("ℹ️ Dodatkowe informacje", merged.description));
-        }
-
-        // 👇 ZAMIAST „spacerów”: dokładamy WIDOCZNE wypełniacze,
-        // żeby 2. rząd nigdy nie był „dziurawy”.
-        const rest = tiles.length % 3;
-        if(rest === 1){
-          // mamy 1 kafel w ostatnim rzędzie → dodaj 2
-          tiles.push(fillerCard("tips", merged.description));
-          tiles.push(fillerCard("prevention"));
-        } else if(rest === 2){
-          // mamy 2 kafle w ostatnim rzędzie → dodaj 1
-          tiles.push(fillerCard("tips", merged.description));
-        }
-        // teraz tiles.length to wielokrotność 3
-
-        const grid=document.createElement("section");
-        grid.className="cards";
-        for(const t of tiles) grid.appendChild(t);
-
-        content.innerHTML="";
-        content.appendChild(grid);
-      }catch(e){
-        console.error(e);
-        content.innerHTML=`<p class="error">Błąd wczytywania danych: ${e.message}</p>`;
-      }
-    }
-
-    if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",render);
-    else render();
+    new MutationObserver(enhance)
+      .observe(document.getElementById('content')||document.body,{childList:true,subtree:true});
   })();
   </script>
-
-  <!-- Afterburner (zostawiamy, ale teraz i tak nie będzie pustek) -->
-  <style id="force-grid-fix">
-    :where(.cards){
-      display:grid !important;
-      grid-template-columns: repeat(3, minmax(320px, 1fr)) !important;
-      grid-auto-flow:dense !important;
-      justify-content: center !important;
-      gap: 22px !important;
-      max-width: 1120px !important;
-      margin: 24px auto 40px !important;
-      padding: 0 12px !important;
-    }
-  </style>
 </body>
 </html>
