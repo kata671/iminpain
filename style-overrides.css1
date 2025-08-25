@@ -1,19 +1,1 @@
-/* --- DOTYCZY TYLKO szczegoly.html --- */
-body[data-page="szczegoly"] .details-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;                   /* równe odstępy między kafelkami */
-  max-width: 1200px;           /* szerokość całej sekcji */
-  margin: 28px auto 0;         /* ładnie pod tytułem i na środku */
-  align-items: start;
-  justify-items: center;       /* wyśrodkowanie kafelków w kolumnie */
-}
 
-/* każdy kafelek dostaje tę samą szerokość i wygląda spójnie */
-body[data-page="szczegoly"] .details-grid > .card,
-body[data-page="szczegoly"] .details-grid > .box,
-body[data-page="szczegoly"] .details-grid > section{
-  width: 100%;
-  max-width: 360px;            /* identyczna szerokość kafelków */
-  border-radius: 18px;         /* miękkie rogi (nie wymaga zmian HTML) */
-}
