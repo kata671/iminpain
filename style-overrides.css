@@ -93,3 +93,68 @@ body[data-page="szczegoly"] #content .cards .card.emergency:hover {
 .card.emergency:hover{
   box-shadow:0 0 28px rgba(255, 30, 30, .9);
 }
+/* --- SIATKA KAFELKÓW (Szczegóły) --- */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(260px, 1fr));
+  gap:20px;
+  max-width:1100px;
+  margin:22px auto 30px;
+  padding:0 12px;
+
+  /* równe wysokości w całej siatce */
+  grid-auto-rows:1fr;
+}
+
+/* 2 kolumny na tabletach */
+@media (max-width: 920px){
+  .cards{ grid-template-columns:repeat(2, minmax(240px,1fr)); }
+}
+
+/* 1 kolumna na telefonach */
+@media (max-width: 560px){
+  .cards{ grid-template-columns:1fr; }
+}
+
+/* --- KAFEL --- */
+.card{
+  display:flex;            /* pozwala rozciągnąć zawartość na pełną wysokość */
+  flex-direction:column;
+  height:100%;
+
+  width:100%;
+  max-width:360px;
+  border-radius:16px;
+  border:1px solid rgba(180,180,255,.22);
+  background:rgba(34,42,90,.78);
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 22px rgba(0,0,0,.42), 0 0 14px rgba(255,255,255,.28);
+}
+
+/* tytuł zawsze tej samej wysokości i ładnie wycentrowany */
+.card-caption{
+  min-height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  text-align:center;
+  padding:10px 12px 0;
+}
+
+/* listy */
+.card ul{ margin:10px 14px 14px; padding-left:20px; }
+.card li{ line-height:1.45; }
+
+/* czerwony kafel – wyraźny i z glowem */
+.card.emergency{
+  border:2px solid #ff4d4d;
+  background:rgba(120, 20, 20, .88);
+  color:#fff;
+  font-weight:700;
+}
+.card.emergency:hover{ box-shadow:0 0 28px rgba(255, 30, 30, .92); }
