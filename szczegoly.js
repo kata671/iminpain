@@ -1,82 +1,169 @@
-(async function() {
+(function () {
+  // Pomocnicze – unikalne elementy tablic (spina dane z 2 plików JSON)
+  function uniq(arr) {
+    return Array.from(new Set((arr || []).filter(Boolean)));
+  }
+
+  // Złączenie 2 węzłów: detailed (bogatszy) + base (ubogi)
+  function mergeNodes(detailed, base) {
+    const src = detailed || {};
+    const fall = base || {};
+    const out = {};
+
+    // pola tekstowe
+    out.title = src.title || fall.title || "Szczegóły";
+
+    // pola tablicowe – łączymy i usuwamy duplikaty
+    const keys = [
+      "causes",
+      "symptoms",
+      "concerns",
+      "doctors",
+      "medications",
+      "first_aid",
+      "emergency",
+      "rehabilitation",
+      "avoid",
+      "prevention",
+      "mistakes"
+    ];
+    keys.forEach(k => {
+      out[k] = uniq([...(fall[k] || []), ...(src[k] || [])]);
+    });
+
+    // opis
+    out.description = (src.description || "") || (fall.description || "");
+
+    return out;
+  }
+
   function card(title, items) {
     const div = document.createElement("article");
     div.className = "card";
+    let html = `<div class="card-caption">${title}</div>`;
 
-    let html = `<div class="card-caption">${title}</div><ul>`;
-    for (const it of items) {
-      html += `<li>${it}</li>`;
+    if (Array.isArray(items)) {
+      html += "<ul>";
+      for (const it of items) html += `<li>${it}</li>`;
+      html += "</ul>";
+    } else if (typeof items === "string" && items.trim()) {
+      html += `<p>${items}</p>`;
+    } else {
+      html += `<p>Brak danych.</p>`;
     }
-    html += "</ul>";
 
     div.innerHTML = html;
     return div;
+  }
+
+  function emergencyCard(items) {
+    const div = card("🚨 Niezwłoczna pomoc (112/SOR)", items && items.length ? items : [
+      "Silny, narastający ból.",
+      "Duszność, zlewne poty, omdlenie.",
+      "Objawy udaru (osłabienie, bełkotliwa mowa, opadnięty kącik ust).",
+      "Ostra duszność, sinica, krwioplucie, silny uraz."
+    ]);
+    div.classList.add("emergency");
+    return div;
+  }
+
+  async function getJSON(url) {
+    const res = await fetch(`${url}?ts=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status + " @ " + url);
+    return res.json();
   }
 
   async function render() {
     const params = new URLSearchParams(location.search);
     const id = params.get("id");
     const content = document.getElementById("content");
+    const titleEl = document.getElementById("title");
+    const back = document.getElementById("sectionBack");
 
     if (!id || !content) return;
 
-    try {
-      const res = await fetch("data/detailed_conditions.json?" + Date.now());
-      const data = await res.json();
-      const node = data[id];
+    // link „wróć do wyboru sekcji”
+    function sectionUrlFromId(_id) {
+      if (!_id) return "index.html";
+      const isK = _id.endsWith("_k");
+      const isM = _id.endsWith("_m");
+      const mapK = {
+        oczy_k: "kobieta-glowa.html", uszy_k: "kobieta-glowa.html", nos_k: "kobieta-glowa.html",
+        szczeka_k: "kobieta-glowa.html", szyja_k: "kobieta-glowa.html", glowa_k: "kobieta-glowa.html",
+        serce_k: "kobieta-klatka.html", pluca_k: "kobieta-klatka.html", klatka_piersiowa_k: "kobieta-klatka.html",
+        brzuch_k: "kobieta-klatka.html", plecy_k: "kobieta-klatka.html",
+        uklad_krw_k: "kobieta-klatka.html", uklad_oddech_k: "kobieta-klatka.html", uklad_pokarm_k: "kobieta-klatka.html",
+        biodra_k: "kobieta-nogi.html", uda_k: "kobieta-nogi.html", kolano_k: "kobieta-nogi.html",
+        lydka_k: "kobieta-nogi.html", kostka_k: "kobieta-nogi.html", stopy_k: "kobieta-nogi.html",
+        ciaza_k: "kobieta.html"
+      };
+      const mapM = {
+        oczy_m: "mezczyzna-glowa.html", uszy_m: "mezczyzna-glowa.html", nos_m: "mezczyzna-glowa.html",
+        szczeka_m: "mezczyzna-glowa.html", szyja_m: "mezczyzna-glowa.html", glowa_m: "mezczyzna-glowa.html",
+        serce_m: "mezczyzna-klatka.html", pluca_m: "mezczyzna-klatka.html", klatka_piersiowa_m: "mezczyzna-klatka.html",
+        brzuch_m: "mezczyzna-klatka.html", plecy_m: "mezczyzna-klatka.html",
+        uklad_krw_m: "mezczyzna-klatka.html", uklad_oddech_m: "mezczyzna-klatka.html", uklad_pokarm_m: "mezczyzna-klatka.html",
+        biodra_m: "mezczyzna-nogi.html", uda_m: "mezczyzna-nogi.html", kolano_m: "mezczyzna-nogi.html",
+        lydka_m: "mezczyzna-nogi.html", kostka_m: "mezczyzna-nogi.html", stopy_m: "mezczyzna-nogi.html"
+      };
+      if (isK) return mapK[_id] || "kobieta.html";
+      if (isM) return mapM[_id] || "mezczyzna.html";
+      return "index.html";
+    }
+    if (back) back.href = sectionUrlFromId(id);
 
-      if (!node) {
-        content.innerHTML = `<p>Brak danych dla tego obszaru.</p>`;
+    try {
+      // 1) bogatszy
+      const detailed = await getJSON("data/detailed_conditions.json");
+      // 2) bazowy (fallback)
+      const base = await getJSON("data/conditions.json");
+
+      const merged = mergeNodes(detailed[id], base[id]);
+      if (!merged.title && !merged.causes?.length) {
+        content.innerHTML = "<p>Brak danych dla tego obszaru.</p>";
         return;
       }
 
+      // tytuł
+      if (titleEl) titleEl.textContent = merged.title;
+
+      // siatka 3x
       const grid = document.createElement("section");
-      grid.className = "grid-container";
+      grid.className = "cards";
 
-      // Tytuł
-      const h1 = document.createElement("h1");
-      h1.textContent = node.title;
-      content.appendChild(h1);
+      // standardowe sekcje
+      if (merged.causes?.length)     grid.appendChild(card("🌀 Możliwe przyczyny", merged.causes));
+      if (merged.symptoms?.length)   grid.appendChild(card("🤒 Objawy", merged.symptoms));
+      if (merged.concerns?.length)   grid.appendChild(card("⚠️ Kiedy się niepokoić", merged.concerns));
+      if (merged.doctors?.length)    grid.appendChild(card("👨‍⚕️ Lekarze", merged.doctors));
+      if (merged.medications?.length)grid.appendChild(card("💊 Leki", merged.medications));
+      if (merged.first_aid?.length)  grid.appendChild(card("⛑️ Pierwsza pomoc", merged.first_aid));
 
-      // Standardowe sekcje
-      if (node.causes && node.causes.length)        grid.appendChild(card("🌀 Możliwe przyczyny", node.causes));
-      if (node.symptoms && node.symptoms.length)    grid.appendChild(card("🤒 Objawy", node.symptoms));
-      if (node.concerns && node.concerns.length)    grid.appendChild(card("⚠️ Kiedy się niepokoić", node.concerns));
-      if (node.doctors && node.doctors.length)      grid.appendChild(card("👨‍⚕️ Lekarze", node.doctors));
-      if (node.medications && node.medications.length) grid.appendChild(card("💊 Leki", node.medications));
-      if (node.first_aid && node.first_aid.length)  grid.appendChild(card("⛑️ Pierwsza pomoc", node.first_aid));
-      if (node.emergency && node.emergency.length)  grid.appendChild(card("🚨 Niezwłoczna pomoc", node.emergency));
+      // nowe sekcje
+      if (merged.rehabilitation?.length) grid.appendChild(card("🏃 Rehabilitacja / Ćwiczenia", merged.rehabilitation));
+      if (merged.avoid?.length)          grid.appendChild(card("❌ Czego unikać", merged.avoid));
+      if (merged.prevention?.length)     grid.appendChild(card("✅ Profilaktyka", merged.prevention));
+      if (merged.mistakes?.length)       grid.appendChild(card("⚠️ Najczęstsze błędy", merged.mistakes));
 
-      // ➕ Nowe sekcje
-      if (node.rehabilitation && node.rehabilitation.length) 
-        grid.appendChild(card("🏃 Rehabilitacja / Ćwiczenia", node.rehabilitation));
+      // emergency zawsze NA KOŃCU
+      grid.appendChild(emergencyCard(merged.emergency));
 
-      if (node.avoid && node.avoid.length) 
-        grid.appendChild(card("❌ Czego unikać", node.avoid));
-
-      if (node.prevention && node.prevention.length) 
-        grid.appendChild(card("✅ Profilaktyka", node.prevention));
-
-      if (node.mistakes && node.mistakes.length) 
-        grid.appendChild(card("⚠️ Najczęstsze błędy", node.mistakes));
-
-      // Opis ogólny
-      if (node.description) {
-        const desc = document.createElement("article");
-        desc.className = "card";
-        desc.innerHTML = `<div class="card-caption">ℹ️ Dodatkowe informacje</div><p>${node.description}</p>`;
-        grid.appendChild(desc);
+      // opis (jako osobny kafelek)
+      if (merged.description && merged.description.trim()) {
+        grid.appendChild(card("ℹ️ Dodatkowe informacje", merged.description));
       }
 
+      content.innerHTML = "";
       content.appendChild(grid);
-    } catch (err) {
-      console.error(err);
-      content.innerHTML = "<p>Błąd ładowania danych.</p>";
+    } catch (e) {
+      console.error(e);
+      content.innerHTML = `<p class="error">Błąd wczytywania danych: ${e.message}</p>`;
     }
   }
 
-  if (document.readyState === "loading")
+  if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", render);
-  else
+  } else {
     render();
+  }
 })();
