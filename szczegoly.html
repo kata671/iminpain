@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title id="title">Szczegóły</title>
 
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="style-overrides.css?v=14">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style-overrides.css?v=icons1" />
 </head>
 <body data-page="szczegoly">
-  <div class="nav-links">
-    <a href="index.html">← Strona główna</a>
-    <a id="sectionBack" href="index.html">← Wróć do wyboru sekcji</a>
+  <div class="nav-links" style="text-align:center; margin:10px 0;">
+    <a href="index.html">← Strona główna</a> |
+    <a id="sectionBack" href="index.html">Wróć do wyboru sekcji</a>
   </div>
 
   <h1 id="title" style="text-align:center; margin:12px 0 6px;">Szczegóły</h1>
@@ -24,28 +24,56 @@
     <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
   </footer>
 
-  <script src="szczegoly.js?v=14"></script>
+  <!-- Twój główny JS -->
+  <script src="szczegoly.js?v=icons1"></script>
 
-  <!-- Skrypt: podświetlenie "Bez recepty:" na zielono -->
+  <!-- Skrypt post-render: kolory etykiet i emoji w tytułach -->
   <script>
   (function(){
-    function highlightLabels(root){
+    function enhance(root){
+      if(!root) return;
+
+      // Kolory dla "Bez recepty" i "Na receptę"
       const nodes = root.querySelectorAll('.card ul li, .card p');
-      nodes.forEach(node => {
-        const prev = node.innerHTML;
-        const next = prev.replace(/(^|\s)(Bez recepty)\s*:/i, '$1<strong class="otc">$2</strong>:');
-        if(next !== prev) node.innerHTML = next;
+      nodes.forEach(n=>{
+        let html = n.innerHTML;
+        html = html.replace(/(^|\s)(Bez\s+recepty)\s*:/gi,
+          '$1<strong class="otc">$2</strong>:');
+        html = html.replace(/(^|\s)(Na\s+receptę)\s*:/gi,
+          '$1<strong class="rx">$2</strong>:');
+        if(html !== n.innerHTML) n.innerHTML = html;
+      });
+
+      // Emoji w tytułach kafelków
+      const captions = root.querySelectorAll('.card .card-caption');
+      captions.forEach(c=>{
+        let t = c.textContent.trim();
+
+        if(/^Objawy/i.test(t)) t = "🤒 " + t;
+        else if(/^Możliwe przyczyny/i.test(t)) t = "🌀 " + t;
+        else if(/^Kiedy się niepokoić/i.test(t)) t = "⚠️ " + t;
+        else if(/^Lekarze/i.test(t)) t = "👨‍⚕️ " + t;
+        else if(/^Leki/i.test(t)) t = "💊 " + t;
+        else if(/^Pierwsza pomoc/i.test(t)) t = "🛟 " + t;
+        else if(/^Rehabilitacja/i.test(t)) t = "🏃 " + t;
+        else if(/^Czego unikać/i.test(t)) t = "❌ " + t;
+        else if(/^Profilaktyka/i.test(t)) t = "✅ " + t;
+        else if(/^Najczęstsze błędy/i.test(t)) t = "⚠️ " + t;
+        else if(/^Niezwłoczna pomoc/i.test(t)) t = "🚨 " + t;
+        else if(/^Dodatkowe informacje/i.test(t)) t = "ℹ️ " + t;
+
+        c.textContent = t;
       });
     }
-    function run(){
-      const content = document.getElementById('content');
-      if(content) highlightLabels(content);
-    }
+
+    function run(){ enhance(document.getElementById('content')); }
+
     if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
     else run();
 
-    const mo = new MutationObserver(() => run());
-    mo.observe(document.body, { childList: true, subtree: true });
+    // Obserwator — odpala po każdym przeładowaniu kafelków
+    const mo = new MutationObserver(()=> run());
+    mo.observe(document.getElementById('content') || document.body, {childList:true, subtree:true});
   })();
   </script>
 </body>
