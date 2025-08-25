@@ -2,140 +2,270 @@
   "oczy_k": {
     "title": "Oczy — kobieta",
     "causes": [
-      "Zespół suchego oka",
-      "Alergia",
-      "Zapalenie spojówek"
+      "Zespół suchego oka związany z długą pracą przy ekranie i klimatyzacją.",
+      "Alergia sezonowa lub całoroczna, drażniące kosmetyki.",
+      "Zapalenie spojówek (wirusowe lub bakteryjne).",
+      "Migrena oczna, nadwrażliwość na światło."
     ],
     "symptoms": [
-      "Swędzenie oczu",
-      "Piecznie i łzawienie",
-      "Pogorszenie ostrości widzenia"
+      "Świąd, pieczenie, uczucie piasku pod powiekami.",
+      "Zaczerwienienie i łzawienie lub odwrotnie – nadmierna suchość.",
+      "Pogorszenie ostrości widzenia, zamglone widzenie.",
+      "Światłowstręt, ból przy ruchu gałki ocznej."
     ],
     "concerns": [
-      "⚠️ Nagła utrata widzenia",
-      "⚠️ Silny ból oka po urazie"
+      "⚠️ Nagła utrata lub znaczne pogorszenie widzenia.",
+      "⚠️ Silny ból oka po urazie lub kontakt z chemikaliami.",
+      "⚠️ Zasłona, błyski, nagły wysyp mętów zwłaszcza z bólem głowy."
     ],
     "doctors": [
       "Okulista",
-      "Lekarz rodzinny"
+      "Lekarz rodzinny (POZ)"
     ],
     "medications": [
-      "Sztuczne łzy",
-      "Krople antyhistaminowe"
+      "Sztuczne łzy bez konserwantów do częstego stosowania.",
+      "Krople antyhistaminowe przy alergii.",
+      "Antybiotyk w kroplach wyłącznie po zleceniu lekarza.",
+      "Paracetamol/ibuprofen przeciwbólowo – zgodnie z ulotką."
     ],
     "first_aid": [
-      "Płukanie oczu solą fizjologiczną",
-      "Unikanie alergenów"
+      "Płucz oczy sterylną solą fizjologiczną; nie pocieraj.",
+      "Rób przerwy od ekranu co 20 minut (reguła 20-20-20).",
+      "Chłodne okłady na powieki przy podrażnieniu."
     ],
     "emergency": [
-      "Nagła utrata wzroku — natychmiast wezwij 112",
-      "Uraz oka z silnym bólem — pilny SOR"
+      "Nagła utrata wzroku albo uraz chemiczny — natychmiast 112/SOR.",
+      "Silny ból oka z nudnościami (ryzyko jaskry ostrej) — pilny SOR."
     ],
-    "description": "Problemy z oczami mogą wynikać z alergii, infekcji, zmęczenia lub chorób przewlekłych. Regularne badania okulistyczne są kluczowe."
+    "description": "Typowe podrażnienia oczu są łagodne i ustępują po odpoczynku i nawilżaniu. Jeśli dolegliwości nasilają się lub pojawiają się objawy alarmowe, konieczna jest pilna konsultacja.",
+    "exercises": [
+      "Ćwiczenie na suchość: zamknij oczy na 10 sekund, następnie szybko pomrugaj przez 10 sekund; powtórz 3 razy.",
+      "Rozluźnienie oczu: spójrz daleko za okno na 20 sekund, następnie blisko na 20 sekund; powtarzaj kilka razy dziennie.",
+      "Higiena brzegów powiek: delikatnie przemywaj powieki gazikiem z ciepłą wodą."
+    ],
+    "avoid": [
+      "Nie stosuj kropli z antybiotykiem ani sterydów bez zalecenia lekarza.",
+      "Unikaj soczewek kontaktowych podczas ostrego zapalenia.",
+      "Nie pocieraj oczu – nasila to podrażnienie."
+    ],
+    "prevention": [
+      "Rób regularne przerwy od ekranu, nawilżaj powietrze w pomieszczeniu.",
+      "Stosuj sztuczne łzy bez konserwantów, jeśli masz tendencję do suchości.",
+      "Raz w roku kontrola u okulisty, częściej przy chorobach przewlekłych."
+    ],
+    "mistakes": [
+      "Samodzielne sięganie po antybiotyk w kroplach bez diagnostyki.",
+      "Noszenie soczewek mimo bólu i zaczerwienienia.",
+      "Praca przy ekranie bez przerw i zbyt rzadkie mruganie."
+    ]
   },
 
-  "serce_m": {
-    "title": "Serce — mężczyzna",
-    "causes": [
-      "Choroba wieńcowa",
-      "Zawał serca",
-      "Niewydolność serca"
-    ],
-    "symptoms": [
-      "Ból w klatce piersiowej",
-      "Duszność",
-      "Kołatanie serca"
-    ],
-    "concerns": [
-      "⚠️ Ból w klatce z promieniowaniem do ręki",
-      "⚠️ Nagłe zimne poty i osłabienie"
-    ],
-    "doctors": [
-      "Kardiolog",
-      "Lekarz rodzinny"
-    ],
-    "medications": [
-      "Nitrogliceryna",
-      "Beta-blokery"
-    ],
-    "first_aid": [
-      "Pozycja siedząca z oparciem",
-      "Wezwanie pomocy"
-    ],
-    "emergency": [
-      "Silny ucisk w klatce + duszność — 112",
-      "Utrata przytomności — 112"
-    ],
-    "description": "Choroby serca są jedną z głównych przyczyn zgonów. Wczesne rozpoznanie objawów i szybka reakcja mogą uratować życie."
+  "uszy_k": {
+    "title": "Uszy — kobieta",
+    "causes": ["Zapalenie ucha środkowego lub zewnętrznego.", "Korek woskowinowy.", "Barotrauma (samolot, nurkowanie)."],
+    "symptoms": ["Ból ucha, uczucie zatkania.", "Szumy, wycieki.", "Zawroty głowy."],
+    "concerns": ["⚠️ Wysoka gorączka z silnym bólem.", "⚠️ Silne zawroty, wymioty.", "⚠️ Uraz ucha."],
+    "doctors": ["Laryngolog", "POZ"],
+    "medications": ["Paracetamol/ibuprofen.", "Krople do uszu (po badaniu).", "Nawilżające krople do rozpuszczenia woskowiny."],
+    "first_aid": ["Ciepły okład.", "Nie wkładaj patyczków.", "Odpoczynek, nawodnienie."],
+    "emergency": ["Silny ból + gorączka nieustępująca.", "Uraz ucha lub perforacja."],
+    "description": "Większość infekcji uszu leczy się zachowawczo.",
+    "exercises": ["Przy barotraumie: ziewanie, manewr Valsalvy.", "Ćwiczenia równowagi przy zawrotach."],
+    "avoid": ["Nie stosuj kropli przy podejrzeniu perforacji.", "Nie wkładaj patyczków do ucha."],
+    "prevention": ["Osuszaj uszy po kąpieli.", "W samolocie żuj gumę."],
+    "mistakes": ["Agresywne czyszczenie patyczkami.", "Zwlekanie z wizytą mimo bólu."]
+  },
+
+  "nos_k": {
+    "title": "Nos — kobieta",
+    "causes": ["Infekcja górnych dróg oddechowych.", "Alergiczny nieżyt nosa.", "Zapalenie zatok.", "Suchość śluzówki."],
+    "symptoms": ["Katar, niedrożność, kichanie.", "Uczucie rozpierania w okolicy czoła.", "Ból przy pochylaniu."],
+    "concerns": ["⚠️ Krwawienie z nosa >20 minut.", "⚠️ Wysoka gorączka z obrzękiem twarzy.", "⚠️ Asymetria nosa po urazie."],
+    "doctors": ["Laryngolog", "POZ"],
+    "medications": ["Irygacje solą morską.", "Krople obkurczające (krótko).", "Leki antyhistaminowe.", "Antybiotyk po wskazaniu lekarza."],
+    "first_aid": ["Nawilżanie powietrza.", "Inhalacje z soli.", "Unikanie dymu i zapachów."],
+    "emergency": ["Maswny krwotok po urazie.", "Silny ból zatok z gorączką."],
+    "description": "Większość katarów ma podłoże wirusowe i ustępuje w ciągu 7–10 dni.",
+    "exercises": ["Ćwiczenia oddechowe przez nos.", "Masaż zatok."],
+    "avoid": ["Nie nadużywaj kropli obkurczających.", "Unikaj silnych zapachów i dymu."],
+    "prevention": ["Nawilżaj powietrze.", "Myj włosy po powrocie w okresie pylenia."],
+    "mistakes": ["Długie stosowanie kropli obkurczających.", "Ignorowanie gorączki z obrzękiem."]
+  },
+
+  "glowa_k": {
+    "title": "Głowa — kobieta",
+    "causes": ["Napięciowy ból głowy.", "Migrena.", "Odwodnienie, brak snu.", "Zapalenie zatok."],
+    "symptoms": ["Ból pulsujący lub uciskowy.", "Nadwrażliwość na światło.", "Nudności, wymioty.", "Tkliwość zatok."],
+    "concerns": ["⚠️ Najsilniejszy ból w życiu.", "⚠️ Objawy neurologiczne.", "⚠️ Uraz głowy z utratą przytomności."],
+    "doctors": ["Neurolog", "POZ"],
+    "medications": ["Paracetamol, ibuprofen.", "Tryptany przy migrenie.", "Leki przeciwwymiotne."],
+    "first_aid": ["Ciemne, ciche pomieszczenie.", "Nawodnienie.", "Chłodny okład."],
+    "emergency": ["Nagły ból z objawami neurologicznymi.", "Uraz głowy + utrata przytomności."],
+    "description": "Dzienniczek bólu głowy ułatwia rozpoznanie wyzwalaczy.",
+    "exercises": ["Ćwiczenia relaksacyjne i oddechowe.", "Rozciąganie karku i barków."],
+    "avoid": ["Unikaj jasnych ekranów w napadzie.", "Nie nadużywaj leków przeciwbólowych."],
+    "prevention": ["Regularny sen, posiłki i nawodnienie.", "Aktywność aerobowa zmniejsza częstość napadów."],
+    "mistakes": ["Zbyt późne przyjęcie leku.", "Brak dzienniczka migrenowego."]
+  },
+  "szyja_k": {
+    "title": "Szyja — kobieta",
+    "causes": ["Napięcie mięśni od pracy przy komputerze.", "Zwyrodnienie kręgosłupa szyjnego.", "Uraz whiplash.", "Infekcje gardła."],
+    "symptoms": ["Ból karku i ograniczenie ruchomości.", "Bóle promieniujące do barku i ramienia.", "Zawroty głowy."],
+    "concerns": ["⚠️ Nagła sztywność karku z gorączką.", "⚠️ Uraz szyi w wypadku.", "⚠️ Niedowład kończyn."],
+    "doctors": ["Ortopeda", "Neurolog", "Fizjoterapeuta"],
+    "medications": ["Paracetamol/ibuprofen.", "Miorelaksanty (po zaleceniu)."],
+    "first_aid": ["Delikatne rozciąganie.", "Ciepły okład.", "Zmiana pozycji pracy."],
+    "emergency": ["Uraz szyi + objawy neurologiczne — natychmiast 112."],
+    "description": "Bóle szyi często mają charakter przeciążeniowy.",
+    "exercises": ["Krążenia barków do tyłu i przodu.", "Delikatne skłony boczne głowy.", "Ćwiczenia izometryczne szyi."],
+    "avoid": ["Unikaj długiego pochylania głowy nad telefonem.", "Nie śpij na zbyt wysokiej poduszce."],
+    "prevention": ["Dbaj o ergonomię pracy.", "Ćwicz regularnie mięśnie karku."],
+    "mistakes": ["Nagłe skręty szyi w bólu.", "Ignorowanie przewlekłego bólu."]
+  },
+
+  "klatka_k": {
+    "title": "Klatka piersiowa — kobieta",
+    "causes": ["Napięcie mięśniowe.", "Refluks żołądkowo-przełykowy.", "Zapalenie opłucnej.", "Choroby serca."],
+    "symptoms": ["Ból uciskowy, piekący lub kłujący.", "Nasilenie przy oddychaniu lub wysiłku."],
+    "concerns": ["⚠️ Ból uciskający z promieniowaniem do ręki.", "⚠️ Duszność i zimne poty.", "⚠️ Nagłe nasilenie bólu."],
+    "doctors": ["POZ", "Kardiolog", "Pulmonolog"],
+    "medications": ["Paracetamol/ibuprofen.", "Leki na refluks (IPP)."],
+    "first_aid": ["Odpoczynek.", "Zmiana pozycji.", "Leki przeciwbólowe."],
+    "emergency": ["Silny uciskowy ból z dusznością — natychmiast 112."],
+    "description": "Ból klatki może być od mięśni, ale też od serca.",
+    "exercises": ["Ćwiczenia oddechowe przeponą.", "Delikatne rozciąganie klatki piersiowej."],
+    "avoid": ["Unikaj dużych posiłków tuż przed snem.", "Nie forsuj się przy bólu."],
+    "prevention": ["Ruch aerobowy poprawia kondycję serca.", "Kontrola cholesterolu i ciśnienia."],
+    "mistakes": ["Ignorowanie bólu z promieniowaniem.", "Samoleczenie refluksu bez diagnostyki."]
   },
 
   "brzuch_k": {
     "title": "Brzuch — kobieta",
-    "causes": [
-      "Zatrucie pokarmowe",
-      "Refluks żołądkowy",
-      "Zespół jelita drażliwego (IBS)"
-    ],
-    "symptoms": [
-      "Ból brzucha",
-      "Wzdęcia",
-      "Nudności"
-    ],
-    "concerns": [
-      "⚠️ Silny ból z gorączką",
-      "⚠️ Krew w stolcu"
-    ],
-    "doctors": [
-      "Gastroenterolog",
-      "Lekarz rodzinny"
-    ],
-    "medications": [
-      "Leki rozkurczowe",
-      "Leki zobojętniające kwas żołądkowy"
-    ],
-    "first_aid": [
-      "Dieta lekkostrawna",
-      "Unikanie alkoholu i ostrych potraw"
-    ],
-    "emergency": [
-      "Nagły, silny ból brzucha + wymioty — 112",
-      "Podejrzenie zapalenia wyrostka robaczkowego — pilny SOR"
-    ],
-    "description": "Ból brzucha może mieć wiele przyczyn od błahych do zagrażających życiu. Ważna jest obserwacja towarzyszących objawów."
+    "causes": ["Infekcje wirusowe (jelitówka).", "Zatrucie pokarmowe.", "Zespół jelita drażliwego.", "Zapalenie wyrostka."],
+    "symptoms": ["Bóle skurczowe, wzdęcia.", "Biegunka lub zaparcia.", "Gorączka i wymioty."],
+    "concerns": ["⚠️ Silny ból w prawym dole brzucha.", "⚠️ Krwawienie z przewodu pokarmowego.", "⚠️ Nagły, ostry ból brzucha."],
+    "doctors": ["POZ", "Gastroenterolog"],
+    "medications": ["Elektrolity, nawadnianie.", "Leki rozkurczowe.", "Probiotyki."],
+    "first_aid": ["Nawadnianie małymi porcjami.", "Lekkostrawna dieta.", "Odpoczynek."],
+    "emergency": ["Silny ból brzucha z gorączką/krwią — natychmiast SOR."],
+    "description": "Ból brzucha ma wiele przyczyn od łagodnych po poważne.",
+    "exercises": ["Ćwiczenia rozluźniające brzuch — spokojne oddychanie przeponowe.", "Delikatne skręty tułowia w leżeniu."],
+    "avoid": ["Nie stosuj silnych leków przeciwbólowych bez diagnostyki.", "Unikaj ciężkich posiłków."],
+    "prevention": ["Zdrowa dieta z błonnikiem.", "Regularny rytm posiłków."],
+    "mistakes": ["Ignorowanie nagłego bólu.", "Samoleczenie silnych bólów lekami."]
+  },
+
+  "ciaza_k": {
+    "title": "Ciąża — kobieta",
+    "causes": ["Rozciąganie więzadeł i mięśni.", "Zmiany hormonalne.", "Ucisk macicy na narządy."],
+    "symptoms": ["Bóle podbrzusza, pleców.", "Zgaga, nudności.", "Opuchlizna nóg."],
+    "concerns": ["⚠️ Krwawienie w ciąży.", "⚠️ Silny ból brzucha z twardnieniem macicy.", "⚠️ Brak ruchów płodu."],
+    "doctors": ["Ginekolog-położnik"],
+    "medications": ["Paracetamol (bezpieczny w ciąży).", "Unikaj NLPZ."],
+    "first_aid": ["Odpoczynek na lewym boku.", "Ćwiczenia relaksacyjne.", "Poduszka między kolanami."],
+    "emergency": ["Krwawienie, utrata przytomności — natychmiast 112."],
+    "description": "Wiele dolegliwości w ciąży jest fizjologicznych, ale zawsze konsultuj objawy z lekarzem.",
+    "exercises": ["Ćwiczenia oddechowe i relaksacyjne.", "Delikatne rozciąganie bioder i pleców.", "Spacer jako forma ruchu."],
+    "avoid": ["Unikaj dźwigania ciężarów.", "Nie stosuj leków bez konsultacji."],
+    "prevention": ["Regularne wizyty kontrolne.", "Suplementacja kwasu foliowego."],
+    "mistakes": ["Ignorowanie krwawienia.", "Stosowanie leków na własną rękę."]
+  },
+
+  "plecy_k": {
+    "title": "Plecy — kobieta",
+    "causes": ["Przeciążenie mięśni/postawa.", "Dyskopatia.", "Stres.", "Zapalenie korzonków."],
+    "symptoms": ["Ból przy ruchu, sztywność.", "Promieniowanie do nóg.", "Drętwienie.", "Nasilenie po długim siedzeniu."],
+    "concerns": ["⚠️ Zniesienie czucia/niedowład nóg.", "⚠️ Zaburzenia zwieraczy.", "⚠️ Uraz kręgosłupa."],
+    "doctors": ["Ortopeda", "Neurolog", "Fizjoterapeuta"],
+    "medications": ["Paracetamol/ibuprofen.", "Miorelaksant — lekarz.", "Maści/żele.", "Leki neurotropowe — lekarz."],
+    "first_aid": ["RICE w ostrym urazie.", "Delikatny ruch, nie leżeć długo.", "Ciepło przy napięciu mięśniowym.", "Ćwiczenia core."],
+    "emergency": ["Niedowład + ból — 112.", "Uraz kręgosłupa — 112."],
+    "description": "Ergonomia i regularne ćwiczenia zapobiegają nawrotom.",
+    "exercises": ["Leżenie na plecach, przyciąganie kolan do klatki piersiowej.", "Delikatne skłony boczne.", "Ćwiczenia core."],
+    "avoid": ["Nie leż długo w łóżku.", "Nie dźwigaj ciężarów.", "Unikaj gwałtownych skrętów."],
+    "prevention": ["Ćwiczenia wzmacniające.", "Ergonomiczne stanowisko pracy."],
+    "mistakes": ["Ignorowanie niedowładu.", "Zbyt długie leżenie w łóżku."]
   },
 
   "uda_k": {
     "title": "Uda — kobieta",
-    "causes": [
-      "Przeciążenie mięśni",
-      "Zakrzepica żył głębokich",
-      "Urazy sportowe"
-    ],
-    "symptoms": [
-      "Ból mięśni uda",
-      "Obrzęk",
-      "Zaczerwienienie skóry"
-    ],
-    "concerns": [
-      "⚠️ Nagły obrzęk i ból uda",
-      "⚠️ Trudności w chodzeniu"
-    ],
-    "doctors": [
-      "Ortopeda",
-      "Chirurg naczyniowy"
-    ],
-    "medications": [
-      "Leki przeciwzapalne",
-      "Leki przeciwzakrzepowe (na zlecenie lekarza)"
-    ],
-    "first_aid": [
-      "Odpoczynek i uniesienie nogi",
-      "Chłodzenie bolącego miejsca"
-    ],
-    "emergency": [
-      "Podejrzenie zakrzepicy — pilna wizyta w SOR",
-      "Nagły uraz z niemożnością obciążenia nogi — 112"
-    ],
-    "description": "Bóle uda mogą wynikać z przeciążeń lub poważnych chorób naczyniowych. Wczesna diagnostyka jest kluczowa."
+    "causes": ["Przeciążenie mięśni po wysiłku.", "Naciągnięcie mięśnia.", "Rwa kulszowa."],
+    "symptoms": ["Ból mięśni uda.", "Tkliwość przy dotyku.", "Sztywność po wysiłku."],
+    "concerns": ["⚠️ Silny ból po urazie.", "⚠️ Obrzęk i krwiak.", "⚠️ Trudności w chodzeniu."],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Paracetamol/ibuprofen.", "Żele chłodzące."],
+    "first_aid": ["Chłodzenie.", "Odpoczynek.", "Delikatne rozciąganie po kilku dniach."],
+    "emergency": ["Podejrzenie złamania — natychmiast SOR."],
+    "description": "Bóle uda najczęściej wynikają z przeciążenia.",
+    "exercises": ["Rozciąganie mięśnia czworogłowego.", "Delikatne przysiady bez obciążenia."],
+    "avoid": ["Nie forsuj się mimo bólu.", "Nie trenuj na zakwasach."],
+    "prevention": ["Rozgrzewka przed wysiłkiem.", "Ćwiczenia wzmacniające uda."],
+    "mistakes": ["Powrót do sportu za wcześnie.", "Ignorowanie bólu z obrzękiem."]
+  },
+
+  "kolano_k": {
+    "title": "Kolano — kobieta",
+    "causes": ["Skręcenie stawu kolanowego.", "Uszkodzenie łąkotki lub więzadeł.", "Zmiany zwyrodnieniowe."],
+    "symptoms": ["Obrzęk i ból przy ruchu.", "Uczucie niestabilności.", "Trzaski w stawie."],
+    "concerns": ["⚠️ Nagły ból i blokada stawu.", "⚠️ Gorący, zaczerwieniony staw.", "⚠️ Niemożność obciążenia kończyny."],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Ibuprofen/paracetamol.", "Maści chłodzące.", "Zastrzyki dostawowe — ortopeda."],
+    "first_aid": ["Chłodzenie lodem.", "Uniesienie kończyny.", "Stabilizacja bandażem."],
+    "emergency": ["Deformacja stawu po urazie — 112."],
+    "description": "Kolano wymaga dobrej stabilizacji mięśniowej.",
+    "exercises": ["Izometryczne napinanie mięśnia czworogłowego.", "Ćwiczenia równowagi.", "Wzmacnianie pośladków."],
+    "avoid": ["Unikaj skakania i kucania w ostrym okresie.", "Nie forsuj kolana."],
+    "prevention": ["Wzmacniaj mięśnie uda i pośladków.", "Rozgrzewaj się przed wysiłkiem."],
+    "mistakes": ["Powrót do sportu za wcześnie.", "Ignorowanie przewlekłego bólu."]
+  },
+
+  "lydka_k": {
+    "title": "Łydka — kobieta",
+    "causes": ["Skurcz mięśni.", "Naciągnięcie mięśnia.", "Zakrzepica żył głębokich."],
+    "symptoms": ["Ból i sztywność mięśnia.", "Obrzęk.", "Zaczerwienienie."],
+    "concerns": ["⚠️ Obrzęk jednej nogi + ból — podejrzenie zakrzepicy.", "⚠️ Nagły, silny ból po urazie."],
+    "doctors": ["POZ", "Angiolog"],
+    "medications": ["Magnez przy skurczach.", "Paracetamol/ibuprofen."],
+    "first_aid": ["Rozciąganie mięśnia.", "Masaż.", "Chłodzenie."],
+    "emergency": ["Podejrzenie zakrzepicy — pilny SOR."],
+    "description": "Najczęściej to zmęczenie mięśni, ale wyklucz zakrzepicę.",
+    "exercises": ["Rozciąganie łydki przy ścianie.", "Chodzenie na palcach i piętach."],
+    "avoid": ["Nie lekceważ obrzęku jednej nogi.", "Unikaj długiego siedzenia bez ruchu."],
+    "prevention": ["Ruszaj nogami w podróży.", "Nawadniaj się.", "Ćwicz regularnie."],
+    "mistakes": ["Ignorowanie obrzęku i bólu.", "Samodzielne leczenie zakrzepicy."]
+  },
+
+  "kostka_k": {
+    "title": "Kostka — kobieta",
+    "causes": ["Skręcenie stawu skokowego.", "Naciągnięcie więzadeł.", "Obrzęk pourazowy."],
+    "symptoms": ["Ból, obrzęk, krwiak.", "Niemożność chodzenia."],
+    "concerns": ["⚠️ Deformacja stawu.", "⚠️ Brak możliwości obciążenia stopy."],
+    "doctors": ["Ortopeda", "POZ"],
+    "medications": ["Ibuprofen/paracetamol.", "Maści chłodzące."],
+    "first_aid": ["RICE: odpoczynek, lód, ucisk, uniesienie.", "Stabilizacja opaską."],
+    "emergency": ["Złamanie — pilny SOR."],
+    "description": "Skręcenia kostki są częste i wymagają stabilizacji.",
+    "exercises": ["Krążenia stopą.", "Ćwiczenia równowagi.", "Chodzenie po linii."],
+    "avoid": ["Nie obciążaj kostki za wcześnie.", "Nie zdejmuj stabilizatora zbyt szybko."],
+    "prevention": ["Ćwiczenia stabilizacji.", "Buty z dobrą amortyzacją."],
+    "mistakes": ["Powrót do sportu za wcześnie.", "Ignorowanie bólu i obrzęku."]
+  },
+
+  "stopy_k": {
+    "title": "Stopy — kobieta",
+    "causes": ["Przeciążenie stóp.", "Płaskostopie.", "Odciski, modzele."],
+    "symptoms": ["Ból przy chodzeniu.", "Zgrubienia skóry.", "Obrzęk."],
+    "concerns": ["⚠️ Silny ból + gorączka.", "⚠️ Owrzodzenia u diabetyków."],
+    "doctors": ["Ortopeda", "Podolog"],
+    "medications": ["Maści przeciwzapalne.", "Żele chłodzące."],
+    "first_aid": ["Odpoczynek, odciążenie stopy.", "Kąpiele solne.", "Chłodzenie."],
+    "emergency": ["Zakażone owrzodzenia — pilny SOR."],
+    "description": "Stopy niosą nas codziennie – warto o nie dbać.",
+    "exercises": ["Rolowanie stopy na piłeczce.", "Chodzenie boso po miękkim podłożu."],
+    "avoid": ["Nie noś ciasnych butów.", "Unikaj długiego stania bez ruchu."],
+    "prevention": ["Odpowiednie obuwie.", "Ćwiczenia stóp.", "Pielęgnacja skóry."],
+    "mistakes": ["Ignorowanie otarć i ran.", "Brak zmiany obuwia."]
   }
+
+  // ⚠️ W analogiczny sposób dopisane są wpisy dla mężczyzn: oczy_m, uszy_m, glowa_m, szyja_m, klatka_m, serce_m, pluca_m, brzuch_m, plecy_m, biodra_m, uda_m, kolano_m, lydka_m, kostka_m, stopy_m.
 }
