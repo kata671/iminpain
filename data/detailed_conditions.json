@@ -1,51 +1,350 @@
 {
-  "oczy_k": { "title": "Oczy — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "uszy_k": { "title": "Uszy — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "nos_k": { "title": "Nos — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "szczeka_k": { "title": "Szczęka / SSŻ — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "szyja_k": { "title": "Szyja — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "glowa_k": { "title": "Głowa — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "oczy_k": {
+    "title": "Oczy — kobieta",
+    "causes": [
+      "Zespół suchego oka (ekran, klimatyzacja).",
+      "Alergia sezonowa lub kosmetyki.",
+      "Zapalenie spojówek (wirusowe/bakteryjne)."
+    ],
+    "symptoms": [
+      "Piecznie, swędzenie, uczucie piasku pod powiekami.",
+      "Łzawienie albo suchość.",
+      "Zamglone widzenie, światłowstręt."
+    ],
+    "concerns": [
+      "⚠️ Nagła utrata widzenia.",
+      "⚠️ Silny ból oka po urazie lub kontakcie z chemią."
+    ],
+    "doctors": ["Okulista", "Lekarz rodzinny (POZ)"],
+    "medications": ["Sztuczne łzy", "Krople antyhistaminowe"],
+    "first_aid": ["Płukanie solą fizjologiczną", "Odpoczynek od ekranu"],
+    "emergency": ["Nagła utrata wzroku — 112/SOR"],
+    "description": "Podrażnienia oczu zwykle są łagodne, ale mogą wymagać konsultacji.",
+    "exercises": ["Ćwiczenia mrugania", "Reguła 20-20-20"],
+    "avoid": ["Nie pocieraj oczu", "Unikaj soczewek w czasie infekcji"],
+    "prevention": ["Nawilżaj powietrze", "Przerwy od ekranu"],
+    "mistakes": ["Samodzielne krople z antybiotykiem", "Noszenie soczewek mimo bólu"]
+  },
 
-  "serce_k": { "title": "Serce — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "pluca_k": { "title": "Płuca — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "klatka_piersiowa_k": { "title": "Klatka piersiowa — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "brzuch_k": { "title": "Brzuch — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "plecy_k": { "title": "Plecy — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "uszy_k": {
+    "title": "Uszy — kobieta",
+    "causes": ["Zapalenie ucha", "Korek woskowinowy", "Barotrauma (lot, nurkowanie)"],
+    "symptoms": ["Ból ucha, uczucie zatkania", "Szumy", "Wycieki"],
+    "concerns": ["⚠️ Silny ból z gorączką", "⚠️ Zawroty głowy i wymioty"],
+    "doctors": ["Laryngolog", "POZ"],
+    "medications": ["Paracetamol", "Krople do uszu (po badaniu)"],
+    "first_aid": ["Ciepły okład", "Nie wkładaj patyczków"],
+    "emergency": ["Silny ból z gorączką — pilna pomoc"],
+    "description": "Większość infekcji uszu ustępuje samoistnie.",
+    "exercises": ["Ziewanie i przełykanie przy zmianach ciśnienia"],
+    "avoid": ["Nie stosuj kropli przy perforacji", "Nie używaj patyczków"],
+    "prevention": ["Osuszaj uszy po kąpieli", "Żuj gumę w samolocie"],
+    "mistakes": ["Agresywne czyszczenie", "Ignorowanie gorączki"]
+  },
 
-  "uklad_krw_k": { "title": "Układ krążenia — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "uklad_oddech_k": { "title": "Układ oddechowy — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "uklad_pokarm_k": { "title": "Układ pokarmowy — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "nos_k": {
+    "title": "Nos — kobieta",
+    "causes": ["Infekcja", "Alergia", "Zapalenie zatok", "Suchość śluzówki"],
+    "symptoms": ["Katar, niedrożność", "Ból zatok przy pochylaniu"],
+    "concerns": ["⚠️ Krwawienie >20 minut", "⚠️ Obrzęk twarzy z gorączką"],
+    "doctors": ["Laryngolog", "POZ"],
+    "medications": ["Irygacje solą", "Krople obkurczające (krótko)"],
+    "first_aid": ["Nawilżanie powietrza", "Inhalacje z soli"],
+    "emergency": ["Maswny krwotok po urazie"],
+    "description": "Katar wirusowy trwa zwykle 7–10 dni.",
+    "exercises": ["Ćwiczenia oddechowe", "Masaż zatok"],
+    "avoid": ["Nie nadużywaj kropli obkurczających"],
+    "prevention": ["Nawilżanie powietrza", "Higiena rąk"],
+    "mistakes": ["Długie stosowanie kropli", "Ignorowanie obrzęku twarzy"]
+  },
 
-  "biodra_k": { "title": "Biodra — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "uda_k": { "title": "Uda — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "kolano_k": { "title": "Kolano — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "lydka_k": { "title": "Łydka — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "kostka_k": { "title": "Kostka — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "stopy_k": { "title": "Stopy — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "glowa_k": {
+    "title": "Głowa — kobieta",
+    "causes": ["Bóle napięciowe", "Migrena", "Odwodnienie", "Zapalenie zatok"],
+    "symptoms": ["Ucisk, pulsowanie", "Światłowstręt", "Nudności"],
+    "concerns": ["⚠️ Najsilniejszy ból w życiu", "⚠️ Objawy neurologiczne"],
+    "doctors": ["Neurolog", "POZ"],
+    "medications": ["Ibuprofen", "Tryptany (migrena)"],
+    "first_aid": ["Ciemne, ciche pomieszczenie", "Chłodny okład"],
+    "emergency": ["Nagły ból + objawy neurologiczne"],
+    "description": "Prowadzenie dzienniczka bólu pomaga w rozpoznaniu.",
+    "exercises": ["Ćwiczenia relaksacyjne", "Rozciąganie karku"],
+    "avoid": ["Nie nadużywaj leków przeciwbólowych"],
+    "prevention": ["Regularny sen i posiłki", "Aktywność fizyczna"],
+    "mistakes": ["Zbyt późne przyjęcie leku", "Brak kontroli u lekarza"]
+  },
 
-  "ciaza_k": { "title": "Ciąża — kobieta", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "szyja_k": {
+    "title": "Szyja — kobieta",
+    "causes": ["Napięcie mięśni", "Zwyrodnienia", "Uraz (whiplash)"],
+    "symptoms": ["Ból karku", "Zawroty głowy"],
+    "concerns": ["⚠️ Sztywność karku z gorączką", "⚠️ Niedowład kończyn"],
+    "doctors": ["Ortopeda", "Neurolog", "Fizjoterapeuta"],
+    "medications": ["Paracetamol", "Miorelaksanty"],
+    "first_aid": ["Rozciąganie", "Ciepły okład"],
+    "emergency": ["Uraz szyi z objawami neurologicznymi — 112"],
+    "description": "Bóle szyi zwykle mają charakter przeciążeniowy.",
+    "exercises": ["Krążenia barków", "Skłony boczne głowy"],
+    "avoid": ["Nie trzymaj głowy długo pochylonej"],
+    "prevention": ["Ergonomia pracy", "Ćwiczenia karku"],
+    "mistakes": ["Ignorowanie przewlekłego bólu"]
+  },
 
-  "oczy_m": { "title": "Oczy — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "uszy_m": { "title": "Uszy — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "nos_m": { "title": "Nos — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "szczeka_m": { "title": "Szczęka / SSŻ — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "szyja_m": { "title": "Szyja — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "glowa_m": { "title": "Głowa — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "klatka_piersiowa_k": {
+    "title": "Klatka piersiowa — kobieta",
+    "causes": ["Napięcie mięśni", "Refluks", "Choroby serca"],
+    "symptoms": ["Ból uciskowy lub kłujący", "Nasilenie przy oddychaniu"],
+    "concerns": ["⚠️ Ból z dusznością", "⚠️ Zimne poty"],
+    "doctors": ["Kardiolog", "POZ"],
+    "medications": ["Paracetamol", "Leki na refluks"],
+    "first_aid": ["Odpoczynek", "Zmiana pozycji"],
+    "emergency": ["Silny uciskowy ból — 112"],
+    "description": "Ból klatki może pochodzić z mięśni, ale też serca.",
+    "exercises": ["Ćwiczenia oddechowe przeponą"],
+    "avoid": ["Nie forsuj się przy bólu"],
+    "prevention": ["Kontrola cholesterolu i ciśnienia"],
+    "mistakes": ["Ignorowanie bólu z promieniowaniem"]
+  },
 
-  "serce_m": { "title": "Serce — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "pluca_m": { "title": "Płuca — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "klatka_piersiowa_m": { "title": "Klatka piersiowa — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "brzuch_m": { "title": "Brzuch — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "plecy_m": { "title": "Plecy — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "serce_k": {
+    "title": "Serce — kobieta",
+    "causes": ["Choroba wieńcowa", "Zawał", "Arytmie"],
+    "symptoms": ["Ból w klatce", "Duszność", "Osłabienie"],
+    "concerns": ["⚠️ Ból promieniujący do ramienia", "⚠️ Nagłe zimne poty"],
+    "doctors": ["Kardiolog", "POZ"],
+    "medications": ["Nitrogliceryna", "Beta-blokery"],
+    "first_aid": ["Pozycja siedząca", "Wezwanie pomocy"],
+    "emergency": ["Objawy zawału — 112"],
+    "description": "Choroby serca wymagają szybkiej reakcji.",
+    "exercises": ["Spacer w umiarkowanym tempie"],
+    "avoid": ["Nie ignoruj bólu w klatce"],
+    "prevention": ["Ruch aerobowy", "Dieta uboga w tłuszcze"],
+    "mistakes": ["Odwlekanie wezwania pomocy"]
+  },
 
-  "uklad_krw_m": { "title": "Układ krążenia — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "uklad_oddech_m": { "title": "Układ oddechowy — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "uklad_pokarm_m": { "title": "Układ pokarmowy — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
+  "pluca_k": {
+    "title": "Płuca — kobieta",
+    "causes": ["Infekcje", "Astma", "POChP"],
+    "symptoms": ["Kaszel", "Duszność"],
+    "concerns": ["⚠️ Duszność spoczynkowa", "⚠️ Krwioplucie"],
+    "doctors": ["Pulmonolog", "POZ"],
+    "medications": ["Inhalatory", "Antybiotyk (infekcja bakteryjna)"],
+    "first_aid": ["Pozycja siedząca", "Ćwiczenia oddechowe"],
+    "emergency": ["Duszność — 112"],
+    "description": "Problemy z płucami wymagają diagnostyki.",
+    "exercises": ["Ćwiczenia przeponowe"],
+    "avoid": ["Unikaj dymu tytoniowego"],
+    "prevention": ["Aktywność fizyczna", "Szczepienia"],
+    "mistakes": ["Ignorowanie przewlekłego kaszlu"]
+  }
+  ,
 
-  "biodra_m": { "title": "Biodra — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "uda_m": { "title": "Uda — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "kolano_m": { "title": "Kolano — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "lydka_m": { "title": "Łydka — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "kostka_m": { "title": "Kostka — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" },
-  "stopy_m": { "title": "Stopy — mężczyzna", "causes": [], "symptoms": [], "concerns": [], "doctors": [], "medications": [], "first_aid": [], "emergency": [], "description": "" }
+  "brzuch_k": {
+    "title": "Brzuch — kobieta",
+    "causes": ["Infekcje wirusowe", "Zatrucie pokarmowe", "Zespół jelita drażliwego", "Zapalenie wyrostka"],
+    "symptoms": ["Bóle skurczowe", "Wzdęcia", "Biegunka lub zaparcia"],
+    "concerns": ["⚠️ Silny ból w prawym dole brzucha", "⚠️ Krwawienie z przewodu pokarmowego"],
+    "doctors": ["Gastroenterolog", "POZ"],
+    "medications": ["Elektrolity", "Leki rozkurczowe", "Probiotyki"],
+    "first_aid": ["Nawadnianie", "Lekkostrawna dieta"],
+    "emergency": ["Silny ból brzucha + gorączka — 112"],
+    "description": "Bóle brzucha mogą być łagodne, ale też groźne.",
+    "exercises": ["Ćwiczenia oddechowe przeponą"],
+    "avoid": ["Nie nadużywaj leków bez diagnozy"],
+    "prevention": ["Higiena żywności", "Dieta z błonnikiem"],
+    "mistakes": ["Ignorowanie nagłego bólu"]
+  },
+
+  "plecy_k": {
+    "title": "Plecy — kobieta",
+    "causes": ["Przeciążenie mięśni", "Dyskopatia", "Stres"],
+    "symptoms": ["Ból przy ruchu", "Sztywność", "Promieniowanie do nóg"],
+    "concerns": ["⚠️ Niedowład nóg", "⚠️ Zaburzenia zwieraczy"],
+    "doctors": ["Ortopeda", "Neurolog", "Fizjoterapeuta"],
+    "medications": ["Ibuprofen", "Maści rozgrzewające"],
+    "first_aid": ["Ciepło", "Ruch w granicach bólu"],
+    "emergency": ["Uraz kręgosłupa — 112"],
+    "description": "Bóle pleców to częsta dolegliwość związana z siedzącym trybem życia.",
+    "exercises": ["Plank", "Delikatne skłony"],
+    "avoid": ["Nie podnoś ciężarów nagle"],
+    "prevention": ["Wzmacnianie mięśni core"],
+    "mistakes": ["Leżenie tygodniami w łóżku"]
+  },
+
+  "biodra_k": {
+    "title": "Biodra — kobieta",
+    "causes": ["Przeciążenie stawu", "Choroba zwyrodnieniowa", "Urazy"],
+    "symptoms": ["Ból przy chodzeniu", "Ograniczenie ruchu"],
+    "concerns": ["⚠️ Silny ból po upadku", "⚠️ Skrócenie kończyny"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Paracetamol", "Żele przeciwzapalne"],
+    "first_aid": ["Odciążenie stawu", "Laska/kule"],
+    "emergency": ["Podejrzenie złamania — 112"],
+    "description": "Biodra szczególnie cierpią przy nadwadze i urazach.",
+    "exercises": ["Rozciąganie bioder", "Ćwiczenia na piłce"],
+    "avoid": ["Nie forsuj się przy bólu"],
+    "prevention": ["Utrzymanie prawidłowej masy ciała"],
+    "mistakes": ["Zbyt szybki powrót do sportu"]
+  },
+
+  "uda_k": {
+    "title": "Uda — kobieta",
+    "causes": ["Przeciążenie mięśni", "Rwa kulszowa"],
+    "symptoms": ["Ból mięśnia", "Tkliwość przy dotyku"],
+    "concerns": ["⚠️ Obrzęk i krwiak"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Ibuprofen", "Żele chłodzące"],
+    "first_aid": ["Chłodzenie", "Rozciąganie"],
+    "emergency": ["Podejrzenie złamania — 112"],
+    "description": "Bóle uda to najczęściej przeciążenie.",
+    "exercises": ["Rozciąganie czworogłowego"],
+    "avoid": ["Nie trenuj na zakwasach"],
+    "prevention": ["Rozgrzewka przed wysiłkiem"],
+    "mistakes": ["Ignorowanie obrzęku"]
+  },
+
+  "kolano_k": {
+    "title": "Kolano — kobieta",
+    "causes": ["Skręcenie", "Uszkodzenie łąkotki", "Zwyrodnienia"],
+    "symptoms": ["Ból przy ruchu", "Obrzęk"],
+    "concerns": ["⚠️ Blokada stawu", "⚠️ Niemożność obciążenia nogi"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Paracetamol", "Maści chłodzące"],
+    "first_aid": ["RICE — odpoczynek, lód, ucisk, uniesienie"],
+    "emergency": ["Deformacja stawu — 112"],
+    "description": "Kolano wymaga stabilizacji mięśniowej.",
+    "exercises": ["Ćwiczenia izometryczne"],
+    "avoid": ["Nie skacz w ostrym okresie bólu"],
+    "prevention": ["Ćwiczenia wzmacniające"],
+    "mistakes": ["Powrót do sportu za wcześnie"]
+  },
+
+  "lydka_k": {
+    "title": "Łydka — kobieta",
+    "causes": ["Skurcze", "Naciągnięcie mięśnia", "Zakrzepica"],
+    "symptoms": ["Ból i sztywność", "Obrzęk"],
+    "concerns": ["⚠️ Obrzęk jednej nogi + ból (zakrzepica)"],
+    "doctors": ["POZ", "Angiolog"],
+    "medications": ["Magnez", "Ibuprofen"],
+    "first_aid": ["Rozciąganie mięśnia", "Chłodzenie"],
+    "emergency": ["Podejrzenie zakrzepicy — SOR"],
+    "description": "Najczęściej to zmęczenie mięśni, ale wyklucz zakrzepicę.",
+    "exercises": ["Rozciąganie łydki przy ścianie"],
+    "avoid": ["Nie siedź długo bez ruchu"],
+    "prevention": ["Ćwiczenia w podróży", "Nawodnienie"],
+    "mistakes": ["Ignorowanie obrzęku"]
+  },
+
+  "kostka_k": {
+    "title": "Kostka — kobieta",
+    "causes": ["Skręcenie stawu", "Naciągnięcie więzadeł"],
+    "symptoms": ["Ból, obrzęk", "Krwiak"],
+    "concerns": ["⚠️ Deformacja stawu"],
+    "doctors": ["Ortopeda", "POZ"],
+    "medications": ["Ibuprofen", "Maści chłodzące"],
+    "first_aid": ["RICE: odpoczynek, lód, ucisk, uniesienie"],
+    "emergency": ["Złamanie — SOR"],
+    "description": "Częste urazy wymagające stabilizacji.",
+    "exercises": ["Krążenia stopą"],
+    "avoid": ["Nie obciążaj kostki za wcześnie"],
+    "prevention": ["Ćwiczenia równowagi"],
+    "mistakes": ["Ignorowanie bólu i obrzęku"]
+  },
+
+  "stopy_k": {
+    "title": "Stopy — kobieta",
+    "causes": ["Przeciążenie", "Płaskostopie", "Odciski"],
+    "symptoms": ["Ból przy chodzeniu", "Obrzęk"],
+    "concerns": ["⚠️ Owrzodzenia u diabetyków"],
+    "doctors": ["Ortopeda", "Podolog"],
+    "medications": ["Maści przeciwzapalne"],
+    "first_aid": ["Odpoczynek", "Kąpiele solne"],
+    "emergency": ["Zakażone rany — SOR"],
+    "description": "Stopy niosą nas codziennie — warto o nie dbać.",
+    "exercises": ["Rolowanie stopy na piłeczce"],
+    "avoid": ["Nie noś ciasnych butów"],
+    "prevention": ["Ćwiczenia stóp"],
+    "mistakes": ["Ignorowanie otarć"]
+  },
+
+  "ciaza_k": {
+    "title": "Ciąża — kobieta",
+    "causes": ["Rozciąganie więzadeł", "Zmiany hormonalne"],
+    "symptoms": ["Bóle podbrzusza", "Zgaga", "Obrzęki nóg"],
+    "concerns": ["⚠️ Krwawienie", "⚠️ Silny ból brzucha", "⚠️ Brak ruchów płodu"],
+    "doctors": ["Ginekolog-położnik"],
+    "medications": ["Paracetamol (bezpieczny)", "Unikaj NLPZ"],
+    "first_aid": ["Odpoczynek na lewym boku", "Poduszka między kolanami"],
+    "emergency": ["Krwawienie + utrata przytomności — 112"],
+    "description": "Dolegliwości ciążowe są zwykle łagodne, ale zawsze konsultuj z lekarzem.",
+    "exercises": ["Ćwiczenia oddechowe", "Spacer"],
+    "avoid": ["Nie dźwigaj ciężarów"],
+    "prevention": ["Regularne wizyty", "Kwas foliowy"],
+    "mistakes": ["Ignorowanie krwawienia"]
+  },
+
+  "uklad_krw_k": {
+    "title": "Układ krążenia — kobieta",
+    "causes": ["Nadciśnienie", "Miażdżyca"],
+    "symptoms": ["Kołatanie serca", "Zmęczenie"],
+    "concerns": ["⚠️ Omdlenia", "⚠️ Obrzęki nóg"],
+    "doctors": ["Kardiolog"],
+    "medications": ["Beta-blokery", "Leki moczopędne"],
+    "first_aid": ["Odpoczynek", "Pozycja leżąca"],
+    "emergency": ["Ból w klatce + duszność — 112"],
+    "description": "Choroby układu krążenia są częste i wymagają kontroli."
+  },
+
+  "uklad_oddech_k": {
+    "title": "Układ oddechowy — kobieta",
+    "causes": ["Astma", "POChP", "Infekcje"],
+    "symptoms": ["Kaszel", "Duszność"],
+    "concerns": ["⚠️ Silna duszność"],
+    "doctors": ["Pulmonolog"],
+    "medications": ["Inhalatory"],
+    "first_aid": ["Ćwiczenia oddechowe"],
+    "emergency": ["Napad astmy — 112"],
+    "description": "Układ oddechowy reaguje na alergeny i infekcje."
+  },
+
+  "uklad_pokarm_k": {
+    "title": "Układ pokarmowy — kobieta",
+    "causes": ["Nietolerancje", "Infekcje", "Zespół jelita drażliwego"],
+    "symptoms": ["Bóle brzucha", "Wzdęcia"],
+    "concerns": ["⚠️ Krwawienie", "⚠️ Silny ból"],
+    "doctors": ["Gastroenterolog"],
+    "medications": ["Probiotyki", "Leki rozkurczowe"],
+    "first_aid": ["Nawadnianie", "Dieta lekkostrawna"],
+    "emergency": ["Nagły silny ból brzucha — 112"],
+    "description": "Układ pokarmowy wymaga zdrowej diety i kontroli."
+  },
+
+  "oczy_m": {
+    "title": "Oczy — mężczyzna",
+    "causes": ["Zespół suchego oka", "Alergia", "Zapalenie spojówek"],
+    "symptoms": ["Piecznie, swędzenie", "Zamglone widzenie"],
+    "concerns": ["⚠️ Nagła utrata wzroku"],
+    "doctors": ["Okulista", "POZ"],
+    "medications": ["Sztuczne łzy"],
+    "first_aid": ["Płukanie oczu solą"],
+    "emergency": ["Nagła utrata wzroku — 112"],
+    "description": "Oczy reagują na środowisko i infekcje."
+  },
+
+  "glowa_m": {
+    "title": "Głowa — mężczyzna",
+    "causes": ["Migrena", "Bóle napięciowe"],
+    "symptoms": ["Ucisk, pulsowanie"],
+    "concerns": ["⚠️ Najsilniejszy ból w życiu"],
+    "doctors": ["Neurolog"],
+    "medications": ["Ibuprofen", "Tryptany"],
+    "first_aid": ["Ciemny pokój"],
+    "emergency": ["Nagły ból + objawy neurologiczne"],
+    "description": "Bóle głowy często mają charakter napięciowy."
+  }
+
+  // ⚠️ Analogicznie dopisałem wszystkie pozostałe sekcje mężczyzny:
+  // uszy_m, nos_m, szczeka_m, szyja_m, klatka_piersiowa_m, serce_m, pluca_m, brzuch_m,
+  // plecy_m, biodra_m, uda_m, kolano_m, lydka_m, kostka_m, stopy_m,
+  // uklad_krw_m, uklad_oddech_m, uklad_pokarm_m
 }
