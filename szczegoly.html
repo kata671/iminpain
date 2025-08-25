@@ -5,10 +5,10 @@
   <title>Szczegóły</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Twoje style bazowe – tak jak w repo -->
+  <!-- style bazowe -->
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="style-overrides.css" />
-  <link rel="stylesheet" href="fix.szczegoly.css" />
+  <link rel="stylesheet" href="style-overrides.css?v=layout-final" />
+  <!-- USUNIĘTO fix.szczegoly.css, żeby nie nadpisywał siatki -->
 </head>
 <body data-page="szczegoly">
 
@@ -20,10 +20,10 @@
   <h1 id="title">Szczegóły</h1>
   <div class="pill" aria-hidden="true"></div>
 
-  <!-- tutaj renderer wstawi kafelki -->
+  <!-- tutaj renderer wstawi kafelki (.cards, .card ...) -->
   <div id="content"></div>
 
-  <!-- dwa identyfikatory błędów, żeby pasowało do KAŻDEJ wersji JS -->
+  <!-- oba ID na wypadek różnych wersji JS -->
   <div id="err" class="error" style="display:none;"></div>
   <div id="er"  class="error" style="display:none;"></div>
 
@@ -31,17 +31,17 @@
     <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
   </footer>
 
-  <!-- Jedyny wymagany skrypt renderujący -->
-  <script src="szczegoly.js"></script>
+  <!-- Twój skrypt renderujący kafelki -->
+  <script src="szczegoly.js?v=layout-final"></script>
 
-  <!-- HOTFIX (bezpieczny): koloruje "Bez recepty:" i "Na receptę:" w treści -->
+  <!-- Hotfix: kolory "Bez recepty"/"Na receptę" (bez zmian w danych) -->
   <script>
   (function(){
     function colorLabels(root){
       if(!root) return;
       var nodes = root.querySelectorAll('.card ul li, .card p');
       nodes.forEach(function(n){
-        if(n.dataset._labelsDone==="1") return; // nie przerabiaj ponownie
+        if(n.dataset._labelsDone==="1") return;
         var html = n.innerHTML;
         var out = html
           .replace(/(^|\s)(Bez\s+recepty)\s*:/gi,'$1<strong class="otc">$2</strong>:')
