@@ -342,3 +342,11 @@ body[data-page="szczegoly"] .card.emergency{
   width: 320px;
   height: 360px;
 }
+/* Spacery – wypełniacze siatki, by domknąć rzędy 3× */
+body[data-page="szczegoly"] .card.spacer{
+  visibility: hidden;       /* całkiem niewidoczne, ale zajmują miejsce */
+  pointer-events: none;     /* brak reakcji */
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+}
