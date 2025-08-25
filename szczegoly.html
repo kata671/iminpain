@@ -1,73 +1,84 @@
 <!DOCTYPE html>
-<html lang="pl" data-page="szczegoly">
+<html lang="pl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title id="title">Szczegóły</title>
+
+  <!-- Twoje style globalne (zostawiamy jak było) -->
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="style-overrides.css?v=9">
+  <link rel="stylesheet" href="style-overrides.css?v=10">
 
   <style>
-  /* Układ 3× i równe rzędy */
-  body[data-page="szczegoly"] .cards{
-    display:grid;
-    grid-template-columns: repeat(3, 320px);
-    justify-content:center;
-    gap:22px;
-    max-width:1100px;
-    margin:22px auto 32px;
-    padding:0 12px;
-  }
-  @media (max-width:920px){
-    body[data-page="szczegoly"] .cards{ grid-template-columns:repeat(2,320px); }
-  }
-  @media (max-width:560px){
-    body[data-page="szczegoly"] .cards{ grid-template-columns:1fr; }
-  }
+    /* Podstawowy layout kart (lekki, nieagresywny) – dociskamy dopiero w „nuklearnym” fixie */
+    body[data-page="szczegoly"] .cards{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(320px, 1fr));
+      justify-content:center;
+      gap:22px;
+      max-width:1120px;
+      margin:24px auto 40px;
+      padding:0 12px;
+    }
+    @media (max-width:920px){ body[data-page="szczegoly"] .cards{ grid-template-columns:repeat(2, minmax(300px,1fr)); } }
+    @media (max-width:560px){ body[data-page="szczegoly"] .cards{ grid-template-columns:1fr; } }
 
-  body[data-page="szczegoly"] .card{
-    width:320px; height:360px;
-    display:flex; flex-direction:column;
-    box-sizing:border-box;
-  }
-  body[data-page="szczegoly"] .card .card-caption{
-    display:flex; align-items:center; justify-content:center;
-    min-height:52px; padding:8px 10px;
-    text-align:center; font-weight:700;
-    border-bottom:1px solid rgba(255,255,255,.08);
-  }
-  body[data-page="szczegoly"] .card ul,
-  body[data-page="szczegoly"] .card p{
-    margin:12px 12px 14px; padding:0;
-    flex:1; overflow:auto;
-  }
-  body[data-page="szczegoly"] .card li{ list-style:disc inside; margin:6px 0; }
+    body[data-page="szczegoly"] .card{
+      display:flex; flex-direction:column;
+      box-sizing:border-box;
+      min-height:340px;
+    }
+    body[data-page="szczegoly"] .card .card-caption{
+      min-height:52px; display:flex; align-items:center; justify-content:center;
+      text-align:center; font-weight:700;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      padding:8px 10px;
+    }
+    body[data-page="szczegoly"] .card ul,
+    body[data-page="szczegoly"] .card p{
+      margin:12px 12px 14px; padding:0; flex:1; overflow:auto;
+    }
+    body[data-page="szczegoly"] .card li{ list-style:disc inside; margin:6px 0; }
 
-  /* Czerwony kafel */
-  body[data-page="szczegoly"] .card.emergency{
-    border:2px solid #ff4d4d;
-    background:rgba(120,20,20,.88);
-    color:#fff;
-    font-weight:700;
-  }
-  body[data-page="szczegoly"] .card.emergency:hover{
-    box-shadow:0 0 28px rgba(255,30,30,.9);
-  }
+    /* Czerwony kafel (emergency) */
+    body[data-page="szczegoly"] .card.emergency{
+      border:2px solid #ff4d4d;
+      background:rgba(120,20,20,.88);
+      color:#fff; font-weight:700;
+    }
+    body[data-page="szczegoly"] .card.emergency:hover{
+      box-shadow:0 0 28px rgba(255,30,30,.9);
+    }
 
-  /* Spacer – niewidoczny wypełniacz */
-  body[data-page="szczegoly"] .card.spacer{
-    visibility:hidden;
-    pointer-events:none;
-    background:transparent;
-    border:none;
-    box-shadow:none;
-  }
+    /* Spacer – niewidoczny wypełniacz (żeby domknąć rzędy po 3) */
+    body[data-page="szczegoly"] .card.spacer{
+      visibility:hidden; pointer-events:none;
+      background:transparent; border:0; box-shadow:none;
+      min-height:340px;
+    }
+
+    /* Mały pasek navi na górze */
+    .nav-links{ max-width:1120px; margin:10px auto 0; padding:0 12px; }
+    .nav-links a{ color:#66c; text-decoration:none; margin-right:12px; }
   </style>
 </head>
-<body>
-  <nav><a id="sectionBack" href="index.html">← Powrót</a></nav>
-  <main id="content"><p>Ładowanie…</p></main>
+<body data-page="szczegoly">
+  <div class="nav-links">
+    <a href="index.html">← Strona główna</a>
+    <a id="sectionBack" href="index.html">← Wróć do wyboru sekcji</a>
+  </div>
 
+  <h1 id="title" style="text-align:center; margin:12px 0 6px;">Szczegóły</h1>
+
+  <main id="content" style="min-height:320px; display:flex; justify-content:center; align-items:flex-start; padding:8px;">
+    <p>Ładowanie…</p>
+  </main>
+
+  <footer style="margin:40px 0; text-align:center; opacity:.8;">
+    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  </footer>
+
+  <!-- ====== GŁÓWNY SKRYPT RENDERUJĄCY ====== -->
   <script>
   (function () {
     function uniq(arr){ return Array.from(new Set((arr||[]).filter(Boolean))); }
@@ -143,6 +154,7 @@
       if(isM) return mapM[id]||"mezczyzna.html";
       return "index.html";
     }
+
     async function render(){
       const params=new URLSearchParams(location.search);
       const id=params.get("id");
@@ -174,7 +186,7 @@
         if(merged.prevention?.length)     tiles.push(card("✅ Profilaktyka", merged.prevention));
         if(merged.mistakes?.length)       tiles.push(card("⚠️ Najczęstsze błędy", merged.mistakes));
 
-        // czerwony kafel zawsze na pozycji 4
+        // czerwony kafel zawsze na pozycji 4 (index 3)
         const em=emergencyCard(merged.emergency);
         const targetIndex=Math.min(3, tiles.length);
         tiles.splice(targetIndex,0,em);
@@ -183,12 +195,9 @@
           tiles.push(card("ℹ️ Dodatkowe informacje", merged.description));
         }
 
-        // spacery do pełnego rzędu
-        const remainder=tiles.length%3;
-        if(remainder!==0){
-          const toAdd=3-remainder;
-          for(let i=0;i<toAdd;i++) tiles.push(spacerCard());
-        }
+        // dopełnij do pełnych rzędów po 3
+        const rest = tiles.length % 3;
+        if(rest!==0){ for(let i=0;i<3-rest;i++) tiles.push(spacerCard()); }
 
         const grid=document.createElement("section");
         grid.className="cards";
@@ -201,9 +210,75 @@
         content.innerHTML=`<p class="error">Błąd wczytywania danych: ${e.message}</p>`;
       }
     }
+
     if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",render);
     else render();
   })();
   </script>
+  <!-- ====== /GŁÓWNY SKRYPT ====== -->
+
+  <!-- ====== NUKLEARNY AFTERBURNER (układ 3×, czerwony #4, spacery) ====== -->
+  <style id="force-grid-fix">
+    :where(.cards){
+      display:grid !important;
+      grid-template-columns: repeat(3, minmax(320px, 1fr)) !important;
+      justify-content: center !important;
+      gap: 22px !important;
+      max-width: 1120px !important;
+      margin: 24px auto 40px !important;
+      padding: 0 12px !important;
+    }
+    :where(.cards) > :where(.card){ min-height:340px !important; box-sizing:border-box !important; }
+    :where(.cards) > :where(.card.spacer){
+      visibility:hidden !important; pointer-events:none !important;
+      background:transparent !important; border:0 !important; box-shadow:none !important;
+      min-height:340px !important;
+    }
+  </style>
+
+  <script>
+  (function(){
+    function applyFix(container){
+      if(!container) return;
+      // usuń stare spacery
+      container.querySelectorAll(':scope > .card.spacer').forEach(n=>n.remove());
+
+      // przenieś czerwony kafel na pozycję 4 (index 3)
+      const items = Array.from(container.querySelectorAll(':scope > .card:not(.spacer)'));
+      const em = items.find(el => el.classList.contains('emergency'));
+      if (em) {
+        const targetIndex = Math.min(3, items.length);
+        if (items[targetIndex] !== em) {
+          container.insertBefore(em, items[targetIndex] || null);
+        }
+      }
+
+      // dopełnij do wielokrotności 3
+      const count = container.querySelectorAll(':scope > .card:not(.spacer)').length;
+      const rest = count % 3;
+      if (rest !== 0) {
+        const toAdd = 3 - rest;
+        for (let i = 0; i < toAdd; i++) {
+          const s = document.createElement('article');
+          s.className = 'card spacer';
+          s.setAttribute('aria-hidden','true');
+          container.appendChild(s);
+        }
+      }
+    }
+
+    function runWhenReady(){
+      const grid = document.querySelector('.cards');
+      if (grid) { applyFix(grid); return true; }
+      return false;
+    }
+
+    if (runWhenReady()) return;
+    document.addEventListener('DOMContentLoaded', runWhenReady);
+    const mo = new MutationObserver(() => { if (runWhenReady()) mo.disconnect(); });
+    mo.observe(document.documentElement, { childList:true, subtree:true });
+  })();
+  </script>
+  <!-- ====== /NUKLEARNY AFTERBURNER ====== -->
 </body>
 </html>
