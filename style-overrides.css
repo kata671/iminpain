@@ -158,3 +158,68 @@ body[data-page="szczegoly"] #content .cards .card.emergency:hover {
   font-weight:700;
 }
 .card.emergency:hover{ box-shadow:0 0 28px rgba(255, 30, 30, .92); }
+/* --- USZTYWNIENIE SIATKI I „GĘSTE” UKŁADANIE --- */
+.cards{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 20px auto 28px;
+  padding: 0 12px;
+
+  /* klucz: pozwól późniejszym kaflom wskakiwać w wolne dziury */
+  grid-auto-flow: row dense;
+
+  /* rozciągaj pozycje w wierszu do tej samej wysokości */
+  align-items: stretch;
+  justify-items: stretch;
+}
+
+/* 2 kolumny na tabletach */
+@media (max-width: 920px){
+  .cards{ grid-template-columns: repeat(2, minmax(240px, 1fr)); }
+}
+
+/* 1 kolumna na telefonach */
+@media (max-width: 560px){
+  .cards{ grid-template-columns: 1fr; }
+}
+
+/* --- WNĘTRZE KAFELKA: FLEX, ŻEBY TREŚĆ UKŁADAŁA SIĘ RÓWNO --- */
+.card{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;           /* brak „pompowania” wymiarów */
+}
+
+/* nagłówek karty – ta sama wysokość, ładne centrowanie */
+.card .card-caption{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;                 /* identyczny top we wszystkich */
+  font-weight: 700;
+  text-align: center;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+/* listy i akapity – ujednolicone marginesy */
+.card ul, .card p{
+  margin: 12px 12px 14px;
+  padding: 0;
+}
+.card li{
+  margin: 6px 0;
+  list-style: disc inside;
+}
+
+/* czerwony kafel – zostaw jak jest, tylko niech też się rozciąga */
+.card.emergency{
+  display: flex;
+  flex-direction: column;
+}
+
+/* (opcjonalnie) wyrównaj wysokość wierszy jeszcze mocniej */
+.cards > .card{ align-self: stretch; }
