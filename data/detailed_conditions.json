@@ -1,92 +1,454 @@
 {
   "oczy_k": {
     "title": "Oczy — kobieta",
-    "causes": ["Zespół suchego oka", "Alergia sezonowa", "Zapalenie spojówek"],
-    "symptoms": ["Piecznie, swędzenie", "Łzawienie albo suchość", "Zamglone widzenie"],
-    "concerns": ["⚠️ Nagła utrata wzroku", "⚠️ Silny ból oka"],
-    "doctors": ["Okulista", "Lekarz rodzinny (POZ)"],
+    "causes": ["Zespół suchego oka", "Alergia sezonowa"],
+    "symptoms": ["Pieczenie i swędzenie", "Zamglone widzenie"],
+    "concerns": ["⚠️ Nagła utrata widzenia", "⚠️ Silny ból oka po urazie"],
+    "doctors": ["Okulista", "POZ"],
     "medications": ["Sztuczne łzy", "Krople antyhistaminowe"],
-    "first_aid": ["Płukanie solą fizjologiczną", "Odpoczynek od ekranu"],
-    "emergency": ["Nagła utrata wzroku — 112"],
-    "description": "Podrażnienia oczu zwykle są łagodne, ale mogą wymagać konsultacji.",
-    "exercises": ["Ćwiczenia mrugania", "Reguła 20-20-20"],
-    "avoid": ["Nie pocieraj oczu", "Unikaj soczewek w czasie infekcji"],
-    "prevention": ["Nawilżaj powietrze", "Przerwy od ekranu"],
-    "mistakes": ["Samodzielne krople z antybiotykiem", "Noszenie soczewek mimo bólu"]
+    "first_aid": ["Płukanie solą fizjologiczną", "Odpoczynek od ekranu (20-20-20)"],
+    "emergency": ["Nagła utrata wzroku — 112/SOR"],
+    "description": "Najczęstsze to podrażnienie i suchość związana z ekranami."
   },
-
   "uszy_k": {
     "title": "Uszy — kobieta",
-    "causes": ["Zapalenie ucha", "Korek woskowinowy", "Barotrauma (lot, nurkowanie)"],
-    "symptoms": ["Ból ucha, uczucie zatkania", "Szumy", "Wycieki"],
-    "concerns": ["⚠️ Silny ból z gorączką", "⚠️ Zawroty głowy i wymioty"],
+    "causes": ["Zapalenie ucha", "Korek woskowinowy"],
+    "symptoms": ["Ból ucha", "Uczucie zatkania"],
+    "concerns": ["⚠️ Wysoka gorączka z silnym bólem", "⚠️ Zawroty głowy i wymioty"],
     "doctors": ["Laryngolog", "POZ"],
-    "medications": ["Paracetamol", "Krople do uszu (po badaniu)"],
-    "first_aid": ["Ciepły okład", "Nie wkładaj patyczków"],
-    "emergency": ["Silny ból z gorączką — pilna pomoc"],
-    "description": "Większość infekcji uszu ustępuje samoistnie."
+    "medications": ["Paracetamol/ibuprofen", "Krople do uszu (po badaniu)"],
+    "first_aid": ["Ciepły okład", "Nie używaj patyczków"],
+    "emergency": ["Silny ból + gorączka — pilna pomoc"],
+    "description": "Większość infekcji jest samoograniczająca, ale wymaga obserwacji."
   },
-
   "nos_k": {
     "title": "Nos — kobieta",
-    "causes": ["Infekcja", "Alergia", "Zapalenie zatok"],
-    "symptoms": ["Katar, niedrożność", "Ból zatok przy pochylaniu"],
-    "concerns": ["⚠️ Krwawienie >20 minut", "⚠️ Obrzęk twarzy z gorączką"],
+    "causes": ["Infekcja wirusowa", "Alergiczny nieżyt nosa"],
+    "symptoms": ["Katar i niedrożność", "Ból zatok przy pochylaniu"],
+    "concerns": ["⚠️ Krwawienie >20 min", "⚠️ Obrzęk twarzy z gorączką"],
     "doctors": ["Laryngolog", "POZ"],
-    "medications": ["Irygacje solą", "Krople obkurczające (krótko)"],
+    "medications": ["Irygacje solą", "Krople obkurczające krótko"],
     "first_aid": ["Nawilżanie powietrza", "Inhalacje z soli"],
-    "emergency": ["Maswny krwotok po urazie"],
-    "description": "Katar wirusowy trwa zwykle 7–10 dni."
+    "emergency": ["Maswny krwotok po urazie — 112"],
+    "description": "Katar zwykle mija w 7–10 dni; unikaj nadużywania kropli."
   },
-
-  "glowa_k": {
-    "title": "Głowa — kobieta",
-    "causes": ["Bóle napięciowe", "Migrena", "Odwodnienie"],
-    "symptoms": ["Ucisk, pulsowanie", "Światłowstręt", "Nudności"],
-    "concerns": ["⚠️ Najsilniejszy ból w życiu", "⚠️ Objawy neurologiczne"],
-    "doctors": ["Neurolog", "POZ"],
-    "medications": ["Ibuprofen", "Tryptany"],
-    "first_aid": ["Ciemne, ciche pomieszczenie", "Chłodny okład"],
-    "emergency": ["Nagły ból + objawy neurologiczne"],
-    "description": "Prowadzenie dzienniczka bólu pomaga w rozpoznaniu."
+  "szczeka_k": {
+    "title": "Szczęka / SSŻ — kobieta",
+    "causes": ["Bruksizm", "Przeciążenie stawu"],
+    "symptoms": ["Trzaski w stawie", "Ból przy żuciu"],
+    "concerns": ["⚠️ Zablokowanie szczęki", "⚠️ Silny, jednostronny ból + obrzęk"],
+    "doctors": ["Stomatolog", "Fizjoterapeuta"],
+    "medications": ["NLPZ krótkotrwale", "Szyna relaksacyjna (po zaleceniu)"],
+    "first_aid": ["Miękka dieta", "Ciepłe okłady i rozluźnianie"],
+    "emergency": ["Nagłe unieruchomienie szczęki — SOR"],
+    "description": "Zaburzenia SSŻ zwykle leczy się zachowawczo i fizjoterapią."
   },
-
   "szyja_k": {
     "title": "Szyja — kobieta",
-    "causes": ["Napięcie mięśni", "Zwyrodnienia", "Uraz (whiplash)"],
-    "symptoms": ["Ból karku", "Zawroty głowy"],
-    "concerns": ["⚠️ Sztywność karku z gorączką", "⚠️ Niedowład kończyn"],
-    "doctors": ["Ortopeda", "Neurolog", "Fizjoterapeuta"],
-    "medications": ["Paracetamol", "Miorelaksanty"],
-    "first_aid": ["Rozciąganie", "Ciepły okład"],
-    "emergency": ["Uraz szyi z objawami neurologicznymi — 112"],
-    "description": "Bóle szyi zwykle mają charakter przeciążeniowy."
+    "causes": ["Napięcie mięśni", "Praca przy komputerze"],
+    "symptoms": ["Sztywność karku", "Ból promieniujący do barku"],
+    "concerns": ["⚠️ Gorączka + sztywność karku", "⚠️ Drętwienie lub niedowład"],
+    "doctors": ["Ortopeda", "Neurolog"],
+    "medications": ["Paracetamol/ibuprofen", "Miorelaksant (lekarz)"],
+    "first_aid": ["Delikatne rozciąganie", "Ciepło na mięśnie"],
+    "emergency": ["Uraz szyi + objawy neurologiczne — 112"],
+    "description": "Najczęściej przeciążenie postawne; ważna ergonomia."
   },
-
-  "klatka_piersiowa_k": {
-    "title": "Klatka piersiowa — kobieta",
-    "causes": ["Napięcie mięśni", "Refluks", "Choroby serca"],
-    "symptoms": ["Ból uciskowy lub kłujący", "Nasilenie przy oddychaniu"],
-    "concerns": ["⚠️ Ból z dusznością", "⚠️ Zimne poty"],
-    "doctors": ["Kardiolog", "POZ"],
-    "medications": ["Paracetamol", "Leki na refluks"],
-    "first_aid": ["Odpoczynek", "Zmiana pozycji"],
-    "emergency": ["Silny uciskowy ból — 112"],
-    "description": "Ból klatki może pochodzić z mięśni, ale też serca."
+  "glowa_k": {
+    "title": "Głowa — kobieta",
+    "causes": ["Ból napięciowy", "Migrena"],
+    "symptoms": ["Ucisk lub pulsowanie", "Światłowstręt, nudności"],
+    "concerns": ["⚠️ Najsilniejszy ból w życiu", "⚠️ Objawy neurologiczne"],
+    "doctors": ["Neurolog", "POZ"],
+    "medications": ["Paracetamol/ibuprofen", "Tryptan (migrena)"],
+    "first_aid": ["Ciemne, ciche pomieszczenie", "Nawodnienie"],
+    "emergency": ["Nagły ból + deficyty — 112"],
+    "description": "Dzienniczek bólu pomaga w identyfikacji wyzwalaczy."
   },
-
   "serce_k": {
     "title": "Serce — kobieta",
-    "causes": ["Choroba wieńcowa", "Zawał", "Arytmie"],
-    "symptoms": ["Ból w klatce", "Duszność", "Osłabienie"],
-    "concerns": ["⚠️ Ból promieniujący do ramienia", "⚠️ Nagłe zimne poty"],
+    "causes": ["Choroba wieńcowa", "Arytmia"],
+    "symptoms": ["Ucisk w klatce", "Duszność i osłabienie"],
+    "concerns": ["⚠️ Promieniowanie do lewej ręki/szczęki", "⚠️ Zimne poty, lęk"],
     "doctors": ["Kardiolog", "POZ"],
-    "medications": ["Nitrogliceryna", "Beta-blokery"],
-    "first_aid": ["Pozycja siedząca", "Wezwanie pomocy"],
-    "emergency": ["Objawy zawału — 112"],
-    "description": "Choroby serca wymagają szybkiej reakcji."
-  }
+    "medications": ["Nitrogliceryna (lekarz)", "Beta-blokery (lekarz)"],
+    "first_aid": ["Spoczynek", "Wezwanie pomocy"],
+    "emergency": ["Podejrzenie zawału — 112/SOR"],
+    "description": "Ból sercowy bywa nietypowy u kobiet — nie bagatelizuj."
+  },
+  "pluca_k": {
+    "title": "Płuca — kobieta",
+    "causes": ["Infekcja dróg oddechowych", "Astma"],
+    "symptoms": ["Kaszel", "Duszność i świsty"],
+    "concerns": ["⚠️ Spoczynkowa duszność", "⚠️ Krwioplucie"],
+    "doctors": ["Pulmonolog", "POZ"],
+    "medications": ["Inhalatory (lekarz)", "Mukolityk przy zaleganiu"],
+    "first_aid": ["Pozycja siedząca", "Ćwiczenia oddechowe"],
+    "emergency": ["Nasilająca się duszność — 112"],
+    "description": "Przewlekły kaszel >8 tyg. wymaga diagnostyki."
+  },
+  "klatka_piersiowa_k": {
+    "title": "Klatka piersiowa — kobieta",
+    "causes": ["Napięcie mięśni", "Refluks"],
+    "symptoms": ["Kłucie lub pieczenie", "Nasilenie przy ruchu/oddechu"],
+    "concerns": ["⚠️ Uciskowy ból z dusznością", "⚠️ Objawy ogólne (zimne poty)"],
+    "doctors": ["POZ", "Kardiolog"],
+    "medications": ["Paracetamol/ibuprofen", "IPP przy refluksie"],
+    "first_aid": ["Odpoczynek", "Zmiana pozycji"],
+    "emergency": ["Silny, narastający ból — 112"],
+    "description": "Większość bólów ściany klp jest mięśniowo-powięziowa."
+  },
+  "brzuch_k": {
+    "title": "Brzuch — kobieta",
+    "causes": ["Infekcja jelitowa", "Zespół jelita drażliwego"],
+    "symptoms": ["Skurcze, wzdęcia", "Biegunka lub zaparcia"],
+    "concerns": ["⚠️ Ostry ból w prawym dole brzucha", "⚠️ Krew w stolcu/wymiotach"],
+    "doctors": ["Gastroenterolog", "POZ"],
+    "medications": ["Elektrolity", "Leki rozkurczowe"],
+    "first_aid": ["Nawadnianie małymi porcjami", "Dieta lekkostrawna"],
+    "emergency": ["Ostry brzuch — 112"],
+    "description": "Obserwuj lokalizację bólu i objawy towarzyszące."
+  },
+  "plecy_k": {
+    "title": "Plecy — kobieta",
+    "causes": ["Przeciążenie i napięcie", "Dyskopatia"],
+    "symptoms": ["Ból przy ruchu", "Promieniowanie do nogi"],
+    "concerns": ["⚠️ Niedowład lub zaburzenia zwieraczy", "⚠️ Uraz kręgosłupa"],
+    "doctors": ["Ortopeda/Neurolog", "Fizjoterapeuta"],
+    "medications": ["Paracetamol/ibuprofen", "Maści/żele"],
+    "first_aid": ["Ruch w granicach bólu", "Ciepło na mięśnie"],
+    "emergency": ["Objawy ogona końskiego — 112"],
+    "description": "Ważna jest ergonomia i regularne wzmacnianie core."
+  },
+  "uklad_krw_k": {
+    "title": "Układ krążenia — kobieta",
+    "causes": ["Nadciśnienie", "Miażdżyca"],
+    "symptoms": ["Kołatanie serca", "Obrzęki nóg"],
+    "concerns": ["⚠️ Omdlenia", "⚠️ Silna duszność/spadek tolerancji wysiłku"],
+    "doctors": ["Kardiolog"],
+    "medications": ["Leki hipotensyjne (lekarz)", "Statyna (lekarz)"],
+    "first_aid": ["Odpoczynek", "Uniesienie nóg przy omdleniu"],
+    "emergency": ["Ból w klatce + duszność — 112"],
+    "description": "Profilaktyka: dieta, ruch, kontrola ciśnienia i lipidów."
+  },
+  "uklad_oddech_k": {
+    "title": "Układ oddechowy — kobieta",
+    "causes": ["Astma", "POChP (palacze)"],
+    "symptoms": ["Kaszel, duszność", "Świsty"],
+    "concerns": ["⚠️ Nasilający się napad astmy", "⚠️ Sinica, splątanie"],
+    "doctors": ["Pulmonolog"],
+    "medications": ["Inhalatory doraźne i kontrolujące (lekarz)"],
+    "first_aid": ["Siedząca pozycja, spokojny oddech"],
+    "emergency": ["Brak poprawy po leku — 112"],
+    "description": "Unikaj dymu i alergenów; szczepienia sezonowe."
+  },
+  "uklad_pokarm_k": {
+    "title": "Układ pokarmowy — kobieta",
+    "causes": ["Nietolerancje pokarmowe", "Refluks/GERD"],
+    "symptoms": ["Zgaga, odbijanie", "Wzdęcia/biegunki po pokarmach"],
+    "concerns": ["⚠️ Krwawienie z pp", "⚠️ Nagła utrata masy ciała"],
+    "doctors": ["Gastroenterolog"],
+    "medications": ["IPP (lekarz)", "Probiotyki/rozkurczowe"],
+    "first_aid": ["Małe, częste posiłki", "Unikanie wyzwalaczy"],
+    "emergency": ["Obfite krwawienie, smoliste stolce — 112"],
+    "description": "Dieta eliminacyjna po potwierdzeniu rozpoznania."
+  },
+  "biodra_k": {
+    "title": "Biodra — kobieta",
+    "causes": ["Przeciążenie stawu", "Zmiany zwyrodnieniowe"],
+    "symptoms": ["Ból przy chodzeniu", "Sztywność poranna"],
+    "concerns": ["⚠️ Silny ból po upadku", "⚠️ Skrócenie/rotacja kończyny"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Paracetamol/ibuprofen", "Żel p/zapalny"],
+    "first_aid": ["Odciążanie stawu", "Chłodzenie przy urazie"],
+    "emergency": ["Podejrzenie złamania — 112"],
+    "description": "Redukcja masy ciała zmniejsza obciążenia stawu."
+  },
+  "uda_k": {
+    "title": "Uda — kobieta",
+    "causes": ["Naciągnięcie mięśnia", "Rwa kulszowa"],
+    "symptoms": ["Ból mięśni", "Tkliwość przy dotyku"],
+    "concerns": ["⚠️ Rozległy krwiak/obrzęk", "⚠️ Silny ból po urazie"],
+    "doctors": ["Fizjoterapeuta", "Ortopeda"],
+    "medications": ["Paracetamol/ibuprofen", "Żele chłodzące"],
+    "first_aid": ["RICE: odpoczynek, lód, ucisk, uniesienie"],
+    "emergency": ["Podejrzenie zerwania — SOR"],
+    "description": "Stopniowy powrót do aktywności po ustąpieniu bólu."
+  },
+  "kolano_k": {
+    "title": "Kolano — kobieta",
+    "causes": ["Skręcenie", "Uszkodzenie łąkotki"],
+    "symptoms": ["Ból przy ruchu", "Obrzęk i uczucie niestabilności"],
+    "concerns": ["⚠️ Blokada stawu", "⚠️ Niemożność obciążenia"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["NLPZ krótko", "Żele chłodzące"],
+    "first_aid": ["Chłodzenie", "Stabilizacja opaską"],
+    "emergency": ["Deformacja stawu — 112"],
+    "description": "Wzmacnianie czworogłowego i pośladków stabilizuje kolano."
+  },
+  "lydka_k": {
+    "title": "Łydka — kobieta",
+    "causes": ["Skurcze/naciągnięcie", "Zakrzepica (rzadziej)"],
+    "symptoms": ["Ból i sztywność", "Obrzęk/ocieplenie"],
+    "concerns": ["⚠️ Jednostronny duży obrzęk + ból", "⚠️ Duszność (ZP)"],
+    "doctors": ["POZ", "Angiolog"],
+    "medications": ["Magnez (skurcze)", "Paracetamol/ibuprofen"],
+    "first_aid": ["Delikatne rozciąganie", "Chłodzenie"],
+    "emergency": ["Podejrzenie ZŻG/ZP — 112"],
+    "description": "Ruszaj nogami w podróży; unikaj długiego bezruchu."
+  },
+  "kostka_k": {
+    "title": "Kostka — kobieta",
+    "causes": ["Skręcenie stawu skokowego", "Naciągnięcie więzadeł"],
+    "symptoms": ["Ból, obrzęk, krwiak", "Trudność w chodzeniu"],
+    "concerns": ["⚠️ Deformacja stawu", "⚠️ Brak możliwości obciążenia"],
+    "doctors": ["Ortopeda", "POZ"],
+    "medications": ["NLPZ krótko", "Żel chłodzący"],
+    "first_aid": ["RICE", "Uniesienie kończyny"],
+    "emergency": ["Podejrzenie złamania — SOR"],
+    "description": "Po urazie wracaj do sportu dopiero po odzyskaniu stabilności."
+  },
+  "stopy_k": {
+    "title": "Stopy — kobieta",
+    "causes": ["Przeciążenie", "Płaskostopie/haluksy"],
+    "symptoms": ["Ból przy chodzeniu", "Zgrubienia skóry"],
+    "concerns": ["⚠️ Owrzodzenia (cukrzyca)", "⚠️ Zakażone rany"],
+    "doctors": ["Podolog", "Ortopeda"],
+    "medications": ["Maści p/zapalne", "Preparaty na odciski (ostrożnie)"],
+    "first_aid": ["Odpoczynek i odciążenie", "Kąpiele solne/chłodzenie"],
+    "emergency": ["Zakażone owrzodzenia — SOR"],
+    "description": "Wkładki i obuwie z dobrą amortyzacją zmniejszają dolegliwości."
+  },
+  "ciaza_k": {
+    "title": "Ciąża — kobieta",
+    "causes": ["Rozciąganie więzadeł", "Ucisk macicy, zmiany hormonalne"],
+    "symptoms": ["Bóle podbrzusza/pleców", "Zgaga, nudności"],
+    "concerns": ["⚠️ Krwawienie", "⚠️ Silny ból i twardnienie brzucha"],
+    "doctors": ["Ginekolog-położnik"],
+    "medications": ["Paracetamol (bezpieczny)", "Unikać NLPZ"],
+    "first_aid": ["Odpoczynek na lewym boku", "Poduszka między kolanami"],
+    "emergency": ["Krwawienie/utrata przytomności — 112"],
+    "description": "Większość dolegliwości jest fizjologiczna; wątpliwości konsultuj."
+  },
 
-  /* … dalsze wpisy dla płuca, brzuch, plecy, biodra, nogi, ciąża,
-        układy oraz odpowiedniki mężczyzny (pełne sekcje) … */
+  "oczy_m": {
+    "title": "Oczy — mężczyzna",
+    "causes": ["Zespół suchego oka", "Zapalenie spojówek"],
+    "symptoms": ["Pieczenie i łzawienie", "Światłowstręt"],
+    "concerns": ["⚠️ Nagła utrata widzenia", "⚠️ Uraz chemiczny"],
+    "doctors": ["Okulista", "POZ"],
+    "medications": ["Sztuczne łzy", "Krople antyhistaminowe"],
+    "first_aid": ["Płukanie solą", "Przerwy od ekranu"],
+    "emergency": ["Nagła utrata wzroku — 112"],
+    "description": "Nawilżanie i higiena powiek zwykle wystarczają."
+  },
+  "uszy_m": {
+    "title": "Uszy — mężczyzna",
+    "causes": ["Zapalenie ucha", "Korek woskowinowy"],
+    "symptoms": ["Ból i zatkanie ucha", "Szumy"],
+    "concerns": ["⚠️ Gorączka + silny ból", "⚠️ Zawroty/ wymioty"],
+    "doctors": ["Laryngolog", "POZ"],
+    "medications": ["Paracetamol/ibuprofen", "Krople (po badaniu)"],
+    "first_aid": ["Ciepły okład", "Bez patyczków"],
+    "emergency": ["Silny ból + gorączka — pilna pomoc"],
+    "description": "Często leczenie zachowawcze i obserwacja."
+  },
+  "nos_m": {
+    "title": "Nos — mężczyzna",
+    "causes": ["Infekcja", "Alergia"],
+    "symptoms": ["Katar, niedrożność", "Tkliwość zatok"],
+    "concerns": ["⚠️ Długotrwałe krwawienie", "⚠️ Obrzęk twarzy z gorączką"],
+    "doctors": ["Laryngolog", "POZ"],
+    "medications": ["Irygacje", "Krótkotrwałe obkurczające"],
+    "first_aid": ["Nawilżanie", "Inhalacje z soli"],
+    "emergency": ["Maswny krwotok — 112"],
+    "description": "Unikaj nadużywania kropli obkurczających."
+  },
+  "szczeka_m": {
+    "title": "Szczęka / SSŻ — mężczyzna",
+    "causes": ["Bruksizm", "Przeciążenia"],
+    "symptoms": ["Trzaski", "Ból przy żuciu"],
+    "concerns": ["⚠️ Zablokowanie szczęki", "⚠️ Ostry obrzęk i ból"],
+    "doctors": ["Stomatolog", "Fizjoterapeuta"],
+    "medications": ["NLPZ", "Szyna relaksacyjna (lekarz)"],
+    "first_aid": ["Miękka dieta", "Ciepłe okłady"],
+    "emergency": ["Nagłe unieruchomienie — SOR"],
+    "description": "Zwykle pomaga fizjoterapia i nawyki anty-bruksizmowe."
+  },
+  "szyja_m": {
+    "title": "Szyja — mężczyzna",
+    "causes": ["Przeciążenie", "Zła ergonomia pracy"],
+    "symptoms": ["Sztywność i ból karku", "Ból promieniujący do barku"],
+    "concerns": ["⚠️ Drętwienie lub niedowład", "⚠️ Gorączka + sztywność karku"],
+    "doctors": ["Ortopeda/Neurolog"],
+    "medications": ["Paracetamol/ibuprofen", "Miorelaksant (lekarz)"],
+    "first_aid": ["Rozciąganie i przerwy ruchowe", "Ciepło na mięśnie"],
+    "emergency": ["Uraz szyi z deficytami — 112"],
+    "description": "Popraw pozycję pracy i wzmacniaj mięśnie karku."
+  },
+  "glowa_m": {
+    "title": "Głowa — mężczyzna",
+    "causes": ["Napięciowy ból głowy", "Migrena"],
+    "symptoms": ["Ucisk/pulsowanie", "Nudności, światłowstręt"],
+    "concerns": ["⚠️ Piorunujący ból", "⚠️ Objawy neurologiczne"],
+    "doctors": ["Neurolog", "POZ"],
+    "medications": ["Paracetamol/ibuprofen", "Tryptan"],
+    "first_aid": ["Odpoczynek w ciemności", "Nawodnienie"],
+    "emergency": ["Nagły ból z objawami — 112"],
+    "description": "Unikaj wyzwalaczy, prowadź dzienniczek bólu."
+  },
+  "serce_m": {
+    "title": "Serce — mężczyzna",
+    "causes": ["Choroba wieńcowa", "Nadciśnienie"],
+    "symptoms": ["Ucisk w klatce", "Duszność"],
+    "concerns": ["⚠️ Promieniowanie do lewej ręki/szczęki", "⚠️ Zimne poty"],
+    "doctors": ["Kardiolog", "POZ"],
+    "medications": ["Nitrogliceryna (lekarz)", "Beta-blokery (lekarz)"],
+    "first_aid": ["Spoczynek", "Wezwanie pomocy"],
+    "emergency": ["Podejrzenie zawału — 112/SOR"],
+    "description": "Nie lekceważ bólu w klatce piersiowej podczas wysiłku."
+  },
+  "pluca_m": {
+    "title": "Płuca — mężczyzna",
+    "causes": ["Infekcja", "Astma/POChP"],
+    "symptoms": ["Kaszel", "Duszność"],
+    "concerns": ["⚠️ Spoczynkowa duszność", "⚠️ Krwioplucie"],
+    "doctors": ["Pulmonolog", "POZ"],
+    "medications": ["Inhalatory (lekarz)", "Mukolityk"],
+    "first_aid": ["Pozycja siedząca", "Ćwiczenia oddechowe"],
+    "emergency": ["Nasilająca się duszność — 112"],
+    "description": "Rzuć palenie, unikaj dymu i pyłów."
+  },
+  "klatka_piersiowa_m": {
+    "title": "Klatka piersiowa — mężczyzna",
+    "causes": ["Napięcie mięśni", "Refluks"],
+    "symptoms": ["Kłucie/przeszywanie", "Pieczenie w klatce"],
+    "concerns": ["⚠️ Uciskowy ból z dusznością", "⚠️ Zimne poty, osłabienie"],
+    "doctors": ["POZ", "Kardiolog"],
+    "medications": ["Paracetamol/ibuprofen", "IPP przy refluksie"],
+    "first_aid": ["Odpoczynek", "Zmiana pozycji"],
+    "emergency": ["Silny, narastający ból — 112"],
+    "description": "Bóle ściany klp są częste, ale wyklucz serce przy wątpliwościach."
+  },
+  "brzuch_m": {
+    "title": "Brzuch — mężczyzna",
+    "causes": ["Nieżyt żołądkowo-jelitowy", "Niestrawność/GERD"],
+    "symptoms": ["Skurcze, wzdęcia", "Biegunka/zaparcia lub zgaga"],
+    "concerns": ["⚠️ Ostry ból w prawym dole brzucha", "⚠️ Krwawienie z pp"],
+    "doctors": ["Gastroenterolog", "POZ"],
+    "medications": ["Elektrolity", "Rozkurczowe / IPP (lekarz)"],
+    "first_aid": ["Nawadnianie", "Dieta lekkostrawna"],
+    "emergency": ["Ostry brzuch — 112"],
+    "description": "Obserwuj czas trwania, gorączkę i towarzyszące objawy."
+  },
+  "plecy_m": {
+    "title": "Plecy — mężczyzna",
+    "causes": ["Przeciążenie", "Dyskopatia"],
+    "symptoms": ["Ból przy ruchu", "Rwa kulszowa"],
+    "concerns": ["⚠️ Niedowład, zaburzenia zwieraczy", "⚠️ Uraz kręgosłupa"],
+    "doctors": ["Ortopeda/Neurolog", "Fizjoterapeuta"],
+    "medications": ["Paracetamol/ibuprofen", "Maści/żele"],
+    "first_aid": ["Ruch w granicach bólu", "Ciepło"],
+    "emergency": ["Objawy ogona końskiego — 112"],
+    "description": "Ćwiczenia core i ergonomia to podstawa profilaktyki."
+  },
+  "uklad_krw_m": {
+    "title": "Układ krążenia — mężczyzna",
+    "causes": ["Nadciśnienie", "Miażdżyca"],
+    "symptoms": ["Kołatanie", "Męczliwość"],
+    "concerns": ["⚠️ Omdlenia", "⚠️ Obrzęki i duszność"],
+    "doctors": ["Kardiolog"],
+    "medications": ["Leki hipotensyjne (lekarz)", "Statyna (lekarz)"],
+    "first_aid": ["Odpoczynek", "Uniesienie nóg przy omdleniu"],
+    "emergency": ["Ból w klatce + duszność — 112"],
+    "description": "Kontroluj ciśnienie, lipidy i masę ciała."
+  },
+  "uklad_oddech_m": {
+    "title": "Układ oddechowy — mężczyzna",
+    "causes": ["Astma", "POChP"],
+    "symptoms": ["Kaszel", "Duszność/świsty"],
+    "concerns": ["⚠️ Nasilający się napad astmy", "⚠️ Sinica"],
+    "doctors": ["Pulmonolog"],
+    "medications": ["Leki wziewne (lekarz)"],
+    "first_aid": ["Ćwiczenia oddechowe", "Pozycja siedząca"],
+    "emergency": ["Brak poprawy po leku — 112"],
+    "description": "Unikaj dymu, noś maskę w pyłach; szczepienia."
+  },
+  "uklad_pokarm_m": {
+    "title": "Układ pokarmowy — mężczyzna",
+    "causes": ["Refluks/GERD", "Nietolerancje"],
+    "symptoms": ["Zgaga, odbijanie", "Wzdęcia/biegunki po pokarmach"],
+    "concerns": ["⚠️ Krwawienie", "⚠️ Spadek masy ciała"],
+    "doctors": ["Gastroenterolog"],
+    "medications": ["IPP (lekarz)", "Probiotyki/rozkurczowe"],
+    "first_aid": ["Mniejsze posiłki", "Unikanie wyzwalaczy"],
+    "emergency": ["Smoliste stolce/krwiste wymioty — 112"],
+    "description": "Dieta i styl życia są kluczowe w kontroli objawów."
+  },
+  "biodra_m": {
+    "title": "Biodra — mężczyzna",
+    "causes": ["Przeciążenie", "Zwyrodnienie"],
+    "symptoms": ["Ból przy chodzeniu", "Sztywność"],
+    "concerns": ["⚠️ Silny ból po upadku", "⚠️ Niemożność obciążenia"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Paracetamol/ibuprofen", "Żel p/zapalny"],
+    "first_aid": ["Odciążanie", "Chłodzenie"],
+    "emergency": ["Podejrzenie złamania — 112"],
+    "description": "Redukcja masy ciała i ćwiczenia odciążające staw."
+  },
+  "uda_m": {
+    "title": "Uda — mężczyzna",
+    "causes": ["Naciągnięcie mięśni", "Rwa kulszowa"],
+    "symptoms": ["Ból mięśni", "Tkliwość"],
+    "concerns": ["⚠️ Duży krwiak/obrzęk", "⚠️ Silny ból po urazie"],
+    "doctors": ["Fizjoterapeuta", "Ortopeda"],
+    "medications": ["NLPZ krótko", "Żele chłodzące"],
+    "first_aid": ["RICE", "Stopniowe rozciąganie"],
+    "emergency": ["Zerwanie mięśnia — SOR"],
+    "description": "Powrót do aktywności stopniowo, po ustąpieniu bólu."
+  },
+  "kolano_m": {
+    "title": "Kolano — mężczyzna",
+    "causes": ["Skręcenie", "Uszkodzenie łąkotki"],
+    "symptoms": ["Ból, obrzęk", "Uczucie niestabilności"],
+    "concerns": ["⚠️ Blokada stawu", "⚠️ Niemożność obciążenia"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": ["Paracetamol/ibuprofen", "Żele chłodzące"],
+    "first_aid": ["Chłodzenie", "Stabilizacja"],
+    "emergency": ["Deformacja — 112"],
+    "description": "Wzmacniaj czworogłowy i pośladki dla stabilizacji."
+  },
+  "lydka_m": {
+    "title": "Łydka — mężczyzna",
+    "causes": ["Skurcze/naciągnięcie", "Zakrzepica (rzadziej)"],
+    "symptoms": ["Ból i sztywność", "Obrzęk"],
+    "concerns": ["⚠️ Jednostronny duży obrzęk + ból", "⚠️ Duszność (ZP)"],
+    "doctors": ["POZ", "Angiolog"],
+    "medications": ["Magnez", "Paracetamol/ibuprofen"],
+    "first_aid": ["Rozciąganie", "Chłodzenie"],
+    "emergency": ["Podejrzenie ZŻG/ZP — 112"],
+    "description": "Ruszaj nogami w podróży; pij wodę."
+  },
+  "kostka_m": {
+    "title": "Kostka — mężczyzna",
+    "causes": ["Skręcenie", "Naciągnięcie więzadeł"],
+    "symptoms": ["Ból, obrzęk, krwiak", "Trudność w chodzeniu"],
+    "concerns": ["⚠️ Deformacja", "⚠️ Brak możliwości obciążenia"],
+    "doctors": ["Ortopeda", "POZ"],
+    "medications": ["NLPZ krótko", "Żele chłodzące"],
+    "first_aid": ["RICE", "Uniesienie kończyny"],
+    "emergency": ["Podejrzenie złamania — SOR"],
+    "description": "Stabilizacja i rehabilitacja zapobiega nawrotom."
+  },
+  "stopy_m": {
+    "title": "Stopy — mężczyzna",
+    "causes": ["Przeciążenie", "Płaskostopie"],
+    "symptoms": ["Ból przy chodzeniu", "Zgrubienia skóry"],
+    "concerns": ["⚠️ Owrzodzenia (cukrzyca)", "⚠️ Zakażone rany"],
+    "doctors": ["Podolog", "Ortopeda"],
+    "medications": ["Maści p/zapalne", "Preparaty keratolityczne"],
+    "first_aid": ["Odpoczynek/odciążenie", "Kąpiele/chłodzenie"],
+    "emergency": ["Zakażone owrzodzenia — SOR"],
+    "description": "Dobre obuwie i wkładki znacznie pomagają."
+  }
 }
