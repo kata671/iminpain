@@ -31,44 +31,32 @@
     <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
   </footer>
 
-  <!-- Jedyny wymagany skrypt -->
+  <!-- Jedyny wymagany skrypt renderujący -->
   <script src="szczegoly.js"></script>
-<script>
-(function(){
-  function colorLabels(root){
-    const nodes = root.querySelectorAll('.card ul li, .card p');
-    nodes.forEach(n=>{
-      let html = n.innerHTML;
-      html = html.replace(/(^|\s)(Bez\s+recepty)\s*:/gi,'$1<strong class="otc">$2</strong>:');
-      html = html.replace(/(^|\s)(Na\s+receptę)\s*:/gi,'$1<strong class="rx">$2</strong>:');
-      if(html!==n.innerHTML) n.innerHTML = html;
-    });
-  }
-  function addEmojis(root){
-    root.querySelectorAll('.card .card-caption').forEach(c=>{
-      let t=c.textContent.trim();
-      if(/^Możliwe przyczyny/i.test(t)) t="🌀 "+t;
-      else if(/^Objawy/i.test(t)) t="🤒 "+t;
-      else if(/^Kiedy się niepokoić/i.test(t)) t="⚠️ "+t;
-      else if(/^Lekarze/i.test(t)) t="👨‍⚕️ "+t;
-      else if(/^Leki/i.test(t)) t="💊 "+t;
-      else if(/^Pierwsza pomoc/i.test(t)) t="🛟 "+t;
-      else if(/^Rehabilitacja/i.test(t)) t="🏃 "+t;
-      else if(/^Czego unikać/i.test(t)) t="❌ "+t;
-      else if(/^Profilaktyka/i.test(t)) t="✅ "+t;
-      else if(/^Najczęstsze błędy/i.test(t)) t="⚠️ "+t;
-      else if(/^Dodatkowe informacje/i.test(t)) t="ℹ️ "+t;
-      else if(/^Niezwłoczna pomoc/i.test(t)) t="🚨 "+t;
-      c.textContent=t;
-    });
-  }
-  function enhance(){
-    const root=document.getElementById('content')||document.body;
-    colorLabels(root); addEmojis(root);
-  }
-  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',enhance):enhance();
-  new MutationObserver(enhance).observe(document.getElementById('content')||document.body,{childList:true,subtree:true});
-})();
-</script>
+
+  <!-- HOTFIX (bezpieczny): koloruje "Bez recepty:" i "Na receptę:" w treści -->
+  <script>
+  (function(){
+    function colorLabels(root){
+      if(!root) return;
+      var nodes = root.querySelectorAll('.card ul li, .card p');
+      nodes.forEach(function(n){
+        if(n.dataset._labelsDone==="1") return; // nie przerabiaj ponownie
+        var html = n.innerHTML;
+        var out = html
+          .replace(/(^|\s)(Bez\s+recepty)\s*:/gi,'$1<strong class="otc">$2</strong>:')
+          .replace(/(^|\s)(Na\s+receptę)\s*:/gi,'$1<strong class="rx">$2</strong>:');
+        if(out !== html) n.innerHTML = out;
+        n.dataset._labelsDone = "1";
+      });
+    }
+    function run(){
+      var root = document.getElementById('content') || document.body;
+      colorLabels(root);
+    }
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', run) : run();
+    new MutationObserver(run).observe(document.getElementById('content')||document.body, { childList:true, subtree:true });
+  })();
+  </script>
 </body>
 </html>
