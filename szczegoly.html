@@ -2,38 +2,31 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <title>Szczegóły</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- Twój główny CSS -->
+  <title>Szczegóły</title>
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Dodatkowy bezpieczny CSS do układu kafelków -->
-  <link rel="stylesheet" href="style-overrides.css" />
 </head>
 <body data-page="szczegoly">
 
-  <!-- Nawigacja -->
-  <div class="nav-links">
-    <a href="index.html" class="back-link">← Strona główna</a>
-    <a href="#" id="sectionBack" class="back-link">← Wróć do wyboru sekcji</a>
-  </div>
+  <header>
+    <nav style="max-width:1100px;margin:16px auto 0;padding:0 12px;">
+      <a id="sectionBack" href="index.html">← Wróć</a>
+    </nav>
+  </header>
 
-  <!-- Tytuł -->
-  <h1 id="title">Szczegóły</h1>
-  <div class="pill" aria-hidden="true"></div>
+  <!-- Tutaj JS wpisze tytuł wybranego obszaru -->
+  <h1 id="title" style="max-width:1100px;margin:8px auto 0;padding:0 12px;text-align:center;">
+    Szczegóły
+  </h1>
 
-  <!-- Zawartość dynamiczna (ładowana z JSON) -->
+  <!-- Tutaj pojawią się kafelki -->
   <div id="content"></div>
-  <div id="err" class="error" style="display:none"></div>
 
-  <!-- Stopka -->
-  <footer style="margin-top:40px">
-    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  <footer style="max-width:1100px;margin:24px auto;padding:0 12px;text-align:center;font-size:0.9em;color:#aaa;">
+    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
   </footer>
 
-  <!-- Twój obecny skrypt, który już masz i działa -->
-  <script defer src="szczegoly.js"></script>
-
+  <!-- Skrypt odpowiedzialny za wstawianie treści -->
+  <script defer src="js/szczegoly.js"></script>
 </body>
 </html>
