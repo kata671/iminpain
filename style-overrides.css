@@ -1,7 +1,5 @@
 /* === STYLE-OVERRIDES.CSS === */
-/* Tutaj nadpisujemy style globalne i poprawki do szczegółów */
-
-/* Równa siatka szczegółów */
+/* Układ siatki dla kafelków */
 body[data-page="szczegoly"] .cards {
   display: grid !important;
   grid-template-columns: repeat(3, minmax(320px, 1fr)) !important;
@@ -24,31 +22,43 @@ body[data-page="szczegoly"] .cards {
   }
 }
 
-/* Każdy kafel dokładnie 1 kolumna */
+/* Kafelki */
 body[data-page="szczegoly"] .cards > .card {
   grid-column: auto !important;
   min-width: 0 !important;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  min-height: 340px;
+  min-height: 320px;
+  padding: 12px 14px;
 }
 
-/* Nagłówki kafelków (np. Objawy, Leki...) większe */
+/* Nagłówki w kafelkach (trochę mniejsze niż poprzednio) */
 body[data-page="szczegoly"] .card .card-caption {
-  font-size: 1.12rem !important;
+  font-size: 1.05rem !important;
   font-weight: 700;
   letter-spacing: .2px;
   text-align: center;
-  padding: 8px 10px;
+  padding: 6px 8px;
   border-bottom: 1px solid rgba(255,255,255,.08);
-  min-height: 52px;
+  min-height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Czerwony kafel */
+/* Listy w kafelkach — punkty wewnątrz ramki */
+body[data-page="szczegoly"] .card ul {
+  list-style-position: inside !important;
+  margin: 8px 0 0 0 !important;
+  padding: 0 6px !important;
+}
+body[data-page="szczegoly"] .card li {
+  margin: 4px 0;
+  line-height: 1.35em;
+}
+
+/* Kafel awaryjny (czerwony) */
 body[data-page="szczegoly"] .card.emergency {
   border: 2px solid #ff4d4d !important;
   background: rgba(120,20,20,.88) !important;
