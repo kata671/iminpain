@@ -350,3 +350,41 @@ body[data-page="szczegoly"] .card.spacer{
   border: none !important;
   background: transparent !important;
 }
+/* === SZCZEGÓŁY — stały rozmiar i 3 kolumny === */
+body[data-page="szczegoly"] .cards{
+  display:grid;
+  grid-template-columns: repeat(3, 340px) !important;  /* 3 kolumny po 340px */
+  justify-content: center !important;
+  gap: 22px !important;
+  max-width: 1120px !important;
+  margin: 24px auto 40px !important;
+  padding: 0 12px !important;
+}
+
+/* Kafel — wymuś docelowy rozmiar niezależnie od innych reguł */
+body[data-page="szczegoly"] .card{
+  width: 340px !important;
+  height: 360px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Tytuł w kaflu */
+body[data-page="szczegoly"] .card .card-caption{
+  min-height: 52px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  font-weight: 700 !important;
+}
+
+/* 👇 spacer — całkiem niewidoczny (żadnych ramek, cieni, tła) */
+body[data-page="szczegoly"] .card.spacer{
+  visibility: hidden !important;      /* zajmuje miejsce, ale jest niewidoczny */
+  pointer-events: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
