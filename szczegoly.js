@@ -38,6 +38,15 @@
     return div;
   }
 
+  // NIEWIDOCZNY „WYPEŁNIACZ”, żeby domknąć rząd do 3 kolumn
+  function spacerCard(){
+    const div = document.createElement("article");
+    div.className = "card spacer";
+    div.setAttribute("aria-hidden", "true");
+    div.innerHTML = `<div class="card-caption"> </div><p> </p>`;
+    return div;
+  }
+
   async function getJSON(url){
     const res = await fetch(`${url}?ts=${Date.now()}`, { cache:"no-store" });
     if(!res.ok) throw new Error(`HTTP ${res.status} @ ${url}`);
@@ -103,7 +112,7 @@
       if(merged.prevention?.length)     tiles.push(card("✅ Profilaktyka", merged.prevention));
       if(merged.mistakes?.length)       tiles.push(card("⚠️ Najczęstsze błędy", merged.mistakes));
 
-      // zawsze wstaw czerwony kafel na stałą pozycję #4 (index 3)
+      // zawsze wstaw czerwony kafel na pozycję #4 (index 3)
       const em = emergencyCard(merged.emergency);
       const targetIndex = Math.min(3, tiles.length);
       tiles.splice(targetIndex, 0, em);
@@ -111,6 +120,13 @@
       // opcjonalny opis – na końcu
       if(merged.description && merged.description.trim()){
         tiles.push(card("ℹ️ Dodatkowe informacje", merged.description));
+      }
+
+      // DOPADANIE SPACERÓW: dopełnij do wielokrotności 3
+      const remainder = tiles.length % 3;
+      if (remainder !== 0) {
+        const toAdd = 3 - remainder;
+        for (let i = 0; i < toAdd; i++) tiles.push(spacerCard());
       }
 
       // render
