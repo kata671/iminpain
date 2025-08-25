@@ -32,22 +32,22 @@ body[data-page="szczegoly"] .card {
 
 /* Nagłówki */
 body[data-page="szczegoly"] .card .card-caption {
-  font-size: 1.05rem;  /* trochę większe, ale nie za bardzo */
+  font-size: 1.08rem;
   font-weight: 700;
   text-align: center;
   margin-bottom: 8px;
 }
 
-/* Listy — punkty zawsze w środku ramki */
+/* Listy — punkty przy lewej krawędzi */
 body[data-page="szczegoly"] .card ul {
   list-style-type: disc;
-  list-style-position: inside;   /* punkty w środku */
-  margin: 0;
-  padding-left: 0;               /* usuwamy nadmiar */
+  list-style-position: outside;  /* punkty na brzegu */
+  margin: 0 0 0 18px;            /* odsunięcie od krawędzi */
+  padding-left: 0;
 }
 body[data-page="szczegoly"] .card li {
   margin: 4px 0;
-  line-height: 1.4;
+  line-height: 1.5;
   word-wrap: break-word;
 }
 
@@ -65,5 +65,11 @@ body[data-page="szczegoly"] .card.emergency:hover {
 /* Zielone "Bez recepty:" */
 body[data-page="szczegoly"] .card .otc {
   color: #2ecc71;
+  font-weight: 700;
+}
+
+/* Czerwone "Na receptę:" */
+body[data-page="szczegoly"] .card .rx {
+  color: #e74c3c;
   font-weight: 700;
 }
