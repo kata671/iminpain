@@ -103,9 +103,9 @@
       if(merged.prevention?.length)     tiles.push(card("✅ Profilaktyka", merged.prevention));
       if(merged.mistakes?.length)       tiles.push(card("⚠️ Najczęstsze błędy", merged.mistakes));
 
-      // zawsze wstaw czerwony kafel na stałą pozycję #6 (index 5)
+      // zawsze wstaw czerwony kafel na stałą pozycję #4 (index 3)
       const em = emergencyCard(merged.emergency);
-      const targetIndex = Math.min(5, tiles.length);
+      const targetIndex = Math.min(3, tiles.length);
       tiles.splice(targetIndex, 0, em);
 
       // opcjonalny opis – na końcu
