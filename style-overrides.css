@@ -438,3 +438,9 @@ body[data-page="szczegoly"] .cards > .card.spacer{
   min-height: 0 !important;
   padding: 0 !important;
 }
+/* --- Szczegóły: drobny tuning nagłówków i list --- */
+body[data-page="szczegoly"] .card .card-caption{font-size:1.06rem;font-weight:700;letter-spacing:.2px;margin-bottom:8px;text-align:center}
+body[data-page="szczegoly"] .card ul{list-style:disc;list-style-position:outside;margin:0 0 0 18px;padding-left:0}
+body[data-page="szczegoly"] .card li{margin:4px 0;line-height:1.5}
+body[data-page="szczegoly"] .card .otc{color:#2ecc71;font-weight:700} /* Bez recepty */
+body[data-page="szczegoly"] .card .rx{color:#e74c3c;font-weight:700}   /* Na receptę */
