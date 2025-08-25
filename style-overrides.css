@@ -1,66 +1,89 @@
-/* === STYLE-OVERRIDES.CSS (ostateczny, bezpieczny) === */
+/* === STYLE-OVERRIDES.CSS — układ 3×N, stabilny === */
 
-/* Siatka kart w Szczegółach (3 w rzędzie, responsywnie) */
-body[data-page="szczegoly"] .cards{
-  display:grid;
-  grid-template-columns:repeat(3, minmax(320px,1fr));
-  gap:22px;
-  max-width:1100px;
-  margin:30px auto;
-  padding:0 15px;
-  justify-content:center;
-  align-items:start;
+/* 0) Upewnij się, że #content nie jest gridem (neutralizacja starych fixów) */
+body[data-page="szczegoly"] #content{
+  display:block !important;
+  max-width: 1200px;
+  margin: 0 auto;
 }
-@media (max-width: 920px){
-  body[data-page="szczegoly"] .cards{ grid-template-columns:repeat(2, minmax(300px,1fr)); }
+
+/* 1) Główna siatka kart — TYLKO kontener .cards jest gridem */
+body[data-page="szczegoly"] .cards{
+  display:grid !important;
+  grid-template-columns: repeat(3, minmax(300px, 1fr)) !important;
+  gap:22px !important;
+  justify-items: stretch !important;
+  align-items: start !important;
+  align-content: start !important;
+  grid-auto-rows: auto !important;
+  max-width: 1120px !important;
+  margin: 28px auto 36px !important;
+  padding: 0 12px !important;
+}
+@media (max-width: 980px){
+  body[data-page="szczegoly"] .cards{
+    grid-template-columns: repeat(2, minmax(280px, 1fr)) !important;
+  }
 }
 @media (max-width: 560px){
-  body[data-page="szczegoly"] .cards{ grid-template-columns:1fr; }
+  body[data-page="szczegoly"] .cards{
+    grid-template-columns: 1fr !important;
+  }
 }
 
-/* Kafelki – layout */
+/* 2) Każdy kafel zachowuje się jak „zwykła komórka” grida */
 body[data-page="szczegoly"] .cards > .card{
-  display:flex;
-  flex-direction:column;
-  box-sizing:border-box;
-  min-height:320px;
-  padding:14px 16px;
-  border-radius:12px;
+  grid-column: auto !important;
+  width: 100% !important;
+  max-width: 360px;           /* kontrola szerokości, ale nadal elastyczna */
+  margin: 0 auto;             /* ładne centrowanie w kolumnie */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 320px;
+  padding: 14px 16px;
+  border-radius: 12px;
+}
+body[data-page="szczegoly"] .cards > .card *{
+  word-wrap: break-word;
 }
 
-/* Nagłówki w kafelkach – delikatnie większe */
+/* 3) Nagłówki w kafelkach – delikatnie większe */
 body[data-page="szczegoly"] .card .card-caption{
-  font-size:1.06rem;
-  font-weight:700;
-  text-align:center;
-  margin-bottom:8px;
-  letter-spacing:.2px;
+  font-size: 1.06rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+  letter-spacing: .2px;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Listy – punkty równo przy lewej krawędzi, wewnątrz ramki */
+/* 4) Listy – punkty równo przy lewej krawędzi i „w ramce” */
 body[data-page="szczegoly"] .card ul{
-  list-style:disc;
-  list-style-position:outside;
-  margin:0 0 0 18px;
-  padding-left:0;
+  list-style: disc;
+  list-style-position: outside;
+  margin: 0 0 0 18px;
+  padding-left: 0;
 }
 body[data-page="szczegoly"] .card li{
-  margin:4px 0;
-  line-height:1.5;
-  word-wrap:break-word;
+  margin: 4px 0;
+  line-height: 1.5;
 }
 
-/* Czerwony kafel (niezwłoczna pomoc) */
+/* 5) Czerwony kafel (Niezwłoczna pomoc) */
 body[data-page="szczegoly"] .card.emergency{
-  border:2px solid #ff4d4d;
-  background:rgba(120,20,20,.9);
-  color:#fff;
-  font-weight:700;
+  border: 2px solid #ff4d4d;
+  background: rgba(120,20,20,.9);
+  color: #fff;
+  font-weight: 700;
 }
 body[data-page="szczegoly"] .card.emergency:hover{
-  box-shadow:0 0 25px rgba(255,30,30,.9);
+  box-shadow: 0 0 25px rgba(255,30,30,.9);
 }
 
-/* Kolory etykiet w treści (podmieniane w HTML przez hotfix) */
+/* 6) Kolory etykiet w treści (wstrzykiwane przez hotfix w HTML) */
 body[data-page="szczegoly"] .card .otc{ color:#2ecc71; font-weight:700; } /* Bez recepty */
 body[data-page="szczegoly"] .card .rx { color:#e74c3c; font-weight:700; } /* Na receptę */
