@@ -1,73 +1,209 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" data-page="szczegoly">
 <head>
-  <meta charset="UTF-8" />
-  <title>Szczegóły</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Style -->
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="style-overrides.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title id="title">Szczegóły</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-overrides.css?v=9">
 
   <style>
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 1100px;
-      margin: 20px auto;
-      justify-items: center;
-      align-items: stretch;
-    }
+  /* Układ 3× i równe rzędy */
+  body[data-page="szczegoly"] .cards{
+    display:grid;
+    grid-template-columns: repeat(3, 320px);
+    justify-content:center;
+    gap:22px;
+    max-width:1100px;
+    margin:22px auto 32px;
+    padding:0 12px;
+  }
+  @media (max-width:920px){
+    body[data-page="szczegoly"] .cards{ grid-template-columns:repeat(2,320px); }
+  }
+  @media (max-width:560px){
+    body[data-page="szczegoly"] .cards{ grid-template-columns:1fr; }
+  }
 
-    .card {
-      background: rgba(34, 42, 90, 0.8);
-      border: 1px solid rgba(200,200,255,.2);
-      border-radius: 14px;
-      padding: 16px;
-      width: 100%;
-      max-width: 320px;
-      box-shadow: 0 4px 10px rgba(0,0,0,.3);
-      transition: transform .2s, box-shadow .2s;
-    }
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 16px rgba(0,0,0,.4), 0 0 10px rgba(255,255,255,.4);
-    }
+  body[data-page="szczegoly"] .card{
+    width:320px; height:360px;
+    display:flex; flex-direction:column;
+    box-sizing:border-box;
+  }
+  body[data-page="szczegoly"] .card .card-caption{
+    display:flex; align-items:center; justify-content:center;
+    min-height:52px; padding:8px 10px;
+    text-align:center; font-weight:700;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  body[data-page="szczegoly"] .card ul,
+  body[data-page="szczegoly"] .card p{
+    margin:12px 12px 14px; padding:0;
+    flex:1; overflow:auto;
+  }
+  body[data-page="szczegoly"] .card li{ list-style:disc inside; margin:6px 0; }
 
-    .card.emergency {
-      border: 2px solid red;
-      background: rgba(120, 20, 20, .85);
-      color: #fff;
-      font-weight: bold;
-      text-align: center;
-    }
-    .card.emergency:hover {
-      box-shadow: 0 0 25px red;
-    }
+  /* Czerwony kafel */
+  body[data-page="szczegoly"] .card.emergency{
+    border:2px solid #ff4d4d;
+    background:rgba(120,20,20,.88);
+    color:#fff;
+    font-weight:700;
+  }
+  body[data-page="szczegoly"] .card.emergency:hover{
+    box-shadow:0 0 28px rgba(255,30,30,.9);
+  }
 
-    h1 {
-      text-align: center;
-      margin: 20px;
-    }
+  /* Spacer – niewidoczny wypełniacz */
+  body[data-page="szczegoly"] .card.spacer{
+    visibility:hidden;
+    pointer-events:none;
+    background:transparent;
+    border:none;
+    box-shadow:none;
+  }
   </style>
 </head>
-<body data-page="szczegoly">
+<body>
+  <nav><a id="sectionBack" href="index.html">← Powrót</a></nav>
+  <main id="content"><p>Ładowanie…</p></main>
 
-  <nav class="nav-links" style="margin: 12px;">
-    <a href="index.html" class="back-link">← Strona główna</a>
-    <a href="#" id="sectionBack" class="back-link">← Wróć do wyboru sekcji</a>
-  </nav>
+  <script>
+  (function () {
+    function uniq(arr){ return Array.from(new Set((arr||[]).filter(Boolean))); }
+    function mergeNodes(detailed, base){
+      const src = detailed || {}, fall = base || {};
+      const out = { title: src.title || fall.title || "Szczegóły" };
+      const keys = ["causes","symptoms","concerns","doctors","medications","first_aid","emergency","rehabilitation","avoid","prevention","mistakes"];
+      keys.forEach(k => out[k] = uniq([...(fall[k]||[]), ...(src[k]||[])]));
+      out.description = (src.description || "") || (fall.description || "");
+      return out;
+    }
+    function card(title, items){
+      const div = document.createElement("article");
+      div.className = "card";
+      let html = `<div class="card-caption">${title}</div>`;
+      if(Array.isArray(items)){
+        html += "<ul>";
+        for(const it of items) html += `<li>${it}</li>`;
+        html += "</ul>";
+      }else if(typeof items==="string" && items.trim()){
+        html += `<p>${items}</p>`;
+      }else{
+        html += `<p>Brak danych.</p>`;
+      }
+      div.innerHTML = html;
+      return div;
+    }
+    function emergencyCard(items){
+      const list = (items && items.length)?items:[
+        "Silny, narastający ból lub zniekształcenie stawu.",
+        "Duszność, omdlenie, objawy udaru.",
+        "Gorączka + silny ból/obrzęk stawu."
+      ];
+      const div = card("🚨 Niezwłoczna pomoc (112/SOR)", list);
+      div.classList.add("emergency");
+      return div;
+    }
+    function spacerCard(){
+      const div = document.createElement("article");
+      div.className="card spacer";
+      div.setAttribute("aria-hidden","true");
+      div.innerHTML=`<div class="card-caption"> </div><p> </p>`;
+      return div;
+    }
+    async function getJSON(url){
+      const res=await fetch(`${url}?ts=${Date.now()}`,{cache:"no-store"});
+      if(!res.ok) throw new Error(`HTTP ${res.status} @ ${url}`);
+      return res.json();
+    }
+    function sectionUrlFromId(id){
+      if(!id) return "index.html";
+      const isK=id.endsWith("_k"), isM=id.endsWith("_m");
+      const mapK={
+        oczy_k:"kobieta-glowa.html",uszy_k:"kobieta-glowa.html",nos_k:"kobieta-glowa.html",
+        szczeka_k:"kobieta-glowa.html",szyja_k:"kobieta-glowa.html",glowa_k:"kobieta-glowa.html",
+        serce_k:"kobieta-klatka.html",pluca_k:"kobieta-klatka.html",klatka_piersiowa_k:"kobieta-klatka.html",
+        brzuch_k:"kobieta-klatka.html",plecy_k:"kobieta-klatka.html",
+        uklad_krw_k:"kobieta-klatka.html",uklad_oddech_k:"kobieta-klatka.html",uklad_pokarm_k:"kobieta-klatka.html",
+        biodra_k:"kobieta-nogi.html",uda_k:"kobieta-nogi.html",kolano_k:"kobieta-nogi.html",
+        lydka_k:"kobieta-nogi.html",kostka_k:"kobieta-nogi.html",stopy_k:"kobieta-nogi.html",
+        ciaza_k:"kobieta.html"
+      };
+      const mapM={
+        oczy_m:"mezczyzna-glowa.html",uszy_m:"mezczyzna-glowa.html",nos_m:"mezczyzna-glowa.html",
+        szczeka_m:"mezczyzna-glowa.html",szyja_m:"mezczyzna-glowa.html",glowa_m:"mezczyzna-glowa.html",
+        serce_m:"mezczyzna-klatka.html",pluca_m:"mezczyzna-klatka.html",klatka_piersiowa_m:"mezczyzna-klatka.html",
+        brzuch_m:"mezczyzna-klatka.html",plecy_m:"mezczyzna-klatka.html",
+        uklad_krw_m:"mezczyzna-klatka.html",uklad_oddech_m:"mezczyzna-klatka.html",uklad_pokarm_m:"mezczyzna-klatka.html",
+        biodra_m:"mezczyzna-nogi.html",uda_m:"mezczyzna-nogi.html",kolano_m:"mezczyzna-nogi.html",
+        lydka_m:"mezczyzna-nogi.html",kostka_m:"mezczyzna-nogi.html",stopy_m:"mezczyzna-nogi.html"
+      };
+      if(isK) return mapK[id]||"kobieta.html";
+      if(isM) return mapM[id]||"mezczyzna.html";
+      return "index.html";
+    }
+    async function render(){
+      const params=new URLSearchParams(location.search);
+      const id=params.get("id");
+      const content=document.getElementById("content");
+      const titleEl=document.getElementById("title");
+      const back=document.getElementById("sectionBack");
+      if(!id||!content) return;
+      if(back) back.href=sectionUrlFromId(id);
 
-  <h1 id="title">Szczegóły</h1>
+      try{
+        const detailed=await getJSON("data/detailed_conditions.json");
+        const base=await getJSON("data/conditions.json");
+        const merged=mergeNodes(detailed[id], base[id]);
+        if(!merged.title && !merged.causes?.length){
+          content.innerHTML="<p>Brak danych dla tego obszaru.</p>";
+          return;
+        }
+        if(titleEl) titleEl.textContent=merged.title;
 
-  <main id="content"></main>
+        const tiles=[];
+        if(merged.causes?.length)      tiles.push(card("🌀 Możliwe przyczyny", merged.causes));
+        if(merged.symptoms?.length)    tiles.push(card("🤒 Objawy", merged.symptoms));
+        if(merged.concerns?.length)    tiles.push(card("⚠️ Kiedy się niepokoić", merged.concerns));
+        if(merged.doctors?.length)     tiles.push(card("👨‍⚕️ Lekarze", merged.doctors));
+        if(merged.medications?.length) tiles.push(card("💊 Leki", merged.medications));
+        if(merged.first_aid?.length)   tiles.push(card("⛑️ Pierwsza pomoc", merged.first_aid));
+        if(merged.rehabilitation?.length) tiles.push(card("🏃 Rehabilitacja / Ćwiczenia", merged.rehabilitation));
+        if(merged.avoid?.length)          tiles.push(card("❌ Czego unikać", merged.avoid));
+        if(merged.prevention?.length)     tiles.push(card("✅ Profilaktyka", merged.prevention));
+        if(merged.mistakes?.length)       tiles.push(card("⚠️ Najczęstsze błędy", merged.mistakes));
 
-  <footer style="margin-top:40px; text-align:center; font-size:13px; color:#aaa;">
-    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
-  </footer>
+        // czerwony kafel zawsze na pozycji 4
+        const em=emergencyCard(merged.emergency);
+        const targetIndex=Math.min(3, tiles.length);
+        tiles.splice(targetIndex,0,em);
 
-  <!-- Skrypt -->
-  <script src="szczegoly.js"></script>
+        if(merged.description && merged.description.trim()){
+          tiles.push(card("ℹ️ Dodatkowe informacje", merged.description));
+        }
+
+        // spacery do pełnego rzędu
+        const remainder=tiles.length%3;
+        if(remainder!==0){
+          const toAdd=3-remainder;
+          for(let i=0;i<toAdd;i++) tiles.push(spacerCard());
+        }
+
+        const grid=document.createElement("section");
+        grid.className="cards";
+        for(const t of tiles) grid.appendChild(t);
+
+        content.innerHTML="";
+        content.appendChild(grid);
+      }catch(e){
+        console.error(e);
+        content.innerHTML=`<p class="error">Błąd wczytywania danych: ${e.message}</p>`;
+      }
+    }
+    if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",render);
+    else render();
+  })();
+  </script>
 </body>
 </html>
