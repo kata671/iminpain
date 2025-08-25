@@ -3,37 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <title>Szczegóły</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- style bazowe -->
+  <!-- Twoje style bazowe – tak jak w repo -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="style-overrides.css" />
   <link rel="stylesheet" href="fix.szczegoly.css" />
-
-  <style id="enh-szczegoly-css">
-    /* tytuły w kafelkach odrobinkę większe */
-    body[data-page="szczegoly"] .card .card-caption {
-      font-size: 1.06rem;
-      font-weight: 700;
-      letter-spacing: .2px;
-      text-align: center;
-      margin-bottom: 8px;
-    }
-    /* punkty zawsze równo przy lewej krawędzi, nic nie „wychodzi” */
-    body[data-page="szczegoly"] .card ul {
-      list-style: disc;
-      list-style-position: outside;
-      margin: 0 0 0 18px;
-      padding-left: 0;
-    }
-    body[data-page="szczegoly"] .card li {
-      margin: 4px 0;
-      line-height: 1.5;
-    }
-    /* kolory etykiet w treści */
-    .otc { color:#2ecc71; font-weight:700; } /* Bez recepty */
-    .rx  { color:#e74c3c; font-weight:700; } /* Na receptę */
-  </style>
 </head>
 <body data-page="szczegoly">
 
@@ -44,62 +19,19 @@
 
   <h1 id="title">Szczegóły</h1>
   <div class="pill" aria-hidden="true"></div>
+
+  <!-- tutaj renderer wstawi kafelki -->
   <div id="content"></div>
-  <div class="error" style="display:none;"></div>
+
+  <!-- dwa identyfikatory błędów, żeby pasowało do KAŻDEJ wersji JS -->
+  <div id="err" class="error" style="display:none;"></div>
+  <div id="er"  class="error" style="display:none;"></div>
 
   <footer style="margin-top:40px">
     <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
   </footer>
 
-  <!-- Skrypty -->
+  <!-- Jedyny wymagany skrypt -->
   <script src="szczegoly.js"></script>
-
-  <script id="enh-szczegoly-js">
-  (function(){
-    function colorLabels(root){
-      const nodes = root.querySelectorAll('.card ul li, .card p');
-      nodes.forEach(n=>{
-        let html = n.innerHTML;
-        html = html.replace(/(^|\s)(Bez\s+recepty)\s*:/gi,
-          '$1<strong class="otc">$2</strong>:');
-        html = html.replace(/(^|\s)(Na\s+receptę)\s*:/gi,
-          '$1<strong class="rx">$2</strong>:');
-        if(html!==n.innerHTML) n.innerHTML = html;
-      });
-    }
-
-    function addEmojis(root){
-      const caps = root.querySelectorAll('.card .card-caption');
-      caps.forEach(c=>{
-        let t = c.textContent.trim();
-        if (/^Możliwe przyczyny/i.test(t)) t = "🌀 " + t;
-        else if (/^Objawy/i.test(t)) t = "🤒 " + t;
-        else if (/^Kiedy się niepokoić/i.test(t)) t = "⚠️ " + t;
-        else if (/^Lekarze/i.test(t)) t = "👨‍⚕️ " + t;
-        else if (/^Leki/i.test(t)) t = "💊 " + t;
-        else if (/^Pierwsza pomoc/i.test(t)) t = "🛟 " + t;
-        else if (/^Rehabilitacja/i.test(t)) t = "🏃 " + t;
-        else if (/^Czego unikać/i.test(t)) t = "❌ " + t;
-        else if (/^Profilaktyka/i.test(t)) t = "✅ " + t;
-        else if (/^Najczęstsze błędy/i.test(t)) t = "⚠️ " + t;
-        else if (/^Dodatkowe informacje/i.test(t)) t = "ℹ️ " + t;
-        else if (/^Niezwłoczna pomoc/i.test(t)) t = "🚨 " + t;
-        c.textContent = t;
-      });
-    }
-
-    function enhance(){
-      const root = document.getElementById('content') || document.body;
-      colorLabels(root);
-      addEmojis(root);
-    }
-
-    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', enhance);
-    else enhance();
-
-    new MutationObserver(enhance)
-      .observe(document.getElementById('content')||document.body,{childList:true,subtree:true});
-  })();
-  </script>
 </body>
 </html>
