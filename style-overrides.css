@@ -388,3 +388,53 @@ body[data-page="szczegoly"] .card.spacer{
   border: 0 !important;
   box-shadow: none !important;
 }
+/* --- TWARDY FIX DLA SZCZEGÓŁÓW (3 kolumny, bez dziur) --- */
+body[data-page="szczegoly"] .cards{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(320px, 1fr)) !important;
+  grid-auto-flow: row !important;            /* bez „przeskakiwania” */
+  justify-content: center !important;
+  align-items: start !important;
+  gap: 22px !important;
+  max-width: 1120px !important;
+  margin: 24px auto 40px !important;
+  padding: 0 12px !important;
+}
+@media (max-width: 920px){
+  body[data-page="szczegoly"] .cards{
+    grid-template-columns: repeat(2, minmax(300px, 1fr)) !important;
+  }
+}
+@media (max-width: 560px){
+  body[data-page="szczegoly"] .cards{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Każda karta zajmuje DOKŁADNIE 1 kolumnę – nic nie span-uje szerzej */
+body[data-page="szczegoly"] .cards > .card{
+  grid-column: auto !important;
+  min-width: 0 !important;     /* zapobiega wypychaniu kolumn */
+}
+
+/* Czerwony kafel – tylko kosmetyka, nie wpływa na układ */
+body[data-page="szczegoly"] .card.emergency{
+  border: 2px solid #ff4d4d !important;
+  background: rgba(120,20,20,.88) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+}
+body[data-page="szczegoly"] .card.emergency:hover{
+  box-shadow: 0 0 28px rgba(255,30,30,.9) !important;
+}
+
+/* Na wypadek starych „spacerów” – nie pokazuj ich */
+body[data-page="szczegoly"] .cards > .card.spacer{
+  visibility: hidden !important;
+  pointer-events: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+}
