@@ -283,3 +283,62 @@ body[data-page="szczegoly"] .card li{
 body[data-page="szczegoly"] .card.emergency{
   height: 330px;              /* ta sama co .card */
 }
+/* === SZCZEGÓŁY: równe rzędy 3×, wyśrodkowane === */
+body[data-page="szczegoly"] .cards{
+  display:grid;
+  /* stałe, równe kolumny i centrowanie całej siatki */
+  grid-template-columns: repeat(3, 320px);
+  justify-content: center;
+  gap: 22px;
+  margin: 22px auto 32px;
+  padding: 0 12px;
+}
+
+/* Tablet: 2 kolumny */
+@media (max-width: 920px){
+  body[data-page="szczegoly"] .cards{
+    grid-template-columns: repeat(2, 320px);
+  }
+}
+/* Telefon: 1 kolumna, bez stałej wysokości */
+@media (max-width: 560px){
+  body[data-page="szczegoly"] .cards{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Karta – identyczne wymiary, równy nagłówek i przewijalny środek */
+body[data-page="szczegoly"] .card{
+  width: 320px;
+  height: 360px;              /* <- jeśli za niskie/wysokie: zmień 360 */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+body[data-page="szczegoly"] .card .card-caption{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:52px;            /* równy „pasek” tytułu */
+  padding: 8px 10px;
+  text-align:center;
+  font-weight:700;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+body[data-page="szczegoly"] .card ul,
+body[data-page="szczegoly"] .card p{
+  margin: 12px 12px 14px;
+  padding: 0;
+  flex: 1;                    /* wypełnia resztę karty */
+  overflow: auto;             /* przewijane, gdy treści dużo */
+}
+body[data-page="szczegoly"] .card li{
+  list-style: disc inside;
+  margin: 6px 0;
+}
+
+/* Czerwony kafel – ten sam rozmiar */
+body[data-page="szczegoly"] .card.emergency{
+  width: 320px;
+  height: 360px;
+}
