@@ -1,82 +1,51 @@
-/* ——— Reset / podstawa dla kafelków ——— */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(260px, 1fr));
-  gap: 16px 18px;
-  justify-content: center;
-  align-items: start;
-  max-width: 1100px;
-  margin: 24px auto 28px;
-  padding: 0 16px;
+/* Siatka SZCZEGÓŁÓW – niezależna od style.css */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(260px,1fr));
+  gap:16px 18px;
+  justify-content:center;
+  align-items:start;
+  max-width:1100px;
+  margin:24px auto 28px;
+  padding:0 16px;
 }
 
-.card,
-.grid .card {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  border-radius: 14px;
-  overflow: hidden;
-  background: rgba(86,51,142,.18);
-  border: 1px solid rgba(165,140,255,.12);
-  box-shadow:
-    inset 0 0 1px rgba(165,140,255,.22),
-    0 6px 18px rgba(0,0,0,.35);
+/* Karty na szczegółach */
+.card{
+  display:flex; flex-direction:column; min-height:100%;
+  border-radius:14px; overflow:hidden;
+  background:rgba(86,51,142,.18);
+  border:1px solid rgba(165,140,255,.12);
+  box-shadow: inset 0 0 1px rgba(165,140,255,.22), 0 6px 18px rgba(0,0,0,.35);
   transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
+.card__head{padding:12px 14px 8px}
+.card__body{padding:8px 14px 14px; flex:1 1 auto}
+.card__body ul{margin:.35rem 0 0 1.15rem; padding:0}
+.card__body li{margin:.28rem 0}
 
-.card img,
-.grid .card img,
-.card-image {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16/10;
-  object-fit: cover;
-  display: block;
+/* Hover (biały glow) – zwykłe karty */
+.card:not(.emergency):hover{
+  transform:translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.4), 0 0 18px rgba(255,255,255,.25);
 }
 
-.card .card-caption,
-.grid .card .card-caption {
-  padding: 10px 12px;
-  text-align: center;
-  font-weight: 600;
+/* EMERGENCY – puls i mocny czerwony glow */
+@keyframes pulse-red{
+  0%{ box-shadow:0 0 0 0 rgba(255,59,59,.55); transform:translateY(0) }
+  50%{ box-shadow:0 0 24px 8px rgba(255,59,59,.35); transform:translateY(-1px) }
+  100%{ box-shadow:0 0 0 0 rgba(255,59,59,.55); transform:translateY(0) }
 }
-
-.card__head { padding: 12px 14px 8px; }
-.card__body { padding: 8px 14px 14px; flex: 1 1 auto; }
+.card.emergency{
+  border:2px solid rgba(255,80,80,.75) !important;
+  background:rgba(120,8,8,.20) !important;
+  animation:pulse-red 1.8s ease-in-out infinite;
+}
+.card.emergency:hover{
+  box-shadow: 0 10px 28px rgba(0,0,0,.55), 0 0 28px rgba(255,60,60,.65) !important;
+  transform:translateY(-2px);
+}
 
 /* Responsywność */
-@media (max-width: 980px) {
-  .grid { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
-}
-@media (max-width: 560px) {
-  .grid { grid-template-columns: 1fr; }
-}
-
-/* ——— EMERGENCY: puls + mocny glow ——— */
-@keyframes pulse-red {
-  0%   { box-shadow: 0 0 0 0 rgba(255, 59, 59, .55); transform: translateY(0); }
-  50%  { box-shadow: 0 0 24px 8px rgba(255, 59, 59, .35); transform: translateY(-1px); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 59, 59, .55); transform: translateY(0); }
-}
-
-.card.emergency {
-  border: 2px solid rgba(255, 80, 80, .75) !important;
-  background: rgba(120, 8, 8, .20) !important;
-  animation: pulse-red 1.8s ease-in-out infinite;
-}
-
-.card.emergency:hover {
-  box-shadow:
-    0 10px 28px rgba(0,0,0,.55),
-    0 0 28px rgba(255, 60, 60, .65) !important;
-  transform: translateY(-2px);
-}
-
-/* ——— Delikatny biały glow dla zwykłych kafelków ——— */
-.card:not(.emergency):hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 8px 20px rgba(0,0,0,.4),
-    0 0 18px rgba(255, 255, 255, .25);
-}
+@media (max-width:980px){ .grid{grid-template-columns:repeat(2, minmax(220px,1fr))} }
+@media (max-width:560px){ .grid{grid-template-columns:1fr} }
