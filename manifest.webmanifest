@@ -1,0 +1,12 @@
+{
+  "name": "Iminpain — Niezwłoczna pomoc",
+  "short_name": "Iminpain",
+  "start_url": "pomoc.html",
+  "display": "standalone",
+  "background_color": "#56338e",
+  "theme_color": "#56338e",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
