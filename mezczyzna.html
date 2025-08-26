@@ -2,132 +2,28 @@
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mężczyzna — wybierz obszar bólu</title>
-
-  <!-- Twój globalny CSS -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Drobny CSS tylko dla układu kafelków (spójny z Kobietą) -->
-  <style>
-    .grid-container {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:24px;
-      align-items:start;
-      justify-items:center;
-      width:100%;
-      max-width:1100px;
-      margin:24px auto 0;
-      padding:0 16px;
-    }
-
-    .card{
-      width:100%;
-      max-width:340px;
-      /* ciemny, półprzezroczysty fiolet */
-      background: rgba(86, 51, 142, 0.18);
-      border-radius:16px;
-      /* cienka, prawie transparentna obwódka + delikatny cień */
-      border:1px solid rgba(165,140,255,0.12);
-      box-shadow:
-        inset 0 0 0 1px rgba(165,140,255,0.22),
-        0 6px 18px rgba(0,0,0,0.35);
-      overflow:hidden;
-      transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
-    }
-
-    .card:hover{
-      transform: translateY(-2px);
-      background: rgba(86, 51, 142, 0.22);
-      box-shadow:
-        inset 0 0 0 1px rgba(185,165,255,0.45),
-        0 0 28px 6px rgba(140,110,255,0.22),
-        0 10px 24px rgba(0,0,0,0.45);
-    }
-
-    .card a{ display:block; color:inherit; text-decoration:none; }
-
-    .card-image{
-      display:block;
-      width:100%;
-      aspect-ratio:16/10;
-      object-fit:cover;
-    }
-
-    .card-caption{
-      padding:10px 14px;
-      font-weight:600;
-      text-align:center;
-    }
-
-    header .breadcrumbs{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      padding:16px 16px 0;
-      max-width:1100px;
-      margin:0 auto;
-    }
-    header .breadcrumbs a{ text-decoration:none; }
-
-    main h1{
-      max-width:1100px;
-      margin:8px auto 0;
-      padding:0 16px;
-    }
-
-    @media (max-width:480px){
-      .grid-container{ grid-template-columns:1fr; gap:18px; }
-      .card{ max-width:100%; }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mężczyzna — wybór obszaru bólu</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
-<body data-page="mezczyzna">
-  <header>
-    <nav class="breadcrumbs">
-      <a href="index.html">← Wróć do startu</a>
-      <span>|</span>
-      <a href="index.html">Strona główna</a>
-    </nav>
-    <h1>Wybierz obszar bólu — Mężczyzna</h1>
+<body class="bg-med">
+  <header class="site-header">
+    <a class="back" href="index.html">← Wróć</a>
+    <h1>👨 Mężczyzna</h1>
+    <p class="subtitle">Wybierz obszar bólu</p>
   </header>
 
-  <main>
-    <section class="grid-container" aria-label="Wybór sekcji">
-
-      <!-- Głowa i szyja -->
-      <article class="card">
-        <a href="mezczyzna-glowa.html">
-          <img class="card-image" src="img/mezczyzna-glowa.jpg" alt="Głowa i szyja" loading="lazy">
-          <div class="card-caption">Głowa i szyja</div>
-        </a>
-      </article>
-
-      <!-- Klatka / Brzuch / Plecy -->
-      <article class="card">
-        <a href="mezczyzna-klatka.html">
-          <img class="card-image" src="img/mezczyzna-klatka.jpg" alt="Klatka / Brzuch / Plecy" loading="lazy">
-          <div class="card-caption">Klatka / Brzuch / Plecy</div>
-        </a>
-      </article>
-
-      <!-- Biodra / Nogi / Stopy -->
-      <article class="card">
-        <a href="mezczyzna-nogi.html">
-          <img class="card-image" src="img/mezczyzna-biodra-nogi-stopy.jpg" alt="Biodra / Nogi / Stopy" loading="lazy">
-          <div class="card-caption">Biodra / Nogi / Stopy</div>
-        </a>
-      </article>
-
-    </section>
+  <main class="container">
+    <ul class="tiles tiles-3x2">
+      <li><a class="tile" href="szczegoly.html?id=glowa_m"><span>🧠 Głowa</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=szyja_m"><span>🦴 Szyja</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=klatka_m"><span>💙 Klatka piersiowa</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=brzuch_m"><span>🫃 Brzuch</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=plecy_m"><span>🧍 Plecy</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=nogi_m"><span>🦵 Nogi</span></a></li>
+    </ul>
   </main>
 
-  <footer>
-    <p style="text-align:center; opacity:.8; margin:28px 0 18px;">
-      © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
-    </p>
-  </footer>
+  <footer class="site-footer"><small>© 2025</small></footer>
 </body>
 </html>
