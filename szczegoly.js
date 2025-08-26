@@ -1,135 +1,101 @@
-<script>
-// ========== S Z C Z E G O Ł Y  ==========
-(() => {
-  const params = new URLSearchParams(location.search);
-  const id = params.get("id");
-  const DATA_URL = "data/detailed_conditions.json";
+// Tworzy element
+function el(tag, className, text){
+  const e = document.createElement(tag);
+  if(className) e.className = className;
+  if(text) e.innerHTML = text;
+  return e;
+}
 
-  const ICONS = {
-    causes: "🧬",
-    symptoms: "🧪",
-    concerns: "⚠️",
-    doctors: "🧑‍⚕️",
-    medications: "💊",
-    first_aid: "🆘",
-    rehab: "🏋️",
-    avoid: "❌",
-    prevention: "🌱",
-    mistakes: "⚠️",
-    emergency: "🎆",
-    info: "ℹ️",
-    now_do: "👉"
-  };
+// Lista
+function buildList(arr){
+  const ul = document.createElement("ul");
+  arr.forEach(item=>{
+    const li = document.createElement("li");
+    li.innerHTML = item;
+    ul.appendChild(li);
+  });
+  return ul;
+}
 
-  const TITLES = {
-    causes: "Możliwe przyczyny",
-    symptoms: "Objawy",
-    concerns: "Kiedy się niepokoić",
-    doctors: "Lekarze",
-    medications: "Leki",
-    first_aid: "Pierwsza pomoc",
-    rehab: "Rehabilitacja / ćwiczenia",
-    avoid: "Czego unikać",
-    prevention: "Profilaktyka",
-    mistakes: "Najczęstsze błędy",
-    emergency: "Niezwłoczna pomoc (112/SOR)",
-    info: "Dodatkowe informacje",
-    now_do: "Co zrobić teraz (3 kroki)"
-  };
+// Budowa karty
+function cardFor(key, value, titleText){
+  const c = el("section","card");
+  const head = el("div","card__head");
+  head.appendChild(el("h3","card__title",titleText));
+  c.appendChild(head);
 
-  const ORDER = [
-    "causes","symptoms","concerns",
-    "doctors","medications","first_aid",
-    "rehab","avoid","prevention",
-    "mistakes","emergency","info","now_do"
-  ];
+  const body = el("div","card__body");
+  if(key==="medications" && Array.isArray(value)){
+    const formatted = value.map(line =>
+      line.replace(/^Bez recepty:/i, `<span class="tag tag--otc">Bez recepty:</span>`)
+          .replace(/^Na receptę:/i, `<span class="tag tag--rx">Na receptę:</span>`)
+    );
+    body.appendChild(buildList(formatted));
+  } else if(Array.isArray(value)){
+    body.appendChild(buildList(value));
+  } else if(typeof value==="string"){
+    body.appendChild(el("p",null,value));
+  }
+  c.appendChild(body);
 
-  const el = (tag, cls, html) => {
-    const e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (html != null) e.innerHTML = html;
-    return e;
-  };
-
-  function buildList(items) {
-    const ul = el("ul","list");
-    items.forEach(t => {
-      const li = el("li",null, t);
-      ul.appendChild(li);
-    });
-    return ul;
+  // Emergency special
+  if(key==="emergency"){
+    c.classList.add("emergency");
+    c.addEventListener("click", ()=> window.location.href="pomoc.html");
   }
 
-  function cardFor(key, value, titleText) {
-    // Specjalna karta „emergency” jako link do pomoc.html
-    if (key === "emergency") {
-      const url = new URL("pomoc.html", location.origin);
-      url.searchParams.set("from", id || "");
-      const a = el("a","card card--danger");
-      a.href = url.toString();
-      a.setAttribute("aria-label","Otwórz mapę pomocy");
-      const head = el("div","card__head",
-        `<span class="card__icon">${ICONS[key]||""}</span><span class="card__title">${titleText}</span>`);
-      const body = el("div","card__body");
-      body.appendChild(buildList(value));
-      a.append(head, body);
-      return a;
+  return c;
+}
+
+// Dane (tu możesz dokładać kolejne bogatsze treści)
+const conditions = {
+  "kolano_m": {
+    title: "Kolano — mężczyzna",
+    cards: {
+      causes: ["Skręcenie, łąkotki","ACL/PCL","Zapalenia, chondromalacja","Przeciążenia"],
+      symptoms: ["Ból ostry/tępy, obrzęk","Blokowanie, niestabilność"],
+      worry: ["Obrzęk + brak obciążenia","Blokada/niestabilność","Gorączka + ból/obrzęk"],
+      doctors: ["Ortopeda/traumatolog","Fizjoterapeuta","POZ"],
+      medications: [
+        "Bez recepty: paracetamol, ibuprofen/naproksen, żele",
+        "Na receptę: NLPZ/COX-2, leki osłonowe, ortezy wg lekarza"
+      ],
+      firstAid: ["RICE, kompresja, elewacja","Odciążanie (kule/stabilizator)"],
+      avoid: ["Głębokie przysiady/skoki na początku"],
+      prevention: ["FIFA 11+, rozgrzewka/schłodzenie","Wymiana butów 600–800 km"],
+      extra: ["Stabilność kolana zależy od pośladków i czworogłowych"],
+      emergency: ["Deformacja, silny obrzęk, podejrzenie złamania — 112/SOR"]
     }
+  },
 
-    const card = el("div","card");
-    if (key === "medications") card.classList.add("card--meds");
-    const head = el("div","card__head",
-      `<span class="card__icon">${ICONS[key]||""}</span><span class="card__title">${titleText}</span>`);
-    const body = el("div","card__body");
-
-    // value: string | string[]
-    if (Array.isArray(value)) {
-      body.appendChild(buildList(value));
-    } else if (typeof value === "string") {
-      body.appendChild(el("p",null,value));
+  "oczy_k": {
+    title: "Oczy — kobieta",
+    cards: {
+      causes: ["Zespół suchego oka","Zapalenie spojówek","Podrażnienie ekran/wiatr","Ciało obce"],
+      symptoms: ["Szczypanie, pieczenie, łzawienie","Światłowstręt","Poczucie piasku w oku","Zaczerwienienie"],
+      worry: ["Nagłe pogorszenie ostrości","Silny ból, światłowstręt","Uraz chemiczny/mechaniczny"],
+      doctors: ["Okulista","POZ (skierowanie, krople)"],
+      medications: [
+        "Bez recepty: sztuczne łzy, krople na alergię",
+        "Na receptę: krople sterydowe/antybiotyki wg okulisty"
+      ],
+      firstAid: ["Płucz oko solą fizjologiczną","Ogranicz ekran, rób przerwy 20-20-20"],
+      avoid: ["Soczewki przy stanie zapalnym","Pocieranie oczu"],
+      prevention: ["Nawilżanie powietrza","Przerwy od ekranu, odpowiednie oświetlenie"],
+      mistakes: ["Samodzielne sterydy","Brak konsultacji przy pogorszeniu"],
+      emergency: ["Nagła utrata widzenia, silny ból — 112/SOR"]
     }
-
-    card.append(head, body);
-    return card;
   }
+};
 
-  function renderTitle(title) {
-    const h = document.getElementById("page-title");
-    if (h) h.textContent = title || "Szczegóły";
-  }
-
-  async function render() {
-    const content = document.getElementById("content");
-    if (!id || !content) return;
-
-    const res = await fetch(`${DATA_URL}?v=${Date.now()}`);
-    const data = await res.json();
-    const node = data[id];
-    if (!node) {
-      content.textContent = "Brak danych.";
-      return;
-    }
-
-    renderTitle(node.title);
-
-    const grid = el("div","cards-grid");
-    ORDER.forEach(key => {
-      if (!node[key]) return;
-      const val = node[key];
-      // pustki pomijamy
-      if ((Array.isArray(val) && val.length===0) || (typeof val==="string" && !val.trim())) return;
-      const titleText = TITLES[key] || key;
-      grid.appendChild(cardFor(key, val, titleText));
-    });
-
-    content.innerHTML = "";
-    content.appendChild(grid);
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", render);
-  } else {
-    render();
-  }
-})();
-</script>
+// Render
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+const section = conditions[id];
+if(section){
+  document.getElementById("sectionTitle").textContent = section.title;
+  const container = document.getElementById("cardsContainer");
+  Object.entries(section.cards).forEach(([key,val])=>{
+    container.appendChild(cardFor(key,val,key));
+  });
+}
