@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli-mnie.pl — Start</title>
 
-  <!-- CSS: lista stron (siatka) + tapeta -->
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="wallpaper.css" />
+  <!-- Style: krok 5 -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="wallpaper.css">
 </head>
 <body>
   <header>
@@ -22,13 +22,24 @@
   </header>
 
   <main>
-    <!-- WSTAW TU SWOJĄ ZAWARTOŚĆ BEZ ZMIAN:
-         Twoje obecne kafelki (np. kobieta/mężczyzna).
-         Zachowaj istniejący <div class="grid"> ... </div> -->
+    <!-- Twoje kafelki z wyborem kobieta/mężczyzna -->
+    <div class="grid">
+      <a href="kobieta.html" class="card">
+        <img src="img/kobieta-model1.png" alt="Kobieta">
+        <span>Kobieta</span>
+      </a>
+      <a href="mezczyzna.html" class="card">
+        <img src="img/mezczyzna-model1.png" alt="Mężczyzna">
+        <span>Mężczyzna</span>
+      </a>
+    </div>
   </main>
 
   <footer>
     © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
   </footer>
+
+  <!-- Krok 5: skrypt porządkujący -->
+  <script src="apply-step5.js" defer></script>
 </body>
 </html>
