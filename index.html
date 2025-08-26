@@ -1,31 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boli mnie</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Boli-mnie — wybierz postać</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body data-page="index">
-    <div class="container">
-        <h1>Boli mnie</h1>
-        <h2>Wybierz postać</h2>
+<body class="bg-med">
+  <header class="site-header">
+    <h1>🩺 Boli-mnie</h1>
+    <p class="subtitle">Szybko zlokalizuj ból i znajdź pomoc</p>
+  </header>
 
-        <div class="gender-choice">
-            <label>
-                <input type="radio" name="gender" value="kobieta" onclick="location.href='kobieta.html'">
-                Kobieta
-                <br>
-                <img src="img/kobieta-glowa-12.png" alt="Kobieta" width="200">
-            </label>
-
-            <label>
-                <input type="radio" name="gender" value="mezczyzna" onclick="location.href='mezczyzna.html'">
-                Mężczyzna
-                <br>
-                <img src="img/mezczyzna-glowa-1.png" alt="Mężczyzna" width="200">
-            </label>
-        </div>
+  <main class="container">
+    <div class="grid-2 hero-grid">
+      <a class="hero-card" href="kobieta.html" aria-label="Kobieta">
+        <img src="img/kobieta-glowa-12.png" alt="Kobieta – model" />
+        <span>👩 Kobieta</span>
+      </a>
+      <a class="hero-card" href="mezczyzna.html" aria-label="Mężczyzna">
+        <img src="img/mezczyzna-glowa-1.png" alt="Mężczyzna – model" />
+        <span>👨 Mężczyzna</span>
+      </a>
     </div>
+  </main>
+
+  <footer class="site-footer">
+    <small>Informacje mają charakter edukacyjny. W nagłym zagrożeniu dzwoń 112 / 999.</small>
+  </footer>
 </body>
 </html>
