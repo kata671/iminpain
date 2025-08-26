@@ -1,65 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Kobieta — wybór sekcji</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      justify-items: center;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .card {
-      width: 100%;
-      max-width: 320px;
-      background: rgba(86,51,142,.18);
-      border-radius: 16px;
-      border: 1px solid rgba(165,140,255,.12);
-      box-shadow: inset 0 0 1px rgba(165,140,255,.22),
-                  0 6px 18px rgba(0,0,0,.35);
-      overflow: hidden;
-      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-    }
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(0,0,0,.45),
-                  0 0 20px rgba(165,140,255,.25);
-    }
-    .card img { display:block; width:100%; height:auto; }
-    .card span { display:block; padding:10px; text-align:center; font-weight:600; }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kobieta — wybór obszaru bólu</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body data-page="kobieta">
-  <div class="nav-links">
-    <a href="index.html" class="back-link">← Powrót do startu</a>
-  </div>
+<body class="bg-med">
+  <header class="site-header">
+    <a class="back" href="index.html">← Wróć</a>
+    <h1>👩 Kobieta</h1>
+    <p class="subtitle">Wybierz obszar bólu</p>
+  </header>
 
-  <h1>Wybierz obszar bólu — Kobieta</h1>
+  <main class="container">
+    <ul class="tiles tiles-3x2">
+      <li><a class="tile" href="szczegoly.html?id=glowa_k"><span>🧠 Głowa</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=szyja_k"><span>🦴 Szyja</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=klatka_k"><span>💙 Klatka piersiowa</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=brzuch_k"><span>🫃 Brzuch</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=plecy_k"><span>🧍 Plecy</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=nogi_k"><span>🦵 Nogi</span></a></li>
+    </ul>
+  </main>
 
-  <div class="grid">
-    <a href="kobieta-glowa.html" class="card">
-      <img src="img/kobieta-glowa.jpg" alt="Głowa">
-      <span>Głowa</span>
-    </a>
-
-    <a href="kobieta-klatka.html" class="card">
-      <img src="img/kobieta-klatka.jpg" alt="Klatka, brzuch, plecy">
-      <span>Klatka, brzuch, plecy</span>
-    </a>
-
-    <a href="kobieta-nogi.html" class="card">
-      <img src="img/kobieta-nogi.jpg" alt="Biodra, nogi, stopy">
-      <span>Biodra, nogi, stopy</span>
-    </a>
-
-    <a href="szczegoly.html?id=ciaza_k" class="card">
-      <img src="img/kobieta-ciaza.jpg" alt="Ciąża">
-      <span>Ciąża</span>
-    </a>
-  </div>
+  <footer class="site-footer"><small>© 2025</small></footer>
 </body>
 </html>
