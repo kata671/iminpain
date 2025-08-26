@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boli mnie</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Boli-mnie.pl — Start</title>
+
+  <!-- CSS: lista stron (siatka) + tapeta -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="wallpaper.css" />
 </head>
-<body data-page="index">
-    <div class="container">
-        <h1>Boli mnie</h1>
-        <h2>Wybierz postać</h2>
+<body>
+  <header>
+    <nav class="breadcrumbs">
+      <a href="index.html">← Start</a>
+      <span>|</span>
+      <a href="kobieta.html">Kobieta</a>
+      <span>|</span>
+      <a href="mezczyzna.html">Mężczyzna</a>
+    </nav>
+    <h1>Wybierz widok</h1>
+  </header>
 
-        <div class="gender-choice">
-            <label>
-                <input type="radio" name="gender" value="kobieta" onclick="location.href='kobieta.html'">
-                Kobieta
-                <br>
-                <img src="img/kobieta-glowa-12.png" alt="Kobieta" width="200">
-            </label>
+  <main>
+    <!-- WSTAW TU SWOJĄ ZAWARTOŚĆ BEZ ZMIAN:
+         Twoje obecne kafelki (np. kobieta/mężczyzna).
+         Zachowaj istniejący <div class="grid"> ... </div> -->
+  </main>
 
-            <label>
-                <input type="radio" name="gender" value="mezczyzna" onclick="location.href='mezczyzna.html'">
-                Mężczyzna
-                <br>
-                <img src="img/mezczyzna-glowa-1.png" alt="Mężczyzna" width="200">
-            </label>
-        </div>
-    </div>
+  <footer>
+    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
+  </footer>
 </body>
 </html>
