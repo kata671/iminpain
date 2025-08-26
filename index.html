@@ -9,12 +9,12 @@
   <meta name="theme-color" content="#7a4dff" />
   <meta name="description" content="Szybko zlokalizuj ból, sprawdź pierwszą pomoc i znajdź najbliższą pomoc medyczną." />
 
-  <!-- Styl TYLKO dla strony głównej: większe ikony quickbaru + panel akcji -->
+  <!-- Styl TYLKO dla strony głównej (większe ikony + zielone kafelki) -->
   <style>
-    /* większe, nowoczesne ikonki tylko na tej stronie */
     .home-icons .qi { font-size: 1.15rem; line-height: 1; display: inline-block; transform: translateY(1px); }
     .home-icons .quickbar a, .home-icons .quickbar button { padding: .55rem .9rem; }
-    /* panel akcji */
+
+    /* panel akcji u góry (zostawiamy) */
     .actions { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 14px 0 18px; }
     .action-card {
       display:flex; align-items:center; gap:10px; padding:12px 14px; border-radius:14px;
@@ -28,9 +28,37 @@
       border-color: #ff9ca699;
       box-shadow: 0 0 14px rgba(255,77,90,.6), 0 0 36px rgba(255,77,120,.35);
     }
-    @media (max-width: 480px){
-      .home-icons .qi { font-size: 1.2rem; }
+
+    /* >>> NOWE: 3 zielone kafelki z glow (średnie, poziomo) <<< */
+    .help-tiles{
+      display:grid; gap:14px; grid-template-columns: repeat(3, minmax(0,1fr));
+      margin: 8px 0 20px;
     }
+    @media (max-width: 900px){ .help-tiles{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 560px){ .help-tiles{ grid-template-columns: 1fr; } }
+
+    .help-tile{
+      display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:16px;
+      background: linear-gradient(180deg, rgba(8,40,20,.85), rgba(12,52,28,.78));
+      border:1px solid rgba(18,197,91,.35);
+      color: var(--ink); text-decoration:none; font-weight:800;
+      box-shadow: 0 0 14px rgba(18,197,91,.45), 0 0 36px rgba(18,197,91,.25);
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+      min-height: 92px;
+    }
+    .help-tile .ico{
+      font-size: 1.4rem;
+      filter: drop-shadow(0 0 6px rgba(18,197,91,.65));
+    }
+    .help-tile .txt{ line-height:1.2 }
+    .help-tile .txt .title{ font-size: 1.05rem; display:block; }
+    .help-tile .txt .note{ opacity:.9; font-size:.92rem; }
+    .help-tile:hover{
+      transform: translateY(-2px);
+      border-color: rgba(18,197,91,.55);
+      box-shadow: 0 0 18px rgba(18,197,91,.75), 0 0 54px rgba(18,197,91,.45);
+    }
+
     /* ujednolicenie wysokości obrazów w kartach (K/M/D) — tylko na tej stronie */
     .hero-card img { max-height: 420px; width: auto; object-fit: contain; }
   </style>
@@ -53,11 +81,36 @@
 
   <header class="site-header">
     <h1>Wybierz, kogo dotyczy ból</h1>
-    <p class="subtitle">Interfejs dopasujemy do osoby. Zawsze w zasięgu ręki: pierwsza pomoc i lokalizacja.</p>
+    <p class="subtitle">Interfejs dopasujemy do osoby. Zawsze pod ręką: pierwsza pomoc, lokalizacja i szybkie instrukcje.</p>
   </header>
 
   <main class="container">
-    <!-- Panel szybkich akcji -->
+    <!-- NOWE: 3 zielone kafelki (z linkami do kotwic) -->
+    <div class="help-tiles">
+      <a class="help-tile" href="pierwsza-pomoc.html#rko" title="Reanimacja — instrukcja krok po kroku">
+        <span class="ico">❤️</span>
+        <span class="txt">
+          <span class="title">Reanimacja (RKO)</span>
+          <span class="note">Bezpieczeństwo, 30:2, AED — krok po kroku</span>
+        </span>
+      </a>
+      <a class="help-tile" href="pierwsza-pomoc.html#dławienie" title="Zadławienie — co robić">
+        <span class="ico">🫁</span>
+        <span class="txt">
+          <span class="title">Zadławienie</span>
+          <span class="note">Uderzenia między łopatki, uciśnięcia brzucha/piersi</span>
+        </span>
+      </a>
+      <a class="help-tile" href="pierwsza-pomoc.html#wypadek" title="Ofiara wypadku — pierwsze kroki">
+        <span class="ico">🚧</span>
+        <span class="txt">
+          <span class="title">Ofiara wypadku</span>
+          <span class="note">Zabezpiecz miejsce, oceń oddech, wezwij pomoc</span>
+        </span>
+      </a>
+    </div>
+
+    <!-- Panel szybkich akcji (zostawiamy jak było) -->
     <div class="actions">
       <a class="action-card emergency" href="tel:112" title="Zgłoś wypadek">
         <span class="ico">🚨</span><div><strong>Zgłoś wypadek</strong><br><span class="note">Połącz z numerem alarmowym 112</span></div>
@@ -73,7 +126,7 @@
       </a>
     </div>
 
-    <!-- Kafelki wyboru osoby (zdjęcia dodasz później) -->
+    <!-- Kafelki wyboru osoby -->
     <div class="grid-2 hero-grid">
       <a class="hero-card" href="kobieta.html" onclick="localStorage.setItem('sex','k')">
         <img src="img/kobieta.png" alt="Kobieta" />
@@ -94,13 +147,7 @@
 
   <script src="app.js"></script>
   <script>
-    // „Namierz mnie” — przenosi od razu do strony lokalizacji.
-    // (Twoja strona lokalizacji ma już przycisk Moja lokalizacja, więc tu robimy szybkie przejście)
-    document.getElementById('btn-locate')?.addEventListener('click', () => {
-      // opcjonalnie: można próbować pobrać pozycję już tutaj (dla szybszego UX),
-      // ale prosto i bezpiecznie przekierowujemy i całość obsłuży lokalizacja.html
-      location.href = 'lokalizacja.html';
-    });
+    document.getElementById('btn-locate')?.addEventListener('click', ()=>{ location.href='lokalizacja.html'; });
   </script>
 </body>
 </html>
