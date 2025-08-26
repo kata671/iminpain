@@ -1,21 +1,17 @@
 /* ================================
-   Boli-mnie.pl — GLOBAL STYLE
+   Boli-mnie.pl — GLOBAL (listy)
    ================================ */
 
 /* —— Zmienne kolorów —— */
 :root{
-  --bg-deep: #0d1230;         /* bardzo ciemny granat/fiolet */
-  --bg-grad-1: #0e1f2a;       /* ciemny turkus */
-  --bg-grad-2: #1a0f2e;       /* ciemny fiolet */
   --card-bg: rgba(86,51,142,.18);
   --card-bd: rgba(165,140,255,.12);
   --card-inner: rgba(165,140,255,.22);
   --text: #e9ecf8;
   --text-dim: #cdd3ea;
   --link: #aeb8ff;
-  --accent: #a58cff;
 
-  /* tagi leków */
+  /* tagi leków (używane też na szczegółach) */
   --otc-bg: rgba(30, 150, 90, .18);
   --otc-bd: rgba(45, 200, 120, .5);
   --otc-fg: #7cf0ba;
@@ -31,19 +27,10 @@ html{scroll-behavior:smooth}
 body{
   margin:0;
   color:var(--text);
-  font:16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", Ubuntu, Cantarell, "Fira Sans", "Droid Sans", sans-serif;
-  background:
-    /* warstwa 1 — delikatny wzór (NA WIERZCHU) */
-    radial-gradient(ellipse at 20% -10%, rgba(255,255,255,.06), transparent 45%),
-    radial-gradient(ellipse at 80% 0%, rgba(255,255,255,.04), transparent 50%),
-    /* warstwa 2 — bardzo lekki „szum” */
-    repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 2px, transparent 2px 6px),
-    /* warstwa 3 — gradient tła (NA DOLE) */
-    linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%);
-  background-attachment: fixed;
+  font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",Ubuntu,Cantarell,"Fira Sans","Droid Sans",sans-serif;
 }
 
-/* —— Linki, nagłówki —— */
+/* —— Linki i nagłówki —— */
 a{color:var(--link); text-decoration:none}
 a:hover{text-decoration:underline}
 h1,h2,h3{line-height:1.25; margin:0 0 .35em}
@@ -51,7 +38,7 @@ h1{font-size:clamp(1.5rem, 2.8vw, 2.2rem)}
 h2{font-size:clamp(1.25rem, 2.2vw, 1.6rem)}
 h3{font-size:clamp(1.05rem, 1.8vw, 1.25rem)}
 
-/* —— Layout nagłówka/okruszków —— */
+/* —— Header / breadcrumbs —— */
 header{padding:14px 0 6px}
 .nav-links, .breadcrumbs{
   display:flex; gap:12px; align-items:center;
@@ -63,7 +50,7 @@ main{padding:6px 0 24px}
 main h1{max-width:1100px; margin:8px auto 12px; padding:0 16px; text-align:center}
 
 /* ================================
-   SIATKA KAFELKÓW (globalnie)
+   SIATKA KAFELKÓW (tylko dla list)
    ================================ */
 .grid{
   display:grid;
@@ -76,8 +63,8 @@ main h1{max-width:1100px; margin:8px auto 12px; padding:0 16px; text-align:cente
   padding:0 16px;
 }
 
-/* Karta (wersja bazowa dla index/kobieta/mezczyzna i podstron listowych) */
-.card{
+/* Karta — tylko w obrębie siatki .grid */
+.grid .card{
   display:flex;
   flex-direction:column;
   min-height:100%;
@@ -90,37 +77,57 @@ main h1{max-width:1100px; margin:8px auto 12px; padding:0 16px; text-align:cente
   overflow:hidden;
   transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
-.card a{color:inherit; text-decoration:none; display:block}
-.card img,
-.card-image{
+.grid .card a{color:inherit; text-decoration:none; display:block}
+
+/* Obrazek — tylko w kartach na listach */
+.grid .card img,
+.grid .card .card-image{
   width:100%;
   height:auto;
   aspect-ratio:16/10;
   object-fit:cover;
   display:block;
 }
-.card-caption{padding:10px 12px; text-align:center; font-weight:600}
-.card__head{padding:12px 14px 8px}
-.card__body{padding:8px 14px 14px; flex:1 1 auto}
-.card:hover{
+
+/* Podpis — tylko na listach */
+.grid .card .card-caption{
+  padding:10px 12px; text-align:center; font-weight:600;
+}
+
+/* Hover — tylko na listach */
+.grid .card:hover{
   transform:translateY(-2px);
   box-shadow:
     0 8px 20px rgba(0,0,0,.4),
     0 0 18px rgba(255,255,255,.22);
 }
 
-/* —— Emergency (globalna delikatna baza; pełny puls jest w fix.szczegoly.css) —— */
-.card.emergency{
+/* Emergency na listach — delikatna baza (pełny puls jest w fix.szczegoly.css) */
+.grid .card.emergency{
   border:2px solid rgba(255,80,80,.75);
   background:rgba(120,8,8,.18);
 }
-.card.emergency:hover{
+.grid .card.emergency:hover{
   box-shadow:
     0 10px 24px rgba(0,0,0,.5),
     0 0 24px rgba(255,60,60,.55);
 }
 
-/* —— Tagi „Bez recepty” / „Na receptę” —— */
+/* Równe wnętrza na listach */
+.grid .card__head{padding:12px 14px 8px}
+.grid .card__body{padding:8px 14px 14px; flex:1 1 auto}
+
+/* Responsywność list */
+@media (max-width:980px){
+  .grid{grid-template-columns:repeat(2, minmax(220px,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+
+/* ================================
+   Tagi leków (używane też na szczegółach)
+   ================================ */
 .tag{
   display:inline-block;
   padding:.15rem .5rem;
@@ -141,20 +148,8 @@ main h1{max-width:1100px; margin:8px auto 12px; padding:0 16px; text-align:cente
   border-color:var(--rx-bd);
 }
 
-/* —— Listy w kartach: pilnujemy marginesów, żeby punkty nie „wychodziły” —— */
-.card__body ul{margin:.35rem 0 0 1.15rem; padding:0}
-.card__body li{margin:.28rem 0}
-
-/* —— Responsywność —— */
-@media (max-width:980px){
-  .grid{grid-template-columns:repeat(2, minmax(220px,1fr))}
-}
-@media (max-width:560px){
-  .grid{grid-template-columns:1fr}
-}
-
 /* ================================
-   DROBNE DODATKI
+   Footer
    ================================ */
 footer{
   color:var(--text-dim);
