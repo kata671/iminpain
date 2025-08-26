@@ -1,78 +1,82 @@
-/* Tło: gradient + półprzezroczysty wzór */
-body {
-  background: linear-gradient(135deg, #0d1b2a, #2b2d42, #1e2761);
-  background-attachment: fixed;
-  color: #fff;
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><circle cx="30" cy="30" r="2" fill="rgba(255,255,255,0.15)"/></svg>');
-  background-size: 60px 60px;
-  pointer-events: none;
-  opacity: 0.4;
-}
-
-/* Grid kafelków */
-.cards-grid {
+/* ——— Reset / podstawa dla kafelków ——— */
+.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.2rem;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 16px 18px;
+  justify-content: center;
+  align-items: start;
+  max-width: 1100px;
+  margin: 24px auto 28px;
+  padding: 0 16px;
 }
 
-.card {
-  border-radius: 12px;
-  background: rgba(20, 20, 60, 0.85);
-  padding: 1rem 1.2rem;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.5);
-  transition: transform .2s ease, box-shadow .2s ease;
+.card,
+.grid .card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(86,51,142,.18);
+  border: 1px solid rgba(165,140,255,.12);
+  box-shadow:
+    inset 0 0 1px rgba(165,140,255,.22),
+    0 6px 18px rgba(0,0,0,.35);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+.card img,
+.grid .card img,
+.card-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  display: block;
 }
 
-.card__title {
-  font-size: 1.15rem;
-  margin: 0 0 .5rem;
-  font-weight: bold;
+.card .card-caption,
+.grid .card .card-caption {
+  padding: 10px 12px;
+  text-align: center;
+  font-weight: 600;
 }
 
-.card__body ul {
-  padding-left: 1.2rem;
-  margin: .3rem 0 0;
+.card__head { padding: 12px 14px 8px; }
+.card__body { padding: 8px 14px 14px; flex: 1 1 auto; }
+
+/* Responsywność */
+@media (max-width: 980px) {
+  .grid { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
 }
-.card__body li + li {
-  margin-top: .25rem;
+@media (max-width: 560px) {
+  .grid { grid-template-columns: 1fr; }
 }
 
-/* Pulsujący czerwony kafel */
-@keyframes em-pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(255, 85, 85, .65); }
-  50%  { box-shadow: 0 0 0 14px rgba(255, 85, 85, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 85, 85, 0); }
+/* ——— EMERGENCY: puls + mocny glow ——— */
+@keyframes pulse-red {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 59, 59, .55); transform: translateY(0); }
+  50%  { box-shadow: 0 0 24px 8px rgba(255, 59, 59, .35); transform: translateY(-1px); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 59, 59, .55); transform: translateY(0); }
 }
+
 .card.emergency {
-  cursor: pointer;
-  border: 2px solid #ff5b5b;
-  background: linear-gradient(180deg, #7d0f17 0%, #5b0c12 100%);
-  color: #fff;
-  animation: em-pulse 2s infinite;
-}
-.card.emergency:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(255,80,80,.55);
+  border: 2px solid rgba(255, 80, 80, .75) !important;
+  background: rgba(120, 8, 8, .20) !important;
+  animation: pulse-red 1.8s ease-in-out infinite;
 }
 
-/* Kolory dla leków */
-.tag--otc { color: #2ad67d; font-weight: bold; }
-.tag--rx { color: #ff6b6b; font-weight: bold; }
+.card.emergency:hover {
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.55),
+    0 0 28px rgba(255, 60, 60, .65) !important;
+  transform: translateY(-2px);
+}
+
+/* ——— Delikatny biały glow dla zwykłych kafelków ——— */
+.card:not(.emergency):hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.4),
+    0 0 18px rgba(255, 255, 255, .25);
+}
