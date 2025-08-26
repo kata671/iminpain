@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mężczyzna — wybór obszaru bólu</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .tiles-responsive{
+      display:grid; gap:16px; list-style:none; padding:0; margin:16px 0;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+  </style>
 </head>
 <body class="bg-med">
   <header class="site-header">
@@ -14,16 +20,41 @@
   </header>
 
   <main class="container">
-    <ul class="tiles tiles-3x2">
+    <ul class="tiles-responsive">
+      <!-- Głowa / twarz -->
       <li><a class="tile" href="szczegoly.html?id=glowa_m"><span>🧠 Głowa</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=oczy_m"><span>👁 Oczy</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=nos_m"><span>👃 Nos</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=ucho_m"><span>👂 Ucho</span></a></li>
+
+      <!-- Szyja / bark / ręka -->
       <li><a class="tile" href="szczegoly.html?id=szyja_m"><span>🦴 Szyja</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=bark_m"><span>🏋️ Bark</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=ramie_m"><span>💪 Ramię</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=lokiec_m"><span>🎾 Łokieć</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=nadgarstek_m"><span>⌚ Nadgarstek</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=dlon_m"><span>✋ Dłoń</span></a></li>
+
+      <!-- Klatka / serce / plecy / brzuch -->
       <li><a class="tile" href="szczegoly.html?id=klatka_m"><span>💙 Klatka piersiowa</span></a></li>
-      <li><a class="tile" href="szczegoly.html?id=brzuch_m"><span>🫃 Brzuch</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=serce_m"><span>❤️ Serce</span></a></li>
       <li><a class="tile" href="szczegoly.html?id=plecy_m"><span>🧍 Plecy</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=brzuch_m"><span>🫃 Brzuch</span></a></li>
+
+      <!-- Miednica / noga -->
+      <li><a class="tile" href="szczegoly.html?id=biodra_m"><span>🦴 Biodra</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=pachwina_m"><span>🔻 Pachwina / Miednica</span></a></li>
       <li><a class="tile" href="szczegoly.html?id=nogi_m"><span>🦵 Nogi</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=kolano_m"><span>🦵 Kolano</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=lydka_m"><span>🦿 Łydka</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=kostka_m"><span>🦶 Kostka</span></a></li>
+      <li><a class="tile" href="szczegoly.html?id=stopa_m"><span>🦶 Stopa</span></a></li>
+
+      <!-- Szybki skrót do pomocy -->
+      <li><a class="tile tile-accent pulse" href="lokalizacja.html"><span>🚑 Natychmiastowa pomoc</span></a></li>
     </ul>
   </main>
 
-  <footer class="site-footer"><small>© 2025</small></footer>
+  <footer class="site-footer"><small>© 2025 • W nagłym zagrożeniu dzwoń 112 / 999</small></footer>
 </body>
 </html>
