@@ -1,625 +1,832 @@
 {
   "oczy_k": {
     "title": "Oczy — kobieta",
-    "causes": ["Zespół suchego oka", "Zapalenie spojówek (alergiczne/infekcyjne)", "Podrażnienie (ekran, wiatr)", "Ciało obce"],
-    "symptoms": ["Szczypanie, pieczenie, łzawienie", "Światłowstręt", "Poczucie piasku w oku", "Zaczerwienienie"],
-    "concerns": ["⚠️ Nagłe pogorszenie ostrości widzenia", "⚠️ Silny ból, światłowstręt", "⚠️ Uraz chemiczny/mechaniczny"],
-    "doctors": ["Okulista", "POZ (skierowanie, krople)"],
-    "medications": ["Bez recepty: sztuczne łzy, krople na alergię (antyhistaminowe)", "Na receptę: krople steroidowe/antybiotyk wg okulisty"],
-    "first_aid": ["Płucz oko solą fizjologiczną przy podrażnieniu", "Ogranicz ekran, rób przerwy 20-20-20"],
-    "rehabilitation": ["Higiena brzegów powiek", "Ćwiczenia częstszego mrugania"],
-    "avoid": ["Soczewki przy stanie zapalnym", "Pocieranie oczu"],
-    "prevention": ["Nawilżanie powietrza", "Przerwy od ekranu, odpowiednie oświetlenie"],
-    "mistakes": ["Samodzielne sterydy do oka", "Brak konsultacji przy pogorszeniu widzenia"],
-    "emergency": ["Nagła utrata widzenia, silny ból — 112/SOR", "Oparzenia chemiczne — natychmiast płukać i SOR"],
-    "description": "Większość podrażnień ustępuje po odpoczynku i nawilżaniu. Pogorszenie widzenia wymaga pilnej oceny."
-  },
-  "uszy_k": {
-    "title": "Uszy — kobieta",
-    "causes": ["Zapalenie ucha zewnętrznego/środkowego", "Korek woskowinowy", "Barotrauma (lot)"],
-    "symptoms": ["Ból ucha, uczucie zatkania", "Szumy, czasem gorączka", "Wyciek"],
-    "concerns": ["⚠️ Silny ból + wysoka gorączka", "⚠️ Zawroty głowy, niedosłuch nagły", "⚠️ Uraz, krwawienie"],
-    "doctors": ["Laryngolog", "POZ"],
-    "medications": ["Bez recepty: paracetamol/ibuprofen, krople zmiękczające woskowinę", "Na receptę: krople z antybiotykiem/steroidem wg laryngologa"],
-    "first_aid": ["Nie wkładaj patyczków", "Ciepły okład na ból (nie przy wycieku)"],
-    "rehabilitation": ["Higiena ucha zewnętrznego (tylko małżowina)", "Unikanie wilgoci w przewlekłych zapaleniach"],
-    "avoid": ["Patyczki głęboko do kanału", "Woda w uchu przy stanie zapalnym"],
-    "prevention": ["Osuszanie ucha po basenie", "Kontrola alergii"],
-    "mistakes": ["Samodzielne płukanie przy bólu/wycieku", "Zbyt szybki powrót do pływania"],
-    "emergency": ["Silny ból + zawroty/porażenie nerwu — pilnie SOR", "Uraz z krwawieniem — pilnie"],
-    "description": "Najczęściej wystarczy leczenie objawowe i krople. Silne objawy lub wyciek wymagają konsultacji."
-  },
-  "nos_k": {
-    "title": "Nos — kobieta",
-    "causes": ["Nieżyt nosa (infekcyjny/alergiczny)", "Zapalenie zatok", "Skrzywiona przegroda (przewlekle)"],
-    "symptoms": ["Katar, kichanie, zatkany nos", "Ból/ucisk zatok, gorączka (czasem)"],
-    "concerns": ["⚠️ Silny ból zatok + wysoka gorączka", "⚠️ Ropna wydzielina >10 dni", "⚠️ Obrzęk okolicy oka"],
-    "doctors": ["POZ", "Laryngolog (nawracające)"],
-    "medications": ["Bez recepty: płukanie nosa solą, NLPZ, krótko ksylometazolina", "Na receptę: steryd donosowy, antybiotyk wg wskazań"],
-    "first_aid": ["Płukanie roztworem soli", "Nawilżanie powietrza"],
-    "rehabilitation": ["Ćwiczenia oddechu nosem", "Unikanie alergenów"],
-    "avoid": ["Długie użycie kropli obkurczających", "Palenie dymu tytoniowego"],
-    "prevention": ["Nawilżanie, mycie rąk", "Szczepienia przeciw grypie/COVID (ogólnie)"],
-    "mistakes": ["Stałe krople obkurczające — ryzyko polekowego nieżytu"],
-    "emergency": ["Ból zatok + obrzęk powiek/gorączka — SOR", "Krwawienie obfite — pilnie"],
-    "description": "Większość nieżytów jest wirusowa i samoograniczająca — leczenie objawowe, płukanie, nawilżanie."
-  },
-  "szczeka_k": {
-    "title": "Szczęka / SSŻ — kobieta",
-    "causes": ["Bruksizm, stres", "Dysfunkcja stawu skroniowo-żuchwowego", "Zabiegi stomatologiczne (przejściowo)"],
-    "symptoms": ["Ból żuchwy, klikanie, napięcie mięśni", "Bóle głowy, ucha bez infekcji"],
-    "concerns": ["⚠️ Trismus (szczękościski), niemożność otwarcia ust", "⚠️ Uraz z przemieszczeniem stawu"],
-    "doctors": ["Stomatolog", "Fizjoterapeuta stomatologiczny"],
-    "medications": ["Bez recepty: paracetamol/ibuprofen", "Na receptę: miorelaksanty krótkotrwale wg lekarza"],
-    "first_aid": ["Zimno/ciepło według komfortu", "Miękka dieta, unikanie żucia twardych pokarmów"],
-    "rehabilitation": ["Ćwiczenia rozluźniające mięśnie żucia", "Szyna relaksacyjna (wg stomatologa)"],
-    "avoid": ["Żucie gumy, twarde pokarmy", "Zgrzytanie — praca nad stresem"],
-    "prevention": ["Higiena snu, redukcja stresu", "Regularna kontrola stomatologiczna"],
-    "mistakes": ["Długie „zaciskanie zębów” przy stresie", "Brak szyny przy bruksizmie"],
-    "emergency": ["Uraz/zwichnięcie stawu — SOR", "Silny ból + gorączka (ropień) — pilnie"],
-    "description": "Dysfunkcje SSŻ dobrze reagują na fizjoterapię i szyny; stres odgrywa dużą rolę."
-  },
-  "szyja_k": {
-    "title": "Szyja — kobieta",
-    "causes": ["Napięciowe przeciążenie mięśni", "Dyskopatia szyjna", "Niewłaściwa ergonomia"],
-    "symptoms": ["Ból karku, ograniczenie ruchu", "Promieniowanie do barku/ramienia", "Bóle głowy"],
-    "concerns": ["⚠️ Osłabienie ręki, drętwienia postępujące", "⚠️ Uraz z bólami neurologicznymi"],
-    "doctors": ["Neurolog/ortopeda", "Fizjoterapeuta", "POZ"],
-    "medications": ["Bez recepty: paracetamol/ibuprofen", "Na receptę: leki rozluźniające, silniejsze NLPZ wg lekarza"],
-    "first_aid": ["Delikatne rozciąganie, ciepło", "Krótkie przerwy od pozycji statycznych"],
-    "rehabilitation": ["Ćwiczenia postawy i mobilizacji odcinka szyjnego", "Wzmacnianie mięśni głębokich"],
-    "avoid": ["Długie pochylanie nad telefonem", "Nagłe ruchy w ostrym bólu"],
-    "prevention": ["Ergonomia pracy, regularne przerwy", "Aktywność fizyczna"],
-    "mistakes": ["Długie leżenie w unieruchomieniu", "Brak ćwiczeń stabilizacji"],
-    "emergency": ["Uraz z objawami neurologicznymi — SOR", "Nagłe niedowłady — pilnie"],
-    "description": "Najważniejsze są ergonomia i systematyczna, łagodna aktywność z progresją."
-  },
-  "glowa_k": {
-    "title": "Głowa — kobieta",
-    "causes": ["Ból napięciowy", "Migrena", "Zatoki", "Odwodnienie, stres"],
-    "symptoms": ["Pulsujący lub uciskowy ból", "Nudności (migrena)", "Nadwrażliwość na światło/hałas"],
-    "concerns": ["⚠️ „Najsilniejszy ból życia” (piorunujący)", "⚠️ Uraz głowy, zaburzenia neurologiczne", "⚠️ Gorączka + sztywność karku"],
-    "doctors": ["Neurolog", "POZ"],
-    "medications": ["Bez recepty: paracetamol/ibuprofen, kofeina w połączeniu", "Na receptę: tryptany, profilaktyka migreny wg neurologa"],
-    "first_aid": ["Ciemne, ciche pomieszczenie", "Nawodnienie, zimny okład na czoło"],
-    "rehabilitation": ["Higiena snu, dzienniczek bólów", "Ćwiczenia relaksacyjne, oddechowe"],
-    "avoid": ["Migrenowe wyzwalacze (np. czerwone wino, migające światła)", "Przegrzanie, odwodnienie"],
-    "prevention": ["Regularny rytm dnia i snu", "Aktywność, redukcja stresu"],
-    "mistakes": ["Nadmierne użycie leków przeciwbólowych (ból z odbicia)", "Brak diagnostyki czerwonych flag"],
-    "emergency": ["Nagły najgorszy ból, deficyty — 112/SOR", "Udarowe objawy — pilnie"],
-    "description": "Monitoruj wyzwalacze i odpowiednio wcześnie lecz napad. Czerwone flagi wymagają działania."
-  },
-
-  "serce_k": {
-    "title": "Serce — kobieta",
-    "causes": ["Choroba wieńcowa (często nietypowe objawy)", "Zawał", "Zapalenie osierdzia/mięśnia", "Zaburzenia rytmu"],
-    "symptoms": ["Ucisk w klatce LUB duszność, nudności, ból pleców/żuchwy", "Zimne poty, osłabienie"],
-    "concerns": ["⚠️ Silny ból/nietypowe objawy + duszność", "⚠️ Omdlenie, sinica", "⚠️ Ból po wysiłku nieustępujący"],
-    "doctors": ["Kardiolog", "POZ (EKG, badania)", "SOR przy ostrych objawach"],
-    "medications": ["Bez recepty: brak doraźnych „na serce”", "Na receptę: ASA, azotany, beta-blokery, statyny, ACEI/ARB — wg lekarza"],
-    "first_aid": ["Przerwij wysiłek, usiądź", "Nitrogliceryna tylko jeśli zalecono", "Wezwij pomoc przy trwających objawach"],
-    "rehabilitation": ["Po wykluczeniu OZW — marsz, aerobowe low-intensity", "Rehabilitacja kardiologiczna wg zaleceń"],
-    "avoid": ["Wysiłek w trakcie bólu w klatce", "Palenie, alkohol", "NLPZ na własną rękę"],
-    "prevention": ["Kontrola RR, lipidów, glikemii", "Dieta śródziemnomorska, ruch", "Sen i redukcja stresu"],
-    "mistakes": ["Bagatelizowanie nietypowych objawów", "Zwlekanie z wezwaniem pomocy"],
-    "emergency": ["Silny ucisk >10 min + duszność/poty — 112/SOR", "Omdlenie, ciężka duszność"],
-    "description": "U kobiet objawy bywają nietypowe — postępuj ostrożnie i nie zwlekaj z wezwaniem pomocy."
-  },
-  "pluca_k": {
-    "title": "Płuca — kobieta",
-    "causes": ["Infekcje dróg oddechowych", "Astma/nadreaktywność", "POChP (palacze)", "Zatorowość płucna (pilne)"],
-    "symptoms": ["Kaszel, duszność, świsty", "Ból w klatce przy oddychaniu", "Gorączka (infekcja)"],
-    "concerns": ["⚠️ Spoczynkowa duszność, sinica", "⚠️ Krwioplucie, ból opłucnowy", "⚠️ Nagłe nasilenie astmy"],
-    "doctors": ["Pulmonolog", "POZ"],
-    "medications": ["Bez recepty: leki wykrztuśne/nawilżające", "Na receptę: wziewne steroidy/bronchodilatatory, antybiotyk wg wskazań"],
-    "first_aid": ["Nawilżanie powietrza, odpoczynek", "Inhalacje z soli fizjologicznej"],
-    "rehabilitation": ["Ćwiczenia oddechowe (przepona)", "Stopniowe zwiększanie aktywności po infekcji"],
-    "avoid": ["Palenie, dym", "Wysiłek przy spoczynkowej duszności"],
-    "prevention": ["Szczepienia (grypa, COVID, pneumokoki)", "Higiena rąk, wentylacja pomieszczeń"],
-    "mistakes": ["Samodzielne antybiotyki", "Ignorowanie narastającej duszności"],
-    "emergency": ["Silna duszność, sinica, krwioplucie — 112/SOR", "Nagły ból opłucnowy + duszność"],
-    "description": "Duszące infekcje zwykle ustępują, ale czerwone flagi wymagają pilnego działania."
-  },
-  "klatka_piersiowa_k": {
-    "title": "Klatka piersiowa — kobieta",
-    "causes": ["Ból mięśniowo-powięziowy", "Zapalenie chrząstek żebrowych (costochondritis)", "Nadmierny kaszel/obciążenie", "Choroby serca/płuc (różnicowanie)"],
-    "symptoms": ["Ból nasilany uciskiem/ruchami", "Tkliwość miejscowa", "Czasem kłujący ból przy wdechu"],
-    "concerns": ["⚠️ Ból z dusznością, potami (serce)", "⚠️ Krwioplucie, sinica (płuca)"],
-    "doctors": ["POZ", "Kardiolog/pulmonolog przy czerwonych flagach"],
-    "medications": ["Bez recepty: paracetamol/ibuprofen", "Na receptę: silniejsze NLPZ/miorelaksanty wg lekarza"],
-    "first_aid": ["Ciepło miejscowo, odpoczynek", "Delikatne rozciąganie mięśni klp"],
-    "rehabilitation": ["Ćwiczenia oddechowe i rozciągające mięśnie międzyżebrowe", "Korekta postawy"],
-    "avoid": ["Forsowanie treningu siłowego w bólu", "Długie garbienie się"],
-    "prevention": ["Wzmacnianie posturalne, ergonomia", "Stopniowanie obciążeń"],
-    "mistakes": ["Ignorowanie objawów kardiologicznych", "Zbyt szybki powrót do ćwiczeń"],
-    "emergency": ["Ból + duszność, poty — 112/SOR", "Uraz klp z dusznością — pilnie"],
-    "description": "Najczęstszy jest ból mięśniowo-kostny, ale najpierw wykluczamy serce/płuca, jeśli są czerwone flagi."
-  },
-  "brzuch_k": {
-    "title": "Brzuch — kobieta",
-    "causes": ["Dyspepsja, refluks, IBS", "Infekcja żołądkowo-jelitowa", "Kolka żółciowa", "Wyrostek/trzustka (pilne)", "Bóle miesiączkowe/endometrioza"],
-    "symptoms": ["Ból w nad-/śród-/podbrzuszu", "Wzdęcia, zgaga, nudności", "Biegunka/zaparcia"],
-    "concerns": ["⚠️ Twardy „deskowaty” brzuch, silny ból", "⚠️ Krwawienia z dróg rodnych poza terminem", "⚠️ Gorączka + wymioty"],
-    "doctors": ["POZ", "Gastroenterolog", "Ginekolog (jeśli dotyczy)"],
-    "medications": ["Bez recepty: IPP małe dawki krótko, leki zobojętniające, simetikon, elektrolity", "Na receptę: IPP/antysekrecyjne, spazmolityki, antybiotyki wg wskazań lekarza"],
-    "first_aid": ["Lekkostrawna dieta, nawadnianie", "Ciepły termofor (gdy nie podejrzewasz ostrego brzucha)"],
-    "rehabilitation": ["Delikatna aktywność po ustąpieniu ostrych objawów", "Oddech przeponowy, relaksacja"],
-    "avoid": ["Alkohol, tłuste/ostre potrawy", "NLPZ na pusty żołądek"],
-    "prevention": ["Regularne posiłki, higiena żywności", "Aktywność, kontrola masy ciała"],
-    "mistakes": ["Długie branie IPP bez kontroli", "Bagatelizowanie czerwonych flag"],
-    "emergency": ["Silny ból + obrona mięśniowa, krwawienie, omdlenie — 112/SOR"],
-    "description": "U kobiet należy uwzględnić cykl i ciążę. Czerwone flagi wymagają pilnej diagnostyki."
-  },
-  "plecy_k": {
-    "title": "Plecy — kobieta",
-    "causes": ["Napięcie mięśniowe, przeciążenie", "Dyskopatia", "Siedzący tryb życia"],
-    "symptoms": ["Ból lędźwiowy/między łopatkami", "Nasilenie przy długim siedzeniu", "Sztywność rano"],
-    "concerns": ["⚠️ Drętwienia/niedowład kończyn", "⚠️ Nietrzymanie moczu/stolca (zespół ogona końskiego)"],
-    "doctors": ["Fizjoterapeuta", "Ortopeda/neurolog", "POZ"],
-    "medications": ["Bez recepty: paracetamol/ibuprofen", "Na receptę: miorelaksanty/NLPZ wg lekarza"],
-    "first_aid": ["Ciepło, delikatny ruch, przerwy od siedzenia", "Unikaj dźwigania"],
-    "rehabilitation": ["Wzmacnianie core, mobilizacja bioder", "Stopniowy powrót do aktywności"],
-    "avoid": ["Długie leżenie bez ruchu", "Nagłe skręty/przeciążenia"],
-    "prevention": ["Ergonomia pracy, regularne przerwy i ruch", "Utrzymanie masy ciała"],
-    "mistakes": ["Brak ćwiczeń stabilizacyjnych", "Bagatelizowanie objawów neurologicznych"],
-    "emergency": ["Nagłe zaburzenia neurologiczne, uraz — 112/SOR"],
-    "description": "Większość bólów pleców poprawia się w 2–6 tygodni przy ruchu i ćwiczeniach."
-  },
-
-  "uklad_krw_k": {
-    "title": "Układ krążenia — kobieta",
-    "causes": ["Nadciśnienie, miażdżyca", "Zakrzepica żył głębokich (ZŻG)", "Zaburzenia rytmu"],
-    "symptoms": ["Ból/obrzęk łydki (ZŻG)", "Kołatania serca", "Bóle w klatce przy wysiłku"],
-    "concerns": ["⚠️ Jednostronny obrzęk i ból łydki (ZŻG?)", "⚠️ Ból w klatce + duszność/poty"],
-    "doctors": ["Kardiolog", "Angiolog", "POZ"],
-    "medications": ["Bez recepty: styl życia, ASA tylko wg zaleceń", "Na receptę: antykoagulanty, statyny, leki p/arytmiczne — wg lekarza"],
-    "first_aid": ["Uniesienie kończyny przy obrzęku", "Ograniczanie długiego siedzenia"],
-    "rehabilitation": ["Marsz, ćwiczenia aerobowe po ocenie ryzyka", "Kontrola masy ciała"],
-    "avoid": ["Palenie", "Długi bezruch (podróże) bez przerw"],
-    "prevention": ["Ruch 150 min/tydz., dieta, kontrola RR i lipidów"],
-    "mistakes": ["Bagatelizowanie jednostronnego obrzęku", "Samodzielne odstawianie leków"],
-    "emergency": ["Objawy zatorowości (dusznosć, ból klatki) — 112/SOR"],
-    "description": "Profilaktyka to podstawa; przy podejrzeniu ZŻG lub zatorowości działaj pilnie."
-  },
-  "uklad_oddech_k": {
-    "title": "Układ oddechowy — kobieta",
-    "causes": ["Infekcje", "Astma", "POChP (palacze)"],
-    "symptoms": ["Kaszel, duszność, świsty", "Ból przy oddychaniu"],
-    "concerns": ["⚠️ Spoczynkowa duszność/sinica", "⚠️ Krwioplucie"],
-    "doctors": ["POZ", "Pulmonolog"],
-    "medications": ["Bez recepty: syropy wykrztuśne/nawilżające", "Na receptę: leki wziewne (SABA/ICS/LABA), antybiotyk wg wskazań"],
-    "first_aid": ["Inhalacje NaCl 0,9%", "Nawilżanie, odpoczynek"],
-    "rehabilitation": ["Ćwiczenia oddechowe, spacer", "Stopniowy powrót do wysiłku"],
-    "avoid": ["Dym tytoniowy", "Wysiłek przy duszności"],
-    "prevention": ["Szczepienia, higiena, wietrzenie"],
-    "mistakes": ["Zaniedbanie inhalatorów przepisanych", "Samodzielne antybiotyki"],
-    "emergency": ["Silna duszność/krwioplucie — 112/SOR"],
-    "description": "Większość infekcji to wirusy — leczenie objawowe, czujność na czerwone flagi."
-  },
-  "uklad_pokarm_k": {
-    "title": "Układ pokarmowy — kobieta",
-    "causes": ["Dyspepsja, refluks, IBS", "Nietolerancje pokarmowe", "Infekcje jelitowe"],
-    "symptoms": ["Ból brzucha, wzdęcia", "Zgaga, biegunka/zaparcia"],
-    "concerns": ["⚠️ Krew w stolcu/wymiotach", "⚠️ Utrata masy ciała, gorączka"],
-    "doctors": ["Gastroenterolog", "POZ"],
-    "medications": ["Bez recepty: IPP krótko, leki zobojętniające, elektrolity", "Na receptę: IPP długoterminowo, spazmolityki, antybiotyki wg wskazań"],
-    "first_aid": ["Lekkostrawna dieta, płyny", "Odpoczynek"],
-    "rehabilitation": ["Stopniowy powrót do diety", "Aktywność umiarkowana"],
-    "avoid": ["Alkohol, tłuste/ostre potrawy", "NLPZ na pusty żołądek"],
-    "prevention": ["Higiena żywności, regularne posiłki"],
-    "mistakes": ["Przewlekłe IPP bez kontroli", "Ignorowanie krwawienia"],
-    "emergency": ["Ostry brzuch, krwawienie — 112/SOR"],
-    "description": "Objawy przewlekłe wymagają planu z lekarzem; ostre czerwone flagi — pilna pomoc."
-  },
-
-  "biodra_k": {
-    "title": "Biodra — kobieta",
-    "causes": ["Przeciążenia mięśni pośladkowych", "Zapalenie kaletki krętarzowej", "Zespół pasma biodrowo-piszczelowego"],
-    "symptoms": ["Ból bocznej części biodra", "Nasilenie przy chodzie/biegu/bocznych ruchach"],
-    "concerns": ["⚠️ Uraz z niemożnością obciążenia", "⚠️ Gorączka + ból stawu"],
-    "doctors": ["Ortopeda", "Fizjoterapeuta"],
-    "medications": ["Bez recepty: paracetamol/ibuprofen, żele p/zapalne", "Na receptę: NLPZ/steroidy miejscowo wg lekarza"],
-    "first_aid": ["Ogranicz obciążenie, zimno w ostrym stanie"],
-    "rehabilitation": ["Wzmacnianie pośladków (glute med/max)", "Mobilizacja biodra, rozciąganie ITB"],
-    "avoid": ["Bieganie po skosach/pochyleniach w ostrym stanie"],
-    "prevention": ["Stopniuj obciążenia, technika biegu", "Stabilizacja miednicy i core"],
-    "mistakes": ["Brak ćwiczeń pośladków", "Zbyt szybki powrót do biegu"],
-    "emergency": ["Uraz z deformacją/niemożnością chodzenia — SOR"],
-    "description": "Kluczem jest stabilizacja miednicy i kontrola obciążeń."
-  },
-  "uda_k": {
-    "title": "Uda — kobieta",
-    "causes": ["Napięcia mięśni czworogłowych/tylnych", "Zespół pasma biodrowo-piszczelowego"],
-    "symptoms": ["Ból przodu/tyłu uda", "Nasilenie przy podbiegach/przysiadach"],
-    "concerns": ["⚠️ Ostry uraz z trzaskiem i krwiakiem", "⚠️ Objawy ZŻG (obrzęk jednostronny)"],
-    "doctors": ["Fizjoterapeuta", "Ortopeda"],
-    "medications": ["Bez recepty: NLPZ krótko, żele", "Na receptę: leki p/bólowe silniejsze wg lekarza"],
-    "first_aid": ["RICE w ostrym urazie", "Stopniowy powrót do aktywności"],
-    "rehabilitation": ["Eccentryki dla dwugłowego/ czworogłowego", "Mobilizacja biodra, core"],
-    "avoid": ["Sprinty/duże obciążenia w bólu"],
-    "prevention": ["Rozgrzewka, progresja obciążeń", "Wzmacnianie antagonistów"],
-    "mistakes": ["Zbyt szybki powrót po naderwaniu"],
-    "emergency": ["Podejrzenie ZŻG/rozległy krwiak — pilnie"],
-    "description": "Eccentryki i progresja obciążeń zmniejszają ryzyko nawrotów."
-  },
-  "kolano_k": {
-    "title": "Kolano — kobieta",
-    "causes": ["PFP, chondromalacja", "Skręcenie, łąkotki/ACL", "Przeciążenia"],
-    "symptoms": ["Tępy ból, schody/kucanie", "Przeskakiwanie, chrupanie"],
-    "concerns": ["⚠️ Blokada, niestabilność", "⚠️ Obrzęk + niemożność obciążenia"],
-    "doctors": ["Fizjoterapeuta", "Ortopeda", "POZ"],
-    "medications": ["Bez recepty: paracetamol, ibuprofen/naproksen, żele", "Na receptę: NLPZ/COX-2, iniekcje dostawowe wg ortopedy"],
-    "first_aid": ["RICE, kompresja, elewacja", "Odciążenie czasowe"],
-    "rehabilitation": ["Pośladki + czworogłowy, propriocepcja", "Kontrola kolana nad stopą"],
-    "avoid": ["Głębokie przysiady w bólu", "Skoki na wczesnym etapie"],
-    "prevention": ["Programy prewencyjne, rozgrzewka", "Wymiana butów biegowych"],
-    "mistakes": ["Powrót do sportu „mimo bólu”"],
-    "emergency": ["Deformacja, silny obrzęk — SOR"],
-    "description": "Stabilizacja miednicy i siła pośladków odciążają kolano."
-  },
-  "lydka_k": {
-    "title": "Łydka — kobieta",
-    "causes": ["Naderwanie mięśnia brzuchatego/ płaszczkowatego", "ZŻG (różnicowanie)"],
-    "symptoms": ["Ból kłujący/ciągnący, obrzęk", "Czasem krwiak, trudność w chodzie"],
-    "concerns": ["⚠️ Jednostronny obrzęk + ból (ZŻG?)", "⚠️ Trzask przy urazie + znaczny krwiak"],
-    "doctors": ["Fizjoterapeuta", "Ortopeda", "Angiolog (podejrzenie ZŻG)"],
-    "medications": ["Bez recepty: NLPZ krótko, maści chłodzące", "Na receptę: leki p/bólowe silniejsze wg lekarza"],
-    "first_aid": ["RICE w ostrym urazie", "Stopniowe rozciąganie i powrót do obciążeń"],
-    "rehabilitation": ["Eccentryczne wspięcia, propriocepcja", "Wzmacnianie łańcucha tylnego"],
-    "avoid": ["Biegi interwałowe/sprinty na początku"],
-    "prevention": ["Rozgrzewka, progresja obciążeń", "Nawadnianie, obuwie sportowe"],
-    "mistakes": ["Zbyt szybki powrót do biegu"],
-    "emergency": ["Podejrzenie ZŻG — pilnie", "Silny ból + deformacja — SOR"],
-    "description": "Większość naderwań goi się dobrze przy odpowiedniej progresji ćwiczeń."
-  },
-  "kostka_k": {
-    "title": "Kostka — kobieta",
-    "causes": ["Skręcenie stawu skokowego", "Niestabilność przewlekła"],
-    "symptoms": ["Obrzęk, ból bocznej kostki", "Siniak, ograniczenie chodu"],
-    "concerns": ["⚠️ Niemożność obciążenia po urazie", "⚠️ Ból kości (złamanie?)"],
-    "doctors": ["Ortopeda", "Fizjoterapeuta"],
-    "medications": ["Bez recepty: NLPZ krótko, chłodzenie", "Na receptę: orteza, leki p/bólowe wg lekarza"],
-    "first_aid": ["RICE, elewacja", "Chód z odciążeniem wg bólu"],
-    "rehabilitation": ["Propriocepcja, wzmocnienie ewersorów/inwersorów", "Stopniowy powrót do biegu/skoków"],
-    "avoid": ["Nierówne podłoże we wczesnym etapie"],
-    "prevention": ["Trening równowagi, taping w sportach", "Dobre obuwie"],
-    "mistakes": ["Brak ćwiczeń stabilizacji — nawroty"],
-    "emergency": ["Zniekształcenie/niestabilność — SOR"],
-    "description": "Po skręceniu potrzebna jest praca nad stabilnością, nie tylko odpoczynek."
-  },
-  "stopy_k": {
-    "title": "Stopy — kobieta",
-    "causes": ["Zapalenie rozcięgna podeszwowego", "Haluksy/przeciążenia przodostopia", "Modzele/odciski"],
-    "symptoms": ["Ból pięty przy pierwszych krokach", "Ból przodostopia przy dłuższym staniu"],
-    "concerns": ["⚠️ Obrzęk, zaczerwienienie, gorączka (infekcja)", "⚠️ Nagły silny ból i obrzęk (złamanie zmęczeniowe?)"],
-    "doctors": ["Ortopeda/podolog", "Fizjoterapeuta"],
-    "medications": ["Bez recepty: NLPZ miejscowo, wkładki amortyzujące", "Na receptę: iniekcje sterydowe (wybrane przypadki)"],
-    "first_aid": ["Rozciąganie łydki/rozcięgna", "Modyfikacja obuwia, ortezy nocne (rozcięgno)"],
-    "rehabilitation": ["Ćwiczenia krótkich mięśni stopy", "Progresywny nacisk/obciążenia"],
-    "avoid": ["Cienkie, twarde podeszwy na długo", "Nagły wzrost aktywności"],
-    "prevention": ["Obuwie z amortyzacją, kontrola masy ciała"],
-    "mistakes": ["Tylko odpoczynek bez ćwiczeń"],
-    "emergency": ["Podejrzenie infekcji/złamania — pilnie"],
-    "description": "Połączenie rozciągania i wzmacniania daje najlepsze efekty."
-  },
-
-  "ciaza_k": {
-    "title": "Ciąża — kobieta",
-    "causes": ["Fizjologiczne dolegliwości bólowe (kręgosłup, miednica)", "Zgaga, nudności", "Skurcze łydek"],
-    "symptoms": ["Bóle krzyża/miednicy", "Zgaga, wzdęcia", "Obrzęki kończyn"],
-    "concerns": ["⚠️ Krwawienie z dróg rodnych", "⚠️ Silny ból brzucha/jednostronny ból (wczesna ciąża?)", "⚠️ Bóle głowy + obrzęki, zaburzenia widzenia (stan przedrzucawkowy?)"],
-    "doctors": ["Położna/ginekolog", "POZ (infekcje, ogólne)"],
-    "medications": ["Bez recepty: paracetamol (preferowany), preparaty elektrolitów", "Na receptę: wg ginekologa — unikaj leków bez konsultacji"],
-    "first_aid": ["Odpoczynek, pozycje odciążające", "Dieta lekkostrawna na zgagę, małe porcje"],
-    "rehabilitation": ["Ćwiczenia w ciąży (bez obciążeń) — oddech, miednica", "Spacer, pływanie"],
-    "avoid": ["NLPZ (zwłaszcza III trymestr)", "Sporty kontaktowe, skoki"],
-    "prevention": ["Wit. D/kwas foliowy wg zaleceń", "Aktywność dostosowana, sen"],
-    "mistakes": ["Samodzielne leczenie lekami potencjalnie szkodliwymi"],
-    "emergency": ["Krwawienie, utrata płynu owodniowego, silny ból, brak ruchów płodu — 112/SOR"],
-    "description": "W ciąży decyzje lekowe zawsze z lekarzem/położną. Przy czerwonych flagach — pilnie."
+    "causes": [
+      "Zespół suchego oka",
+      "Alergiczne/infekcyjne zapalenie spojówek",
+      "Podrażnienie (ekran, wiatr), ciała obce",
+      "Nadmierne noszenie soczewek, niewłaściwa higiena"
+    ],
+    "symptoms": [
+      "Szczypanie, pieczenie, łzawienie",
+      "Światłowstręt, uczucie piasku w oku",
+      "Zaczerwienienie, wydzielina",
+      "Przejściowe pogorszenie ostrości widzenia"
+    ],
+    "concerns": [
+      "Nagłe pogorszenie ostrości widzenia",
+      "Silny ból oka, światłowstręt + nudności",
+      "Uraz chemiczny/mechaniczny, ciało metaliczne"
+    ],
+    "doctors": ["Okulista", "POZ (skierowanie)"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> sztuczne łzy, krople na alergię (antyhistaminowe), nawilżające żele",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> krople steroidowe/antybiotyk wg okulisty"
+    ],
+    "first_aid": [
+      "Płucz oko solą fizjologiczną przy podrażnieniu",
+      "Nie pocieraj oka, zdejmij soczewki",
+      "Przerwy 20-20-20 od ekranu"
+    ],
+    "rehab": [
+      "Higiena brzegów powiek (ciepłe kompresy + delikatne oczyszczanie)",
+      "Nawilżanie powietrza, ograniczenie klimatyzacji"
+    ],
+    "avoid": ["Soczewki przy stanie zapalnym", "Samodzielne steroidy do oka"],
+    "prevention": ["Nawilżanie powietrza", "Ergonomiczne oświetlenie, przerwy od ekranu"],
+    "mistakes": ["Krople „czerwone oko” długotrwale", "Brak konsultacji przy pogorszeniu widzenia"],
+    "emergency": [
+      "Uraz chemiczny/ciało obce — płucz i jedź na SOR/112",
+      "Nagła utrata widzenia, ból + nudności — SOR/112"
+    ],
+    "info": "Przewlekłe dolegliwości wymagają oceny filmu łzowego i nawyków pracy przy ekranie.",
+    "now_do": ["Zdejmij soczewki i przepłucz oko NaCl 0.9%", "Zastosuj sztuczne łzy co 3–4 h", "Jeśli ból/utrata widzenia — jedź na SOR"]
   },
 
   "oczy_m": {
     "title": "Oczy — mężczyzna",
-    "causes": ["Suche oko", "Zapalenie spojówek", "Podrażnienie (ekran, kurz)"],
-    "symptoms": ["Pieczenie, łzawienie, zaczerwienienie", "Światłowstręt"],
-    "concerns": ["⚠️ Nagła utrata ostrości", "⚠️ Uraz chemiczny/mechaniczny"],
+    "causes": ["Zespół suchego oka", "Zapalenie spojówek", "Podrażnienie środowiskowe/uraz"],
+    "symptoms": ["Pieczenie, łzawienie", "Światłowstręt", "Uczucie piasku, zaczerwienienie"],
+    "concerns": ["Nagłe pogorszenie widzenia", "Uraz mechaniczny/chemiczny", "Silny ból oka"],
     "doctors": ["Okulista", "POZ"],
-    "medications": ["Bez recepty: sztuczne łzy", "Na receptę: krople sterydowe/antybiotyk wg okulisty"],
-    "first_aid": ["Płukanie solą fizjologiczną", "Przerwy od ekranu"],
-    "rehabilitation": ["Higiena powiek", "Ćwiczenie mrugania"],
-    "avoid": ["Pocieranie oczu", "Soczewki przy zapaleniu"],
-    "prevention": ["Nawilżanie powietrza", "Ergonomia ekranu"],
-    "mistakes": ["Samodzielne sterydy do oka"],
-    "emergency": ["Oparzenie chemiczne, duży uraz — SOR"],
-    "description": "Najczęściej pomaga nawilżanie i odpoczynek; poważne objawy — pilnie."
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> sztuczne łzy, krople antyhistaminowe",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> antybiotyk/steroid wg okulisty"
+    ],
+    "first_aid": ["Płukanie NaCl 0.9%", "Nie pocieraj oka", "Przerwa od ekranów"],
+    "rehab": ["Higiena powiek", "Nawilżanie powietrza"],
+    "avoid": ["Krople zwężające naczynia długotrwale"],
+    "prevention": ["Okulary ochronne przy pracy/DIY", "Regularne przerwy"],
+    "mistakes": ["„Domowe” płukanie kranówką", "Samodzielne steroidy"],
+    "emergency": ["Uraz chemiczny/mechaniczny", "Utrata widzenia — SOR/112"],
+    "info": "U sportowców rozważ ochranianie oczu oraz kontrolę alergii sezonowej.",
+    "now_do": ["Płucz, chroń przed światłem", "Sztuczne łzy", "W razie bólu/urazu — SOR"]
   },
+
+  "uszy_k": {
+    "title": "Uszy — kobieta",
+    "causes": ["Zapalenie ucha", "Korek woskowinowy", "Barotrauma (lot, nurkowanie)"],
+    "symptoms": ["Ból ucha, uczucie zatkania", "Szumy, wycieki", "Gorączka u dziecka"],
+    "concerns": ["Silny ból z gorączką", "Zawroty głowy + wymioty", "Uraz, podejrzenie perforacji"],
+    "doctors": ["Laryngolog", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> paracetamol/ibuprofen (przeciwbólowo), krople nawilżające po badaniu",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> antybiotyk/krople złożone wg laryngologa"
+    ],
+    "first_aid": ["Ciepły okład (nie przy wycieku)", "Nie wkładaj patyczków", "Odciąganie nosa u dzieci"],
+    "rehab": ["Ćwiczenia trąbki słuchowej (po zapaleniu)", "Higiena nosa"],
+    "avoid": ["Patyczki, bagietki", "Mokre uszy w basenie przy stanie zapalnym"],
+    "prevention": ["Krople po basenie (osuszające)", "Szczepienia zgodnie z kalendarzem"],
+    "mistakes": ["Samoleczenie kroplami bez badania", "Brak konsultacji przy zawrotach"],
+    "emergency": ["Zawroty + wymioty, asymetria twarzy — SOR", "Uraz/krwawienie z ucha — SOR"],
+    "info": "Przy nawracających infekcjach rozważ konsultację laryngologiczną i ocenę przegrody nosa.",
+    "now_do": ["Leki p/bólowe OTC", "Ciepły okład", "Jeśli gorączka/silny ból — lekarz"]
+  },
+
   "uszy_m": {
     "title": "Uszy — mężczyzna",
-    "causes": ["Zapalenie ucha", "Korek woskowiny", "Barotrauma"],
-    "symptoms": ["Ból, zatkanie, szumy", "Czasem gorączka, wyciek"],
-    "concerns": ["⚠️ Silny ból + zawroty/niedosłuch nagły", "⚠️ Uraz, krwawienie"],
+    "causes": ["Zapalenie ucha zewn./środkowego", "Korek woskowinowy", "Barotrauma"],
+    "symptoms": ["Ból, zatkanie", "Szumy", "Wyciek"],
+    "concerns": ["Zawroty + wymioty", "Uraz/krwawienie", "Gorączka wysoka u dziecka"],
     "doctors": ["Laryngolog", "POZ"],
-    "medications": ["Bez recepty: NLPZ, krople do woskowiny", "Na receptę: krople z antybiotykiem/steroidem"],
-    "first_aid": ["Nie wkładaj patyczków", "Ciepły okład (bez wycieku)"],
-    "rehabilitation": ["Higiena małżowiny", "Unikanie wilgoci"],
-    "avoid": ["Patyczki do kanału", "Pływanie przy zapaleniu"],
-    "prevention": ["Osuszanie ucha po basenie"],
-    "mistakes": ["Samodzielne płukanie przy bólu/wycieku"],
-    "emergency": ["Uraz/krwawienie, porażenie n. VII — pilnie"],
-    "description": "Najczęściej leczenie objawowe, krople; pilnie przy czerwonych flagach."
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> paracetamol/ibuprofen",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> krople/antybiotyk wg lekarza"
+    ],
+    "first_aid": ["Nie manipuluj patyczkami", "Odpoczynek, nawadnianie"],
+    "rehab": ["Po chorobie: delikatne wyrównywanie ciśnień (Valsalva)"],
+    "avoid": ["Hałas (słuchawki głośno)", "Woda w uchu przy infekcji"],
+    "prevention": ["Ochronniki słuchu w pracy", "Nawadnianie przy lotach"],
+    "mistakes": ["Samodzielne płukanie przy bólu (ryzyko perforacji)"],
+    "emergency": ["Asymetria twarzy, porażenie — SOR", "Uraz, krwawienie — SOR"],
+    "info": "Szumy uszne wymagają diagnostyki przy długim utrzymywaniu.",
+    "now_do": ["OTC przeciwbólowe", "Nie dłub w uchu", "Jeśli zawroty/wyciek — lekarz"]
   },
+
+  "nos_k": {
+    "title": "Nos — kobieta",
+    "causes": ["Nieżyt nosa (alergia/infekcja)", "Zapalenie zatok", "Skrzywienie przegrody"],
+    "symptoms": ["Katar, niedrożność", "Ból zatok przy pochyleniu", "Kichanie, łzawienie"],
+    "concerns": ["Silny ból zatok + gorączka >3 dni", "Wytrzeszcz/obrzęk oczodołu"],
+    "doctors": ["Laryngolog", "Alergolog", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> irygacje NaCl, antyhistaminowe, krótko ksylometazolina",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> steroid donosowy, antybiotyk wg lekarza"
+    ],
+    "first_aid": ["Płukanie nosa solą", "Nawilżanie powietrza"],
+    "rehab": ["Trening oddechowy, oddychanie nosem"],
+    "avoid": ["Długie stosowanie ksylometazoliny (>3–5 dni)"],
+    "prevention": ["Odpylanie w domu, filtry HEPA", "Szczepienia grypa/COVID według zaleceń"],
+    "mistakes": ["Brak irygacji przy gęstym katarze"],
+    "emergency": ["Obrzęk oczodołu, podwójne widzenie — SOR"],
+    "info": "Przewlekłe objawy mogą wymagać testów alergicznych.",
+    "now_do": ["Irygacja NaCl", "Krótkotrwały spray obkurczający", "Gorączka/ból — lekarz"]
+  },
+
   "nos_m": {
     "title": "Nos — mężczyzna",
-    "causes": ["Nieżyt nosa", "Zapalenie zatok"],
-    "symptoms": ["Katar, zatkany nos, ból zatok"],
-    "concerns": ["⚠️ Ropna wydzielina >10 dni", "⚠️ Obrzęk powiek + gorączka"],
-    "doctors": ["POZ", "Laryngolog"],
-    "medications": ["Bez recepty: płukanie solą, NLPZ, krótko krople obkurczające", "Na receptę: steryd donosowy, antybiotyk wg wskazań"],
-    "first_aid": ["Nawilżanie, płukanie nosa"],
-    "rehabilitation": ["Ćwiczenia oddechowe nosem"],
-    "avoid": ["Długie użycie ksylometazoliny"],
-    "prevention": ["Higiena rąk, szczepienia"],
-    "mistakes": ["Polekowy nieżyt od kropli"],
-    "emergency": ["Silny ból zatok + obrzęk oczu — pilnie"],
-    "description": "Większość infekcji jest wirusowa; leczenie objawowe."
+    "causes": ["Alergia/infekcja", "Polipy", "Skrzywienie przegrody"],
+    "symptoms": ["Niedrożność", "Katar", "Ból zatok"],
+    "concerns": ["Obrzęk oczodołu, gorączka wysoka", "Krwawienie nieustępujące >20 min"],
+    "doctors": ["Laryngolog", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> płukanie NaCl, antyhistaminowe",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> steroid donosowy, antybiotyk wg lekarza"
+    ],
+    "first_aid": ["Irygacje, nawadnianie", "Chłodzenie policzków"],
+    "rehab": ["Ćwiczenia oddechowe"],
+    "avoid": ["Pryskanie ksylometazoliną >5 dni"],
+    "prevention": ["Kontrola alergenów w domu"],
+    "mistakes": ["Samoleczenie antybiotykiem z „zapasu”"],
+    "emergency": ["Krwotok nie do opanowania — SOR/112"],
+    "info": "Nawracające zapalenia zatok — rozważ tomografię.",
+    "now_do": ["Iryguj", "Leki OTC na alergię", "Nie mija? — lekarz"]
   },
+
+  "szczeka_k": {
+    "title": "Szczęka / SSŻ — kobieta",
+    "causes": ["Bruksizm, napięcia mięśniowe", "Dysfunkcja stawu skroniowo-żuchwowego", "Wada zgryzu"],
+    "symptoms": ["Ból przy żuciu/otwieraniu ust", "Trzaski, ograniczenie ruchu", "Ból głowy skroniowy"],
+    "concerns": ["Szczękościsk, uraz", "Asymetria twarzy + gorączka (ropień)"],
+    "doctors": ["Stomatolog", "Fizjoterapeuta stomatologiczny"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> NLPZ (ibuprofen/naproksen), maści rozgrzewające",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> miorelaksanty wg lekarza"
+    ],
+    "first_aid": ["Ciepło na mięśnie, miękka dieta", "Ćwiczenia rozluźniające"],
+    "rehab": ["Autoterapia więzadeł/mięśni, szyny relaksacyjne"],
+    "avoid": ["Guma do żucia, twarde pokarmy"],
+    "prevention": ["Higiena stresu, higiena snu"],
+    "mistakes": ["Długie zaciskanie zębów w stresie"],
+    "emergency": ["Niemożność otwarcia ust po urazie — SOR"],
+    "info": "Często współistnieją bóle karku — warto włączyć terapię odcinka szyjnego.",
+    "now_do": ["Ciepło + miękka dieta", "OTC przeciwbólowe", "Umów fizjoterapię stom."]
+  },
+
   "szczeka_m": {
     "title": "Szczęka / SSŻ — mężczyzna",
-    "causes": ["Bruksizm, stres", "Dysfunkcja SSŻ"],
-    "symptoms": ["Ból żuchwy, klikanie, napięcie", "Ból głowy/ucha bez infekcji"],
-    "concerns": ["⚠️ Szczękościsk, uraz stawu"],
-    "doctors": ["Stomatolog", "Fizjoterapeuta"],
-    "medications": ["Bez recepty: NLPZ", "Na receptę: miorelaksanty wg lekarza"],
-    "first_aid": ["Ciepło/zimno wg komfortu", "Miękka dieta"],
-    "rehabilitation": ["Ćwiczenia rozluźniające, szyna"],
-    "avoid": ["Żucie twardych pokarmów", "Zgrzytanie"],
-    "prevention": ["Higiena snu, redukcja stresu"],
-    "mistakes": ["Brak szyny przy bruksizmie"],
-    "emergency": ["Uraz/zwichnięcie — SOR"],
-    "description": "Terapia skojarzona (fizjo + szyna) daje najlepsze efekty."
+    "causes": ["Bruksizm", "Dysfunkcja SSŻ", "Uraz"],
+    "symptoms": ["Trzaski, ból przy żuciu", "Ograniczenie otwierania ust"],
+    "concerns": ["Szczękościsk, uraz, gorączka + obrzęk"],
+    "doctors": ["Stomatolog", "Fizjoterapeuta stom."],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> ibuprofen/naproksen",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> miorelaksant wg lekarza"
+    ],
+    "first_aid": ["Ciepło, rozluźnianie", "Miękka dieta"],
+    "rehab": ["Szyna relaksacyjna, ćwiczenia toru żuchwy"],
+    "avoid": ["Twarde pokarmy, ziewanie „na maxa”"],
+    "prevention": ["Redukcja stresu, higiena snu"],
+    "mistakes": ["Ignorowanie trzasków + przeciążanie"],
+    "emergency": ["Zablokowanie stawu po urazie — SOR"],
+    "info": "Zadbaj też o postawę szyi i barków.",
+    "now_do": ["Ciepło + OTC", "Ćwiczenia rozluźniające", "Wizyta u stomatologa"]
   },
+
+  "szyja_k": {
+    "title": "Szyja — kobieta",
+    "causes": ["Napięcie mięśniowe, praca przy komputerze", "Dyskopatia szyjna"],
+    "symptoms": ["Ból karku, ograniczenie ruchu", "Bóle głowy potyliczne"],
+    "concerns": ["Gorączka + sztywność karku", "Uraz komunikacyjny (whiplash)"],
+    "doctors": ["Fizjoterapeuta", "Neurolog/Ortopeda"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> paracetamol/ibuprofen, maści rozgrzewające",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> miorelaksanty wg lekarza"
+    ],
+    "first_aid": ["Ciepło, delikatne rozciąganie", "Mikroprzerwy co 45–60 min"],
+    "rehab": ["Mobilizacje odc. szyjnego, wzmocnienie głębokie"],
+    "avoid": ["Długie utrzymywanie jednej pozycji"],
+    "prevention": ["Ergonomia biurka, ekran na wysokości oczu"],
+    "mistakes": ["Sztywne kołnierze bez wskazań"],
+    "emergency": ["Uraz + objawy ubytkowe — SOR"],
+    "info": "Ból szyi często promieniuje do głowy — praca z oddechem pomaga.",
+    "now_do": ["Ciepło + przerwy", "OTC przeciwbólowe", "Umów fizjoterapię"]
+  },
+
   "szyja_m": {
     "title": "Szyja — mężczyzna",
-    "causes": ["Przeciążenie, dyskopatia", "Ergonomia pracy"],
-    "symptoms": ["Ból karku, ograniczenie ruchu", "Promieniowanie do barku"],
-    "concerns": ["⚠️ Postępujące drętwienia/niedowład", "⚠️ Uraz z objawami neurologicznymi"],
-    "doctors": ["Neurolog/ortopeda", "Fizjoterapeuta"],
-    "medications": ["Bez recepty: NLPZ/paracetamol", "Na receptę: miorelaksanty/NLPZ silniejsze"],
-    "first_aid": ["Ciepło, delikatne rozciąganie"],
-    "rehabilitation": ["Stabilizacja szyi, postawa", "Ćwiczenia scapularne"],
-    "avoid": ["Długie pochylanie, nagłe skręty"],
-    "prevention": ["Ergonomia, przerwy, aktywność"],
-    "mistakes": ["Długie unieruchomienie"],
-    "emergency": ["Uraz z deficytami — SOR"],
-    "description": "Ruch i ergonomia ponad sam odpoczynek."
+    "causes": ["Napięcia, przeciążenia", "Dyskopatia"],
+    "symptoms": ["Ból karku, promieniowanie do barku", "Sztywność poranna"],
+    "concerns": ["Uraz, drętwienie ręki", "Gorączka + sztywność"],
+    "doctors": ["Fizjoterapeuta", "Neurolog/Ortopeda"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> paracetamol/ibuprofen",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> miorelaksant/NLPZ wg lekarza"
+    ],
+    "first_aid": ["Ciepło, delikatne ruchy", "Unikaj nagłych skrętów"],
+    "rehab": ["Wzmacnianie stabilizacji szyi, otwieranie kl.piersiowej"],
+    "avoid": ["Siłowe „nastawianie” szyi"],
+    "prevention": ["Ergonomia, przerwy"],
+    "mistakes": ["Leżenie przez wiele dni bez ruchu"],
+    "emergency": ["Uraz, objawy neurologiczne — SOR"],
+    "info": "Praca siedząca? Rób 2–3 min mobilizacji co godzinę.",
+    "now_do": ["Ciepło", "OTC", "Fizjoterapia"]
   },
+
+  "glowa_k": {
+    "title": "Głowa — kobieta",
+    "causes": ["Napięciowe bóle głowy", "Migrena", "Zatoki/szyja/SSŻ"],
+    "symptoms": ["Tępy ucisk/obustronny ból", "Nadwrażliwość na bodźce przy migrenie"],
+    "concerns": ["„Piorunujący” nagły ból", "Udarowe objawy (niedowład, bełkotliwa mowa)"],
+    "doctors": ["Neurolog", "POZ", "Fizjoterapeuta"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> ibuprofen/naproksen, paracetamol",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> tryptany, profilaktyka migreny wg neurologa"
+    ],
+    "first_aid": ["Ciemne, ciche pomieszczenie", "Nawodnienie, kofeina (migrena)"],
+    "rehab": ["Terapia szyi/SSŻ, trening oddechowy"],
+    "avoid": ["Przeciążenia szyi, odwodnienie"],
+    "prevention": ["Higiena snu, dzienniczek bólów"],
+    "mistakes": ["Za częste leki doraźne (ból polekowy)"],
+    "emergency": ["Nagły najgorszy w życiu ból, udar — SOR/112"],
+    "info": "Często pomaga praca nad stresem i szyją.",
+    "now_do": ["Nawodnij się", "OTC doraźnie", "Jeśli objawy neurologiczne — SOR"]
+  },
+
   "glowa_m": {
     "title": "Głowa — mężczyzna",
-    "causes": ["Napięciowy ból", "Migrena", "Zatoki"],
-    "symptoms": ["Ucisk/pulsowanie", "Nudności (migrena)"],
-    "concerns": ["⚠️ Piorunujący ból", "⚠️ Objawy ogniskowe po urazie"],
-    "doctors": ["Neurolog", "POZ"],
-    "medications": ["Bez recepty: paracetamol/ibuprofen", "Na receptę: tryptany/profilaktyka"],
-    "first_aid": ["Ciemno, cicho, nawodnienie"],
-    "rehabilitation": ["Higiena snu, redukcja stresu"],
-    "avoid": ["Nadmierne NLPZ", "Odwodnienie"],
-    "prevention": ["Rytm dnia, aktywność"],
-    "mistakes": ["Ból z odbicia od leków"],
-    "emergency": ["Nagły najgorszy ból, deficyty — 112/SOR"],
-    "description": "Wczesne leczenie napadu skraca ból."
+    "causes": ["Napięciowe", "Migrenowe", "Z zatok/szyi"],
+    "symptoms": ["Ucisk/rozpieranie", "Nadwrażliwość bodźców"],
+    "concerns": ["Udarowe objawy", "Nagły piorunujący ból"],
+    "doctors": ["Neurolog", "POZ", "Fizjoterapeuta"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> ibuprofen/naproksen/paracetamol",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> tryptany/profilaktyka"
+    ],
+    "first_aid": ["Ciemne miejsce, chłodny okład", "Nawodnienie + odpoczynek"],
+    "rehab": ["Terapia szyi, oddechowa"],
+    "avoid": ["Przemęczenie, odwodnienie"],
+    "prevention": ["Sen, regularne posiłki"],
+    "mistakes": ["Nadmierne doraźne leki"],
+    "emergency": ["Objawy udarowe — SOR/112"],
+    "info": "Monitoruj czynniki wyzwalające.",
+    "now_do": ["Odpocznij", "OTC", "Niepokojące objawy — SOR"]
+  },
+
+  "serce_k": {
+    "title": "Serce — kobieta",
+    "causes": ["Choroba wieńcowa", "Skurcz naczyń, stres", "Nadciśnienie"],
+    "symptoms": ["Ból w klatce (ucisk/rozpieranie)", "Duszność, osłabienie, poty"],
+    "concerns": ["Ból promieniujący do ręki/żuchwy", "Zimny pot + nudności"],
+    "doctors": ["Kardiolog", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> brak skutecznych doraźnych (poza p/bólowymi przy innych przyczynach)",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> nitrogliceryna, beta-blokery wg kardiologa"
+    ],
+    "first_aid": ["Usiądź, ogranicz wysiłek", "Jeśli ból >5–10 min/typowy — 112"],
+    "rehab": ["Kardiorehabilitacja po incydencie", "Aktywność wg zaleceń"],
+    "avoid": ["Palenie, przeciążenia bez diagnostyki"],
+    "prevention": ["Kontrola ciśnienia, lipidów", "Aktywność + dieta"],
+    "mistakes": ["Zlekceważenie bólu wysiłkowego"],
+    "emergency": ["Objawy zawału — natychmiast 112/SOR"],
+    "info": "U kobiet obraz bywa nietypowy (nudności, duszność, zmęczenie).",
+    "now_do": ["Usiądź", "Wezwij pomoc przy typowych objawach", "Nie prowadź auta"]
   },
 
   "serce_m": {
     "title": "Serce — mężczyzna",
-    "causes": ["Choroba wieńcowa", "Zawał", "Zapalenie osierdzia/mięśnia", "Arytmie"],
-    "symptoms": ["Ucisk w klatce, duszność, poty", "Promieniowanie do ręki/szczęki"],
-    "concerns": ["⚠️ Silny ból w klatce + duszność", "⚠️ Omdlenie, sinica"],
-    "doctors": ["Kardiolog", "POZ", "SOR przy ostrych objawach"],
-    "medications": ["Bez recepty: brak doraźnych „na serce”", "Na receptę: ASA, azotany, beta-blokery, statyny, ACEI/ARB"],
-    "first_aid": ["Przerwij wysiłek, usiądź", "Nitrogliceryna jeśli zalecono", "Dzwoń 112 przy utrzymujących się objawach"],
-    "rehabilitation": ["Marsz, low-intensity po wykluczeniu OZW", "Rehab kardiologiczna"],
-    "avoid": ["Wysiłek w bólu", "Palenie, alkohol", "NLPZ „na własną rękę”"],
-    "prevention": ["Kontrola RR/lipidów", "Dieta śródziemnomorska, ruch"],
-    "mistakes": ["Czekanie „aż przejdzie”"],
-    "emergency": ["Ból >10 min + duszność/poty — 112/SOR"],
-    "description": "Każdy nowy/silny ból w klatce traktuj poważnie."
+    "causes": ["Choroba wieńcowa", "Zawał/ACS", "Nadciśnienie"],
+    "symptoms": ["Ból w klatce piersiowej", "Duszność, zimne poty"],
+    "concerns": ["Ból z promieniowaniem do lewej ręki", "Nagła duszność + poty"],
+    "doctors": ["Kardiolog", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> nitrogliceryna, beta-blokery, wg kardiologa"
+    ],
+    "first_aid": ["Pozycja półsiedząca", "112 przy podejrzeniu zawału"],
+    "rehab": ["Kardiorehabilitacja, modyfikacja stylu życia"],
+    "avoid": ["Wysiłek przy bólu w klatce", "Palenie"],
+    "prevention": ["Kontrola lipidów, ruch"],
+    "mistakes": ["„Przeczekanie” bólu"],
+    "emergency": ["Podejrzenie zawału — 112/SOR natychmiast"],
+    "info": "Czas to mięsień — nie zwlekaj.",
+    "now_do": ["Usiądź", "Dzwoń 112", "Przygotuj listę leków"]
   },
+
+  "pluca_k": {
+    "title": "Płuca — kobieta",
+    "causes": ["Zapalenie oskrzeli/płuc", "Astma/POChP", "Zatorowość (ryzyko)"],
+    "symptoms": ["Kaszel, duszność", "Ból w klatce przy oddychaniu"],
+    "concerns": ["Duszność spoczynkowa", "Krwioplucie, sinica"],
+    "doctors": ["Pulmonolog", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> syropy wykrztuśne (krótko)",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> inhalatory, antybiotyk wg lekarza"
+    ],
+    "first_aid": ["Nawadnianie, odpoczynek", "Pozycja ułatwiająca oddychanie"],
+    "rehab": ["Trening oddechowy, spacery w rekonwalescencji"],
+    "avoid": ["Dym, zimne powietrze bez osłony"],
+    "prevention": ["Szczepienia, aktywność"],
+    "mistakes": ["Antybiotyk „na własną rękę”"],
+    "emergency": ["Silna duszność, sinica — 112/SOR"],
+    "info": "Nagła duszność + ból wdechowy wymaga pilnej oceny.",
+    "now_do": ["Nawodnij", "Odpocznij", "Duszność? — 112"]
+  },
+
   "pluca_m": {
     "title": "Płuca — mężczyzna",
-    "causes": ["Infekcje", "Astma", "POChP"],
-    "symptoms": ["Kaszel, duszność, świsty"],
-    "concerns": ["⚠️ Sinica/krwioplucie", "⚠️ Duszność spoczynkowa"],
-    "doctors": ["POZ", "Pulmonolog"],
-    "medications": ["Bez recepty: syropy wykrztuśne", "Na receptę: inhalacyjne SABA/ICS/LABA, antybiotyk wg wskazań"],
-    "first_aid": ["Nawilżanie, odpoczynek", "Inhalacje NaCl"],
-    "rehabilitation": ["Oddech przeponowy, spacer"],
-    "avoid": ["Dym, wysiłek przy duszności"],
-    "prevention": ["Szczepienia, higiena"],
-    "mistakes": ["Samodzielne antybiotyki", "Zaniedbanie inhalatorów"],
-    "emergency": ["Silna duszność/krwioplucie — 112/SOR"],
-    "description": "Kontrola objawów i plan leczenia ograniczają zaostrzenia."
+    "causes": ["Infekcje, astma/POChP", "Zatorowość (ryzyko)"],
+    "symptoms": ["Kaszel, duszność", "Świsty, ból wdechowy"],
+    "concerns": ["Nagła duszność spoczynkowa", "Krwioplucie"],
+    "doctors": ["Pulmonolog", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> syropy/na kaszel",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> inhalatory, antybiotyk wg lekarza"
+    ],
+    "first_aid": ["Pozycja wysoka", "Ciepłe napoje"],
+    "rehab": ["Ćwiczenia oddechowe"],
+    "avoid": ["Dym tytoniowy"],
+    "prevention": ["Szczepienia, ruch"],
+    "mistakes": ["Opóźnianie wizyty przy duszności"],
+    "emergency": ["Silna duszność/sinica — SOR/112"],
+    "info": "Jeśli męczysz się przy krótkim marszu — konsultacja.",
+    "now_do": ["Usiądź wysoko", "Nawodnij", "Duszność? — 112"]
   },
+
+  "klatka_piersiowa_k": {
+    "title": "Klatka piersiowa — kobieta",
+    "causes": ["Napięcia międzyżebrowe", "Kostochondritis", "Refluks/żołądek — ból zamostkowy"],
+    "symptoms": ["Ból punktowy/przy ucisku", "Nasilenie przy ruchu, kaszlu/wdechu"],
+    "concerns": ["Ból wysiłkowy uciskowy", "Duszność spoczynkowa"],
+    "doctors": ["POZ", "Ortopeda/Fizjoterapeuta", "Kardiolog (jeśli podejrzenie)"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> NLPZ (krótko), maści rozgrzewające",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> leki p/kwasowe, miorelaksant wg lekarza"
+    ],
+    "first_aid": ["Ciepło, delikatne oddychanie żebrowe", "Unikaj dźwigania"],
+    "rehab": ["Mobilizacja mostka/żeber, oddech przeponowy"],
+    "avoid": ["Przeciążenia kl. piersiowej"],
+    "prevention": ["Postawa, mobilność", "Stopniowanie wysiłku"],
+    "mistakes": ["Brak diagnostyki przy duszności/bólu wysiłkowym"],
+    "emergency": ["Ból uciskowy + duszność — 112"],
+    "info": "Ból mięśniowo-powięziowy bywa ostry, ale niekardiologiczny.",
+    "now_do": ["Odpocznij", "Ciepło/OTC", "Objawy sercowe? — 112"]
+  },
+
   "klatka_piersiowa_m": {
     "title": "Klatka piersiowa — mężczyzna",
-    "causes": ["Ból mięśniowo-kostny", "Zapalenie chrząstek żebrowych", "Kaszel/przeciążenie"],
-    "symptoms": ["Ból nasilany uciskiem/ruchami", "Tkliwość"],
-    "concerns": ["⚠️ Ból z dusznością/potami (serce)", "⚠️ Krwioplucie/sinica (płuca)"],
-    "doctors": ["POZ", "Kardiolog/Pulmonolog przy flagach"],
-    "medications": ["Bez recepty: paracetamol/ibuprofen", "Na receptę: NLPZ/miorelaksanty"],
-    "first_aid": ["Ciepło, odpoczynek", "Delikatne rozciąganie"],
-    "rehabilitation": ["Ćwiczenia oddechowe, posturalne", "Stopniowe obciążenia"],
-    "avoid": ["Forsowny trening w bólu"],
-    "prevention": ["Ergonomia, wzmacnianie posturalne"],
-    "mistakes": ["Ignorowanie objawów kardiologicznych"],
-    "emergency": ["Ból + duszność — 112/SOR"],
-    "description": "Najpierw wykluczamy serce/płuca w razie wątpliwości."
+    "causes": ["Napięcia międzyżebrowe", "Kostochondritis", "Refluks"],
+    "symptoms": ["Ból miejscowy przy ruchu/oddechu", "Tkliwość przy ucisku"],
+    "concerns": ["Ból uciskowy z dusznością", "Omdlenia"],
+    "doctors": ["POZ", "Ortopeda/Fizjoterapeuta", "Kardiolog (jeśli kliniczne)"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> NLPZ/maści",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> p/kwasowe, miorelaksant wg lekarza"
+    ],
+    "first_aid": ["Ciepło, ogranicz dźwiganie", "Oddychanie przeponowe"],
+    "rehab": ["Mobilizacje żeber, rozciąganie piersiowych"],
+    "avoid": ["Nagłe skręty przy ciężarach"],
+    "prevention": ["Wzmacnianie pleców/łopatek"],
+    "mistakes": ["Ignorowanie objawów sercowych"],
+    "emergency": ["Ból typowo sercowy + duszność — 112"],
+    "info": "Często to ból mięśniowo-powięziowy.",
+    "now_do": ["Ciepło/OTC", "Odpocznij", "Wątpliwości? — lekarz/112"]
   },
+
+  "brzuch_k": {
+    "title": "Brzuch — kobieta",
+    "causes": ["Niestrawność/refluks", "Zespół jelita drażliwego", "Infekcje dróg moczowych"],
+    "symptoms": ["Ból skurczowy, wzdęcia", "Zgaga, nudności"],
+    "concerns": ["Silny ból z napięciem brzucha", "Czarna smolista stolca/wymioty fusowate"],
+    "doctors": ["Gastroenterolog", "Ginekolog (jeśli podejrzenie)"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> IPP krótkotrwale, leki rozkurczowe, probiotyki",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> wg rozpoznania (IPP długotrwale, antybiotyki)"
+    ],
+    "first_aid": ["Nawodnienie, lekkostrawna dieta", "Ciepły termofor przy skurczach"],
+    "rehab": ["Ćwiczenia oddechowe/przepony"],
+    "avoid": ["Alkohol, tłuste posiłki"],
+    "prevention": ["Regularne posiłki, sen"],
+    "mistakes": ["Maskowanie bólu silnymi lekami bez diagnostyki"],
+    "emergency": ["Ostry brzuch, krew w stolcu — SOR/112"],
+    "info": "U kobiet różnicować z problemami ginekologicznymi.",
+    "now_do": ["Nawodnij", "Lekkostrawne", "Silny ból/krew — SOR"]
+  },
+
   "brzuch_m": {
     "title": "Brzuch — mężczyzna",
-    "causes": ["Dyspepsja, refluks, IBS", "Infekcje", "Kolka żółciowa", "Wyrostek/trzustka (pilne)"],
-    "symptoms": ["Ból w nad-/śród-/podbrzuszu", "Wzdęcia, zgaga, biegunka/zaparcia"],
-    "concerns": ["⚠️ Stały silny ból, obrona mięśniowa", "⚠️ Krew w stolcu/wymiotach"],
-    "doctors": ["POZ", "Gastroenterolog"],
-    "medications": ["Bez recepty: IPP krótko, zobojętniające, simetikon, elektrolity", "Na receptę: IPP/antysekrecyjne, spazmolityki, antybiotyki wg wskazań"],
-    "first_aid": ["Lekkostrawna dieta, płyny", "Ciepło przy skurczach (bez podejrzenia ostrego brzucha)"],
-    "rehabilitation": ["Powrót do aktywności po ustąpieniu ostrych objawów"],
-    "avoid": ["Alkohol, tłuste/ostre", "NLPZ na pusty żołądek"],
-    "prevention": ["Higiena żywności, regularne posiłki"],
-    "mistakes": ["Długie IPP bez kontroli"],
-    "emergency": ["Ostry brzuch/krwawienie — 112/SOR"],
-    "description": "Czerwone flagi wymagają pilnej diagnostyki — nie zwlekaj."
+    "causes": ["Niestrawność/WRZ", "Jelito drażliwe", "Zapalenia"],
+    "symptoms": ["Skurcze, wzdęcia", "Zgaga"],
+    "concerns": ["Silny stały ból z obroną mięśni", "Krwawienie z pp."],
+    "doctors": ["Gastroenterolog", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> IPP krótko, rozkurczowe",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> wg rozpoznania"
+    ],
+    "first_aid": ["Dieta lekkostrawna, płyny", "Odpoczynek"],
+    "rehab": ["Oddech przeponowy"],
+    "avoid": ["Alkohol, tłuste posiłki"],
+    "prevention": ["Regularność posiłków"],
+    "mistakes": ["Przeciąganie diagnostyki"],
+    "emergency": ["Ostry brzuch — SOR/112"],
+    "info": "Utrata masy ciała + ból — pilna konsultacja.",
+    "now_do": ["Lekkostrawnie", "OTC rozkurczowe", "Nie ustępuje? — lekarz"]
   },
+
+  "plecy_k": {
+    "title": "Plecy — kobieta",
+    "causes": ["Przeciążenie mięśni", "Dyskopatia", "Zespół mięśniowo-powięziowy"],
+    "symptoms": ["Ból przy ruchu, sztywność", "Promieniowanie do nóg (rwa)"],
+    "concerns": ["Niedowład, zaburzenia zwieraczy", "Uraz z bólem kręgosłupa"],
+    "doctors": ["Ortopeda/Neurolog", "Fizjoterapeuta"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> leki p/bólowe, maści rozgrzewające",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> miorelaksant/NLPZ wg lekarza"
+    ],
+    "first_aid": ["RICE modyfikowane (odpoczynek krótko, chłodzenie/później ciepło)", "Pozycja odciążająca"],
+    "rehab": ["Core, rozciąganie, mobilizacje", "Stopniowy powrót do aktywności"],
+    "avoid": ["Dźwiganie „z pleców”", "Długie leżenie"],
+    "prevention": ["Programy prewencyjne, ergonomia"],
+    "mistakes": ["Powrót do sportu „mimo bólu”"],
+    "emergency": ["Zespół ogona końskiego — SOR/112"],
+    "info": "Najlepszym „lekiem” jest rozsądny ruch.",
+    "now_do": ["Krótki odpoczynek", "Delikatny ruch w granicach bólu", "Umów fizjo, jeśli trwa >7 dni"]
+  },
+
   "plecy_m": {
     "title": "Plecy — mężczyzna",
-    "causes": ["Przeciążenie, dyskopatia", "Słaby core"],
-    "symptoms": ["Ból lędźwiowy/między łopatkami", "Sztywność"],
-    "concerns": ["⚠️ Deficyty neurologiczne", "⚠️ Nietrzymanie moczu/stolca"],
-    "doctors": ["Fizjoterapeuta", "Ortopeda/neurolog"],
-    "medications": ["Bez recepty: NLPZ/paracetamol", "Na receptę: miorelaksanty/NLPZ silniejsze"],
-    "first_aid": ["Ciepło, delikatny ruch", "Przerwy od siedzenia"],
-    "rehabilitation": ["Core, mobilizacja bioder, progresja obciążeń"],
-    "avoid": ["Dźwiganie/nagłe skręty w ostrym okresie"],
-    "prevention": ["Ergonomia, regularny ruch"],
-    "mistakes": ["Leżenie zamiast ćwiczeń"],
-    "emergency": ["Deficyty, uraz — 112/SOR"],
-    "description": "U większości poprawa w 2–6 tygodni przy aktywnym podejściu."
+    "causes": ["Przeciążenie, dyskopatia", "Napięcia"],
+    "symptoms": ["Ból, sztywność", "Promieniowanie do kończyny"],
+    "concerns": ["Zaburzenia zwieraczy, niedowład", "Uraz"],
+    "doctors": ["Ortopeda/Neurolog", "Fizjoterapeuta"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> paracetamol/ibuprofen, maści",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> miorelaksant/NLPZ wg lekarza"
+    ],
+    "first_aid": ["Chłodzenie 10–15 min w ostrym", "Pozycja odciążająca"],
+    "rehab": ["Core, biodra, mobilizacje"],
+    "avoid": ["Dźwiganie z rotacją", "Leżenie dłużej niż 1–2 dni"],
+    "prevention": ["Rozgrzewka, technika podnoszenia"],
+    "mistakes": ["Brak stopniowania powrotu"],
+    "emergency": ["Objawy ogona końskiego — SOR/112"],
+    "info": "Ruch lepszy niż bezczynność.",
+    "now_do": ["Krótki odpoczynek", "Lekki spacer", "Fizjoterapia jeśli nie mija"]
+  },
+
+  "uklad_krw_k": {
+    "title": "Układ krążenia — kobieta",
+    "causes": ["Nadciśnienie, miażdżyca", "Żylaki/zakrzepica (ryzyko)"],
+    "symptoms": ["Obrzęki, uczucie ciężkości nóg", "Bóle głowy przy HT"],
+    "concerns": ["Jednostronny obrzęk + ból łydki", "Ból w klatce + duszność"],
+    "doctors": ["Internista/Kardiolog", "Angiolog"],
+    "medications": [
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> leki na nadciśnienie/antykoagulanty wg lekarza"
+    ],
+    "first_aid": ["Unieś nogi, chłodź przy obrzękach"],
+    "rehab": ["Chód, łydki ‚pompa mięśniowa’"],
+    "avoid": ["Długie siedzenie bez ruchu"],
+    "prevention": ["Waga, ruch, dieta"],
+    "mistakes": ["Przerywanie leków na ciśnienie"],
+    "emergency": ["Objawy DVT/PE — SOR/112"],
+    "info": "Kontroluj ciśnienie w domu.",
+    "now_do": ["Mierz ciśnienie", "Ruszaj się co godzinę", "Alarmowe objawy — SOR"]
   },
 
   "uklad_krw_m": {
     "title": "Układ krążenia — mężczyzna",
-    "causes": ["Miażdżyca, nadciśnienie", "ZŻG"],
-    "symptoms": ["Ból/obrzęk łydki", "Kołatania, bóle w klatce przy wysiłku"],
-    "concerns": ["⚠️ Jednostronny obrzęk (ZŻG?)", "⚠️ Ból w klatce + duszność"],
-    "doctors": ["Kardiolog/Angiolog", "POZ"],
-    "medications": ["Bez recepty: styl życia", "Na receptę: antykoagulanty/statyny/p-arytmiczne wg lekarza"],
-    "first_aid": ["Uniesienie kończyny, przerwy w długim siedzeniu"],
-    "rehabilitation": ["Marsz/aeroby po ocenie", "Redukcja masy ciała"],
-    "avoid": ["Palenie, długi bezruch"],
-    "prevention": ["Ruch 150 min/tydz., dieta, kontrola RR/lipidów"],
+    "causes": ["Nadciśnienie", "Żylaki/zakrzepica"],
+    "symptoms": ["Bóle głowy przy HT", "Obrzęki nóg"],
+    "concerns": ["Ból w klatce + duszność", "Jednostronny obrzęk + ból łydki"],
+    "doctors": ["Internista/Kardiolog"],
+    "medications": [
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> leki hipotensyjne/antykoagulanty"
+    ],
+    "first_aid": ["Unieś nogi, chłodzenie"],
+    "rehab": ["Marsz, ćwiczenia łydek"],
+    "avoid": ["Długie siedzenie"],
+    "prevention": ["Ruch, dieta"],
     "mistakes": ["Samodzielne odstawianie leków"],
-    "emergency": ["Dusznosć/krwioplucie — 112/SOR"],
-    "description": "Czerwone flagi wymagają natychmiastowego działania."
+    "emergency": ["DVT/PE — 112"],
+    "info": "Regularne pomiary HT są kluczowe.",
+    "now_do": ["Mierz ciśnienie", "Spacer", "Alarmowe objawy — 112"]
   },
+
+  "uklad_oddech_k": {
+    "title": "Układ oddechowy — kobieta",
+    "causes": ["Astma/POChP", "Infekcje"],
+    "symptoms": ["Świsty, duszność", "Kaszel"],
+    "concerns": ["Duszność spoczynkowa", "Sinica"],
+    "doctors": ["Pulmonolog", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> inhalatory kontrolujące/doraźne"
+    ],
+    "first_aid": ["Pozycja siedząca, uspokojony oddech"],
+    "rehab": ["Ćwiczenia oddechowe"],
+    "avoid": ["Dym, zimne powietrze"],
+    "prevention": ["Szczepienia, plan działania astmy"],
+    "mistakes": ["Brak inhalatora przy zaostrzeniach"],
+    "emergency": ["Nagła duszność — 112"],
+    "info": "Sprawdź technikę inhalacji.",
+    "now_do": ["Zastosuj inhalator doraźny", "Usiądź", "Jeśli brak poprawy — 112"]
+  },
+
   "uklad_oddech_m": {
     "title": "Układ oddechowy — mężczyzna",
-    "causes": ["Infekcje", "Astma", "POChP"],
-    "symptoms": ["Kaszel, duszność, świsty"],
-    "concerns": ["⚠️ Sinica/krwioplucie", "⚠️ Duszność spoczynkowa"],
-    "doctors": ["POZ", "Pulmonolog"],
-    "medications": ["Bez recepty: syropy/nawilżanie", "Na receptę: wziewne SABA/ICS/LABA, antybiotyk wg wskazań"],
-    "first_aid": ["Inhalacje NaCl, odpoczynek"],
-    "rehabilitation": ["Ćwiczenia oddechowe, spacer"],
-    "avoid": ["Dym tytoniowy"],
-    "prevention": ["Szczepienia, higiena"],
-    "mistakes": ["Zaniedbanie inhalatorów"],
-    "emergency": ["Silna duszność/krwioplucie — 112/SOR"],
-    "description": "Plan leczenia i czujność na zaostrzenia."
+    "causes": ["Astma/POChP", "Infekcje"],
+    "symptoms": ["Duszność, świsty", "Kaszel"],
+    "concerns": ["Sinica, duszność spoczynkowa"],
+    "doctors": ["Pulmonolog", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> SABA/LABA/ICS wg zaleceń"
+    ],
+    "first_aid": ["Pozycja wysoka", "Spokojny oddech przez nos"],
+    "rehab": ["Trening oddechowy"],
+    "avoid": ["Dym, kurz"],
+    "prevention": ["Szczepienia"],
+    "mistakes": ["Brak planu astmy"],
+    "emergency": ["Zaostrzenie ciężkie — 112"],
+    "info": "Noś inhalator przy sobie.",
+    "now_do": ["Inhalator", "Usiądź", "Brak poprawy — 112"]
   },
+
+  "uklad_pokarm_k": {
+    "title": "Układ pokarmowy — kobieta",
+    "causes": ["Niestrawność, refluks", "ZJD"],
+    "symptoms": ["Wzdęcia, ból, zgaga"],
+    "concerns": ["Krwawienie, smolista stolca", "Utrata masy ciała"],
+    "doctors": ["Gastroenterolog"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> IPP krótko, zobojętniające",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> IPP długoterminowo, prokinetyki"
+    ],
+    "first_aid": ["Mniejsze posiłki, bez późnych kolacji"],
+    "rehab": ["Oddech przeponowy"],
+    "avoid": ["Alkohol, pikantne"],
+    "prevention": ["Ruch, sen"],
+    "mistakes": ["Długie IPP bez kontroli"],
+    "emergency": ["Krew w stolcu/wymiotach — SOR"],
+    "info": "Jeśli dołącza gorączka — ocena pod kątem infekcji.",
+    "now_do": ["Lekkostrawnie", "Krótko IPP", "Nie mija? — lekarz"]
+  },
+
   "uklad_pokarm_m": {
     "title": "Układ pokarmowy — mężczyzna",
-    "causes": ["Dyspepsja/refluks", "IBS", "Infekcje jelitowe"],
-    "symptoms": ["Ból brzucha, zgaga, wzdęcia", "Biegunka/zaparcia"],
-    "concerns": ["⚠️ Krew w stolcu/wymiotach", "⚠️ Utrata wagi, gorączka"],
-    "doctors": ["Gastroenterolog", "POZ"],
-    "medications": ["Bez recepty: IPP krótko, zobojętniające, elektrolity", "Na receptę: IPP/spazmolityki/antybiotyki wg wskazań"],
-    "first_aid": ["Lekkostrawna dieta, płyny"],
-    "rehabilitation": ["Stopniowy powrót do diety, aktywność"],
-    "avoid": ["Alkohol, tłuste/ostre", "NLPZ na pusty żołądek"],
-    "prevention": ["Higiena żywności, regularne posiłki"],
-    "mistakes": ["Długie IPP bez kontroli"],
-    "emergency": ["Ostry brzuch/krwawienie — 112/SOR"],
-    "description": "Przewlekłe objawy — plan z lekarzem; ostre — pilna ocena."
+    "causes": ["Refluks, ZJD"],
+    "symptoms": ["Zgaga, ból, wzdęcia"],
+    "concerns": ["Krwawienie z pp.", "Spadek wagi"],
+    "doctors": ["Gastroenterolog"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> IPP doraźnie",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> wg rozpoznania"
+    ],
+    "first_aid": ["Niewielkie posiłki, podniesienie wezgłowia"],
+    "rehab": ["Ćwiczenia oddechowe"],
+    "avoid": ["Tłuste, alkohol"],
+    "prevention": ["Ruch"],
+    "mistakes": ["Samodzielne antybiotyki"],
+    "emergency": ["Krwawienie — SOR"],
+    "info": "Rozważ test na Helicobacter pylori.",
+    "now_do": ["Lekkostrawnie", "IPP krótko", "Wizyta, jeśli utrzymuje się"]
+  },
+
+  "biodra_k": {
+    "title": "Biodra — kobieta",
+    "causes": ["Zespół pasma biodrowo-piszczelowego", "Naduse/ścięgna pośladkowe"],
+    "symptoms": ["Ból boczny biodra", "Nasilenie przy chodzeniu/biegu"],
+    "concerns": ["Upadek/uraz, niemożność obciążenia"],
+    "doctors": ["Ortopeda", "Fizjoterapeuta"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> NLPZ miejscowe",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> iniekcje p/zapalne wg ortopedy"
+    ],
+    "first_aid": ["Chłodzenie 10–15 min", "Ograniczenie biegu pod górę"],
+    "rehab": ["Wzmacnianie pośladków/rotatorów", "Mobilizacja biodra"],
+    "avoid": ["Nagłe zwiększenie objętości biegu"],
+    "prevention": ["Rozgrzewka, zmiana butów regularnie"],
+    "mistakes": ["„Rozbiegiwanie” bólu"],
+    "emergency": ["Uraz + deformacja — SOR"],
+    "info": "Często pomaga praca nad techniką biegu.",
+    "now_do": ["Chłodzenie", "Modyfikuj aktywność", "Fizjoterapia"]
   },
 
   "biodra_m": {
     "title": "Biodra — mężczyzna",
-    "causes": ["Przeciążenia, zapalenie kaletki", "ITBS"],
-    "symptoms": ["Ból bocznego biodra", "Nasilenie przy ruchu"],
-    "concerns": ["⚠️ Uraz + niemożność obciążenia", "⚠️ Gorączka + ból stawu"],
-    "doctors": ["Ortopeda", "Fizjoterapeuta"],
-    "medications": ["Bez recepty: NLPZ/żele", "Na receptę: iniekcje/leczenie p/zapalne wg lekarza"],
-    "first_aid": ["Zimno, odpoczynek w ostrym okresie"],
-    "rehabilitation": ["Pośladki, mobilizacja biodra", "Rozciąganie ITB"],
-    "avoid": ["Skoki/przeciążenia na początku"],
-    "prevention": ["Progresja obciążeń, stabilizacja"],
-    "mistakes": ["Brak ćwiczeń stabilizacyjnych"],
-    "emergency": ["Uraz z deformacją — SOR"],
-    "description": "Stabilizacja miednicy kluczowa dla biodra i kolana."
+    "causes": ["Przeciążenia ścięgien", "Konflikt udowo-panewkowy"],
+    "symptoms": ["Ból pachwiny/boczny", "Sztywność po siedzeniu"],
+    "concerns": ["Uraz, brak obciążenia"],
+    "doctors": ["Ortopeda/Fizjoterapeuta"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> NLPZ miejscowe",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> iniekcje wg ortopedy"
+    ],
+    "first_aid": ["Chłodzenie, odciążenie"],
+    "rehab": ["Siła pośladków, mobilność"],
+    "avoid": ["Przysiady głębokie przy bólu"],
+    "prevention": ["Rozgrzewka"],
+    "mistakes": ["Ignorowanie sygnałów przeciążenia"],
+    "emergency": ["Uraz ciężki — SOR"],
+    "info": "Zmieniaj pozycje pracy co 30–60 min.",
+    "now_do": ["Zmniejsz obciążenie", "Chłodź", "Umów fizjo"]
   },
+
+  "uda_k": {
+    "title": "Uda — kobieta",
+    "causes": ["Naciągnięcie dwugłowego/czworogłowego", "Zespół pasma biodrowo-piszczelowego"],
+    "symptoms": ["Ból przy bieganiu/wspinaniu", "Tkliwość miejscowa"],
+    "concerns": ["Siniak masywny, brak obciążenia"],
+    "doctors": ["Ortopeda/Fizjoterapeuta"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> chłodzące żele, NLPZ miejscowe"
+    ],
+    "first_aid": ["RICE: odpoczynek, kompresja, elewacja"],
+    "rehab": ["Stopniowe obciążanie, ekscentryka"],
+    "avoid": ["Sprinty na zimno"],
+    "prevention": ["Rozgrzewka, progresja obciążeń"],
+    "mistakes": ["Za szybki powrót do sprintu"],
+    "emergency": ["Uraz z deformacją — SOR"],
+    "info": "Wczesna aktywacja poprawia gojenie.",
+    "now_do": ["RICE 48–72 h", "Delikatny ruch", "Fizjo po 3–5 dniach"]
+  },
+
   "uda_m": {
     "title": "Uda — mężczyzna",
-    "causes": ["Naderwania mięśni", "ITBS"],
-    "symptoms": ["Ból przodu/tyłu uda", "Krwiak, tkliwość"],
-    "concerns": ["⚠️ Trzask + nagły ból/krwiak", "⚠️ Objawy ZŻG"],
-    "doctors": ["Fizjoterapeuta", "Ortopeda"],
-    "medications": ["Bez recepty: NLPZ krótko", "Na receptę: p/bólowe silniejsze"],
+    "causes": ["Naciągnięcie mięśni", "Nadmierne obciążenia"],
+    "symptoms": ["Ból przy bieganiu, skokach"],
+    "concerns": ["Słabość znaczna, krwiak rozległy"],
+    "doctors": ["Ortopeda/Fizjoterapeuta"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> żele chłodzące, NLPZ miejscowe"
+    ],
     "first_aid": ["RICE, elewacja"],
-    "rehabilitation": ["Eccentryki, propriocepcja", "Core/pośladki"],
-    "avoid": ["Sprinty na starcie rehabu"],
-    "prevention": ["Rozgrzewka, progres obciążeń"],
-    "mistakes": ["Za szybki powrót"],
-    "emergency": ["ZŻG/rozległy uraz — pilnie"],
-    "description": "Progresywne obciążanie i eccentryki wspierają gojenie."
+    "rehab": ["Ekscentryka, propriocepcja"],
+    "avoid": ["Sprinty bez rozgrzewki"],
+    "prevention": ["Progresja obciążeń"],
+    "mistakes": ["Trening mimo ostrego bólu"],
+    "emergency": ["Deformacja — SOR"],
+    "info": "Siła ekscentryczna kluczem w prewencji.",
+    "now_do": ["Odpoczynek", "Chłodzenie", "Plan powrotu z fizjo"]
   },
+
+  "kolano_k": {
+    "title": "Kolano — kobieta",
+    "causes": ["PFP/chondromalacja", "Skręcenie, łąkotki/ACL", "Przeciążenia"],
+    "symptoms": ["Tępy ból, schody/kucanie", "Przeskakiwanie, chrupanie"],
+    "concerns": ["Blokada, niestabilność", "Obrzęk + brak obciążenia"],
+    "doctors": ["Fizjoterapeuta", "Ortopeda", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> paracetamol/ibuprofen, żele",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> NLPZ/COX-2, iniekcje — wg ortopedy"
+    ],
+    "first_aid": ["RICE, kompresja, elewacja", "Odciążenie czasowe (kule/stabilizator)"],
+    "rehab": ["Ćw. core + biodro, mobilizacja rzepki", "Propriocepcja/przysiad z kontrolą"],
+    "avoid": ["Głębokie przysiady w bólu", "Skoki na wczesnym etapie"],
+    "prevention": ["Programy prewencyjne (np. FIFA 11+)", "Wymiana butów biegowych 600–800 km"],
+    "mistakes": ["Szybki powrót do sportu „mimo bólu”"],
+    "emergency": ["Deformacja, silny obrzęk — SOR/112"],
+    "info": "Stabilizacja miednicy zmniejsza obciążenie kolana.",
+    "now_do": ["RICE 48 h", "Chód w granicach komfortu", "Umów fizjo/ortopedę"]
+  },
+
   "kolano_m": {
     "title": "Kolano — mężczyzna",
-    "causes": ["Skręcenie, łąkotki", "ACL/PCL", "Zapalenia, chondromalacja", "Przeciążenia"],
+    "causes": ["Skręcenie, łąkotki/ACL/PCL", "Zapalenia, chondromalacja", "Przeciążenia"],
     "symptoms": ["Ból ostry/tępy, obrzęk", "Blokowanie, niestabilność"],
-    "concerns": ["⚠️ Obrzęk + brak obciążenia", "⚠️ Blokada/niestabilność", "⚠️ Gorączka + ból/obrzęk"],
-    "doctors": ["Ortopeda/traumatolog", "Fizjoterapeuta", "POZ"],
-    "medications": ["Bez recepty: paracetamol, ibuprofen/naproksen, żele; chłodzenie 10–15 min", "Na receptę: NLPZ/COX-2, leki osłonowe; ortezy wg lekarza"],
+    "concerns": ["Obrzęk + brak obciążenia", "Gorączka + ból/obrzęk (infekcja)"],
+    "doctors": ["Ortopeda/Traumatolog", "Fizjoterapeuta", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> paracetamol/ibuprofen, żele; chłodzenie 10–15 min",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> NLPZ/COX-2, osłonowe, ortezy wg lekarza"
+    ],
     "first_aid": ["RICE, kompresja, elewacja", "Odciążanie (kule/stabilizator)"],
-    "rehabilitation": ["ROM w odciążeniu, izometria czworogłowego", "Pośladki, propriocepcja, progres aktywności"],
-    "avoid": ["Głębokie przysiady/skoki na początku"],
-    "prevention": ["FIFA 11+, rozgrzewka/schłodzenie", "Wymiana butów 600–800 km"],
-    "mistakes": ["Powrót do sportu mimo bólu", "Długie unieruchomienie bez ćwiczeń"],
-    "emergency": ["Deformacja, silny obrzęk, podejrzenie złamania — SOR/112"],
-    "description": "Stabilność kolana zależy od pośladków i czworogłowego; progresuj obciążenia rozsądnie."
+    "rehab": ["Core + biodro, propriocepcja", "Stopniowe obciążanie wg bólu"],
+    "avoid": ["Skoki i głębokie przysiady w bólu"],
+    "prevention": ["FIFA 11+, rozgrzewka/schłodzenie"],
+    "mistakes": ["Szybki powrót bez ćwiczeń kontroli"],
+    "emergency": ["Deformacja, podejrzenie złamania — SOR/112"],
+    "info": "Wzmocnienie pośladków odciąża kolano.",
+    "now_do": ["Chłodź 3× dziennie", "Chodź tyle, ile bez utykania", "Umów fizjo/ortopedę"]
   },
+
+  "lydka_k": {
+    "title": "Łydka — kobieta",
+    "causes": ["Naciągnięcie mięśni łydki", "Skurcze z odwodnienia"],
+    "symptoms": ["Ból przy chodzie/wspięciach", "Tkliwość"],
+    "concerns": ["Jednostronny obrzęk + ból (DVT)"],
+    "doctors": ["Ortopeda", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> żele chłodzące/NLPZ"
+    ],
+    "first_aid": ["RICE, lekkie rozciąganie po 48 h"],
+    "rehab": ["Ekscentryka łydek, propriocepcja"],
+    "avoid": ["Bieganie pod górę w ostrej fazie"],
+    "prevention": ["Nawodnienie, rozgrzewka"],
+    "mistakes": ["Brak przerw na rozciąganie"],
+    "emergency": ["Podejrzenie DVT — SOR/112"],
+    "info": "Stopniowo wracaj do biegu (reguła 10%).",
+    "now_do": ["Chłodź", "Odciąż", "Fizjo jeśli ból >7 dni"]
+  },
+
   "lydka_m": {
     "title": "Łydka — mężczyzna",
-    "causes": ["Naderwania mięśni", "ZŻG (różnicowanie)"],
-    "symptoms": ["Ból, obrzęk, krwiak", "Trudność w chodzie"],
-    "concerns": ["⚠️ Jednostronny obrzęk i ból — ZŻG?", "⚠️ Trzask + duży krwiak"],
-    "doctors": ["Fizjoterapeuta", "Ortopeda", "Angiolog"],
-    "medications": ["Bez recepty: NLPZ/maści", "Na receptę: p/bólowe wg lekarza"],
-    "first_aid": ["RICE, elewacja", "Rozciąganie stopniowe"],
-    "rehabilitation": ["Eccentryczne wspięcia, propriocepcja", "Łańcuch tylny"],
-    "avoid": ["Sprinty/skoki na starcie"],
-    "prevention": ["Rozgrzewka, nawadnianie"],
-    "mistakes": ["Powrót za wcześnie"],
-    "emergency": ["ZŻG — pilnie; duży uraz — SOR"],
-    "description": "Stopniowa progresja i eccentryki zmniejszają nawroty."
+    "causes": ["Naciągnięcia, skurcze", "Przeciążenia"],
+    "symptoms": ["Ból przy wspięciach", "Tkliwość"],
+    "concerns": ["Jednostronny obrzęk + ból (DVT)"],
+    "doctors": ["Ortopeda/POZ"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> żele chłodzące/NLPZ"
+    ],
+    "first_aid": ["RICE"],
+    "rehab": ["Wspięcia ekscentryczne"],
+    "avoid": ["Sprinty"],
+    "prevention": ["Nawadnianie"],
+    "mistakes": ["Za szybki powrót"],
+    "emergency": ["DVT — 112"],
+    "info": "Buty z właściwym dropem pomagają.",
+    "now_do": ["Chłodź", "Rozciągnij delikatnie", "Fizjo"]
   },
+
+  "kostka_k": {
+    "title": "Kostka — kobieta",
+    "causes": ["Skręcenie (ATFL/CFL)", "Przeciążenia ścięgien"],
+    "symptoms": ["Obrzęk, ból boczny", "Niestabilność"],
+    "concerns": ["Deformacja, brak obciążenia"],
+    "doctors": ["Ortopeda/Fizjoterapeuta"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> chłodzenie, NLPZ miejscowo"
+    ],
+    "first_aid": ["RICE, bandaż elastyczny", "Uniesienie kończyny"],
+    "rehab": ["Propriocepcja, wzmocnienie ewerterów"],
+    "avoid": ["Nierówne podłoże w ostrej fazie"],
+    "prevention": ["Trening równowagi"],
+    "mistakes": ["Za szybki bieg po skręceniu"],
+    "emergency": ["Podejrzenie złamania — SOR/112"],
+    "info": "Stabilizacja wraca dzięki treningowi czucia głębokiego.",
+    "now_do": ["Kompresja + elewacja", "Chłodź", "Fizjo za 3–5 dni"]
+  },
+
   "kostka_m": {
     "title": "Kostka — mężczyzna",
-    "causes": ["Skręcenie, niestabilność"],
-    "symptoms": ["Ból, obrzęk, sina skóra"],
-    "concerns": ["⚠️ Brak możliwości obciążenia", "⚠️ Ból kości (złamanie?)"],
-    "doctors": ["Ortopeda", "Fizjoterapeuta"],
-    "medications": ["Bez recepty: NLPZ/chłodzenie", "Na receptę: ortezy, p/bólowe wg lekarza"],
-    "first_aid": ["RICE, elewacja", "Odciążenie wg bólu"],
-    "rehabilitation": ["Propriocepcja, wzmocnienie stabilizatorów", "Powrót do biegu/skoków stopniowo"],
-    "avoid": ["Nierówny teren w ostrym okresie"],
-    "prevention": ["Trening równowagi, taping"],
-    "mistakes": ["Brak stabilizacji — nawroty"],
-    "emergency": ["Deformacja/niestabilność — SOR"],
-    "description": "Stabilizacja to klucz po skręceniu — ćwicz równowagę."
+    "causes": ["Skręcenia, przeciążenia"],
+    "symptoms": ["Obrzęk, ból boczny/pośrodkowy"],
+    "concerns": ["Deformacja, brak obciążenia"],
+    "doctors": ["Ortopeda/Fizjoterapeuta"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> chłodzenie, NLPZ miejscowe"
+    ],
+    "first_aid": ["RICE", "Uniesienie"],
+    "rehab": ["Propriocepcja (deska), siła ścięgien"],
+    "avoid": ["Bieganie cross w ostrej fazie"],
+    "prevention": ["Ćwiczenia równowagi"],
+    "mistakes": ["Brak treningu po skręceniu"],
+    "emergency": ["Złamanie — SOR"],
+    "info": "Taśmy elastyczne przy powrocie do sportu.",
+    "now_do": ["Kompresja", "Chłodzenie", "Fizjo"]
   },
+
+  "stopy_k": {
+    "title": "Stopy — kobieta",
+    "causes": ["Podeszwowe zapalenie rozcięgna", "Haluksy/przeciążenia"],
+    "symptoms": ["Ból pięty rano", "Tkliwość przodostopia"],
+    "concerns": ["Infekcja, silny obrzęk po urazie"],
+    "doctors": ["Ortopeda/Podiatra", "Fizjoterapeuta"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> wkładki, chłodzenie, NLPZ miejscowo"
+    ],
+    "first_aid": ["Roller/zimna butelka pod stopą", "Ogranicz bieganie na twardym"],
+    "rehab": ["Rozciąganie łydki/rozcięgna, siła stopy"],
+    "avoid": ["Buty zużyte/za ciasne"],
+    "prevention": ["Wkładki, wzmocnienie łuku"],
+    "mistakes": ["Ignorowanie bólu porannego"],
+    "emergency": ["Silny obrzęk po urazie — SOR"],
+    "info": "Czas terapii 6–12 tygodni.",
+    "now_do": ["Roller 2× dziennie", "Zmniejsz obciążenia", "Fizjoterapia"]
+  },
+
   "stopy_m": {
     "title": "Stopy — mężczyzna",
-    "causes": ["Zapalenie rozcięgna podeszwowego", "Złamania zmęczeniowe (bieganie)", "Modzele/odciski"],
-    "symptoms": ["Ból pięty/przodostopia", "Nasilenie po dłuższym staniu/biegu"],
-    "concerns": ["⚠️ Nagły silny ból + obrzęk (złamanie?)", "⚠️ Zaczerwienienie + gorączka (infekcja)"],
-    "doctors": ["Ortopeda/podolog", "Fizjoterapeuta"],
-    "medications": ["Bez recepty: NLPZ miejscowo, wkładki", "Na receptę: iniekcje sterydowe (wybrane)"],
-    "first_aid": ["Rozciąganie rozcięgna/łydki", "Modyfikacja obuwia"],
-    "rehabilitation": ["Ćwiczenia krótkich mięśni stopy", "Progres obciążeń"],
-    "avoid": ["Cienkie, twarde podeszwy na długo"],
-    "prevention": ["Wkładki/amortyzacja, kontrola masy ciała"],
-    "mistakes": ["Brak ćwiczeń, tylko odpoczynek"],
-    "emergency": ["Podejrzenie złamania/infekcji — pilnie"],
-    "description": "Połączenie rozciągania i wzmacniania przyspiesza powrót."
+    "causes": ["Plantar fasciitis", "Przeciążenia/pronacja"],
+    "symptoms": ["Ból pięty/przodostopia", "Sztywność poranna"],
+    "concerns": ["Uraz z dużym obrzękiem"],
+    "doctors": ["Ortopeda/Podiatra", "Fizjoterapeuta"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> chłodzenie, wkładki, NLPZ miejscowe"
+    ],
+    "first_aid": ["Roller/zimny masaż", "Zmiana obuwia"],
+    "rehab": ["Siła łuku, rozciąganie łydki"],
+    "avoid": ["Biegi po twardym w bólu"],
+    "prevention": ["Dobór obuwia"],
+    "mistakes": ["Brak pracy nad łydką"],
+    "emergency": ["Uraz duży — SOR"],
+    "info": "Kontrola pronacji może pomóc.",
+    "now_do": ["Roller", "Zmniejsz obciążenia", "Fizjo"]
+  },
+
+  "ciaza_k": {
+    "title": "Ciąża — kobieta",
+    "causes": ["Fizjologiczne zmiany postawy/więzadeł", "Niedobory/odwodnienie"],
+    "symptoms": ["Bóle krzyża, miednicy", "Obrzęki kończyn"],
+    "concerns": ["Krwiak/krwawienie, silny ból brzucha", "Białkomocz, silne bóle głowy (stan przedrzucawkowy)"],
+    "doctors": ["Ginekolog/Położna", "POZ"],
+    "medications": [
+      "<strong class=\"tag tag--otc\">Bez recepty:</strong> paracetamol (po uzgodnieniu), preparaty magnezu",
+      "<strong class=\"tag tag--rx\">Na receptę:</strong> wg ginekologa (bezpieczeństwo płodu!)"
+    ],
+    "first_aid": ["Odpoczynek na boku lewym", "Nawadnianie, chłodzenie obrzęków"],
+    "rehab": ["Bezpieczne ćwiczenia w ciąży, dno miednicy, oddech"],
+    "avoid": ["Gorące kąpiele/sauna", "Leki bez konsultacji"],
+    "prevention": ["Aktywność umiarkowana, sen, dieta"],
+    "mistakes": ["Samoleczenie lekami p/bólowymi bez konsultacji"],
+    "emergency": ["Krwawienie, silny ból brzucha, brak ruchów płodu — SOR/112"],
+    "info": "W razie wątpliwości zawsze konsultuj się z prowadzącym.",
+    "now_do": ["Odpocznij na lewym boku", "Pij wodę", "Niepokojące objawy — SOR/112"]
   }
 }
