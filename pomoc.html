@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Niezwłoczna pomoc</title>
 
-  <!-- CSS: global + tapeta (jaśniejsza dla .pomoc) + ew. dodatkowe -->
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="wallpaper.css" />
-  <link rel="stylesheet" href="fix.szczegoly.css" />
+  <!-- Style: krok 5 -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="wallpaper.css">
+  <link rel="stylesheet" href="fix.szczegoly.css">
 </head>
 <body class="pomoc">
   <header>
@@ -21,15 +21,16 @@
   </header>
 
   <main>
-    <!-- WSTAW TU SWOJĄ ZAWARTOŚĆ BEZ ZMIAN:
-         pasek filtrów, wyszukiwarkę, mapę, listę miejsc itd. -->
+    <!-- tu mapa + filtry specjalistów -->
+    <div id="map"></div>
   </main>
 
   <footer>
-    W razie bezpośredniego zagrożenia życia — zadzwoń 112.
+    W razie bezpośredniego zagrożenia życia — dzwoń 112
   </footer>
 
-  <!-- Twoje skrypty mapy/filtrów itp. -->
-  <!-- <script src="..."></script> -->
+  <script src="apply-step5.js" defer></script>
+  <!-- Twój skrypt mapy -->
+  <!-- <script src="map.js"></script> -->
 </body>
 </html>
