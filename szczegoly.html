@@ -4,29 +4,111 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Szczegóły</title>
+
+  <!-- Globalny styl (zostaje jak masz) -->
   <link rel="stylesheet" href="style.css" />
 
+  <!-- OSTATECZNY: stabilny layout + lokalne tło tylko dla tej strony -->
   <style>
-    /* Układ kafelków — stabilny (jak w backupie) */
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(260px,1fr));
-      gap:24px;
-      max-width:1200px;
-      margin:28px auto 40px;
-      padding:0 16px;
-      justify-items:center;
-      align-items:start;
+    /* === Nowe tło tylko dla tej strony (nie rusza innych) === */
+    body[data-page="szczegoly"]{
+      /* ciemny turkus + fiolet */
+      background-color:#060910 !important;
+      background-image:
+        radial-gradient(1200px 800px at 8% -10%, rgba(20,184,166,.18), transparent 60%),
+        radial-gradient(900px 600px  at 110% 10%, rgba(124,58,237,.12), transparent 60%),
+        radial-gradient(800px 600px  at 52% 120%, rgba(20,184,166,.12), transparent 60%) !important;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
-    @media (max-width:980px){ .cards{ grid-template-columns:repeat(2,minmax(260px,1fr)); } }
-    @media (max-width:640px){ .cards{ grid-template-columns:1fr; } }
+    /* nadpisanie ewentualnego starego wzoru */
+    body[data-page="szczegoly"]::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .15;
+      mix-blend-mode: screen;
+      background-size: 240px 200px;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='200' viewBox='0 0 240 200'%3E%3Cpath d='M120 0 L240 50 240 150 120 200 0 150 0 50 Z' fill='none' stroke='%2314b8a6' stroke-opacity='.35' stroke-width='1'/%3E%3C/svg%3E");
+    }
 
-    .card{ width:100%; max-width:360px; box-sizing:border-box; }
-    .card h3{ margin:0 0 8px; font-size:1.05rem; line-height:1.35rem; }
-    .card ul{ margin:0; padding-left:18px; list-style:disc; list-style-position:outside; }
-    .card li{ margin:6px 0; }
+    /* === Stabilny układ 3 kolumn — jak w backupie (scopowany do tej strony) === */
+    body[data-page="szczegoly"] #content{ display:block; }
+    body[data-page="szczegoly"] .cards{
+      display: grid;
+      grid-template-columns: repeat(3, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 28px auto 40px;
+      padding: 0 16px;
+      justify-items: center;
+      align-items: start;
+      box-sizing: border-box;
+    }
+    @media (max-width: 980px){
+      body[data-page="szczegoly"] .cards{ grid-template-columns: repeat(2, minmax(260px,1fr)); }
+    }
+    @media (max-width: 640px){
+      body[data-page="szczegoly"] .cards{ grid-template-columns: 1fr; }
+    }
 
-    .card.emergency{ cursor:pointer; }
+    /* Kafelki — pełna szerokość kolumny, bez rozpychania */
+    body[data-page="szczegoly"] .card{
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 340px;            /* kontrola szerokości, żeby 3 kolumny się mieściły */
+      border-radius: 16px;
+      padding: 12px;
+      /* delikatny wygląd, bez ruszania Twojej palety (jeśli masz zmienne w style.css, zostaną) */
+      background: var(--card-bg, rgba(32,36,76,.72));
+      border: 1px solid var(--card-bd, rgba(130,150,255,.25));
+      box-shadow:
+        inset 0 0 1px rgba(200,210,255,.25),
+        0 10px 26px rgba(0,0,0,.38),
+        0 0 30px var(--card-glow, rgba(150,170,255,.15));
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    body[data-page="szczegoly"] .card h3{
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+      line-height: 1.35rem;
+      letter-spacing: .2px;
+    }
+    body[data-page="szczegoly"] .card ul{
+      margin: 0;
+      padding-left: 18px;          /* punkty równo przy krawędzi */
+      list-style: disc;
+      list-style-position: outside;
+    }
+    body[data-page="szczegoly"] .card li{ margin: 6px 0; }
+
+    /* Czerwony kafelek — bezpieczny, klikalny, bez wpływu na siatkę */
+    body[data-page="szczegoly"] .card.emergency{
+      cursor: pointer;
+      border-color: rgba(255,90,90,.55);
+      background: rgba(120,8,8,.20);
+      position: relative;
+    }
+    body[data-page="szczegoly"] .card.emergency *{ pointer-events: none; } /* klika cała karta */
+    body[data-page="szczegoly"] .card.emergency::after{
+      content:"";
+      position:absolute; inset:-6px;
+      border-radius:20px;
+      border:2px solid rgba(255,80,80,.35);
+      filter: blur(2px);
+      animation: pulseRed 1.8s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes pulseRed{ 0%,100%{ opacity:.25; transform:scale(.98);} 50%{opacity:.55; transform:scale(1.02);} }
+    @media (prefers-reduced-motion: reduce){
+      body[data-page="szczegoly"] .card.emergency::after{ animation:none; opacity:.35; }
+    }
+
+    /* Dostępność focus */
+    a,button{ outline:none; }
+    a:focus-visible,button:focus-visible{ outline:2px solid #60a5fa; outline-offset:2px; border-radius:10px; }
   </style>
 </head>
 <body data-page="szczegoly">
@@ -42,12 +124,12 @@
   <div id="err" class="error" style="display:none;color:#ff9999;text-align:center;margin-top:20px;"></div>
 
   <footer style="margin:40px auto; text-align:center;">
-    <p>© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
+    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
   </footer>
 
   <script>
   (function(){
-    /* mapowanie id → odpowiednia strona powrotu */
+    /* 1) powrót do właściwej strony sekcji */
     function sectionUrlFromId(id){
       if(!id) return "index.html";
       const female = id.endsWith("_k");
@@ -82,6 +164,7 @@
     const id = params.get("id");
     document.getElementById("sectionBack").href = sectionUrlFromId(id);
 
+    /* 2) pomocnicza do elementów */
     function el(tag, className, html){
       const e = document.createElement(tag);
       if(className) e.className = className;
@@ -89,119 +172,124 @@
       return e;
     }
 
+    /* 3) pojedynczy kafelek (bezpieczny dla layoutu) */
     function card(title, items){
       const c = el('div','card');
-      c.appendChild(el('h3',null,title));
+      c.appendChild(el('h3', null, title));
 
-      if(Array.isArray(items)){
+      if (Array.isArray(items)){
         const ul = el('ul');
-        items.forEach(v=>ul.appendChild(el('li',null,v)));
+        items.forEach(v=>ul.appendChild(el('li', null, v)));
         c.appendChild(ul);
-      }else if(typeof items==='string' && items){
-        c.appendChild(el('p',null,items));
+      } else if (typeof items === 'string' && items){
+        c.appendChild(el('p', null, items));
       }
 
-      // czerwony kafelek
-      if(/Niezwłoczna pomoc/i.test(title)){
+      // czerwony kafelek → pomoc.html
+      if (/Niezwłoczna pomoc/i.test(title)){
         c.classList.add('emergency');
-        c.addEventListener('click', ()=>location.href='pomoc.html');
+        c.addEventListener('click', ()=> location.href='pomoc.html');
+        // focus z klawiatury
+        c.setAttribute('role','link');
+        c.setAttribute('tabindex','0');
+        c.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') location.href='pomoc.html'; });
       }
+
       return c;
     }
 
+    /* 4) render — bogate dane -> fallback -> siatka */
     async function load(){
       const err = document.getElementById('err');
       try{
         if(!id) throw new Error("Brak parametru id.");
         const ts = Date.now();
 
-        let data=null;
-        try{
-          const resA = await fetch('data/detailed_conditions.json?ts='+ts);
-          if(resA.ok){ const det=await resA.json(); data=det[id]; }
-        }catch(e){}
+        let data = null;
 
+        // najpierw spróbuj detailed
+        try{
+          const a = await fetch('data/detailed_conditions.json?ts='+ts);
+          if(a.ok){ const det = await a.json(); data = det[id]; }
+        }catch(_){}
+
+        // fallback do basic
         if(!data){
-          const resB = await fetch('data/conditions.json?ts='+ts);
-          if(!resB.ok) throw new Error("Błąd HTTP "+resB.status);
-          const base=await resB.json();
-          data=base[id];
+          const b = await fetch('data/conditions.json?ts='+ts);
+          if(!b.ok) throw new Error("Błąd HTTP "+b.status);
+          const base = await b.json();
+          data = base[id];
         }
+
         if(!data) throw new Error("Nie znaleziono wpisu dla id="+id);
 
-        document.getElementById('title').textContent=data.title||'Szczegóły';
+        document.getElementById('title').textContent = data.title || 'Szczegóły';
 
-        const grid=el('div','cards');
-        const order=[
-          ['Możliwe przyczyny',data.causes],
-          ['Objawy',data.symptoms],
-          ['Kiedy się niepokoić',data.concerns],
-          ['Lekarze',data.doctors],
-          ['Leki',data.medications],
-          ['Pierwsza pomoc',data.first_aid],
-          ['Rehabilitacja / Ćwiczenia',data.rehab],
-          ['Czego unikać',data.avoid],
-          ['Profilaktyka',data.prevention],
-          ['Najczęstsze błędy',data.mistakes],
-          ['Dodatkowe informacje',data.description]
+        const grid = el('div','cards');
+
+        /* KOLEJNOŚĆ (3 w rzędzie, reszta pod spodem) */
+        const order = [
+          ['Możliwe przyczyny', data.causes],
+          ['Objawy', data.symptoms],
+          ['Kiedy się niepokoić', data.concerns],
+          ['Lekarze', data.doctors],
+          ['Leki', data.medications],
+          ['Pierwsza pomoc', data.first_aid],
+          ['Rehabilitacja / Ćwiczenia', data.rehab],
+          ['Czego unikać', data.avoid],
+          ['Profilaktyka', data.prevention],
+          ['Najczęstsze błędy', data.mistakes],
+          ['Dodatkowe informacje', data.description]
         ];
-        order.forEach(([title,items])=>{
-          const has=(Array.isArray(items)&&items.length)||(typeof items==='string'&&items.trim().length);
-          if(has) grid.appendChild(card(title,items));
+
+        // render tylko niepustych kart (nie zostawiamy „dziur”)
+        order.forEach(([title, items])=>{
+          const has = (Array.isArray(items) && items.length) || (typeof items === 'string' && items.trim().length);
+          if (has) grid.appendChild(card(title, items));
         });
 
-        const emergencyList=Array.isArray(data.emergency)&&data.emergency.length?data.emergency:[
+        // czerwony kafelek zawsze na końcu siatki
+        const emergencyList = Array.isArray(data.emergency) && data.emergency.length ? data.emergency : [
           "Silny, narastający ból, duszność, zlewne poty, omdlenie.",
           "Objawy udaru: osłabienie, bełkotliwa mowa, opadnięty kącik ust.",
           "Ostra duszność, sinica, krwioplucie, silny uraz.",
           "W razie wątpliwości: natychmiast zadzwoń 112."
         ];
-        grid.appendChild(card('Niezwłoczna pomoc (112/SOR)',emergencyList));
+        grid.appendChild(card('Niezwłoczna pomoc (112/SOR)', emergencyList));
 
-        const content=document.getElementById('content');
-        content.innerHTML='';
+        const content = document.getElementById('content');
+        content.innerHTML = '';
         content.appendChild(grid);
+
+        // natywne tooltipy (zero ryzyka dla layoutu)
+        const tips = {
+          "Możliwe przyczyny":"Najczęstsze źródła dolegliwości.",
+          "Objawy":"Co możesz odczuwać teraz.",
+          "Kiedy się niepokoić":"Czerwone flagi — reaguj szybciej.",
+          "Lekarze":"Do kogo najlepiej się zgłosić.",
+          "Leki":"Zielone — bez recepty; czerwone — na receptę.",
+          "Pierwsza pomoc":"3 szybkie kroki: zabezpiecz – złagodź – obserwuj.",
+          "Rehabilitacja / Ćwiczenia":"Delikatny, regularny ruch zwykle pomaga.",
+          "Czego unikać":"Co najczęściej nasila objawy.",
+          "Profilaktyka":"Nawyki zmniejszające ryzyko nawrotu.",
+          "Najczęstsze błędy":"Typowe błędy utrwalające ból.",
+          "Dodatkowe informacje":"Krótkie wskazówki edukacyjne.",
+          "Niezwłoczna pomoc (112/SOR)":"Kliknij, by otworzyć mapę i listę placówek."
+        };
+        document.querySelectorAll('.card').forEach(function(c){
+          const h = c.querySelector('h3'); if(!h) return;
+          const t = tips[h.textContent.trim()]; if(t) c.setAttribute('title', t);
+        });
 
       }catch(e){
         err.style.display='block';
-        err.textContent='Błąd: '+e.message;
+        err.textContent='Błąd: '+ e.message;
         console.error(e);
       }
     }
 
-    if(document.readyState==='loading'){
-      document.addEventListener('DOMContentLoaded',load);
-    }else load();
-  })();
-  </script>
-
-  <script>
-  /* Natywne tooltipy jako title (bez zmian w layoucie) */
-  (function(){
-    const tips={
-      "Możliwe przyczyny":"Najczęstsze źródła dolegliwości.",
-      "Objawy":"Co możesz odczuwać teraz.",
-      "Kiedy się niepokoić":"Czerwone flagi — reaguj szybciej.",
-      "Lekarze":"Do kogo najlepiej się zgłosić.",
-      "Leki":"Zielone — bez recepty; czerwone — na receptę.",
-      "Pierwsza pomoc":"3 szybkie kroki: zabezpiecz – złagodź – obserwuj.",
-      "Rehabilitacja / Ćwiczenia":"Delikatny, regularny ruch zwykle pomaga.",
-      "Czego unikać":"Co najczęściej nasila objawy.",
-      "Profilaktyka":"Nawyki zmniejszające ryzyko nawrotu.",
-      "Najczęstsze błędy":"Typowe rzeczy, które utrwalają ból.",
-      "Dodatkowe informacje":"Krótkie wskazówki edukacyjne.",
-      "Niezwłoczna pomoc (112/SOR)":"Kliknij, by znaleźć najbliższy SOR / pomoc."
-    };
-    function applyTitles(){
-      document.querySelectorAll('.card').forEach(function(card){
-        const h=card.querySelector('h3');
-        if(!h) return;
-        const tip=tips[h.textContent.trim()];
-        if(tip) card.setAttribute('title',tip);
-      });
-    }
-    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',applyTitles);
-    else applyTitles();
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
+    else load();
   })();
   </script>
 </body>
