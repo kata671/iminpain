@@ -1,239 +1,310 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Szczegóły</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Szczegóły</title>
 
-  <!-- Twój główny styl (nie zmieniamy) -->
-  <link rel="stylesheet" href="style.css" />
+<!-- ====== STYLES (inline; zero zależności) ====== -->
+<style>
+  :root{
+    --bg1:#08131a;          /* ciemny turkus/granat */
+    --bg2:#120820;          /* ciemny fiolet */
+    --tile:#13224e;         /* bazowy kafel  (niebieski) */
+    --tile-grad-1:#1b2a62;
+    --tile-grad-2:#15234f;
+    --tile-border:#5b73ff55;
+    --tile-shadow: rgba(0,0,0,.55);
+    --white:#eef1ff;
+    --muted:#bcd0ff;
+    --accent:#7aa6ff;
+    --ok:#20c997;           /* „Bez recepty” */
+    --warn:#ff5b5b;         /* „Na receptę” + czerwony kafel */
+    --pill:#8b7cff;
+  }
 
-  <!-- Dodatkowe, bezpieczne ulepszenia wyglądu tylko dla SZCZEGÓŁÓW -->
-  <style>
-    /* --- TŁO: turkus → fiolet + subtelny pattern --- */
-    body[data-page="szczegoly"]{
-      --bg1:#0e2a33;   /* ciemny turkus */
-      --bg2:#120a2a;   /* głęboki fiolet  */
-      background:
-        radial-gradient(1200px 800px at 20% -10%, rgba(0, 255, 255, .08), transparent 70%),
-        radial-gradient(1200px 800px at 120% 110%, rgba(150, 80, 255, .10), transparent 70%),
-        linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 100%);
-      position: relative;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    body[data-page="szczegoly"]::before{
-      content:"";
-      position: fixed; inset: 0;
-      pointer-events: none;
-      opacity:.12;
-      background-image:
-        radial-gradient(circle at 20px 20px, rgba(255,255,255,.25) 2px, transparent 2.5px);
-      background-size: 24px 24px;
-      mix-blend-mode: screen;
-    }
+  /* TŁO: gradient + delikatny wzór */
+  body{
+    margin:0;
+    color:var(--white);
+    font: 16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+    background:
+      radial-gradient(1200px 800px at 20% 10%, rgba(0,255,255,.10), transparent 60%),
+      radial-gradient(900px 700px at 80% 20%, rgba(147,0,255,.12), transparent 55%),
+      linear-gradient(135deg, var(--bg1), var(--bg2));
+    position:relative;
+    min-height:100dvh;
+  }
+  /* półprzezroczysty lab-wzór */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    opacity:.10;
+    background-image:
+      radial-gradient(circle at 10% 15%, #7fffd4 1px, transparent 1.2px),
+      radial-gradient(circle at 30% 35%, #7aa6ff 1px, transparent 1.2px),
+      radial-gradient(circle at 70% 25%, #9f7aff 1.2px, transparent 1.4px),
+      radial-gradient(circle at 85% 60%, #7fffd4 1px, transparent 1.2px);
+    background-size: 120px 120px, 160px 160px, 180px 180px, 140px 140px;
+    background-position: 0 0, 30px 60px, 60px 20px, 90px 100px;
+    filter: blur(.2px);
+  }
 
-    /* --- SIATKA KAFELKÓW: 3 w rzędzie, równe marginesy --- */
-    .cards{
-      display: grid;
-      grid-template-columns: repeat(3, minmax(260px, 1fr));
-      gap: 22px;
-      max-width: 1120px;
-      margin: 28px auto 40px;
-      padding: 0 16px;
-      align-items: stretch;
-    }
-    @media (max-width: 980px){
-      .cards{ grid-template-columns: repeat(2, minmax(260px, 1fr)); }
-    }
-    @media (max-width: 620px){
-      .cards{ grid-template-columns: 1fr; }
-    }
+  .wrap{max-width:1180px; margin:18px auto 64px; padding:0 16px;}
+  .nav-links{display:flex; gap:16px; align-items:center; margin:8px 0 4px;}
+  .nav-links a{color:#6ec2ff; text-decoration:none}
+  .nav-links a:hover{text-decoration:underline}
+  h1{
+    margin:6px 0 18px; text-align:center; font-weight:800;
+    letter-spacing:.4px; font-size:clamp(28px, 4.4vw, 44px);
+    text-shadow:0 2px 14px rgba(0,0,0,.35);
+  }
 
-    /* --- KAFELKI: wygląd, tytuły, listy --- */
-    .card{
-      background: rgba(50,70,160,.25);
-      border: 1px solid rgba(160,170,255,.36);
-      border-radius: 18px;
-      box-shadow:
-        inset 0 0 1px rgba(255,255,255,.12),
-        0 8px 24px rgba(0,0,0,.35);
-      padding: 14px 16px 16px;
-      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
-    }
-    .card:hover{
-      transform: translateY(-2px);
-      box-shadow:
-        inset 0 0 1px rgba(255,255,255,.15),
-        0 14px 28px rgba(0,0,0,.45),
-        0 0 24px rgba(160,140,255,.18);
-    }
+  /* GRID: zawsze 3 w rzędzie (potem 2/1 na mniejszych) */
+  .cards{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:18px;
+    align-items:stretch;
+  }
+  @media (max-width: 980px){ .cards{ grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px){ .cards{ grid-template-columns: 1fr; } }
 
-    /* tytuły nieco większe */
-    .card h3{
-      font-weight: 800;
-      font-size: clamp(18px, 2.15vw, 22px);
-      letter-spacing:.2px;
-      margin: 4px 0 10px;
-      text-align: center;
-    }
+  /* KAFEL */
+  .card{
+    background: linear-gradient(180deg,var(--tile-grad-1),var(--tile-grad-2));
+    border:1px solid var(--tile-border);
+    border-radius:18px;
+    box-shadow:
+      inset 0 0 1px rgba(140,160,255,.35),
+      0 8px 18px var(--tile-shadow);
+    padding:16px 18px 18px;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  .card:hover{
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 0 1px rgba(160,180,255,.45),
+      0 12px 24px rgba(0,0,0,.6),
+      0 0 22px rgba(122,166,255,.18);
+  }
+  .card h3{
+    margin:6px 0 10px; font-size:clamp(18px, 2.2vw, 21px);
+    font-weight:800; letter-spacing:.2px; color:#e9ecff;
+    display:flex; align-items:center; gap:.5rem;
+  }
+  .card h3 .em{font-style:normal; color:var(--pill)}
+  .card ul{ list-style: disc; list-style-position: inside; padding-left: 0; margin: 6px 0 0; }
+  .card li{ margin: 6px 0; }
+  .small{ font-size:.92rem; color:var(--muted); }
 
-    /* listy: punkty równo w środku kafelka */
-    .card ul{ 
-      list-style: disc inside;       /* punkty „w środku” kafla */
-      margin: 0;
-      padding-left: .2em;
-    }
-    .card li{
-      margin: 6px 0;
-      line-height: 1.35;
-    }
+  /* Wyróżnienia w „Leki” */
+  .rx-free{ color: var(--ok); font-weight:800; }
+  .rx{ color: var(--warn); font-weight:800; }
 
-    /* Kolory „Bez recepty / Na receptę” */
-    .card .otc{ color:#2dd07a; font-weight: 800; }   /* zielony */
-    .card .rx { color:#ff6b6b; font-weight: 800; }   /* czerwony */
+  /* Czerwony kafel (NIEZWŁOCZNA POMOC) */
+  .card.emergency{
+    background: linear-gradient(180deg, #5a0f12, #3f0b0d);
+    border-color: rgba(255,120,120,.55);
+    box-shadow:
+      inset 0 0 1px rgba(255,140,140,.35),
+      0 8px 18px var(--tile-shadow);
+  }
+  .card.emergency h3 .em{ color:#ffd2d2 }
+  .card.emergency:hover{
+    box-shadow:
+      inset 0 0 1px rgba(255,170,170,.55),
+      0 12px 24px rgba(0,0,0,.7),
+      0 0 26px rgba(255,70,70,.55);  /* mocny czerwony glow */
+  }
 
-    /* Kafelek alarmowy: czerwona ramka + glow */
-    .card.emergency{
-      background: rgba(128, 12, 12, .22);
-      border-color: rgba(255, 120, 120, .55);
-      box-shadow:
-        inset 0 0 1px rgba(255,160,160,.35),
-        0 8px 24px rgba(0,0,0,.35);
-    }
-    .card.emergency:hover{
-      box-shadow:
-        inset 0 0 1px rgba(255,160,160,.45),
-        0 12px 30px rgba(0,0,0,.45),
-        0 0 28px rgba(255, 90, 90, .55);   /* czerwony glow */
-      border-color: rgba(255, 150, 150, .9);
-      background: rgba(140, 16, 16, .26);
-    }
+  /* „puste” miejsce – gdy jakiejś sekcji brak, trzymamy siatkę */
+  .spacer{ visibility:hidden; }
 
-    /* drobne wyrównania nagłówka strony */
-    #title{
-      max-width: 1120px;
-      margin: 18px auto 0;
-      padding: 0 16px;
-      text-align: center;
-    }
-    .nav-links{
-      max-width:1120px;
-      margin: 10px auto 0;
-      padding: 0 16px;
-    }
-  </style>
+  /* komunikat błędu */
+  .error{ display:none; margin:14px 0; color:#ffd1d1; font-weight:700; }
+</style>
 </head>
-<body data-page="szczegoly">
-  <div class="nav-links">
-    <a href="index.html" class="back-link">← Strona główna</a>
-    &nbsp;&nbsp;—&nbsp;&nbsp;
-    <a id="sectionBack" class="back-link" href="#">← Wróć do wyboru sekcji</a>
+<body>
+  <div class="wrap">
+    <div class="nav-links">
+      <a href="index.html">← Strona główna</a>
+      <a id="backLink" href="kobieta.html">← Wróć do wyboru sekcji</a>
+    </div>
+
+    <h1 id="title">Szczegóły</h1>
+    <p id="err" class="error">Błąd wczytywania danych.</p>
+
+    <section id="grid" class="cards" aria-label="Kafelki szczegółów"></section>
   </div>
 
-  <h1 id="title">Szczegóły</h1>
+<!-- ====== SCRIPT (inline; pobiera JSON, rysuje kafelki) ====== -->
+<script>
+(function(){
+  /* --- 0) utiliki --- */
+  const $ = sel => document.querySelector(sel);
+  const el = (tag, cls, html) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html !== undefined) e.innerHTML = html;
+    return e;
+  };
+  const icon = {
+    causes: '🧬',
+    symptoms: '🩺',
+    concerns: '⚠️',
+    doctors: '👩‍⚕️',
+    medications: '💊',
+    first_aid: '⛑️',
+    avoid: '❌',
+    rehab: '✨',
+    prevention: '🧩',
+    mistakes: '⚠️',
+    now: '➡️',
+    extra: '📘',
+    emergency: '🚨'
+  };
 
-  <div id="content"></div>
-  <div id="err" class="error" style="display:none;"></div>
+  /* --- 1) mapy stron wstecz (kobieta/mężczyzna) --- */
+  function backHrefFromId(id){
+    if (!id) return 'index.html';
+    const female = id.endsWith('_k');
+    const male   = id.endsWith('_m');
+    const mapF = {
+      oczy_k:'kobieta-glowa.html', uszy_k:'kobieta-glowa.html', nos_k:'kobieta-glowa.html',
+      szczeka_k:'kobieta-glowa.html', szyja_k:'kobieta-glowa.html', glowa_k:'kobieta-glowa.html',
+      serce_k:'kobieta-klatka.html', pluca_k:'kobieta-klatka.html', klatka_piersiowa_k:'kobieta-klatka.html',
+      brzuch_k:'kobieta-klatka.html', plecy_k:'kobieta-klatka.html',
+      uklad_krw_k:'kobieta-klatka.html', uklad_oddech_k:'kobieta-klatka.html', uklad_pokarm_k:'kobieta-klatka.html',
+      biodra_k:'kobieta-nogi.html', uda_k:'kobieta-nogi.html', kolano_k:'kobieta-nogi.html',
+      lydka_k:'kobieta-nogi.html', kostka_k:'kobieta-nogi.html', stopy_k:'kobieta-nogi.html',
+      ciaza_k:'kobieta.html'
+    };
+    const mapM = {
+      oczy_m:'mezczyzna-glowa.html', uszy_m:'mezczyzna-glowa.html', nos_m:'mezczyzna-glowa.html',
+      szczeka_m:'mezczyzna-glowa.html', szyja_m:'mezczyzna-glowa.html', glowa_m:'mezczyzna-glowa.html',
+      serce_m:'mezczyzna-klatka.html', pluca_m:'mezczyzna-klatka.html', klatka_piersiowa_m:'mezczyzna-klatka.html',
+      brzuch_m:'mezczyzna-klatka.html', plecy_m:'mezczyzna-klatka.html',
+      uklad_krw_m:'mezczyzna-klatka.html', uklad_oddech_m:'mezczyzna-klatka.html', uklad_pokarm_m:'mezczyzna-klatka.html',
+      biodra_m:'mezczyzna-nogi.html', uda_m:'mezczyzna-nogi.html', kolano_m:'mezczyzna-nogi.html',
+      lydka_m:'mezczyzna-nogi.html', kostka_m:'mezczyzna-nogi.html', stopy_m:'mezczyzna-nogi.html'
+    };
+    if (female) return mapF[id] || 'kobieta.html';
+    if (male)   return mapM[id] || 'mezczyzna.html';
+    return 'index.html';
+  }
 
-  <footer style="margin:24px auto 28px; max-width:1120px; padding:0 16px; text-align:center;">
-    <p style="opacity:.85">© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
-  </footer>
+  /* --- 2) rysowanie pojedynczego kafla --- */
+  function card(title, items, opts = {}){
+    const c = el('article', 'card' + (opts.emergency ? ' emergency' : ''));
 
-  <!-- ⬇️ TU ZOSTAWIASZ swój obecny skrypt, który renderuje karty z JSON (jeśli masz go w osobnym pliku, to nadal go ładuj). -->
-  <!-- <script src="szczegoly.js"></script> -->
+    const h = el('h3');
+    h.innerHTML = (opts.icon ? `<span class="em">${opts.icon}</span> ` : '') + title;
+    c.appendChild(h);
 
-  <!-- ULEPSZENIA: emoji + kolory „Bez recepty/Na receptę” + auto emergency -->
-  <script>
-  (function(){
-    function afterRenderEnhance(){
-      const iconMap = [
-        [/możliwe przyczyny/i, "🧩"],
-        [/objawy/i, "🩺"],
-        [/kiedy się niepokoić/i, "⚠️"],
-        [/lekarze/i, "👤"],
-        [/leki/i, "💊"],
-        [/pierwsza pomoc/i, "🧰"],
-        [/rehabilitacja|ćwiczenia/i, "🏃‍♂️"],
-        [/czego unikać/i, "✖️"],
-        [/profilaktyka/i, "🛡️"],
-        [/najczęstsze błędy/i, "⚠️"],
-        [/dodatkowe informacje/i, "ℹ️"],
-        [/niezwłoczna pomoc/i, "🚨"]
-      ];
-
-      // 1) Emoji + emergency class
-      document.querySelectorAll('.card h3').forEach(h=>{
-        const title = h.textContent.trim();
-        for(const [re, emo] of iconMap){
-          if(re.test(title) && !h.dataset.emojiApplied){
-            h.innerHTML = emo + " " + h.innerHTML;
-            h.dataset.emojiApplied = "1";
-            if(/niezwłoczna pomoc/i.test(title)){
-              h.closest('.card')?.classList.add('emergency');
-            }
-            break;
-          }
-        }
-      });
-
-      // 2) Kolory w sekcji „Leki”
-      document.querySelectorAll('.card').forEach(card=>{
-        const h = card.querySelector('h3');
-        if(!h) return;
-        if(/leki/i.test(h.textContent)){
-          const ul = card.querySelector('ul');
-          if(!ul) return;
-          ul.querySelectorAll('li').forEach(li=>{
-            const t = li.textContent.trim();
-            if(/^bez recepty\s*:/i.test(t)){
-              li.innerHTML = t.replace(/^bez recepty\s*:/i, "<span class='otc'>Bez recepty:</span>");
-            }else if(/^na recept(?:ę|e)\s*:/i.test(t)){
-              li.innerHTML = t.replace(/^na recept(?:ę|e)\s*:/i, "<span class='rx'>Na receptę:</span>");
-            }
-          });
-        }
-      });
-
-      // 3) Wyrównanie list po ewentualnym doładowaniu
-      document.querySelectorAll('.card ul').forEach(ul=>{
-        ul.style.listStyle = 'disc inside';
-      });
+    if (Array.isArray(items)){
+      const ul = el('ul');
+      items.forEach(t => ul.appendChild(el('li', null, t)));
+      c.appendChild(ul);
+    } else if (typeof items === 'string'){
+      c.appendChild(el('p', 'small', items));
+    } else if (items === null){
+      // SPACER – utrzymuje siatkę
+      c.classList.add('spacer');
     }
 
-    // Spróbuj po załadowaniu DOM i ponownie po chwili (gdy dane dojadą z JSON)
-    document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(afterRenderEnhance, 50);
-      setTimeout(afterRenderEnhance, 350);
-    });
-    window.addEventListener('load', () => {
-      setTimeout(afterRenderEnhance, 50);
-      setTimeout(afterRenderEnhance, 500);
-    });
+    return c;
+  }
 
-    // Link „Wróć do wyboru sekcji” – ustalany dynamicznie po ID
-    (function setBackLink(){
-      const params = new URLSearchParams(location.search);
-      const id = params.get('id') || '';
-      const isK = /_k$/i.test(id);
-      const isM = /_m$/i.test(id);
-      const map = {
-        // głowa
-        oczy_k: "kobieta-glowa.html", uszy_k: "kobieta-glowa.html", nos_k: "kobieta-glowa.html", szczeka_k:"kobieta-glowa.html", szyja_k:"kobieta-glowa.html", glowa_k:"kobieta-glowa.html",
-        oczy_m: "mezczyzna-glowa.html", uszy_m:"mezczyzna-glowa.html", nos_m:"mezczyzna-glowa.html", szczeka_m:"mezczyzna-glowa.html", szyja_m:"mezczyzna-glowa.html", glowa_m:"mezczyzna-glowa.html",
-        // klatka
-        serce_k:"kobieta-klatka.html", pluca_k:"kobieta-klatka.html", klatka_piersiowa_k:"kobieta-klatka.html", brzuch_k:"kobieta-klatka.html", plecy_k:"kobieta-klatka.html",
-        serce_m:"mezczyzna-klatka.html", pluca_m:"mezczyzna-klatka.html", klatka_piersiowa_m:"mezczyzna-klatka.html", brzuch_m:"mezczyzna-klatka.html", plecy_m:"mezczyzna-klatka.html",
-        uklad_krw_k:"kobieta-klatka.html", uklad_oddech_k:"kobieta-klatka.html", uklad_pokarm_k:"kobieta-klatka.html",
-        uklad_krw_m:"mezczyzna-klatka.html", uklad_oddech_m:"mezczyzna-klatka.html", uklad_pokarm_m:"mezczyzna-klatka.html",
-        // nogi
-        biodra_k:"kobieta-nogi.html", uda_k:"kobieta-nogi.html", kolano_k:"kobieta-nogi.html", lydka_k:"kobieta-nogi.html", kostka_k:"kobieta-nogi.html", stopy_k:"kobieta-nogi.html", ciaza_k:"kobieta-klatka.html",
-        biodra_m:"mezczyzna-nogi.html", uda_m:"mezczyzna-nogi.html", kolano_m:"mezczyzna-nogi.html", lydka_m:"mezczyzna-nogi.html", kostka_m:"mezczyzna-nogi.html", stopy_m:"mezczyzna-nogi.html"
-      };
-      const back = document.getElementById('sectionBack');
-      back.href = map[id] || (isK ? "kobieta.html" : isM ? "mezczyzna.html" : "index.html");
-    })();
-  })();
-  </script>
+  /* --- 3) kolejnosc i stabilna siatka 3xN --- */
+  const ORDER = [
+    'causes','symptoms','concerns',
+    'doctors','medications','first_aid',
+    'avoid','rehab','prevention',
+    'mistakes','now','extra'
+  ];
+  const FIXED_POS_EMERGENCY = 9; // czerwony kafel na pozycji #10 (licząc od 0)
+
+  /* --- 4) logika wczytania danych i render --- */
+  async function load(){
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
+    $('#backLink').href = backHrefFromId(id);
+
+    const err = $('#err');
+    try{
+      if (!id) throw new Error('Brak parametru id w adresie.');
+      const ts = Date.now(); // odświeżenie cache
+      // Najpierw bogatszy plik, potem fallback
+      const res = await fetch(`data/detailed_conditions.json?ts=${ts}`);
+      if (!res.ok) throw new Error('Błąd pobierania danych.');
+      const data = await res.json();
+      const node = data[id];
+      if (!node) throw new Error('Nie znaleziono wpisu: ' + id);
+
+      $('#title').textContent = node.title || 'Szczegóły';
+
+      const grid = $('#grid');
+      grid.innerHTML = '';
+
+      // 1) Zwykłe kafle wg ORDER
+      ORDER.forEach(key=>{
+        if (node[key] && node[key].length){
+          let title = '';
+          if (key==='causes')       title = 'Możliwe przyczyny';
+          else if (key==='symptoms')title = 'Objawy';
+          else if (key==='concerns')title = 'Kiedy się niepokoić';
+          else if (key==='doctors') title = 'Lekarze';
+          else if (key==='medications') title = 'Leki';
+          else if (key==='first_aid') title = 'Pierwsza pomoc';
+          else if (key==='avoid') title = 'Czego unikać';
+          else if (key==='rehab') title = 'Rehabilitacja / ćwiczenia';
+          else if (key==='prevention') title = 'Profilaktyka';
+          else if (key==='mistakes') title = 'Najczęstsze błędy';
+          else if (key==='now') title = 'Co robić teraz';
+          else if (key==='extra') title = 'Dodatkowe informacje';
+
+          // podmiana kolorów w „Leki”
+          let items = node[key];
+          if (key==='medications'){
+            items = items.map(t=>{
+              return t
+                .replace(/\bBez recepty\b/i,'<span class="rx-free">Bez recepty</span>')
+                .replace(/\bNa receptę\b/i,'<span class="rx">Na receptę</span>');
+            });
+          }
+          grid.appendChild(card(title, items, {icon: icon[key]}));
+        }else{
+          // brak sekcji -> wstaw „spacer” aby trzymać rząd
+          grid.appendChild(card('', null));
+        }
+      });
+
+      // 2) Wstaw awaryjny kafel na stałe miejsce (zapełnia rząd 2)
+      const emergencyList = (Array.isArray(node.emergency) && node.emergency.length)
+        ? node.emergency
+        : ['Silny, narastający ból / deformacja / utrata czucia — 112/SOR'];
+
+      const em = card('Niezwłoczna pomoc (112/SOR)', emergencyList, {icon: icon.emergency, emergency:true});
+
+      // Jeśli już coś stoi na pozycji docelowej -> wstaw przed nim
+      const kids = Array.from(grid.children);
+      const anchor = kids[FIXED_POS_EMERGENCY];
+      if (anchor) grid.insertBefore(em, anchor);
+      else grid.appendChild(em);
+
+    }catch(e){
+      console.error(e);
+      err.style.display='block';
+      err.textContent = 'Błąd: ' + e.message;
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', load);
+  } else { load(); }
+})();
+</script>
 </body>
 </html>
