@@ -5,30 +5,39 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Kobieta — Klatka, brzuch, plecy</title>
 
-  <!-- CSS: lista stron (siatka) + tapeta -->
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="wallpaper.css" />
-
-  <!-- UWAGA: NIE podpinamy tu fix.szczegoly.css (dotyczy tylko strony szczegółów) -->
+  <!-- Style: krok 5 -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="wallpaper.css">
 </head>
 <body>
   <header>
     <nav class="breadcrumbs">
       <a href="index.html">← Start</a>
       <span>|</span>
-      <a href="kobieta.html">Wybór obszaru — Kobieta</a>
+      <a href="kobieta.html">Kobieta</a>
     </nav>
     <h1>Kobieta — Klatka, brzuch, plecy</h1>
   </header>
 
   <main>
-    <!-- WSTAW TU SWOJĄ ZAWARTOŚĆ BEZ ZMIAN:
-         Twoją istniejącą siatkę kart (np. <div class="grid"> ... </div>)
-         Dzięki temu nic nie stracisz, a nagłówek/tapeta i siatka będą poprawne. -->
+    <!-- Twoja siatka kafelków -->
+    <div class="grid">
+      <a href="szczegoly.html?id=serce_k" class="card">
+        <img src="img/kobieta-serce.jpg" alt="Serce">
+        <span>Serce</span>
+      </a>
+      <a href="szczegoly.html?id=pluca_k" class="card">
+        <img src="img/kobieta-pluca.jpg" alt="Płuca">
+        <span>Płuca</span>
+      </a>
+      <!-- …reszta kafelków -->
+    </div>
   </main>
 
   <footer>
     © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
   </footer>
+
+  <script src="apply-step5.js" defer></script>
 </body>
 </html>
