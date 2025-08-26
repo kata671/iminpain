@@ -2,294 +2,237 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Szczegóły</title>
 
-  <!-- Globalny styl (zostaje jak masz) -->
+  <!-- Twój główny styl (nie zmieniamy) -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- OSTATECZNY: stabilny layout + lokalne tło tylko dla tej strony -->
+  <!-- Dodatkowe, bezpieczne ulepszenia wyglądu tylko dla SZCZEGÓŁÓW -->
   <style>
-    /* === Nowe tło tylko dla tej strony (nie rusza innych) === */
+    /* --- TŁO: turkus → fiolet + subtelny pattern --- */
     body[data-page="szczegoly"]{
-      /* ciemny turkus + fiolet */
-      background-color:#060910 !important;
-      background-image:
-        radial-gradient(1200px 800px at 8% -10%, rgba(20,184,166,.18), transparent 60%),
-        radial-gradient(900px 600px  at 110% 10%, rgba(124,58,237,.12), transparent 60%),
-        radial-gradient(800px 600px  at 52% 120%, rgba(20,184,166,.12), transparent 60%) !important;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      background-size: cover;
+      --bg1:#0e2a33;   /* ciemny turkus */
+      --bg2:#120a2a;   /* głęboki fiolet  */
+      background:
+        radial-gradient(1200px 800px at 20% -10%, rgba(0, 255, 255, .08), transparent 70%),
+        radial-gradient(1200px 800px at 120% 110%, rgba(150, 80, 255, .10), transparent 70%),
+        linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 100%);
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
-    /* nadpisanie ewentualnego starego wzoru */
     body[data-page="szczegoly"]::before{
       content:"";
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       pointer-events: none;
-      opacity: .15;
+      opacity:.12;
+      background-image:
+        radial-gradient(circle at 20px 20px, rgba(255,255,255,.25) 2px, transparent 2.5px);
+      background-size: 24px 24px;
       mix-blend-mode: screen;
-      background-size: 240px 200px;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='200' viewBox='0 0 240 200'%3E%3Cpath d='M120 0 L240 50 240 150 120 200 0 150 0 50 Z' fill='none' stroke='%2314b8a6' stroke-opacity='.35' stroke-width='1'/%3E%3C/svg%3E");
     }
 
-    /* === Stabilny układ 3 kolumn — jak w backupie (scopowany do tej strony) === */
-    body[data-page="szczegoly"] #content{ display:block; }
-    body[data-page="szczegoly"] .cards{
+    /* --- SIATKA KAFELKÓW: 3 w rzędzie, równe marginesy --- */
+    .cards{
       display: grid;
-      grid-template-columns: repeat(3, minmax(280px, 1fr));
-      gap: 24px;
-      max-width: 1100px;
+      grid-template-columns: repeat(3, minmax(260px, 1fr));
+      gap: 22px;
+      max-width: 1120px;
       margin: 28px auto 40px;
       padding: 0 16px;
-      justify-items: center;
-      align-items: start;
-      box-sizing: border-box;
+      align-items: stretch;
     }
     @media (max-width: 980px){
-      body[data-page="szczegoly"] .cards{ grid-template-columns: repeat(2, minmax(260px,1fr)); }
+      .cards{ grid-template-columns: repeat(2, minmax(260px, 1fr)); }
     }
-    @media (max-width: 640px){
-      body[data-page="szczegoly"] .cards{ grid-template-columns: 1fr; }
+    @media (max-width: 620px){
+      .cards{ grid-template-columns: 1fr; }
     }
 
-    /* Kafelki — pełna szerokość kolumny, bez rozpychania */
-    body[data-page="szczegoly"] .card{
-      box-sizing: border-box;
-      width: 100%;
-      max-width: 340px;            /* kontrola szerokości, żeby 3 kolumny się mieściły */
-      border-radius: 16px;
-      padding: 12px;
-      /* delikatny wygląd, bez ruszania Twojej palety (jeśli masz zmienne w style.css, zostaną) */
-      background: var(--card-bg, rgba(32,36,76,.72));
-      border: 1px solid var(--card-bd, rgba(130,150,255,.25));
+    /* --- KAFELKI: wygląd, tytuły, listy --- */
+    .card{
+      background: rgba(50,70,160,.25);
+      border: 1px solid rgba(160,170,255,.36);
+      border-radius: 18px;
       box-shadow:
-        inset 0 0 1px rgba(200,210,255,.25),
-        0 10px 26px rgba(0,0,0,.38),
-        0 0 30px var(--card-glow, rgba(150,170,255,.15));
-      transition: transform .15s ease, box-shadow .15s ease;
+        inset 0 0 1px rgba(255,255,255,.12),
+        0 8px 24px rgba(0,0,0,.35);
+      padding: 14px 16px 16px;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
     }
-    body[data-page="szczegoly"] .card h3{
-      margin: 0 0 8px;
-      font-size: 1.05rem;
-      line-height: 1.35rem;
-      letter-spacing: .2px;
+    .card:hover{
+      transform: translateY(-2px);
+      box-shadow:
+        inset 0 0 1px rgba(255,255,255,.15),
+        0 14px 28px rgba(0,0,0,.45),
+        0 0 24px rgba(160,140,255,.18);
     }
-    body[data-page="szczegoly"] .card ul{
+
+    /* tytuły nieco większe */
+    .card h3{
+      font-weight: 800;
+      font-size: clamp(18px, 2.15vw, 22px);
+      letter-spacing:.2px;
+      margin: 4px 0 10px;
+      text-align: center;
+    }
+
+    /* listy: punkty równo w środku kafelka */
+    .card ul{ 
+      list-style: disc inside;       /* punkty „w środku” kafla */
       margin: 0;
-      padding-left: 18px;          /* punkty równo przy krawędzi */
-      list-style: disc;
-      list-style-position: outside;
+      padding-left: .2em;
     }
-    body[data-page="szczegoly"] .card li{ margin: 6px 0; }
-
-    /* Czerwony kafelek — bezpieczny, klikalny, bez wpływu na siatkę */
-    body[data-page="szczegoly"] .card.emergency{
-      cursor: pointer;
-      border-color: rgba(255,90,90,.55);
-      background: rgba(120,8,8,.20);
-      position: relative;
-    }
-    body[data-page="szczegoly"] .card.emergency *{ pointer-events: none; } /* klika cała karta */
-    body[data-page="szczegoly"] .card.emergency::after{
-      content:"";
-      position:absolute; inset:-6px;
-      border-radius:20px;
-      border:2px solid rgba(255,80,80,.35);
-      filter: blur(2px);
-      animation: pulseRed 1.8s ease-in-out infinite;
-      pointer-events:none;
-    }
-    @keyframes pulseRed{ 0%,100%{ opacity:.25; transform:scale(.98);} 50%{opacity:.55; transform:scale(1.02);} }
-    @media (prefers-reduced-motion: reduce){
-      body[data-page="szczegoly"] .card.emergency::after{ animation:none; opacity:.35; }
+    .card li{
+      margin: 6px 0;
+      line-height: 1.35;
     }
 
-    /* Dostępność focus */
-    a,button{ outline:none; }
-    a:focus-visible,button:focus-visible{ outline:2px solid #60a5fa; outline-offset:2px; border-radius:10px; }
+    /* Kolory „Bez recepty / Na receptę” */
+    .card .otc{ color:#2dd07a; font-weight: 800; }   /* zielony */
+    .card .rx { color:#ff6b6b; font-weight: 800; }   /* czerwony */
+
+    /* Kafelek alarmowy: czerwona ramka + glow */
+    .card.emergency{
+      background: rgba(128, 12, 12, .22);
+      border-color: rgba(255, 120, 120, .55);
+      box-shadow:
+        inset 0 0 1px rgba(255,160,160,.35),
+        0 8px 24px rgba(0,0,0,.35);
+    }
+    .card.emergency:hover{
+      box-shadow:
+        inset 0 0 1px rgba(255,160,160,.45),
+        0 12px 30px rgba(0,0,0,.45),
+        0 0 28px rgba(255, 90, 90, .55);   /* czerwony glow */
+      border-color: rgba(255, 150, 150, .9);
+      background: rgba(140, 16, 16, .26);
+    }
+
+    /* drobne wyrównania nagłówka strony */
+    #title{
+      max-width: 1120px;
+      margin: 18px auto 0;
+      padding: 0 16px;
+      text-align: center;
+    }
+    .nav-links{
+      max-width:1120px;
+      margin: 10px auto 0;
+      padding: 0 16px;
+    }
   </style>
 </head>
 <body data-page="szczegoly">
-
-  <div class="nav-links" style="margin:10px 0;">
+  <div class="nav-links">
     <a href="index.html" class="back-link">← Strona główna</a>
-    <a id="sectionBack" class="back-link" style="margin-left:14px;">← Wróć do wyboru sekcji</a>
+    &nbsp;&nbsp;—&nbsp;&nbsp;
+    <a id="sectionBack" class="back-link" href="#">← Wróć do wyboru sekcji</a>
   </div>
 
-  <h1 id="title" style="text-align:center;">Szczegóły</h1>
+  <h1 id="title">Szczegóły</h1>
 
   <div id="content"></div>
-  <div id="err" class="error" style="display:none;color:#ff9999;text-align:center;margin-top:20px;"></div>
+  <div id="err" class="error" style="display:none;"></div>
 
-  <footer style="margin:40px auto; text-align:center;">
-    <p>© 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.</p>
+  <footer style="margin:24px auto 28px; max-width:1120px; padding:0 16px; text-align:center;">
+    <p style="opacity:.85">© 2025 Iminpain — Materiał poglądowy, nie zastępuje konsultacji z lekarzem.</p>
   </footer>
 
+  <!-- ⬇️ TU ZOSTAWIASZ swój obecny skrypt, który renderuje karty z JSON (jeśli masz go w osobnym pliku, to nadal go ładuj). -->
+  <!-- <script src="szczegoly.js"></script> -->
+
+  <!-- ULEPSZENIA: emoji + kolory „Bez recepty/Na receptę” + auto emergency -->
   <script>
   (function(){
-    /* 1) powrót do właściwej strony sekcji */
-    function sectionUrlFromId(id){
-      if(!id) return "index.html";
-      const female = id.endsWith("_k");
-      const male   = id.endsWith("_m");
+    function afterRenderEnhance(){
+      const iconMap = [
+        [/możliwe przyczyny/i, "🧩"],
+        [/objawy/i, "🩺"],
+        [/kiedy się niepokoić/i, "⚠️"],
+        [/lekarze/i, "👤"],
+        [/leki/i, "💊"],
+        [/pierwsza pomoc/i, "🧰"],
+        [/rehabilitacja|ćwiczenia/i, "🏃‍♂️"],
+        [/czego unikać/i, "✖️"],
+        [/profilaktyka/i, "🛡️"],
+        [/najczęstsze błędy/i, "⚠️"],
+        [/dodatkowe informacje/i, "ℹ️"],
+        [/niezwłoczna pomoc/i, "🚨"]
+      ];
 
-      const groupMapK = {
-        oczy_k:"kobieta-glowa.html", uszy_k:"kobieta-glowa.html", nos_k:"kobieta-glowa.html",
-        szczeka_k:"kobieta-glowa.html", szyja_k:"kobieta-glowa.html", glowa_k:"kobieta-glowa.html",
-        serce_k:"kobieta-klatka.html", pluca_k:"kobieta-klatka.html", klatka_piersiowa_k:"kobieta-klatka.html",
-        brzuch_k:"kobieta-klatka-narzady.html", plecy_k:"kobieta-klatka.html",
-        uklad_krw_k:"kobieta-klatka.html", uklad_oddech_k:"kobieta-klatka.html", uklad_pokarm_k:"kobieta-klatka-narzady.html",
-        biodra_k:"kobieta-nogi.html", uda_k:"kobieta-nogi.html", kolano_k:"kobieta-nogi.html",
-        lydka_k:"kobieta-nogi.html", kostka_k:"kobieta-nogi.html", stopy_k:"kobieta-nogi.html",
-        ciaza_k:"kobieta-klatka-narzady.html"
-      };
-      const groupMapM = {
-        oczy_m:"mezczyzna-glowa.html", uszy_m:"mezczyzna-glowa.html", nos_m:"mezczyzna-glowa.html",
-        szczeka_m:"mezczyzna-glowa.html", szyja_m:"mezczyzna-glowa.html", glowa_m:"mezczyzna-glowa.html",
-        serce_m:"mezczyzna-klatka.html", pluca_m:"mezczyzna-klatka.html", klatka_piersiowa_m:"mezczyzna-klatka.html",
-        brzuch_m:"mezczyzna-klatka-narzady.html", plecy_m:"mezczyzna-klatka.html",
-        uklad_krw_m:"mezczyzna-klatka.html", uklad_oddech_m:"mezczyzna-klatka.html", uklad_pokarm_m:"mezczyzna-klatka-narzady.html",
-        biodra_m:"mezczyzna-nogi.html", uda_m:"mezczyzna-nogi.html", kolano_m:"mezczyzna-nogi.html",
-        lydka_m:"mezczyzna-nogi.html", kostka_m:"mezczyzna-nogi.html", stopy_m:"mezczyzna-nogi.html"
-      };
-
-      if(female) return groupMapK[id] || "kobieta.html";
-      if(male)   return groupMapM[id] || "mezczyzna.html";
-      return "index.html";
-    }
-
-    const params = new URLSearchParams(location.search);
-    const id = params.get("id");
-    document.getElementById("sectionBack").href = sectionUrlFromId(id);
-
-    /* 2) pomocnicza do elementów */
-    function el(tag, className, html){
-      const e = document.createElement(tag);
-      if(className) e.className = className;
-      if(html !== undefined) e.innerHTML = html;
-      return e;
-    }
-
-    /* 3) pojedynczy kafelek (bezpieczny dla layoutu) */
-    function card(title, items){
-      const c = el('div','card');
-      c.appendChild(el('h3', null, title));
-
-      if (Array.isArray(items)){
-        const ul = el('ul');
-        items.forEach(v=>ul.appendChild(el('li', null, v)));
-        c.appendChild(ul);
-      } else if (typeof items === 'string' && items){
-        c.appendChild(el('p', null, items));
-      }
-
-      // czerwony kafelek → pomoc.html
-      if (/Niezwłoczna pomoc/i.test(title)){
-        c.classList.add('emergency');
-        c.addEventListener('click', ()=> location.href='pomoc.html');
-        // focus z klawiatury
-        c.setAttribute('role','link');
-        c.setAttribute('tabindex','0');
-        c.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') location.href='pomoc.html'; });
-      }
-
-      return c;
-    }
-
-    /* 4) render — bogate dane -> fallback -> siatka */
-    async function load(){
-      const err = document.getElementById('err');
-      try{
-        if(!id) throw new Error("Brak parametru id.");
-        const ts = Date.now();
-
-        let data = null;
-
-        // najpierw spróbuj detailed
-        try{
-          const a = await fetch('data/detailed_conditions.json?ts='+ts);
-          if(a.ok){ const det = await a.json(); data = det[id]; }
-        }catch(_){}
-
-        // fallback do basic
-        if(!data){
-          const b = await fetch('data/conditions.json?ts='+ts);
-          if(!b.ok) throw new Error("Błąd HTTP "+b.status);
-          const base = await b.json();
-          data = base[id];
+      // 1) Emoji + emergency class
+      document.querySelectorAll('.card h3').forEach(h=>{
+        const title = h.textContent.trim();
+        for(const [re, emo] of iconMap){
+          if(re.test(title) && !h.dataset.emojiApplied){
+            h.innerHTML = emo + " " + h.innerHTML;
+            h.dataset.emojiApplied = "1";
+            if(/niezwłoczna pomoc/i.test(title)){
+              h.closest('.card')?.classList.add('emergency');
+            }
+            break;
+          }
         }
+      });
 
-        if(!data) throw new Error("Nie znaleziono wpisu dla id="+id);
+      // 2) Kolory w sekcji „Leki”
+      document.querySelectorAll('.card').forEach(card=>{
+        const h = card.querySelector('h3');
+        if(!h) return;
+        if(/leki/i.test(h.textContent)){
+          const ul = card.querySelector('ul');
+          if(!ul) return;
+          ul.querySelectorAll('li').forEach(li=>{
+            const t = li.textContent.trim();
+            if(/^bez recepty\s*:/i.test(t)){
+              li.innerHTML = t.replace(/^bez recepty\s*:/i, "<span class='otc'>Bez recepty:</span>");
+            }else if(/^na recept(?:ę|e)\s*:/i.test(t)){
+              li.innerHTML = t.replace(/^na recept(?:ę|e)\s*:/i, "<span class='rx'>Na receptę:</span>");
+            }
+          });
+        }
+      });
 
-        document.getElementById('title').textContent = data.title || 'Szczegóły';
-
-        const grid = el('div','cards');
-
-        /* KOLEJNOŚĆ (3 w rzędzie, reszta pod spodem) */
-        const order = [
-          ['Możliwe przyczyny', data.causes],
-          ['Objawy', data.symptoms],
-          ['Kiedy się niepokoić', data.concerns],
-          ['Lekarze', data.doctors],
-          ['Leki', data.medications],
-          ['Pierwsza pomoc', data.first_aid],
-          ['Rehabilitacja / Ćwiczenia', data.rehab],
-          ['Czego unikać', data.avoid],
-          ['Profilaktyka', data.prevention],
-          ['Najczęstsze błędy', data.mistakes],
-          ['Dodatkowe informacje', data.description]
-        ];
-
-        // render tylko niepustych kart (nie zostawiamy „dziur”)
-        order.forEach(([title, items])=>{
-          const has = (Array.isArray(items) && items.length) || (typeof items === 'string' && items.trim().length);
-          if (has) grid.appendChild(card(title, items));
-        });
-
-        // czerwony kafelek zawsze na końcu siatki
-        const emergencyList = Array.isArray(data.emergency) && data.emergency.length ? data.emergency : [
-          "Silny, narastający ból, duszność, zlewne poty, omdlenie.",
-          "Objawy udaru: osłabienie, bełkotliwa mowa, opadnięty kącik ust.",
-          "Ostra duszność, sinica, krwioplucie, silny uraz.",
-          "W razie wątpliwości: natychmiast zadzwoń 112."
-        ];
-        grid.appendChild(card('Niezwłoczna pomoc (112/SOR)', emergencyList));
-
-        const content = document.getElementById('content');
-        content.innerHTML = '';
-        content.appendChild(grid);
-
-        // natywne tooltipy (zero ryzyka dla layoutu)
-        const tips = {
-          "Możliwe przyczyny":"Najczęstsze źródła dolegliwości.",
-          "Objawy":"Co możesz odczuwać teraz.",
-          "Kiedy się niepokoić":"Czerwone flagi — reaguj szybciej.",
-          "Lekarze":"Do kogo najlepiej się zgłosić.",
-          "Leki":"Zielone — bez recepty; czerwone — na receptę.",
-          "Pierwsza pomoc":"3 szybkie kroki: zabezpiecz – złagodź – obserwuj.",
-          "Rehabilitacja / Ćwiczenia":"Delikatny, regularny ruch zwykle pomaga.",
-          "Czego unikać":"Co najczęściej nasila objawy.",
-          "Profilaktyka":"Nawyki zmniejszające ryzyko nawrotu.",
-          "Najczęstsze błędy":"Typowe błędy utrwalające ból.",
-          "Dodatkowe informacje":"Krótkie wskazówki edukacyjne.",
-          "Niezwłoczna pomoc (112/SOR)":"Kliknij, by otworzyć mapę i listę placówek."
-        };
-        document.querySelectorAll('.card').forEach(function(c){
-          const h = c.querySelector('h3'); if(!h) return;
-          const t = tips[h.textContent.trim()]; if(t) c.setAttribute('title', t);
-        });
-
-      }catch(e){
-        err.style.display='block';
-        err.textContent='Błąd: '+ e.message;
-        console.error(e);
-      }
+      // 3) Wyrównanie list po ewentualnym doładowaniu
+      document.querySelectorAll('.card ul').forEach(ul=>{
+        ul.style.listStyle = 'disc inside';
+      });
     }
 
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
-    else load();
+    // Spróbuj po załadowaniu DOM i ponownie po chwili (gdy dane dojadą z JSON)
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(afterRenderEnhance, 50);
+      setTimeout(afterRenderEnhance, 350);
+    });
+    window.addEventListener('load', () => {
+      setTimeout(afterRenderEnhance, 50);
+      setTimeout(afterRenderEnhance, 500);
+    });
+
+    // Link „Wróć do wyboru sekcji” – ustalany dynamicznie po ID
+    (function setBackLink(){
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id') || '';
+      const isK = /_k$/i.test(id);
+      const isM = /_m$/i.test(id);
+      const map = {
+        // głowa
+        oczy_k: "kobieta-glowa.html", uszy_k: "kobieta-glowa.html", nos_k: "kobieta-glowa.html", szczeka_k:"kobieta-glowa.html", szyja_k:"kobieta-glowa.html", glowa_k:"kobieta-glowa.html",
+        oczy_m: "mezczyzna-glowa.html", uszy_m:"mezczyzna-glowa.html", nos_m:"mezczyzna-glowa.html", szczeka_m:"mezczyzna-glowa.html", szyja_m:"mezczyzna-glowa.html", glowa_m:"mezczyzna-glowa.html",
+        // klatka
+        serce_k:"kobieta-klatka.html", pluca_k:"kobieta-klatka.html", klatka_piersiowa_k:"kobieta-klatka.html", brzuch_k:"kobieta-klatka.html", plecy_k:"kobieta-klatka.html",
+        serce_m:"mezczyzna-klatka.html", pluca_m:"mezczyzna-klatka.html", klatka_piersiowa_m:"mezczyzna-klatka.html", brzuch_m:"mezczyzna-klatka.html", plecy_m:"mezczyzna-klatka.html",
+        uklad_krw_k:"kobieta-klatka.html", uklad_oddech_k:"kobieta-klatka.html", uklad_pokarm_k:"kobieta-klatka.html",
+        uklad_krw_m:"mezczyzna-klatka.html", uklad_oddech_m:"mezczyzna-klatka.html", uklad_pokarm_m:"mezczyzna-klatka.html",
+        // nogi
+        biodra_k:"kobieta-nogi.html", uda_k:"kobieta-nogi.html", kolano_k:"kobieta-nogi.html", lydka_k:"kobieta-nogi.html", kostka_k:"kobieta-nogi.html", stopy_k:"kobieta-nogi.html", ciaza_k:"kobieta-klatka.html",
+        biodra_m:"mezczyzna-nogi.html", uda_m:"mezczyzna-nogi.html", kolano_m:"mezczyzna-nogi.html", lydka_m:"mezczyzna-nogi.html", kostka_m:"mezczyzna-nogi.html", stopy_m:"mezczyzna-nogi.html"
+      };
+      const back = document.getElementById('sectionBack');
+      back.href = map[id] || (isK ? "kobieta.html" : isM ? "mezczyzna.html" : "index.html");
+    })();
   })();
   </script>
 </body>
