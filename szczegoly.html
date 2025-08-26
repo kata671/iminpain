@@ -1,20 +1,41 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Szczegóły</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="fix.szczegoly.css">
+
+  <!-- CSS: kolejność ma znaczenie -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="wallpaper.css" />
+  <link rel="stylesheet" href="fix.szczegoly.css" />
+
+  <!-- (opcjonalnie) favicon/meta -->
+  <!-- <link rel="icon" href="favicon.ico"> -->
+  <!-- <meta property="og:title" content="Boli-mnie.pl — Szczegóły"> -->
 </head>
 <body>
-  <nav>
-    <a href="index.html">← Strona główna</a> |
-    <a href="index.html">← Wróć do wyboru sekcji</a>
-  </nav>
-  <main>
+  <header>
+    <nav class="breadcrumbs">
+      <a href="index.html">← Start</a>
+      <span>|</span>
+      <a href="kobieta.html">Kobieta</a>
+      <span>|</span>
+      <a href="mezczyzna.html">Mężczyzna</a>
+    </nav>
     <h1 id="sectionTitle">Szczegóły</h1>
-    <div id="cardsContainer" class="cards-grid"></div>
+  </header>
+
+  <main>
+    <!-- Kafelki generowane przez JS -->
+    <section id="cardsContainer" class="grid"></section>
   </main>
+
+  <footer>
+    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
+  </footer>
+
+  <!-- JS na końcu body -->
   <script src="szczegoly.js"></script>
 </body>
 </html>
