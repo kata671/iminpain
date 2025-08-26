@@ -1,213 +1,167 @@
-/* =========================
-   I M I N P A I N  —  STYLE
-   ========================= */
+/* ================================
+   Boli-mnie.pl — GLOBAL STYLE
+   ================================ */
 
-/* ---------- Zmienne kolorów ---------- */
+/* —— Zmienne kolorów —— */
 :root{
-  --bg-1: #0b1f26;         /* ciemny turkus/granat */
-  --bg-2: #140a2a;         /* głębszy fiolet */
-  --ink: #e9e6ff;          /* jasny tekst */
-  --muted: #b9c2d6;        /* drugorzędowy tekst */
-  --card: #13234a;         /* tło kafelka (ciemny granat) */
-  --card-ink: #e6ebff;
-  --card-border: #4a66ff44;
-  --card-glow: #7abaff66;
+  --bg-deep: #0d1230;         /* bardzo ciemny granat/fiolet */
+  --bg-grad-1: #0e1f2a;       /* ciemny turkus */
+  --bg-grad-2: #1a0f2e;       /* ciemny fiolet */
+  --card-bg: rgba(86,51,142,.18);
+  --card-bd: rgba(165,140,255,.12);
+  --card-inner: rgba(165,140,255,.22);
+  --text: #e9ecf8;
+  --text-dim: #cdd3ea;
+  --link: #aeb8ff;
+  --accent: #a58cff;
 
-  --accent: #7c8bff;       /* akcent do ramek */
-  --pill-bg: #1d2e66;      /* tło dla tytułów w kartach */
-
-  --otc: #35d07f;          /* Bez recepty (zielony) */
-  --rx:  #ff5b5b;          /* Na receptę (czerwony) */
-
-  --em-red: #b51f2f;       /* awaryjny – tło */
-  --em-red-strong: #ff3b3b;/* awaryjny – poświata */
+  /* tagi leków */
+  --otc-bg: rgba(30, 150, 90, .18);
+  --otc-bd: rgba(45, 200, 120, .5);
+  --otc-fg: #7cf0ba;
+  --rx-bg: rgba(200, 28, 28, .2);
+  --rx-bd: rgba(255, 80, 80, .7);
+  --rx-fg: #ff9a9a;
 }
 
-/* ---------- Reset przyjazny gridom ---------- */
-*{ box-sizing: border-box; }
-html,body{ height:100%; }
+/* —— Reset i typografia —— */
+*{box-sizing:border-box}
+html,body{height:100%}
+html{scroll-behavior:smooth}
 body{
   margin:0;
-  color:var(--ink);
-  font: 16px/1.55 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: radial-gradient(1200px 800px at 50% 0%, #0f3250 0%, var(--bg-1) 40%, var(--bg-2) 100%);
-  overflow-y: auto;
+  color:var(--text);
+  font:16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", Ubuntu, Cantarell, "Fira Sans", "Droid Sans", sans-serif;
+  background:
+    /* warstwa 1 — delikatny wzór (NA WIERZCHU) */
+    radial-gradient(ellipse at 20% -10%, rgba(255,255,255,.06), transparent 45%),
+    radial-gradient(ellipse at 80% 0%, rgba(255,255,255,.04), transparent 50%),
+    /* warstwa 2 — bardzo lekki „szum” */
+    repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 2px, transparent 2px 6px),
+    /* warstwa 3 — gradient tła (NA DOLE) */
+    linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%);
+  background-attachment: fixed;
 }
 
-/* WZÓR NA WIERZCHU (ale pod treścią) */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-  opacity:.25;               /* widoczność wzoru */
-  background-image:
-    /* siatka heksów jako SVG data-URL */
-    url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'>\
-<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>\
-<stop offset='0%' stop-color='%2380a6ff'/><stop offset='100%' stop-color='%2348ffd2'/></linearGradient></defs>\
-<path d='M15,1 45,1 59,26 45,51 15,51 1,26Z' fill='none' stroke='url(%23g)' stroke-width='1' opacity='0.6'/>\
-</svg>");
-  background-size: 180px 156px;
-  background-position: center;
-  mix-blend-mode: screen;
-}
+/* —— Linki, nagłówki —— */
+a{color:var(--link); text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{line-height:1.25; margin:0 0 .35em}
+h1{font-size:clamp(1.5rem, 2.8vw, 2.2rem)}
+h2{font-size:clamp(1.25rem, 2.2vw, 1.6rem)}
+h3{font-size:clamp(1.05rem, 1.8vw, 1.25rem)}
 
-/* gwarantujemy, że treść jest nad wzorem */
-#app, main, .page, .wrap, .cards, .card{ position:relative; z-index:1; }
-
-/* ---------- Linki nawigacji ---------- */
-.nav-links{
-  display:flex;
-  gap:16px;
-  padding:14px 20px 0;
+/* —— Layout nagłówka/okruszków —— */
+header{padding:14px 0 6px}
+.nav-links, .breadcrumbs{
+  display:flex; gap:12px; align-items:center;
+  max-width:1100px; margin:0 auto; padding:0 16px;
+  color:var(--text-dim);
 }
-.nav-links a{
-  color:#8ecbff;
-  text-decoration:none;
-}
-.nav-links a:hover{ text-decoration:underline; }
+.breadcrumbs a{color:var(--text-dim)}
+main{padding:6px 0 24px}
+main h1{max-width:1100px; margin:8px auto 12px; padding:0 16px; text-align:center}
 
-/* ---------- Tytuł strony ---------- */
-h1#title{
-  margin: 18px auto 8px;
-  text-align:center;
-  font-weight: 800;
-  letter-spacing:.4px;
-  font-size: clamp(28px, 3.2vw, 42px);
-  text-shadow: 0 2px 14px #0008;
-}
-
-/* ---------- GRID KAFELKÓW ---------- */
-.cards{
+/* ================================
+   SIATKA KAFELKÓW (globalnie)
+   ================================ */
+.grid{
   display:grid;
-  grid-template-columns: repeat(3, minmax(280px, 1fr));
-  gap: 26px;
-  max-width: 1180px;
-  padding: 12px 20px 60px;
-  margin: 8px auto 40px;
-  align-items: stretch;
-  grid-auto-flow: dense;              /* domyka dziury */
-}
-.cards > :empty{ display:none; }      /* ukryj puste elementy */
-
-/* Responsywność */
-@media (max-width: 980px){
-  .cards{ grid-template-columns: repeat(2, minmax(260px, 1fr)); }
-}
-@media (max-width: 640px){
-  .cards{ grid-template-columns: 1fr; }
+  grid-template-columns:repeat(3, minmax(260px,1fr));
+  gap:16px 18px;
+  justify-content:center;
+  align-items:start;
+  max-width:1100px;
+  margin:24px auto 28px;
+  padding:0 16px;
 }
 
-/* ---------- KAFELKI ---------- */
+/* Karta (wersja bazowa dla index/kobieta/mezczyzna i podstron listowych) */
 .card{
-  background: linear-gradient(180deg, rgba(33,46,92,.9), rgba(23,30,68,.92));
-  border: 1.5px solid var(--card-border);
-  box-shadow:
-    0 0 0 .5px rgba(124,139,255,.35) inset,
-    0 8px 26px -8px #0009,
-    0 0 40px -10px var(--card-glow);
-  border-radius: 22px;
-  padding: 18px 20px;
-  color: var(--card-ink);
   display:flex;
   flex-direction:column;
-  justify-content:flex-start;
-  min-height: 170px;
-  transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
+  min-height:100%;
+  background:var(--card-bg);
+  border:1px solid var(--card-bd);
+  border-radius:14px;
+  box-shadow:
+    inset 0 0 1px var(--card-inner),
+    0 6px 18px rgba(0,0,0,.35);
+  overflow:hidden;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
+.card a{color:inherit; text-decoration:none; display:block}
+.card img,
+.card-image{
+  width:100%;
+  height:auto;
+  aspect-ratio:16/10;
+  object-fit:cover;
+  display:block;
+}
+.card-caption{padding:10px 12px; text-align:center; font-weight:600}
+.card__head{padding:12px 14px 8px}
+.card__body{padding:8px 14px 14px; flex:1 1 auto}
 .card:hover{
-  transform: translateY(-2px);
+  transform:translateY(-2px);
   box-shadow:
-    0 0 0 .5px rgba(124,139,255,.55) inset,
-    0 12px 34px -8px #000c,
-    0 0 52px -10px #82b4ff66;
+    0 8px 20px rgba(0,0,0,.4),
+    0 0 18px rgba(255,255,255,.22);
 }
 
-/* Tytuły kafelków */
-.card h3{
-  margin: 0 0 10px;
-  font-weight: 800;
-  font-size: clamp(18px, 1.9vw, 22px);   /* odrobinkę większe */
-  letter-spacing:.2px;
-  color: #ffffff;
-  text-shadow: 0 1px 10px #0005;
-}
-
-/* Listy w kafelkach */
-.card ul{
-  list-style: disc inside;   /* kropki zawsze w środku, bez wychodzenia poza ramkę */
-  margin: 4px 0 0;
-  padding: 0;
-}
-.card li{
-  margin: 6px 0;
-  color: var(--ink);
-}
-
-/* drobniejszy opis, jeżeli występuje */
-.card p{
-  margin: 6px 0 0;
-  color: var(--muted);
-}
-
-/* ---------- „Bez recepty” i „Na receptę” ---------- */
-.tag{ font-weight: 800; }
-.tag--otc{ color: var(--otc); }  /* Bez recepty */
-.tag--rx { color: var(--rx); }   /* Na receptę */
-
-/* Opcjonalnie: wyraźniej w jednym akapicie leków */
-.card .med-note strong.tag--otc{ color:var(--otc); }
-.card .med-note strong.tag--rx{ color:var(--rx); }
-
-/* ---------- KAFELEK AWARYJNY ---------- */
+/* —— Emergency (globalna delikatna baza; pełny puls jest w fix.szczegoly.css) —— */
 .card.emergency{
-  background: linear-gradient(180deg, #3a0e16, #25090e);
-  border: 1.8px solid #ff6262aa;
-  color: #ffecec;
-  box-shadow:
-    0 0 0 1px #ff5c5c33 inset,
-    0 10px 28px -8px #000c,
-    0 0 56px -8px rgba(255, 59, 59, .45);
+  border:2px solid rgba(255,80,80,.75);
+  background:rgba(120,8,8,.18);
 }
 .card.emergency:hover{
-  border-color: #ff7e7e;
   box-shadow:
-    0 0 0 1px #ff7e7e55 inset,
-    0 12px 34px -8px #000,
-    0 0 80px -6px var(--em-red-strong);
+    0 10px 24px rgba(0,0,0,.5),
+    0 0 24px rgba(255,60,60,.55);
 }
 
-/* nagłówek awaryjny */
-.card.emergency h3{
-  color: #fff3f3;
-  text-shadow: 0 0 18px rgba(255,60,60,.55);
+/* —— Tagi „Bez recepty” / „Na receptę” —— */
+.tag{
+  display:inline-block;
+  padding:.15rem .5rem;
+  border-radius:.5rem;
+  border:1px solid currentColor;
+  margin-right:.35rem;
+  font-weight:700;
+  white-space:nowrap;
+}
+.tag--otc{
+  color:var(--otc-fg);
+  background:var(--otc-bg);
+  border-color:var(--otc-bd);
+}
+.tag--rx{
+  color:var(--rx-fg);
+  background:var(--rx-bg);
+  border-color:var(--rx-bd);
 }
 
-/* ---------- Stopka ---------- */
+/* —— Listy w kartach: pilnujemy marginesów, żeby punkty nie „wychodziły” —— */
+.card__body ul{margin:.35rem 0 0 1.15rem; padding:0}
+.card__body li{margin:.28rem 0}
+
+/* —— Responsywność —— */
+@media (max-width:980px){
+  .grid{grid-template-columns:repeat(2, minmax(220px,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+
+/* ================================
+   DROBNE DODATKI
+   ================================ */
 footer{
-  color:#a7b2c7;
+  color:var(--text-dim);
+  font-size:.925rem;
+  max-width:1100px;
+  margin:16px auto 28px;
+  padding:0 16px;
   text-align:center;
-  margin: 24px 0 40px;
-  font-size: 14px;
-  opacity:.85;
+  opacity:.9;
 }
-
-/* ---------- Drobne poprawki stron pomoc.html (jaśniejsze tło) ---------- */
-body.page-help{
-  background: radial-gradient(1200px 900px at 50% 0%, #114261 0%, #0f2e3f 40%, #0c2230 100%);
-}
-body.page-help::before{ opacity:.2; }  /* wzór delikatniejszy nad mapą */
-
-/* ---------- Upewniamy się, że nic nie „rozpycha” kart ---------- */
-.card > *:last-child{ margin-bottom: 0; }
-
-/* ---------- Eleganckie odnośniki w treści ---------- */
-.card a{
-  color:#9cd3ff;
-  text-decoration: underline dotted;
-  text-underline-offset: 3px;
-}
-.card a:hover{ color:#c7e6ff; }
