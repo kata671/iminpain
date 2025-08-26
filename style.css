@@ -321,3 +321,41 @@ body::before {
 @media (max-width: 620px) {
   .kafelki { grid-template-columns: 1fr; }
 }
+/* ==== TOOLTIPY DLA KAFELKÓW (CSS-only) ==== */
+.card[data-tip] { position: relative; }
+
+.card[data-tip]:hover::after,
+.card[data-tip]:focus-within::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%);
+  max-width: 460px;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  line-height: 1.25rem;
+  color: #eaf2ff;
+  background: rgba(16,18,32,.92);
+  border: 1px solid rgba(150,180,255,.35);
+  border-radius: 10px;
+  box-shadow: 0 10px 22px rgba(0,0,0,.45), 0 0 22px rgba(150,180,255,.25);
+  pointer-events: none;
+  z-index: 20;
+  white-space: normal;
+}
+
+.card[data-tip]:hover::before,
+.card[data-tip]:focus-within::before{
+  content:"";
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: rgba(16,18,32,.92);
+  filter: drop-shadow(0 -1px 0 rgba(150,180,255,.35));
+}
+
+/* lepsza nawigacja klawiaturą */
+.card:focus-within { outline: 2px solid #60a5fa; outline-offset: 2px; border-radius: 14px; }
