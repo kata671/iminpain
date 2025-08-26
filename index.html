@@ -3,36 +3,47 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Boli-mnie — wybierz postać</title>
+  <title>Boli-mnie — Wybierz osobę</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#7a4dff" />
+  <meta name="description" content="Szybko zlokalizuj ból, sprawdź pierwszą pomoc i znajdź najbliższą pomoc medyczną." />
 </head>
 <body class="bg-med">
+  <!-- Quickbar -->
   <nav class="quickbar">
     <a href="tel:112">📞 112</a>
     <a href="lokalizacja.html">📍 Lokalizacja</a>
     <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
+    <input id="search" type="search" placeholder="np. ból brzucha, kolano..." />
+    <button id="search-btn">🔎</button>
+    <button id="btn-voice" title="Szukaj głosem">🎤</button>
+    <button id="theme-toggle" class="theme-toggle" title="Jasny/Ciemny">☀️/🌙</button>
   </nav>
 
   <header class="site-header">
-    <h1>🩺 Boli-mnie</h1>
-    <p class="subtitle">Szybko zlokalizuj ból i znajdź pomoc</p>
+    <h1>Wybierz, kogo dotyczy ból</h1>
+    <p class="subtitle">Interfejs dopasujemy do osoby</p>
   </header>
 
   <main class="container">
     <div class="grid-2 hero-grid">
-      <a class="hero-card" href="kobieta.html" aria-label="Kobieta">
-        <img src="img/kobieta-glowa-12.png" alt="Kobieta – model" />
+      <a class="hero-card" href="kobieta.html" onclick="localStorage.setItem('sex','k')">
+        <img src="img/kobieta.png" alt="Kobieta" />
         <span>👩 Kobieta</span>
       </a>
-      <a class="hero-card" href="mezczyzna.html" aria-label="Mężczyzna">
-        <img src="img/mezczyzna-glowa-1.png" alt="Mężczyzna – model" />
+      <a class="hero-card" href="mezczyzna.html" onclick="localStorage.setItem('sex','m')">
+        <img src="img/mezczyzna.png" alt="Mężczyzna" />
         <span>👨 Mężczyzna</span>
+      </a>
+      <a class="hero-card" href="dziecko.html" onclick="localStorage.setItem('sex','d')">
+        <img src="img/dziecko.png" alt="Dziecko" />
+        <span>🧒 Dziecko</span>
       </a>
     </div>
   </main>
 
-  <footer class="site-footer">
-    <small>© 2025 • W nagłym zagrożeniu dzwoń 112 / 999</small>
-  </footer>
+  <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
+  <script src="app.js"></script>
 </body>
 </html>
