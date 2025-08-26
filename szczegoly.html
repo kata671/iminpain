@@ -4,16 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Szczegóły</title>
-
-  <!-- Twój globalny wygląd -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Lokalne, lekkie doprecyzowania wyglądu strony szczegółów + TOOLTIPY -->
   <style>
-    /* Siatka 3x (zgodna z tym co już masz) */
+    /* Układ kafelków — stabilny (jak w backupie) */
     .cards{
       display:grid;
-      grid-template-columns:repeat(3, minmax(260px, 1fr));
+      grid-template-columns:repeat(3,minmax(260px,1fr));
       gap:24px;
       max-width:1200px;
       margin:28px auto 40px;
@@ -21,60 +18,15 @@
       justify-items:center;
       align-items:start;
     }
-    @media (max-width:980px){ .cards{ grid-template-columns:repeat(2, minmax(260px, 1fr)); } }
+    @media (max-width:980px){ .cards{ grid-template-columns:repeat(2,minmax(260px,1fr)); } }
     @media (max-width:640px){ .cards{ grid-template-columns:1fr; } }
 
-    /* Kafelek – korzysta z Twojej kolorystyki; tu tylko drobne bezpieczne rzeczy */
-    .card{ width:100%; max-width:360px; }
-
-    .card h3{
-      margin:0 0 8px;
-      font-size:1.05rem;          /* delikatnie większy nagłówek */
-      line-height:1.35rem;
-      letter-spacing:.2px;
-    }
-    .card ul{ margin:0; padding-left:18px; }
+    .card{ width:100%; max-width:360px; box-sizing:border-box; }
+    .card h3{ margin:0 0 8px; font-size:1.05rem; line-height:1.35rem; }
+    .card ul{ margin:0; padding-left:18px; list-style:disc; list-style-position:outside; }
     .card li{ margin:6px 0; }
 
-    /* Czerwona karta awaryjna – obramowanie + klik */
     .card.emergency{ cursor:pointer; }
-
-    /* ===== TOOLTIPY (CSS-only) ===== */
-    .card[data-tip]{ position:relative; }
-    .card[data-tip]:hover::after,
-    .card[data-tip]:focus-within::after{
-      content:attr(data-tip);
-      position:absolute;
-      left:50%;
-      bottom:calc(100% + 10px);
-      transform:translateX(-50%);
-      max-width:460px;
-      padding:10px 12px;
-      font-size:.9rem;
-      line-height:1.25rem;
-      color:#eaf2ff;
-      background:rgba(16,18,32,.92);
-      border:1px solid rgba(150,180,255,.35);
-      border-radius:10px;
-      box-shadow:0 10px 22px rgba(0,0,0,.45), 0 0 22px rgba(150,180,255,.25);
-      pointer-events:none;
-      z-index:20;
-      white-space:normal;
-      text-align:left;
-    }
-    .card[data-tip]:hover::before,
-    .card[data-tip]:focus-within::before{
-      content:"";
-      position:absolute;
-      left:50%;
-      bottom:100%;
-      transform:translateX(-50%);
-      border:8px solid transparent;
-      border-top-color:rgba(16,18,32,.92);
-      filter:drop-shadow(0 -1px 0 rgba(150,180,255,.35));
-    }
-    .card:focus-within{ outline:2px solid #60a5fa; outline-offset:2px; border-radius:14px; }
-    /* ===== /TOOLTIPY ===== */
   </style>
 </head>
 <body data-page="szczegoly">
@@ -95,7 +47,7 @@
 
   <script>
   (function(){
-    /* ===== 0) Powrót do właściwej strony sekcji (mapowanie id → strona) ===== */
+    /* mapowanie id → odpowiednia strona powrotu */
     function sectionUrlFromId(id){
       if(!id) return "index.html";
       const female = id.endsWith("_k");
@@ -126,12 +78,10 @@
       return "index.html";
     }
 
-    /* ===== 1) Pobieramy id z URL i ustawiamy link powrotny ===== */
     const params = new URLSearchParams(location.search);
     const id = params.get("id");
     document.getElementById("sectionBack").href = sectionUrlFromId(id);
 
-    /* ===== 2) Mała pomocnicza do tworzenia elementów ===== */
     function el(tag, className, html){
       const e = document.createElement(tag);
       if(className) e.className = className;
@@ -139,138 +89,119 @@
       return e;
     }
 
-    /* ===== 3) FUNKCJA KAFELKA – tu dodajemy tooltipy i klik czerwonego ===== */
     function card(title, items){
-      // podpowiedzi (dymki) – możesz dopisywać własne
-      const tips = {
-        "Możliwe przyczyny": "Najczęstsze źródła dolegliwości. Jeśli objawy są nietypowe lub bardzo silne – skonsultuj się z lekarzem.",
-        "Objawy": "Co możesz odczuwać. Jeśli dołącza gorączka, narastający ból lub objawy neurologiczne – reaguj szybciej.",
-        "Kiedy się niepokoić": "Czerwone flagi – w tych sytuacjach nie zwlekaj z konsultacją.",
-        "Lekarze": "Specjaliści, do których najczęściej trafia dany problem. Zacznij od POZ, gdy nie jesteś pewna/pewny.",
-        "Leki": "Zielone – bez recepty; czerwone – na receptę. Stosuj zgodnie z ulotką/zaleceniem.",
-        "Pierwsza pomoc": "3 szybkie kroki: zabezpiecz – złagodź – obserwuj.",
-        "Rehabilitacja / Ćwiczenia": "Delikatny, regularny ruch zwykle pomaga. Jeśli ból rośnie – przerwij.",
-        "Czego unikać": "Rzeczy, które zwykle nasilają objawy.",
-        "Profilaktyka": "Nawyki i rutyny zmniejszające ryzyko nawrotu.",
-        "Najczęstsze błędy": "Typowe potknięcia utrwalające ból.",
-        "Dodatkowe informacje": "Krótkie wskazówki edukacyjne.",
-        "Niezwłoczna pomoc (112/SOR)": "Kliknij, aby otworzyć listę najbliższych punktów pomocy na mapie."
-      };
-
       const c = el('div','card');
-      const tip = tips[title];
-      if(tip) c.setAttribute('data-tip', tip);
+      c.appendChild(el('h3',null,title));
 
-      // tytuł
-      c.appendChild(el('h3', null, title));
-
-      // treść
       if(Array.isArray(items)){
         const ul = el('ul');
-        items.forEach(v => ul.appendChild(el('li', null, v)));
+        items.forEach(v=>ul.appendChild(el('li',null,v)));
         c.appendChild(ul);
-      }else if(typeof items === 'string' && items){
-        c.appendChild(el('p', null, items));
+      }else if(typeof items==='string' && items){
+        c.appendChild(el('p',null,items));
       }
 
-      // czerwona karta – klik do pomoc.html
+      // czerwony kafelek
       if(/Niezwłoczna pomoc/i.test(title)){
         c.classList.add('emergency');
-        c.addEventListener('click', () => location.href = 'pomoc.html');
-        c.setAttribute('role','link');
-        c.setAttribute('tabindex','0');
-        c.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') location.href='pomoc.html'; });
+        c.addEventListener('click', ()=>location.href='pomoc.html');
       }
-
       return c;
     }
 
-    /* ===== 4) Render – pobieramy dane i budujemy siatkę ===== */
     async function load(){
       const err = document.getElementById('err');
       try{
-        if(!id) throw new Error("Brak parametru id w adresie.");
-
-        // 1) Spróbuj bogatsze dane, potem fallback do podstawowych
+        if(!id) throw new Error("Brak parametru id.");
         const ts = Date.now();
-        const resA = await fetch('data/detailed_conditions.json?ts=' + ts);
-        const detOK = resA.ok;
-        const det = detOK ? await resA.json() : {};
-        const node = det[id];
 
-        let data = node;
+        let data=null;
+        try{
+          const resA = await fetch('data/detailed_conditions.json?ts='+ts);
+          if(resA.ok){ const det=await resA.json(); data=det[id]; }
+        }catch(e){}
+
         if(!data){
-          const resB = await fetch('data/conditions.json?ts=' + ts);
-          if(!resB.ok) throw new Error("Błąd HTTP " + resB.status);
-          const base = await resB.json();
-          data = base[id];
+          const resB = await fetch('data/conditions.json?ts='+ts);
+          if(!resB.ok) throw new Error("Błąd HTTP "+resB.status);
+          const base=await resB.json();
+          data=base[id];
         }
-        if(!data) throw new Error("Nie znaleziono wpisu o id „" + id + "”.");
+        if(!data) throw new Error("Nie znaleziono wpisu dla id="+id);
 
-        // 2) Tytuł
-        document.getElementById('title').textContent = data.title || 'Szczegóły';
+        document.getElementById('title').textContent=data.title||'Szczegóły';
 
-        // 3) Siatka
-        const grid = el('div','cards');
-
-        // KOLEJNOŚĆ kafelków (3x w rzędzie)
-        // możesz łatwo przestawić kolejność, to czysta tablica:
-        const order = [
-          ['Możliwe przyczyny', data.causes],
-          ['Objawy', data.symptoms],
-          ['Kiedy się niepokoić', data.concerns],
-          ['Lekarze', data.doctors],
-          ['Leki', data.medications],
-          ['Pierwsza pomoc', data.first_aid],
-          ['Rehabilitacja / Ćwiczenia', data.rehab],
-          ['Czego unikać', data.avoid],
-          ['Profilaktyka', data.prevention],
-          ['Najczęstsze błędy', data.mistakes],
-          ['Dodatkowe informacje', data.description]
+        const grid=el('div','cards');
+        const order=[
+          ['Możliwe przyczyny',data.causes],
+          ['Objawy',data.symptoms],
+          ['Kiedy się niepokoić',data.concerns],
+          ['Lekarze',data.doctors],
+          ['Leki',data.medications],
+          ['Pierwsza pomoc',data.first_aid],
+          ['Rehabilitacja / Ćwiczenia',data.rehab],
+          ['Czego unikać',data.avoid],
+          ['Profilaktyka',data.prevention],
+          ['Najczęstsze błędy',data.mistakes],
+          ['Dodatkowe informacje',data.description]
         ];
-
-        // dodajemy zwykłe karty (bez tych pustych)
-        order.forEach(([title, items])=>{
-          const hasContent =
-            (Array.isArray(items) && items.length) ||
-            (typeof items === 'string' && items.trim().length);
-          if(hasContent) grid.appendChild(card(title, items));
+        order.forEach(([title,items])=>{
+          const has=(Array.isArray(items)&&items.length)||(typeof items==='string'&&items.trim().length);
+          if(has) grid.appendChild(card(title,items));
         });
 
-        // czerwony kafelek – zawsze na końcu siatki
-        const emergencyList = Array.isArray(data.emergency) && data.emergency.length
-          ? data.emergency
-          : [
-              "Silny, narastający ból, duszność, zlewne poty, omdlenie.",
-              "Objawy udaru: osłabienie, bełkotliwa mowa, opadnięty kącik ust.",
-              "Ostra duszność, sinica, krwioplucie, silny uraz.",
-              "W razie wątpliwości: natychmiast zadzwoń 112."
-            ];
-        grid.appendChild(card('Niezwłoczna pomoc (112/SOR)', emergencyList));
+        const emergencyList=Array.isArray(data.emergency)&&data.emergency.length?data.emergency:[
+          "Silny, narastający ból, duszność, zlewne poty, omdlenie.",
+          "Objawy udaru: osłabienie, bełkotliwa mowa, opadnięty kącik ust.",
+          "Ostra duszność, sinica, krwioplucie, silny uraz.",
+          "W razie wątpliwości: natychmiast zadzwoń 112."
+        ];
+        grid.appendChild(card('Niezwłoczna pomoc (112/SOR)',emergencyList));
 
-        const content = document.getElementById('content');
-        content.innerHTML = '';
+        const content=document.getElementById('content');
+        content.innerHTML='';
         content.appendChild(grid);
 
-        // opis długi pod siatką (jeśli był w JSON jako string i nie użyty wyżej)
-        if(typeof data.description === 'string' && data.description.trim()){
-          const desc = el('p', null, data.description);
-          desc.style.marginTop = '16px';
-          content.appendChild(desc);
-        }
-
       }catch(e){
-        err.style.display = 'block';
-        err.textContent = 'Błąd wczytywania danych: ' + e.message;
+        err.style.display='block';
+        err.textContent='Błąd: '+e.message;
         console.error(e);
       }
     }
 
-    if(document.readyState === 'loading'){
-      document.addEventListener('DOMContentLoaded', load);
-    }else{
-      load();
+    if(document.readyState==='loading'){
+      document.addEventListener('DOMContentLoaded',load);
+    }else load();
+  })();
+  </script>
+
+  <script>
+  /* Natywne tooltipy jako title (bez zmian w layoucie) */
+  (function(){
+    const tips={
+      "Możliwe przyczyny":"Najczęstsze źródła dolegliwości.",
+      "Objawy":"Co możesz odczuwać teraz.",
+      "Kiedy się niepokoić":"Czerwone flagi — reaguj szybciej.",
+      "Lekarze":"Do kogo najlepiej się zgłosić.",
+      "Leki":"Zielone — bez recepty; czerwone — na receptę.",
+      "Pierwsza pomoc":"3 szybkie kroki: zabezpiecz – złagodź – obserwuj.",
+      "Rehabilitacja / Ćwiczenia":"Delikatny, regularny ruch zwykle pomaga.",
+      "Czego unikać":"Co najczęściej nasila objawy.",
+      "Profilaktyka":"Nawyki zmniejszające ryzyko nawrotu.",
+      "Najczęstsze błędy":"Typowe rzeczy, które utrwalają ból.",
+      "Dodatkowe informacje":"Krótkie wskazówki edukacyjne.",
+      "Niezwłoczna pomoc (112/SOR)":"Kliknij, by znaleźć najbliższy SOR / pomoc."
+    };
+    function applyTitles(){
+      document.querySelectorAll('.card').forEach(function(card){
+        const h=card.querySelector('h3');
+        if(!h) return;
+        const tip=tips[h.textContent.trim()];
+        if(tip) card.setAttribute('title',tip);
+      });
     }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',applyTitles);
+    else applyTitles();
   })();
   </script>
 </body>
