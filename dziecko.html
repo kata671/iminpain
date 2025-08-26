@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dziecko — wybór obszaru bólu</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#7a4dff" />
+</head>
+<body class="bg-med">
+  <!-- Quickbar -->
+  <nav class="quickbar">
+    <a href="tel:112">📞 112</a>
+    <a href="lokalizacja.html">📍 Lokalizacja</a>
+    <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
+    <input id="search" type="search" placeholder="np. ból brzucha, kolano..." />
+    <button id="search-btn">🔎</button>
+    <button id="btn-voice" title="Szukaj głosem">🎤</button>
+    <button id="theme-toggle" class="theme-toggle" title="Jasny/Ciemny">☀️/🌙</button>
+  </nav>
+
+  <header class="site-header">
+    <a class="back" href="index.html">← Wróć</a>
+    <h1>🧒 Dziecko</h1>
+    <p class="subtitle">Wybierz obszar bólu</p>
+  </header>
+
+  <main class="container">
+    <ul class="tiles tiles-3x2">
+      <!-- Głowa / twarz -->
+      <li><a class="tile" href="szczegoly.html?id=glowa_d" onclick="localStorage.setItem('sex','d')">🧠 Głowa</a></li>
+      <li><a class="tile" href="szczegoly.html?id=oczy_d" onclick="localStorage.setItem('sex','d')">👁 Oczy</a></li>
+      <li><a class="tile" href="szczegoly.html?id=nos_d" onclick="localStorage.setItem('sex','d')">👃 Nos/Zatoki</a></li>
+      <li><a class="tile" href="szczegoly.html?id=ucho_d" onclick="localStorage.setItem('sex','d')">👂 Ucho</a></li>
+
+      <!-- Szyja / bark / ręka -->
+      <li><a class="tile" href="szczegoly.html?id=szyja_d" onclick="localStorage.setItem('sex','d')">🦴 Szyja</a></li>
+      <li><a class="tile" href="szczegoly.html?id=bark_d" onclick="localStorage.setItem('sex','d')">🏋️ Bark</a></li>
+      <li><a class="tile" href="szczegoly.html?id=ramie_d" onclick="localStorage.setItem('sex','d')">💪 Ramię</a></li>
+      <li><a class="tile" href="szczegoly.html?id=lokiec_d" onclick="localStorage.setItem('sex','d')">🎾 Łokieć</a></li>
+      <li><a class="tile" href="szczegoly.html?id=nadgarstek_d" onclick="localStorage.setItem('sex','d')">⌚ Nadgarstek</a></li>
+      <li><a class="tile" href="szczegoly.html?id=dlon_d" onclick="localStorage.setItem('sex','d')">✋ Dłoń</a></li>
+
+      <!-- Klatka / serce / plecy / brzuch -->
+      <li><a class="tile" href="szczegoly.html?id=klatka_d" onclick="localStorage.setItem('sex','d')">💙 Klatka piersiowa</a></li>
+      <li><a class="tile" href="szczegoly.html?id=serce_d" onclick="localStorage.setItem('sex','d')">❤️ Serce</a></li>
+      <li><a class="tile" href="szczegoly.html?id=plecy_d" onclick="localStorage.setItem('sex','d')">🧍 Plecy</a></li>
+      <li><a class="tile" href="szczegoly.html?id=brzuch_d" onclick="localStorage.setItem('sex','d')">🫃 Brzuch</a></li>
+
+      <!-- Miednica / noga -->
+      <li><a class="tile" href="szczegoly.html?id=biodra_d" onclick="localStorage.setItem('sex','d')">🦴 Biodra</a></li>
+      <li><a class="tile" href="szczegoly.html?id=pachwina_d" onclick="localStorage.setItem('sex','d')">🔻 Pachwina</a></li>
+      <li><a class="tile" href="szczegoly.html?id=nogi_d" onclick="localStorage.setItem('sex','d')">🦵 Nogi</a></li>
+      <li><a class="tile" href="szczegoly.html?id=kolano_d" onclick="localStorage.setItem('sex','d')">🦵 Kolano</a></li>
+      <li><a class="tile" href="szczegoly.html?id=lydka_d" onclick="localStorage.setItem('sex','d')">🦿 Łydka</a></li>
+      <li><a class="tile" href="szczegoly.html?id=kostka_d" onclick="localStorage.setItem('sex','d')">🦶 Kostka</a></li>
+      <li><a class="tile" href="szczegoly.html?id=stopa_d" onclick="localStorage.setItem('sex','d')">🦶 Stopa</a></li>
+
+      <!-- Szybki skrót -->
+      <li><a class="tile tile-accent pulse" href="lokalizacja.html">🚑 Natychmiastowa pomoc</a></li>
+    </ul>
+  </main>
+
+  <footer class="site-footer"><small>© 2025</small></footer>
+
+  <!-- Zapamiętaj kontekst „dziecko” dla wyszukiwarki -->
+  <script>localStorage.setItem('sex','d');</script>
+  <script src="app.js"></script>
+</body>
+</html>
