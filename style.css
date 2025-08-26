@@ -6,7 +6,7 @@
   --green:#12c55b; --red:#ff4d5a; color-scheme:dark;
 }
 
-/* tło – turkus/fiolet + molekularna siatka (nie zmieniamy motywu) */
+/* tło – turkus/fiolet + molekularna siatka */
 .bg-med{
   background:
     radial-gradient(1000px 800px at 70% 20%, rgba(122,77,255,.18), transparent 60%),
@@ -61,21 +61,33 @@ body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Ari
   white-space:normal; word-break:break-word; overflow-wrap:anywhere;
 }
 .tile:hover{transform:translateY(-3px);box-shadow:0 0 18px #7a4dffaa,0 0 50px #4ad0ff66;border-color:#c8daff77}
-.tile-accent{background:linear-gradient(180deg, rgba(122,77,255,.36), rgba(74,208,255,.28));border-color:#c8daffaa}
-.pulse{animation:pulse 1.6s ease-in-out infinite}
-@keyframes pulse{0%{box-shadow:0 0 12px #7a4dff66,0 0 28px #4ad0ff33}50%{box-shadow:0 0 24px #7a4dffaa,0 0 56px #4ad0ff55}100%{box-shadow:0 0 12px #7a4dff66,0 0 28px #4ad0ff33}}
 
-.tile-btn{
-  background:none;border:none;width:100%;height:100%;cursor:pointer;color:inherit;font:inherit;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+/* 🔴 Emergency accent: mocny czerwony glow */
+.tile-accent{
+  background:linear-gradient(180deg, rgba(255,77,90,.28), rgba(255,77,120,.22));
+  border-color:#ff9ca6aa;
+  box-shadow: 0 0 14px rgba(255,77,90,.65), 0 0 36px rgba(255,77,120,.35);
+}
+.pulse{animation:pulse-emergency 1.6s ease-in-out infinite}
+@keyframes pulse-emergency{
+  0%   { box-shadow:0 0 12px rgba(255,77,90,.55), 0 0 28px rgba(255,77,120,.30); }
+  50%  { box-shadow:0 0 24px rgba(255,77,90,.85), 0 0 56px rgba(255,77,120,.55); }
+  100% { box-shadow:0 0 12px rgba(255,77,90,.55), 0 0 28px rgba(255,77,120,.30); }
 }
 
-/* >>> Fix: mobilne zawijanie tytułu i badge w kafelku „Leczenie” <<< */
+/* przyciski-kafelki: NIC nie nadpisujemy z wyglądu .tile */
+.tile-btn{
+  /* ważne: brak background/border/box-shadow/color */
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  width:100%;height:100%;cursor:pointer;font:inherit;appearance:none;
+}
+
+/* >>> Fix: mobilne zawijanie tytułu i badge w „Leczenie” <<< */
 .tile-btn .badge{display:inline-block; margin-top:4px}
 @media (max-width:480px){
   .tile{min-height:110px;padding:14px;font-size:.95rem}
   .tile-btn{gap:4px}
-  .tile-btn .badge{display:block; margin-top:2px} /* badge w nowej linii na bardzo wąskich ekranach */
+  .tile-btn .badge{display:block; margin-top:2px}
 }
 
 /* karty + obraz */
@@ -98,10 +110,15 @@ body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Ari
 .btn{display:inline-block;padding:.5rem .9rem;border-radius:12px;border:1px solid var(--border);text-decoration:none;color:var(--ink);background:var(--card-light);box-shadow:var(--glow)}
 .note{opacity:.9}
 
-/* tryb jasny */
+/* tryb jasny – utrzymujemy mocny czerwony akcent */
 :root.light{color-scheme:light}
 :root.light body{color:#0f1526}
 :root.light .quickbar{background:rgba(255,255,255,.55)}
-:root.light .tile,:root.light .hero-card,.light .card{background:rgba(255,255,255,.85)}
+:root.light .tile,:root.light .hero-card,.light .card{background:rgba(255,255,255,.88)}
 :root.light .badge.green{color:#0f8a4b}
 :root.light .badge.red{color:#c82534}
+:root.light .tile-accent{
+  background:linear-gradient(180deg, rgba(255,77,90,.30), rgba(255,77,120,.24));
+  border-color:#ff9ca6cc;
+  box-shadow: 0 0 16px rgba(255,77,90,.75), 0 0 60px rgba(255,77,120,.55);
+}
