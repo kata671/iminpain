@@ -58,5 +58,26 @@
     new MutationObserver(run).observe(document.getElementById('content')||document.body, { childList:true, subtree:true });
   })();
   </script>
+<script>
+/* Kliknięcie w czerwony kafelek "Niezwłoczna pomoc" -> pomoc.html
+   Działa nawet jeśli w środku nie ma <a> albo jeśli treść wczytuje się dynamicznie. */
+(function () {
+  // 1) Wymuś wygląd „klikalny”
+  var css = document.createElement('style');
+  css.textContent = `
+    .card.emergency { cursor: pointer; }
+    .card.emergency * { pointer-events: none; } /* ułatwia kliknięcie całej karty */
+  `;
+  document.head.appendChild(css);
+
+  // 2) Delegacja zdarzeń: łapie klik w dowolnym miejscu karty
+  document.addEventListener('click', function (ev) {
+    var card = ev.target.closest && ev.target.closest('.card.emergency');
+    if (!card) return;
+    ev.preventDefault();
+    window.location.href = 'pomoc.html';
+  }, true);
+})();
+</script>
 </body>
 </html>
