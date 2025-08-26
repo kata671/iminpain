@@ -13,16 +13,15 @@
   <style>
     .home-icons .qi { font-size: 1.15rem; line-height: 1; display:inline-block; transform: translateY(1px); }
     .home-icons .quickbar a, .home-icons .quickbar button { padding: .55rem .9rem; }
+    .mini-icons { font-size:.9rem; opacity:.85; margin-left:4px; }
 
-    /* siatka 4 kwadratów */
+    /* 4 kafelki — zawsze jeden rząd, bez scrolla; na małych ekranach kompaktujemy */
     .hot-tiles { max-width: var(--max); margin: 12px auto 0; padding: 0 16px; }
     .hot-tiles-grid {
-      display: grid; gap: 12px;
-      grid-template-columns: repeat(4, minmax(0,1fr));
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(4, 1fr);
     }
-    @media(max-width: 900px){ .hot-tiles-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
-    @media(max-width: 560px){ .hot-tiles-grid{ grid-template-columns: 1fr 1fr; } }
-
     .hot-tile {
       display:flex; flex-direction:column; align-items:center; justify-content:center;
       min-height:110px; border-radius:14px; font-weight:900; text-decoration:none; color:var(--ink);
@@ -32,34 +31,49 @@
     .hot-tile .ico { font-size: 1.35rem; margin-bottom:6px; }
     .hot-tile .title { font-size:1rem; }
 
-    /* czerwony pulsujący */
+    /* 🔴 czerwony — wyraźniejsze pulsowanie */
     .hot-red {
       background: linear-gradient(180deg, rgba(255,77,90,.24), rgba(255,77,120,.18));
       border-color: #ff9ca699;
-      animation: pulseRed 2s infinite;
+      animation: pulseRed 2s ease-in-out infinite;
     }
     @keyframes pulseRed {
-      0% { box-shadow: 0 0 6px rgba(255,77,90,.6), 0 0 18px rgba(255,77,120,.4); transform: scale(1); }
-      50%{ box-shadow: 0 0 14px rgba(255,77,90,.9), 0 0 34px rgba(255,77,120,.6); transform: scale(1.03);}
-      100%{ box-shadow: 0 0 6px rgba(255,77,90,.6), 0 0 18px rgba(255,77,120,.4); transform: scale(1);}
+      0%   { box-shadow: 0 0 6px rgba(255,77,90,.55), 0 0 18px rgba(255,77,120,.35); transform: scale(1); }
+      50%  { box-shadow: 0 0 16px rgba(255,77,90,.95), 0 0 38px rgba(255,77,120,.6);  transform: scale(1.035); }
+      100% { box-shadow: 0 0 6px rgba(255,77,90,.55), 0 0 18px rgba(255,77,120,.35); transform: scale(1); }
     }
 
-    /* zielone neonowe */
+    /* 🟢 zielone — delikatne pulsowanie (subtelniejsze od czerwonego) */
     .hot-green {
       background: linear-gradient(180deg, rgba(8,40,20,.85), rgba(12,52,28,.78));
       border-color: rgba(18,197,91,.35);
-      box-shadow: 0 0 10px rgba(18,197,91,.35), 0 0 24px rgba(18,197,91,.2);
+      box-shadow: 0 0 10px rgba(18,197,91,.30), 0 0 22px rgba(18,197,91,.18);
+      animation: pulseGreen 2.6s ease-in-out infinite;
     }
-    .hot-green:hover {
-      transform: translateY(-2px);
-      border-color: rgba(18,197,91,.55);
-      box-shadow: 0 0 16px rgba(18,197,91,.7), 0 0 38px rgba(18,197,91,.45);
+    @keyframes pulseGreen {
+      0%   { box-shadow: 0 0 8px rgba(18,197,91,.28), 0 0 18px rgba(18,197,91,.16); transform: scale(1); }
+      50%  { box-shadow: 0 0 12px rgba(18,197,91,.48), 0 0 28px rgba(18,197,91,.30); transform: scale(1.012); }
+      100% { box-shadow: 0 0 8px rgba(18,197,91,.28), 0 0 18px rgba(18,197,91,.16); transform: scale(1); }
     }
 
-    /* obrazki K/M/D wyrównane */
+    /* Obrazki K/M/D wyrównane na tej stronie */
     .hero-card img { max-height:420px; width:auto; object-fit:contain; }
-    /* małe emotki w quickbarze */
-    .mini-icons { font-size:.9rem; opacity:.85; margin-left:4px; }
+
+    /* Kompaktowanie na bardzo wąskich ekranach — wciąż 4 kolumny */
+    @media (max-width: 540px){
+      .hot-tiles { padding: 0 10px; }
+      .hot-tiles-grid { gap: 8px; }
+      .hot-tile { min-height: 86px; padding: 10px; border-radius: 12px; }
+      .hot-tile .ico { font-size: 1.15rem; margin-bottom:4px; }
+      .hot-tile .title { font-size: .9rem; }
+    }
+    @media (max-width: 380px){
+      .hot-tiles { padding: 0 8px; }
+      .hot-tiles-grid { gap: 6px; }
+      .hot-tile { min-height: 74px; padding: 8px; border-radius: 10px; }
+      .hot-tile .ico { font-size: 1rem; margin-bottom: 2px; }
+      .hot-tile .title { font-size: .82rem; letter-spacing: 0; }
+    }
   </style>
 </head>
 
@@ -80,7 +94,7 @@
     <button id="theme-toggle"><span class="qi">☀️/🌙</span></button>
   </nav>
 
-  <!-- 4 kwadratowe kafelki nad nagłówkiem -->
+  <!-- 4 kwadratowe kafelki nad nagłówkiem (zawsze 1 rząd) -->
   <section class="hot-tiles">
     <div class="hot-tiles-grid">
       <a class="hot-tile hot-red" href="tel:112" title="Zadzwoń 112">
