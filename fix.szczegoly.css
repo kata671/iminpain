@@ -1,104 +1,78 @@
-/* === TŁO (turkus + fiolet) + WYRAŹNY WZÓR === */
-:root{
-  --bg-0:#070b14;
-  --c-teal:#14b8a6;
-  --c-violet:#7c3aed;
-  --card-bg: rgba(32,36,76,.72);
-  --card-bd: rgba(130,150,255,.25);
-  --card-glow: rgba(150,170,255,.15);
-  --card-glow-hover: rgba(160,190,255,.24);
-}
-
-html, body{ background-image:none !important; background-color:var(--bg-0); }
-
-body{
-  background-image:
-    radial-gradient(1100px 700px at 8% -10%, rgba(20,184,166,.18), transparent 60%),
-    radial-gradient(900px 600px  at 110% 12%, rgba(124,58,237,.14), transparent 60%),
-    radial-gradient(800px 600px  at 52% 120%, rgba(20,184,166,.14), transparent 60%) !important;
+/* Tło: gradient + półprzezroczysty wzór */
+body {
+  background: linear-gradient(135deg, #0d1b2a, #2b2d42, #1e2761);
   background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-body::before{
-  content:"";
-  position:fixed; inset:0;
-  pointer-events:none;
-  opacity:.28;
-  mix-blend-mode:screen;
-  background-size:220px 180px;
-  background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='180' viewBox='0 0 220 180'%3E%3Cg stroke='%2314b8a6' stroke-opacity='.45' stroke-width='1' fill='none'%3E%3Cpath d='M110 0 L220 45 220 135 110 180 0 135 0 45 Z'/%3E%3Ccircle cx='55' cy='22' r='6'/%3E%3Ccircle cx='165' cy='158' r='6'/%3E%3C/g%3E%3C/svg%3E") !important;
-}
-@media (prefers-reduced-motion: reduce){ body::before{opacity:.20; mix-blend-mode:normal;} }
-
-/* === SIATKA KAFELKÓW (3 w rzędzie, koniec z „dziurą”) === */
-.cards{
-  display:grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  gap:22px !important;
-  max-width:1100px; margin:24px auto !important;
-  align-items:stretch;
-  justify-items:stretch;
-  grid-auto-flow: row dense;   /* zagęszcza układ – bez pustych kolumn */
-}
-.card{
-  box-sizing:border-box;
-  width:100% !important;
-  max-width:unset !important;  /* nie ścinaj szerokości – to usuwa „lukę” */
-  min-width:0;
-  background:var(--card-bg);
-  border:1px solid var(--card-bd);
-  border-radius:16px;
-  box-shadow:
-    inset 0 0 1px rgba(200,210,255,.25),
-    0 10px 26px rgba(0,0,0,.38),
-    0 0 30px var(--card-glow);
-  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
-  display:flex; flex-direction:column;
-}
-.card:hover{
-  transform:translateY(-2px);
-  box-shadow:
-    inset 0 0 1px rgba(210,225,255,.32),
-    0 12px 32px rgba(0,0,0,.45),
-    0 0 38px var(--card-glow-hover);
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-/* typografia i listy – kropki „do środka” ramki */
-.card h3{ margin:0 0 8px; font-size:1.05rem; line-height:1.35rem; letter-spacing:.2px; }
-.card ul{ margin:0; padding-left:18px; list-style:disc; list-style-position:outside; }
-.card li{ margin:6px 0; overflow-wrap:anywhere; }
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><circle cx="30" cy="30" r="2" fill="rgba(255,255,255,0.15)"/></svg>');
+  background-size: 60px 60px;
+  pointer-events: none;
+  opacity: 0.4;
+}
 
-/* === CZERWONY kafelek (ramka + glow + puls) === */
-.card.emergency{
-  cursor:pointer; position:relative;
-  background:rgba(120,8,8,.22);
-  border-color:rgba(255,90,90,.55) !important;
-  box-shadow:
-    inset 0 0 1px rgba(255,150,150,.35),
-    0 10px 26px rgba(0,0,0,.40),
-    0 0 30px rgba(255,80,80,.28);
+/* Grid kafelków */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.card.emergency *{ pointer-events:none; }
-.card.emergency:hover{
-  box-shadow:
-    inset 0 0 1px rgba(255,170,170,.40),
-    0 12px 34px rgba(0,0,0,.46),
-    0 0 42px rgba(255,90,90,.38);
-}
-.card.emergency::after{
-  content:""; position:absolute; inset:-6px; border-radius:20px;
-  border:2px solid rgba(255,80,80,.38); filter:blur(2px);
-  animation:pulseRed 1.8s ease-in-out infinite;
-}
-@keyframes pulseRed{0%,100%{opacity:.25;transform:scale(.98)}50%{opacity:.55;transform:scale(1.02)}}
-@media (prefers-reduced-motion: reduce){ .card.emergency::after{ animation:none; opacity:.35; } }
 
-/* === Kolory etykiet w „Leki” === */
-.otc{ color:#22c55e; font-weight:700; }  /* Bez recepty – zielony */
-.rx { color:#ef4444; font-weight:700; }  /* Na receptę – czerwony */
-
-/* 1 kolumna na bardzo wąskich ekranach */
-@media (max-width:640px){
-  .cards{ grid-template-columns:1fr !important; }
+.card {
+  border-radius: 12px;
+  background: rgba(20, 20, 60, 0.85);
+  padding: 1rem 1.2rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+  transition: transform .2s ease, box-shadow .2s ease;
 }
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+}
+
+.card__title {
+  font-size: 1.15rem;
+  margin: 0 0 .5rem;
+  font-weight: bold;
+}
+
+.card__body ul {
+  padding-left: 1.2rem;
+  margin: .3rem 0 0;
+}
+.card__body li + li {
+  margin-top: .25rem;
+}
+
+/* Pulsujący czerwony kafel */
+@keyframes em-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 85, 85, .65); }
+  50%  { box-shadow: 0 0 0 14px rgba(255, 85, 85, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 85, 85, 0); }
+}
+.card.emergency {
+  cursor: pointer;
+  border: 2px solid #ff5b5b;
+  background: linear-gradient(180deg, #7d0f17 0%, #5b0c12 100%);
+  color: #fff;
+  animation: em-pulse 2s infinite;
+}
+.card.emergency:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(255,80,80,.55);
+}
+
+/* Kolory dla leków */
+.tag--otc { color: #2ad67d; font-weight: bold; }
+.tag--rx { color: #ff6b6b; font-weight: bold; }
