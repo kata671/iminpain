@@ -3,14 +3,47 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Natychmiastowa pomoc — lokalizacja</title>
+  <title>🚑 Natychmiastowa pomoc — Lokalizacja</title>
+
   <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#7a4dff">
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#7a4dff" />
+
+  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- MarkerCluster -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <!-- Leaflet-Geosearch (autouzupełnianie adresu) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.8.0/dist/geosearch.css"/>
+  <script src="https://unpkg.com/leaflet-geosearch@3.8.0/dist/geosearch.umd.js"></script>
+
+  <style>
+    /* panel filtrów i kontrolki */
+    .controls{
+      display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;
+      margin:10px 0;padding:10px;border:1px solid var(--border);
+      background:var(--card-light);border-radius:14px;box-shadow:var(--glow);
+    }
+    .controls label{display:flex;align-items:center;gap:4px;cursor:pointer;font-weight:600}
+    .placowka-card{
+      background:var(--card);border:1px solid var(--border);border-radius:12px;
+      padding:10px;margin:8px 0;box-shadow:var(--glow);transition:transform .15s;
+    }
+    .placowka-card:hover{transform:translateY(-2px)}
+    .placowka-card strong{color:var(--ink)}
+    .placowka-card .type{font-size:.9rem;color:var(--muted)}
+    .placowka-card a{display:inline-block;margin-top:6px}
+    .btn-filter{padding:.4rem .7rem;border-radius:999px;border:1px solid var(--border);background:var(--card);box-shadow:var(--glow);cursor:pointer}
+    .leaflet-popup-content-wrapper{border-radius:12px;box-shadow:var(--glow)}
+    .leaflet-popup-content strong{color:var(--ink)}
+    .leaflet-container{border-radius:18px;box-shadow:var(--glow)}
+  </style>
 </head>
 <body class="bg-med-light">
+  <!-- Quickbar -->
   <nav class="quickbar">
     <a href="tel:112">📞 112</a>
     <a href="lokalizacja.html">📍 Lokalizacja</a>
@@ -24,49 +57,87 @@
   <header class="site-header">
     <a class="back" href="index.html">← Wróć</a>
     <h1>🚑 Natychmiastowa pomoc</h1>
+    <p class="subtitle">Znajdź najbliższe szpitale, apteki i lekarzy</p>
   </header>
 
   <main class="container">
-    <section class="card">
-      <div class="controls">
-        <label><input type="checkbox" id="f-hospital" checked> Szpitale</label>
-        <label><input type="checkbox" id="f-clinic" checked> Przychodnie</label>
-        <label><input type="checkbox" id="f-doctors" checked> Lekarze</label>
-        <label><input type="checkbox" id="f-pharmacy" checked> Apteki</label>
-        <input id="addr" type="text" placeholder="Wpisz adres/miasto" />
-        <button id="btn-addr" class="btn">📍 Użyj adresu</button>
-        <label>Promień
-          <select id="radius">
-            <option value="1000">1 km</option>
-            <option value="3000" selected>3 km</option>
-            <option value="5000">5 km</option>
-            <option value="10000">10 km</option>
-          </select>
-        </label>
-        <button id="btn-search" class="btn">🔎 Szukaj ponownie</button>
-      </div>
+    <section class="controls">
+      <label><input type="checkbox" id="f-hospital" checked> 🏥 Szpitale</label>
+      <label><input type="checkbox" id="f-clinic" checked> 🏨 Przychodnie</label>
+      <label><input type="checkbox" id="f-doctors" checked> 👩‍⚕️ Lekarze</label>
+      <label><input type="checkbox" id="f-pharmacy" checked> 💊 Apteki</label>
+      <select id="radius">
+        <option value="1000">1 km</option>
+        <option value="3000" selected>3 km</option>
+        <option value="5000">5 km</option>
+        <option value="10000">10 km</option>
+      </select>
+      <button id="btn-mypos" class="btn-filter">🎯 Moja lokalizacja</button>
     </section>
 
     <div id="map" class="map"></div>
-    <section class="card"><h2>Placówki</h2><div id="list"></div></section>
+
+    <section class="card">
+      <h2>📋 Placówki w pobliżu</h2>
+      <div id="list"></div>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <small>© 2025 • Boli-mnie.pl</small>
+  </footer>
 
   <script src="app.js"></script>
   <script>
-    const map=L.map('map',{zoomControl:true});
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
-    let center={lat:52.1,lng:19.1},markers=[];
-    const labels={hospital:"Szpital",clinic:"Przychodnia",doctors:"Lekarz",pharmacy:"Apteka"};
-    function clearMarkers(){markers.forEach(m=>map.removeLayer(m));markers=[];}
+    // === Mapa ===
+    const map = L.map('map').setView([52.1,19.1],6);
+
+    // Neon tiles (Carto Light jako baza)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+      attribution:'&copy; <a href="https://www.openstreetmap.org/">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+      subdomains:'abcd',maxZoom:20
+    }).addTo(map);
+
+    // Cluster group
+    const markers = L.markerClusterGroup();
+    map.addLayer(markers);
+
+    // Kolory ikon
+    function iconFor(type){
+      let color='#7a4dff';let emoji='📍';
+      if(type==='hospital'){color='#ff4d5a';emoji='🏥';}
+      if(type==='clinic'){color='#4ad0ff';emoji='🏨';}
+      if(type==='doctors'){color='#12c55b';emoji='👩‍⚕️';}
+      if(type==='pharmacy'){color='#ffd84d';emoji='💊';}
+      return L.divIcon({
+        className:'custom-marker',
+        html:`<div style="font-size:20px;filter:drop-shadow(0 0 6px ${color});">${emoji}</div>`,
+        iconSize:[24,24],iconAnchor:[12,12]
+      });
+    }
+
+    // Odległość w metrach
+    function dist(a,b){const R=6371000;const toRad=d=>d*Math.PI/180;
+      const dLat=toRad(b.lat-a.lat),dLon=toRad(b.lng-a.lng);
+      const s=Math.sin(dLat/2)**2+Math.cos(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.sin(dLon/2)**2;
+      return 2*R*Math.asin(Math.sqrt(s));}
+
+    // Render listy
     function renderList(items){
       const c=document.getElementById('list');
       if(!items.length){c.innerHTML="<p>Brak danych.</p>";return;}
       c.innerHTML=items.map(i=>{
         const link=`https://www.google.com/maps/dir/?api=1&destination=${i.p.lat},${i.p.lng}`;
-        return `<div><b>${i.name||"(bez nazwy)"}</b> — ${i.distance.toFixed(0)} m · <a href="${link}" target="_blank">Nawiguj</a></div>`;
+        return `<div class="placowka-card">
+          <strong>${i.name||"(bez nazwy)"}</strong>
+          <div class="type">${i.emoji} ${i.typeLabel}</div>
+          <div>📍 ${i.distance.toFixed(0)} m</div>
+          <a href="${link}" target="_blank" class="btn">Nawiguj</a>
+        </div>`;
       }).join("");
     }
-    function dist(a,b){const R=6371000,toRad=d=>d*Math.PI/180;const dLat=toRad(b.lat-a.lat),dLon=toRad(b.lng-a.lng);const s=Math.sin(dLat/2)**2+Math.cos(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(s));}
+
+    // Pobieranie placówek
     async function fetchOverpass(lat,lng,rad){
       const q=`[out:json][timeout:25];
         (node["amenity"="hospital"](around:${rad},${lat},${lng});
@@ -76,8 +147,9 @@
       const r=await fetch("https://overpass-api.de/api/interpreter",{method:"POST",body:q});
       return r.json();
     }
-    async function search(){
-      clearMarkers();
+
+    async function search(center){
+      markers.clearLayers();
       const rad=parseInt(document.getElementById('radius').value,10);
       const data=await fetchOverpass(center.lat,center.lng,rad);
       const filters={
@@ -86,24 +158,52 @@
         doctors:document.getElementById('f-doctors').checked,
         pharmacy:document.getElementById('f-pharmacy').checked
       };
-      const items=(data.elements||[]).map(el=>{
+      let items=(data.elements||[]).map(el=>{
         const p={lat:el.lat,lng:el.lon};
-        return {type:el.tags.amenity,name:el.tags.name||"",p,distance:dist(center,p)};
+        const type=el.tags.amenity;
+        const typeLabel={
+          hospital:"Szpital",clinic:"Przychodnia",doctors:"Lekarz",pharmacy:"Apteka"
+        }[type];
+        const emoji={hospital:"🏥",clinic:"🏨",doctors:"👩‍⚕️",pharmacy:"💊"}[type];
+        return {type,typeLabel,emoji,name:el.tags.name||"",p,distance:dist(center,p)};
       }).filter(i=>filters[i.type]).sort((a,b)=>a.distance-b.distance).slice(0,50);
-      items.forEach(i=>{markers.push(L.marker(i.p).addTo(map).bindPopup(i.name||"(bez nazwy)"));});
+
+      // Dodanie markerów
+      items.forEach(i=>{
+        const m=L.marker(i.p,{icon:iconFor(i.type)})
+          .bindPopup(`<strong>${i.name||"(bez nazwy)"}</strong><br>${i.emoji} ${i.typeLabel}<br>${i.distance.toFixed(0)} m<br><a href="https://www.google.com/maps/dir/?api=1&destination=${i.p.lat},${i.p.lng}" target="_blank">Nawiguj</a>`);
+        markers.addLayer(m);
+      });
+
       renderList(items);
     }
-    async function geocode(q){
-      const r=await fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(q));
-      const j=await r.json(); return j&&j[0]?{lat:+j[0].lat,lng:+j[0].lon}:null;
-    }
-    document.getElementById('btn-addr').addEventListener('click',async()=>{
-      const q=document.getElementById('addr').value.trim(); if(!q) return;
-      const c=await geocode(q); if(!c){alert("Nie znaleziono.");return;}
-      center=c; map.setView(center,14); search();
+
+    // Geolokalizacja
+    let center={lat:52.1,lng:19.1};
+    document.getElementById('btn-mypos').addEventListener('click',()=>{
+      navigator.geolocation.getCurrentPosition(pos=>{
+        center={lat:pos.coords.latitude,lng:pos.coords.longitude};
+        map.setView(center,14);search(center);
+      },()=>alert("Brak dostępu do lokalizacji"));
     });
-    document.getElementById('btn-search').addEventListener('click',search);
-    navigator.geolocation.getCurrentPosition(pos=>{center={lat:pos.coords.latitude,lng:pos.coords.longitude};map.setView(center,14);search();},()=>{map.setView(center,6);});
+
+    // Autouzupełnianie adresu
+    const provider=new window.GeoSearch.OpenStreetMapProvider();
+    const searchControl=new window.GeoSearch.GeoSearchControl({
+      provider:provider,style:'bar',autoComplete:true,autoCompleteDelay:200,
+      searchLabel:'Wpisz adres/miasto',retainZoomLevel:false
+    });
+    map.addControl(searchControl);
+
+    // Wyszukiwanie po wpisaniu adresu
+    map.on('geosearch/showlocation',e=>{
+      center={lat:e.location.y,lng:e.location.x};
+      search(center);
+    });
+
+    // Start
+    map.setView(center,6);
+    search(center);
   </script>
 </body>
 </html>
