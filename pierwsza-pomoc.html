@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pierwsza pomoc — Boli-mnie</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .cta-bar{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin:8px 0 16px}
+    .cta-btn{display:inline-block; padding:.75rem 1rem; border-radius:14px; border:1px solid var(--border); background:var(--card); color:var(--ink); text-decoration:none; box-shadow:var(--glow); font-weight:800}
+    .cta-btn:hover{transform:translateY(-2px)}
+    .danger{background:linear-gradient(180deg, rgba(255,77,90,.25), rgba(122,77,255,.15)); border-color:#ff9ca6aa}
+    .tip{opacity:.9; font-size:.95rem}
+    .steps ol{margin:0; padding-left:1.2rem}
+    .steps li{margin:.35rem 0}
+  </style>
+</head>
+<body class="bg-med">
+  <!-- Pasek szybkiej pomocy -->
+  <nav class="quickbar">
+    <a href="tel:112">📞 112</a>
+    <a href="lokalizacja.html">📍 Lokalizacja</a>
+    <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
+  </nav>
+
+  <header class="site-header">
+    <a class="back" href="index.html">← Wróć</a>
+    <h1>⛑️ Pierwsza pomoc</h1>
+    <p class="subtitle">Szybkie checklisty w nagłych sytuacjach</p>
+  </header>
+
+  <main class="container">
+    <section class="card cta">
+      <div class="cta-bar">
+        <a class="cta-btn danger" href="tel:112">📞 Zadzwoń 112</a>
+        <a class="cta-btn" href="lokalizacja.html">📍 Znajdź najbliższą pomoc</a>
+        <a class="cta-btn" href="szczegoly.html?id=klatka_m">💙 Ból w klatce — info</a>
+        <a class="cta-btn" href="szczegoly.html?id=brzuch_m">🫃 Ból brzucha — info</a>
+      </div>
+      <p class="tip">Informacje poniżej mają charakter edukacyjny i nie zastępują porady lekarza. W razie zagrożenia życia dzwoń <strong>112/999</strong>.</p>
+    </section>
+
+    <section class="grid">
+      <article class="card steps">
+        <h2>😵 Utrata przytomności</h2>
+        <ol>
+          <li>Sprawdź bezpieczeństwo miejsca.</li>
+          <li>Sprawdź reakcję: zawołaj, delikatnie potrząśnij.</li>
+          <li>Wezwij pomoc: <strong>112</strong>.</li>
+          <li>Sprawdź oddech (max 10 s): zobacz / słuchaj / wyczuj.</li>
+          <li>Jeśli oddycha: ułóż w pozycji bezpiecznej, kontroluj oddech.</li>
+          <li>Jeśli nie oddycha: rozpocznij RKO 30:2 (jeśli umiesz), użyj AED gdy dostępne.</li>
+        </ol>
+      </article>
+
+      <article class="card steps">
+        <h2>🩸 Krwotok</h2>
+        <ol>
+          <li>Załóż rękawiczki lub użyj bariery (np. folia/worki).</li>
+          <li>Ucisk bezpośredni miejsca krwawienia (jałowy opatrunek/gaza).</li>
+          <li>Unieś kończynę (jeśli można, bez bólu).</li>
+          <li>Gdy opatrunek przesiąka — dołóż kolejny, nie zdejmuj poprzedniego.</li>
+          <li>Wezwij pomoc: <strong>112</strong> (duże krwotoki, rany kłute/cięte).</li>
+        </ol>
+      </article>
+
+      <article class="card steps">
+        <h2>🔥 Oparzenia</h2>
+        <ol>
+          <li>Chłodź chłodną wodą bieżącą przez ok. <strong>20 min</strong> (nie lodem).</li>
+          <li>Usuń biżuterię/odzież nieprzyklejoną do skóry.</li>
+          <li>Nie przekłuwaj pęcherzy, nie smaruj tłuszczami.</li>
+          <li>Przykryj jałowo, chroń przed wychłodzeniem.</li>
+          <li>Rozległe/chemiczne/elektryczne — pilnie do SOR/NPL.</li>
+        </ol>
+      </article>
+
+      <article class="card steps">
+        <h2>😮‍💨 Zadławienie (dorosły/przytomny)</h2>
+        <ol>
+          <li>5 uderzeń między łopatki (nadgarstkiem dłoni).</li>
+          <li>Jeśli nieskuteczne — 5 uciśnięć nadbrzusza (Heimlich).</li>
+          <li>Na zmianę 5/5 do skutku lub utraty przytomności.</li>
+          <li>Wezwij pomoc: <strong>112</strong>. Po epizodzie — kontrola lekarska.</li>
+        </ol>
+      </article>
+
+      <article class="card steps">
+        <h2>💙 Ból w klatce piersiowej</h2>
+        <ol>
+          <li>Przerwij wysiłek, usiądź półsiedząco.</li>
+          <li>Objawy alarmowe (ucisk, duszność, poty, lęk, nudności) → <strong>112</strong>.</li>
+          <li>Jeśli masz zalecenia lekarza (np. nitrogliceryna) — postępuj wg nich.</li>
+          <li>Nie prowadź samodzielnie do szpitala.</li>
+        </ol>
+      </article>
+
+      <article class="card steps">
+        <h2>🧠 Uraz głowy</h2>
+        <ol>
+          <li>Obserwuj: utrata przytomności, wymioty, ból narastający, senność, zaburzenia mowy/widzenia.</li>
+          <li>W razie niepokojących objawów — <strong>112</strong> / SOR.</li>
+          <li>Unikaj leków przeciwkrzepliwych bez zaleceń lekarskich.</li>
+        </ol>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>ℹ️ Ważne</h2>
+      <p>Treści mają charakter edukacyjny. W razie wątpliwości — dzwoń <strong>112</strong> lub skorzystaj z <a class="btn" href="lokalizacja.html">lokalizacji pomocy</a>.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer"><small>© 2025 • W nagłym zagrożeniu dzwoń 112 / 999</small></footer>
+</body>
+</html>
