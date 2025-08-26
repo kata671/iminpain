@@ -359,3 +359,112 @@ body::before {
 
 /* lepsza nawigacja klawiaturą */
 .card:focus-within { outline: 2px solid #60a5fa; outline-offset: 2px; border-radius: 14px; }
+/* ========== GLOBALNE TŁO (ciemny turkus + fiolet) ========== */
+:root{
+  --bg-0:#060910;         /* bardzo ciemny granat */
+  --c-teal:#14b8a6;       /* turkus (akcent) */
+  --c-violet:#7c3aed;     /* fiolet (akcent) */
+
+  /* neutralny wygląd kafelków (używany na wszystkich stronach) */
+  --card-bg: rgba(32,36,76,.72);
+  --card-bd: rgba(130,150,255,.25);
+  --card-glow: rgba(150,170,255,.15);
+  --card-glow-hover: rgba(160,190,255,.24);
+}
+
+/* wyłączamy starą tapetę/dots na KAŻDEJ stronie */
+html, body{ background-image:none !important; background-color:var(--bg-0); }
+
+/* nowe, lekkie poświaty */
+body{
+  background-image:
+    radial-gradient(1200px 800px at 8% -10%, rgba(20,184,166,.18), transparent 60%),
+    radial-gradient(900px 600px  at 110% 10%, rgba(124,58,237,.12), transparent 60%),
+    radial-gradient(800px 600px  at 52% 120%, rgba(20,184,166,.12), transparent 60%) !important;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* nowa siatka „molekularna” (globalnie) – nadpisuje stare pseudo-elementy */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .15;
+  mix-blend-mode: screen;
+  background-size: 240px 200px;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='200' viewBox='0 0 240 200'%3E%3Cpath d='M120 0 L240 50 240 150 120 200 0 150 0 50 Z' fill='none' stroke='%2314b8a6' stroke-opacity='.35' stroke-width='1'/%3E%3C/svg%3E") !important;
+}
+
+/* prefer-reduced-motion: delikatniej */
+@media (prefers-reduced-motion: reduce){
+  body::before{ opacity:.10; mix-blend-mode:normal; }
+}
+
+/* ========== KAFELKI – wspólne, subtelny biały glow ========== */
+.card{
+  box-sizing:border-box;
+  width:100%;
+  max-width:340px;                 /* bezpieczna szerokość dla 3 kolumn */
+  background:var(--card-bg);
+  border:1px solid var(--card-bd);
+  border-radius:16px;
+  box-shadow:
+    inset 0 0 1px rgba(200,210,255,.25),
+    0 10px 26px rgba(0,0,0,.38),
+    0 0 30px var(--card-glow);
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.card:hover{
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 0 1px rgba(210,225,255,.32),
+    0 12px 32px rgba(0,0,0,.45),
+    0 0 38px var(--card-glow-hover);
+}
+.card h3{ margin:0 0 8px; font-size:1.05rem; line-height:1.35rem; letter-spacing:.2px; }
+.card ul{ margin:0; padding-left:18px; list-style:disc; list-style-position:outside; }
+.card li{ margin:6px 0; }
+
+/* ========== CZERWONY KAFELEK – ramka, glow, puls ========== */
+.card.emergency{
+  cursor:pointer;
+  position:relative;
+  background: rgba(120, 8, 8, .22);
+  border-color: rgba(255,90,90,.55) !important;
+  box-shadow:
+    inset 0 0 1px rgba(255,150,150,.35),
+    0 10px 26px rgba(0,0,0,.40),
+    0 0 30px rgba(255,80,80,.28);
+}
+.card.emergency *{ pointer-events:none; } /* klikalna cała karta */
+.card.emergency:hover{
+  box-shadow:
+    inset 0 0 1px rgba(255,170,170,.40),
+    0 12px 34px rgba(0,0,0,.46),
+    0 0 42px rgba(255,90,90,.38);
+}
+/* pulsująca obwódka */
+.card.emergency::after{
+  content:"";
+  position:absolute; inset:-6px;
+  border-radius:20px;
+  border:2px solid rgba(255,80,80,.38);
+  filter: blur(2px);
+  animation: pulseRed 1.8s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes pulseRed{ 0%,100%{ opacity:.25; transform:scale(.98);} 50%{opacity:.55; transform:scale(1.02);} }
+@media (prefers-reduced-motion: reduce){
+  .card.emergency::after{ animation:none; opacity:.35; }
+}
+
+/* oznaczenia leków (jeśli używane) */
+.otc{ color:#22c55e; font-weight:700; } /* Bez recepty */
+.rx{  color:#ef4444; font-weight:700; } /* Na receptę */
+
+/* dostępność: focus */
+a,button{ outline:none; }
+a:focus-visible,button:focus-visible{ outline:2px solid #60a5fa; outline-offset:2px; border-radius:10px; }
