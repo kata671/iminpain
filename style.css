@@ -1,572 +1,213 @@
 /* =========================
-   Iminpain — style.css (UNIFIKACJA RAMEK + RÓWNE KAFELKI)
+   I M I N P A I N  —  STYLE
    ========================= */
 
-/* --- Reset & bazowe --- */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
-body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  color: #e9f0ff;
-  background: #0f1117 radial-gradient(#1d2030 1px, transparent 1px) 0 0 / 12px 12px;
-  line-height: 1.45;
-}
-
-/* Kontener centralny */
-.container {
-  max-width: 1100px;
-  margin: 32px auto 40px;
-  padding: 0 16px;
-}
-
-/* --- Nagłówki --- */
-h1{
-  font-size: clamp(28px, 4vw, 42px);
-  font-weight: 800;
-  letter-spacing: .3px;
-  color:#cbb2ff;                /* jasny fiolet tylko dla H1 */
-  text-shadow: 0 2px 18px rgba(180,140,255,.25);
-  margin:18px 0 12px;
-  text-align:center;
-}
-h2{
-  font-size: clamp(18px, 2.4vw, 26px);
-  font-weight:700;
-  color:#e9f0ff;
-  opacity:.9;
-  margin:6px 0 22px;
-  text-align:center;
-}
-
-/* --- Linki powrotu --- */
-.nav-links{
-  max-width:1100px;
-  margin:16px auto 10px;
-  padding:0 16px;
-}
-.back-link{
-  color:#8ec9ff;
-  text-decoration:none;
-  margin-right:12px;
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:10px;
-  transition:background .2s, transform .1s;
-}
-.back-link:hover{
-  background:rgba(142,201,255,.12);
-  transform:translateY(-1px);
-}
-
-/* --- Siatka kafelków (jednolite układanie) --- */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
-  gap:22px;
-  align-items:stretch;      /* wszystkie elementy równają wysokością */
-}
-
-/* --- Kafelek (UNIFIKACJA RAMEK) --- */
-.card{
-  display:flex;             /* pozwala wyrównać podpis do dołu */
-  flex-direction:column;
-  justify-content:flex-start;
-  height:100%;              /* wypełnia komórkę siatki */
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(203,178,255,.35);  /* JEDNA ramka: delikatny fiolet */
-  border-radius:16px;
-  padding:12px 12px 14px;
-  text-align:center;
-  text-decoration:none;
-  color:#cfe6ff;
-  box-shadow:0 6px 22px rgba(0,0,0,.25);
-  transition:transform .18s, box-shadow .25s, border-color .25s;
-}
-.card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 12px 30px rgba(0,0,0,.35);
-  border-color:rgba(203,178,255,.6);
-}
-
-/* Obraz w kafelku — stałe proporcje i równa wysokość */
-.card img{
-  width:100%;
-  aspect-ratio: 4 / 3;      /* równe kafelki niezależnie od pliku */
-  height:auto;
-  object-fit:cover;
-  border-radius:12px;
-  display:block;
-  margin-bottom:10px;
-}
-
-/* Podpis przycisku/kafelka na dole */
-.card span{
-  margin-top:auto;          /* zepchnij na dół */
-  display:block;
-  font-weight:700;
-  color:#79b8ff;
-}
-
-/* --- Strona szczegółów --- */
-.details-wrap{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
-  gap:18px;
-  margin-top:16px;
-}
-.info-box{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(203,178,255,.25); /* spójna ramka */
-  border-radius:16px;
-  padding:14px 16px;
-}
-.info-box h3{
-  color:#b7caff;
-  margin-bottom:8px;
-  font-size:18px;
-}
-.info-box ul{ padding-left:18px; margin-top:6px; }
-.info-box li{ margin:6px 0; }
-
-/* Alarm */
-.alert{
-  background:rgba(255,70,70,.08);
-  border-color:rgba(255,90,90,.28);
-}
-
-/* --- Stopka --- */
-footer{
-  opacity:.8;
-  font-size:13px;
-  text-align:center;
-  margin:36px 0 14px;
-}
-
-/* ==============================
-   Strona główna — glow pod kafelkami
-   ============================== */
-body[data-page="index"] .gender-choice{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
-  gap:26px;
-  justify-items:center;
-  margin-top:8px;
-}
-body[data-page="index"] .gender-choice label{
-  display:inline-block;
-  background:rgba(120,90,200,.18);
-  border:1px solid rgba(203,178,255,.35); /* ta sama ramka co karty */
-  border-radius:18px;
-  padding:12px 14px 10px;
-  box-shadow:0 0 14px rgba(180,140,255,.40);
-  transition:transform .2s, box-shadow .3s;
-  cursor:pointer;
-}
-body[data-page="index"] .gender-choice label:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 20px rgba(200,160,255,.65);
-}
-body[data-page="index"] .gender-choice input[type="radio"]{ display:none; }
-body[data-page="index"] .gender-choice img{
-  width:320px; max-width:90vw;
-  aspect-ratio: 4 / 5;      /* stała proporcja zdjęć na stronie głównej */
-  height:auto; object-fit:cover; border-radius:12px; display:block;
-}
-
-/* ==============================
-   Przycisk 112 (jeśli używasz)
-   ============================== */
-.emergency-btn{
-  position:fixed; bottom:20px; right:20px;
-  background:#e60019; color:#fff; font-weight:800;
-  padding:12px 18px; border-radius:12px; text-decoration:none;
-  box-shadow:0 8px 18px rgba(0,0,0,.35);
-  transition:background .25s, transform .18s; z-index:999;
-}
-.emergency-btn:hover{ background:#b80014; transform:scale(1.05); }
-
-/* --- Responsywność --- */
-@media (max-width: 640px){
-  .grid{ gap:18px; }
-  .card{ padding:10px 10px 12px; }
-  body[data-page="index"] .gender-choice img{ width:270px; }
-}
-/* === Ułożenie kafelków i wygląd (bezpieczny dodatek) === */
-
-/* 1) Strona główna – dwa kafelki obok siebie, wycentrowane */
-.gender-choice{
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  gap: 24px;
-  flex-wrap: nowrap;           /* na mobile przestawi się niżej przez media query */
-  margin-top: 12px;
-}
-
-/* 2) Siatka kafelków na wszystkich podstronach – 4 w rzędzie, wycentrowane */
-.grid{
-  display: grid;
-  grid-template-columns: repeat(4, 260px); /* dokładnie 4 w rzędzie */
-  justify-content: center;                  /* cała siatka na środku */
-  gap: 22px;                                /* odstępy między kafelkami */
-  margin: 0 auto;
-}
-
-/* 3) Wygląd kafelków – ciemno-fioletowe tło + delikatna obwódka + glow w hover */
-.card{
-  width: 260px;                              /* spójna szerokość z siatką */
-  background: rgba(82, 48, 140, 0.22);       /* ciemny transparentny fiolet */
-  border: 1px solid rgba(185, 160, 255, 0.25);/* prawie przezroczysta ramka */
-  border-radius: 14px;
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.06),  /* lekka „szklista” krawędź */
-    0 2px 10px rgba(0,0,0,0.25);              /* subtelny cień */
-  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
-}
-
-.card:hover{
-  border-color: rgba(200, 175, 255, 0.55);
-  box-shadow:
-    0 0 14px 4px rgba(130, 105, 255, 0.35),  /* zewnętrzny glow */
-    inset 0 0 30px rgba(130, 105, 255, 0.12),
-    0 6px 18px rgba(0,0,0,0.35);
-  transform: translateY(-1px);
-}
-
-/* 4) Responsywność – na wąskich ekranach kafelki układają się po 2 lub 1 */
-@media (max-width: 1100px){
-  .grid{ grid-template-columns: repeat(3, 260px); }
-}
-@media (max-width: 860px){
-  .gender-choice{ flex-wrap: wrap; }         /* na bardzo wąskich ekranach może się zawinąć */
-  .grid{ grid-template-columns: repeat(2, 260px); }
-}
-@media (max-width: 580px){
-  .grid{ grid-template-columns: 1fr; }
-  .card{ width: 100%; }
-}
-/* Układ 4 kafelki w pierwszym rzędzie + 5-ty wyśrodkowany poniżej */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 kolumny */
-  gap: 20px; /* odstępy między kafelkami */
-  justify-items: center; /* elementy wyśrodkowane w kolumnach */
-}
-
-.cards .card:nth-child(5) {
-  grid-column: 2 / span 2; /* 5-ty kafelek będzie w 2 i 3 kolumnie */
-}
-.cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  justify-items: center;
-}
-
-.cards .card:last-child {
-  grid-column: 2 / span 2;
-}
-.cards {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 kolumn w jednym rzędzie */
-  gap: 20px;
-  justify-items: center;
-}
-
-.cards .card:last-child {
-  grid-column: 3 / span 1; /* ustawia 6-ty kafelek w 3-ciej kolumnie → środek */
-}
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 kolumny */
-  gap: 20px;
-  justify-items: center; /* wyrównanie do środka */
-}
-/* --- Tapeta tła dla wszystkich stron --- */
-body {
-  background-color: #1c1c1c; /* ciemnoszare tło */
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1; /* pod całą treścią */
-  background-image: radial-gradient(#2a2a2a 1px, transparent 1px);
-  background-size: 20px 20px; /* odstęp między kropkami */
-  opacity: 0.9;
-}
-/* --- Uniwersalny układ kafelków: 3 w rzędzie, reszta pod spodem --- */
-.kafelki {
-  display: grid;                               /* siatka */
-  grid-template-columns: repeat(3, 1fr);       /* 3 równe kolumny */
-  gap: 24px;                                   /* odstępy */
-  max-width: 1100px;                           /* szerokość całego bloku */
-  margin: 24px auto 60px;                      /* wyśrodkowanie na stronie */
-  padding: 0 16px;
-  justify-items: center;                       /* kafle w kolumnach na środku */
-}
-
-/* Ustaw rozmiar pojedynczego kafla (karta nie rozciąga się za bardzo) */
-.kafelki .card {
-  width: 100%;
-  max-width: 320px;   /* możesz zmienić na 280 / 300 / 360 wedle gustu */
-}
-
-/* Responsywność */
-@media (max-width: 980px) {
-  .kafelki { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 620px) {
-  .kafelki { grid-template-columns: 1fr; }
-}
-/* ==== TOOLTIPY DLA KAFELKÓW (CSS-only) ==== */
-.card[data-tip] { position: relative; }
-
-.card[data-tip]:hover::after,
-.card[data-tip]:focus-within::after {
-  content: attr(data-tip);
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 10px);
-  transform: translateX(-50%);
-  max-width: 460px;
-  padding: 10px 12px;
-  font-size: 0.9rem;
-  line-height: 1.25rem;
-  color: #eaf2ff;
-  background: rgba(16,18,32,.92);
-  border: 1px solid rgba(150,180,255,.35);
-  border-radius: 10px;
-  box-shadow: 0 10px 22px rgba(0,0,0,.45), 0 0 22px rgba(150,180,255,.25);
-  pointer-events: none;
-  z-index: 20;
-  white-space: normal;
-}
-
-.card[data-tip]:hover::before,
-.card[data-tip]:focus-within::before{
-  content:"";
-  position: absolute;
-  left: 50%;
-  bottom: 100%;
-  transform: translateX(-50%);
-  border: 8px solid transparent;
-  border-top-color: rgba(16,18,32,.92);
-  filter: drop-shadow(0 -1px 0 rgba(150,180,255,.35));
-}
-
-/* lepsza nawigacja klawiaturą */
-.card:focus-within { outline: 2px solid #60a5fa; outline-offset: 2px; border-radius: 14px; }
-/* ========== GLOBALNE TŁO (ciemny turkus + fiolet) ========== */
+/* ---------- Zmienne kolorów ---------- */
 :root{
-  --bg-0:#060910;         /* bardzo ciemny granat */
-  --c-teal:#14b8a6;       /* turkus (akcent) */
-  --c-violet:#7c3aed;     /* fiolet (akcent) */
+  --bg-1: #0b1f26;         /* ciemny turkus/granat */
+  --bg-2: #140a2a;         /* głębszy fiolet */
+  --ink: #e9e6ff;          /* jasny tekst */
+  --muted: #b9c2d6;        /* drugorzędowy tekst */
+  --card: #13234a;         /* tło kafelka (ciemny granat) */
+  --card-ink: #e6ebff;
+  --card-border: #4a66ff44;
+  --card-glow: #7abaff66;
 
-  /* neutralny wygląd kafelków (używany na wszystkich stronach) */
-  --card-bg: rgba(32,36,76,.72);
-  --card-bd: rgba(130,150,255,.25);
-  --card-glow: rgba(150,170,255,.15);
-  --card-glow-hover: rgba(160,190,255,.24);
+  --accent: #7c8bff;       /* akcent do ramek */
+  --pill-bg: #1d2e66;      /* tło dla tytułów w kartach */
+
+  --otc: #35d07f;          /* Bez recepty (zielony) */
+  --rx:  #ff5b5b;          /* Na receptę (czerwony) */
+
+  --em-red: #b51f2f;       /* awaryjny – tło */
+  --em-red-strong: #ff3b3b;/* awaryjny – poświata */
 }
 
-/* wyłączamy starą tapetę/dots na KAŻDEJ stronie */
-html, body{ background-image:none !important; background-color:var(--bg-0); }
-
-/* nowe, lekkie poświaty */
+/* ---------- Reset przyjazny gridom ---------- */
+*{ box-sizing: border-box; }
+html,body{ height:100%; }
 body{
-  background-image:
-    radial-gradient(1200px 800px at 8% -10%, rgba(20,184,166,.18), transparent 60%),
-    radial-gradient(900px 600px  at 110% 10%, rgba(124,58,237,.12), transparent 60%),
-    radial-gradient(800px 600px  at 52% 120%, rgba(20,184,166,.12), transparent 60%) !important;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
+  margin:0;
+  color:var(--ink);
+  font: 16px/1.55 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: radial-gradient(1200px 800px at 50% 0%, #0f3250 0%, var(--bg-1) 40%, var(--bg-2) 100%);
+  overflow-y: auto;
 }
 
-/* nowa siatka „molekularna” (globalnie) – nadpisuje stare pseudo-elementy */
+/* WZÓR NA WIERZCHU (ale pod treścią) */
 body::before{
   content:"";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: .15;
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.25;               /* widoczność wzoru */
+  background-image:
+    /* siatka heksów jako SVG data-URL */
+    url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'>\
+<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>\
+<stop offset='0%' stop-color='%2380a6ff'/><stop offset='100%' stop-color='%2348ffd2'/></linearGradient></defs>\
+<path d='M15,1 45,1 59,26 45,51 15,51 1,26Z' fill='none' stroke='url(%23g)' stroke-width='1' opacity='0.6'/>\
+</svg>");
+  background-size: 180px 156px;
+  background-position: center;
   mix-blend-mode: screen;
-  background-size: 240px 200px;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='200' viewBox='0 0 240 200'%3E%3Cpath d='M120 0 L240 50 240 150 120 200 0 150 0 50 Z' fill='none' stroke='%2314b8a6' stroke-opacity='.35' stroke-width='1'/%3E%3C/svg%3E") !important;
 }
 
-/* prefer-reduced-motion: delikatniej */
-@media (prefers-reduced-motion: reduce){
-  body::before{ opacity:.10; mix-blend-mode:normal; }
+/* gwarantujemy, że treść jest nad wzorem */
+#app, main, .page, .wrap, .cards, .card{ position:relative; z-index:1; }
+
+/* ---------- Linki nawigacji ---------- */
+.nav-links{
+  display:flex;
+  gap:16px;
+  padding:14px 20px 0;
+}
+.nav-links a{
+  color:#8ecbff;
+  text-decoration:none;
+}
+.nav-links a:hover{ text-decoration:underline; }
+
+/* ---------- Tytuł strony ---------- */
+h1#title{
+  margin: 18px auto 8px;
+  text-align:center;
+  font-weight: 800;
+  letter-spacing:.4px;
+  font-size: clamp(28px, 3.2vw, 42px);
+  text-shadow: 0 2px 14px #0008;
 }
 
-/* ========== KAFELKI – wspólne, subtelny biały glow ========== */
+/* ---------- GRID KAFELKÓW ---------- */
+.cards{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  gap: 26px;
+  max-width: 1180px;
+  padding: 12px 20px 60px;
+  margin: 8px auto 40px;
+  align-items: stretch;
+  grid-auto-flow: dense;              /* domyka dziury */
+}
+.cards > :empty{ display:none; }      /* ukryj puste elementy */
+
+/* Responsywność */
+@media (max-width: 980px){
+  .cards{ grid-template-columns: repeat(2, minmax(260px, 1fr)); }
+}
+@media (max-width: 640px){
+  .cards{ grid-template-columns: 1fr; }
+}
+
+/* ---------- KAFELKI ---------- */
 .card{
-  box-sizing:border-box;
-  width:100%;
-  max-width:340px;                 /* bezpieczna szerokość dla 3 kolumn */
-  background:var(--card-bg);
-  border:1px solid var(--card-bd);
-  border-radius:16px;
+  background: linear-gradient(180deg, rgba(33,46,92,.9), rgba(23,30,68,.92));
+  border: 1.5px solid var(--card-border);
   box-shadow:
-    inset 0 0 1px rgba(200,210,255,.25),
-    0 10px 26px rgba(0,0,0,.38),
-    0 0 30px var(--card-glow);
-  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    0 0 0 .5px rgba(124,139,255,.35) inset,
+    0 8px 26px -8px #0009,
+    0 0 40px -10px var(--card-glow);
+  border-radius: 22px;
+  padding: 18px 20px;
+  color: var(--card-ink);
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  min-height: 170px;
+  transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
 }
 .card:hover{
   transform: translateY(-2px);
   box-shadow:
-    inset 0 0 1px rgba(210,225,255,.32),
-    0 12px 32px rgba(0,0,0,.45),
-    0 0 38px var(--card-glow-hover);
+    0 0 0 .5px rgba(124,139,255,.55) inset,
+    0 12px 34px -8px #000c,
+    0 0 52px -10px #82b4ff66;
 }
-.card h3{ margin:0 0 8px; font-size:1.05rem; line-height:1.35rem; letter-spacing:.2px; }
-.card ul{ margin:0; padding-left:18px; list-style:disc; list-style-position:outside; }
-.card li{ margin:6px 0; }
 
-/* ========== CZERWONY KAFELEK – ramka, glow, puls ========== */
+/* Tytuły kafelków */
+.card h3{
+  margin: 0 0 10px;
+  font-weight: 800;
+  font-size: clamp(18px, 1.9vw, 22px);   /* odrobinkę większe */
+  letter-spacing:.2px;
+  color: #ffffff;
+  text-shadow: 0 1px 10px #0005;
+}
+
+/* Listy w kafelkach */
+.card ul{
+  list-style: disc inside;   /* kropki zawsze w środku, bez wychodzenia poza ramkę */
+  margin: 4px 0 0;
+  padding: 0;
+}
+.card li{
+  margin: 6px 0;
+  color: var(--ink);
+}
+
+/* drobniejszy opis, jeżeli występuje */
+.card p{
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+/* ---------- „Bez recepty” i „Na receptę” ---------- */
+.tag{ font-weight: 800; }
+.tag--otc{ color: var(--otc); }  /* Bez recepty */
+.tag--rx { color: var(--rx); }   /* Na receptę */
+
+/* Opcjonalnie: wyraźniej w jednym akapicie leków */
+.card .med-note strong.tag--otc{ color:var(--otc); }
+.card .med-note strong.tag--rx{ color:var(--rx); }
+
+/* ---------- KAFELEK AWARYJNY ---------- */
 .card.emergency{
-  cursor:pointer;
-  position:relative;
-  background: rgba(120, 8, 8, .22);
-  border-color: rgba(255,90,90,.55) !important;
+  background: linear-gradient(180deg, #3a0e16, #25090e);
+  border: 1.8px solid #ff6262aa;
+  color: #ffecec;
   box-shadow:
-    inset 0 0 1px rgba(255,150,150,.35),
-    0 10px 26px rgba(0,0,0,.40),
-    0 0 30px rgba(255,80,80,.28);
+    0 0 0 1px #ff5c5c33 inset,
+    0 10px 28px -8px #000c,
+    0 0 56px -8px rgba(255, 59, 59, .45);
 }
-.card.emergency *{ pointer-events:none; } /* klikalna cała karta */
 .card.emergency:hover{
+  border-color: #ff7e7e;
   box-shadow:
-    inset 0 0 1px rgba(255,170,170,.40),
-    0 12px 34px rgba(0,0,0,.46),
-    0 0 42px rgba(255,90,90,.38);
-}
-/* pulsująca obwódka */
-.card.emergency::after{
-  content:"";
-  position:absolute; inset:-6px;
-  border-radius:20px;
-  border:2px solid rgba(255,80,80,.38);
-  filter: blur(2px);
-  animation: pulseRed 1.8s ease-in-out infinite;
-  pointer-events:none;
-}
-@keyframes pulseRed{ 0%,100%{ opacity:.25; transform:scale(.98);} 50%{opacity:.55; transform:scale(1.02);} }
-@media (prefers-reduced-motion: reduce){
-  .card.emergency::after{ animation:none; opacity:.35; }
+    0 0 0 1px #ff7e7e55 inset,
+    0 12px 34px -8px #000,
+    0 0 80px -6px var(--em-red-strong);
 }
 
-/* oznaczenia leków (jeśli używane) */
-.otc{ color:#22c55e; font-weight:700; } /* Bez recepty */
-.rx{  color:#ef4444; font-weight:700; } /* Na receptę */
-
-/* dostępność: focus */
-a,button{ outline:none; }
-a:focus-visible,button:focus-visible{ outline:2px solid #60a5fa; outline-offset:2px; border-radius:10px; }
-/* === GLOBAL: tło (ciemny turkus + fiolet) + WYRAŹNIEJSZY WZÓR === */
-:root{
-  --bg-0:#060910;
-  --c-teal:#14b8a6;
-  --c-violet:#7c3aed;
-  --card-bg: rgba(32,36,76,.72);
-  --card-bd: rgba(130,150,255,.25);
-  --card-glow: rgba(150,170,255,.15);
-  --card-glow-hover: rgba(160,190,255,.24);
+/* nagłówek awaryjny */
+.card.emergency h3{
+  color: #fff3f3;
+  text-shadow: 0 0 18px rgba(255,60,60,.55);
 }
 
-/* zabijamy stare tła i ustawiamy nowe */
-html, body{ background-image:none !important; background-color:var(--bg-0); }
-body{
-  background-image:
-    radial-gradient(1200px 800px at 8% -10%, rgba(20,184,166,.22), transparent 60%),
-    radial-gradient(900px 600px  at 110% 10%, rgba(124,58,237,.16), transparent 60%),
-    radial-gradient(800px 600px  at 52% 120%, rgba(20,184,166,.16), transparent 60%) !important;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
+/* ---------- Stopka ---------- */
+footer{
+  color:#a7b2c7;
+  text-align:center;
+  margin: 24px 0 40px;
+  font-size: 14px;
+  opacity:.85;
 }
-/* wzór – mocniej, żeby było widać */
-body::before{
-  content:"";
-  position:fixed; inset:0;
-  pointer-events:none;
-  opacity:.28;                        /* podbite z ~.15 do .28 */
-  mix-blend-mode:screen;
-  background-size:220px 180px;
-  background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='180' viewBox='0 0 220 180'%3E%3Cg stroke='%2314b8a6' stroke-opacity='.45' stroke-width='1' fill='none'%3E%3Cpath d='M110 0 L220 45 220 135 110 180 0 135 0 45 Z'/%3E%3Ccircle cx='55' cy='22' r='6'/%3E%3Ccircle cx='165' cy='158' r='6'/%3E%3C/g%3E%3C/svg%3E") !important;
-}
-@media (prefers-reduced-motion: reduce){ body::before{opacity:.20; mix-blend-mode:normal;} }
 
-/* === SZCZEGÓŁY: siatka 3x, bez „dziury” w 2 rzędzie === */
-.cards{
-  display:grid !important;
-  grid-template-columns: repeat(3, minmax(280px, 1fr)) !important;
-  gap:22px !important;
-  max-width:1100px; margin:24px auto !important;
-  align-items:stretch;                 /* wyrównanie wysokości */
-  justify-items:stretch;               /* karty wypełniają kolumnę */
-  grid-auto-flow: row dense;           /* zagęszcza – bez pustej kolumny */
+/* ---------- Drobne poprawki stron pomoc.html (jaśniejsze tło) ---------- */
+body.page-help{
+  background: radial-gradient(1200px 900px at 50% 0%, #114261 0%, #0f2e3f 40%, #0c2230 100%);
 }
-.card{
-  box-sizing:border-box;
-  width:100% !important;
-  max-width:unset !important;          /* NIE ograniczaj szerokości – zniknie luka */
-  background:var(--card-bg);
-  border:1px solid var(--card-bd);
-  border-radius:16px;
-  box-shadow:
-    inset 0 0 1px rgba(200,210,255,.25),
-    0 10px 26px rgba(0,0,0,.38),
-    0 0 30px var(--card-glow);
-  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
-  display:flex; flex-direction:column;
-}
-.card:hover{
-  transform:translateY(-2px);
-  box-shadow:
-    inset 0 0 1px rgba(210,225,255,.32),
-    0 12px 32px rgba(0,0,0,.45),
-    0 0 38px var(--card-glow-hover);
-}
-.card h3{ margin:0 0 8px; font-size:1.05rem; line-height:1.35rem; letter-spacing:.2px; }
-.card ul{ margin:0; padding-left:18px; list-style:disc; list-style-position:outside; }
-.card li{ margin:6px 0; }
+body.page-help::before{ opacity:.2; }  /* wzór delikatniejszy nad mapą */
 
-/* === CZERWONY kafelek – ramka + glow + puls (jak wcześniej) === */
-.card.emergency{
-  cursor:pointer; position:relative;
-  background:rgba(120,8,8,.22);
-  border-color:rgba(255,90,90,.55) !important;
-  box-shadow:
-    inset 0 0 1px rgba(255,150,150,.35),
-    0 10px 26px rgba(0,0,0,.40),
-    0 0 30px rgba(255,80,80,.28);
-}
-.card.emergency *{ pointer-events:none; }
-.card.emergency:hover{
-  box-shadow:
-    inset 0 0 1px rgba(255,170,170,.40),
-    0 12px 34px rgba(0,0,0,.46),
-    0 0 42px rgba(255,90,90,.38);
-}
-.card.emergency::after{
-  content:""; position:absolute; inset:-6px; border-radius:20px;
-  border:2px solid rgba(255,80,80,.38); filter:blur(2px);
-  animation:pulseRed 1.8s ease-in-out infinite;
-}
-@keyframes pulseRed{0%,100%{opacity:.25;transform:scale(.98)}50%{opacity:.55;transform:scale(1.02)}}
-@media (prefers-reduced-motion: reduce){ .card.emergency::after{ animation:none; opacity:.35; } }
+/* ---------- Upewniamy się, że nic nie „rozpycha” kart ---------- */
+.card > *:last-child{ margin-bottom: 0; }
 
-/* === Kolory dla leków === */
-.otc{ color:#22c55e; font-weight:700; }  /* Bez recepty – zielony */
-.rx{  color:#ef4444; font-weight:700; }  /* Na receptę – czerwony */
-
-/* na małych ekranach: 1 kolumna */
-@media (max-width:640px){
-  .cards{ grid-template-columns:1fr !important; }
+/* ---------- Eleganckie odnośniki w treści ---------- */
+.card a{
+  color:#9cd3ff;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
 }
+.card a:hover{ color:#c7e6ff; }
