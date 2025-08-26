@@ -3,115 +3,91 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pierwsza pomoc — Boli-mnie</title>
+  <title>Pierwsza pomoc — instrukcje</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    .grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-    .cta-bar{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin:8px 0 16px}
-    .cta-btn{display:inline-block; padding:.75rem 1rem; border-radius:14px; border:1px solid var(--border); background:var(--card); color:var(--ink); text-decoration:none; box-shadow:var(--glow); font-weight:800}
-    .cta-btn:hover{transform:translateY(-2px)}
-    .danger{background:linear-gradient(180deg, rgba(255,77,90,.25), rgba(122,77,255,.15)); border-color:#ff9ca6aa}
-    .tip{opacity:.9; font-size:.95rem}
-    .steps ol{margin:0; padding-left:1.2rem}
-    .steps li{margin:.35rem 0}
-  </style>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#7a4dff" />
+  <meta name="description" content="Pierwsza pomoc: reanimacja (RKO), zadławienie, postępowanie przy wypadku." />
 </head>
 <body class="bg-med">
-  <!-- Pasek szybkiej pomocy -->
   <nav class="quickbar">
     <a href="tel:112">📞 112</a>
     <a href="lokalizacja.html">📍 Lokalizacja</a>
     <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
+    <input id="search" type="search" placeholder="np. ból brzucha, kolano..." />
+    <button id="search-btn">🔎</button>
+    <button id="btn-voice" title="Szukaj głosem">🎤</button>
+    <button id="theme-toggle" class="theme-toggle" title="Jasny/Ciemny">☀️/🌙</button>
   </nav>
 
   <header class="site-header">
     <a class="back" href="index.html">← Wróć</a>
-    <h1>⛑️ Pierwsza pomoc</h1>
-    <p class="subtitle">Szybkie checklisty w nagłych sytuacjach</p>
+    <h1>⛑️ Pierwsza pomoc — najważniejsze instrukcje</h1>
+    <p class="subtitle">Postępuj według kroków. W zagrożeniu życia dzwoń <strong>112</strong>/<strong>999</strong>.</p>
   </header>
 
-  <main class="container">
-    <section class="card cta">
-      <div class="cta-bar">
-        <a class="cta-btn danger" href="tel:112">📞 Zadzwoń 112</a>
-        <a class="cta-btn" href="lokalizacja.html">📍 Znajdź najbliższą pomoc</a>
-        <a class="cta-btn" href="szczegoly.html?id=klatka_m">💙 Ból w klatce — info</a>
-        <a class="cta-btn" href="szczegoly.html?id=brzuch_m">🫃 Ból brzucha — info</a>
-      </div>
-      <p class="tip">Informacje poniżej mają charakter edukacyjny i nie zastępują porady lekarza. W razie zagrożenia życia dzwoń <strong>112/999</strong>.</p>
-    </section>
+  <main class="container" id="content">
+    <!-- RKO -->
+    <article class="card" id="rko">
+      <h2>❤️ Reanimacja (RKO) — dorośli</h2>
+      <ul>
+        <li><strong>Bezpieczeństwo</strong> miejsca zdarzenia.</li>
+        <li>Sprawdź reakcję — wołaj i delikatnie potrząśnij.</li>
+        <li>Brak reakcji → <strong>odchyl głowę, udrożnij drogi oddechowe</strong>, sprawdź oddech do 10 s.</li>
+        <li><strong>Brak oddechu / oddech agonalny</strong> → zadzwoń <strong>112</strong> (tryb głośnomówiący) + poproś o <strong>AED</strong>.</li>
+        <li><strong>Uciśnięcia klatki</strong>: środek mostka, głębokość ok. 5–6 cm, rytm ~100–120/min.</li>
+        <li>Stosunek <strong>30:2</strong> (ucisk:oddech) jeśli potrafisz wykonywać oddechy; inaczej — same uciśnięcia.</li>
+        <li><strong>AED</strong>: włącz, naklej elektrody zgodnie z obrazkiem, <em>posłuchaj poleceń</em>.</li>
+        <li>Kontynuuj do przyjazdu służb lub powrotu prawidłowego oddechu.</li>
+      </ul>
+      <p class="note">U dzieci: 5 oddechów ratowniczych na start, uciśnięcia płycej (ok. 1/3 głębokości klatki) i szybciej. Jeśli jesteś sam/a — po 1 min RKO wezwij pomoc.</p>
+    </article>
 
-    <section class="grid">
-      <article class="card steps">
-        <h2>😵 Utrata przytomności</h2>
-        <ol>
-          <li>Sprawdź bezpieczeństwo miejsca.</li>
-          <li>Sprawdź reakcję: zawołaj, delikatnie potrząśnij.</li>
-          <li>Wezwij pomoc: <strong>112</strong>.</li>
-          <li>Sprawdź oddech (max 10 s): zobacz / słuchaj / wyczuj.</li>
-          <li>Jeśli oddycha: ułóż w pozycji bezpiecznej, kontroluj oddech.</li>
-          <li>Jeśli nie oddycha: rozpocznij RKO 30:2 (jeśli umiesz), użyj AED gdy dostępne.</li>
-        </ol>
-      </article>
+    <!-- Dławienie -->
+    <article class="card" id="dławienie">
+      <h2>🫁 Zadławienie — jak pomóc</h2>
+      <h3>Dorosły / dziecko przytomne</h3>
+      <ul>
+        <li>Zachęcaj do kaszlu, nie klep po plecach, gdy poszkodowany efektywnie kaszle.</li>
+        <li>Gdy kaszel nieskuteczny: <strong>5 mocnych uderzeń</strong> w plecy <em>między łopatki</em>.</li>
+        <li>Potem <strong>5 uciśnięć nadbrzusza</strong> (chwyt Heimlicha) — u kobiet w ciąży oraz małych dzieci zamiast tego: <strong>5 uciśnięć klatki piersiowej</strong>.</li>
+        <li>Na zmianę 5+5 do czasu usunięcia ciała obcego lub utraty przytomności.</li>
+      </ul>
+      <h3>Niemowlę (do 1. r.ż.)</h3>
+      <ul>
+        <li>Ułóż na przedramieniu głową w dół, podtrzymuj żuchwę.</li>
+        <li><strong>5 uderzeń</strong> między łopatki, następnie <strong>5 uciśnięć klatki</strong> (na mostku).</li>
+      </ul>
+      <p class="note">Jeśli objawy nie ustępują lub doszło do utraty przytomności — <strong>112</strong> i rozpocznij RKO.</p>
+    </article>
 
-      <article class="card steps">
-        <h2>🩸 Krwotok</h2>
-        <ol>
-          <li>Załóż rękawiczki lub użyj bariery (np. folia/worki).</li>
-          <li>Ucisk bezpośredni miejsca krwawienia (jałowy opatrunek/gaza).</li>
-          <li>Unieś kończynę (jeśli można, bez bólu).</li>
-          <li>Gdy opatrunek przesiąka — dołóż kolejny, nie zdejmuj poprzedniego.</li>
-          <li>Wezwij pomoc: <strong>112</strong> (duże krwotoki, rany kłute/cięte).</li>
-        </ol>
-      </article>
+    <!-- Wypadek -->
+    <article class="card" id="wypadek">
+      <h2>🚧 Ofiara wypadku — pierwsze kroki</h2>
+      <ul>
+        <li><strong>Zabezpiecz miejsce</strong>: trójkąt, światła awaryjne, załóż rękawiczki.</li>
+        <li><strong>Wezwij pomoc</strong>: 112 — podaj lokalizację i liczbę poszkodowanych.</li>
+        <li><strong>Ocena ABC</strong>: przytomność, oddech; jeśli brak — <a href="#rko">RKO</a>.</li>
+        <li><strong>Silny krwotok</strong> — ucisk bezpośredni, opatrunek uciskowy, możliwa opaska (wg wskazań).</li>
+        <li><strong>Uraz kręgosłupa</strong> — nie poruszaj szyją/tułowiem, stabilizuj w pozycji zastanej.</li>
+        <li><strong>Złamania</strong> — unieruchom <em>dwa sąsiednie stawy</em>, lód przez tkaninę, uniesienie.</li>
+        <li><strong>Oparzenia</strong> — chłodzenie <em>letnią</em> wodą 15–20 min; nie przebijaj pęcherzy.</li>
+      </ul>
+      <p><a href="lokalizacja.html" class="btn">📍 Znajdź najbliższą pomoc</a></p>
+    </article>
 
-      <article class="card steps">
-        <h2>🔥 Oparzenia</h2>
-        <ol>
-          <li>Chłodź chłodną wodą bieżącą przez ok. <strong>20 min</strong> (nie lodem).</li>
-          <li>Usuń biżuterię/odzież nieprzyklejoną do skóry.</li>
-          <li>Nie przekłuwaj pęcherzy, nie smaruj tłuszczami.</li>
-          <li>Przykryj jałowo, chroń przed wychłodzeniem.</li>
-          <li>Rozległe/chemiczne/elektryczne — pilnie do SOR/NPL.</li>
-        </ol>
-      </article>
-
-      <article class="card steps">
-        <h2>😮‍💨 Zadławienie (dorosły/przytomny)</h2>
-        <ol>
-          <li>5 uderzeń między łopatki (nadgarstkiem dłoni).</li>
-          <li>Jeśli nieskuteczne — 5 uciśnięć nadbrzusza (Heimlich).</li>
-          <li>Na zmianę 5/5 do skutku lub utraty przytomności.</li>
-          <li>Wezwij pomoc: <strong>112</strong>. Po epizodzie — kontrola lekarska.</li>
-        </ol>
-      </article>
-
-      <article class="card steps">
-        <h2>💙 Ból w klatce piersiowej</h2>
-        <ol>
-          <li>Przerwij wysiłek, usiądź półsiedząco.</li>
-          <li>Objawy alarmowe (ucisk, duszność, poty, lęk, nudności) → <strong>112</strong>.</li>
-          <li>Jeśli masz zalecenia lekarza (np. nitrogliceryna) — postępuj wg nich.</li>
-          <li>Nie prowadź samodzielnie do szpitala.</li>
-        </ol>
-      </article>
-
-      <article class="card steps">
-        <h2>🧠 Uraz głowy</h2>
-        <ol>
-          <li>Obserwuj: utrata przytomności, wymioty, ból narastający, senność, zaburzenia mowy/widzenia.</li>
-          <li>W razie niepokojących objawów — <strong>112</strong> / SOR.</li>
-          <li>Unikaj leków przeciwkrzepliwych bez zaleceń lekarskich.</li>
-        </ol>
-      </article>
-    </section>
-
-    <section class="card">
-      <h2>ℹ️ Ważne</h2>
-      <p>Treści mają charakter edukacyjny. W razie wątpliwości — dzwoń <strong>112</strong> lub skorzystaj z <a class="btn" href="lokalizacja.html">lokalizacji pomocy</a>.</p>
-    </section>
+    <!-- Urazy (kotwica dla istniejących linków) -->
+    <article class="card" id="urazy">
+      <h2>🦴 Złamania i urazy — skrót</h2>
+      <ul>
+        <li>RICE: <strong>R</strong>est odpoczynek, <strong>I</strong>ce lód (15–20 min), <strong>C</strong>ompression ucisk, <strong>E</strong>levation uniesienie.</li>
+        <li>Unieruchomienie przed transportem.</li>
+        <li>Silny ból/deformacja/utrata czucia — konsultacja pilna.</li>
+      </ul>
+    </article>
   </main>
 
-  <footer class="site-footer"><small>© 2025 • W nagłym zagrożeniu dzwoń 112 / 999</small></footer>
+  <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
+  <script src="app.js"></script>
 </body>
 </html>
