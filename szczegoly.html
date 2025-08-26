@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="bg-med">
+  <nav class="quickbar">
+    <a href="tel:112">📞 112</a>
+    <a href="lokalizacja.html">📍 Lokalizacja</a>
+    <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
+  </nav>
+
   <header class="site-header">
     <a class="back" href="javascript:history.back()">← Wróć</a>
     <h1 id="title">Szczegóły</h1>
@@ -19,7 +25,7 @@
       <article class="card">
         <h2 id="h2">Opis</h2>
         <p id="desc">Wybierz kafelek poniżej, aby rozwinąć informacje.</p>
-        <p class="note">Treści są edukacyjne i nie zastępują porady lekarza. W razie zagrożenia życia zadzwoń <strong>112</strong> / <strong>999</strong>.</p>
+        <p class="note">Treści są edukacyjne i nie zastępują porady lekarza. W razie zagrożenia życia dzwoń <strong>112</strong> / <strong>999</strong>.</p>
       </article>
     </section>
 
@@ -32,111 +38,86 @@
       <li><a class="tile tile-accent pulse" href="lokalizacja.html">🚑 Natychmiastowa pomoc</a></li>
     </ul>
 
-    <!-- Sekcje treściowe -->
     <article id="content" class="card"></article>
   </main>
 
   <script>
-    // Mapowanie ID -> dane (przykładowe, do rozbudowy)
+    // ====== DANE: wszystkie obszary ======
     const DATA = {
-      "glowa_k": {
-        title: "🧠 Głowa (kobieta)",
-        area: "Głowa",
-        img: "img/kobieta-glowa-12.png",
-        desc: "Ból głowy może mieć charakter napięciowy, migrenowy, zatokowy lub wtórny."
-      },
-      "glowa_m": {
-        title: "🧠 Głowa (mężczyzna)",
-        area: "Głowa",
-        img: "img/mezczyzna-glowa-1.png",
-        desc: "Ból głowy może mieć charakter napięciowy, migrenowy, zatokowy lub wtórny."
-      },
-      "szyja_k": { title:"🦴 Szyja (kobieta)", area:"Szyja", img:"img/kobieta-szyja.png", desc:"Ból szyi bywa skutkiem napięcia mięśni, przeciążenia, urazu lub chorób kręgosłupa." },
-      "szyja_m": { title:"🦴 Szyja (mężczyzna)", area:"Szyja", img:"img/mezczyzna-szyja.png", desc:"Ból szyi bywa skutkiem napięcia mięśni, przeciążenia, urazu lub chorób kręgosłupa." },
-      "klatka_k": { title:"💙 Klatka piersiowa (kobieta)", area:"Klatka", img:"img/kobieta-klatka.png", desc:"Ból w klatce może pochodzić od mięśni, żołądka, płuc lub serca — w razie niepokoju dzwoń 112." },
-      "klatka_m": { title:"💙 Klatka piersiowa (mężczyzna)", area:"Klatka", img:"img/mezczyzna-klatka.png", desc:"Ból w klatce może pochodzić od mięśni, żołądka, płuc lub serca — w razie niepokoju dzwoń 112." },
-      "brzuch_k": { title:"🫃 Brzuch (kobieta)", area:"Brzuch", img:"img/kobieta-brzuch.png", desc:"Przyczyny: niestrawność, infekcje, kolka żółciowa, zapalenie wyrostka itp." },
-      "brzuch_m": { title:"🫃 Brzuch (mężczyzna)", area:"Brzuch", img:"img/mezczyzna-brzuch.png", desc:"Przyczyny: niestrawność, infekcje, kolka żółciowa, zapalenie wyrostka itp." },
-      "plecy_k": { title:"🧍 Plecy (kobieta)", area:"Plecy", img:"img/kobieta-plecy.png", desc:"Najczęściej przeciążenia, dyskopatia, napięcie mięśniowe." },
-      "plecy_m": { title:"🧍 Plecy (mężczyzna)", area:"Plecy", img:"img/mezczyzna-plecy.png", desc:"Najczęściej przeciążenia, dyskopatia, napięcie mięśniowe." },
-      "nogi_k": { title:"🦵 Nogi (kobieta)", area:"Kończyny dolne", img:"img/kobieta-nogi.png", desc:"Ból nóg: urazy, przeciążenia, zakwasy, rwa kulszowa, zakrzepica (pilnie do lekarza)." },
-      "nogi_m": { title:"🦵 Nogi (mężczyzna)", area:"Kończyny dolne", img:"img/mezczyzna-nogi.png", desc:"Ból nóg: urazy, przeciążenia, zakwasy, rwa kulszowa, zakrzepica (pilnie do lekarza)." }
+      // GŁOWA I TWARZ
+      "glowa_k":{title:"🧠 Głowa (kobieta)", area:"Głowa", img:"img/kobieta-glowa-12.png", desc:"Bóle napięciowe, migrena, zatokowe."},
+      "glowa_m":{title:"🧠 Głowa (mężczyzna)", area:"Głowa", img:"img/mezczyzna-glowa-1.png", desc:"Bóle napięciowe, migrena, zatokowe."},
+      "oczy_k":{title:"👁 Oczy (kobieta)", area:"Twarz", img:"img/oczy-k.png", desc:"Ból, pieczenie, łzawienie — zwykle przemęczenie, suchość, infekcja."},
+      "oczy_m":{title:"👁 Oczy (mężczyzna)", area:"Twarz", img:"img/oczy-m.png", desc:"Ból, pieczenie, łzawienie — zwykle przemęczenie, suchość, infekcja."},
+      "nos_k":{title:"👃 Nos (kobieta)", area:"Twarz", img:"img/nos-k.png", desc:"Ucisk/bolesność w zatokach — infekcja, alergia, uraz."},
+      "nos_m":{title:"👃 Nos (mężczyzna)", area:"Twarz", img:"img/nos-m.png", desc:"Ucisk/bolesność w zatokach — infekcja, alergia, uraz."},
+      "ucho_k":{title:"👂 Ucho (kobieta)", area:"Twarz", img:"img/ucho-k.png", desc:"Ból ucha: zapalenie, korek woskowinowy."},
+      "ucho_m":{title:"👂 Ucho (mężczyzna)", area:"Twarz", img:"img/ucho-m.png", desc:"Ból ucha: zapalenie, korek woskowinowy."},
+
+      // SZYJA I RĘCE
+      "szyja_k":{title:"🦴 Szyja (kobieta)", area:"Szyja", img:"img/kobieta-szyja.png", desc:"Napięcie mięśni, urazy, kręgosłup szyjny."},
+      "szyja_m":{title:"🦴 Szyja (mężczyzna)", area:"Szyja", img:"img/mezczyzna-szyja.png", desc:"Napięcie mięśni, urazy, kręgosłup szyjny."},
+      "bark_k":{title:"🏋️ Bark (kobieta)", area:"Bark", img:"img/bark-k.png", desc:"Przeciążenia, zapalenie kaletki, urazy."},
+      "bark_m":{title:"🏋️ Bark (mężczyzna)", area:"Bark", img:"img/bark-m.png", desc:"Przeciążenia, zapalenie kaletki, urazy."},
+      "ramie_k":{title:"💪 Ramię (kobieta)", area:"Ramię", img:"img/ramie-k.png", desc:"Naciągnięcia, zapalenia ścięgien."},
+      "ramie_m":{title:"💪 Ramię (mężczyzna)", area:"Ramię", img:"img/ramie-m.png", desc:"Naciągnięcia, zapalenia ścięgien."},
+      "lokiec_k":{title:"🎾 Łokieć (kobieta)", area:"Łokieć", img:"img/lokiec-k.png", desc:"Łokieć tenisisty/golfisty, urazy."},
+      "lokiec_m":{title:"🎾 Łokieć (mężczyzna)", area:"Łokieć", img:"img/lokiec-m.png", desc:"Łokieć tenisisty/golfisty, urazy."},
+      "nadgarstek_k":{title:"⌚ Nadgarstek (kobieta)", area:"Nadgarstek", img:"img/nadgarstek-k.png", desc:"Skręcenia, cieśń nadgarstka."},
+      "nadgarstek_m":{title:"⌚ Nadgarstek (mężczyzna)", area:"Nadgarstek", img:"img/nadgarstek-m.png", desc:"Skręcenia, cieśń nadgarstka."},
+      "dlon_k":{title:"✋ Dłoń (kobieta)", area:"Dłoń", img:"img/dlon-k.png", desc:"Urazy, zapalenia ścięgien."},
+      "dlon_m":{title:"✋ Dłoń (mężczyzna)", area:"Dłoń", img:"img/dlon-m.png", desc:"Urazy, zapalenia ścięgien."},
+
+      // KLATKA / SERCE / PLECY / BRZUCH
+      "klatka_k":{title:"💙 Klatka (kobieta)", area:"Klatka", img:"img/kobieta-klatka.png", desc:"Ból mięśniowy, refluks, infekcje."},
+      "klatka_m":{title:"💙 Klatka (mężczyzna)", area:"Klatka", img:"img/mezczyzna-klatka.png", desc:"Ból mięśniowy, refluks, infekcje."},
+      "serce_k":{title:"❤️ Serce (kobieta)", area:"Klatka", img:"img/serce-kobieta.png", desc:"Ucisk, duszność, poty — alarmowe!"},
+      "serce_m":{title:"❤️ Serce (mężczyzna)", area:"Klatka", img:"img/serce-mezczyzna.png", desc:"Ucisk, duszność, poty — alarmowe!"},
+      "plecy_k":{title:"🧍 Plecy (kobieta)", area:"Plecy", img:"img/kobieta-plecy.png", desc:"Przeciążenia, dyskopatia."},
+      "plecy_m":{title:"🧍 Plecy (mężczyzna)", area:"Plecy", img:"img/mezczyzna-plecy.png", desc:"Przeciążenia, dyskopatia."},
+      "brzuch_k":{title:"🫃 Brzuch (kobieta)", area:"Brzuch", img:"img/kobieta-brzuch.png", desc:"Niestrawność, infekcje, zapalenie wyrostka."},
+      "brzuch_m":{title:"🫃 Brzuch (mężczyzna)", area:"Brzuch", img:"img/mezczyzna-brzuch.png", desc:"Niestrawność, infekcje, zapalenie wyrostka."},
+
+      // MIEDNICA / NOGI
+      "biodra_k":{title:"🦴 Biodra (kobieta)", area:"Miednica", img:"img/biodra-k.png", desc:"Przeciążenia, zwyrodnienia."},
+      "biodra_m":{title:"🦴 Biodra (mężczyzna)", area:"Miednica", img:"img/biodra-m.png", desc:"Przeciążenia, zwyrodnienia."},
+      "pachwina_k":{title:"🔻 Pachwina (kobieta)", area:"Miednica", img:"img/pachwina-k.png", desc:"Przepuklina, naciągnięcia, infekcje."},
+      "pachwina_m":{title:"🔻 Pachwina (mężczyzna)", area:"Miednica", img:"img/pachwina-m.png", desc:"Przepuklina, naciągnięcia, infekcje."},
+      "nogi_k":{title:"🦵 Nogi (kobieta)", area:"Nogi", img:"img/kobieta-nogi.png", desc:"Urazy, rwa kulszowa, zakrzepica."},
+      "nogi_m":{title:"🦵 Nogi (mężczyzna)", area:"Nogi", img:"img/mezczyzna-nogi.png", desc:"Urazy, rwa kulszowa, zakrzepica."},
+      "kolano_k":{title:"🦵 Kolano (kobieta)", area:"Kolano", img:"img/kolano-k.png", desc:"Urazy więzadeł, chondromalacja."},
+      "kolano_m":{title:"🦵 Kolano (mężczyzna)", area:"Kolano", img:"img/kolano-m.png", desc:"Urazy więzadeł, chondromalacja."},
+      "lydka_k":{title:"🦿 Łydka (kobieta)", area:"Łydka", img:"img/lydka-k.png", desc:"Skurcze, naciągnięcia, zakrzepica."},
+      "lydka_m":{title:"🦿 Łydka (mężczyzna)", area:"Łydka", img:"img/lydka-m.png", desc:"Skurcze, naciągnięcia, zakrzepica."},
+      "kostka_k":{title:"🦶 Kostka (kobieta)", area:"Kostka", img:"img/kostka-k.png", desc:"Skręcenia, urazy."},
+      "kostka_m":{title:"🦶 Kostka (mężczyzna)", area:"Kostka", img:"img/kostka-m.png", desc:"Skręcenia, urazy."},
+      "stopa_k":{title:"🦶 Stopa (kobieta)", area:"Stopa", img:"img/stopa-k.png", desc:"Ostroga piętowa, zapalenie rozcięgna."},
+      "stopa_m":{title:"🦶 Stopa (mężczyzna)", area:"Stopa", img:"img/stopa-m.png", desc:"Ostroga piętowa, zapalenie rozcięgna."}
     };
 
+    // ====== TREŚCI uniwersalne ======
     const sections = {
-      przyczyny: `
-        <h2>🔍 Przyczyny</h2>
-        <ul>
-          <li>Napięcie mięśni / przeciążenie</li>
-          <li>Stany zapalne i infekcje</li>
-          <li>Urazy, przecięcia, skręcenia</li>
-          <li>Choroby narządów (np. serca, żołądka, kręgosłupa)</li>
-          <li>Stres, brak snu, odwodnienie</li>
-        </ul>
-      `,
-      objawy: `
-        <h2>📋 Objawy</h2>
-        <ul>
-          <li>Charakter bólu: tępy, kłujący, pulsujący, piekący</li>
-          <li>Nasilenie i czas trwania</li>
-          <li>Objawy towarzyszące: gorączka, duszność, wymioty, drętwienie</li>
-          <li>Czynniki nasilające/łagodzące</li>
-        </ul>
-      `,
-      pierwsza: `
-        <h2>⛑️ Pierwsza pomoc</h2>
-        <ol>
-          <li>Oceń stan: czy to nagłe zagrożenie życia? Jeśli tak — dzwoń <strong>112/999</strong>.</li>
-          <li>Odpoczynek, nawodnienie, delikatne chłodzenie/ogrzewanie miejsca bólu.</li>
-          <li>Bezpieczne pozycje odciążające (np. pozycja przeciwbólowa przy bólu brzucha).</li>
-          <li>Jeśli masz wątpliwości — skontaktuj się z lekarzem lub <a href="lokalizacja.html">znajdź najbliższą pomoc</a>.</li>
-        </ol>
-      `,
-      leczenie: `
-        <h2>💊 Leczenie</h2>
-        <p><span class="badge green">Bez recepty</span> — leki przeciwbólowe/przeciwzapalne (np. paracetamol, ibuprofen), maści chłodzące/rozgrzewające, nawodnienie, elektrolity.</p>
-        <p><span class="badge red">Na receptę</span> — silniejsze przeciwbólowe, rozkurczowe, antybiotyki, leki specyficzne wg rozpoznania (tylko po konsultacji lekarskiej).</p>
-        <p>Domowe wsparcie: higiena snu, unikanie przeciążeń, delikatny ruch po ustąpieniu ostrego bólu.</p>
-      `,
-      lekarze: `
-        <h2>👩‍⚕️ Jacy lekarze pomagają?</h2>
-        <ul>
-          <li>POZ / lekarz rodzinny</li>
-          <li>SOR / NPL — w nagłych sytuacjach</li>
-          <li>Specjaliści wg dolegliwości: neurolog, ortopeda, kardiolog, gastrolog, laryngolog, fizjoterapeuta</li>
-        </ul>
-        <p><a class="btn" href="lokalizacja.html">Zobacz placówki w pobliżu</a></p>
-      `
+      przyczyny:`<h2>🔍 Przyczyny</h2><ul><li>Napięcie mięśni / uraz</li><li>Infekcje / stany zapalne</li><li>Choroby narządów</li><li>Stres, odwodnienie, brak snu</li></ul>`,
+      objawy:`<h2>📋 Objawy</h2><ul><li>Charakter bólu: tępy/kłujący/pulsujący</li><li>Nasilenie i czas trwania</li><li>Objawy towarzyszące</li></ul>`,
+      pierwsza:`<h2>⛑️ Pierwsza pomoc</h2><ol><li>Oceń stan, w razie wątpliwości — <strong>112</strong>.</li><li>Odpoczynek, nawodnienie, chłodzenie/ogrzewanie.</li><li>Jeśli ból narasta — <a href="lokalizacja.html">szukaj pomocy</a>.</li></ol>`,
+      leczenie:`<h2>💊 Leczenie</h2><p><span class="badge green">Bez recepty</span> — paracetamol, ibuprofen, maści.</p><p><span class="badge red">Na receptę</span> — silniejsze leki, antybiotyki (wg lekarza).</p>`,
+      lekarze:`<h2>👩‍⚕️ Lekarze</h2><ul><li>POZ / lekarz rodzinny</li><li>SOR / NPL</li><li>Specjaliści: neurolog, ortopeda, kardiolog, laryngolog, gastrolog, okulista, fizjoterapeuta</li></ul>`
     };
 
-    // Inicjalizacja wg ?id=
+    // ====== INICJALIZACJA ======
     const id = new URLSearchParams(location.search).get("id");
     const item = DATA[id];
-    const titleEl = document.getElementById("title");
-    const subtitleEl = document.getElementById("subtitle");
-    const imgEl = document.getElementById("photo");
-    const h2El = document.getElementById("h2");
-    const descEl = document.getElementById("desc");
-    const contentEl = document.getElementById("content");
+    const titleEl=document.getElementById("title"),subtitleEl=document.getElementById("subtitle"),imgEl=document.getElementById("photo"),h2El=document.getElementById("h2"),descEl=document.getElementById("desc"),contentEl=document.getElementById("content");
 
-    if (item) {
-      titleEl.textContent = item.title;
-      subtitleEl.textContent = `Obszar: ${item.area}`;
-      imgEl.src = item.img; imgEl.alt = item.title;
-      descEl.textContent = item.desc;
-      h2El.textContent = item.title;
-    } else {
-      imgEl.src = "img/placeholder.png"; imgEl.alt = "Brak danych";
-      subtitleEl.textContent = "—";
-      descEl.textContent = "Wybierz obszar na poprzedniej stronie.";
-    }
+    function setImage(src,alt){imgEl.src=src;imgEl.alt=alt;imgEl.onerror=()=>{imgEl.onerror=null;imgEl.src="img/placeholder.png";};}
 
-    // Obsługa kafelków treści
+    if(item){titleEl.textContent=item.title;subtitleEl.textContent=`Obszar: ${item.area}`;setImage(item.img,item.title);descEl.textContent=item.desc;h2El.textContent=item.title;}else{titleEl.textContent="Szczegóły";subtitleEl.textContent="—";setImage("img/placeholder.png","Brak danych");descEl.textContent="Nie znaleziono danych.";h2El.textContent="Brak danych";}
+
     document.querySelectorAll(".tile-btn").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const key = btn.getAttribute("data-section");
-        contentEl.innerHTML = sections[key] || "";
-        contentEl.scrollIntoView({behavior:"smooth", block:"start"});
+      btn.addEventListener("click",()=>{
+        const key=btn.getAttribute("data-section");
+        contentEl.innerHTML=sections[key]||"";
+        contentEl.scrollIntoView({behavior:"smooth"});
       });
     });
   </script>
