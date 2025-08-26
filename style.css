@@ -122,3 +122,9 @@ body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Ari
   border-color:#ff9ca6cc;
   box-shadow: 0 0 16px rgba(255,77,90,.75), 0 0 60px rgba(255,77,120,.55);
 }
+/* wyrównanie wielkości zdjęć kobieta/mężczyzna na stronie głównej */
+.hero-card img {
+  max-height: 420px;   /* dopasuj jeśli trzeba ciut większe/mniejsze */
+  width: auto;
+  object-fit: contain;
+}
