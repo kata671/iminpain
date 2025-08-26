@@ -1,45 +1,31 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Boli-mnie.pl — Start</title>
-
-  <!-- Style: krok 5 -->
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="wallpaper.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boli mnie</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header>
-    <nav class="breadcrumbs">
-      <a href="index.html">← Start</a>
-      <span>|</span>
-      <a href="kobieta.html">Kobieta</a>
-      <span>|</span>
-      <a href="mezczyzna.html">Mężczyzna</a>
-    </nav>
-    <h1>Wybierz widok</h1>
-  </header>
+<body data-page="index">
+    <div class="container">
+        <h1>Boli mnie</h1>
+        <h2>Wybierz postać</h2>
 
-  <main>
-    <!-- Twoje kafelki z wyborem kobieta/mężczyzna -->
-    <div class="grid">
-      <a href="kobieta.html" class="card">
-        <img src="img/kobieta-model1.png" alt="Kobieta">
-        <span>Kobieta</span>
-      </a>
-      <a href="mezczyzna.html" class="card">
-        <img src="img/mezczyzna-model1.png" alt="Mężczyzna">
-        <span>Mężczyzna</span>
-      </a>
+        <div class="gender-choice">
+            <label>
+                <input type="radio" name="gender" value="kobieta" onclick="location.href='kobieta.html'">
+                Kobieta
+                <br>
+                <img src="img/kobieta-glowa-12.png" alt="Kobieta" width="200">
+            </label>
+
+            <label>
+                <input type="radio" name="gender" value="mezczyzna" onclick="location.href='mezczyzna.html'">
+                Mężczyzna
+                <br>
+                <img src="img/mezczyzna-glowa-1.png" alt="Mężczyzna" width="200">
+            </label>
+        </div>
     </div>
-  </main>
-
-  <footer>
-    © 2025 Iminpain — Materiał poglądowy; nie zastępuje konsultacji z lekarzem.
-  </footer>
-
-  <!-- Krok 5: skrypt porządkujący -->
-  <script src="apply-step5.js" defer></script>
 </body>
 </html>

@@ -1,130 +1,323 @@
-/* ================================
-   Boli-mnie.pl — GLOBAL (LISTY)
-   ================================ */
+/* =========================
+   Iminpain — style.css (UNIFIKACJA RAMEK + RÓWNE KAFELKI)
+   ========================= */
 
-/* Kolory wspólne (w tym tagi leków) */
-:root{
-  --card-bg: rgba(86,51,142,.18);
-  --card-bd: rgba(165,140,255,.12);
-  --card-inner: rgba(165,140,255,.22);
-  --text: #e9ecf8;
-  --text-dim: #cdd3ea;
-  --link: #aeb8ff;
-
-  --otc-bg: rgba(30,150,90,.18);
-  --otc-bd: rgba(45,200,120,.5);
-  --otc-fg: #7cf0ba;
-  --rx-bg: rgba(200,28,28,.2);
-  --rx-bd: rgba(255,80,80,.7);
-  --rx-fg: #ff9a9a;
+/* --- Reset & bazowe --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #e9f0ff;
+  background: #0f1117 radial-gradient(#1d2030 1px, transparent 1px) 0 0 / 12px 12px;
+  line-height: 1.45;
 }
 
-/* Reset + typografia */
-*{box-sizing:border-box}
-html,body{height:100%}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  color:var(--text);
-  font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",Ubuntu,Cantarell,"Fira Sans","Droid Sans",sans-serif;
+/* Kontener centralny */
+.container {
+  max-width: 1100px;
+  margin: 32px auto 40px;
+  padding: 0 16px;
 }
 
-a{color:var(--link); text-decoration:none}
-a:hover{text-decoration:underline}
-h1,h2,h3{line-height:1.25; margin:0 0 .35em}
-h1{font-size:clamp(1.5rem, 2.8vw, 2.2rem)}
-h2{font-size:clamp(1.25rem, 2.2vw, 1.6rem)}
-h3{font-size:clamp(1.05rem, 1.8vw, 1.25rem)}
-
-header{padding:14px 0 6px}
-.nav-links,.breadcrumbs{
-  display:flex; gap:12px; align-items:center;
-  max-width:1100px; margin:0 auto; padding:0 16px;
-  color:var(--text-dim);
-}
-.breadcrumbs a{color:var(--text-dim)}
-main{padding:6px 0 24px}
-main h1{max-width:1100px; margin:8px auto 12px; padding:0 16px; text-align:center}
-
-footer{
-  color:var(--text-dim);
-  font-size:.925rem;
-  max-width:1100px;
-  margin:16px auto 28px;
-  padding:0 16px;
+/* --- Nagłówki --- */
+h1{
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  letter-spacing: .3px;
+  color:#cbb2ff;                /* jasny fiolet tylko dla H1 */
+  text-shadow: 0 2px 18px rgba(180,140,255,.25);
+  margin:18px 0 12px;
   text-align:center;
+}
+h2{
+  font-size: clamp(18px, 2.4vw, 26px);
+  font-weight:700;
+  color:#e9f0ff;
   opacity:.9;
+  margin:6px 0 22px;
+  text-align:center;
 }
 
-/* ================================
-   SIATKA LIST — .grid oraz .grid-container
-   (celowo ograniczone do list, nie do szczegółów)
-   ================================ */
-.grid, .grid-container{
-  display:grid;
-  grid-template-columns:repeat(3, minmax(260px,1fr));
-  gap:16px 18px;
-  justify-content:center;
-  align-items:start;
+/* --- Linki powrotu --- */
+.nav-links{
   max-width:1100px;
-  margin:24px auto 28px;
+  margin:16px auto 10px;
   padding:0 16px;
 }
-
-/* Karty tylko wewnątrz list */
-.grid .card, .grid-container .card{
-  display:flex; flex-direction:column; min-height:100%;
-  background:var(--card-bg);
-  border:1px solid var(--card-bd);
-  border-radius:14px;
-  box-shadow: inset 0 0 1px var(--card-inner), 0 6px 18px rgba(0,0,0,.35);
-  overflow:hidden;
-  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+.back-link{
+  color:#8ec9ff;
+  text-decoration:none;
+  margin-right:12px;
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:10px;
+  transition:background .2s, transform .1s;
 }
-.grid .card a, .grid-container .card a{display:block; color:inherit; text-decoration:none}
-
-/* Obrazy tylko na listach */
-.grid .card img, .grid-container .card img,
-.grid .card .card-image, .grid-container .card .card-image{
-  width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; display:block;
+.back-link:hover{
+  background:rgba(142,201,255,.12);
+  transform:translateY(-1px);
 }
 
-/* Podpisy tylko na listach */
-.grid .card .card-caption, .grid-container .card .card-caption{
-  padding:10px 12px; text-align:center; font-weight:600;
+/* --- Siatka kafelków (jednolite układanie) --- */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+  gap:22px;
+  align-items:stretch;      /* wszystkie elementy równają wysokością */
 }
 
-/* Hover tylko na listach */
-.grid .card:hover, .grid-container .card:hover{
-  transform:translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,.4), 0 0 18px rgba(255,255,255,.22);
+/* --- Kafelek (UNIFIKACJA RAMEK) --- */
+.card{
+  display:flex;             /* pozwala wyrównać podpis do dołu */
+  flex-direction:column;
+  justify-content:flex-start;
+  height:100%;              /* wypełnia komórkę siatki */
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(203,178,255,.35);  /* JEDNA ramka: delikatny fiolet */
+  border-radius:16px;
+  padding:12px 12px 14px;
+  text-align:center;
+  text-decoration:none;
+  color:#cfe6ff;
+  box-shadow:0 6px 22px rgba(0,0,0,.25);
+  transition:transform .18s, box-shadow .25s, border-color .25s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  border-color:rgba(203,178,255,.6);
 }
 
-/* Emergency baza (puls na szczegółach robi fix.szczegoly.css) */
-.grid .card.emergency, .grid-container .card.emergency{
-  border:2px solid rgba(255,80,80,.75);
-  background:rgba(120,8,8,.18);
-}
-.grid .card.emergency:hover, .grid-container .card.emergency:hover{
-  box-shadow: 0 10px 24px rgba(0,0,0,.5), 0 0 24px rgba(255,60,60,.55);
-}
-
-/* Równe wnętrza */
-.grid .card__head, .grid-container .card__head{padding:12px 14px 8px}
-.grid .card__body, .grid-container .card__body{padding:8px 14px 14px; flex:1 1 auto}
-
-/* Responsywność list */
-@media (max-width:980px){
-  .grid, .grid-container{grid-template-columns:repeat(2, minmax(220px,1fr))}
-}
-@media (max-width:560px){
-  .grid, .grid-container{grid-template-columns:1fr}
+/* Obraz w kafelku — stałe proporcje i równa wysokość */
+.card img{
+  width:100%;
+  aspect-ratio: 4 / 3;      /* równe kafelki niezależnie od pliku */
+  height:auto;
+  object-fit:cover;
+  border-radius:12px;
+  display:block;
+  margin-bottom:10px;
 }
 
-/* Tagi leków (używane też na szczegółach) */
-.tag{
-  display:inline-block; padding:.15rem .5rem; border-radius:.5rem;
-  border:1px solid currentColor; margin-right:.35rem; font-weight:700; white-space:nowrap;
+/* Podpis przycisku/kafelka na dole */
+.card span{
+  margin-top:auto;          /* zepchnij na dół */
+  display:block;
+  font-weight:700;
+  color:#79b8ff;
 }
-.tag--otc{ color:var(--otc-fg); background:var(--otc-bg); border-color:var(--otc-bd); }
-.tag--rx{  color:var(--rx-fg);  background:var(--rx-bg);  border-color:var(--rx-bd); }
+
+/* --- Strona szczegółów --- */
+.details-wrap{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  gap:18px;
+  margin-top:16px;
+}
+.info-box{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(203,178,255,.25); /* spójna ramka */
+  border-radius:16px;
+  padding:14px 16px;
+}
+.info-box h3{
+  color:#b7caff;
+  margin-bottom:8px;
+  font-size:18px;
+}
+.info-box ul{ padding-left:18px; margin-top:6px; }
+.info-box li{ margin:6px 0; }
+
+/* Alarm */
+.alert{
+  background:rgba(255,70,70,.08);
+  border-color:rgba(255,90,90,.28);
+}
+
+/* --- Stopka --- */
+footer{
+  opacity:.8;
+  font-size:13px;
+  text-align:center;
+  margin:36px 0 14px;
+}
+
+/* ==============================
+   Strona główna — glow pod kafelkami
+   ============================== */
+body[data-page="index"] .gender-choice{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  gap:26px;
+  justify-items:center;
+  margin-top:8px;
+}
+body[data-page="index"] .gender-choice label{
+  display:inline-block;
+  background:rgba(120,90,200,.18);
+  border:1px solid rgba(203,178,255,.35); /* ta sama ramka co karty */
+  border-radius:18px;
+  padding:12px 14px 10px;
+  box-shadow:0 0 14px rgba(180,140,255,.40);
+  transition:transform .2s, box-shadow .3s;
+  cursor:pointer;
+}
+body[data-page="index"] .gender-choice label:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 20px rgba(200,160,255,.65);
+}
+body[data-page="index"] .gender-choice input[type="radio"]{ display:none; }
+body[data-page="index"] .gender-choice img{
+  width:320px; max-width:90vw;
+  aspect-ratio: 4 / 5;      /* stała proporcja zdjęć na stronie głównej */
+  height:auto; object-fit:cover; border-radius:12px; display:block;
+}
+
+/* ==============================
+   Przycisk 112 (jeśli używasz)
+   ============================== */
+.emergency-btn{
+  position:fixed; bottom:20px; right:20px;
+  background:#e60019; color:#fff; font-weight:800;
+  padding:12px 18px; border-radius:12px; text-decoration:none;
+  box-shadow:0 8px 18px rgba(0,0,0,.35);
+  transition:background .25s, transform .18s; z-index:999;
+}
+.emergency-btn:hover{ background:#b80014; transform:scale(1.05); }
+
+/* --- Responsywność --- */
+@media (max-width: 640px){
+  .grid{ gap:18px; }
+  .card{ padding:10px 10px 12px; }
+  body[data-page="index"] .gender-choice img{ width:270px; }
+}
+/* === Ułożenie kafelków i wygląd (bezpieczny dodatek) === */
+
+/* 1) Strona główna – dwa kafelki obok siebie, wycentrowane */
+.gender-choice{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap: 24px;
+  flex-wrap: nowrap;           /* na mobile przestawi się niżej przez media query */
+  margin-top: 12px;
+}
+
+/* 2) Siatka kafelków na wszystkich podstronach – 4 w rzędzie, wycentrowane */
+.grid{
+  display: grid;
+  grid-template-columns: repeat(4, 260px); /* dokładnie 4 w rzędzie */
+  justify-content: center;                  /* cała siatka na środku */
+  gap: 22px;                                /* odstępy między kafelkami */
+  margin: 0 auto;
+}
+
+/* 3) Wygląd kafelków – ciemno-fioletowe tło + delikatna obwódka + glow w hover */
+.card{
+  width: 260px;                              /* spójna szerokość z siatką */
+  background: rgba(82, 48, 140, 0.22);       /* ciemny transparentny fiolet */
+  border: 1px solid rgba(185, 160, 255, 0.25);/* prawie przezroczysta ramka */
+  border-radius: 14px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),  /* lekka „szklista” krawędź */
+    0 2px 10px rgba(0,0,0,0.25);              /* subtelny cień */
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
+}
+
+.card:hover{
+  border-color: rgba(200, 175, 255, 0.55);
+  box-shadow:
+    0 0 14px 4px rgba(130, 105, 255, 0.35),  /* zewnętrzny glow */
+    inset 0 0 30px rgba(130, 105, 255, 0.12),
+    0 6px 18px rgba(0,0,0,0.35);
+  transform: translateY(-1px);
+}
+
+/* 4) Responsywność – na wąskich ekranach kafelki układają się po 2 lub 1 */
+@media (max-width: 1100px){
+  .grid{ grid-template-columns: repeat(3, 260px); }
+}
+@media (max-width: 860px){
+  .gender-choice{ flex-wrap: wrap; }         /* na bardzo wąskich ekranach może się zawinąć */
+  .grid{ grid-template-columns: repeat(2, 260px); }
+}
+@media (max-width: 580px){
+  .grid{ grid-template-columns: 1fr; }
+  .card{ width: 100%; }
+}
+/* Układ 4 kafelki w pierwszym rzędzie + 5-ty wyśrodkowany poniżej */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 kolumny */
+  gap: 20px; /* odstępy między kafelkami */
+  justify-items: center; /* elementy wyśrodkowane w kolumnach */
+}
+
+.cards .card:nth-child(5) {
+  grid-column: 2 / span 2; /* 5-ty kafelek będzie w 2 i 3 kolumnie */
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-items: center;
+}
+
+.cards .card:last-child {
+  grid-column: 2 / span 2;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 kolumn w jednym rzędzie */
+  gap: 20px;
+  justify-items: center;
+}
+
+.cards .card:last-child {
+  grid-column: 3 / span 1; /* ustawia 6-ty kafelek w 3-ciej kolumnie → środek */
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 kolumny */
+  gap: 20px;
+  justify-items: center; /* wyrównanie do środka */
+}
+/* --- Tapeta tła dla wszystkich stron --- */
+body {
+  background-color: #1c1c1c; /* ciemnoszare tło */
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1; /* pod całą treścią */
+  background-image: radial-gradient(#2a2a2a 1px, transparent 1px);
+  background-size: 20px 20px; /* odstęp między kropkami */
+  opacity: 0.9;
+}
+/* --- Uniwersalny układ kafelków: 3 w rzędzie, reszta pod spodem --- */
+.kafelki {
+  display: grid;                               /* siatka */
+  grid-template-columns: repeat(3, 1fr);       /* 3 równe kolumny */
+  gap: 24px;                                   /* odstępy */
+  max-width: 1100px;                           /* szerokość całego bloku */
+  margin: 24px auto 60px;                      /* wyśrodkowanie na stronie */
+  padding: 0 16px;
+  justify-items: center;                       /* kafle w kolumnach na środku */
+}
+
+/* Ustaw rozmiar pojedynczego kafla (karta nie rozciąga się za bardzo) */
+.kafelki .card {
+  width: 100%;
+  max-width: 320px;   /* możesz zmienić na 280 / 300 / 360 wedle gustu */
+}
+
+/* Responsywność */
+@media (max-width: 980px) {
+  .kafelki { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 620px) {
+  .kafelki { grid-template-columns: 1fr; }
+}
