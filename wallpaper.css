@@ -1,21 +1,18 @@
 /* ================================
-   TŁO / TAPETA — globalnie
+   TAPETA — globalnie
    ================================ */
 
-/* Domyślne (ciemniejsza) */
+/* Domyślnie (ciemniejsza) */
 body{
   background:
-    /* warstwa 1 — delikatny wzór na wierzchu */
     radial-gradient(ellipse at 20% -10%, rgba(255,255,255,.06), transparent 45%),
     radial-gradient(ellipse at 80% 0%, rgba(255,255,255,.04), transparent 50%),
-    /* warstwa 2 — bardzo lekki „szum” */
     repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 2px, transparent 2px 6px),
-    /* warstwa 3 — gradient bazowy */
     linear-gradient(135deg, #0e1f2a 0%, #1a0f2e 100%);
   background-attachment: fixed;
 }
 
-/* Wersja jaśniejsza na stronie pomocy (z mapą) */
+/* Jaśniejsza na stronie z mapą */
 body.pomoc{
   background:
     radial-gradient(ellipse at 20% -10%, rgba(255,255,255,.08), transparent 45%),
