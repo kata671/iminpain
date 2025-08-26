@@ -20,4 +20,136 @@
   <!-- Pasek szybkiej pomocy -->
   <nav class="quickbar">
     <a href="tel:112">📞 112</a>
-    <a href
+    <a href="lokalizacja.html">📍 Lokalizacja</a>
+    <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
+  </nav>
+
+  <header class="site-header">
+    <a class="back" href="javascript:history.back()">← Wróć</a>
+    <h1>🚑 Natychmiastowa pomoc</h1>
+    <p class="subtitle">Najbliższe szpitale, przychodnie, lekarze i apteki</p>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <div class="controls">
+        <label class="chipx"><input type="checkbox" id="f-hospital" checked> Szpitale</label>
+        <label class="chipx"><input type="checkbox" id="f-clinic" checked> Przychodnie</label>
+        <label class="chipx"><input type="checkbox" id="f-doctors" checked> Lekarze</label>
+        <label class="chipx"><input type="checkbox" id="f-pharmacy" checked> Apteki</label>
+        <span class="spacer"></span>
+        <label class="chipx">Promień
+          <select id="radius">
+            <option value="1000">1 km</option>
+            <option value="3000" selected>3 km</option>
+            <option value="5000">5 km</option>
+            <option value="10000">10 km</option>
+          </select>
+        </label>
+        <button id="btn-search" class="btn">🔎 Szukaj ponownie</button>
+      </div>
+      <p><strong>Numery alarmowe:</strong> 112 (ogólny), 999 (pogotowie), 998 (straż), 997 (policja).</p>
+    </section>
+
+    <div id="map" class="map"></div>
+
+    <section class="card">
+      <h2>Placówki w pobliżu</h2>
+      <div id="list"></div>
+    </section>
+  </main>
+
+  <script>
+    const map = L.map('map',{zoomControl:true});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);
+
+    let center={lat:52.1,lng:19.1}; // fallback (środek PL)
+    let markers=[];
+    const labels={hospital:"Szpital",clinic:"Przychodnia",doctors:"Lekarz",pharmacy:"Apteka"};
+
+    function clearMarkers(){markers.forEach(m=>map.removeLayer(m));markers=[];}
+
+    function renderList(items){
+      const container=document.getElementById('list');
+      if(!items.length){container.innerHTML="<p>Brak danych w pobliżu.</p>";return;}
+      const groups={hospital:[],clinic:[],doctors:[],pharmacy:[]};
+      items.forEach(x=>{if(groups[x.type])groups[x.type].push(x);});
+      container.innerHTML=Object.keys(groups).map(t=>{
+        const arr=groups[t]; if(!arr.length) return "";
+        return `<h3>${labels[t]}</h3><ul class="list">`+
+          arr.map(i=>{
+            const link=`https://www.google.com/maps/dir/?api=1&destination=${i.p.lat},${i.p.lng}`;
+            return `<li><strong>${i.name||"(bez nazwy)"}</strong> — ${i.distance.toFixed(0)} m · <a target="_blank" href="${link}">Nawiguj</a></li>`;
+          }).join("")+"</ul>";
+      }).join("");
+    }
+
+    function distance(a,b){
+      const R=6371000,toRad=d=>d*Math.PI/180;
+      const dLat=toRad(b.lat-a.lat),dLon=toRad(b.lng-a.lng);
+      const s=Math.sin(dLat/2)**2+Math.cos(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.sin(dLon/2)**2;
+      return 2*R*Math.asin(Math.sqrt(s));
+    }
+
+    async function fetchOverpass(lat,lng,around){
+      const q=`[out:json][timeout:25];
+      (
+        node["amenity"="hospital"](around:${around},${lat},${lng});
+        node["amenity"="clinic"](around:${around},${lat},${lng});
+        node["amenity"="doctors"](around:${around},${lat},${lng});
+        node["amenity"="pharmacy"](around:${around},${lat},${lng});
+      ); out body; >; out skel qt;`;
+      const r=await fetch("https://overpass-api.de/api/interpreter",{method:"POST",body:q});
+      return r.json();
+    }
+
+    function activeFilters(){
+      return {
+        hospital:document.getElementById('f-hospital').checked,
+        clinic:document.getElementById('f-clinic').checked,
+        doctors:document.getElementById('f-doctors').checked,
+        pharmacy:document.getElementById('f-pharmacy').checked
+      };
+    }
+
+    async function search(){
+      clearMarkers();
+      const rad=parseInt(document.getElementById('radius').value,10);
+      const data=await fetchOverpass(center.lat,center.lng,rad);
+      const filters=activeFilters();
+      const items=(data.elements||[])
+        .filter(el=>el.type==="node" && ["hospital","clinic","doctors","pharmacy"].includes(el.tags?.amenity))
+        .map(el=>{
+          const p={lat:el.lat,lng:el.lon};
+          return {type:el.tags.amenity,name:el.tags.name||"",p,distance:distance(center,p)};
+        })
+        .filter(i=>filters[i.type])
+        .sort((a,b)=>a.distance-b.distance).slice(0,80);
+
+      items.forEach(i=>{
+        const m=L.marker(i.p).addTo(map).bindPopup(`<b>${i.name||"(bez nazwy)"}</b><br>${labels[i.type]}`);
+        markers.push(m);
+      });
+      renderList(items);
+    }
+
+    function initWithPosition(pos){
+      center={lat:pos.coords.latitude,lng:pos.coords.longitude};
+      map.setView(center,14);
+      const me=L.circleMarker(center,{radius:8}).addTo(map).bindPopup("Tu jesteś");
+      markers.push(me);
+      search();
+    }
+
+    document.getElementById('btn-search').addEventListener('click',search);
+    ["f-hospital","f-clinic","f-doctors","f-pharmacy","radius"].forEach(id=>{
+      document.getElementById(id).addEventListener('change',search);
+    });
+
+    navigator.geolocation.getCurrentPosition(initWithPosition,()=>{
+      map.setView(center,6);
+      renderList([]);
+    },{enableHighAccuracy:true,timeout:10000});
+  </script>
+</body>
+</html>
