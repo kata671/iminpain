@@ -7,12 +7,11 @@
   <link rel="stylesheet" href="style.css" />
   <meta name="theme-color" content="#7a4dff" />
   <style>
-    /* KWADRATOWE kafelki + większa miniaturka + emotka po napisie */
+    /* Kwadratowe kafelki 3 w rzędzie + większa miniaturka + emotka po napisie */
     .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-    .card {
+    .card{
       display:flex; align-items:center; justify-content:center; text-align:center;
-      flex-direction:column; gap:8px; padding:10px;
-      aspect-ratio:1/1; /* kwadrat */
+      flex-direction:column; gap:8px; padding:10px; aspect-ratio:1/1;
     }
     .card img.thumb{
       width:44px; height:44px; object-fit:cover; border-radius:8px; margin:0;
@@ -22,7 +21,6 @@
       font-weight:800; line-height:1.15;
       display:inline-flex; align-items:center; gap:6px;
     }
-    .card .label .name{ white-space:nowrap; }
     .card .label .emo{ opacity:.95; }
     @media (max-width:420px){
       .grid-3{ gap:10px; }
@@ -43,6 +41,12 @@
 
   <main class="container">
     <div class="grid-3">
+
+      <!-- NOWA KATEGORIA: CIĄŻA -->
+      <a class="card" href="szczegoly.html?id=kobieta-ciaza">
+        <img src="img/kobieta-ciaza.png" alt="" class="thumb">
+        <span class="label"><span class="name">Ciąża</span><span class="emo">🤰</span></span>
+      </a>
 
       <!-- Głowa i twarz -->
       <a class="card" href="szczegoly.html?id=kobieta-oko">
