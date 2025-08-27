@@ -5,8 +5,13 @@
   --text: #222;
 }
 
+/* === TAPETA === */
 body.bg-med {
-  background: radial-gradient(circle at top left, #d9f1ff, #f2e6ff);
+  /* Twoje turkusowo-fioletowe tło z molekułami */
+  background: radial-gradient(circle at top left, #a2d9ff, #cbb2ff);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
   font-family: system-ui, sans-serif;
   margin: 0;
   color: var(--text);
@@ -46,9 +51,10 @@ body.bg-med {
   box-shadow: 0 0 16px rgba(122,77,255,.4);
 }
 
+/* MINIATURKI — większe */
 .card img.thumb {
-  width: 48px;   /* większe również na telefonie */
-  height: 48px;
+  width: 52px;
+  height: 52px;
   object-fit: cover;
   border-radius: 8px;
   margin: 0;
@@ -65,65 +71,12 @@ body.bg-med {
 /* TELEFON */
 @media (max-width: 420px) {
   .grid-3 { gap: 10px; }
-  .card img.thumb { width: 48px; height: 48px; }
+  .card img.thumb { width: 52px; height: 52px; }
 }
 
 /* LAPTOP I WIĘKSZE */
 @media (min-width: 1024px) {
   .card { padding: 20px; }
-  .card img.thumb { width: 64px; height: 64px; }
-  .card .label { font-size: 1.05rem; }
-}
-/* Miniaturki – teraz większe */
-.card img.thumb {
-  width: 52px;   /* większe niż dotychczas */
-  height: 52px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin: 0;
-  box-shadow: 0 0 6px rgba(130,100,255,.35);
-}
-
-/* Telefon */
-@media (max-width: 420px) {
-  .card img.thumb {
-    width: 52px;
-    height: 52px;
-  }
-}
-
-/* Laptop i większe ekrany */
-@media (min-width: 1024px) {
-  .card img.thumb {
-    width: 68px;
-    height: 68px;
-  }
+  .card img.thumb { width: 68px; height: 68px; }
   .card .label { font-size: 1.1rem; }
-}
-/* === PATCH: większe miniaturki bez ruszania tła === */
-.grid-3 .card img.thumb{
-  width: 52px;
-  height: 52px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin: 0;
-  box-shadow: 0 0 6px rgba(130,100,255,.35);
-}
-
-/* Telefon (również ciut większe) */
-@media (max-width: 420px){
-  .grid-3 .card img.thumb{ width: 52px; height: 52px; }
-}
-
-/* Laptop i większe – wyraźniejsze kafelki */
-@media (min-width: 1024px){
-  .grid-3 .card{ padding: 20px; }
-  .grid-3 .card img.thumb{ width: 68px; height: 68px; }
-  .grid-3 .card .label{ font-size: 1.1rem; }
-}
-/* WYMUSZENIE TŁA – użyj tylko jeśli tapeta nadal nie wraca */
-body.bg-med{
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
 }
