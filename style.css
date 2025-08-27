@@ -315,3 +315,35 @@ body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Ari
   font-size: 1rem;
   text-decoration: none !important;
 }
+/* ——— Wyłącznie dla sekcji „Wybierz obszar bólu” ——— */
+
+/* baza dla miniatur (jeśli brakowało) */
+.areas .thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Telefon: +15% (bez ruszania kafelków) */
+@media (max-width: 767px){
+  .areas .thumb { width: 74px !important; height: 74px !important; }
+}
+
+/* Laptop: +20% (bez ruszania kafelków) */
+@media (min-width: 1024px){
+  .areas .thumb { width: 77px !important; height: 77px !important; } /* 64px * 1.2 ≈ 77 */
+}
+
+/* same podpisy: bez podkreśleń, ładnie wyśrodkowane */
+.areas a, .areas .card, .areas .label, .areas .card span {
+  text-decoration: none !important;
+}
+.areas .label, .areas .card span {
+  display: block;
+  margin-top: 8px;
+  font-weight: 700;
+  text-align: center;
+}
