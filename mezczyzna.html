@@ -5,66 +5,93 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mężczyzna — wybór obszaru bólu</title>
   <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#7a4dff" />
   <style>
-    .tiles-responsive{
-      display:grid;
-      gap:16px;
-      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-      list-style:none;
-      padding:0;
-      margin:16px 0
+    .card img.thumb {
+      display:block;
+      width:42px; height:42px;
+      object-fit:cover; border-radius:6px;
+      margin:0 auto 6px;
+      box-shadow:0 0 6px rgba(130,100,255,.35);
     }
   </style>
 </head>
 <body class="bg-med">
   <nav class="quickbar">
-    <a href="tel:112">📞 112</a>
-    <a href="lokalizacja.html">📍 Lokalizacja</a>
+    <a href="index.html">🏠 Strona główna</a>
     <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
+    <a href="lokalizacja.html">📍 Lokalizacja</a>
   </nav>
 
   <header class="site-header">
-    <a class="back" href="index.html">← Wróć</a>
-    <h1>👨 Mężczyzna</h1>
-    <p class="subtitle">Wybierz obszar bólu</p>
+    <h1>👨 Mężczyzna — wybierz obszar bólu</h1>
   </header>
 
   <main class="container">
-    <ul class="tiles-responsive">
-      <!-- Głowa / twarz -->
-      <li><a class="tile" href="szczegoly.html?id=glowa_m">🧠 Głowa</a></li>
-      <li><a class="tile" href="szczegoly.html?id=oczy_m">👁 Oczy</a></li>
-      <li><a class="tile" href="szczegoly.html?id=nos_m">👃 Nos</a></li>
-      <li><a class="tile" href="szczegoly.html?id=ucho_m">👂 Ucho</a></li>
+    <div class="grid-3">
 
-      <!-- Szyja / bark / ręka -->
-      <li><a class="tile" href="szczegoly.html?id=szyja_m">🦴 Szyja</a></li>
-      <li><a class="tile" href="szczegoly.html?id=bark_m">🏋️ Bark</a></li>
-      <li><a class="tile" href="szczegoly.html?id=ramie_m">💪 Ramię</a></li>
-      <li><a class="tile" href="szczegoly.html?id=lokiec_m">🎾 Łokieć</a></li>
-      <li><a class="tile" href="szczegoly.html?id=nadgarstek_m">⌚ Nadgarstek</a></li>
-      <li><a class="tile" href="szczegoly.html?id=dlon_m">✋ Dłoń</a></li>
+      <!-- Głowa i twarz -->
+      <a class="card" href="szczegoly.html?id=mezczyzna-oko">
+        <img src="img/mezczyzna-oko.png" alt="Oko mężczyzny" class="thumb"><span>👁️ Oko</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=mezczyzna-nos">
+        <img src="img/mezczyzna-nos.png" alt="Nos mężczyzny" class="thumb"><span>👃 Nos</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=mezczyzna-usta">
+        <img src="img/mezczyzna-usta.png" alt="Usta mężczyzny" class="thumb"><span>👄 Usta</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=mezczyzna-ucho">
+        <img src="img/mezczyzna-ucho.png" alt="Ucho mężczyzny" class="thumb"><span>👂 Ucho</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=mezczyzna-glowa">
+        <img src="img/mezczyzna-glowa.png" alt="Głowa mężczyzny" class="thumb"><span>🧠 Głowa</span>
+      </a>
 
-      <!-- Klatka / serce / plecy / brzuch -->
-      <li><a class="tile" href="szczegoly.html?id=klatka_m">💙 Klatka piersiowa</a></li>
-      <li><a class="tile" href="szczegoly.html?id=serce_m">❤️ Serce</a></li>
-      <li><a class="tile" href="szczegoly.html?id=plecy_m">🧍 Plecy</a></li>
-      <li><a class="tile" href="szczegoly.html?id=brzuch_m">🫃 Brzuch</a></li>
+      <!-- Tułów -->
+      <a class="card" href="szczegoly.html?id=mezczyzna-serce">
+        <img src="img/mezczyzna-serce.png" alt="Serce mężczyzny" class="thumb"><span>❤️ Serce</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=mezczyzna-pluca">
+        <img src="img/mezczyzna-pluca.png" alt="Płuca mężczyzny" class="thumb"><span>🫁 Płuca</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=mezczyzna-kregoslup">
+        <img src="img/mezczyzna-kregoslup.png" alt="Kręgosłup mężczyzny" class="thumb"><span>🧍‍♂️ Kręgosłup</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=mezczyzna-zoladek">
+        <img src="img/mezczyzna-zoladek.png" alt="Żołądek mężczyzny" class="thumb"><span>🫀 Żołądek</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=mezczyzna-watroba">
+        <img src="img/mezczyzna-watroba.png" alt="Wątroba mężczyzny" class="thumb"><span>🍃 Wątroba</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=mezczyzna-nerki">
+        <img src="img/mezczyzna-nerki.png" alt="Nerki mężczyzny" class="thumb"><span>💧 Nerki</span>
+      </a>
 
-      <!-- Miednica / noga -->
-      <li><a class="tile" href="szczegoly.html?id=biodra_m">🦴 Biodra</a></li>
-      <li><a class="tile" href="szczegoly.html?id=pachwina_m">🔻 Pachwina</a></li>
-      <li><a class="tile" href="szczegoly.html?id=nogi_m">🦵 Nogi</a></li>
-      <li><a class="tile" href="szczegoly.html?id=kolano_m">🦵 Kolano</a></li>
-      <li><a class="tile" href="szczegoly.html?id=lydka_m">🦿 Łydka</a></li>
-      <li><a class="tile" href="szczegoly.html?id=kostka_m">🦶 Kostka</a></li>
-      <li><a class="tile" href="szczegoly.html?id=stopa_m">🦶 Stopa</a></li>
+      <!-- Kończyny górne -->
+      <a class="card" href="szczegoly.html?id=mezczyzna-ramie">
+        <img src="img/mezczyzna-ramie.png" alt="Ramię mężczyzny" class="thumb"><span>💪 Ramię</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=mezczyzna-lokiec">
+        <img src="img/mezczyzna-lokiec.png" alt="Łokieć mężczyzny" class="thumb"><span>⚡ Łokieć</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=mezczyzna-dlon">
+        <img src="img/mezczyzna-dlon.png" alt="Dłoń mężczyzny" class="thumb"><span>✋ Dłoń</span>
+      </a>
 
-      <!-- Szybki skrót -->
-      <li><a class="tile tile-accent pulse" href="lokalizacja.html">🚑 Natychmiastowa pomoc</a></li>
-    </ul>
+      <!-- Kończyny dolne -->
+      <a class="card" href="szczegoly.html?id=mezczyzna-udo">
+        <img src="img/mezczyzna-udo.png" alt="Udo mężczyzny" class="thumb"><span>🦵 Udo</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=mezczyzna-kolano">
+        <img src="img/mezczyzna-kolano.png" alt="Kolano mężczyzny" class="thumb"><span>🦵 Kolano</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=mezczyzna-stopa">
+        <img src="img/mezczyzna-stopa.png" alt="Stopa mężczyzny" class="thumb"><span>🦶 Stopa</span>
+      </a>
+
+    </div>
   </main>
 
-  <footer class="site-footer"><small>© 2025</small></footer>
+  <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
 </body>
 </html>
