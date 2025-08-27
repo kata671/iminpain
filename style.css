@@ -1,130 +1,76 @@
-/* === Kolory i zmienne === */
-:root{
-  --ink:#ecf3ff; --muted:#cfe3ff; --accent:#7f9cff; --accent-2:#7a4dff;
-  --card:#101728cc; --card-light:#142139c9; --border:#9fb6ff44;
-  --glow:0 0 14px #7a4dff66, 0 0 36px #4ad0ff33; --max:1120px;
-  --green:#12c55b; --red:#ff4d5a; color-scheme:dark;
+:root {
+  --bg: #f9f8ff;
+  --card: rgba(255,255,255,.85);
+  --border: rgba(120,100,255,.35);
+  --text: #222;
 }
 
-/* tło – turkus/fiolet + molekularna siatka */
-.bg-med{
-  background:
-    radial-gradient(1000px 800px at 70% 20%, rgba(122,77,255,.18), transparent 60%),
-    radial-gradient(900px 700px at 20% 80%, rgba(74,208,255,.18), transparent 60%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='140' viewBox='0 0 160 140'%3E%3Cg fill='none' stroke='%23a9c7ff22' stroke-width='1'%3E%3Cpath d='M40 0l40 20 40-20 40 20v40l-40 20-40-20-40 20-40-20V20z'/%3E%3C/g%3E%3C/svg%3E") repeat,
-    linear-gradient(180deg, #0d1326, #0c1020 60%, #0a0e1a);
-}
-.bg-med-light{
-  background:
-    radial-gradient(900px 700px at 60% 10%, rgba(122,77,255,.12), transparent 60%),
-    radial-gradient(900px 700px at 30% 90%, rgba(74,208,255,.12), transparent 60%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='140' viewBox='0 0 160 140'%3E%3Cg fill='none' stroke='%23a9c7ff33' stroke-width='1'%3E%3Cpath d='M40 0l40 20 40-20 40 20v40l-40 20-40-20-40 20-40-20V20z'/%3E%3C/g%3E%3C/svg%3E") repeat,
-    linear-gradient(180deg, #0f1a33, #102040 60%, #0f1c36);
+body.bg-med {
+  background: radial-gradient(circle at top left, #d9f1ff, #f2e6ff);
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  color: var(--text);
 }
 
-/* ogólne */
-*{box-sizing:border-box} html,body{margin:0;padding:0}
-body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Arial,sans-serif}
-.container{max-width:var(--max);margin:26px auto;padding:0 16px}
-.site-header{max-width:var(--max);margin:22px auto 8px;padding:16px;text-align:center;position:relative}
-.site-header h1{margin:.2rem 0 0;font-size:clamp(24px,3.2vw,42px);text-shadow:var(--glow)}
-.subtitle{margin:.2rem 0 0;color:var(--muted)}
-.back{position:absolute;left:16px;top:16px;color:var(--muted);text-decoration:none}
-.site-footer{max-width:var(--max);margin:24px auto;padding:16px;text-align:center;color:#cfe3ffaa}
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+.site-header, .site-footer { text-align: center; padding: 14px; }
 
-/* quickbar */
-.quickbar{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;padding:.5rem;border-bottom:1px solid var(--border);background:rgba(0,0,0,.35);backdrop-filter:blur(6px)}
-.quickbar a,.quickbar button,.quickbar .chipx{
-  padding:.45rem .8rem;border-radius:999px;border:1px solid var(--border);
-  background:var(--card);box-shadow:var(--glow);color:var(--ink);font-weight:700;
-}
-.quickbar input[type="search"]{padding:.5rem .75rem;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--ink);min-width:220px}
-.theme-toggle{display:inline-flex;align-items:center;gap:.4rem}
-
-/* hero i siatki */
-.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
-@media (max-width:760px){.grid-2{grid-template-columns:1fr}}
-.hero-card{display:flex;flex-direction:column;align-items:center;gap:12px;padding:16px;border-radius:22px;background:var(--card);border:1px solid var(--border);box-shadow:var(--glow);text-decoration:none;color:var(--ink);transition:transform .18s, box-shadow .18s,border-color .18s}
-.hero-card:hover{transform:translateY(-2px);box-shadow:0 0 18px #7a4dffaa,0 0 48px #4ad0ff55;border-color:#bcd2ff66}
-.hero-card img{width:100%;height:auto;border-radius:16px}
-
-/* kafelki – neonowy look */
-.tiles{list-style:none;padding:0;margin:16px 0;display:grid;gap:16px}
-.tiles-3x2{grid-template-columns:repeat(3,minmax(0,1fr))}
-@media (max-width:820px){.tiles-3x2{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.tile{
-  display:flex;align-items:center;justify-content:center;min-height:120px;padding:18px;border-radius:20px;
-  background:linear-gradient(180deg, rgba(16,23,40,.88), rgba(16,23,40,.74));
-  border:1px solid var(--border);text-decoration:none;color:var(--ink);
-  box-shadow:var(--glow);text-align:center;font-weight:700;letter-spacing:.3px;
-  transition:transform .16s, box-shadow .16s, border-color .16s, background .16s;
-  white-space:normal; word-break:break-word; overflow-wrap:anywhere;
-}
-.tile:hover{transform:translateY(-3px);box-shadow:0 0 18px #7a4dffaa,0 0 50px #4ad0ff66;border-color:#c8daff77}
-
-/* 🔴 Emergency accent: mocny czerwony glow */
-.tile-accent{
-  background:linear-gradient(180deg, rgba(255,77,90,.28), rgba(255,77,120,.22));
-  border-color:#ff9ca6aa;
-  box-shadow: 0 0 14px rgba(255,77,90,.65), 0 0 36px rgba(255,77,120,.35);
-}
-.pulse{animation:pulse-emergency 1.6s ease-in-out infinite}
-@keyframes pulse-emergency{
-  0%   { box-shadow:0 0 12px rgba(255,77,90,.55), 0 0 28px rgba(255,77,120,.30); }
-  50%  { box-shadow:0 0 24px rgba(255,77,90,.85), 0 0 56px rgba(255,77,120,.55); }
-  100% { box-shadow:0 0 12px rgba(255,77,90,.55), 0 0 28px rgba(255,77,120,.30); }
+/* GRID */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
 }
 
-/* przyciski-kafelki: NIC nie nadpisujemy z wyglądu .tile */
-.tile-btn{
-  /* ważne: brak background/border/box-shadow/color */
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
-  width:100%;height:100%;cursor:pointer;font:inherit;appearance:none;
+/* KAFELKI */
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 8px;
+  padding: 12px;
+  aspect-ratio: 1/1;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(122,77,255,.25);
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+  transition: transform .2s, box-shadow .2s;
+}
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 16px rgba(122,77,255,.4);
 }
 
-/* >>> Fix: mobilne zawijanie tytułu i badge w „Leczenie” <<< */
-.tile-btn .badge{display:inline-block; margin-top:4px}
-@media (max-width:480px){
-  .tile{min-height:110px;padding:14px;font-size:.95rem}
-  .tile-btn{gap:4px}
-  .tile-btn .badge{display:block; margin-top:2px}
+.card img.thumb {
+  width: 48px;   /* większe również na telefonie */
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 0;
+  box-shadow: 0 0 6px rgba(130,100,255,.35);
+}
+.card .label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+}
+.card .label .emo { opacity:.95; }
+
+/* TELEFON */
+@media (max-width: 420px) {
+  .grid-3 { gap: 10px; }
+  .card img.thumb { width: 48px; height: 48px; }
 }
 
-/* karty + obraz */
-.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--glow)}
-.detail-hero{max-width:980px;margin:24px auto;display:grid;gap:16px}
-.detail-hero img{width:100%;height:auto;border-radius:18px;box-shadow:var(--glow);background:#0b1222}
-
-/* badge */
-.badge{display:inline-block;padding:.25rem .5rem;border-radius:999px;font-weight:800;margin-left:.35rem}
-.badge.green{background:rgba(18,197,91,.18);color:#bff3d4;border:1px solid rgba(18,197,91,.35)}
-.badge.red{background:rgba(255,77,90,.18);color:#ffd0d4;border:1px solid rgba(255,77,90,.38)}
-
-/* listy w treści */
-#content ul{margin:.4rem 0 .6rem 1.1rem}
-#content li{margin:.25rem 0}
-
-/* mapa / listy */
-.map{height:56vh;border-radius:18px;border:1px solid var(--border);box-shadow:var(--glow);margin:16px 0}
-.list{padding-left:18px}.list li{margin:.35rem 0}
-.btn{display:inline-block;padding:.5rem .9rem;border-radius:12px;border:1px solid var(--border);text-decoration:none;color:var(--ink);background:var(--card-light);box-shadow:var(--glow)}
-.note{opacity:.9}
-
-/* tryb jasny – utrzymujemy mocny czerwony akcent */
-:root.light{color-scheme:light}
-:root.light body{color:#0f1526}
-:root.light .quickbar{background:rgba(255,255,255,.55)}
-:root.light .tile,:root.light .hero-card,.light .card{background:rgba(255,255,255,.88)}
-:root.light .badge.green{color:#0f8a4b}
-:root.light .badge.red{color:#c82534}
-:root.light .tile-accent{
-  background:linear-gradient(180deg, rgba(255,77,90,.30), rgba(255,77,120,.24));
-  border-color:#ff9ca6cc;
-  box-shadow: 0 0 16px rgba(255,77,90,.75), 0 0 60px rgba(255,77,120,.55);
-}
-/* wyrównanie wielkości zdjęć kobieta/mężczyzna na stronie głównej */
-.hero-card img {
-  max-height: 420px;   /* dopasuj jeśli trzeba ciut większe/mniejsze */
-  width: auto;
-  object-fit: contain;
+/* LAPTOP I WIĘKSZE */
+@media (min-width: 1024px) {
+  .card { padding: 20px; }
+  .card img.thumb { width: 64px; height: 64px; }
+  .card .label { font-size: 1.05rem; }
 }
