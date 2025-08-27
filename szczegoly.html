@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css" />
   <meta name="theme-color" content="#7a4dff" />
   <style>
+    /* Nie zmieniam globalnego tła! Tylko UI tej podstrony. */
     .detail-hero { display:none; margin:10px auto 14px; max-width:min(960px,95vw);
       border-radius:14px; overflow:hidden; border:1px solid var(--border); background:var(--card);
       box-shadow:0 0 18px rgba(122,77,255,.28), 0 0 36px rgba(80,180,255,.18);
@@ -19,14 +20,13 @@
     .cta-row { display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 0; }
     .btn { display:inline-block; padding:.6rem .9rem; border-radius:10px; font-weight:800; border:1px solid var(--border); background:var(--card); text-decoration:none; }
     .btn-emg { background:linear-gradient(180deg, rgba(255,77,90,.24), rgba(255,77,120,.18)); border-color:#ff9ca699; animation:pulseRed 2s infinite; }
-    .btn-green { background:linear-gradient(180deg, rgba(18,197,91,.18), rgba(18,197,91,.08)); border-color:#22c15a99; color:#137a3c; }
     @keyframes pulseRed { 0%{box-shadow:0 0 6px rgba(255,77,90,.55),0 0 18px rgba(255,77,120,.35); transform:scale(1);} 50%{box-shadow:0 0 16px rgba(255,77,90,.95),0 0 38px rgba(255,77,120,.6); transform:scale(1.02);} 100%{box-shadow:0 0 6px rgba(255,77,90,.55),0 0 18px rgba(255,77,120,.35); transform:scale(1);} }
     .note { opacity:.85; font-size:.95rem; }
     ul { margin:.4rem 0 .2rem; }
 
-    /* przewijanie */
+    /* Eleganckie przewijanie list, gdy treści jest dużo */
     .section.card ul {
-      max-height: 240px;
+      max-height: 240px;    /* widoczna wysokość; możesz podnieść/obniżyć */
       overflow-y: auto;
       padding-right: 8px;
     }
@@ -34,25 +34,6 @@
     .section.card ul::-webkit-scrollbar-track { background: transparent; }
     .section.card ul::-webkit-scrollbar-thumb { background: rgba(122,77,255,.4); border-radius: 6px; }
     .section.card ul::-webkit-scrollbar-thumb:hover { background: rgba(122,77,255,.6); }
-
-    /* objawy alarmowe */
-    .alarm-box {
-      background: rgba(255,77,90,.1);
-      border: 2px solid rgba(255,77,90,.6);
-      border-radius: 12px;
-      padding: 12px;
-      margin: 10px 0;
-      animation: pulseRed 3s infinite;
-    }
-    .alarm-box h2 { color:#ff4d5a; margin-top:0; }
-    .profilaktyka-box {
-      background: rgba(18,197,91,.1);
-      border: 2px solid rgba(18,197,91,.5);
-      border-radius: 12px;
-      padding: 12px;
-      margin: 10px 0;
-    }
-    .profilaktyka-box h2 { color:#22c15a; margin-top:0; }
   </style>
 </head>
 <body class="bg-med">
@@ -61,7 +42,6 @@
     <a href="tel:112">📞 112</a>
     <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
     <a href="lokalizacja.html">📍 Lokalizacja</a>
-    <a href="lokalizacja.html#apteki" class="btn btn-green">💊 Apteka 24h</a>
   </nav>
 
   <header class="site-header">
@@ -70,6 +50,7 @@
     <p id="subtitle" class="subtitle">Przyczyny, objawy, pierwsza pomoc, leki i lekarze</p>
   </header>
 
+  <!-- Opcjonalne mini-hero (jeśli istnieje obraz: img/<osoba>-<część>.png) -->
   <figure class="detail-hero" id="detailHero"><img id="heroImg" alt=""></figure>
 
   <main class="container">
@@ -81,12 +62,6 @@
     <section class="section card" id="objawy">
       <h2>🔍 Objawy</h2>
       <ul id="list-objawy"></ul>
-    </section>
-
-    <!-- NOWA SEKCJA: objawy alarmowe -->
-    <section class="alarm-box" id="alarm">
-      <h2>🚨 Objawy alarmowe</h2>
-      <ul id="list-alarm"></ul>
     </section>
 
     <section class="section card" id="pp">
@@ -107,12 +82,6 @@
       <ul id="list-leki"></ul>
     </section>
 
-    <!-- NOWA SEKCJA: profilaktyka -->
-    <section class="profilaktyka-box" id="profilaktyka">
-      <h2>✅ Profilaktyka</h2>
-      <ul id="list-profilaktyka"></ul>
-    </section>
-
     <section class="section card" id="lekarze">
       <h2>🩺 Lekarze</h2>
       <ul id="list-lekarze"></ul>
@@ -126,9 +95,13 @@
 
   <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
 
-  <script src="content.js?v=2"></script>
+  <!-- 1) baza treści -->
+  <script src="content.js?v=1"></script>
+
+  <!-- 2) logika wypełniania; nic poza tym nie zmieniam -->
   <script>
     const raw = new URLSearchParams(location.search).get('id') || '';
+
     function normalize(s){
       s = (s || '').toLowerCase().trim().replace(/\s+/g,'-').replace(/_/g,'-');
       for(const p of ['kobieta','mezczyzna','dziecko']){
@@ -146,26 +119,27 @@
       ciaza:'Ciąża'
     };
 
+    // Tytuł
     const title = document.getElementById('title');
     title.textContent = PART_NAME[ctx.part] ? `${PART_NAME[ctx.part]} — ${ctx.osoba}` : 'Szczegóły';
 
+    // Mini-hero jeśli istnieje obraz
     (function hero(){
       const src = `img/${ctx.osoba}-${ctx.part}.png`;
       const img = document.getElementById('heroImg');
       const box = document.getElementById('detailHero');
       img.onload = ()=> box.style.display='block';
       img.onerror = ()=> box.style.display='none';
-      img.src = src + '?v=2';
+      img.src = src + '?v=1';
     })();
 
+    // Render
     function fill(content){
       const toLis = arr => (arr||[]).map(x=>`<li>${Array.isArray(x)?x.join(' — '):x}</li>`).join('');
       document.getElementById('list-przyczyny').innerHTML = toLis(content?.przyczyny);
       document.getElementById('list-objawy').innerHTML    = toLis(content?.objawy);
-      document.getElementById('list-alarm').innerHTML     = toLis(content?.alarm);
       document.getElementById('list-pp').innerHTML        = toLis(content?.pp);
       document.getElementById('list-leki').innerHTML      = toLis(content?.leki);
-      document.getElementById('list-profilaktyka').innerHTML = toLis(content?.profilaktyka);
       document.getElementById('list-lekarze').innerHTML   = toLis(content?.lekarze);
     }
     fill((window.CONTENT||{})[ctx.part] || {});

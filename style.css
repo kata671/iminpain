@@ -1,225 +1,286 @@
-/* ================================
-   BOLI-MNIE.PL — STABILNY STYLE.CSS
-   — NIE zmienia tapety (body.bg-med)!
-   — Zawiera: quickbar, siatki grid-3/grid-4,
-     kafelki (card), stany red/green, puls,
-     "Namierz mnie", wyszukiwarka z lupą,
-     przyciski .btn/.btn-green oraz ogólny layout.
-   ================================ */
-
-/* Zmienne bazowe */
+/* === Kolory i zmienne === */
 :root{
-  --text: #1b1b1f;
-  --muted:#5a5f74;
-  --card: rgba(255,255,255,.88);
-  --border: rgba(120,100,255,.35);
-  --shadow: 0 0 10px rgba(122,77,255,.22);
+  --ink:#ecf3ff; --muted:#cfe3ff; --accent:#7f9cff; --accent-2:#7a4dff;
+  --card:#101728cc; --card-light:#142139c9; --border:#9fb6ff44;
+  --glow:0 0 14px #7a4dff66, 0 0 36px #4ad0ff33; --max:1120px;
+  --green:#12c55b; --red:#ff4d5a; color-scheme:dark;
 }
 
-/* Reset skrócony */
-*{ box-sizing:border-box; }
-html,body{ margin:0; padding:0; }
-
-/* TŁO — pozostawiamy nietknięte!
-   Jeżeli masz własną tapetę ustawioną wcześniej,
-   NIE nadpisujemy jej tutaj. */
-body.bg-med{
-  /* background: (celowo puste) */
-  color: var(--text);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif;
-  line-height: 1.45;
+/* tło – turkus/fiolet + molekularna siatka */
+.bg-med{
+  background:
+    radial-gradient(1000px 800px at 70% 20%, rgba(122,77,255,.18), transparent 60%),
+    radial-gradient(900px 700px at 20% 80%, rgba(74,208,255,.18), transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='140' viewBox='0 0 160 140'%3E%3Cg fill='none' stroke='%23a9c7ff22' stroke-width='1'%3E%3Cpath d='M40 0l40 20 40-20 40 20v40l-40 20-40-20-40 20-40-20V20z'/%3E%3C/g%3E%3C/svg%3E") repeat,
+    linear-gradient(180deg, #0d1326, #0c1020 60%, #0a0e1a);
+}
+.bg-med-light{
+  background:
+    radial-gradient(900px 700px at 60% 10%, rgba(122,77,255,.12), transparent 60%),
+    radial-gradient(900px 700px at 30% 90%, rgba(74,208,255,.12), transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='140' viewBox='0 0 160 140'%3E%3Cg fill='none' stroke='%23a9c7ff33' stroke-width='1'%3E%3Cpath d='M40 0l40 20 40-20 40 20v40l-40 20-40-20-40 20-40-20V20z'/%3E%3C/g%3E%3C/svg%3E") repeat,
+    linear-gradient(180deg, #0f1a33, #102040 60%, #0f1c36);
 }
 
-/* Layout — kontener, nagłówki, stopka */
-.container{ max-width: 1100px; margin: 0 auto; padding: 12px; }
-.site-header, .site-footer{ text-align:center; padding: 12px; }
-.site-header h1{ margin: 0 0 6px; font-size: 1.8rem; }
-.site-header p{ margin: 0; color: var(--muted); }
-.site-footer small{ opacity:.85; }
+/* ogólne */
+*{box-sizing:border-box} html,body{margin:0;padding:0}
+body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Arial,sans-serif}
+.container{max-width:var(--max);margin:26px auto;padding:0 16px}
+.site-header{max-width:var(--max);margin:22px auto 8px;padding:16px;text-align:center;position:relative}
+.site-header h1{margin:.2rem 0 0;font-size:clamp(24px,3.2vw,42px);text-shadow:var(--glow)}
+.subtitle{margin:.2rem 0 0;color:var(--muted)}
+.back{position:absolute;left:16px;top:16px;color:var(--muted);text-decoration:none}
+.site-footer{max-width:var(--max);margin:24px auto;padding:16px;text-align:center;color:#cfe3ffaa}
 
-/* Quickbar (górny pasek) */
-.quickbar{
-  display:flex; gap:10px; padding:10px 12px; justify-content:center; flex-wrap:wrap;
+/* quickbar */
+.quickbar{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;padding:.5rem;border-bottom:1px solid var(--border);background:rgba(0,0,0,.35);backdrop-filter:blur(6px)}
+.quickbar a,.quickbar button,.quickbar .chipx{
+  padding:.45rem .8rem;border-radius:999px;border:1px solid var(--border);
+  background:var(--card);box-shadow:var(--glow);color:var(--ink);font-weight:700;
 }
-.quickbar a{
-  display:inline-flex; align-items:center; gap:6px;
-  padding:.4rem .7rem;
-  border-radius:10px;
-  text-decoration:none;
-  color:var(--text);
-  background: var(--card);
-  border:1px solid var(--border);
-  box-shadow: var(--shadow);
-  font-weight: 700;
-}
+.quickbar input[type="search"]{padding:.5rem .75rem;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--ink);min-width:220px}
+.theme-toggle{display:inline-flex;align-items:center;gap:.4rem}
 
-/* Przyciski ogólne — spójne na całej stronie */
-.btn{
-  display:inline-flex; align-items:center; justify-content:center;
-  gap:6px; padding:.55rem .9rem;
-  border-radius:10px; text-decoration:none;
-  color:var(--text); background: var(--card);
-  border:1px solid var(--border);
-  box-shadow: var(--shadow);
-  font-weight:800;
-}
-.btn-green{
-  background: linear-gradient(180deg, rgba(18,197,91,.18), rgba(18,197,91,.08));
-  border-color: #22c15a9c;
-  color:#0f6b36;
-}
+/* hero i siatki */
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+@media (max-width:760px){.grid-2{grid-template-columns:1fr}}
+.hero-card{display:flex;flex-direction:column;align-items:center;gap:12px;padding:16px;border-radius:22px;background:var(--card);border:1px solid var(--border);box-shadow:var(--glow);text-decoration:none;color:var(--ink);transition:transform .18s, box-shadow .18s,border-color .18s}
+.hero-card:hover{transform:translateY(-2px);box-shadow:0 0 18px #7a4dffaa,0 0 48px #4ad0ff55;border-color:#bcd2ff66}
+.hero-card img{width:100%;height:auto;border-radius:16px}
 
-/* Siatki */
-.grid-3{ display:grid; grid-template-columns: repeat(3,1fr); gap:14px; }
-.grid-4{ display:grid; grid-template-columns: repeat(4,1fr); gap:12px; }
+/* kafelki – neonowy look */
+.tiles{list-style:none;padding:0;margin:16px 0;display:grid;gap:16px}
+.tiles-3x2{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:820px){.tiles-3x2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{
+  display:flex;align-items:center;justify-content:center;min-height:120px;padding:18px;border-radius:20px;
+  background:linear-gradient(180deg, rgba(16,23,40,.88), rgba(16,23,40,.74));
+  border:1px solid var(--border);text-decoration:none;color:var(--ink);
+  box-shadow:var(--glow);text-align:center;font-weight:700;letter-spacing:.3px;
+  transition:transform .16s, box-shadow .16s, border-color .16s, background .16s;
+  white-space:normal; word-break:break-word; overflow-wrap:anywhere;
+}
+.tile:hover{transform:translateY(-3px);box-shadow:0 0 18px #7a4dffaa,0 0 50px #4ad0ff66;border-color:#c8daff77}
 
-@media (max-width: 1023px){
-  .grid-3{ grid-template-columns: repeat(3,1fr); gap:10px; }
-  .grid-4{ grid-template-columns: repeat(2,1fr); gap:10px; }
+/* 🔴 Emergency accent: mocny czerwony glow */
+.tile-accent{
+  background:linear-gradient(180deg, rgba(255,77,90,.28), rgba(255,77,120,.22));
+  border-color:#ff9ca6aa;
+  box-shadow: 0 0 14px rgba(255,77,90,.65), 0 0 36px rgba(255,77,120,.35);
 }
-@media (max-width: 580px){
-  .grid-3{ grid-template-columns: repeat(3,1fr); gap:8px; }
-  .grid-4{ grid-template-columns: repeat(2,1fr); gap:8px; }
-}
-
-/* Kafelki (card) */
-.card{
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:10px; text-align:center;
-  background: var(--card);
-  border:1px solid var(--border);
-  border-radius: 14px;
-  padding: 14px;
-  aspect-ratio: 1/1;               /* kwadratowe kafelki */
-  text-decoration:none;
-  color: var(--text);
-  font-weight: 700;
-  box-shadow: var(--shadow);
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-.card:hover{ transform: translateY(-2px) scale(1.02); box-shadow: 0 0 16px rgba(122,77,255,.32); }
-
-/* Kolorystyka kafelków funkcyjnych */
-.card.red{
-  background: linear-gradient(180deg, rgba(255,77,90,.15), rgba(255,77,120,.10));
-  border-color: rgba(255,77,90,.55);
-}
-.card.green{
-  background: linear-gradient(180deg, rgba(18,197,91,.12), rgba(18,197,91,.06));
-  border-color: rgba(18,197,91,.48);
+.pulse{animation:pulse-emergency 1.6s ease-in-out infinite}
+@keyframes pulse-emergency{
+  0%   { box-shadow:0 0 12px rgba(255,77,90,.55), 0 0 28px rgba(255,77,120,.30); }
+  50%  { box-shadow:0 0 24px rgba(255,77,90,.85), 0 0 56px rgba(255,77,120,.55); }
+  100% { box-shadow:0 0 12px rgba(255,77,90,.55), 0 0 28px rgba(255,77,120,.30); }
 }
 
-/* Puls dla kafelka alarmowego */
-@keyframes pulseRed {
-  0%{ box-shadow: 0 0 8px rgba(255,77,90,.55), 0 0 18px rgba(255,77,120,.35); transform:scale(1); }
-  50%{ box-shadow: 0 0 16px rgba(255,77,90,.9), 0 0 36px rgba(255,77,120,.55); transform:scale(1.02); }
-  100%{ box-shadow: 0 0 8px rgba(255,77,90,.55), 0 0 18px rgba(255,77,120,.35); transform:scale(1); }
+/* przyciski-kafelki: NIC nie nadpisujemy z wyglądu .tile */
+.tile-btn{
+  /* ważne: brak background/border/box-shadow/color */
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  width:100%;height:100%;cursor:pointer;font:inherit;appearance:none;
 }
-.pulse{ animation: pulseRed 2.4s infinite; }
 
-/* Obrazki/miniaturki w kafelkach treści (np. „wybierz obszar bólu”) */
-.card img.thumb{
-  width: 64px; height: 64px; object-fit: cover; border-radius: 10px;
-  box-shadow: 0 0 6px rgba(130,100,255,.30);
+/* >>> Fix: mobilne zawijanie tytułu i badge w „Leczenie” <<< */
+.tile-btn .badge{display:inline-block; margin-top:4px}
+@media (max-width:480px){
+  .tile{min-height:110px;padding:14px;font-size:.95rem}
+  .tile-btn{gap:4px}
+  .tile-btn .badge{display:block; margin-top:2px}
 }
+
+/* karty + obraz */
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--glow)}
+.detail-hero{max-width:980px;margin:24px auto;display:grid;gap:16px}
+.detail-hero img{width:100%;height:auto;border-radius:18px;box-shadow:var(--glow);background:#0b1222}
+
+/* badge */
+.badge{display:inline-block;padding:.25rem .5rem;border-radius:999px;font-weight:800;margin-left:.35rem}
+.badge.green{background:rgba(18,197,91,.18);color:#bff3d4;border:1px solid rgba(18,197,91,.35)}
+.badge.red{background:rgba(255,77,90,.18);color:#ffd0d4;border:1px solid rgba(255,77,90,.38)}
+
+/* listy w treści */
+#content ul{margin:.4rem 0 .6rem 1.1rem}
+#content li{margin:.25rem 0}
+
+/* mapa / listy */
+.map{height:56vh;border-radius:18px;border:1px solid var(--border);box-shadow:var(--glow);margin:16px 0}
+.list{padding-left:18px}.list li{margin:.35rem 0}
+.btn{display:inline-block;padding:.5rem .9rem;border-radius:12px;border:1px solid var(--border);text-decoration:none;color:var(--ink);background:var(--card-light);box-shadow:var(--glow)}
+.note{opacity:.9}
+
+/* tryb jasny – utrzymujemy mocny czerwony akcent */
+:root.light{color-scheme:light}
+:root.light body{color:#0f1526}
+:root.light .quickbar{background:rgba(255,255,255,.55)}
+:root.light .tile,:root.light .hero-card,.light .card{background:rgba(255,255,255,.88)}
+:root.light .badge.green{color:#0f8a4b}
+:root.light .badge.red{color:#c82534}
+:root.light .tile-accent{
+  background:linear-gradient(180deg, rgba(255,77,90,.30), rgba(255,77,120,.24));
+  border-color:#ff9ca6cc;
+  box-shadow: 0 0 16px rgba(255,77,90,.75), 0 0 60px rgba(255,77,120,.55);
+}
+/* wyrównanie wielkości zdjęć kobieta/mężczyzna na stronie głównej */
+.hero-card img {
+  max-height: 420px;   /* dopasuj jeśli trzeba ciut większe/mniejsze */
+  width: auto;
+  object-fit: contain;
+}
+/* === PATCH: powiększone miniaturki === */
+
+/* Domyślnie (telefon + małe ekrany) */
+.grid-3 .card img.thumb {
+  width: 64px;   /* było mniejsze, teraz wyraźniejsze */
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 0;
+  box-shadow: 0 0 6px rgba(130,100,255,.35);
+}
+
+/* Laptop i większe ekrany */
+@media (min-width: 1024px) {
+  .grid-3 .card img.thumb {
+    width: 88px;   /* powiększamy także na laptopie */
+    height: 88px;
+  }
+  .grid-3 .card .label {
+    font-size: 1.1rem;  /* podpisy ciut większe */
+  }
+}
+/* === PATCH: większe kafelki w sekcji "wybierz obszar bólu" === */
+
+/* Telefon i małe ekrany */
+.grid-3 .card {
+  padding: 16px;     /* było mniej – teraz kafelki wyższe/szersze */
+}
+
+/* Laptop i większe ekrany */
+@media (min-width: 1024px) {
+  .grid-3 .card {
+    padding: 28px;   /* powiększamy kafelki na dużych ekranach */
+  }
+  .grid-3 .card .label {
+    font-size: 1.1rem;
+  }
+}
+/* === PATCH: dopasowanie rozmiarów kafelków i miniaturek (tylko w .grid-3) === */
+
+/* Bazowo (telefony) — kafelki odrobinkę mniejsze, miniaturki też ciut mniejsze */
+.grid-3 .card{
+  padding: 12px;              /* było więcej → lekko zmniejszamy kafelki */
+  gap: 8px;
+}
+.grid-3 .card img.thumb{
+  width: 56px;                /* było większe → delikatnie w dół */
+  height: 56px;
+  object-fit: cover;
+}
+.grid-3 .card .label{
+  font-size: .98rem;          /* subtelnie mniejszy podpis na telefonie */
+  line-height: 1.15;
+  gap: 6px;
+}
+
+/* Bardzo małe telefony */
+@media (max-width: 360px){
+  .grid-3 { gap: 8px; }
+  .grid-3 .card{ padding: 10px; }
+  .grid-3 .card img.thumb{ width: 52px; height: 52px; }
+}
+
+/* Tablety (utrzymujemy proporcje, trochę większe niż telefon) */
+@media (min-width: 640px) and (max-width: 1023px){
+  .grid-3 .card{ padding: 14px; }
+  .grid-3 .card img.thumb{ width: 64px; height: 64px; }
+  .grid-3 .card .label{ font-size: 1rem; }
+}
+
+/* Laptopy i większe — miniaturki WYRAŹNIE większe, ale kafelek ciut mniejszy (mniej paddingu) */
 @media (min-width: 1024px){
-  .card img.thumb{ width: 96px; height: 96px; }
+  .grid-3 .card{
+    padding: 20px;            /* było np. 28px → minimalnie mniejsze kafelki */
+  }
+  .grid-3 .card img.thumb{
+    width: 96px;              /* większe miniaturki na laptopie */
+    height: 96px;
+  }
+  .grid-3 .card .label{
+    font-size: 1.12rem;       /* czytelniej na desktopie */
+    gap: 8px;
+  }
 }
 
-/* Napisy w kafelkach */
-.card span, .card .label{ font-weight:800; }
+/* Estetyka: niech podpis nie łamie się brzydko */
+.grid-3 .card .label .name{
+  white-space: nowrap;
+}
+/* === PATCH: laptop/desktop tuning (bez zmian dla telefonu) === */
+@media (min-width: 1024px){
+  /* odrobinę szerszy „oddech” na desktopie */
+  .container{ max-width: 1100px; }
 
-/* Karty główne (kobieta/mężczyzna/dziecko) — obrazki mogą nie być kwadratami */
-main.container .card img{
-  max-width: 100%; height: auto; border-radius: 10px;
-  box-shadow: 0 0 6px rgba(130,100,255,.20);
+  /* 3 w rzędzie zostaje – tylko subtelnie większy odstęp */
+  .grid-3{ gap: 16px; }
+
+  /* kafelek minimalnie bardziej zwarty (mniej paddingu), ale grafika większa */
+  .grid-3 .card{ padding: 18px; }
+  .grid-3 .card img.thumb{ width: 100px; height: 100px; }
+
+  /* podpis czytelniejszy */
+  .grid-3 .card .label{ font-size: 1.16rem; gap: 8px; }
+  .grid-3 .card .label .name{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
+  }
+
+  /* subtelniejszy hover tylko na desktopie */
+  .grid-3 .card:hover{ transform: translateY(-2px) scale(1.02); }
 }
 
-/* „Namierz mnie” — bez pulsu, nieinwazyjny */
-.locate-me{
-  display:inline-flex; align-items:center; gap:8px;
-  font-weight:800; font-size:1.12rem;
-  padding:10px 16px; border-radius:12px;
-  background: rgba(18,197,91,.12);
-  border:1px solid rgba(18,197,91,.45);
-  text-decoration:none; color:#0f6b36;
-  box-shadow:0 0 10px rgba(18,197,91,.18);
+/* 4K/duże monitory – jeszcze odrobina przestrzeni i grafiki */
+@media (min-width: 1440px){
+  .container{ max-width: 1200px; }
+  .grid-3{ gap: 18px; }
+  .grid-3 .card img.thumb{ width: 108px; height: 108px; }
 }
+/* === PATCH: laptop/desktop – większe miniatury, ciaśniejsze kafelki === */
+@media (min-width: 1024px){
+  /* kafelek ciaśniejszy */
+  .grid-3 .card{
+    padding: 14px;           /* mniej niż było → mniejszy kafelek */
+  }
 
-/* Wyszukiwarka z lupą po lewej */
-.search{ position: relative; display:flex; align-items:center; }
-.search .ico{ position:absolute; left:10px; font-size:1.1rem; opacity:.75; }
-.search input[type="search"]{
-  width:100%; padding:.55rem .75rem .55rem 36px;
-  border-radius:10px; border:1px solid var(--border);
-  background: var(--card);
-  box-shadow: var(--shadow);
-  font-size: 1rem;
-  outline: none;
+  /* miniaturki większe */
+  .grid-3 .card img.thumb{
+    width: 120px;            /* były ~100px → teraz wyraźnie większe */
+    height: 120px;
+  }
+
+  /* podpis czytelny, ale nieprzytłaczający */
+  .grid-3 .card .label{
+    font-size: 1.05rem;
+  }
 }
+/* === PATCH: laptop/desktop – +40% miniaturki, -20% kafelki === */
+@media (min-width: 1024px){
+  /* ciaśniejsze kafelki */
+  .grid-3 .card{
+    padding: 16px;        /* było 20px → mniej o 20% */
+  }
 
-/* Sekcje/karty treści (używane m.in. w szczegółach i lokalizacji) */
-.section.card{
-  background: var(--card);
-  border:1px solid var(--border);
-  border-radius: 14px;
-  padding: 14px;
-  box-shadow: var(--shadow);
-}
-.section h2{ margin:0 0 8px; display:flex; align-items:center; gap:8px; }
+  /* dużo większe miniaturki */
+  .grid-3 .card img.thumb{
+    width: 140px;         /* było ~100px → +40% */
+    height: 140px;
+  }
 
-/* Suwaki (gdy listy przewijane na podstronach) */
-.section.card ul::-webkit-scrollbar{ width:6px; }
-.section.card ul::-webkit-scrollbar-track{ background: transparent; }
-.section.card ul::-webkit-scrollbar-thumb{ background: rgba(122,77,255,.4); border-radius: 6px; }
-.section.card ul::-webkit-scrollbar-thumb:hover{ background: rgba(122,77,255,.6); }
-
-/* Tagi w „Leki” (renderowane w szczegółach) */
-.tag-otc{ color:#22c15a; font-weight:800; }
-.tag-rx{  color:#ff4d5a; font-weight:800; }
-
-/* Drobne ułatwienia responsywne */
-@media (max-width: 420px){
-  .site-header h1{ font-size:1.6rem; }
-  .quickbar{ gap:8px; }
-  .card{ padding:12px; }
-  .card img.thumb{ width:58px; height:58px; }
-}
-/* EMERGENCY — układ strony głównej */
-.container.grid-4{display:grid !important; grid-template-columns:repeat(4,1fr) !important; gap:12px !important;}
-@media (max-width:1023px){ .container.grid-4{grid-template-columns:repeat(2,1fr) !important;} }
-.container.grid-3{display:grid !important; grid-template-columns:repeat(3,1fr) !important; gap:14px !important;}
-.card{
-  display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:center !important;
-  text-align:center !important; background:rgba(255,255,255,.88) !important; border:1px solid rgba(120,100,255,.35) !important;
-  border-radius:14px !important; padding:14px !important; aspect-ratio:1/1 !important; box-shadow:0 0 10px rgba(122,77,255,.22) !important;
-}
-.quickbar a,.btn{display:inline-flex !important; align-items:center !important;}
-.locate-me{display:inline-flex !important;}
-/* ==== FIX: delikatny glow dla zielonych kafelków ==== */
-.card.green.glow{
-  box-shadow: 0 0 12px rgba(18,197,91,.22), 0 0 22px rgba(18,197,91,.12);
-}
-
-/* ==== FIX: wygląd przycisku „Namierz mnie” ==== */
-.locate-me{
-  display:inline-flex; align-items:center; gap:8px;
-  font-weight:800; font-size:1.12rem;
-  padding:10px 16px; border-radius:12px;
-  background: rgba(18,197,91,.12);
-  border:1px solid rgba(18,197,91,.45);
-  text-decoration:none; color:#0f6b36;
-  box-shadow:0 0 10px rgba(18,197,91,.18);
-}
-
-/* ==== Wyszukiwarka z lupą (na wypadek gdyby brakowało) ==== */
-.search{ position: relative; display:flex; align-items:center; }
-.search .ico{ position:absolute; left:10px; font-size:1.1rem; opacity:.75; }
-.search input[type="search"]{
-  width:100%; padding:.55rem .75rem .55rem 36px;
-  border-radius:10px; border:1px solid rgba(120,100,255,.35);
-  background: rgba(255,255,255,.88);
-  box-shadow: 0 0 10px rgba(122,77,255,.22);
-  font-size: 1rem;
-  outline: none;
+  /* podpis proporcjonalnie większy */
+  .grid-3 .card .label{
+    font-size: 1.15rem;
+  }
 }
