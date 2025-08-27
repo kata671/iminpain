@@ -196,3 +196,30 @@ main.container .card img{
 }
 .quickbar a,.btn{display:inline-flex !important; align-items:center !important;}
 .locate-me{display:inline-flex !important;}
+/* ==== FIX: delikatny glow dla zielonych kafelków ==== */
+.card.green.glow{
+  box-shadow: 0 0 12px rgba(18,197,91,.22), 0 0 22px rgba(18,197,91,.12);
+}
+
+/* ==== FIX: wygląd przycisku „Namierz mnie” ==== */
+.locate-me{
+  display:inline-flex; align-items:center; gap:8px;
+  font-weight:800; font-size:1.12rem;
+  padding:10px 16px; border-radius:12px;
+  background: rgba(18,197,91,.12);
+  border:1px solid rgba(18,197,91,.45);
+  text-decoration:none; color:#0f6b36;
+  box-shadow:0 0 10px rgba(18,197,91,.18);
+}
+
+/* ==== Wyszukiwarka z lupą (na wypadek gdyby brakowało) ==== */
+.search{ position: relative; display:flex; align-items:center; }
+.search .ico{ position:absolute; left:10px; font-size:1.1rem; opacity:.75; }
+.search input[type="search"]{
+  width:100%; padding:.55rem .75rem .55rem 36px;
+  border-radius:10px; border:1px solid rgba(120,100,255,.35);
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 0 10px rgba(122,77,255,.22);
+  font-size: 1rem;
+  outline: none;
+}
