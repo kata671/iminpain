@@ -5,48 +5,93 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Kobieta — wybór obszaru bólu</title>
   <link rel="stylesheet" href="style.css" />
-  <style>.tiles-responsive{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));list-style:none;padding:0;margin:16px 0}</style>
+  <meta name="theme-color" content="#7a4dff" />
+  <style>
+    .card img.thumb {
+      display:block;
+      width:42px; height:42px;
+      object-fit:cover; border-radius:6px;
+      margin:0 auto 6px;
+      box-shadow:0 0 6px rgba(130,100,255,.35);
+    }
+  </style>
 </head>
 <body class="bg-med">
   <nav class="quickbar">
-    <a href="tel:112">📞 112</a>
-    <a href="lokalizacja.html">📍 Lokalizacja</a>
+    <a href="index.html">🏠 Strona główna</a>
     <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
+    <a href="lokalizacja.html">📍 Lokalizacja</a>
   </nav>
 
   <header class="site-header">
-    <a class="back" href="index.html">← Wróć</a>
-    <h1>👩 Kobieta</h1>
-    <p class="subtitle">Wybierz obszar bólu</p>
+    <h1>👩 Kobieta — wybierz obszar bólu</h1>
   </header>
 
   <main class="container">
-    <ul class="tiles-responsive">
-      <li><a class="tile" href="szczegoly.html?id=glowa_k">🧠 Głowa</a></li>
-      <li><a class="tile" href="szczegoly.html?id=oczy_k">👁 Oczy</a></li>
-      <li><a class="tile" href="szczegoly.html?id=nos_k">👃 Nos</a></li>
-      <li><a class="tile" href="szczegoly.html?id=ucho_k">👂 Ucho</a></li>
-      <li><a class="tile" href="szczegoly.html?id=szyja_k">🦴 Szyja</a></li>
-      <li><a class="tile" href="szczegoly.html?id=bark_k">🏋️ Bark</a></li>
-      <li><a class="tile" href="szczegoly.html?id=ramie_k">💪 Ramię</a></li>
-      <li><a class="tile" href="szczegoly.html?id=lokiec_k">🎾 Łokieć</a></li>
-      <li><a class="tile" href="szczegoly.html?id=nadgarstek_k">⌚ Nadgarstek</a></li>
-      <li><a class="tile" href="szczegoly.html?id=dlon_k">✋ Dłoń</a></li>
-      <li><a class="tile" href="szczegoly.html?id=klatka_k">💙 Klatka</a></li>
-      <li><a class="tile" href="szczegoly.html?id=serce_k">❤️ Serce</a></li>
-      <li><a class="tile" href="szczegoly.html?id=plecy_k">🧍 Plecy</a></li>
-      <li><a class="tile" href="szczegoly.html?id=brzuch_k">🫃 Brzuch</a></li>
-      <li><a class="tile" href="szczegoly.html?id=biodra_k">🦴 Biodra</a></li>
-      <li><a class="tile" href="szczegoly.html?id=pachwina_k">🔻 Pachwina</a></li>
-      <li><a class="tile" href="szczegoly.html?id=nogi_k">🦵 Nogi</a></li>
-      <li><a class="tile" href="szczegoly.html?id=kolano_k">🦵 Kolano</a></li>
-      <li><a class="tile" href="szczegoly.html?id=lydka_k">🦿 Łydka</a></li>
-      <li><a class="tile" href="szczegoly.html?id=kostka_k">🦶 Kostka</a></li>
-      <li><a class="tile" href="szczegoly.html?id=stopa_k">🦶 Stopa</a></li>
-      <li><a class="tile tile-accent pulse" href="lokalizacja.html">🚑 Natychmiastowa pomoc</a></li>
-    </ul>
+    <div class="grid-3">
+
+      <!-- Głowa i twarz -->
+      <a class="card" href="szczegoly.html?id=kobieta-oko">
+        <img src="img/kobieta-oko.png" alt="Oko kobiety" class="thumb"><span>👁️ Oko</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=kobieta-nos">
+        <img src="img/kobieta-nos.png" alt="Nos kobiety" class="thumb"><span>👃 Nos</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=kobieta-usta">
+        <img src="img/kobieta-usta.png" alt="Usta kobiety" class="thumb"><span>👄 Usta</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=kobieta-ucho">
+        <img src="img/kobieta-ucho.png" alt="Ucho kobiety" class="thumb"><span>👂 Ucho</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=kobieta-glowa">
+        <img src="img/kobieta-glowa.png" alt="Głowa kobiety" class="thumb"><span>🧠 Głowa</span>
+      </a>
+
+      <!-- Tułów -->
+      <a class="card" href="szczegoly.html?id=kobieta-serce">
+        <img src="img/kobieta-serce.png" alt="Serce kobiety" class="thumb"><span>❤️ Serce</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=kobieta-pluca">
+        <img src="img/kobieta-pluca.png" alt="Płuca kobiety" class="thumb"><span>🫁 Płuca</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=kobieta-kregoslup">
+        <img src="img/kobieta-kregoslup.png" alt="Kręgosłup kobiety" class="thumb"><span>🧍‍♀️ Kręgosłup</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=kobieta-zoladek">
+        <img src="img/kobieta-zoladek.png" alt="Żołądek kobiety" class="thumb"><span>🫀 Żołądek</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=kobieta-watroba">
+        <img src="img/kobieta-watroba.png" alt="Wątroba kobiety" class="thumb"><span>🍃 Wątroba</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=kobieta-nerki">
+        <img src="img/kobieta-nerki.png" alt="Nerki kobiety" class="thumb"><span>💧 Nerki</span>
+      </a>
+
+      <!-- Kończyny górne -->
+      <a class="card" href="szczegoly.html?id=kobieta-ramie">
+        <img src="img/kobieta-ramie.png" alt="Ramię kobiety" class="thumb"><span>💪 Ramię</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=kobieta-lokiec">
+        <img src="img/kobieta-lokiec.png" alt="Łokieć kobiety" class="thumb"><span>⚡ Łokieć</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=kobieta-dlon">
+        <img src="img/kobieta-dlon.png" alt="Dłoń kobiety" class="thumb"><span>✋ Dłoń</span>
+      </a>
+
+      <!-- Kończyny dolne -->
+      <a class="card" href="szczegoly.html?id=kobieta-udo">
+        <img src="img/kobieta-udo.png" alt="Udo kobiety" class="thumb"><span>🦵 Udo</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=kobieta-kolano">
+        <img src="img/kobieta-kolano.png" alt="Kolano kobiety" class="thumb"><span>🦵 Kolano</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=kobieta-stopa">
+        <img src="img/kobieta-stopa.png" alt="Stopa kobiety" class="thumb"><span>🦶 Stopa</span>
+      </a>
+
+    </div>
   </main>
 
-  <footer class="site-footer"><small>© 2025</small></footer>
+  <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
 </body>
 </html>
