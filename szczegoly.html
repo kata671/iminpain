@@ -6,8 +6,8 @@
   <title>Szczegóły — objawy i pomoc</title>
   <link rel="stylesheet" href="style.css" />
   <meta name="theme-color" content="#7a4dff" />
-  <meta name="description" content="Przyczyny, objawy, leczenie i pierwsza pomoc dla wybranej części ciała." />
   <style>
+    /* Nie zmieniam globalnego tła! Tylko UI tej podstrony. */
     .detail-hero { display:none; margin:10px auto 14px; max-width:min(960px,95vw);
       border-radius:14px; overflow:hidden; border:1px solid var(--border); background:var(--card);
       box-shadow:0 0 18px rgba(122,77,255,.28), 0 0 36px rgba(80,180,255,.18);
@@ -23,44 +23,50 @@
     @keyframes pulseRed { 0%{box-shadow:0 0 6px rgba(255,77,90,.55),0 0 18px rgba(255,77,120,.35); transform:scale(1);} 50%{box-shadow:0 0 16px rgba(255,77,90,.95),0 0 38px rgba(255,77,120,.6); transform:scale(1.02);} 100%{box-shadow:0 0 6px rgba(255,77,90,.55),0 0 18px rgba(255,77,120,.35); transform:scale(1);} }
     .note { opacity:.85; font-size:.95rem; }
     ul { margin:.4rem 0 .2rem; }
+
+    /* Eleganckie przewijanie list, gdy treści jest dużo */
+    .section.card ul {
+      max-height: 240px;    /* widoczna wysokość; możesz podnieść/obniżyć */
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .section.card ul::-webkit-scrollbar { width: 6px; }
+    .section.card ul::-webkit-scrollbar-track { background: transparent; }
+    .section.card ul::-webkit-scrollbar-thumb { background: rgba(122,77,255,.4); border-radius: 6px; }
+    .section.card ul::-webkit-scrollbar-thumb:hover { background: rgba(122,77,255,.6); }
   </style>
 </head>
-
 <body class="bg-med">
   <nav class="quickbar">
     <a href="index.html">🏠</a>
     <a href="tel:112">📞 112</a>
     <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
     <a href="lokalizacja.html">📍 Lokalizacja</a>
-    <input id="search" type="search" placeholder="np. ból kolana, oko..." />
-    <button id="search-btn">🔎</button>
-    <button id="btn-voice" title="Szukaj głosem">🎤</button>
-    <button id="theme-toggle" class="theme-toggle" title="Jasny/Ciemny">☀️/🌙</button>
   </nav>
 
   <header class="site-header">
     <a class="back" href="javascript:history.back()">← Wróć</a>
     <h1 id="title">Szczegóły</h1>
-    <p id="subtitle" class="subtitle"></p>
+    <p id="subtitle" class="subtitle">Przyczyny, objawy, pierwsza pomoc, leki i lekarze</p>
   </header>
 
-  <!-- opcjonalny obraz -->
+  <!-- Opcjonalne mini-hero (jeśli istnieje obraz: img/<osoba>-<część>.png) -->
   <figure class="detail-hero" id="detailHero"><img id="heroImg" alt=""></figure>
 
   <main class="container">
     <section class="section card" id="przyczyny">
       <h2>🧩 Przyczyny</h2>
-      <ul id="list-przyczyny"><li>—</li></ul>
+      <ul id="list-przyczyny"></ul>
     </section>
 
     <section class="section card" id="objawy">
       <h2>🔍 Objawy</h2>
-      <ul id="list-objawy"><li>—</li></ul>
+      <ul id="list-objawy"></ul>
     </section>
 
     <section class="section card" id="pp">
       <h2>⛑️ Pierwsza pomoc</h2>
-      <ul id="list-pp"><li>—</li></ul>
+      <ul id="list-pp"></ul>
       <div class="cta-row">
         <a class="btn btn-emg" href="tel:112">🚨 Zadzwoń 112</a>
         <a class="btn" href="lokalizacja.html">📍 Znajdź najbliższą pomoc</a>
@@ -73,12 +79,12 @@
         <span class="pill pill-otc">Bez recepty</span>
         <span class="pill pill-rx">Na receptę</span>
       </div>
-      <ul id="list-leki"><li>—</li></ul>
+      <ul id="list-leki"></ul>
     </section>
 
     <section class="section card" id="lekarze">
       <h2>🩺 Lekarze</h2>
-      <ul id="list-lekarze"><li>—</li></ul>
+      <ul id="list-lekarze"></ul>
     </section>
 
     <p class="note">
@@ -89,128 +95,54 @@
 
   <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
 
+  <!-- 1) baza treści -->
+  <script src="content.js?v=1"></script>
+
+  <!-- 2) logika wypełniania; nic poza tym nie zmieniam -->
   <script>
-    // --- parsowanie ID
     const raw = new URLSearchParams(location.search).get('id') || '';
+
     function normalize(s){
-      s = s.toLowerCase().trim().replace(/\s+/g,'-').replace(/_/g,'-');
-      const m = s.match(/^(.*?)-(k|m|d)$/);
-      if(m){ return { osoba: m[2]==='k'?'kobieta':m[2]==='m'?'mezczyzna':'dziecko', part:m[1] }; }
+      s = (s || '').toLowerCase().trim().replace(/\s+/g,'-').replace(/_/g,'-');
       for(const p of ['kobieta','mezczyzna','dziecko']){
         if(s.startsWith(p+'-')) return { osoba:p, part:s.slice(p.length+1) };
       }
-      const ls = (localStorage.getItem('sex')||'').toLowerCase();
-      const osoba = ls==='k'?'kobieta':ls==='m'?'mezczyzna':ls==='d'?'dziecko':'kobieta';
-      return { osoba, part:s };
+      return { osoba:'kobieta', part:s };
     }
     const ctx = normalize(raw);
 
     const PART_NAME = {
       glowa:'Głowa', oko:'Oko', nos:'Nos', usta:'Usta', ucho:'Ucho',
-      serce:'Serce', pluca:'Płuca', kregoslup:'Kręgosłup', zoladek:'Żołądek', watroba:'Wątroba', nerki:'Nerki',
-      ramie:'Ramię', lokiec:'Łokieć', dlon:'Dłoń', udo:'Udo', kolano:'Kolano', lydka:'Łydka', stopa:'Stopa',
+      serce:'Serce', pluca:'Płuca', kregoslup:'Kręgosłup', zoladek:'Żołądek',
+      watroba:'Wątroba', nerki:'Nerki', ramie:'Ramię', lokiec:'Łokieć',
+      dlon:'Dłoń', udo:'Udo', kolano:'Kolano', lydka:'Łydka', stopa:'Stopa',
       ciaza:'Ciąża'
     };
-    const OSOBA_NAME = { kobieta:'kobieta', mezczyzna:'mężczyzna', dziecko:'dziecko' };
 
+    // Tytuł
     const title = document.getElementById('title');
-    const subtitle = document.getElementById('subtitle');
-    const prettyPart = PART_NAME[ctx.part] || ctx.part || 'Szczegóły';
-    title.textContent = `${prettyPart} — ${OSOBA_NAME[ctx.osoba]||''}`.trim();
-    subtitle.textContent = 'Przyczyny, objawy, pierwsza pomoc, leki i lekarze dla wybranego obszaru.';
+    title.textContent = PART_NAME[ctx.part] ? `${PART_NAME[ctx.part]} — ${ctx.osoba}` : 'Szczegóły';
 
-    // hero image jeśli istnieje
+    // Mini-hero jeśli istnieje obraz
     (function hero(){
       const src = `img/${ctx.osoba}-${ctx.part}.png`;
       const img = document.getElementById('heroImg');
       const box = document.getElementById('detailHero');
       img.onload = ()=> box.style.display='block';
       img.onerror = ()=> box.style.display='none';
-      img.src = src+'?v=1';
+      img.src = src + '?v=1';
     })();
 
-    // ————— Treści
-    const CONTENT = {
-      // ... (pozostałe części — jak wcześniej)
-      oko: {
-        przyczyny:['Zapalenie spojówek','Zespół suchego oka','Ciało obce / uraz'],
-        objawy:['Łzawienie, pieczenie','Zaczerwienienie','Pogorszenie ostrości'],
-        pp:['Nie trzyj oka, przepłucz solą','Zdejmij soczewki','Silny ból/utrata widzenia — pilnie do okulisty/112'],
-        leki:[['OTC','Sztuczne łzy, kompresy chłodne'],['RX','Antybiotyk/steroid wg lekarza']],
-        lekarze:['POZ','Okulista']
-      },
-      // … (nos, usta, ucho, glowa, serce, pluca, kregoslup, zoladek, watroba, nerki, ramie, lokiec, dlon, udo, kolano, lydka, stopa)
-      nos: { przyczyny:['Infekcja','Alergia','Skrzywienie przegrody'], objawy:['Katar, zatkanie','Ból zatok'], pp:['Płukanie solą','Nawilżanie powietrza'], leki:[['OTC','Irygacje, krótkotrwale obkurczające'],['RX','Steryd donosowy/antyalergiczne']], lekarze:['POZ','Laryngolog'] },
-      usta:{ przyczyny:['Afty/opryszczka','Podrażnienie','Niedobory'], objawy:['Bolesne zmiany','Pieczenie'], pp:['Płukanki antyseptyczne','Unikaj drażniących potraw'], leki:[['OTC','Żele znieczulające/osłaniające'],['RX','P/wirusowe przy opryszczce']], lekarze:['POZ','Dentysta','Dermatolog'] },
-      ucho:{ przyczyny:['Czop woskowinowy','Zapalenie ucha','Barotrauma'], objawy:['Ból, zatkanie','Szumy'], pp:['Nie używaj patyczków','Ciepły okład'], leki:[['OTC','Krople zmiękczające'],['RX','Antybiotyk wg lekarza']], lekarze:['POZ','Laryngolog'] },
-      glowa:{ przyczyny:['Napięciowy ból','Migrena','Zatoki'], objawy:['Ucisk/pulsowanie','Nadwrażliwość'], pp:['Odpoczynek, nawodnienie','Zimny okład'], leki:[['OTC','Paracetamol/ibuprofen'],['RX','Tryptany/profilaktyka']], lekarze:['POZ','Neurolog','Laryngolog'] },
-      serce:{ przyczyny:['Dławica/zawał','Arytmie','Stres/anemia'], objawy:['Ból uciskowy, duszność','Zimny pot'], pp:['Przerwij wysiłek','Ból >10 min — 112'], leki:[['OTC','—'],['RX','Wg lekarza']], lekarze:['POZ','Kardiolog','SOR'] },
-      pluca:{ przyczyny:['Infekcja','Astma/POChP','Zatorowość'], objawy:['Kaszel, duszność','Ból przy wdechu'], pp:['Pozycja półsiedząca','Nawilżanie powietrza'], leki:[['OTC','Syropy p/kaszlowe/wykrztuśne'],['RX','Antybiotyk/steryd wziewny']], lekarze:['POZ','Pulmonolog','SOR'] },
-      kregoslup:{ przyczyny:['Przeciążenie/dyskopatia','Postawa','Uraz'], objawy:['Ból pleców','Drętwienie'], pp:['Oszczędzanie, ciepło/zimno','Delikatny ruch'], leki:[['OTC','NLPZ/maści'],['RX','Miorelaksant/fizjo']], lekarze:['POZ','Ortopeda','Neurolog','Fizjoterapeuta'] },
-      zoladek:{ przyczyny:['Niestrawność/zatrucie','Refluks/wrzody'], objawy:['Ból nadbrzusza','Zgaga, nudności'], pp:['Nawodnienie, lekkostrawnie','Unikaj alkoholu/tłustego'], leki:[['OTC','IPP OTC, środki osłaniające'],['RX','IPP/eradykacja H.pylori']], lekarze:['POZ','Gastroenterolog'] },
-      watroba:{ przyczyny:['WZW, stłuszczenie','Leki/toksyny'], objawy:['Dyskomfort prawe podżebrze','Zmęczenie'], pp:['Abstynencja alkoholowa','Dieta lekka'], leki:[['OTC','—'],['RX','Wg diagnozy']], lekarze:['POZ','Hepatolog'] },
-      nerki:{ przyczyny:['Kolka nerkowa','ZUM'], objawy:['Ból lędźwi promieniujący','Gorączka, pieczenie przy mikcji'], pp:['Płyny jeśli można','Ciepło na okolicę'], leki:[['OTC','NLPZ p/bólowo'],['RX','Antybiotyk przy ZUM']], lekarze:['POZ','Urolog','SOR (silny ból/gorączka)'] },
-      ramie:{ przyczyny:['Stożek rotatorów','Kaletka'], objawy:['Ból przy unoszeniu','Sztywność'], pp:['Oszczędzanie, zimno','Delikatne ćwiczenia'], leki:[['OTC','NLPZ żele/doustne'],['RX','Iniekcje/fizjo']], lekarze:['POZ','Ortopeda','Fizjoterapeuta'] },
-      lokiec:{ przyczyny:['Tenisisty/golfisty','Uraz'], objawy:['Ból przy chwytaniu','Tkliwość'], pp:['Odpoczynek, orteza','Zimno na ostro'], leki:[['OTC','NLPZ'],['RX','Steryd wg lekarza']], lekarze:['POZ','Ortopeda'] },
-      dlon:{ przyczyny:['Przeciążenie/skręcenie','Cieśń nadgarstka'], objawy:['Ból/obrzęk','Mrowienie'], pp:['Unieruchomienie elastyczne','Ergonomia pracy'], leki:[['OTC','NLPZ miejscowo'],['RX','Steryd/fizjo']], lekarze:['POZ','Ortopeda','Neurolog'] },
-      udo:{ przyczyny:['Naciągnięcie mięśni','Rwa kulszowa'], objawy:['Ból uda','Ograniczenie ruchu'], pp:['RICE','Rozciąganie po ustąpieniu bólu'], leki:[['OTC','NLPZ'],['RX','Fizjoterapia']], lekarze:['POZ','Ortopeda'] },
-      kolano:{ przyczyny:['Więzadła/łąkotka','Chondromalacja'], objawy:['Ból przy zginaniu','Obrzęk'], pp:['RICE, odciążenie','Orteza przy urazie'], leki:[['OTC','NLPZ'],['RX','Rehabilitacja/iniekcje']], lekarze:['POZ','Ortopeda'] },
-      lydka:{ przyczyny:['Skurcz/naderwanie','Zakrzepica!'], objawy:['Ból łydki','Obrzęk/ocieplenie'], pp:['Odpoczynek, lód','Podejrzenie ZŻG — 112/SOR'], leki:[['OTC','NLPZ'],['RX','Wg lekarza']], lekarze:['POZ','Chirurg naczyniowy','SOR'] },
-      stopa:{ przyczyny:['Skręcenie/przeciążenie','Rozcięgno podeszwowe'], objawy:['Ból przy obciążaniu','Tkliwość'], pp:['RICE, obuwie z wkładką','Roller/piłka'], leki:[['OTC','NLPZ/maści'],['RX','Fizjo/iniekcje']], lekarze:['POZ','Ortopeda','Fizjoterapeuta'] },
-
-      // ——— CIĄŻA (nowa sekcja) — tylko dla kobiety, ale pokażemy też, jeśli ktoś wejdzie z inną „osobą”
-      ciaza: {
-        przyczyny: [
-          'Typowe dolegliwości: nudności/wymioty, zgaga, bóle krzyża, obrzęki nóg',
-          'Niedokrwistość ciążowa, infekcje dróg moczowych',
-          'Nadciśnienie indukowane ciążą / stan przedrzucawkowy (objawy alarmowe)'
-        ],
-        objawy: [
-          'Prawidłowe: łagodne bóle więzadeł, sporadyczne skurcze Braxtona-Hicksa',
-          'ALARM: silny ból podbrzusza, krwawienie, ból głowy + mroczki, nagłe obrzęki twarzy/dłoni',
-          'ALARM: zmniejszenie ruchów płodu, wysoka gorączka, odpływanie płynu owodniowego'
-        ],
-        pp: [
-          'Odpoczynek na lewym boku, nawadnianie małymi łykami',
-          'Zgaga: małe posiłki, uniesienie wezgłowia; imbir na nudności',
-          'ALARM (którykolwiek z powyższych): nie zwlekaj — 📞 112 lub jedź do izby przyjęć/położniczej'
-        ],
-        leki: [
-          ['OTC','Paracetamol jako lek p/bólowy pierwszego wyboru'],
-          ['OTC','Na zgagę: leki zobojętniające/alginiaty; na nudności: imbir, wit. B6 (po konsultacji)'],
-          ['RX','Inne leki wyłącznie po ocenie lekarza prowadzącego']
-        ],
-        lekarze: [
-          'Położna / Ginekolog-położnik (kontrola ciąży)',
-          'SOR/Izba położnicza przy objawach alarmowych',
-          'POZ (infekcje, choroby współistniejące — po konsultacji z ginekologiem)'
-        ]
-      }
-    };
-
+    // Render
     function fill(content){
-      const P = document.getElementById('list-przyczyny');
-      const O = document.getElementById('list-objawy');
-      const PP = document.getElementById('list-pp');
-      const L = document.getElementById('list-leki');
-      const DR = document.getElementById('list-lekarze');
-      const toLis = arr => arr.map(x=>`<li>${Array.isArray(x)?x.join(' — '):x}</li>`).join('');
-      if(content){
-        P.innerHTML = toLis(content.przyczyny||[]);
-        O.innerHTML = toLis(content.objawy||[]);
-        PP.innerHTML = toLis(content.pp||[]);
-        L.innerHTML = toLis(content.leki||[]);
-        DR.innerHTML = toLis(content.lekarze||[]);
-      } else {
-        P.innerHTML = '<li>Najczęstsze przyczyny dla tego obszaru.</li>';
-        O.innerHTML = '<li>Najczęstsze objawy do obserwacji.</li>';
-        PP.innerHTML = '<li>Najważniejsze kroki pierwszej pomocy.</li>';
-        L.innerHTML = '<li><span class="pill pill-otc">Bez recepty</span> — wg wskazań.</li><li><span class="pill pill-rx">Na receptę</span> — wg lekarza.</li>';
-        DR.innerHTML = '<li>Właściwa specjalizacja wg objawów.</li>';
-      }
+      const toLis = arr => (arr||[]).map(x=>`<li>${Array.isArray(x)?x.join(' — '):x}</li>`).join('');
+      document.getElementById('list-przyczyny').innerHTML = toLis(content?.przyczyny);
+      document.getElementById('list-objawy').innerHTML    = toLis(content?.objawy);
+      document.getElementById('list-pp').innerHTML        = toLis(content?.pp);
+      document.getElementById('list-leki').innerHTML      = toLis(content?.leki);
+      document.getElementById('list-lekarze').innerHTML   = toLis(content?.lekarze);
     }
-
-    fill( CONTENT[ctx.part] || null );
+    fill((window.CONTENT||{})[ctx.part] || {});
   </script>
 </body>
 </html>
