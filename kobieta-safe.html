@@ -5,70 +5,74 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Kobieta — wybierz obszar bólu (safe)</title>
 
-  <!-- Ładujemy te same style co zwykle, ale NIC w nich nie zmieniamy -->
+  <!-- Ładujemy dokładnie te same style co na działającej wersji (tapeta z backupu) -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="wallpaper.css" />
+  <meta name="theme-color" content="#7a4dff" />
 
-  <!-- Izolowany, lokalny styl TYLKO dla tej podstrony/sekcji -->
+  <!-- LOKALNE style tylko dla tej sekcji (bez żadnych tła/background!) -->
   <style>
-    /* całość TYLKO w tym namespacie — nie ingeruje w resztę strony */
+    /* Namespace — izolacja tylko do tej sekcji */
     .areasOnly { margin-top: 12px; }
     .areasOnly h2 {
       margin: 0 0 10px;
       text-align: center;
       font-weight: 800;
     }
-    .areasOnly .areas-grid {
-      display: grid;
+
+    /* Siatka miniaturek: 3 w rzędzie (jak u Ciebie) */
+    .areasOnly .areas-grid{
+      display:grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap:12px;
     }
     @media (max-width: 900px){
-      .areasOnly .areas-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-      }
+      .areasOnly .areas-grid{ gap:10px; }
     }
     @media (max-width: 600px){
-      .areasOnly .areas-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-      }
+      .areasOnly .areas-grid{ gap:8px; }
     }
 
-    /* Karta miniatury (nie rusza globalnych .card dzięki bardziej specyficznemu selektorowi) */
-    .areasOnly .mini-card {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; text-decoration: none;
+    /* Karta miniatury — NIE używamy globalnej .card, żeby nic nie nadpisać */
+    .areasOnly .mini-card{
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      text-align:center; text-decoration:none; color:inherit;
       background: rgba(255,255,255,.88);
-      border: 1px solid rgba(120,100,255,.35);
-      border-radius: 14px;
-      padding: 10px;
-      box-shadow: 0 0 10px rgba(122,77,255,.20);
+      border:1px solid rgba(120,100,255,.35);
+      border-radius:14px;
+      padding:10px;
+      box-shadow:0 0 10px rgba(122,77,255,.20);
       transition: transform .15s ease, box-shadow .15s ease;
-      min-height: 120px;
+      min-height:120px;
     }
-    .areasOnly .mini-card:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 0 16px rgba(122,77,255,.28); }
+    .areasOnly .mini-card:hover{
+      transform: translateY(-2px) scale(1.02);
+      box-shadow:0 0 16px rgba(122,77,255,.28);
+    }
 
-    /* Miniatury — baza ~64px, tel +15%, laptop +20% */
-    .areasOnly .thumb { width: 64px; height: 64px; object-fit: cover; border-radius: 10px; display:block; }
+    /* Miniatury: baza ~64px; tel +15%, laptop +20% */
+    .areasOnly .thumb{
+      width:64px; height:64px; object-fit:cover; border-radius:10px; display:block;
+    }
     @media (max-width: 767px){
-      .areasOnly .thumb { width: 74px; height: 74px; } /* +15% */
+      .areasOnly .thumb{ width:74px; height:74px; }     /* +15% na telefonie */
     }
     @media (min-width: 1024px){
-      .areasOnly .thumb { width: 77px; height: 77px; } /* +20% (64 -> 77) */
+      .areasOnly .thumb{ width:77px; height:77px; }     /* +20% na laptopie */
     }
 
-    /* Podpisy: tylko tekst, bez emoji, bez podkreśleń */
-    .areasOnly .label {
-      margin-top: 8px; font-weight: 800; text-decoration: none; color: inherit; display:block;
+    /* Podpisy: czysty tekst (bez emoji, bez podkreśleń) */
+    .areasOnly .label{
+      margin-top:8px; font-weight:800; text-decoration:none; display:block; text-align:center;
     }
 
-    /* Drobny odstęp od innych sekcji strony */
-    .areasOnly .note { text-align:center; opacity:.75; font-size:.9rem; margin-top:8px; }
+    .areasOnly .note{
+      text-align:center; opacity:.75; font-size:.9rem; margin-top:8px;
+    }
   </style>
 </head>
 <body class="bg-med">
+  <!-- Quickbar jak na całym serwisie -->
   <nav class="quickbar">
     <a href="index.html">🏠</a>
     <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
@@ -82,7 +86,7 @@
   </header>
 
   <main class="container">
-    <!-- >>> BEZPIECZNA, odizolowana sekcja miniaturek <<< -->
+    <!-- Wyłącznie odizolowana sekcja z miniaturami -->
     <section class="areasOnly">
       <h2>Wybierz obszar bólu</h2>
 
@@ -121,7 +125,7 @@
           <img class="thumb" src="img/kobieta-watroba.png" alt="Wątroba"><span class="label">Wątroba</span>
         </a>
 
-        <!-- PLECY / KRĘGOSŁUP / NERKI -->
+        <!-- PLECY / NERKI / KRĘGOSŁUP -->
         <a class="mini-card" href="szczegoly.html?id=kobieta-kregoslup">
           <img class="thumb" src="img/kobieta-kregoslup.png" alt="Kręgosłup"><span class="label">Kręgosłup</span>
         </a>
