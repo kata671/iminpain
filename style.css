@@ -150,3 +150,19 @@ body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Ari
     font-size: 1.1rem;  /* podpisy ciut większe */
   }
 }
+/* === PATCH: większe kafelki w sekcji "wybierz obszar bólu" === */
+
+/* Telefon i małe ekrany */
+.grid-3 .card {
+  padding: 16px;     /* było mniej – teraz kafelki wyższe/szersze */
+}
+
+/* Laptop i większe ekrany */
+@media (min-width: 1024px) {
+  .grid-3 .card {
+    padding: 28px;   /* powiększamy kafelki na dużych ekranach */
+  }
+  .grid-3 .card .label {
+    font-size: 1.1rem;
+  }
+}
