@@ -80,3 +80,10 @@ body.bg-med {
   .card img.thumb { width: 68px; height: 68px; }
   .card .label { font-size: 1.1rem; }
 }
+body.bg-med {
+  background: url("img/bg-med.png") no-repeat center center fixed;
+  background-size: cover;
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  color: var(--text);
+}
