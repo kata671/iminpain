@@ -7,13 +7,12 @@
   <link rel="stylesheet" href="style.css" />
   <meta name="theme-color" content="#7a4dff" />
   <style>
-    .card { display:flex; align-items:center; justify-content:center; text-align:center; }
-    .card .label { display:inline-flex; align-items:center; gap:8px; }
-    .card img.thumb {
-      width:28px; height:28px; object-fit:cover; border-radius:6px; margin:0;
-      box-shadow:0 0 6px rgba(130,100,255,.35); vertical-align:middle;
-    }
-    .card .em { font-weight:800; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .card{ display:flex; align-items:center; justify-content:center; text-align:center; flex-direction:column; gap:8px; padding:10px; aspect-ratio:1/1; }
+    .card img.thumb{ width:44px; height:44px; object-fit:cover; border-radius:8px; margin:0; box-shadow:0 0 6px rgba(130,100,255,.35); }
+    .card .label{ font-weight:800; line-height:1.15; display:inline-flex; align-items:center; gap:6px; }
+    .card .label .emo{ opacity:.95; }
+    @media (max-width:420px){ .grid-3{ gap:10px; } .card img.thumb{ width:40px; height:40px; } }
   </style>
 </head>
 <body class="bg-med">
@@ -32,61 +31,78 @@
 
       <!-- Głowa i twarz -->
       <a class="card" href="szczegoly.html?id=dziecko-oko">
-        <span class="label"><img src="img/dziecko-oko.png" alt="" class="thumb"><span class="em">👁️ Oko</span></span>
+        <img src="img/dziecko-oko.png" alt="" class="thumb">
+        <span class="label"><span class="name">Oko</span><span class="emo">👁️</span></span>
       </a>
       <a class="card" href="szczegoly.html?id=dziecko-nos">
-        <span class="label"><img src="img/dziecko-nos.png" alt="" class="thumb"><span class="em">👃 Nos</span></span>
+        <img src="img/dziecko-nos.png" alt="" class="thumb">
+        <span class="label"><span class="name">Nos</span><span class="emo">👃</span></span>
       </a>
       <a class="card" href="szczegoly.html?id=dziecko-usta">
-        <span class="label"><img src="img/dziecko-usta.png" alt="" class="thumb"><span class="em">👄 Usta</span></span>
+        <img src="img/dziecko-usta.png" alt="" class="thumb">
+        <span class="label"><span class="name">Usta</span><span class="emo">👄</span></span>
       </a>
       <a class="card" href="szczegoly.html?id=dziecko-ucho">
-        <span class="label"><img src="img/dziecko-ucho.png" alt="" class="thumb"><span class="em">👂 Ucho</span></span>
+        <img src="img/dziecko-ucho.png" alt="" class="thumb">
+        <span class="label"><span class="name">Ucho</span><span class="emo">👂</span></span>
       </a>
       <a class="card" href="szczegoly.html?id=dziecko-glowa">
-        <span class="label"><img src="img/dziecko-glowa.png" alt="" class="thumb"><span class="em">🧠 Głowa</span></span>
+        <img src="img/dziecko-glowa.png" alt="" class="thumb">
+        <span class="label"><span class="name">Głowa</span><span class="emo">🧠</span></span>
       </a>
 
       <!-- Tułów -->
       <a class="card" href="szczegoly.html?id=dziecko-serce">
-        <span class="label"><img src="img/dziecko-serce.png" alt="" class="thumb"><span class="em">❤️ Serce</span></span>
+        <img src="img/dziecko-serce.png" alt="" class="thumb">
+        <span class="label"><span class="name">Serce</span><span class="emo">❤️</span></span>
       </a>
       <a class="card" href="szczegoly.html?id=dziecko-pluca">
-        <span class="label"><img src="img/dziecko-pluca.png" alt="" class="thumb"><span class="em">🫁 Płuca</span></span>
+        <img src="img/dziecko-pluca.png" alt="" class="thumb">
+        <span class="label"><span class="name">Płuca</span><span class="emo">🫁</span></span>
       </a>
       <a class="card" href="szczegoly.html?id=dziecko-kregoslup">
-        <span class="label"><img src="img/dziecko-kregoslup.png" alt="" class="thumb"><span class="em">🧍 Kręgosłup</span></span>
+        <img src="img/dziecko-kregoslup.png" alt="" class="thumb">
+        <span class="label"><span class="name">Kręgosłup</span><span class="emo">🧍</span></span>
       </a>
       <a class="card" href="szczegoly.html?id=dziecko-zoladek">
-        <span class="label"><img src="img/dziecko-zoladek.png" alt="" class="thumb"><span class="em">🫀 Żołądek</span></span>
+        <img src="img/dziecko-zoladek.png" alt="" class="thumb">
+        <span class="label"><span class="name">Żołądek</span><span class="emo">🫀</span></span>
       </a>
       <a class="card" href="szczegoly.html?id=dziecko-watroba">
-        <span class="label"><img src="img/dziecko-watroba.png" alt="" class="thumb"><span class="em">🍃 Wątroba</span></span>
+        <img src="img/dziecko-watroba.png" alt="" class="thumb">
+        <span class="label"><span class="name">Wątroba</span><span class="emo">🍃</span></span>
       </a>
       <a class="card" href="szczegoly.html?id=dziecko-nerki">
-        <span class="label"><img src="img/dziecko-nerki.png" alt="" class="thumb"><span class="em">💧 Nerki</span></span>
+        <img src="img/dziecko-nerki.png" alt="" class="thumb">
+        <span class="label"><span class="name">Nerki</span><span class="emo">💧</span></span>
       </a>
 
       <!-- Kończyny górne -->
       <a class="card" href="szczegoly.html?id=dziecko-ramie">
-        <span class="label"><img src="img/dziecko-ramie.png" alt="" class="thumb"><span class="em">💪 Ramię</span></span>
+        <img src="img/dziecko-ramie.png" alt="" class="thumb">
+        <span class="label"><span class="name">Ramię</span><span class="emo">💪</span></span>
       </a>
       <a class="card" href="szczegoly.html?id=dziecko-lokiec">
-        <span class="label"><img src="img/dziecko-lokiec.png" alt="" class="thumb"><span class="em">⚡ Łokieć</span></span>
+        <img src="img/dziecko-lokiec.png" alt="" class="thumb">
+        <span class="label"><span class="name">Łokieć</span><span class="emo">⚡</span></span>
       </a>
       <a class="card" href="szczegoly.html?id=dziecko-dlon">
-        <span class="label"><img src="img/dziecko-dlon.png" alt="" class="thumb"><span class="em">✋ Dłoń</span></span>
+        <img src="img/dziecko-dlon.png" alt="" class="thumb">
+        <span class="label"><span class="name">Dłoń</span><span class="emo">✋</span></span>
       </a>
 
       <!-- Kończyny dolne -->
       <a class="card" href="szczegoly.html?id=dziecko-udo">
-        <span class="label"><img src="img/dziecko-udo.png" alt="" class="thumb"><span class="em">🦵 Udo</span></span>
+        <img src="img/dziecko-udo.png" alt="" class="thumb">
+        <span class="label"><span class="name">Udo</span><span class="emo">🦵</span></span>
       </a>
       <a class="card" href="szczegoly.html?id=dziecko-kolano">
-        <span class="label"><img src="img/dziecko-kolano.png" alt="" class="thumb"><span class="em">🦵 Kolano</span></span>
+        <img src="img/dziecko-kolano.png" alt="" class="thumb">
+        <span class="label"><span class="name">Kolano</span><span class="emo">🦵</span></span>
       </a>
       <a class="card" href="szczegoly.html?id=dziecko-stopa">
-        <span class="label"><img src="img/dziecko-stopa.png" alt="" class="thumb"><span class="em">🦶 Stopa</span></span>
+        <img src="img/dziecko-stopa.png" alt="" class="thumb">
+        <span class="label"><span class="name">Stopa</span><span class="emo">🦶</span></span>
       </a>
 
     </div>
