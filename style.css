@@ -121,3 +121,9 @@ body.bg-med {
   .grid-3 .card img.thumb{ width: 68px; height: 68px; }
   .grid-3 .card .label{ font-size: 1.1rem; }
 }
+/* WYMUSZENIE TŁA – użyj tylko jeśli tapeta nadal nie wraca */
+body.bg-med{
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
