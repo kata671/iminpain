@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kobieta — wybierz obszar bólu (safe)</title>
+
+  <!-- Ładujemy te same style co zwykle, ale NIC w nich nie zmieniamy -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="wallpaper.css" />
+
+  <!-- Izolowany, lokalny styl TYLKO dla tej podstrony/sekcji -->
+  <style>
+    /* całość TYLKO w tym namespacie — nie ingeruje w resztę strony */
+    .areasOnly { margin-top: 12px; }
+    .areasOnly h2 {
+      margin: 0 0 10px;
+      text-align: center;
+      font-weight: 800;
+    }
+    .areasOnly .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 900px){
+      .areasOnly .areas-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+    }
+    @media (max-width: 600px){
+      .areasOnly .areas-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+    }
+
+    /* Karta miniatury (nie rusza globalnych .card dzięki bardziej specyficznemu selektorowi) */
+    .areasOnly .mini-card {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; text-decoration: none;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(120,100,255,.35);
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(122,77,255,.20);
+      transition: transform .15s ease, box-shadow .15s ease;
+      min-height: 120px;
+    }
+    .areasOnly .mini-card:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 0 16px rgba(122,77,255,.28); }
+
+    /* Miniatury — baza ~64px, tel +15%, laptop +20% */
+    .areasOnly .thumb { width: 64px; height: 64px; object-fit: cover; border-radius: 10px; display:block; }
+    @media (max-width: 767px){
+      .areasOnly .thumb { width: 74px; height: 74px; } /* +15% */
+    }
+    @media (min-width: 1024px){
+      .areasOnly .thumb { width: 77px; height: 77px; } /* +20% (64 -> 77) */
+    }
+
+    /* Podpisy: tylko tekst, bez emoji, bez podkreśleń */
+    .areasOnly .label {
+      margin-top: 8px; font-weight: 800; text-decoration: none; color: inherit; display:block;
+    }
+
+    /* Drobny odstęp od innych sekcji strony */
+    .areasOnly .note { text-align:center; opacity:.75; font-size:.9rem; margin-top:8px; }
+  </style>
+</head>
+<body class="bg-med">
+  <nav class="quickbar">
+    <a href="index.html">🏠</a>
+    <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
+    <a href="lokalizacja.html">📍 Lokalizacja</a>
+    <a href="lokalizacja.html#apteki" class="btn btn-green">✚ 24h</a>
+  </nav>
+
+  <header class="site-header">
+    <h1>Kobieta</h1>
+    <p>Wybierz obszar bólu</p>
+  </header>
+
+  <main class="container">
+    <!-- >>> BEZPIECZNA, odizolowana sekcja miniaturek <<< -->
+    <section class="areasOnly">
+      <h2>Wybierz obszar bólu</h2>
+
+      <div class="areas-grid">
+        <!-- GŁOWA / TWARZ -->
+        <a class="mini-card" href="szczegoly.html?id=kobieta-oko">
+          <img class="thumb" src="img/kobieta-oko.png" alt="Oko"><span class="label">Oko</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-nos">
+          <img class="thumb" src="img/kobieta-nos.png" alt="Nos"><span class="label">Nos</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-usta">
+          <img class="thumb" src="img/kobieta-usta.png" alt="Usta"><span class="label">Usta</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-ucho">
+          <img class="thumb" src="img/kobieta-ucho.png" alt="Ucho"><span class="label">Ucho</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-glowa">
+          <img class="thumb" src="img/kobieta-glowa.png" alt="Głowa"><span class="label">Głowa</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-szyja">
+          <img class="thumb" src="img/kobieta-szyja.png" alt="Szyja"><span class="label">Szyja</span>
+        </a>
+
+        <!-- KLATKA / BRZUCH -->
+        <a class="mini-card" href="szczegoly.html?id=kobieta-serce">
+          <img class="thumb" src="img/kobieta-serce.png" alt="Serce"><span class="label">Serce</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-pluca">
+          <img class="thumb" src="img/kobieta-pluca.png" alt="Płuca"><span class="label">Płuca</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-zoladek">
+          <img class="thumb" src="img/kobieta-zoladek.png" alt="Żołądek"><span class="label">Żołądek</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-watroba">
+          <img class="thumb" src="img/kobieta-watroba.png" alt="Wątroba"><span class="label">Wątroba</span>
+        </a>
+
+        <!-- PLECY / KRĘGOSŁUP / NERKI -->
+        <a class="mini-card" href="szczegoly.html?id=kobieta-kregoslup">
+          <img class="thumb" src="img/kobieta-kregoslup.png" alt="Kręgosłup"><span class="label">Kręgosłup</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-nerki">
+          <img class="thumb" src="img/kobieta-nerki.png" alt="Nerki"><span class="label">Nerki</span>
+        </a>
+
+        <!-- RĘKA -->
+        <a class="mini-card" href="szczegoly.html?id=kobieta-ramie">
+          <img class="thumb" src="img/kobieta-ramie.png" alt="Ramię"><span class="label">Ramię</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-lokiec">
+          <img class="thumb" src="img/kobieta-lokiec.png" alt="Łokieć"><span class="label">Łokieć</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-dlon">
+          <img class="thumb" src="img/kobieta-dlon.png" alt="Dłoń"><span class="label">Dłoń</span>
+        </a>
+
+        <!-- NOGA -->
+        <a class="mini-card" href="szczegoly.html?id=kobieta-udo">
+          <img class="thumb" src="img/kobieta-udo.png" alt="Udo"><span class="label">Udo</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-kolano">
+          <img class="thumb" src="img/kobieta-kolano.png" alt="Kolano"><span class="label">Kolano</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-lydka">
+          <img class="thumb" src="img/kobieta-lydka.png" alt="Łydka"><span class="label">Łydka</span>
+        </a>
+        <a class="mini-card" href="szczegoly.html?id=kobieta-stopa">
+          <img class="thumb" src="img/kobieta-stopa.png" alt="Stopa"><span class="label">Stopa</span>
+        </a>
+
+        <!-- DODATKOWO -->
+        <a class="mini-card" href="szczegoly.html?id=kobieta-ciaza">
+          <img class="thumb" src="img/kobieta-ciaza.png" alt="Ciąża"><span class="label">Ciąża</span>
+        </a>
+      </div>
+
+      <p class="note">Miniatury większe: +15% (telefon), +20% (laptop). Podpisy — bez emoji.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>© 2025 • Boli-mnie.pl</small>
+  </footer>
+</body>
+</html>
