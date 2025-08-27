@@ -9,13 +9,11 @@
   <meta name="theme-color" content="#7a4dff" />
   <meta name="description" content="Szybko zlokalizuj ból, sprawdź pierwszą pomoc i znajdź najbliższą pomoc medyczną." />
 
-  <!-- Styl tylko dla tej strony -->
   <style>
     .home-icons .qi { font-size: 1.15rem; line-height: 1; display:inline-block; transform: translateY(1px); }
     .home-icons .quickbar a, .home-icons .quickbar button { padding: .55rem .9rem; }
     .mini-icons { font-size:.9rem; opacity:.85; margin-left:4px; }
 
-    /* 4 kafelki — zawsze jeden rząd */
     .hot-tiles { max-width: var(--max); margin: 12px auto 0; padding: 0 16px; }
     .hot-tiles-grid {
       display: grid;
@@ -31,7 +29,6 @@
     .hot-tile .ico { font-size: 1.35rem; margin-bottom:6px; }
     .hot-tile .title { font-size:1rem; }
 
-    /* czerwony pulsujący */
     .hot-red {
       background: linear-gradient(180deg, rgba(255,77,90,.24), rgba(255,77,120,.18));
       border-color: #ff9ca699;
@@ -43,7 +40,6 @@
       100% { box-shadow: 0 0 6px rgba(255,77,90,.55), 0 0 18px rgba(255,77,120,.35); transform: scale(1); }
     }
 
-    /* zielone delikatnie pulsujące */
     .hot-green {
       background: linear-gradient(180deg, rgba(8,40,20,.85), rgba(12,52,28,.78));
       border-color: rgba(18,197,91,.35);
@@ -56,8 +52,12 @@
       100% { box-shadow: 0 0 8px rgba(18,197,91,.28), 0 0 18px rgba(18,197,91,.16); transform: scale(1); }
     }
 
-    /* obrazki K/M/D wyrównane */
-    .hero-card img { max-height:420px; width:auto; object-fit:contain; }
+    /* 🔽 zdjęcia kobieta/mezczyzna/dziecko zmniejszone */
+    .hero-card img { 
+      max-height:320px; 
+      width:auto; 
+      object-fit:contain; 
+    }
   </style>
 </head>
 
@@ -78,7 +78,7 @@
     <button id="theme-toggle"><span class="qi">☀️/🌙</span></button>
   </nav>
 
-  <!-- 4 kwadraty nad nagłówkiem -->
+  <!-- 4 kafelki nad nagłówkiem -->
   <section class="hot-tiles">
     <div class="hot-tiles-grid">
       <a class="hot-tile hot-red" href="tel:112" title="Zadzwoń 112">
