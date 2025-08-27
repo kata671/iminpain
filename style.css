@@ -284,3 +284,13 @@ body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Ari
     font-size: 1.15rem;
   }
 }
+/* Namierz mnie pod kafelkami */
+.locate-me {
+  display:inline-flex; align-items:center; gap:8px;
+  font-weight:800; font-size:1.12rem;
+  padding:10px 16px; border-radius:12px;
+  background: rgba(18,197,91,.12);
+  border:1px solid rgba(18,197,91,.45);
+  text-decoration:none; color:#0f6b36;
+  box-shadow:0 0 10px rgba(18,197,91,.18);
+}
