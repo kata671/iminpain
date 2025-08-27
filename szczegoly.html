@@ -3,17 +3,40 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Szczegóły — Boli-mnie</title>
+  <title>Szczegóły — objawy i pomoc</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#7a4dff" />
+  <meta name="description" content="Przyczyny, objawy, leczenie i pierwsza pomoc dla wybranej części ciała." />
+  <style>
+    /* ——— DODATKI TYLKO DLA TEJ STRONY ——— */
+    .detail-hero {
+      display:block; margin:10px auto 14px; max-width:min(960px, 95vw);
+      border-radius:14px; overflow:hidden; border:1px solid var(--border);
+      background: var(--card);
+      box-shadow: 0 0 18px rgba(122,77,255,.28), 0 0 36px rgba(80,180,255,.18);
+    }
+    .detail-hero img {
+      display:block; width:100%; height:auto; object-fit:cover;
+      max-height: 320px; /* kompakt – ładnie mieści się na telefonie */
+    }
+    .mini-chips { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin: 6px 0 2px; }
+    .mini-chip {
+      display:inline-flex; align-items:center; gap:6px; font-weight:700; font-size:.95rem;
+      padding:6px 10px; border-radius:999px; border:1px solid var(--border); background: var(--card);
+      box-shadow: var(--glow);
+    }
+    .mini-chip img.thumb { width:18px; height:18px; border-radius:4px; object-fit:cover; }
+    .section h2 { display:flex; align-items:center; gap:8px; }
+  </style>
 </head>
+
 <body class="bg-med">
+  <!-- Quickbar (jak u Ciebie) -->
   <nav class="quickbar">
     <a href="tel:112">📞 112</a>
     <a href="lokalizacja.html">📍 Lokalizacja</a>
     <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
-    <input id="search" type="search" placeholder="np. ból brzucha, kolano..." />
+    <input id="search" type="search" placeholder="np. ból oka, nos..." />
     <button id="search-btn">🔎</button>
     <button id="btn-voice" title="Szukaj głosem">🎤</button>
     <button id="theme-toggle" class="theme-toggle" title="Jasny/Ciemny">☀️/🌙</button>
@@ -22,262 +45,208 @@
   <header class="site-header">
     <a class="back" href="javascript:history.back()">← Wróć</a>
     <h1 id="title">Szczegóły</h1>
-    <p class="subtitle" id="subtitle">Wybierz temat, aby zobaczyć informacje</p>
+    <!-- drobne emotki + miniaturki (opcjonalne) -->
+    <div class="mini-chips" id="miniChips" aria-label="Szybkie emotki">
+      <!-- zawartość uzupełnia skrypt -->
+    </div>
   </header>
 
+  <!-- HERO ZDJĘCIE (automatycznie podmieniane) -->
+  <figure class="detail-hero" id="detailHero" hidden>
+    <!-- obraz(y) podstawia skrypt -->
+  </figure>
+
   <main class="container">
-    <section class="detail-hero">
-      <img id="photo" alt="" />
-      <article class="card">
-        <h2 id="h2">Opis</h2>
-        <p id="desc">Wybierz kafelek poniżej, aby rozwinąć informacje.</p>
-        <p class="note">Treści edukacyjne — nie zastępują porady lekarza. W razie zagrożenia życia dzwoń <strong>112</strong>/<strong>999</strong>.</p>
-      </article>
+    <!-- Tu Twoja treść: PRZYCZYNY / OBJAWY / POMOC / LEKI / LEKARZE ... -->
+    <section class="section card" id="przyczyny">
+      <h2>🧩 Przyczyny</h2>
+      <ul id="list-przyczyny">
+        <li>—</li>
+      </ul>
     </section>
 
-    <ul class="tiles tiles-3x2">
-      <li><button class="tile tile-btn" data-section="przyczyny">🔍 Przyczyny</button></li>
-      <li><button class="tile tile-btn" data-section="objawy">📋 Objawy</button></li>
-      <li><button class="tile tile-btn" data-section="pierwsza">⛑️ Pierwsza pomoc</button></li>
-      <li>
-        <button class="tile tile-btn" data-section="leczenie">
-          💊 Leczenie
-          <span class="badge green">Bez recepty</span>
-          <span class="badge red">Na receptę</span>
-        </button>
-      </li>
-      <li><button class="tile tile-btn" data-section="lekarze">👩‍⚕️ Lekarze</button></li>
-      <li><a class="tile tile-accent pulse" href="lokalizacja.html">🚑 Natychmiastowa pomoc</a></li>
-    </ul>
+    <section class="section card" id="objawy">
+      <h2>🔍 Objawy</h2>
+      <ul id="list-objawy">
+        <li>—</li>
+      </ul>
+    </section>
 
-    <article id="content" class="card"></article>
+    <section class="section card" id="pierwsza-pomoc">
+      <h2>⛑️ Pierwsza pomoc</h2>
+      <ul id="list-pp">
+        <li>—</li>
+      </ul>
+    </section>
+
+    <section class="section card" id="leki">
+      <h2>💊 Leki</h2>
+      <div>
+        <span class="pill pill-otc">Bez recepty</span>
+        <span class="pill pill-rx">Na receptę</span>
+      </div>
+      <ul id="list-leki">
+        <li>—</li>
+      </ul>
+    </section>
+
+    <section class="section card" id="lekarze">
+      <h2>🩺 Lekarze</h2>
+      <ul id="list-lekarze">
+        <li>—</li>
+      </ul>
+    </section>
   </main>
 
-  <script src="app.js"></script>
+  <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
+
   <script>
-    // ====== DANE wizualne — dodano warianty _d (dziecko) ======
-    const DATA = {
-      // GŁOWA / TWARZ
-      "glowa_k":{title:"🧠 Głowa (kobieta)", area:"Głowa", img:"img/kobieta-glowa-12.png", desc:"Bóle napięciowe, migrena, zatokowe."},
-      "glowa_m":{title:"🧠 Głowa (mężczyzna)", area:"Głowa", img:"img/mezczyzna-glowa-1.png", desc:"Bóle napięciowe, migrena, zatokowe."},
-      "glowa_d":{title:"🧠 Głowa (dziecko)", area:"Głowa", img:"img/dziecko-glowa.png", desc:"Bóle napięciowe, infekcje; zwróć uwagę na gorączkę i odwodnienie."},
-
-      "oczy_k":{title:"👁 Oczy (kobieta)", area:"Twarz", img:"img/oczy-k.png", desc:"Pieczenie, łzawienie, suchość, infekcja."},
-      "oczy_m":{title:"👁 Oczy (mężczyzna)", area:"Twarz", img:"img/oczy-m.png", desc:"Pieczenie, łzawienie, suchość, infekcja."},
-      "oczy_d":{title:"👁 Oczy (dziecko)", area:"Twarz", img:"img/dziecko-oczy.png", desc:"Częste zapalenia spojówek; nie pocieraj, zachowaj higienę rąk."},
-
-      "nos_k":{title:"👃 Nos/Zatoki (kobieta)", area:"Twarz", img:"img/nos-k.png", desc:"Nieżyt nosa, zapalenie zatok, alergia."},
-      "nos_m":{title:"👃 Nos/Zatoki (mężczyzna)", area:"Twarz", img:"img/nos-m.png", desc:"Nieżyt nosa, zapalenie zatok, alergia."},
-      "nos_d":{title:"👃 Nos/Zatoki (dziecko)", area:"Twarz", img:"img/dziecko-nos.png", desc:"Katar, zatoki, alergie; u maluchów szybciej dochodzi do odwodnienia."},
-
-      "ucho_k":{title:"👂 Ucho (kobieta)", area:"Twarz", img:"img/ucho-k.png", desc:"Zapalenie, korek woskowinowy."},
-      "ucho_m":{title:"👂 Ucho (mężczyzna)", area:"Twarz", img:"img/ucho-m.png", desc:"Zapalenie, korek woskowinowy."},
-      "ucho_d":{title:"👂 Ucho (dziecko)", area:"Twarz", img:"img/dziecko-ucho.png", desc:"Częste zapalenia ucha środkowego; obserwuj gorączkę i ból."},
-
-      // SZYJA / RĘCE
-      "szyja_k":{title:"🦴 Szyja (kobieta)", area:"Szyja", img:"img/kobieta-szyja.png", desc:"Napięcie, przeciążenie, kręgosłup szyjny."},
-      "szyja_m":{title:"🦴 Szyja (mężczyzna)", area:"Szyja", img:"img/mezczyzna-szyja.png", desc:"Napięcie, przeciążenie, kręgosłup szyjny."},
-      "szyja_d":{title:"🦴 Szyja (dziecko)", area:"Szyja", img:"img/dziecko-szyja.png", desc:"Napięcie, urazy; uwaga na sztywność karku przy gorączce (pilnie lekarz)."},
-
-      "bark_k":{title:"🏋️ Bark (kobieta)", area:"Bark", img:"img/bark-k.png", desc:"Stożek rotatorów, przeciążenie."},
-      "bark_m":{title:"🏋️ Bark (mężczyzna)", area:"Bark", img:"img/bark-m.png", desc:"Stożek rotatorów, przeciążenie."},
-      "bark_d":{title:"🏋️ Bark (dziecko)", area:"Bark", img:"img/dziecko-bark.png", desc:"Urazy sportowe, przeciążenia."},
-
-      "ramie_k":{title:"💪 Ramię (kobieta)", area:"Kończyna górna", img:"img/ramie-k.png", desc:"Naciągnięcia, ścięgna."},
-      "ramie_m":{title:"💪 Ramię (mężczyzna)", area:"Kończyna górna", img:"img/ramie-m.png", desc:"Naciągnięcia, ścięgna."},
-      "ramie_d":{title:"💪 Ramię (dziecko)", area:"Kończyna górna", img:"img/dziecko-ramie.png", desc:"Urazy podczas zabawy/sportu."},
-
-      "lokiec_k":{title:"🎾 Łokieć (kobieta)", area:"Kończyna górna", img:"img/lokiec-k.png", desc:"Zapalenia przyczepów."},
-      "lokiec_m":{title:"🎾 Łokieć (mężczyzna)", area:"Kończyna górna", img:"img/lokiec-m.png", desc:"Zapalenia przyczepów."},
-      "lokiec_d":{title:"🎾 Łokieć (dziecko)", area:"Kończyna górna", img:"img/dziecko-lokiec.png", desc:"Urazy, naciągnięcia."},
-
-      "nadgarstek_k":{title:"⌚ Nadgarstek (kobieta)", area:"Kończyna górna", img:"img/nadgarstek-k.png", desc:"Cieśń, skręcenia."},
-      "nadgarstek_m":{title:"⌚ Nadgarstek (mężczyzna)", area:"Kończyna górna", img:"img/nadgarstek-m.png", desc:"Cieśń, skręcenia."},
-      "nadgarstek_d":{title:"⌚ Nadgarstek (dziecko)", area:"Kończyna górna", img:"img/dziecko-nadgarstek.png", desc:"Skręcenia, urazy."},
-
-      "dlon_k":{title:"✋ Dłoń (kobieta)", area:"Kończyna górna", img:"img/dlon-k.png", desc:"Urazy, ścięgna."},
-      "dlon_m":{title:"✋ Dłoń (mężczyzna)", area:"Kończyna górna", img:"img/dlon-m.png", desc:"Urazy, ścięgna."},
-      "dlon_d":{title:"✋ Dłoń (dziecko)", area:"Kończyna górna", img:"img/dziecko-dlon.png", desc:"Skaleczenia, urazy."},
-
-      // KLATKA / SERCE / PLECY / BRZUCH
-      "klatka_k":{title:"💙 Klatka (kobieta)", area:"Klatka", img:"img/kobieta-klatka.png", desc:"Ból mięśniowy, refluks."},
-      "klatka_m":{title:"💙 Klatka (mężczyzna)", area:"Klatka", img:"img/mezczyzna-klatka.png", desc:"Ból mięśniowy, refluks."},
-      "klatka_d":{title:"💙 Klatka (dziecko)", area:"Klatka", img:"img/dziecko-klatka.png", desc:"Infekcje dróg oddechowych, mięśnie; alarm: duszność."},
-
-      "serce_k":{title:"❤️ Serce (kobieta)", area:"Klatka", img:"img/serce-kobieta.png", desc:"Objawy sercowe — alarmowe."},
-      "serce_m":{title:"❤️ Serce (mężczyzna)", area:"Klatka", img:"img/serce-mezczyzna.png", desc:"Objawy sercowe — alarmowe."},
-      "serce_d":{title:"❤️ Serce (dziecko)", area:"Klatka", img:"img/dziecko-serce.png", desc:"Ból zwykle mięśniowo-kostny; ale duszność/omdlenie → pilnie lekarz."},
-
-      "plecy_k":{title:"🧍 Plecy (kobieta)", area:"Plecy", img:"img/kobieta-plecy.png", desc:"Przeciążenia, dyskopatia."},
-      "plecy_m":{title:"🧍 Plecy (mężczyzna)", area:"Plecy", img:"img/mezczyzna-plecy.png", desc:"Przeciążenia, dyskopatia."},
-      "plecy_d":{title:"🧍 Plecy (dziecko)", area:"Plecy", img:"img/dziecko-plecy.png", desc:"Wady postawy, przeciążenia; gorączka + ból pleców → konsultacja."},
-
-      "brzuch_k":{title:"🫃 Brzuch (kobieta)", area:"Brzuch", img:"img/kobieta-brzuch.png", desc:"Niestrawność, infekcje."},
-      "brzuch_m":{title:"🫃 Brzuch (mężczyzna)", area:"Brzuch", img:"img/mezczyzna-brzuch.png", desc:"Niestrawność, infekcje."},
-      "brzuch_d":{title:"🫃 Brzuch (dziecko)", area:"Brzuch", img:"img/dziecko-brzuch.png", desc:"Gastroenteritis, zaparcia; uwaga na odwodnienie u maluchów."},
-
-      // MIEDNICA / NOGI
-      "biodra_k":{title:"🦴 Biodra (kobieta)", area:"Miednica", img:"img/biodra-k.png", desc:"Przeciążenia, zwyrodnienia."},
-      "biodra_m":{title:"🦴 Biodra (mężczyzna)", area:"Miednica", img:"img/biodra-m.png", desc:"Przeciążenia, zwyrodnienia."},
-      "biodra_d":{title:"🦴 Biodra (dziecko)", area:"Miednica", img:"img/dziecko-biodra.png", desc:"Urazy, zapalenia przyczepów; utykanie → lekarz."},
-
-      "pachwina_k":{title:"🔻 Pachwina (kobieta)", area:"Miednica", img:"img/pachwina-k.png", desc:"Przepuklina, naciągnięcia."},
-      "pachwina_m":{title:"🔻 Pachwina (mężczyzna)", area:"Miednica", img:"img/pachwina-m.png", desc:"Przepuklina, naciągnięcia."},
-      "pachwina_d":{title:"🔻 Pachwina (dziecko)", area:"Miednica", img:"img/dziecko-pachwina.png", desc:"Naciągnięcia, przepuklina; ból jądra — pilnie lekarz."},
-
-      "nogi_k":{title:"🦵 Nogi (kobieta)", area:"Nogi", img:"img/kobieta-nogi.png", desc:"Urazy, rwa kulszowa."},
-      "nogi_m":{title:"🦵 Nogi (mężczyzna)", area:"Nogi", img:"img/mezczyzna-nogi.png", desc:"Urazy, rwa kulszowa."},
-      "nogi_d":{title:"🦵 Nogi (dziecko)", area:"Nogi", img:"img/dziecko-nogi.png", desc:"Bóle wzrostowe vs urazy; obrzęk/jednostronny ból → lekarz."},
-
-      "kolano_k":{title:"🦵 Kolano (kobieta)", area:"Kolano", img:"img/kolano-k.png", desc:"Urazy więzadeł/łąkotek."},
-      "kolano_m":{title:"🦵 Kolano (mężczyzna)", area:"Kolano", img:"img/kolano-m.png", desc:"Urazy więzadeł/łąkotek."},
-      "kolano_d":{title:"🦵 Kolano (dziecko)", area:"Kolano", img:"img/dziecko-kolano.png", desc:"Urazy, Osgood-Schlatter (wzrost)."},
-
-      "lydka_k":{title:"🦿 Łydka (kobieta)", area:"Łydka", img:"img/lydka-k.png", desc:"Skurcze, naciągnięcia."},
-      "lydka_m":{title:"🦿 Łydka (mężczyzna)", area:"Łydka", img:"img/lydka-m.png", desc:"Skurcze, naciągnięcia."},
-      "lydka_d":{title:"🦿 Łydka (dziecko)", area:"Łydka", img:"img/dziecko-lydka.png", desc:"Skurcze, urazy; obrzęk jednostronny → lekarz."},
-
-      "kostka_k":{title:"🦶 Kostka (kobieta)", area:"Kostka", img:"img/kostka-k.png", desc:"Skręcenia, urazy."},
-      "kostka_m":{title:"🦶 Kostka (mężczyzna)", area:"Kostka", img:"img/kostka-m.png", desc:"Skręcenia, urazy."},
-      "kostka_d":{title:"🦶 Kostka (dziecko)", area:"Kostka", img:"img/dziecko-kostka.png", desc:"Skręcenia, urazy."},
-
-      "stopa_k":{title:"🦶 Stopa (kobieta)", area:"Stopa", img:"img/stopa-k.png", desc:"Ostroga, rozcięgno."},
-      "stopa_m":{title:"🦶 Stopa (mężczyzna)", area:"Stopa", img:"img/stopa-m.png", desc:"Ostroga, rozcięgno."},
-      "stopa_d":{title:"🦶 Stopa (dziecko)", area:"Stopa", img:"img/dziecko-stopa.png", desc:"Urazy, płaskostopie; ból pięty u aktywnych dzieci."}
-    };
-
-    // ====== TREŚCI bazowe (dla wszystkich) ======
-    const CONTENT = {
-      oczy:{przyczyny:["Suchość/ekran/soczewki","Alergia","Infekcja spojówek","Ciało obce/otarcie rogówki"], objawy:["Pieczenie/łzawienie/światłowstręt","Wydzielina/sklejanie powiek","⚠️ Nagłe pogorszenie widzenia, silny ból, uraz chemiczny → pilnie 112/SOR"], pierwsza:["Zdejmij soczewki, płucz solą/sztuczne łzy","Zimny okład przy alergii","Po chemii płucz 15–20 min i do SOR"], leki_otc:["Sztuczne łzy","Antyhistaminowe krople (alergia)","Paracetamol/ibuprofen p/bólowo (jeśli można)"], leki_rx:["Antybiotykowe krople/maści (wg lekarza)","Sterydowe krople — tylko okulista"], lekarze:["Okulista","POZ","SOR (urazy/pogorszenie widzenia)"]},
-      nos:{przyczyny:["Nieżyt nosa (infekcja)","Alergia","Zatoki, polipy"], objawy:["Zatkany nos/ból twarzy","Gorączka, ból przy schylaniu","⚠️ Obrzęk powiek/jednostronny silny ból → pilnie"], pierwsza:["Płukanie solą, nawilżanie","Unieś głowę, pij płyny","Krople obkurczające max 3–5 dni"], leki_otc:["Paracetamol/ibuprofen","Spraye z solą","Krótkotrwale krople obkurczające"], leki_rx:["Sterydy donosowe przewlekle","Antybiotyk przy bakteryjnym zapaleniu zatok"], lekarze:["Laryngolog","POZ"]},
-      ucho:{przyczyny:["Zapalenie ucha","Korek woskowinowy","Ból rzutowany"], objawy:["Ból/pełność/wyciek","⚠️ Zawroty/wyraźny niedosłuch/obrzęk małżowiny → lekarz"], pierwsza:["Bez patyczków!","Ciepły okład jeśli brak wycieku","P/bólowe zgodnie z ulotką"], leki_otc:["Krople zmiękczające woskowinę","Paracetamol/ibuprofen"], leki_rx:["Krople z antybiotykiem/przeciwzapalne","Antybiotyk doustny (u środkowego)"], lekarze:["Laryngolog","POZ"]},
-      glowa:{przyczyny:["Napięciowy","Migrena","Zatokowy","Odwodnienie/stres"], objawy:["Tępy ucisk vs pulsujący z nudnościami (migrena)","⚠️ „Piorunujący”, po urazie, z objawami neurologicznymi/gorączką → SOR"], pierwsza:["Cisza/ciemno, nawodnienie","Chłodny/ciepły okład karku","Ogranicz ekrany"], leki_otc:["Paracetamol","Ibuprofen/naproksen (jeśli można)"], leki_rx:["Tryptany (migrena)","Leki p/wymiotne, profilaktyka wg neurologa"], lekarze:["POZ","Neurolog","SOR przy czerwonych flagach"]},
-      szyja:{przyczyny:["Napięcie/ergonomia","Uraz smagnięcia","Zwyrodnienia"], objawy:["Ból przy ruchu, ograniczenie","Mrowienie rąk — możliwy ucisk korzeni","⚠️ Osłabienie/uraz/gorączka → pilnie"], pierwsza:["Ciepło/zimno miejscowo","Rozciąganie pauzy od ekranu","Ergonomia"], leki_otc:["Maści chłodzące/rozgrzewające","Paracetamol/ibuprofen"], leki_rx:["Miorelaksanty, fizjoterapia"], lekarze:["POZ","Fizjoterapeuta","Ortopeda/Neurolog"]},
-      klatka:{przyczyny:["Mięśniowo-szkieletowe","Refluks","Sercowe (pilne)"], objawy:["Ból przy ucisku/ruchu","Pieczenie po posiłku (refluks)","⚠️ Ucisk + duszność/poty/lęk → 112"], pierwsza:["Przerwij wysiłek, usiądź półsiedząco","Refluks: unieś wezgłowie, lżej jedz"], leki_otc:["Zobojętniające/alginiany","Paracetamol"], leki_rx:["IPP przewlekle (refluks)","Leczenie kardiologiczne wg lekarza"], lekarze:["POZ","Kardiolog (alarm)","Gastroenterolog"]},
-      plecy:{przyczyny:["Przeciążenia/dyskopatia","Napięcie mięśni"], objawy:["Rwa kulszowa (promieniowanie do nogi)","⚠️ Deficyty, zaburzenia zwieraczy, gorączka → pilnie"], pierwsza:["Ruch w granicach bólu","Ciepło/zimno","Ergonomia"], leki_otc:["Paracetamol/ibuprofen","Maści p/zapalne"], leki_rx:["Miorelaksanty, fizjo"], lekarze:["POZ","Fizjoterapeuta","Ortopeda/Neurolog"]},
-      brzuch:{przyczyny:["Niestrawność","Infekcje jelitowe","Kolka żółciowa/zaparcia"], objawy:["Skurcze, wzdęcia, nudności","⚠️ Twardy brzuch, krew w stolcu/wymiotach, wysoka gorączka → pilnie"], pierwsza:["Nawadnianie (elektrolity)","Lekkostrawna dieta, odpoczynek"], leki_otc:["Alginiany/zobojętniające","Symetykon (wzdęcia)","Paracetamol (unikać NLPZ przy bólach brzucha)"], leki_rx:["Rozkurczowe, IPP, antybiotyki wg lekarza"], lekarze:["POZ","Gastroenterolog","SOR przy czerwonych flagach"]},
-      biodra:{przyczyny:["Kaletka krętarzowa","Zwyrodnienia/przeciążenia"], objawy:["Ból po boku uda, gorzej w chodzeniu"], pierwsza:["Odpoczynek obciążenia","Rozciąganie pasma biodrowo-piszczelowego"], leki_otc:["Maści p/zapalne","Paracetamol/ibuprofen"], leki_rx:["Iniekcje okołokaletkowe, fizjo"], lekarze:["Ortopeda","Fizjoterapeuta","POZ"]},
-      kolano:{przyczyny:["Urazy więzadeł/łąkotek","Chondromalacja"], objawy:["Obrzęk, trzaski, uciekanie"], pierwsza:["RICE: odpoczynek, lód, ucisk, uniesienie"], leki_otc:["Maści p/zapalne","Paracetamol/ibuprofen"], leki_rx:["Rehabilitacja, orteza, artroskopia wg ortopedy"], lekarze:["Ortopeda","Fizjoterapeuta","POZ"]},
-      lydka:{przyczyny:["Skurcze/naciągnięcia","Zakrzepica (rzadziej, ale pilnie)"], objawy:["Ból jednostronny, obrzęk, ucieplenie","⚠️ Podejrzenie DVT → pilnie SOR"], pierwsza:["Chłodzenie, odpoczynek, rozciąganie"], leki_otc:["Paracetamol/ibuprofen"], leki_rx:["Antykoagulanty (wg lekarza)"], lekarze:["POZ","Angiolog/Chirurg nacz.","SOR (podejrzenie DVT)"]}
-    };
-
-    // ====== DODATKI pediatryczne – dołączane gdy ID kończy się _d ======
-    const PEDIATRIC = {
-      objawy:[
-        "Dziecko: apatia/senność, trudności oddychania, sinienie ust.",
-        "Odwodnienie: suchy język, brak łez, rzadkie siusianie (u niemowląt <3 mokre pieluchy/24 h).",
-        "Wysoka i utrzymująca się gorączka, wysypka nieblednąca — pilnie lekarz."
-      ],
-      pierwsza:[
-        "Mierz temperaturę; nawadniaj małymi porcjami (5–10 ml co kilka minut).",
-        "Nie podawaj kwasu acetylosalicylowego (ASA) dzieciom.",
-        "Zadławienie niemowlęcia: 5 uderzeń między łopatki + 5 uciśnięć klatki (naprzemiennie) — wezwij 112."
-      ],
-      leki_otc:[
-        "Paracetamol/ibuprofen — dawkuj wg masy ciała i zaleceń z ulotki.",
-        "Preparaty elektrolitowe przy biegunce/wymiotach."
-      ],
-      leki_rx:[
-        "Antybiotyki i leki na receptę tylko wg pediatry.",
-        "Szczególna ostrożność u niemowląt i dzieci przewlekle chorych."
-      ],
-      lekarze:[
-        "Pediatra / NPL pediatryczny",
-        "SOR dziecięcy w stanach nagłych"
-      ]
-    };
-
-    // ====== FALLBACK uniwersalny ======
-    const FALLBACK = {
-      przyczyny:["Napięcie/uraz/stan zapalny","Przeciążenia, stres, odwodnienie","Ból rzutowany z sąsiednich narządów"],
-      objawy:["Charakter bólu, czas trwania, nasilenie","Objawy towarzyszące (gorączka/obrzęk/drętwienie)","⚠️ Narastanie, nagły „piorun”, deficyty — pilnie lekarz"],
-      pierwsza:["Oceń stan — w razie wątpliwości 112","Odpoczynek, nawodnienie, chłodzenie/ogrzewanie","Jeśli nie ustępuje — znajdź pomoc w okolicy"],
-      leki_otc:["Paracetamol, ibuprofen (jeśli można)","Maści/żele p/zapalne"],
-      leki_rx:["Silniejsze p/bólowe/rozkurczowe wg lekarza","Leczenie przyczynowe (antybiotyk, IPP, fizjo)"],
-      lekarze:["POZ","Specjalista wg dolegliwości","SOR/NPL w nagłych sytuacjach"]
-    };
-
-    // ====== INICJALIZACJA ======
-    const params = new URLSearchParams(location.search);
-    const id = (params.get("id")||"").toLowerCase();
-    const item = DATA[id];
-
-    const titleEl=document.getElementById("title"),
-          subtitleEl=document.getElementById("subtitle"),
-          imgEl=document.getElementById("photo"),
-          h2El=document.getElementById("h2"),
-          descEl=document.getElementById("desc"),
-          contentEl=document.getElementById("content");
-
-    function setImage(src,alt){
-      imgEl.src=src; imgEl.alt=alt;
-      imgEl.onerror=()=>{imgEl.onerror=null; imgEl.src="img/placeholder.png";}
+    // —— Parser ID z query (wspiera kilka form, np. glowa_k | kobieta-glowa | oczy_k itd.)
+    const rawId = new URLSearchParams(location.search).get('id') || '';
+    function normId(q){
+      let id = q.toLowerCase().trim();
+      id = id.replace(/\s+/g,'-');
+      // zamiana podkreślników na myślnik
+      id = id.replace(/_/g,'-');
+      // normalizacja wariantów ‘oczy’ -> ‘oko’
+      id = id.replace(/\boczy\b/g,'oko');
+      return id;
     }
+    const id = normId(rawId);
 
-    function getSlug(id){ return id.replace(/_(k|m|d)$/,"").replace(/[^a-z0-9]/g,""); }
-    const isChild = /_d$/.test(id);
-
-    if(item){
-      titleEl.textContent=item.title;
-      subtitleEl.textContent=`Obszar: ${item.area}`;
-      setImage(item.img,item.title);
-      descEl.textContent=item.desc;
-      h2El.textContent=item.title;
-    }else{
-      titleEl.textContent="Szczegóły";
-      subtitleEl.textContent="—";
-      setImage("img/placeholder.png","Brak danych");
-      descEl.textContent="Nie znaleziono danych dla podanego identyfikatora.";
-      h2El.textContent="Brak danych";
-    }
-
-    function bullets(arr){ return `<ul>${arr.map(x=>`<li>${x}</li>`).join("")}</ul>`; }
-
-    function withPediatric(arr, add){ return isChild ? [...arr, ...add] : arr; }
-
-    function renderSection(key){
-      const slug=getSlug(id||"");
-      const spec=CONTENT[slug]||{};
-      const data={
-        przyczyny: spec.przyczyny || FALLBACK.przyczyny,
-        objawy: spec.objawy || FALLBACK.objawy,
-        pierwsza: spec.pierwsza || FALLBACK.pierwsza,
-        leki_otc: spec.leki_otc || FALLBACK.leki_otc,
-        leki_rx: spec.leki_rx || FALLBACK.leki_rx,
-        lekarze: spec.lekarze || FALLBACK.lekarze
-      };
-
-      // dołącz pediatryczne noty jeśli dotyczy
-      const objawy = withPediatric(data.objawy, PEDIATRIC.objawy);
-      const pierwsza = withPediatric(data.pierwsza, PEDIATRIC.pierwsza);
-      const leki_otc = withPediatric(data.leki_otc, PEDIATRIC.leki_otc);
-      const leki_rx = withPediatric(data.leki_rx, PEDIATRIC.leki_rx);
-      const lekarze = withPediatric(data.lekarze, PEDIATRIC.lekarze);
-
-      if(key==="przyczyny"){
-        contentEl.innerHTML=`<h2>🔍 Przyczyny</h2>${bullets(data.przyczyny)}`;
-      }else if(key==="objawy"){
-        contentEl.innerHTML=`<h2>📋 Objawy (w tym czerwone flagi)</h2>${bullets(objawy)}`;
-      }else if(key==="pierwsza"){
-        contentEl.innerHTML=`<h2>⛑️ Pierwsza pomoc</h2>${bullets(pierwsza)}<p>W razie zagrożenia życia — <strong>112/999</strong>. Skorzystaj z <a class="btn" href="lokalizacja.html">lokalizacji pomocy</a>.</p>`;
-      }else if(key==="leczenie"){
-        contentEl.innerHTML=`
-          <h2>💊 Leczenie</h2>
-          <p><span class="badge green">Bez recepty</span></p>
-          ${bullets(leki_otc)}
-          <p><span class="badge red">Na receptę</span></p>
-          ${bullets(leki_rx)}
-          <p class="note">Informacje ogólne. Zawsze sprawdź przeciwwskazania (wiek, choroby, ciąża/karmienie). W razie wątpliwości skonsultuj z lekarzem lub farmaceutą.</p>
-        `;
-      }else if(key==="lekarze"){
-        contentEl.innerHTML=`<h2>👩‍⚕️ Jacy lekarze pomagają?</h2>${bullets(lekarze)}<p><a class="btn" href="lokalizacja.html">📍 Znajdź placówki w pobliżu</a></p>`;
+    // — Ustalenie osoby i części ciała
+    function whoPart(id){
+      // możliwe: 'kobieta-glowa', 'mezczyzna-glowa', 'dziecko-glowa'
+      let osoba = null, part = null;
+      const people = ['kobieta','mezczyzna','dziecko'];
+      for(const p of people){
+        if(id.startsWith(p+'-')){ osoba = p; part = id.slice(p.length+1); break; }
       }
-      contentEl.scrollIntoView({behavior:"smooth",block:"start"});
+      // alternatywa: 'glowa-k' / 'glowa-m' / 'glowa-d'
+      if(!osoba){
+        const m = id.match(/^(.*?)-(k|m|d)$/);
+        if(m){
+          part = m[1];
+          osoba = m[2]==='k'?'kobieta':m[2]==='m'?'mezczyzna':'dziecko';
+        }
+      }
+      return {osoba, part};
+    }
+    const ctx = whoPart(id);
+
+    // — Mapy obrazów (portrety jako fallback dla "głowa")
+    const PORTRAIT = {
+      kobieta: 'img/kobieta-final.png',
+      mezczyzna: 'img/mezczyzna-final.png',
+      dziecko: 'img/dziecko-final.png'
+    };
+
+    // — Próby załadowania obrazów do hero:
+    // 1) dedykowana miniatura o nazwie dokładnie jak id (np. img/kobieta-oko.png)
+    // 2) jeśli część to "glowa" -> portret osoby
+    const hero = document.getElementById('detailHero');
+    const title = document.getElementById('title');
+
+    function tryAppendImg(src){
+      const img = new Image();
+      img.loading = 'eager';
+      img.decoding = 'async';
+      img.alt = '';
+      img.src = src + (src.includes('?')?'':'?v=1');
+      img.onerror = ()=> img.remove();
+      img.onload = ()=> { hero.hidden = false; };
+      hero.appendChild(img);
     }
 
-    document.querySelectorAll(".tile-btn").forEach(btn=>{
-      btn.addEventListener("click",()=>renderSection(btn.getAttribute("data-section")));
-    });
+    // Ustaw tytuł ładnie (np. "Głowa — kobieta")
+    function prettyTitle(osoba, part){
+      const mapPart = { glowa:'Głowa', oko:'Oko', nos:'Nos', ucho:'Ucho', usta:'Usta' };
+      const mapOsoba = { kobieta:'kobieta', mezczyzna:'mężczyzna', dziecko:'dziecko' };
+      const p = mapPart[part] || part || 'Szczegóły';
+      const o = mapOsoba[osoba] || '';
+      return o ? `${p} — ${o}` : p;
+    }
+
+    // uruchom
+    (function init(){
+      title.textContent = prettyTitle(ctx.osoba, ctx.part);
+
+      // 1) spróbuj dedykowany plik 1:1 (jeśli kiedyś go dodasz)
+      if(id){
+        tryAppendImg(`img/${id}.png`);
+      }
+      // 2) dla "głowa" pokaż portret (spójny z Twoją stroną główną)
+      if(ctx.part === 'glowa' && ctx.osoba && PORTRAIT[ctx.osoba]){
+        tryAppendImg(PORTRAIT[ctx.osoba]);
+      }
+
+      // MINIMALNE PRZYKŁADOWE TREŚCI (możesz podmienić własnymi)
+      const P = document.getElementById('list-przyczyny');
+      const O = document.getElementById('list-objawy');
+      const PP = document.getElementById('list-pp');
+      const Leki = document.getElementById('list-leki');
+      const Lekarze = document.getElementById('list-lekarze');
+
+      // czyścimy „—”
+      [P,O,PP,Leki,Lekarze].forEach(ul=>ul.innerHTML='');
+
+      if(ctx.part === 'glowa'){
+        P.innerHTML = `
+          <li>Napięciowe bóle głowy (stres, przeciążenie mięśni karku)</li>
+          <li>Migrena (czasem z aurą: mroczki, światłowstręt)</li>
+          <li>Zatokowy ból (infekcja, alergia)</li>
+        `;
+        O.innerHTML = `
+          <li>Tępy ucisk / pulsujący ból, nadwrażliwość na światło/dźwięk</li>
+          <li>Mdłości, czasem wymioty</li>
+          <li>Przy zatokach: nasilenie przy pochylaniu, katar</li>
+        `;
+        PP.innerHTML = `
+          <li>Odpoczynek w cichym, zaciemnionym miejscu</li>
+          <li>Nawodnienie, zimny okład na czoło/kark</li>
+          <li>W razie potrzeby leki OTC (np. ibuprofen/paracetamol wg ulotki)</li>
+        `;
+        Leki.innerHTML = `
+          <li><span class="pill pill-otc">Bez recepty</span> paracetamol, ibuprofen, naproksen</li>
+          <li><span class="pill pill-rx">Na receptę</span> tryptany, leki profilaktyczne (wg lekarza)</li>
+        `;
+        Lekarze.innerHTML = `
+          <li>POZ / Lekarz rodzinny</li>
+          <li>Neurolog (migrena, przewlekłe bóle)</li>
+          <li>Laryngolog (podejrzenie zapalenia zatok)</li>
+        `;
+      } else {
+        // domyślne wypełnienie dla innych części (zostawione „szablonowo”)
+        P.innerHTML = `<li>Najczęstsze przyczyny w tej okolicy ciała.</li>`;
+        O.innerHTML = `<li>Najczęstsze objawy do obserwacji.</li>`;
+        PP.innerHTML = `<li>Najważniejsze kroki pierwszej pomocy.</li>`;
+        Leki.innerHTML = `<li><span class="pill pill-otc">Bez recepty</span> — wg wskazań.</li><li><span class="pill pill-rx">Na receptę</span> — wg lekarza.</li>`;
+        Lekarze.innerHTML = `<li>Właściwa specjalizacja wg objawów.</li>`;
+      }
+
+      // MAŁE MINIATURKI PRZY EMOTKACH (opcjonalne chipsy)
+      // dodajemy 1 mały podgląd jeśli to głowa
+      const chips = document.getElementById('miniChips');
+      const chip = (label, src) => {
+        const a = document.createElement('a');
+        a.className = 'mini-chip';
+        a.href = location.href;
+        a.innerHTML = `${label}`;
+        if(src){
+          const img = document.createElement('img');
+          img.className = 'thumb';
+          img.src = src;
+          img.alt = '';
+          img.loading = 'lazy';
+          a.prepend(img);
+        }
+        return a;
+      };
+      if(ctx.part === 'glowa'){
+        const small = PORTRAIT[ctx.osoba] || '';
+        chips.appendChild( chip('🧠 Głowa', small) );
+      }
+    })();
   </script>
 </body>
 </html>
