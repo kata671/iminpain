@@ -284,3 +284,34 @@ body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Ari
     font-size: 1.15rem;
   }
 }
+/* --- Zmiany miniaturek i kafelków --- */
+
+/* Miniaturki na laptopie większe o 15% */
+@media (min-width: 1024px) {
+  .miniature img {
+    width: 115% !important;
+    height: auto !important;
+  }
+}
+
+/* Kafelki pod miniaturkami mniejsze o 15% */
+@media (min-width: 1024px) {
+  .card {
+    transform: scale(0.85) !important;
+  }
+}
+
+/* Usuwamy emotki w kafelkach */
+.card span::before,
+.card::before {
+  content: none !important;
+}
+
+/* Podpisy – tylko tekst, wyśrodkowany, bez podkreśleń */
+.card span {
+  display: block;
+  margin-top: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none !important;
+}
