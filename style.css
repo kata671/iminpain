@@ -248,3 +248,21 @@ body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Ari
   .grid-3{ gap: 18px; }
   .grid-3 .card img.thumb{ width: 108px; height: 108px; }
 }
+/* === PATCH: laptop/desktop – większe miniatury, ciaśniejsze kafelki === */
+@media (min-width: 1024px){
+  /* kafelek ciaśniejszy */
+  .grid-3 .card{
+    padding: 14px;           /* mniej niż było → mniejszy kafelek */
+  }
+
+  /* miniaturki większe */
+  .grid-3 .card img.thumb{
+    width: 120px;            /* były ~100px → teraz wyraźnie większe */
+    height: 120px;
+  }
+
+  /* podpis czytelny, ale nieprzytłaczający */
+  .grid-3 .card .label{
+    font-size: 1.05rem;
+  }
+}
