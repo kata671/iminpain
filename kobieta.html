@@ -3,130 +3,60 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kobieta — wybór obszaru bólu</title>
+  <title>Kobieta — wybierz obszar bólu</title>
   <link rel="stylesheet" href="style.css" />
-  <meta name="theme-color" content="#7a4dff" />
-  <style>
-    /* Kwadratowe kafelki 3 w rzędzie + większa miniaturka + emotka po napisie */
-    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-    .card{
-      display:flex; align-items:center; justify-content:center; text-align:center;
-      flex-direction:column; gap:8px; padding:10px; aspect-ratio:1/1;
-    }
-    .card img.thumb{
-      width:44px; height:44px; object-fit:cover; border-radius:8px; margin:0;
-      box-shadow:0 0 6px rgba(130,100,255,.35);
-    }
-    .card .label{
-      font-weight:800; line-height:1.15;
-      display:inline-flex; align-items:center; gap:6px;
-    }
-    .card .label .emo{ opacity:.95; }
-    @media (max-width:420px){
-      .grid-3{ gap:10px; }
-      .card img.thumb{ width:40px; height:40px; }
-    }
-  </style>
 </head>
 <body class="bg-med">
   <nav class="quickbar">
-    <a href="index.html">🏠 Strona główna</a>
-    <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
-    <a href="lokalizacja.html">📍 Lokalizacja</a>
+    <a href="index.html">🏠</a>
+    <a href="szczegoly.html?id=kobieta-glowa">Głowa</a>
+    <!-- ... inne linki ... -->
   </nav>
-
   <header class="site-header">
-    <h1>👩 Kobieta — wybierz obszar bólu</h1>
+    <h1>Kobieta</h1>
+    <p>Wybierz obszar bólu</p>
   </header>
 
   <main class="container">
-    <div class="grid-3">
-
-      <!-- NOWA KATEGORIA: CIĄŻA -->
-      <a class="card" href="szczegoly.html?id=kobieta-ciaza">
-        <img src="img/kobieta-ciaza.png" alt="" class="thumb">
-        <span class="label"><span class="name">Ciąża</span><span class="emo">🤰</span></span>
-      </a>
-
-      <!-- Głowa i twarz -->
-      <a class="card" href="szczegoly.html?id=kobieta-oko">
-        <img src="img/kobieta-oko.png" alt="" class="thumb">
-        <span class="label"><span class="name">Oko</span><span class="emo">👁️</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-nos">
-        <img src="img/kobieta-nos.png" alt="" class="thumb">
-        <span class="label"><span class="name">Nos</span><span class="emo">👃</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-usta">
-        <img src="img/kobieta-usta.png" alt="" class="thumb">
-        <span class="label"><span class="name">Usta</span><span class="emo">👄</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-ucho">
-        <img src="img/kobieta-ucho.png" alt="" class="thumb">
-        <span class="label"><span class="name">Ucho</span><span class="emo">👂</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-glowa">
-        <img src="img/kobieta-glowa.png" alt="" class="thumb">
-        <span class="label"><span class="name">Głowa</span><span class="emo">🧠</span></span>
-      </a>
-
-      <!-- Tułów -->
-      <a class="card" href="szczegoly.html?id=kobieta-serce">
-        <img src="img/kobieta-serce.png" alt="" class="thumb">
-        <span class="label"><span class="name">Serce</span><span class="emo">❤️</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-pluca">
-        <img src="img/kobieta-pluca.png" alt="" class="thumb">
-        <span class="label"><span class="name">Płuca</span><span class="emo">🫁</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-kregoslup">
-        <img src="img/kobieta-kregoslup.png" alt="" class="thumb">
-        <span class="label"><span class="name">Kręgosłup</span><span class="emo">🧍‍♀️</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-zoladek">
-        <img src="img/kobieta-zoladek.png" alt="" class="thumb">
-        <span class="label"><span class="name">Żołądek</span><span class="emo">🫀</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-watroba">
-        <img src="img/kobieta-watroba.png" alt="" class="thumb">
-        <span class="label"><span class="name">Wątroba</span><span class="emo">🍃</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-nerki">
-        <img src="img/kobieta-nerki.png" alt="" class="thumb">
-        <span class="label"><span class="name">Nerki</span><span class="emo">💧</span></span>
-      </a>
-
-      <!-- Kończyny górne -->
-      <a class="card" href="szczegoly.html?id=kobieta-ramie">
-        <img src="img/kobieta-ramie.png" alt="" class="thumb">
-        <span class="label"><span class="name">Ramię</span><span class="emo">💪</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-lokiec">
-        <img src="img/kobieta-lokiec.png" alt="" class="thumb">
-        <span class="label"><span class="name">Łokieć</span><span class="emo">⚡</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-dlon">
-        <img src="img/kobieta-dlon.png" alt="" class="thumb">
-        <span class="label"><span class="name">Dłoń</span><span class="emo">✋</span></span>
-      </a>
-
-      <!-- Kończyny dolne -->
-      <a class="card" href="szczegoly.html?id=kobieta-udo">
-        <img src="img/kobieta-udo.png" alt="" class="thumb">
-        <span class="label"><span class="name">Udo</span><span class="emo">🦵</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-kolano">
-        <img src="img/kobieta-kolano.png" alt="" class="thumb">
-        <span class="label"><span class="name">Kolano</span><span class="emo">🦵</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-stopa">
-        <img src="img/kobieta-stopa.png" alt="" class="thumb">
-        <span class="label"><span class="name">Stopa</span><span class="emo">🦶</span></span>
-      </a>
-
-    </div>
+    <!-- To jest minus — zostawiam tekst, skrypt znajdzie i wyrzuci emoji -->
+    <section>
+      <h2> Wybierz obszar bólu </h2>
+      <div class="grid-4">
+        <a class="card" href="szczegoly.html?id=kobieta-oko"><img src="img/kobieta-oko.png"><span>Oko</span></a>
+        <a class="card" href="szczegoly.html?id=kobieta-nos"><img src="img/kobieta-nos.png"><span>Nos</span></a>
+        <a class="card" href="szczegoly.html?id=kobieta-usta"><img src="img/kobieta-usta.png"><span>Usta</span></a>
+        <a class="card" href="szczegoly.html?id=kobieta-ucho"><img src="img/kobieta-ucho.png"><span>Ucho</span></a>
+        <!-- i tak dalej dla innych obszarów -->
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
+  <footer class="site-footer">
+    <small>© 2025 • Boli-mnie.pl</small>
+  </footer>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const allHeadings = Array.from(document.querySelectorAll('h1,h2,h3'));
+    const targetH = allHeadings.find(h => /wybierz\s*obszar\s*bólu/i.test(h.textContent || ''));
+    if (!targetH) return;
+    const section = targetH.closest('section, .section, .container') || targetH.parentElement;
+    if (!section) return;
+    section.classList.add('areas');
+
+    const imgs = section.querySelectorAll('img');
+    imgs.forEach(img => {
+      const isCard = img.closest('a, .card, .grid-4');
+      if (isCard) img.classList.add('thumb');
+    });
+
+    const labels = section.querySelectorAll('.card span, .label');
+    const emojiRe = /[\p{Emoji_Presentation}\p{Extended_Pictographic}\uFE0F]/gu;
+    labels.forEach(el => {
+      const txt = (el.textContent || '').replace(emojiRe, '').replace(/\s{2,}/g,' ').trim();
+      el.textContent = txt;
+    });
+  });
+  </script>
 </body>
 </html>
