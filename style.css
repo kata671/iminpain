@@ -166,3 +166,54 @@ body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Ari
     font-size: 1.1rem;
   }
 }
+/* === PATCH: dopasowanie rozmiarów kafelków i miniaturek (tylko w .grid-3) === */
+
+/* Bazowo (telefony) — kafelki odrobinkę mniejsze, miniaturki też ciut mniejsze */
+.grid-3 .card{
+  padding: 12px;              /* było więcej → lekko zmniejszamy kafelki */
+  gap: 8px;
+}
+.grid-3 .card img.thumb{
+  width: 56px;                /* było większe → delikatnie w dół */
+  height: 56px;
+  object-fit: cover;
+}
+.grid-3 .card .label{
+  font-size: .98rem;          /* subtelnie mniejszy podpis na telefonie */
+  line-height: 1.15;
+  gap: 6px;
+}
+
+/* Bardzo małe telefony */
+@media (max-width: 360px){
+  .grid-3 { gap: 8px; }
+  .grid-3 .card{ padding: 10px; }
+  .grid-3 .card img.thumb{ width: 52px; height: 52px; }
+}
+
+/* Tablety (utrzymujemy proporcje, trochę większe niż telefon) */
+@media (min-width: 640px) and (max-width: 1023px){
+  .grid-3 .card{ padding: 14px; }
+  .grid-3 .card img.thumb{ width: 64px; height: 64px; }
+  .grid-3 .card .label{ font-size: 1rem; }
+}
+
+/* Laptopy i większe — miniaturki WYRAŹNIE większe, ale kafelek ciut mniejszy (mniej paddingu) */
+@media (min-width: 1024px){
+  .grid-3 .card{
+    padding: 20px;            /* było np. 28px → minimalnie mniejsze kafelki */
+  }
+  .grid-3 .card img.thumb{
+    width: 96px;              /* większe miniaturki na laptopie */
+    height: 96px;
+  }
+  .grid-3 .card .label{
+    font-size: 1.12rem;       /* czytelniej na desktopie */
+    gap: 8px;
+  }
+}
+
+/* Estetyka: niech podpis nie łamie się brzydko */
+.grid-3 .card .label .name{
+  white-space: nowrap;
+}
