@@ -8,7 +8,6 @@
   <meta name="theme-color" content="#7a4dff" />
   <meta name="description" content="Przyczyny, objawy, leczenie i pierwsza pomoc dla wybranej części ciała." />
   <style>
-    /* Dodatki tylko dla tej podstrony */
     .detail-hero { display:none; margin:10px auto 14px; max-width:min(960px,95vw);
       border-radius:14px; overflow:hidden; border:1px solid var(--border); background:var(--card);
       box-shadow:0 0 18px rgba(122,77,255,.28), 0 0 36px rgba(80,180,255,.18);
@@ -28,7 +27,6 @@
 </head>
 
 <body class="bg-med">
-  <!-- Quickbar (jak u Ciebie) -->
   <nav class="quickbar">
     <a href="index.html">🏠</a>
     <a href="tel:112">📞 112</a>
@@ -46,7 +44,7 @@
     <p id="subtitle" class="subtitle"></p>
   </header>
 
-  <!-- Opcjonalny obraz (pokazuje się automatycznie, gdy istnieje plik img/<osoba>-<część>.png) -->
+  <!-- opcjonalny obraz -->
   <figure class="detail-hero" id="detailHero"><img id="heroImg" alt=""></figure>
 
   <main class="container">
@@ -83,210 +81,110 @@
       <ul id="list-lekarze"><li>—</li></ul>
     </section>
 
-    <p class="note">Uwaga: informacje mają charakter edukacyjny. W nagłych przypadkach — <strong>dzwoń 112</strong>.</p>
+    <p class="note">
+      Informacje mają charakter edukacyjny i nie zastępują konsultacji lekarskiej.
+      W nagłych przypadkach — <strong>dzwoń 112</strong>.
+    </p>
   </main>
 
   <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
 
   <script>
-    // ---- ID z query (wspiera: 'kobieta-udo', 'glowa_k', 'kolano-m', 'stopa_d' itp.)
-    const q = new URLSearchParams(location.search).get('id') || '';
-    function normalize(raw){
-      let s = (raw||'').toLowerCase().trim().replace(/\s+/g,'-').replace(/_/g,'-');
-      // warianty skrótów osoby na końcu
+    // --- parsowanie ID
+    const raw = new URLSearchParams(location.search).get('id') || '';
+    function normalize(s){
+      s = s.toLowerCase().trim().replace(/\s+/g,'-').replace(/_/g,'-');
       const m = s.match(/^(.*?)-(k|m|d)$/);
-      if(m){
-        const osoba = m[2]==='k'?'kobieta':m[2]==='m'?'mezczyzna':'dziecko';
-        return { osoba, part: m[1] };
-      }
-      // prefiks z osobą
-      const P = ['kobieta','mezczyzna','dziecko'];
-      for(const p of P){
+      if(m){ return { osoba: m[2]==='k'?'kobieta':m[2]==='m'?'mezczyzna':'dziecko', part:m[1] }; }
+      for(const p of ['kobieta','mezczyzna','dziecko']){
         if(s.startsWith(p+'-')) return { osoba:p, part:s.slice(p.length+1) };
       }
-      // brak osoby — odczyt z localStorage jeśli jest
       const ls = (localStorage.getItem('sex')||'').toLowerCase();
-      const osoba = ls==='k'?'kobieta':ls==='m'?'mezczyzna':ls==='d'?'dziecko':'';
-      return { osoba: osoba||'kobieta', part: s };
+      const osoba = ls==='k'?'kobieta':ls==='m'?'mezczyzna':ls==='d'?'dziecko':'kobieta';
+      return { osoba, part:s };
     }
-    const ctx = normalize(q);
+    const ctx = normalize(raw);
 
-    // ładne nazwy
     const PART_NAME = {
       glowa:'Głowa', oko:'Oko', nos:'Nos', usta:'Usta', ucho:'Ucho',
       serce:'Serce', pluca:'Płuca', kregoslup:'Kręgosłup', zoladek:'Żołądek', watroba:'Wątroba', nerki:'Nerki',
-      ramie:'Ramię', lokiec:'Łokieć', dlon:'Dłoń',
-      udo:'Udo', kolano:'Kolano', lydka:'Łydka', stopa:'Stopa'
+      ramie:'Ramię', lokiec:'Łokieć', dlon:'Dłoń', udo:'Udo', kolano:'Kolano', lydka:'Łydka', stopa:'Stopa',
+      ciaza:'Ciąża'
     };
     const OSOBA_NAME = { kobieta:'kobieta', mezczyzna:'mężczyzna', dziecko:'dziecko' };
 
-    // tytuły
     const title = document.getElementById('title');
     const subtitle = document.getElementById('subtitle');
-    const partLabel = PART_NAME[ctx.part] || (ctx.part ? ctx.part : 'Szczegóły');
-    title.textContent = `${partLabel} — ${OSOBA_NAME[ctx.osoba]||''}`.trim();
+    const prettyPart = PART_NAME[ctx.part] || ctx.part || 'Szczegóły';
+    title.textContent = `${prettyPart} — ${OSOBA_NAME[ctx.osoba]||''}`.trim();
     subtitle.textContent = 'Przyczyny, objawy, pierwsza pomoc, leki i lekarze dla wybranego obszaru.';
 
-    // Mini-hero: jeśli istnieje img/<osoba>-<część>.png, pokaż
-    (function tryHero(){
+    // hero image jeśli istnieje
+    (function hero(){
       const src = `img/${ctx.osoba}-${ctx.part}.png`;
       const img = document.getElementById('heroImg');
       const box = document.getElementById('detailHero');
-      img.onload = ()=>{ box.style.display='block'; };
-      img.onerror = ()=>{ box.style.display='none'; };
+      img.onload = ()=> box.style.display='block';
+      img.onerror = ()=> box.style.display='none';
       img.src = src+'?v=1';
     })();
 
-    // Baza treści (zwięzła, sensowna; możesz rozszerzyć)
+    // ————— Treści
     const CONTENT = {
+      // ... (pozostałe części — jak wcześniej)
       oko: {
+        przyczyny:['Zapalenie spojówek','Zespół suchego oka','Ciało obce / uraz'],
+        objawy:['Łzawienie, pieczenie','Zaczerwienienie','Pogorszenie ostrości'],
+        pp:['Nie trzyj oka, przepłucz solą','Zdejmij soczewki','Silny ból/utrata widzenia — pilnie do okulisty/112'],
+        leki:[['OTC','Sztuczne łzy, kompresy chłodne'],['RX','Antybiotyk/steroid wg lekarza']],
+        lekarze:['POZ','Okulista']
+      },
+      // … (nos, usta, ucho, glowa, serce, pluca, kregoslup, zoladek, watroba, nerki, ramie, lokiec, dlon, udo, kolano, lydka, stopa)
+      nos: { przyczyny:['Infekcja','Alergia','Skrzywienie przegrody'], objawy:['Katar, zatkanie','Ból zatok'], pp:['Płukanie solą','Nawilżanie powietrza'], leki:[['OTC','Irygacje, krótkotrwale obkurczające'],['RX','Steryd donosowy/antyalergiczne']], lekarze:['POZ','Laryngolog'] },
+      usta:{ przyczyny:['Afty/opryszczka','Podrażnienie','Niedobory'], objawy:['Bolesne zmiany','Pieczenie'], pp:['Płukanki antyseptyczne','Unikaj drażniących potraw'], leki:[['OTC','Żele znieczulające/osłaniające'],['RX','P/wirusowe przy opryszczce']], lekarze:['POZ','Dentysta','Dermatolog'] },
+      ucho:{ przyczyny:['Czop woskowinowy','Zapalenie ucha','Barotrauma'], objawy:['Ból, zatkanie','Szumy'], pp:['Nie używaj patyczków','Ciepły okład'], leki:[['OTC','Krople zmiękczające'],['RX','Antybiotyk wg lekarza']], lekarze:['POZ','Laryngolog'] },
+      glowa:{ przyczyny:['Napięciowy ból','Migrena','Zatoki'], objawy:['Ucisk/pulsowanie','Nadwrażliwość'], pp:['Odpoczynek, nawodnienie','Zimny okład'], leki:[['OTC','Paracetamol/ibuprofen'],['RX','Tryptany/profilaktyka']], lekarze:['POZ','Neurolog','Laryngolog'] },
+      serce:{ przyczyny:['Dławica/zawał','Arytmie','Stres/anemia'], objawy:['Ból uciskowy, duszność','Zimny pot'], pp:['Przerwij wysiłek','Ból >10 min — 112'], leki:[['OTC','—'],['RX','Wg lekarza']], lekarze:['POZ','Kardiolog','SOR'] },
+      pluca:{ przyczyny:['Infekcja','Astma/POChP','Zatorowość'], objawy:['Kaszel, duszność','Ból przy wdechu'], pp:['Pozycja półsiedząca','Nawilżanie powietrza'], leki:[['OTC','Syropy p/kaszlowe/wykrztuśne'],['RX','Antybiotyk/steryd wziewny']], lekarze:['POZ','Pulmonolog','SOR'] },
+      kregoslup:{ przyczyny:['Przeciążenie/dyskopatia','Postawa','Uraz'], objawy:['Ból pleców','Drętwienie'], pp:['Oszczędzanie, ciepło/zimno','Delikatny ruch'], leki:[['OTC','NLPZ/maści'],['RX','Miorelaksant/fizjo']], lekarze:['POZ','Ortopeda','Neurolog','Fizjoterapeuta'] },
+      zoladek:{ przyczyny:['Niestrawność/zatrucie','Refluks/wrzody'], objawy:['Ból nadbrzusza','Zgaga, nudności'], pp:['Nawodnienie, lekkostrawnie','Unikaj alkoholu/tłustego'], leki:[['OTC','IPP OTC, środki osłaniające'],['RX','IPP/eradykacja H.pylori']], lekarze:['POZ','Gastroenterolog'] },
+      watroba:{ przyczyny:['WZW, stłuszczenie','Leki/toksyny'], objawy:['Dyskomfort prawe podżebrze','Zmęczenie'], pp:['Abstynencja alkoholowa','Dieta lekka'], leki:[['OTC','—'],['RX','Wg diagnozy']], lekarze:['POZ','Hepatolog'] },
+      nerki:{ przyczyny:['Kolka nerkowa','ZUM'], objawy:['Ból lędźwi promieniujący','Gorączka, pieczenie przy mikcji'], pp:['Płyny jeśli można','Ciepło na okolicę'], leki:[['OTC','NLPZ p/bólowo'],['RX','Antybiotyk przy ZUM']], lekarze:['POZ','Urolog','SOR (silny ból/gorączka)'] },
+      ramie:{ przyczyny:['Stożek rotatorów','Kaletka'], objawy:['Ból przy unoszeniu','Sztywność'], pp:['Oszczędzanie, zimno','Delikatne ćwiczenia'], leki:[['OTC','NLPZ żele/doustne'],['RX','Iniekcje/fizjo']], lekarze:['POZ','Ortopeda','Fizjoterapeuta'] },
+      lokiec:{ przyczyny:['Tenisisty/golfisty','Uraz'], objawy:['Ból przy chwytaniu','Tkliwość'], pp:['Odpoczynek, orteza','Zimno na ostro'], leki:[['OTC','NLPZ'],['RX','Steryd wg lekarza']], lekarze:['POZ','Ortopeda'] },
+      dlon:{ przyczyny:['Przeciążenie/skręcenie','Cieśń nadgarstka'], objawy:['Ból/obrzęk','Mrowienie'], pp:['Unieruchomienie elastyczne','Ergonomia pracy'], leki:[['OTC','NLPZ miejscowo'],['RX','Steryd/fizjo']], lekarze:['POZ','Ortopeda','Neurolog'] },
+      udo:{ przyczyny:['Naciągnięcie mięśni','Rwa kulszowa'], objawy:['Ból uda','Ograniczenie ruchu'], pp:['RICE','Rozciąganie po ustąpieniu bólu'], leki:[['OTC','NLPZ'],['RX','Fizjoterapia']], lekarze:['POZ','Ortopeda'] },
+      kolano:{ przyczyny:['Więzadła/łąkotka','Chondromalacja'], objawy:['Ból przy zginaniu','Obrzęk'], pp:['RICE, odciążenie','Orteza przy urazie'], leki:[['OTC','NLPZ'],['RX','Rehabilitacja/iniekcje']], lekarze:['POZ','Ortopeda'] },
+      lydka:{ przyczyny:['Skurcz/naderwanie','Zakrzepica!'], objawy:['Ból łydki','Obrzęk/ocieplenie'], pp:['Odpoczynek, lód','Podejrzenie ZŻG — 112/SOR'], leki:[['OTC','NLPZ'],['RX','Wg lekarza']], lekarze:['POZ','Chirurg naczyniowy','SOR'] },
+      stopa:{ przyczyny:['Skręcenie/przeciążenie','Rozcięgno podeszwowe'], objawy:['Ból przy obciążaniu','Tkliwość'], pp:['RICE, obuwie z wkładką','Roller/piłka'], leki:[['OTC','NLPZ/maści'],['RX','Fizjo/iniekcje']], lekarze:['POZ','Ortopeda','Fizjoterapeuta'] },
+
+      // ——— CIĄŻA (nowa sekcja) — tylko dla kobiety, ale pokażemy też, jeśli ktoś wejdzie z inną „osobą”
+      ciaza: {
         przyczyny: [
-          'Zapalenie spojówek (alergiczne/wirusowe/bakteryjne)',
-          'Zespół suchego oka (ekrany, klimatyzacja)',
-          'Ciało obce / uraz rogówki'
+          'Typowe dolegliwości: nudności/wymioty, zgaga, bóle krzyża, obrzęki nóg',
+          'Niedokrwistość ciążowa, infekcje dróg moczowych',
+          'Nadciśnienie indukowane ciążą / stan przedrzucawkowy (objawy alarmowe)'
         ],
         objawy: [
-          'Łzawienie, pieczenie, światłowstręt',
-          'Zaczerwienienie, uczucie piasku pod powiekami',
-          'Pogorszenie ostrości widzenia'
+          'Prawidłowe: łagodne bóle więzadeł, sporadyczne skurcze Braxtona-Hicksa',
+          'ALARM: silny ból podbrzusza, krwawienie, ból głowy + mroczki, nagłe obrzęki twarzy/dłoni',
+          'ALARM: zmniejszenie ruchów płodu, wysoka gorączka, odpływanie płynu owodniowego'
         ],
         pp: [
-          'Nie trzyj oka, przepłucz jałowym roztworem soli lub czystą wodą',
-          'Usuń soczewki kontaktowe, jeśli nosisz',
-          'Jeśli ból silny/zaburzenia widzenia — pilna konsultacja'
+          'Odpoczynek na lewym boku, nawadnianie małymi łykami',
+          'Zgaga: małe posiłki, uniesienie wezgłowia; imbir na nudności',
+          'ALARM (którykolwiek z powyższych): nie zwlekaj — 📞 112 lub jedź do izby przyjęć/położniczej'
         ],
         leki: [
-          ['OTC','Sztuczne łzy, krople z ektoiną'],
-          ['OTC','Okłady chłodne, higiena powiek'],
-          ['RX','Antybiotyk/steroid wg lekarza (gdy wskazania)']
+          ['OTC','Paracetamol jako lek p/bólowy pierwszego wyboru'],
+          ['OTC','Na zgagę: leki zobojętniające/alginiaty; na nudności: imbir, wit. B6 (po konsultacji)'],
+          ['RX','Inne leki wyłącznie po ocenie lekarza prowadzącego']
         ],
-        lekarze: ['Lekarz rodzinny / POZ', 'Okulista (ostre objawy, uraz)']
-      },
-      nos: {
-        przyczyny: ['Infekcja wirusowa', 'Alergiczny nieżyt nosa', 'Skrzywienie przegrody / uraz'],
-        objawy: ['Katar, kichanie, zatkany nos', 'Ból zatok, pogorszenie węchu'],
-        pp: [
-          'Płukanie nosa roztworem soli, nawilżanie powietrza',
-          'Unikaj dymu i silnych alergenów'
-        ],
-        leki: [
-          ['OTC','Irygacje solą morską/izotoniczną'],
-          ['OTC','Krople obkurczające < 5 dni'],
-          ['RX','Steryd donosowy / leki antyalergiczne wg lekarza']
-        ],
-        lekarze: ['POZ', 'Laryngolog (nawracające, przewlekłe)']
-      },
-      usta: {
-        przyczyny: ['Afty, opryszczka', 'Podrażnienie (ostre/pikantne potrawy)', 'Niedobory witaminowe'],
-        objawy: ['Bolesne nadżerki/pęcherzyki', 'Pieczenie, obrzęk, trudność w jedzeniu'],
-        pp: ['Płukanki ziołowe/antyseptyczne', 'Unikanie drażniących potraw', 'Nawilżanie ust'],
-        leki: [['OTC','Żele z lidokainą/kwasem hialuronowym'],['RX','Leki p/wirusowe (opryszczka)']],
-        lekarze: ['POZ', 'Dentysta', 'Dermatolog (nawracające)']
-      },
-      ucho: {
-        przyczyny: ['Czop woskowinowy', 'Zapalenie ucha', 'Barotrauma'],
-        objawy: ['Ból, uczucie zatkania', 'Szumy, niedosłuch', 'Gorączka (infekcja)'],
-        pp: ['Nie wkładaj patyczków', 'Ciepły okład na ból', 'Jeśli gorączka/silny ból — konsultacja'],
-        leki: [['OTC','Krople zmiękczające woskowinę'],['RX','Antybiotyk wg lekarza']],
-        lekarze: ['POZ', 'Laryngolog']
-      },
-      glowa: {
-        przyczyny: ['Napięciowy ból głowy', 'Migrena', 'Zapalenie zatok'],
-        objawy: ['Ucisk/pulsowanie', 'Nadwrażliwość na światło/dźwięk', 'Mdłości'],
-        pp: ['Odpoczynek, nawodnienie', 'Zimny okład czoło/kark', 'OTC: paracetamol/ibuprofen wg ulotki'],
-        leki: [['OTC','Paracetamol, ibuprofen, naproksen'],['RX','Tryptany / profilaktyka wg lekarza']],
-        lekarze: ['POZ', 'Neurolog', 'Laryngolog (zatoki)']
-      },
-      serce: {
-        przyczyny: ['Dławica, zawał (stan nagły)', 'Kołatania/arytmie', 'Stres, anemia'],
-        objawy: ['Ból uciskowy w klatce promieniujący do ręki/szczęki', 'Duszność, poty, lęk'],
-        pp: ['Natychmiast przerwij wysiłek', 'Jeśli ból >10 min — 🚨 112', 'Aspiryna tylko wg zaleceń lekarza'],
-        leki: [['OTC','Brak bezpiecznych OTC na ból w klatce'],['RX','Nitraty, beta-blokery itd. wg lekarza']],
-        lekarze: ['POZ', 'Kardiolog', 'SOR (objawy ostre)']
-      },
-      pluca: {
-        przyczyny: ['Infekcja (zapalenie oskrzeli/płuc)', 'Astma/POChP', 'Zatorowość (nagłe)'],
-        objawy: ['Kaszel, duszność', 'Ból przy oddychaniu', 'Gorączka (infekcja)'],
-        pp: ['Spokój, pozycja półsiedząca', 'Nawilżanie powietrza, płyny', 'Silna duszność — 🚨 112'],
-        leki: [['OTC','Leki przeciwkaszlowe/wykrztuśne'],['RX','Antybiotyk, steryd wziewny wg lekarza']],
-        lekarze: ['POZ', 'Pulmonolog', 'SOR (ciężka duszność)']
-      },
-      kregoslup: {
-        przyczyny: ['Przeciążenie, dyskopatia', 'Nieprawidłowa postawa', 'Uraz'],
-        objawy: ['Ból pleców/szyi', 'Drętwienie/utrata siły (ucisk nerwu)'],
-        pp: ['Oszczędzający ruch, ciepło/zimno wg tolerancji', 'Delikatne ćwiczenia mobilizujące'],
-        leki: [['OTC','NLPZ (ibuprofen/naproksen), maści przeciwbólowe'],['RX','Miorelaksant, fizjoterapia wg lekarza']],
-        lekarze: ['POZ', 'Ortopeda', 'Neurolog', 'Fizjoterapeuta']
-      },
-      zoladek: {
-        przyczyny: ['Niestrawność, zatrucie pokarmowe', 'Wrzody, refluks'],
-        objawy: ['Ból w nadbrzuszu, zgaga', 'Nudności, wymioty'],
-        pp: ['Nawodnienie (małe łyki), lekkostrawna dieta', 'Unikaj alkoholu/tłustych potraw'],
-        leki: [['OTC','Inhibitory kwasu (ranitydyna out), IPP OTC, leki osłaniające'],['RX','IPP/eradykacja H.pylori wg lekarza']],
-        lekarze: ['POZ', 'Gastroenterolog']
-      },
-      watroba: {
-        przyczyny: ['WZW, stłuszczenie', 'Leki/hepatotoksyny'],
-        objawy: ['Ból/puczucie pełności w prawym podżebrzu', 'Zmęczenie, nudności'],
-        pp: ['Unikaj alkoholu', 'Zadbaj o dietę lekką'],
-        leki: [['OTC','Brak specyficznych'],['RX','Wg lekarza/diagnostyki']],
-        lekarze: ['POZ', 'Hepatolog', 'Gastroenterolog']
-      },
-      nerki: {
-        przyczyny: ['Kolka nerkowa (kamica)', 'ZUM (zakażenie)'],
-        objawy: ['Ból w okolicy lędźwiowej promieniujący do pachwiny', 'Gorączka, pieczenie przy mikcji'],
-        pp: ['Płyny (o ile brak przeciwwskazań)', 'Ciepło na okolicę lędźwi'],
-        leki: [['OTC','NLPZ przeciwbólowo (wg ulotki)'],['RX','Antybiotyk przy ZUM wg lekarza']],
-        lekarze: ['POZ', 'Urolog', 'SOR (gorączka/kolka nieustępująca)']
-      },
-      ramie: {
-        przyczyny: ['Przeciążenie stożka rotatorów', 'Zapalenie kaletki'],
-        objawy: ['Ból przy unoszeniu ręki', 'Ograniczenie ruchu'],
-        pp: ['Oszczędzanie, zimny okład 15–20 min', 'Delikatne ćwiczenia zakresu ruchu'],
-        leki: [['OTC','NLPZ doustnie/żele'],['RX','Zastrzyki sterydowe/fizjo wg lekarza']],
-        lekarze: ['POZ', 'Ortopeda', 'Fizjoterapeuta']
-      },
-      lokiec: {
-        przyczyny: ['Łokieć tenisisty/golfisty', 'Uraz / zapalenie'],
-        objawy: ['Ból przy chwytaniu/pronacji', 'Tkliwość nad nadkłykciem'],
-        pp: ['Odpoczynek, orteza, zimno na ostro'],
-        leki: [['OTC','NLPZ miejscowo/doustnie'],['RX','Iniekcje sterydowe wg lekarza']],
-        lekarze: ['POZ', 'Ortopeda', 'Fizjoterapeuta']
-      },
-      dlon: {
-        przyczyny: ['Skręcenie, przeciążenie ścięgien', 'Zespół cieśni nadgarstka'],
-        objawy: ['Ból, obrzęk, mrowienie', 'Osłabienie chwytu'],
-        pp: ['Unieruchomienie elastyczne, zimno', 'Ergonomia pracy'],
-        leki: [['OTC','NLPZ miejscowo'],['RX','Sterydy, fizjo wg lekarza']],
-        lekarze: ['POZ', 'Ortopeda', 'Neurolog (cieśń)']
-      },
-      udo: {
-        przyczyny: ['Naciągnięcie mięśni', 'Rwa kulszowa (promieniowanie)'],
-        objawy: ['Ból z przodu/boku/tyłu uda', 'Tkliwość, ograniczenie ruchu'],
-        pp: ['RICE: odpoczynek, lód, ucisk, uniesienie', 'Delikatny stretch po ustąpieniu bólu ostrego'],
-        leki: [['OTC','NLPZ doustnie/miejscowo'],['RX','Fizjoterapia wg lekarza']],
-        lekarze: ['POZ', 'Ortopeda', 'Fizjoterapeuta']
-      },
-      kolano: {
-        przyczyny: ['Uraz więzadła/łąkotki', 'Chondromalacja, zapalenie'],
-        objawy: ['Ból przy zginaniu, obrzęk', 'Uczucie „uciekania” kolana'],
-        pp: ['RICE, odciążenie, orteza przy urazie', 'Nie forsuj schodów/klękania'],
-        leki: [['OTC','NLPZ'],['RX','Rehabilitacja / iniekcje wg ortopedy']],
-        lekarze: ['POZ', 'Ortopeda', 'Fizjoterapeuta']
-      },
-      lydka: {
-        przyczyny: ['Skurcz, naderwanie', 'Zakrzepica (nagłe, jednostronne, obrzęk)'],
-        objawy: ['Ból łydki, napięcie', 'Obrzęk/ocieplenie (pilna diagnostyka)'],
-        pp: ['Odpoczynek, lód', 'Jeśli podejrzenie ZŻG — 🚨 112 / SOR'],
-        leki: [['OTC','NLPZ'],['RX','Wg lekarza']],
-        lekarze: ['POZ', 'Chirurg naczyniowy', 'SOR (pilne)']
-      },
-      stopa: {
-        przyczyny: ['Skręcenie, przeciążenie', 'Zapalenie rozcięgna podeszwowego'],
-        objawy: ['Ból przy obciążaniu', 'Obrzęk, tkliwość'],
-        pp: ['RICE, wygodne obuwie, wkładki', 'Roller/piłeczka pod stopę'],
-        leki: [['OTC','NLPZ / maści p/bólowe'],['RX','Fizjoterapia, iniekcje wg lekarza']],
-        lekarze: ['POZ', 'Ortopeda', 'Fizjoterapeuta']
+        lekarze: [
+          'Położna / Ginekolog-położnik (kontrola ciąży)',
+          'SOR/Izba położnicza przy objawach alarmowych',
+          'POZ (infekcje, choroby współistniejące — po konsultacji z ginekologiem)'
+        ]
       }
     };
 
