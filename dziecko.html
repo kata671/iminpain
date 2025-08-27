@@ -5,67 +5,93 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dziecko — wybór obszaru bólu</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#7a4dff" />
+  <style>
+    .card img.thumb {
+      display:block;
+      width:42px; height:42px;
+      object-fit:cover; border-radius:6px;
+      margin:0 auto 6px;
+      box-shadow:0 0 6px rgba(130,100,255,.35);
+    }
+  </style>
 </head>
 <body class="bg-med">
-  <!-- Quickbar -->
   <nav class="quickbar">
-    <a href="tel:112">📞 112</a>
-    <a href="lokalizacja.html">📍 Lokalizacja</a>
+    <a href="index.html">🏠 Strona główna</a>
     <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
-    <input id="search" type="search" placeholder="np. ból brzucha, kolano..." />
-    <button id="search-btn">🔎</button>
-    <button id="btn-voice" title="Szukaj głosem">🎤</button>
-    <button id="theme-toggle" class="theme-toggle" title="Jasny/Ciemny">☀️/🌙</button>
+    <a href="lokalizacja.html">📍 Lokalizacja</a>
   </nav>
 
   <header class="site-header">
-    <a class="back" href="index.html">← Wróć</a>
-    <h1>🧒 Dziecko</h1>
-    <p class="subtitle">Wybierz obszar bólu</p>
+    <h1>🧒 Dziecko — wybierz obszar bólu</h1>
   </header>
 
   <main class="container">
-    <ul class="tiles tiles-3x2">
-      <!-- Głowa / twarz -->
-      <li><a class="tile" href="szczegoly.html?id=glowa_d" onclick="localStorage.setItem('sex','d')">🧠 Głowa</a></li>
-      <li><a class="tile" href="szczegoly.html?id=oczy_d" onclick="localStorage.setItem('sex','d')">👁 Oczy</a></li>
-      <li><a class="tile" href="szczegoly.html?id=nos_d" onclick="localStorage.setItem('sex','d')">👃 Nos/Zatoki</a></li>
-      <li><a class="tile" href="szczegoly.html?id=ucho_d" onclick="localStorage.setItem('sex','d')">👂 Ucho</a></li>
+    <div class="grid-3">
 
-      <!-- Szyja / bark / ręka -->
-      <li><a class="tile" href="szczegoly.html?id=szyja_d" onclick="localStorage.setItem('sex','d')">🦴 Szyja</a></li>
-      <li><a class="tile" href="szczegoly.html?id=bark_d" onclick="localStorage.setItem('sex','d')">🏋️ Bark</a></li>
-      <li><a class="tile" href="szczegoly.html?id=ramie_d" onclick="localStorage.setItem('sex','d')">💪 Ramię</a></li>
-      <li><a class="tile" href="szczegoly.html?id=lokiec_d" onclick="localStorage.setItem('sex','d')">🎾 Łokieć</a></li>
-      <li><a class="tile" href="szczegoly.html?id=nadgarstek_d" onclick="localStorage.setItem('sex','d')">⌚ Nadgarstek</a></li>
-      <li><a class="tile" href="szczegoly.html?id=dlon_d" onclick="localStorage.setItem('sex','d')">✋ Dłoń</a></li>
+      <!-- Głowa i twarz -->
+      <a class="card" href="szczegoly.html?id=dziecko-oko">
+        <img src="img/dziecko-oko.png" alt="Oko dziecka" class="thumb"><span>👁️ Oko</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=dziecko-nos">
+        <img src="img/dziecko-nos.png" alt="Nos dziecka" class="thumb"><span>👃 Nos</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=dziecko-usta">
+        <img src="img/dziecko-usta.png" alt="Usta dziecka" class="thumb"><span>👄 Usta</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=dziecko-ucho">
+        <img src="img/dziecko-ucho.png" alt="Ucho dziecka" class="thumb"><span>👂 Ucho</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=dziecko-glowa">
+        <img src="img/dziecko-glowa.png" alt="Głowa dziecka" class="thumb"><span>🧠 Głowa</span>
+      </a>
 
-      <!-- Klatka / serce / plecy / brzuch -->
-      <li><a class="tile" href="szczegoly.html?id=klatka_d" onclick="localStorage.setItem('sex','d')">💙 Klatka piersiowa</a></li>
-      <li><a class="tile" href="szczegoly.html?id=serce_d" onclick="localStorage.setItem('sex','d')">❤️ Serce</a></li>
-      <li><a class="tile" href="szczegoly.html?id=plecy_d" onclick="localStorage.setItem('sex','d')">🧍 Plecy</a></li>
-      <li><a class="tile" href="szczegoly.html?id=brzuch_d" onclick="localStorage.setItem('sex','d')">🫃 Brzuch</a></li>
+      <!-- Tułów -->
+      <a class="card" href="szczegoly.html?id=dziecko-serce">
+        <img src="img/dziecko-serce.png" alt="Serce dziecka" class="thumb"><span>❤️ Serce</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=dziecko-pluca">
+        <img src="img/dziecko-pluca.png" alt="Płuca dziecka" class="thumb"><span>🫁 Płuca</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=dziecko-kregoslup">
+        <img src="img/dziecko-kregoslup.png" alt="Kręgosłup dziecka" class="thumb"><span>🧍 Kręgosłup</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=dziecko-zoladek">
+        <img src="img/dziecko-zoladek.png" alt="Żołądek dziecka" class="thumb"><span>🫀 Żołądek</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=dziecko-watroba">
+        <img src="img/dziecko-watroba.png" alt="Wątroba dziecka" class="thumb"><span>🍃 Wątroba</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=dziecko-nerki">
+        <img src="img/dziecko-nerki.png" alt="Nerki dziecka" class="thumb"><span>💧 Nerki</span>
+      </a>
 
-      <!-- Miednica / noga -->
-      <li><a class="tile" href="szczegoly.html?id=biodra_d" onclick="localStorage.setItem('sex','d')">🦴 Biodra</a></li>
-      <li><a class="tile" href="szczegoly.html?id=pachwina_d" onclick="localStorage.setItem('sex','d')">🔻 Pachwina</a></li>
-      <li><a class="tile" href="szczegoly.html?id=nogi_d" onclick="localStorage.setItem('sex','d')">🦵 Nogi</a></li>
-      <li><a class="tile" href="szczegoly.html?id=kolano_d" onclick="localStorage.setItem('sex','d')">🦵 Kolano</a></li>
-      <li><a class="tile" href="szczegoly.html?id=lydka_d" onclick="localStorage.setItem('sex','d')">🦿 Łydka</a></li>
-      <li><a class="tile" href="szczegoly.html?id=kostka_d" onclick="localStorage.setItem('sex','d')">🦶 Kostka</a></li>
-      <li><a class="tile" href="szczegoly.html?id=stopa_d" onclick="localStorage.setItem('sex','d')">🦶 Stopa</a></li>
+      <!-- Kończyny górne -->
+      <a class="card" href="szczegoly.html?id=dziecko-ramie">
+        <img src="img/dziecko-ramie.png" alt="Ramię dziecka" class="thumb"><span>💪 Ramię</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=dziecko-lokiec">
+        <img src="img/dziecko-lokiec.png" alt="Łokieć dziecka" class="thumb"><span>⚡ Łokieć</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=dziecko-dlon">
+        <img src="img/dziecko-dlon.png" alt="Dłoń dziecka" class="thumb"><span>✋ Dłoń</span>
+      </a>
 
-      <!-- Szybki skrót -->
-      <li><a class="tile tile-accent pulse" href="lokalizacja.html">🚑 Natychmiastowa pomoc</a></li>
-    </ul>
+      <!-- Kończyny dolne -->
+      <a class="card" href="szczegoly.html?id=dziecko-udo">
+        <img src="img/dziecko-udo.png" alt="Udo dziecka" class="thumb"><span>🦵 Udo</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=dziecko-kolano">
+        <img src="img/dziecko-kolano.png" alt="Kolano dziecka" class="thumb"><span>🦵 Kolano</span>
+      </a>
+      <a class="card" href="szczegoly.html?id=dziecko-stopa">
+        <img src="img/dziecko-stopa.png" alt="Stopa dziecka" class="thumb"><span>🦶 Stopa</span>
+      </a>
+
+    </div>
   </main>
 
-  <footer class="site-footer"><small>© 2025</small></footer>
-
-  <!-- Zapamiętaj kontekst „dziecko” dla wyszukiwarki -->
-  <script>localStorage.setItem('sex','d');</script>
-  <script src="app.js"></script>
+  <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
 </body>
 </html>
