@@ -266,3 +266,21 @@ body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Ari
     font-size: 1.05rem;
   }
 }
+/* === PATCH: laptop/desktop – +40% miniaturki, -20% kafelki === */
+@media (min-width: 1024px){
+  /* ciaśniejsze kafelki */
+  .grid-3 .card{
+    padding: 16px;        /* było 20px → mniej o 20% */
+  }
+
+  /* dużo większe miniaturki */
+  .grid-3 .card img.thumb{
+    width: 140px;         /* było ~100px → +40% */
+    height: 140px;
+  }
+
+  /* podpis proporcjonalnie większy */
+  .grid-3 .card .label{
+    font-size: 1.15rem;
+  }
+}
