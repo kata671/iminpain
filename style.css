@@ -128,3 +128,25 @@ body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Ari
   width: auto;
   object-fit: contain;
 }
+/* === PATCH: powiększone miniaturki === */
+
+/* Domyślnie (telefon + małe ekrany) */
+.grid-3 .card img.thumb {
+  width: 64px;   /* było mniejsze, teraz wyraźniejsze */
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 0;
+  box-shadow: 0 0 6px rgba(130,100,255,.35);
+}
+
+/* Laptop i większe ekrany */
+@media (min-width: 1024px) {
+  .grid-3 .card img.thumb {
+    width: 88px;   /* powiększamy także na laptopie */
+    height: 88px;
+  }
+  .grid-3 .card .label {
+    font-size: 1.1rem;  /* podpisy ciut większe */
+  }
+}
