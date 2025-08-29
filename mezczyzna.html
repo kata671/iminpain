@@ -4,91 +4,27 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mężczyzna — wybierz obszar bólu</title>
-
-  <!-- Globalny CSS z wersjonowaniem (omija cache) -->
-  <link rel="stylesheet" href="style.css?v=men-final" />
-
-  <!-- LOKALNY CSS: działa tylko na tej stronie -->
+  <link rel="stylesheet" href="style.css?v=men-iconfix" />
   <style>
-    /* Siatka kart — delikatne wyrównanie, bez zmiany Twojego layoutu */
-    body.mezczyzna-page .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
-    @media (max-width: 991px){ body.mezczyzna-page .grid-4 { grid-template-columns: repeat(3,1fr); } }
-    @media (max-width: 640px){ body.mezczyzna-page .grid-4 { grid-template-columns: repeat(2,1fr); } }
-
-    /* Miniatury w kartach — „pancerny” rozmiar */
-    body.mezczyzna-page .grid-4 > .card img,
-    body.mezczyzna-page .grid-4 > a.card img,
-    body.mezczyzna-page .grid-4 > .tile img,
-    body.mezczyzna-page .grid-4 > a img {
-      display:block !important;
-      width:64px !important;
-      height:64px !important;
-      max-width:none !important;
-      max-height:none !important;
-      object-fit:cover !important;
-      border-radius:10px !important;
-      margin:0 auto 8px auto !important;
+    /* HOT-FIX — powiększenie emotek w kartach siatki */
+    body.mezczyzna-page .grid-4 span {
+      font-size: 2rem !important;  /* dostosuj np. 1.5rem, 2rem, 3rem */
+      line-height: 1 !important;
+      display: block;
+      text-align: center;
     }
-    /* Jeśli miniatury były kiedyś jako background-image */
-    body.mezczyzna-page .grid-4 > .card .thumb-bg,
-    body.mezczyzna-page .grid-4 > a .thumb-bg {
-      display:block !important;
-      width:64px !important;
-      height:64px !important;
-      border-radius:10px !important;
-      margin:0 auto 8px auto !important;
-      background-position:center !important;
-      background-repeat:no-repeat !important;
-      background-size:cover !important; /* zamień na contain jeśli wolisz całe */
-    }
-
     /* Telefon: +70% */
-    @media (max-width: 767px){
-      body.mezczyzna-page .grid-4 > .card img,
-      body.mezczyzna-page .grid-4 > a.card img,
-      body.mezczyzna-page .grid-4 > .tile img,
-      body.mezczyzna-page .grid-4 > a img,
-      body.mezczyzna-page .grid-4 > .card .thumb-bg,
-      body.mezczyzna-page .grid-4 > a .thumb-bg {
-        width:109px !important;
-        height:109px !important;
+    @media (max-width: 767px) {
+      body.mezczyzna-page .grid-4 span {
+        font-size: 3.5rem !important;
       }
     }
     /* Laptop: +75% */
-    @media (min-width: 1024px){
-      body.mezczyzna-page .grid-4 > .card img,
-      body.mezczyzna-page .grid-4 > a.card img,
-      body.mezczyzna-page .grid-4 > .tile img,
-      body.mezczyzna-page .grid-4 > a img,
-      body.mezczyzna-page .grid-4 > .card .thumb-bg,
-      body.mezczyzna-page .grid-4 > a .thumb-bg {
-        width:112px !important;
-        height:112px !important;
+    @media (min-width: 1024px) {
+      body.mezczyzna-page .grid-4 span {
+        font-size: 3.5rem !important;
       }
     }
-
-    /* Podpis — czysty tekst; wyłączamy ewentualne emotki-dekoracje */
-    body.mezczyzna-page .grid-4 > .card span,
-    body.mezczyzna-page .grid-4 > a.card span,
-    body.mezczyzna-page .grid-4 > .tile span,
-    body.mezczyzna-page .grid-4 > a span {
-      display:block !important;
-      text-decoration:none !important;
-      font-weight:700 !important;
-      text-align:center !important;
-      margin-top:6px !important;
-    }
-    body.mezczyzna-page .grid-4 > .card::before,
-    body.mezczyzna-page .grid-4 > .card span::before,
-    body.mezczyzna-page .grid-4 > a.card::before,
-    body.mezczyzna-page .grid-4 > a.card span::before {
-      content:none !important;
-    }
-
-    /* Bezpieczne centrowanie kart (gdyby coś je „pchało”) */
-    body.mezczyzna-page .grid-4 > .card,
-    body.mezczyzna-page .grid-4 > a.card,
-    body.mezczyzna-page .grid-4 > a { text-align:center !important; }
   </style>
 </head>
 <body class="bg-med mezczyzna-page">
@@ -107,70 +43,61 @@
   <main class="container">
     <section aria-labelledby="areas-title">
       <h2 id="areas-title">Wybierz obszar bólu</h2>
-
       <div class="grid-4">
-        <!-- GŁOWA / TWARZ -->
+        <!-- Te elementy to emotki, nie obrazki -->
         <a class="card" href="szczegoly.html?id=mezczyzna-oko">
-          <img src="img/mezczyzna-oko.png" alt="Oko"><span>Oko</span>
+          <span>Oko</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-nos">
-          <img src="img/mezczyzna-nos.png" alt="Nos"><span>Nos</span>
+          <span>Nos</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-usta">
-          <img src="img/mezczyzna-usta.png" alt="Usta"><span>Usta</span>
+          <span>Usta</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-ucho">
-          <img src="img/mezczyzna-ucho.png" alt="Ucho"><span>Ucho</span>
+          <span>Ucho</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-glowa">
-          <img src="img/mezczyzna-glowa.png" alt="Głowa"><span>Głowa</span>
+          <span>Głowa</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-szyja">
-          <img src="img/mezczyzna-szyja.png" alt="Szyja"><span>Szyja</span>
+          <span>Szyja</span>
         </a>
-
-        <!-- KLATKA / BRZUCH -->
         <a class="card" href="szczegoly.html?id=mezczyzna-serce">
-          <img src="img/mezczyzna-serce.png" alt="Serce"><span>Serce</span>
+          <span>Serce</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-pluca">
-          <img src="img/mezczyzna-pluca.png" alt="Płuca"><span>Płuca</span>
+          <span>Płuca</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-zoladek">
-          <img src="img/mezczyzna-zoladek.png" alt="Żołądek"><span>Żołądek</span>
+          <span>Żołądek</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-watroba">
-          <img src="img/mezczyzna-watroba.png" alt="Wątroba"><span>Wątroba</span>
+          <span>Wątroba</span>
         </a>
-
-        <!-- PLECY / NERKI / KRĘGOSŁUP -->
         <a class="card" href="szczegoly.html?id=mezczyzna-kregoslup">
-          <img src="img/mezczyzna-kregoslup.png" alt="Kręgosłup"><span>Kręgosłup</span>
+          <span>Kręgosłup</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-nerki">
-          <img src="img/mezczyzna-nerki.png" alt="Nerki"><span>Nerki</span>
+          <span>Nerki</span>
         </a>
-
-        <!-- RĘKA -->
         <a class="card" href="szczegoly.html?id=mezczyzna-ramie">
-          <img src="img/mezczyzna-ramie.png" alt="Ramię"><span>Ramię</span>
+          <span>Ramię</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-lokiec">
-          <img src="img/mezczyzna-lokiec.png" alt="Łokieć"><span>Łokieć</span>
+          <span>Łokieć</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-dlon">
-          <img src="img/mezczyzna-dlon.png" alt="Dłoń"><span>Dłoń</span>
+          <span>Dłoń</span>
         </a>
-
-        <!-- NOGA -->
         <a class="card" href="szczegoly.html?id=mezczyzna-udo">
-          <img src="img/mezczyzna-udo.png" alt="Udo"><span>Udo</span>
+          <span>Udo</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-kolano">
-          <img src="img/mezczyzna-kolano.png" alt="Kolano"><span>Kolano</span>
+          <span>Kolano</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-stopa">
-          <img src="img/mezczyzna-stopa.png" alt="Stopa"><span>Stopa</span>
+          <span>Stopa</span>
         </a>
       </div>
     </section>
