@@ -535,3 +535,39 @@ body.mezczyzna-page .card span{
   text-align:center !important;
   margin-top:6px !important;
 }
+/* === ULTRA-HOT-FIX: miniaturki tylko na mezczyzna.html === */
+body.mezczyzna-page .card img {
+  display:block !important;
+  width:64px !important;
+  height:64px !important;
+  max-width:none !important;
+  max-height:none !important;
+  object-fit:cover !important;
+  border-radius:10px !important;
+  margin:0 auto 8px auto !important;
+}
+
+/* Telefon: +70% (64 -> ~109) */
+@media (max-width: 767px){
+  body.mezczyzna-page .card img {
+    width:109px !important;
+    height:109px !important;
+  }
+}
+
+/* Laptop: +75% (64 -> ~112) */
+@media (min-width: 1024px){
+  body.mezczyzna-page .card img {
+    width:112px !important;
+    height:112px !important;
+  }
+}
+
+/* Podpis pod obrazkiem – czysty tekst, wyśrodkowany */
+body.mezczyzna-page .card span{
+  display:block !important;
+  text-decoration:none !important;
+  font-weight:700 !important;
+  text-align:center !important;
+  margin-top:6px !important;
+}
