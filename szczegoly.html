@@ -5,35 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Szczegóły</title>
 
-  <link rel="stylesheet" href="style.css?v=detail-fix2" />
+  <link rel="stylesheet" href="style.css?v=details-restore" />
 
   <style>
-    /* Równe, wyśrodkowane obrazy w treści (tylko tutaj) */
-    body.szczegoly-page .content img,
-    body.szczegoly-page #content img,
-    body.szczegoly-page .info img,
-    body.szczegoly-page .cards .card img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 8px auto;
-      border-radius: 12px;
-    }
-    /* Miniatury w drobnych kafelkach */
-    body.szczegoly-page .tile img,
-    body.szczegoly-page .pill img {
-      width: 140px;
-      height: 140px;
-      object-fit: contain;
-      display: block;
-      margin: 6px auto;
-    }
-    /* Siatki kart – prostowanie wysokości */
-    body.szczegoly-page .info-grid,
-    body.szczegoly-page .cards,
-    body.szczegoly-page .tiles {
-      align-items: stretch;
-    }
+    /* tylko kosmetyka – nic przy tapecie nie ruszamy */
+    body.szczegoly-page .detail-hero{max-width:980px;margin:24px auto;display:grid;gap:16px}
+    body.szczegoly-page #content .card{margin-bottom:12px}
+    body.szczegoly-page #content h3{margin:.4rem 0}
   </style>
 </head>
 <body class="bg-med szczegoly-page">
@@ -45,31 +23,104 @@
   </nav>
 
   <header class="site-header">
-    <h1>Szczegóły</h1>
+    <h1 id="title">Szczegóły</h1>
+    <p class="subtitle" id="subtitle"></p>
   </header>
 
   <main class="container">
-    <section class="detail-hero" id="hero"></section>
-    <section id="content"></section>
+    <section class="detail-hero">
+      <img id="hero" src="" alt="" />
+      <div id="content"></div>
+    </section>
   </main>
 
-  <footer class="site-footer">
-    <small>© 2025 • Boli-mnie.pl</small>
-  </footer>
+  <footer class="site-footer"><small>© 2025 • Bolihelp.com</small></footer>
 
-  <script src="content.js?v=detail-fix2"></script>
+  <!-- Twoje źródła danych (jeśli istnieją) -->
+  <script src="content.js?v=1" defer></script>
+  <script src="details.js?v=1" defer></script>
+  <script src="szczegoly.js?v=1" defer></script>
+
   <script>
-    /* Opcjonalny „hero” – jeśli masz plik o tej samej nazwie co ?id= */
-    (function(){
-      const p = new URLSearchParams(location.search);
-      const id = p.get('id') || '';
-      if(!id) return;
-      const hero = document.getElementById('hero');
-      const guess = 'img/' + id + '.png';
-      const img = new Image();
-      img.onload = () => { hero.innerHTML = ''; img.alt = id; hero.appendChild(img); };
-      img.src = guess;
-    })();
+  (function(){
+    // pobierz id z query string
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id') || '';
+
+    // próby odczytu danych z różnych miejsc (w zależności co masz w repo)
+    function getDataById(key){
+      // 1) z globalnej mapy JS (content.js)
+      if (window.DETAILED_CONDITIONS && window.DETAILED_CONDITIONS[key]) {
+        return window.DETAILED_CONDITIONS[key];
+      }
+      if (window.CONDITIONS && window.CONDITIONS[key]) {
+        return window.CONDITIONS[key];
+      }
+      // 2) z elementu globalnego utworzonego przez details.js / szczegoly.js
+      if (window.DETAILS && window.DETAILS[key]) {
+        return window.DETAILS[key];
+      }
+      return null;
+    }
+
+    function renderFallback(){
+      document.getElementById('title').textContent = 'Brak danych';
+      document.getElementById('subtitle').textContent = 'Nie znaleziono opisu dla: ' + id;
+      document.getElementById('hero').style.display = 'none';
+      document.getElementById('content').innerHTML =
+        '<div class="card"><p>Spróbuj wrócić i wybrać inny obszar lub odśwież stronę.</p></div>';
+    }
+
+    function render(data){
+      // tytuł, podtytuł, obraz
+      document.getElementById('title').textContent = data.title || 'Szczegóły';
+      document.getElementById('subtitle').textContent = data.subtitle || '';
+      if (data.image){
+        const img = document.getElementById('hero');
+        img.src = data.image;
+        img.alt = data.title || '';
+      } else {
+        document.getElementById('hero').style.display = 'none';
+      }
+
+      // sekcje treści
+      const ctn = document.getElementById('content');
+      const blocks = [];
+
+      function section(label, arr){
+        if (!arr || !arr.length) return;
+        blocks.push(
+          '<div class="card"><h3>'+label+'</h3><ul>' +
+          arr.map(li => '<li>'+li+'</li>').join('') +
+          '</ul></div>'
+        );
+      }
+
+      section('Objawy', data.symptoms);
+      section('Możliwe przyczyny', data.causes);
+      section('Pierwsza pomoc', data.firstAid);
+      section('Kiedy do lekarza', data.whenToSeeDoctor);
+      section('Leki — Bez recepty', data.otc);
+      section('Leki — Na receptę', data.rx);
+      section('Profilaktyka', data.prevention);
+      section('Badania/Diagnostyka', data.diagnostics);
+
+      if (!blocks.length){
+        blocks.push('<div class="card"><p>Brak szczegółowych danych.</p></div>');
+      }
+      ctn.innerHTML = blocks.join('');
+    }
+
+    // Poczekaj chwilę aż content.js/szczegoly.js się załadują (defer)
+    function tryRender(attempts){
+      const data = getDataById(id);
+      if (data){ render(data); return; }
+      if (attempts <= 0){ renderFallback(); return; }
+      setTimeout(()=>tryRender(attempts-1), 60);
+    }
+    tryRender(20); // ~1.2s łącznie
+
+  })();
   </script>
 </body>
 </html>
