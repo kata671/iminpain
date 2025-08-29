@@ -4,9 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Szczegóły</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <link rel="stylesheet" href="style.css?v=detail-fix2" />
+
   <style>
-    /* Tylko dla tej strony: równe, wyśrodkowane obrazy w treści */
+    /* Równe, wyśrodkowane obrazy w treści (tylko tutaj) */
     body.szczegoly-page .content img,
     body.szczegoly-page #content img,
     body.szczegoly-page .info img,
@@ -17,6 +19,7 @@
       margin: 8px auto;
       border-radius: 12px;
     }
+    /* Miniatury w drobnych kafelkach */
     body.szczegoly-page .tile img,
     body.szczegoly-page .pill img {
       width: 140px;
@@ -25,6 +28,7 @@
       display: block;
       margin: 6px auto;
     }
+    /* Siatki kart – prostowanie wysokości */
     body.szczegoly-page .info-grid,
     body.szczegoly-page .cards,
     body.szczegoly-page .tiles {
@@ -53,9 +57,9 @@
     <small>© 2025 • Boli-mnie.pl</small>
   </footer>
 
-  <script src="content.js"></script>
+  <script src="content.js?v=detail-fix2"></script>
   <script>
-    // Opcjonalny „hero”: spróbuj dopasować obraz po ?id=
+    /* Opcjonalny „hero” – jeśli masz plik o tej samej nazwie co ?id= */
     (function(){
       const p = new URLSearchParams(location.search);
       const id = p.get('id') || '';
