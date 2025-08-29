@@ -760,3 +760,16 @@ body.szczegoly-page .cards .card img{
   display:block;
   margin:8px auto;
   border-radius:12px
+/* =========================
+   SZCZEGÓŁY – obrazki w treści
+   ========================= */
+body.szczegoly-page .content img,
+body.szczegoly-page #content img,
+body.szczegoly-page .info img,
+body.szczegoly-page .cards .card img{
+  max-width:100%;
+  height:auto;
+  display:block;
+  margin:8px auto;
+  border-radius:12px;
+}
