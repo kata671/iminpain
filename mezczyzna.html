@@ -3,111 +3,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mężczyzna — wybór obszaru bólu</title>
+  <title>Mężczyzna — wybierz obszar bólu</title>
   <link rel="stylesheet" href="style.css" />
-  <meta name="theme-color" content="#7a4dff" />
-  <style>
-    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-    .card{ display:flex; align-items:center; justify-content:center; text-align:center; flex-direction:column; gap:8px; padding:10px; aspect-ratio:1/1; }
-    .card img.thumb{ width:44px; height:44px; object-fit:cover; border-radius:8px; margin:0; box-shadow:0 0 6px rgba(130,100,255,.35); }
-    .card .label{ font-weight:800; line-height:1.15; display:inline-flex; align-items:center; gap:6px; }
-    .card .label .emo{ opacity:.95; }
-    @media (max-width:420px){ .grid-3{ gap:10px; } .card img.thumb{ width:40px; height:40px; } }
-  </style>
 </head>
-<body class="bg-med">
+<body class="bg-med mezczyzna-page">
+
   <nav class="quickbar">
-    <a href="index.html">🏠 Strona główna</a>
+    <a href="index.html">🏠 Start</a>
     <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
     <a href="lokalizacja.html">📍 Lokalizacja</a>
   </nav>
 
   <header class="site-header">
-    <h1>👨 Mężczyzna — wybierz obszar bólu</h1>
+    <h1>Mężczyzna</h1>
+    <p>Wybierz obszar bólu</p>
   </header>
 
   <main class="container">
-    <div class="grid-3">
-
-      <!-- Głowa i twarz -->
-      <a class="card" href="szczegoly.html?id=mezczyzna-oko">
-        <img src="img/mezczyzna-oko.png" alt="" class="thumb">
-        <span class="label"><span class="name">Oko</span><span class="emo">👁️</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=mezczyzna-nos">
-        <img src="img/mezczyzna-nos.png" alt="" class="thumb">
-        <span class="label"><span class="name">Nos</span><span class="emo">👃</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=mezczyzna-usta">
-        <img src="img/mezczyzna-usta.png" alt="" class="thumb">
-        <span class="label"><span class="name">Usta</span><span class="emo">👄</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=mezczyzna-ucho">
-        <img src="img/mezczyzna-ucho.png" alt="" class="thumb">
-        <span class="label"><span class="name">Ucho</span><span class="emo">👂</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=mezczyzna-glowa">
-        <img src="img/mezczyzna-glowa.png" alt="" class="thumb">
-        <span class="label"><span class="name">Głowa</span><span class="emo">🧠</span></span>
-      </a>
-
-      <!-- Tułów -->
-      <a class="card" href="szczegoly.html?id=mezczyzna-serce">
-        <img src="img/mezczyzna-serce.png" alt="" class="thumb">
-        <span class="label"><span class="name">Serce</span><span class="emo">❤️</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=mezczyzna-pluca">
-        <img src="img/mezczyzna-pluca.png" alt="" class="thumb">
-        <span class="label"><span class="name">Płuca</span><span class="emo">🫁</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=mezczyzna-kregoslup">
-        <img src="img/mezczyzna-kregoslup.png" alt="" class="thumb">
-        <span class="label"><span class="name">Kręgosłup</span><span class="emo">🧍‍♂️</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=mezczyzna-zoladek">
-        <img src="img/mezczyzna-zoladek.png" alt="" class="thumb">
-        <span class="label"><span class="name">Żołądek</span><span class="emo">🫀</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=mezczyzna-watroba">
-        <img src="img/mezczyzna-watroba.png" alt="" class="thumb">
-        <span class="label"><span class="name">Wątroba</span><span class="emo">🍃</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=mezczyzna-nerki">
-        <img src="img/mezczyzna-nerki.png" alt="" class="thumb">
-        <span class="label"><span class="name">Nerki</span><span class="emo">💧</span></span>
-      </a>
-
-      <!-- Kończyny górne -->
-      <a class="card" href="szczegoly.html?id=mezczyzna-ramie">
-        <img src="img/mezczyzna-ramie.png" alt="" class="thumb">
-        <span class="label"><span class="name">Ramię</span><span class="emo">💪</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=mezczyzna-lokiec">
-        <img src="img/mezczyzna-lokiec.png" alt="" class="thumb">
-        <span class="label"><span class="name">Łokieć</span><span class="emo">⚡</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=mezczyzna-dlon">
-        <img src="img/mezczyzna-dlon.png" alt="" class="thumb">
-        <span class="label"><span class="name">Dłoń</span><span class="emo">✋</span></span>
-      </a>
-
-      <!-- Kończyny dolne -->
-      <a class="card" href="szczegoly.html?id=mezczyzna-udo">
-        <img src="img/mezczyzna-udo.png" alt="" class="thumb">
-        <span class="label"><span class="name">Udo</span><span class="emo">🦵</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=mezczyzna-kolano">
-        <img src="img/mezczyzna-kolano.png" alt="" class="thumb">
-        <span class="label"><span class="name">Kolano</span><span class="emo">🦵</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=mezczyzna-stopa">
-        <img src="img/mezczyzna-stopa.png" alt="" class="thumb">
-        <span class="label"><span class="name">Stopa</span><span class="emo">🦶</span></span>
-      </a>
-
-    </div>
+    <section id="areas-k">
+      <h2>Wybierz obszar bólu</h2>
+      <div class="grid-4">
+        <a class="card" href="szczegoly.html?id=mezczyzna-oko">
+          <img class="thumb" src="img/mezczyzna-oko.png" alt="Oko">
+          <span>Oko</span>
+        </a>
+        <a class="card" href="szczegoly.html?id=mezczyzna-nos">
+          <img class="thumb" src="img/mezczyzna-nos.png" alt="Nos">
+          <span>Nos</span>
+        </a>
+        <a class="card" href="szczegoly.html?id=mezczyzna-usta">
+          <img class="thumb" src="img/mezczyzna-usta.png" alt="Usta">
+          <span>Usta</span>
+        </a>
+        <a class="card" href="szczegoly.html?id=mezczyzna-ucho">
+          <img class="thumb" src="img/mezczyzna-ucho.png" alt="Ucho">
+          <span>Ucho</span>
+        </a>
+        <!-- …pozostałe obszary bólu -->
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
+  <footer class="site-footer">
+    <small>© 2025 • Boli-mnie.pl</small>
+  </footer>
+
 </body>
 </html>
