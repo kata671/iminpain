@@ -347,3 +347,40 @@ body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Ari
   font-weight: 700;
   text-align: center;
 }
+/* === Apteka 24h — zielony chip z delikatnym pulsem (bez ruszania reszty) === */
+.chip,
+.quickbar .chip { 
+  display:inline-flex; align-items:center; gap:.45rem;
+  padding:.45rem .8rem; border-radius:999px; font-weight:800; text-decoration:none;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--ink);
+}
+
+.chip-apteka24{
+  background: linear-gradient(180deg, rgba(18,197,91,.18), rgba(18,197,91,.10));
+  border-color: rgba(18,197,91,.45);
+  box-shadow: 0 0 10px rgba(18,197,91,.35), 0 0 28px rgba(18,197,91,.22);
+  position: relative;
+}
+.chip-apteka24 .ico{
+  display:inline-block;
+  font-weight:900;
+  line-height:1;
+  transform: translateY(-1px);
+}
+.chip-apteka24:hover{
+  box-shadow: 0 0 16px rgba(18,197,91,.55), 0 0 40px rgba(18,197,91,.35);
+}
+.chip-apteka24::after{
+  content:"";
+  position:absolute; inset:-2px;
+  border-radius:999px;
+  box-shadow: 0 0 14px rgba(18,197,91,.45), 0 0 30px rgba(18,197,91,.25);
+  opacity:.0; pointer-events:none;
+  animation: aptekaPulse 1.8s ease-in-out infinite;
+}
+@keyframes aptekaPulse{
+  0%,100%{ opacity:.25; }
+  50%    { opacity:.55; }
+}
