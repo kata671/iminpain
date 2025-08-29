@@ -468,3 +468,34 @@ body.kobieta-page .container .grid-4 .card,
 body.mezczyzna-page .container .grid-4 .card {
   text-align: center;
 }
+/* ============================
+   HOT-FIX: zdjęcia w SZCZEGÓŁACH
+   (tylko na stronie szczegóły)
+   ============================ */
+body.szczegoly-page .content img,
+body.szczegoly-page #content img,
+body.szczegoly-page .info img,
+body.szczegoly-page .cards .card img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 8px auto;
+  border-radius: 12px;
+}
+
+/* Miniatury w małych kafelkach (jeśli są) */
+body.szczegoly-page .tile img,
+body.szczegoly-page .pill img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  display: block;
+  margin: 6px auto;
+}
+
+/* Siatki kart – żeby wysokości ładnie się prostowały */
+body.szczegoly-page .info-grid,
+body.szczegoly-page .cards,
+body.szczegoly-page .tiles {
+  align-items: stretch;
+}
