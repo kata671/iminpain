@@ -5,36 +5,51 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mężczyzna — wybierz obszar bólu</title>
 
-  <!-- Globalny CSS z „odświeżaczem” cache -->
-  <link rel="stylesheet" href="style.css?v=men-hardfix" />
+  <!-- Globalny CSS z wersjonowaniem (omija cache) -->
+  <link rel="stylesheet" href="style.css?v=men-final" />
 
-  <!-- LOKALNY CSS: działa TYLKO na tej stronie -->
+  <!-- LOKALNY CSS: działa tylko na tej stronie -->
   <style>
-    /* Miniatury w kartach – złapie IMG i ewentualny DIV z tłem */
+    /* Siatka kart — delikatne wyrównanie, bez zmiany Twojego layoutu */
+    body.mezczyzna-page .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+    @media (max-width: 991px){ body.mezczyzna-page .grid-4 { grid-template-columns: repeat(3,1fr); } }
+    @media (max-width: 640px){ body.mezczyzna-page .grid-4 { grid-template-columns: repeat(2,1fr); } }
+
+    /* Miniatury w kartach — „pancerny” rozmiar */
     body.mezczyzna-page .grid-4 > .card img,
-    body.mezczyzna-page .grid-4 > .card .thumb,
-    body.mezczyzna-page .grid-4 > .card .thumb-bg {
+    body.mezczyzna-page .grid-4 > a.card img,
+    body.mezczyzna-page .grid-4 > .tile img,
+    body.mezczyzna-page .grid-4 > a img {
       display:block !important;
       width:64px !important;
       height:64px !important;
       max-width:none !important;
       max-height:none !important;
+      object-fit:cover !important;
       border-radius:10px !important;
       margin:0 auto 8px auto !important;
-      box-shadow:none !important;
     }
-    /* Jeśli miniatury są jako background-image */
-    body.mezczyzna-page .grid-4 > .card .thumb-bg {
+    /* Jeśli miniatury były kiedyś jako background-image */
+    body.mezczyzna-page .grid-4 > .card .thumb-bg,
+    body.mezczyzna-page .grid-4 > a .thumb-bg {
+      display:block !important;
+      width:64px !important;
+      height:64px !important;
+      border-radius:10px !important;
+      margin:0 auto 8px auto !important;
       background-position:center !important;
       background-repeat:no-repeat !important;
-      background-size:cover !important; /* zamień na contain, jeśli chcesz całe */
+      background-size:cover !important; /* zamień na contain jeśli wolisz całe */
     }
 
     /* Telefon: +70% */
     @media (max-width: 767px){
       body.mezczyzna-page .grid-4 > .card img,
-      body.mezczyzna-page .grid-4 > .card .thumb,
-      body.mezczyzna-page .grid-4 > .card .thumb-bg {
+      body.mezczyzna-page .grid-4 > a.card img,
+      body.mezczyzna-page .grid-4 > .tile img,
+      body.mezczyzna-page .grid-4 > a img,
+      body.mezczyzna-page .grid-4 > .card .thumb-bg,
+      body.mezczyzna-page .grid-4 > a .thumb-bg {
         width:109px !important;
         height:109px !important;
       }
@@ -42,15 +57,21 @@
     /* Laptop: +75% */
     @media (min-width: 1024px){
       body.mezczyzna-page .grid-4 > .card img,
-      body.mezczyzna-page .grid-4 > .card .thumb,
-      body.mezczyzna-page .grid-4 > .card .thumb-bg {
+      body.mezczyzna-page .grid-4 > a.card img,
+      body.mezczyzna-page .grid-4 > .tile img,
+      body.mezczyzna-page .grid-4 > a img,
+      body.mezczyzna-page .grid-4 > .card .thumb-bg,
+      body.mezczyzna-page .grid-4 > a .thumb-bg {
         width:112px !important;
         height:112px !important;
       }
     }
 
-    /* Podpis — czysty tekst, bez emotek dekoracyjnych */
-    body.mezczyzna-page .grid-4 > .card span{
+    /* Podpis — czysty tekst; wyłączamy ewentualne emotki-dekoracje */
+    body.mezczyzna-page .grid-4 > .card span,
+    body.mezczyzna-page .grid-4 > a.card span,
+    body.mezczyzna-page .grid-4 > .tile span,
+    body.mezczyzna-page .grid-4 > a span {
       display:block !important;
       text-decoration:none !important;
       font-weight:700 !important;
@@ -58,12 +79,16 @@
       margin-top:6px !important;
     }
     body.mezczyzna-page .grid-4 > .card::before,
-    body.mezczyzna-page .grid-4 > .card span::before{
+    body.mezczyzna-page .grid-4 > .card span::before,
+    body.mezczyzna-page .grid-4 > a.card::before,
+    body.mezczyzna-page .grid-4 > a.card span::before {
       content:none !important;
     }
 
-    /* Gdyby coś „pchało” karty – centrujemy */
-    body.mezczyzna-page .grid-4 > .card{ text-align:center !important; }
+    /* Bezpieczne centrowanie kart (gdyby coś je „pchało”) */
+    body.mezczyzna-page .grid-4 > .card,
+    body.mezczyzna-page .grid-4 > a.card,
+    body.mezczyzna-page .grid-4 > a { text-align:center !important; }
   </style>
 </head>
 <body class="bg-med mezczyzna-page">
