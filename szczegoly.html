@@ -6,7 +6,7 @@
   <title>Szczegóły</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* TYLKO dla tej strony: porządkujemy obrazki w treści, nic poza tym */
+    /* TYLKO dla tej strony: obrazki w treści są równe i elegancko wyśrodkowane */
     body.szczegoly-page .detail-hero img,
     body.szczegoly-page .content img,
     body.szczegoly-page .info img,
@@ -17,8 +17,7 @@
       margin: 8px auto;
       border-radius: 12px;
     }
-
-    /* Jeśli masz kafelki z obrazkiem po lewej/prawej — złapmy standardową miniaturę */
+    /* Miniatury w kartach, jeśli takie masz po lewej/prawej */
     body.szczegoly-page .tile img,
     body.szczegoly-page .pill img {
       width: 140px;
@@ -27,8 +26,7 @@
       display: block;
       margin: 6px auto;
     }
-
-    /* Siatka (gdy jest) — ładne wyrównanie kart, bez naruszania Twojego layoutu */
+    /* Siatki kart wyrównane */
     body.szczegoly-page .info-grid,
     body.szczegoly-page .cards,
     body.szczegoly-page .tiles {
@@ -49,17 +47,12 @@
   </header>
 
   <main class="container">
-    <!--
-      Twoja obecna treść (nagłówek obszaru bólu, karty: Objawy, Przyczyny, Leczenie, Leki itd.)
-      zostaje bez zmian — dane pobiera content.js.
-      Jeżeli masz "hero" z obrazkiem, nada mu .detail-hero:
-    -->
     <section class="detail-hero">
-      <!-- obrazek/tło jeśli jest; jeśli nie — sekcja może zostać pusta -->
+      <!-- opcjonalny obraz „hero”, jeśli używasz -->
     </section>
 
     <section id="content">
-      <!-- Tu zostaje Twój obecny markup/JS, nie ingeruję -->
+      <!-- treść ładowana przez content.js (Objawy/Przyczyny/Leczenie/Leki itd.) -->
     </section>
   </main>
 
@@ -67,7 +60,6 @@
     <small>© 2025 • Boli-mnie.pl</small>
   </footer>
 
-  <!-- Twój skrypt, który ładuje treści po id=... (bez zmian) -->
   <script src="content.js"></script>
 </body>
 </html>
