@@ -708,3 +708,55 @@ body.mezczyzna-page .grid-4 > .card span {
     width: 112px; height: 112px;
   }
 }
+/* =========================
+   MEN – miniatury (siatka 4)
+   ========================= */
+body.mezczyzna-page .grid-4 .card{
+  text-align:center;
+}
+body.mezczyzna-page .grid-4 .card img.thumb{
+  display:block !important;
+  width:64px; height:64px;
+  object-fit:cover;
+  border-radius:10px;
+  margin:0 auto 8px;
+  box-shadow:0 0 6px rgba(130,100,255,.35);
+  background:#0b1222;
+}
+body.mezczyzna-page .grid-4 .card .label{
+  display:block; font-weight:700; margin-top:4px; text-decoration:none;
+}
+
+/* Telefon: ~+70% miniatury */
+@media (max-width: 767px){
+  body.mezczyzna-page .grid-4 .card img.thumb{
+    width:109px; height:109px;
+  }
+}
+
+/* Laptop: ~+75% miniatury + ciut większy podpis */
+@media (min-width: 1024px){
+  body.mezczyzna-page .grid-4 .card img.thumb{
+    width:112px; height:112px;
+  }
+  body.mezczyzna-page .grid-4 .card .label{
+    font-size:1.06rem;
+  }
+}
+
+/* Z punktu bezpieczeństwa – jeśli jakieś stare emotki próbują się włączyć */
+body.mezczyzna-page .grid-4 .card::before,
+body.mezczyzna-page .grid-4 .card span::before{ content:none !important; }
+
+/* =========================
+   SZCZEGÓŁY – obrazki i kafelki
+   ========================= */
+body.szczegoly-page .content img,
+body.szczegoly-page #content img,
+body.szczegoly-page .info img,
+body.szczegoly-page .cards .card img{
+  max-width:100%;
+  height:auto;
+  display:block;
+  margin:8px auto;
+  border-radius:12px
