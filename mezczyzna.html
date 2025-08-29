@@ -1,154 +1,161 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Mężczyzna – wybierz obszar bólu</title>
-  <link rel="stylesheet" href="style.css?v=mezczyzna-final" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mężczyzna — wybierz obszar bólu</title>
 
+  <!-- NIC nie zmieniamy w globalnym arkuszu -->
+  <link rel="stylesheet" href="style.css?v=final-men" />
+
+  <!-- Lokalny, bezpieczny patch tylko dla tej strony -->
   <style>
-    body.mezczyzna-page .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 12px;
+    /* Siatka i kafelki – tylko na tej stronie */
+    body.mezczyzna-page .areas-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:16px;
+      margin-top:14px;
     }
-    body.mezczyzna-page .card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 14px;
-      text-align: center;
-      border-radius: 18px;
-      border: 1px solid var(--border);
-      background: var(--card);
-      box-shadow: var(--glow);
-      text-decoration: none;
-      color: var(--ink);
-    }
-    body.mezczyzna-page .card img.thumb {
-      width: 64px;
-      height: 64px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 6px;
-      box-shadow: 0 0 6px rgba(130, 100, 255, .35);
-      background: #0b1222;
-    }
-    body.mezczyzna-page .card span {
-      font-weight: 700;
-      margin-top: 4px;
-    }
-    @media (max-width: 767px) {
-      body.mezczyzna-page .card img.thumb {
-        width: 109px;
-        height: 109px;
+    @media (max-width: 820px){
+      body.mezczyzna-page .areas-grid{
+        grid-template-columns: repeat(2, minmax(0,1fr));
+        gap:14px;
       }
     }
-    @media (min-width: 1024px) {
-      body.mezczyzna-page .card img.thumb {
-        width: 112px;
-        height: 112px;
-      }
-      body.mezczyzna-page .card span {
-        font-size: 1.06rem;
+
+    /* Kafelki – korzystamy z istniejącego wyglądu .card,
+       dodajemy tylko wyśrodkowanie i odstępy */
+    body.mezczyzna-page .areas-grid .card{
+      text-align:center;
+      padding:18px;
+    }
+
+    /* Miniatury */
+    body.mezczyzna-page .areas-grid .thumb{
+      display:block;
+      width:112px; height:112px;
+      object-fit:cover;
+      border-radius:14px;
+      margin:0 auto 8px auto;
+      box-shadow:0 0 6px rgba(130,100,255,.35);
+      background:#0b1222;
+    }
+    @media (max-width:820px){
+      body.mezczyzna-page .areas-grid .thumb{
+        width:96px; height:96px;
       }
     }
+
+    /* Podpisy */
+    body.mezczyzna-page .areas-grid .label{
+      display:block;
+      font-weight:700;
+      text-decoration:none;
+      margin-top:4px;
+    }
+
+    /* Na wszelki wypadek wyłączamy pseudo-ikony/emotki */
+    body.mezczyzna-page .areas-grid .card::before,
+    body.mezczyzna-page .areas-grid .card span::before{ content:none !important; }
   </style>
 </head>
 <body class="bg-med mezczyzna-page">
+
   <nav class="quickbar">
     <a href="index.html">🏠 Start</a>
-    <a href="pierwsza-pomoc.html">⛑ Pierwsza pomoc</a>
+    <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
     <a href="lokalizacja.html">📍 Lokalizacja</a>
   </nav>
 
   <header class="site-header">
     <h1>Mężczyzna</h1>
-    <p>Wybierz obszar bólu</p>
+    <p class="subtitle">Wybierz obszar bólu</p>
   </header>
 
   <main class="container">
-    <section>
-      <h2>Wybierz obszar bólu</h2>
-      <div class="grid-4">
+    <section aria-labelledby="areas-title">
+      <h2 id="areas-title">Wybierz obszar bólu</h2>
+
+      <div class="areas-grid">
         <a class="card" href="szczegoly.html?id=mezczyzna-oko">
           <img class="thumb" src="img/mezczyzna-oko.png" alt="Oko">
-          <span>Oko</span>
+          <span class="label">Oko</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-nos">
           <img class="thumb" src="img/mezczyzna-nos.png" alt="Nos">
-          <span>Nos</span>
+          <span class="label">Nos</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-usta">
           <img class="thumb" src="img/mezczyzna-usta.png" alt="Usta">
-          <span>Usta</span>
+          <span class="label">Usta</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-ucho">
           <img class="thumb" src="img/mezczyzna-ucho.png" alt="Ucho">
-          <span>Ucho</span>
+          <span class="label">Ucho</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-glowa">
           <img class="thumb" src="img/mezczyzna-glowa.png" alt="Głowa">
-          <span>Głowa</span>
+          <span class="label">Głowa</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-szyja">
           <img class="thumb" src="img/mezczyzna-szyja.png" alt="Szyja">
-          <span>Szyja</span>
+          <span class="label">Szyja</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-serce">
           <img class="thumb" src="img/mezczyzna-serce.png" alt="Serce">
-          <span>Serce</span>
+          <span class="label">Serce</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-pluca">
           <img class="thumb" src="img/mezczyzna-pluca.png" alt="Płuca">
-          <span>Płuca</span>
+          <span class="label">Płuca</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-zoladek">
           <img class="thumb" src="img/mezczyzna-zoladek.png" alt="Żołądek">
-          <span>Żołądek</span>
+          <span class="label">Żołądek</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-watroba">
           <img class="thumb" src="img/mezczyzna-watroba.png" alt="Wątroba">
-          <span>Wątroba</span>
+          <span class="label">Wątroba</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-kregoslup">
           <img class="thumb" src="img/mezczyzna-kregoslup.png" alt="Kręgosłup">
-          <span>Kręgosłup</span>
+          <span class="label">Kręgosłup</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-nerki">
           <img class="thumb" src="img/mezczyzna-nerki.png" alt="Nerki">
-          <span>Nerki</span>
+          <span class="label">Nerki</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-ramie">
           <img class="thumb" src="img/mezczyzna-ramie.png" alt="Ramię">
-          <span>Ramię</span>
+          <span class="label">Ramię</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-lokiec">
           <img class="thumb" src="img/mezczyzna-lokiec.png" alt="Łokieć">
-          <span>Łokieć</span>
+          <span class="label">Łokieć</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-dlon">
           <img class="thumb" src="img/mezczyzna-dlon.png" alt="Dłoń">
-          <span>Dłoń</span>
+          <span class="label">Dłoń</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-udo">
           <img class="thumb" src="img/mezczyzna-udo.png" alt="Udo">
-          <span>Udo</span>
+          <span class="label">Udo</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-kolano">
           <img class="thumb" src="img/mezczyzna-kolano.png" alt="Kolano">
-          <span>Kolano</span>
+          <span class="label">Kolano</span>
         </a>
         <a class="card" href="szczegoly.html?id=mezczyzna-stopa">
           <img class="thumb" src="img/mezczyzna-stopa.png" alt="Stopa">
-          <span>Stopa</span>
+          <span class="label">Stopa</span>
         </a>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <small>© 2025 • Boli-mnie.pl</small>
+    <small>© 2025 • Bolihelp.com</small>
   </footer>
 </body>
 </html>
