@@ -5,47 +5,37 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mężczyzna — wybierz obszar bólu</title>
 
-  <!-- Twoje globalne style (NIE ruszam tapety) -->
+  <!-- globalny CSS (tapeta, układ) -->
   <link rel="stylesheet" href="style.css?v=men-direct-final" />
 
-  <!-- Mikro-styl tylko dla miniaturek na TEJ stronie -->
+  <!-- mikro-CSS tylko dla TEJ strony -->
   <style>
-    /* Dotyczy WYŁĄCZNIE tej strony */
     body.mezczyzna-page .grid-4 .card{ text-align:center; }
     body.mezczyzna-page .grid-4 .card img.thumb{
-      display:block;
+      display:block !important;
       width:64px; height:64px;
       object-fit:cover;
       border-radius:10px;
-      margin:0 auto 8px auto;
+      margin:0 auto 8px;
       box-shadow:0 0 6px rgba(130,100,255,.35);
+      background:#0b1222;
     }
     body.mezczyzna-page .grid-4 .card .label{
-      display:block;
-      font-weight:700;
-      text-decoration:none;
-      margin-top:4px;
+      display:block; font-weight:700; margin-top:4px; text-decoration:none;
     }
-    /* Telefon: ~+70% (64 -> ~109) */
-    @media (max-width: 767px){
-      body.mezczyzna-page .grid-4 .card img.thumb{
-        width:109px; height:109px;
-      }
+    /* telefon ~+70% */
+    @media (max-width:767px){
+      body.mezczyzna-page .grid-4 .card img.thumb{ width:109px; height:109px; }
     }
-    /* Laptop: ~+75% (64 -> ~112) */
-    @media (min-width: 1024px){
-      body.mezczyzna-page .grid-4 .card img.thumb{
-        width:112px; height:112px;
-      }
-      body.mezczyzna-page .grid-4 .card .label{
-        font-size:1.06rem;
-      }
+    /* laptop ~+75% */
+    @media (min-width:1024px){
+      body.mezczyzna-page .grid-4 .card img.thumb{ width:112px; height:112px; }
+      body.mezczyzna-page .grid-4 .card .label{ font-size:1.06rem; }
     }
   </style>
 </head>
 
 <body class="bg-med mezczyzna-page">
-  <!-- Quickbar -->
   <nav class="quickbar">
     <a href="index.html">🏠 Start</a>
     <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
