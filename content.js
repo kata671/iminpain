@@ -139,3 +139,29 @@ window.CONTENT = {
   }
 };
 /* — koniec — */
+/* --- PATCH: dopisz brakujące wpisy dla szczegółów, jeśli nie istnieją --- */
+window.DETAILS = window.DETAILS || {};
+
+if(!window.DETAILS["mezczyzna-oko"]){
+  window.DETAILS["mezczyzna-oko"] = {
+    title:"Oko — Mężczyzna",
+    image:"img/mezczyzna-oko.png",
+    symptoms:["Ból/pieczenie","Łzawienie, światłowstręt","Zaczerwienienie","Pogorszenie ostrości"],
+    causes:["Zapalenie spojówek","Suchość oka","Uraz rogówki","Alergia"],
+    firstAid:["Sztuczne łzy","Chłodny okład 10–15 min","Nie trzeć oka","Pilnie do SOR przy silnym bólu/urazie"],
+    otc:["Sztuczne łzy","Krople antyhistaminowe (alergia)"],
+    rx:["Antybiotyk w kroplach (wg lekarza)"]
+  };
+}
+
+if(!window.DETAILS["kobieta-oko"]){
+  window.DETAILS["kobieta-oko"] = {
+    title:"Oko — Kobieta",
+    image:"img/kobieta-oko.png",
+    symptoms:["Pieczenie/suchość","Łzawienie, światłowstręt","Zaczerwienienie"],
+    causes:["Zespół suchego oka","Alergia","Zapalenie spojówek"],
+    firstAid:["Przerwy od ekranu (reguła 20-20-20)","Sztuczne łzy","Zdjąć soczewki przy infekcji"],
+    otc:["Sztuczne łzy bez konserwantów"],
+    rx:["Antybiotyk / steroid — wg lekarza"]
+  };
+}
