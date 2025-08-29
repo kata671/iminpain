@@ -773,3 +773,57 @@ body.szczegoly-page .cards .card img{
   margin:8px auto;
   border-radius:12px;
 }
+/* === MINIATURKI/KAFELKI – TYLKO SIATKA „Wybierz obszar bólu” === */
+
+/* Równa siatka – 3 kolumny również na telefonie */
+body.kobieta-page .grid-4,
+body.mezczyzna-page .grid-4{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap:16px;
+}
+
+/* Bardzo wąskie telefony – wciąż 3, ale ciaśniej */
+@media (max-width:380px){
+  body.kobieta-page .grid-4,
+  body.mezczyzna-page .grid-4{
+    gap:12px;
+  }
+}
+
+/* Kafelki – ujednolicenie rozmiaru */
+body.kobieta-page .grid-4 .card,
+body.mezczyzna-page .grid-4 .card{
+  padding:14px;
+  border-radius:20px;
+  text-align:center;
+}
+
+/* Miniaturki – spójny rozmiar */
+body.kobieta-page .grid-4 .card img,
+body.mezczyzna-page .grid-4 .card img{
+  width:110px;
+  height:110px;
+  object-fit:cover;
+  border-radius:14px;
+  display:block;
+  margin:0 auto 8px;
+  box-shadow:0 0 10px rgba(122,77,255,.25);
+}
+
+/* Podpis pod miniaturką */
+body.kobieta-page .grid-4 .card span,
+body.mezczyzna-page .grid-4 .card span{
+  display:block;
+  font-weight:700;
+  text-decoration:none !important;
+}
+
+/* Desktop – trochę większe miniaturki */
+@media (min-width:1024px){
+  body.kobieta-page .grid-4 .card img,
+  body.mezczyzna-page .grid-4 .card img{
+    width:130px;
+    height:130px;
+  }
+}
