@@ -571,3 +571,82 @@ body.mezczyzna-page .card span{
   text-align:center !important;
   margin-top:6px !important;
 }
+/* === PANZER HOT-FIX: miniaturki tylko na stronie MĘŻCZYZNA === */
+body.mezczyzna-page .container .grid-4 > .card { text-align: center !important; }
+body.mezczyzna-page .container .grid-4 > .card::before,
+body.mezczyzna-page .container .grid-4 > .card span::before { content: none !important; }
+
+/* 1) IMG miniatury */
+body.mezczyzna-page .container .grid-4 > .card img {
+  display: block !important;
+  width: 64px !important; height: 64px !important;
+  max-width: none !important; max-height: none !important;
+  object-fit: cover !important; border-radius: 10px !important;
+  margin: 0 auto 8px auto !important;
+}
+
+/* 2) Emoji/tekst jako miniatura (pierwszy element w karcie) */
+body.mezczyzna-page .container .grid-4 > .card > span:first-child,
+body.mezczyzna-page .container .grid-4 > .card > i:first-child,
+body.mezczyzna-page .container .grid-4 > .card > svg:first-child {
+  display: block !important;
+  width: 64px !important; height: 64px !important;
+  line-height: 64px !important; font-size: 64px !important;
+  border-radius: 10px !important; margin: 0 auto 8px auto !important;
+  text-align: center !important;
+}
+
+/* 3) Miniatura jako tło (div/thumb-bg) */
+body.mezczyzna-page .container .grid-4 > .card .thumb,
+body.mezczyzna-page .container .grid-4 > .card .thumb-bg,
+body.mezczyzna-page .container .grid-4 > .card > div:first-child {
+  display: block !important;
+  width: 64px !important; height: 64px !important;
+  border-radius: 10px !important; margin: 0 auto 8px auto !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important; /* zamień na contain, jeśli wolisz całe */
+}
+
+/* Podpis (drugi element w karcie) – czysty tekst */
+body.mezczyzna-page .container .grid-4 > .card > span:last-child {
+  display: block !important; margin-top: 6px !important;
+  font-weight: 700 !important; text-decoration: none !important;
+  text-align: center !important;
+}
+
+/* Telefon: +70% */
+@media (max-width: 767px) {
+  body.mezczyzna-page .container .grid-4 > .card img,
+  body.mezczyzna-page .container .grid-4 > .card > span:first-child,
+  body.mezczyzna-page .container .grid-4 > .card > i:first-child,
+  body.mezczyzna-page .container .grid-4 > .card > svg:first-child,
+  body.mezczyzna-page .container .grid-4 > .card .thumb,
+  body.mezczyzna-page .container .grid-4 > .card .thumb-bg,
+  body.mezczyzna-page .container .grid-4 > .card > div:first-child {
+    width: 109px !important; height: 109px !important;
+  }
+  body.mezczyzna-page .container .grid-4 > .card > span:first-child,
+  body.mezczyzna-page .container .grid-4 > .card > i:first-child,
+  body.mezczyzna-page .container .grid-4 > .card > svg:first-child {
+    line-height: 109px !important; font-size: 109px !important;
+  }
+}
+
+/* Laptop: +75% */
+@media (min-width: 1024px) {
+  body.mezczyzna-page .container .grid-4 > .card img,
+  body.mezczyzna-page .container .grid-4 > .card > span:first-child,
+  body.mezczyzna-page .container .grid-4 > .card > i:first-child,
+  body.mezczyzna-page .container .grid-4 > .card > svg:first-child,
+  body.mezczyzna-page .container .grid-4 > .card .thumb,
+  body.mezczyzna-page .container .grid-4 > .card .thumb-bg,
+  body.mezczyzna-page .container .grid-4 > .card > div:first-child {
+    width: 112px !important; height: 112px !important;
+  }
+  body.mezczyzna-page .container .grid-4 > .card > span:first-child,
+  body.mezczyzna-page .container .grid-4 > .card > i:first-child,
+  body.mezczyzna-page .container .grid-4 > .card > svg:first-child {
+    line-height: 112px !important; font-size: 112px !important;
+  }
+}
