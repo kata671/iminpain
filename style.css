@@ -418,3 +418,53 @@ body.mezczyzna-page #areas-k .thumb {
     height: 112px;
   }
 }
+/* ============================
+   HOT-FIX: powiększenie miniaturek
+   tylko na stronach kobieta/mezczyzna
+   (niezależnie od #areas-k i .thumb)
+   ============================ */
+
+/* Baza – ujednolicenie miniaturek w kartach, w siatce */
+body.kobieta-page .container .grid-4 .card img,
+body.mezczyzna-page .container .grid-4 .card img {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;   /* jeśli wolisz całe widać, użyj contain */
+  border-radius: 10px;
+  margin: 0 auto 8px auto;
+}
+
+/* Telefon: +70% (64 -> ~109px) */
+@media (max-width: 767px) {
+  body.kobieta-page .container .grid-4 .card img,
+  body.mezczyzna-page .container .grid-4 .card img {
+    width: 109px;
+    height: 109px;
+  }
+}
+
+/* Laptop: +75% (64 -> ~112px) */
+@media (min-width: 1024px) {
+  body.kobieta-page .container .grid-4 .card img,
+  body.mezczyzna-page .container .grid-4 .card img {
+    width: 112px;
+    height: 112px;
+  }
+}
+
+/* Podpisy pod miniaturami – czysto, bez podkreśleń/emotikon */
+body.kobieta-page .container .grid-4 .card span,
+body.mezczyzna-page .container .grid-4 .card span {
+  display: block;
+  text-decoration: none !important;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* (opcjonalnie) jeśli obrazki pływają po prawej/lewej, wyrównujemy */
+body.kobieta-page .container .grid-4 .card,
+body.mezczyzna-page .container .grid-4 .card {
+  text-align: center;
+}
