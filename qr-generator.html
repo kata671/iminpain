@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QR Code Generator — Bolihelp</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .qr-container {
+      max-width: 600px;
+      margin: 40px auto;
+      text-align: center;
+    }
+    .qr-display {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      margin: 20px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .qr-canvas {
+      max-width: 100%;
+      height: auto;
+    }
+    .url-input {
+      width: 100%;
+      max-width: 400px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--ink);
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    .generate-btn {
+      background: linear-gradient(135deg, #7a4dff, #4ad0ff);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.2s;
+    }
+    .generate-btn:hover {
+      transform: translateY(-2px);
+    }
+    .download-btn {
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 10px;
+      text-decoration: none;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body class="bg-med">
+  <nav class="quickbar">
+    <a href="index.html">🏠 Start</a>
+    <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
+    <a href="lokalizacja.html">📍 Lokalizacja</a>
+  </nav>
+
+  <header class="site-header">
+    <a class="back" href="index.html">← Wróć</a>
+    <h1>📱 Generator QR Code</h1>
+    <p class="subtitle">Wygeneruj kod QR dla strony Bolihelp</p>
+  </header>
+
+  <main class="container">
+    <div class="qr-container">
+      <div class="card">
+        <h2>Wygeneruj QR Code</h2>
+        <p>Wprowadź URL lub użyj domyślnego adresu strony:</p>
+        
+        <input 
+          type="url" 
+          id="urlInput" 
+          class="url-input" 
+          value="https://bolihelp.com" 
+          placeholder="https://bolihelp.com"
+        />
+        
+        <br>
+        
+        <button id="generateBtn" class="generate-btn">
+          🔄 Wygeneruj QR Code
+        </button>
+        
+        <div id="qrDisplay" class="qr-display" style="display: none;">
+          <canvas id="qrCanvas" class="qr-canvas"></canvas>
+          <br>
+          <a id="downloadBtn" class="download-btn" download="bolihelp-qr.png">
+            💾 Pobierz QR Code
+          </a>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 20px;">
+        <h3>Gotowe QR Codes</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
+          
+          <div style="text-align: center;">
+            <h4>Strona główna</h4>
+            <canvas id="homeQR" style="max-width: 150px; background: white; padding: 10px; border-radius: 8px;"></canvas>
+            <br>
+            <small>bolihelp.com</small>
+          </div>
+          
+          <div style="text-align: center;">
+            <h4>Pierwsza pomoc</h4>
+            <canvas id="firstAidQR" style="max-width: 150px; background: white; padding: 10px; border-radius: 8px;"></canvas>
+            <br>
+            <small>Instrukcje ratownicze</small>
+          </div>
+          
+          <div style="text-align: center;">
+            <h4>Lokalizacja</h4>
+            <canvas id="locationQR" style="max-width: 150px; background: white; padding: 10px; border-radius: 8px;"></canvas>
+            <br>
+            <small>Znajdź pomoc w pobliżu</small>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <small>© 2025 • Bolihelp.com</small>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script>
+    const urlInput = document.getElementById('urlInput');
+    const generateBtn = document.getElementById('generateBtn');
+    const qrDisplay = document.getElementById('qrDisplay');
+    const qrCanvas = document.getElementById('qrCanvas');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    // Generate QR code function
+    async function generateQR(text, canvas) {
+      try {
+        await QRCode.toCanvas(canvas, text, {
+          width: 300,
+          margin: 2,
+          color: {
+            dark: '#000000',
+            light: '#FFFFFF'
+          }
+        });
+        return true;
+      } catch (err) {
+        console.error('QR generation error:', err);
+        return false;
+      }
+    }
+
+    // Generate custom QR
+    generateBtn.addEventListener('click', async () => {
+      const url = urlInput.value.trim();
+      if (!url) {
+        alert('Wprowadź prawidłowy URL');
+        return;
+      }
+
+      const success = await generateQR(url, qrCanvas);
+      if (success) {
+        qrDisplay.style.display = 'block';
+        
+        // Setup download
+        const dataURL = qrCanvas.toDataURL('image/png');
+        downloadBtn.href = dataURL;
+      }
+    });
+
+    // Generate preset QR codes on load
+    window.addEventListener('load', async () => {
+      const baseUrl = window.location.origin + window.location.pathname.replace('qr-generator.html', '');
+      
+      await generateQR(baseUrl + 'index.html', document.getElementById('homeQR'));
+      await generateQR(baseUrl + 'pierwsza-pomoc.html', document.getElementById('firstAidQR'));
+      await generateQR(baseUrl + 'lokalizacja.html', document.getElementById('locationQR'));
+      
+      // Auto-generate main QR
+      await generateQR(urlInput.value, qrCanvas);
+      qrDisplay.style.display = 'block';
+      downloadBtn.href = qrCanvas.toDataURL('image/png');
+    });
+  </script>
+</body>
+</html>
