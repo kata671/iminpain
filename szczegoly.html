@@ -3,145 +3,146 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Szczegóły</title>
-  <link rel="stylesheet" href="style.css?v=details-final" />
+  <title>Szczegóły — objawy i pomoc</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#7a4dff" />
   <style>
-    .detail-hero{max-width:980px;margin:24px auto;display:grid;gap:16px}
-    #content .card{margin-bottom:12px}
-    #content h3{margin:.4rem 0}
-    .detail-hero img{width:100%;height:auto;border-radius:18px;box-shadow:var(--glow);background:#0b1222}
+    /* Nie zmieniam globalnego tła! Tylko UI tej podstrony. */
+    .detail-hero { display:none; margin:10px auto 14px; max-width:min(960px,95vw);
+      border-radius:14px; overflow:hidden; border:1px solid var(--border); background:var(--card);
+      box-shadow:0 0 18px rgba(122,77,255,.28), 0 0 36px rgba(80,180,255,.18);
+    }
+    .detail-hero img { width:100%; height:auto; max-height:320px; object-fit:cover; display:block; }
+    .section h2 { display:flex; align-items:center; gap:8px; }
+    .pill { display:inline-block; padding:.2rem .5rem; border-radius:999px; font-weight:800; font-size:.85rem; margin:.15rem .25rem 0 0; }
+    .pill-otc { background:rgba(18,197,91,.15); border:1px solid rgba(18,197,91,.45); color:#22c15a; }
+    .pill-rx  { background:rgba(255,77,90,.15); border:1px solid rgba(255,77,120,.45); color:#ff4d5a; }
+    .cta-row { display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 0; }
+    .btn { display:inline-block; padding:.6rem .9rem; border-radius:10px; font-weight:800; border:1px solid var(--border); background:var(--card); text-decoration:none; }
+    .btn-emg { background:linear-gradient(180deg, rgba(255,77,90,.24), rgba(255,77,120,.18)); border-color:#ff9ca699; animation:pulseRed 2s infinite; }
+    @keyframes pulseRed { 0%{box-shadow:0 0 6px rgba(255,77,90,.55),0 0 18px rgba(255,77,120,.35); transform:scale(1);} 50%{box-shadow:0 0 16px rgba(255,77,90,.95),0 0 38px rgba(255,77,120,.6); transform:scale(1.02);} 100%{box-shadow:0 0 6px rgba(255,77,90,.55),0 0 18px rgba(255,77,120,.35); transform:scale(1);} }
+    .note { opacity:.85; font-size:.95rem; }
+    ul { margin:.4rem 0 .2rem; }
+
+    /* Eleganckie przewijanie list, gdy treści jest dużo */
+    .section.card ul {
+      max-height: 240px;    /* widoczna wysokość; możesz podnieść/obniżyć */
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .section.card ul::-webkit-scrollbar { width: 6px; }
+    .section.card ul::-webkit-scrollbar-track { background: transparent; }
+    .section.card ul::-webkit-scrollbar-thumb { background: rgba(122,77,255,.4); border-radius: 6px; }
+    .section.card ul::-webkit-scrollbar-thumb:hover { background: rgba(122,77,255,.6); }
   </style>
 </head>
-<body class="bg-med szczegoly-page">
-
+<body class="bg-med">
   <nav class="quickbar">
-    <a href="index.html">🏠 Start</a>
+    <a href="index.html">🏠</a>
+    <a href="tel:112">📞 112</a>
     <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
     <a href="lokalizacja.html">📍 Lokalizacja</a>
   </nav>
 
   <header class="site-header">
+    <a class="back" href="javascript:history.back()">← Wróć</a>
     <h1 id="title">Szczegóły</h1>
-    <p class="subtitle" id="subtitle"></p>
+    <p id="subtitle" class="subtitle">Przyczyny, objawy, pierwsza pomoc, leki i lekarze</p>
   </header>
 
+  <!-- Opcjonalne mini-hero (jeśli istnieje obraz: img/<osoba>-<część>.png) -->
+  <figure class="detail-hero" id="detailHero"><img id="heroImg" alt=""></figure>
+
   <main class="container">
-    <section class="detail-hero">
-      <img id="hero" src="" alt="" />
-      <div id="content"></div>
+    <section class="section card" id="przyczyny">
+      <h2>🧩 Przyczyny</h2>
+      <ul id="list-przyczyny"></ul>
     </section>
+
+    <section class="section card" id="objawy">
+      <h2>🔍 Objawy</h2>
+      <ul id="list-objawy"></ul>
+    </section>
+
+    <section class="section card" id="pp">
+      <h2>⛑️ Pierwsza pomoc</h2>
+      <ul id="list-pp"></ul>
+      <div class="cta-row">
+        <a class="btn btn-emg" href="tel:112">🚨 Zadzwoń 112</a>
+        <a class="btn" href="lokalizacja.html">📍 Znajdź najbliższą pomoc</a>
+      </div>
+    </section>
+
+    <section class="section card" id="leki">
+      <h2>💊 Leki</h2>
+      <div>
+        <span class="pill pill-otc">Bez recepty</span>
+        <span class="pill pill-rx">Na receptę</span>
+      </div>
+      <ul id="list-leki"></ul>
+    </section>
+
+    <section class="section card" id="lekarze">
+      <h2>🩺 Lekarze</h2>
+      <ul id="list-lekarze"></ul>
+    </section>
+
+    <p class="note">
+      Informacje mają charakter edukacyjny i nie zastępują konsultacji lekarskiej.
+      W nagłych przypadkach — <strong>dzwoń 112</strong>.
+    </p>
   </main>
 
-  <footer class="site-footer"><small>© 2025 • Bolihelp.com</small></footer>
+  <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
 
-  <!-- Twoje skrypty (jeśli istnieją) – nie usuwaj -->
-  <script src="content.js?v=1" defer></script>
-  <script src="details.js?v=1" defer></script>
-  <script src="szczegoly.js?v=1" defer></script>
+  <!-- 1) baza treści -->
+  <script src="content.js?v=1"></script>
 
+  <!-- 2) logika wypełniania; nic poza tym nie zmieniam -->
   <script>
-  (function(){
-    const id = new URLSearchParams(location.search).get('id') || '';
+    const raw = new URLSearchParams(location.search).get('id') || '';
 
-    // aliasy pól (pl/en)
-    const pick = (o,keys)=> (o||[]).map ? o : keys.reduce((acc,k)=> acc || o?.[k], null);
-    const arr = v => Array.isArray(v) ? v : (typeof v==='string' ? v.split('|').map(s=>s.trim()).filter(Boolean) : []);
-    const labels = {
-      symptoms: ['symptoms','objawy'],
-      causes: ['causes','przyczyny','mozliwe_przyczyny','możliwe_przyczyny'],
-      firstAid: ['firstAid','first_aid','pierwsza_pomoc'],
-      whenToSeeDoctor: ['whenToSeeDoctor','kiedy_do_lekarza'],
-      otc: ['otc','bez_recepty'],
-      rx: ['rx','na_recepte','na_receptę'],
-      prevention: ['prevention','profilaktyka'],
-      diagnostics: ['diagnostics','badania','diagnostyka']
+    function normalize(s){
+      s = (s || '').toLowerCase().trim().replace(/\s+/g,'-').replace(/_/g,'-');
+      for(const p of ['kobieta','mezczyzna','dziecko']){
+        if(s.startsWith(p+'-')) return { osoba:p, part:s.slice(p.length+1) };
+      }
+      return { osoba:'kobieta', part:s };
+    }
+    const ctx = normalize(raw);
+
+    const PART_NAME = {
+      glowa:'Głowa', oko:'Oko', nos:'Nos', usta:'Usta', ucho:'Ucho',
+      serce:'Serce', pluca:'Płuca', kregoslup:'Kręgosłup', zoladek:'Żołądek',
+      watroba:'Wątroba', nerki:'Nerki', ramie:'Ramię', lokiec:'Łokieć',
+      dlon:'Dłoń', udo:'Udo', kolano:'Kolano', lydka:'Łydka', stopa:'Stopa',
+      ciaza:'Ciąża'
     };
 
-    // 1) próba z globalnych obiektów JS
-    function fromGlobals(key){
-      const pools = [window.DETAILED_CONDITIONS, window.CONDITIONS, window.DETAILS];
-      for (const p of pools){
-        if (p && p[key]) return p[key];
-      }
-      return null;
+    // Tytuł
+    const title = document.getElementById('title');
+    title.textContent = PART_NAME[ctx.part] ? `${PART_NAME[ctx.part]} — ${ctx.osoba}` : 'Szczegóły';
+
+    // Mini-hero jeśli istnieje obraz
+    (function hero(){
+      const src = `img/${ctx.osoba}-${ctx.part}.png`;
+      const img = document.getElementById('heroImg');
+      const box = document.getElementById('detailHero');
+      img.onload = ()=> box.style.display='block';
+      img.onerror = ()=> box.style.display='none';
+      img.src = src + '?v=1';
+    })();
+
+    // Render
+    function fill(content){
+      const toLis = arr => (arr||[]).map(x=>`<li>${Array.isArray(x)?x.join(' — '):x}</li>`).join('');
+      document.getElementById('list-przyczyny').innerHTML = toLis(content?.przyczyny);
+      document.getElementById('list-objawy').innerHTML    = toLis(content?.objawy);
+      document.getElementById('list-pp').innerHTML        = toLis(content?.pp);
+      document.getElementById('list-leki').innerHTML      = toLis(content?.leki);
+      document.getElementById('list-lekarze').innerHTML   = toLis(content?.lekarze);
     }
-
-    // 2) próba z JSON (kilka możliwych ścieżek)
-    async function fromJsons(key){
-      const urls = [
-        'data/detailed_conditions.json',
-        'detailed_conditions.json',
-        'data/conditions.json',
-        'conditions.json'
-      ];
-      for (const url of urls){
-        try{
-          const r = await fetch(url, {cache:'no-store'});
-          if (!r.ok) continue;
-          const data = await r.json();
-          if (data && data[key]) return data[key];
-        }catch(e){/* skip */}
-      }
-      return null;
-    }
-
-    function normalize(raw){
-      if (!raw) return null;
-      const norm = {
-        title: raw.title || raw.nazwa || '',
-        subtitle: raw.subtitle || raw.podtytul || raw.podtytuł || '',
-        image: raw.image || raw.img || ''
-      };
-      for (const k in labels){
-        const val = labels[k].map(name=> raw[name]).find(v=> v!=null);
-        norm[k] = arr(val);
-      }
-      return norm;
-    }
-
-    function sectionHTML(label, items){
-      if (!items || !items.length) return '';
-      return `<div class="card"><h3>${label}</h3><ul>` +
-             items.map(li=>`<li>${li}</li>`).join('') +
-             `</ul></div>`;
-    }
-
-    function render(data){
-      document.getElementById('title').textContent = data.title || 'Szczegóły';
-      document.getElementById('subtitle').textContent = data.subtitle || '';
-      const hero = document.getElementById('hero');
-      if (data.image){ hero.src = data.image; hero.alt = data.title || ''; } else { hero.style.display='none'; }
-
-      const blocks = [
-        sectionHTML('Objawy', data.symptoms),
-        sectionHTML('Możliwe przyczyny', data.causes),
-        sectionHTML('Pierwsza pomoc', data.firstAid),
-        sectionHTML('Kiedy do lekarza', data.whenToSeeDoctor),
-        sectionHTML('Leki — Bez recepty', data.otc),
-        sectionHTML('Leki — Na receptę', data.rx),
-        sectionHTML('Profilaktyka', data.prevention),
-        sectionHTML('Badania / Diagnostyka', data.diagnostics),
-      ].filter(Boolean);
-
-      document.getElementById('content').innerHTML =
-        blocks.length ? blocks.join('') : `<div class="card"><p>Brak szczegółowych danych dla: ${id}</p></div>`;
-    }
-
-    async function init(){
-      let raw = fromGlobals(id);
-      if (!raw) raw = await fromJsons(id);
-      const data = normalize(raw);
-      if (data) render(data);
-      else {
-        document.getElementById('title').textContent = 'Brak danych';
-        document.getElementById('subtitle').textContent = id;
-        document.getElementById('hero').style.display='none';
-        document.getElementById('content').innerHTML =
-          `<div class="card"><p>Nie znaleziono opisu. Upewnij się, że wpis istnieje w <code>content.js</code> lub w JSON.</p></div>`;
-      }
-    }
-    init();
-  })();
+    fill((window.CONTENT||{})[ctx.part] || {});
   </script>
 </body>
 </html>
