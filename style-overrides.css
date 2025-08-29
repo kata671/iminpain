@@ -1,55 +1,70 @@
-/* === OVERRIDES – NIE RUSZA TAPETY === */
+/* ============================
+   OVERRIDES — FINAL
+   ============================ */
 
-/* 3 kolumny miniatur ZAWSZE (telefon + desktop) */
-body.kobieta-page .grid-4,
-body.mezczyzna-page .grid-4{
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0,1fr)) !important;
-  gap: 16px !important;
-  align-items: stretch !important;
+/* Reset pod miniaturki w kartach */
+.card img.thumb {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 0 auto 8px auto;
 }
 
-/* Bardzo wąskie telefony – odrobinkę ciaśniej */
-@media (max-width: 380px){
-  body.kobieta-page .grid-4,
-  body.mezczyzna-page .grid-4{
-    gap: 12px !important;
-  }
-}
-
-/* Spójny wygląd kafelka (BEZ ruszania globalnego .tile) */
-body.kobieta-page .grid-4 .card,
-body.mezczyzna-page .grid-4 .card{
-  padding: 14px !important;
-  border-radius: 20px !important;
-  text-align: center !important;
-}
-
-/* Miniatury – stały rozmiar, ładny glow */
-body.kobieta-page .grid-4 .card img,
-body.mezczyzna-page .grid-4 .card img{
-  width: 110px !important;
-  height: 110px !important;
-  object-fit: cover !important;
-  border-radius: 14px !important;
-  display: block !important;
-  margin: 0 auto 8px !important;
-  box-shadow: 0 0 10px rgba(122,77,255,.25) !important;
-}
-
-/* Podpis pod miniaturą – czysty tekst */
-body.kobieta-page .grid-4 .card span,
-body.mezczyzna-page .grid-4 .card span{
-  display: block !important;
-  font-weight: 700 !important;
+/* Podpisy pod miniaturami – czysto, bez emoji */
+.card span {
+  display: block;
+  margin-top: 6px;
+  font-weight: 700;
+  text-align: center;
   text-decoration: none !important;
 }
 
-/* Desktop – ciut większe miniatury */
-@media (min-width: 1024px){
-  body.kobieta-page .grid-4 .card img,
-  body.mezczyzna-page .grid-4 .card img{
-    width: 130px !important;
-    height: 130px !important;
+/* ===== TELEFON ===== */
+@media (max-width: 767px) {
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 w rzędzie */
+    gap: 12px;
   }
+
+  .card img.thumb {
+    width: 96px;   /* większe miniaturki */
+    height: 96px;
+  }
+
+  .card span {
+    font-size: 0.9rem;
+  }
+}
+
+/* ===== LAPTOP / DESKTOP ===== */
+@media (min-width: 1024px) {
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 w rzędzie */
+    gap: 18px;
+  }
+
+  .card img.thumb {
+    width: 120px;  /* powiększone miniaturki */
+    height: 120px;
+  }
+
+  .card span {
+    font-size: 1.05rem;
+  }
+}
+
+/* ===== SZCZEGÓŁY (obrazy w opisach) ===== */
+body.szczegoly-page .content img,
+body.szczegoly-page #content img,
+body.szczegoly-page .info img,
+body.szczegoly-page .cards .card img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 8px auto;
+  border-radius: 12px;
 }
