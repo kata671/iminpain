@@ -1,8 +1,8 @@
 /* ============================
-   OVERRIDES — FINAL
+   OVERRIDES — FINAL FIX
    ============================ */
 
-/* Reset pod miniaturki w kartach */
+/* Reset miniaturek */
 .card img.thumb {
   display: block;
   width: 64px;
@@ -12,25 +12,28 @@
   margin: 0 auto 8px auto;
 }
 
-/* Podpisy pod miniaturami – czysto, bez emoji */
+/* Podpisy pod miniaturami – przywracamy */
 .card span {
   display: block;
   margin-top: 6px;
   font-weight: 700;
   text-align: center;
+  color: #ecf3ff;   /* jasny tekst */
   text-decoration: none !important;
+  white-space: normal;
+  line-height: 1.3;
 }
 
 /* ===== TELEFON ===== */
 @media (max-width: 767px) {
   .grid-4 {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 w rzędzie */
+    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
   }
 
   .card img.thumb {
-    width: 96px;   /* większe miniaturki */
+    width: 96px;
     height: 96px;
   }
 
@@ -39,16 +42,16 @@
   }
 }
 
-/* ===== LAPTOP / DESKTOP ===== */
+/* ===== LAPTOP ===== */
 @media (min-width: 1024px) {
   .grid-4 {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 w rzędzie */
+    grid-template-columns: repeat(3, 1fr);
     gap: 18px;
   }
 
   .card img.thumb {
-    width: 120px;  /* powiększone miniaturki */
+    width: 120px;
     height: 120px;
   }
 
@@ -57,7 +60,7 @@
   }
 }
 
-/* ===== SZCZEGÓŁY (obrazy w opisach) ===== */
+/* ===== SZCZEGÓŁY ===== */
 body.szczegoly-page .content img,
 body.szczegoly-page #content img,
 body.szczegoly-page .info img,
@@ -67,4 +70,14 @@ body.szczegoly-page .cards .card img {
   display: block;
   margin: 8px auto;
   border-radius: 12px;
+}
+
+body.szczegoly-page .card span,
+body.szczegoly-page .label,
+body.szczegoly-page h3,
+body.szczegoly-page p {
+  color: #ecf3ff;
+  text-align: left;
+  font-size: 1rem;
+  line-height: 1.5;
 }
