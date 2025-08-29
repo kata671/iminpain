@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mężczyzna — wybierz obszar bólu</title>
 
-  <!-- Globalny CSS z wersjonowaniem, żeby ominąć cache -->
-  <link rel="stylesheet" href="style.css?v=men-fix3" />
+  <!-- Globalny CSS z „odświeżaczem” cache -->
+  <link rel="stylesheet" href="style.css?v=men-hardfix" />
 
-  <!-- LOKALNY CSS TYLKO DLA TEJ STRONY (silny, odporny na konflikty) -->
+  <!-- LOKALNY CSS: działa TYLKO na tej stronie -->
   <style>
-    /* Miniatury w kartach – działa dla IMG i DIV z tłem */
+    /* Miniatury w kartach – złapie IMG i ewentualny DIV z tłem */
     body.mezczyzna-page .grid-4 > .card img,
     body.mezczyzna-page .grid-4 > .card .thumb,
     body.mezczyzna-page .grid-4 > .card .thumb-bg {
@@ -27,7 +27,7 @@
     body.mezczyzna-page .grid-4 > .card .thumb-bg {
       background-position:center !important;
       background-repeat:no-repeat !important;
-      background-size:cover !important; /* lub contain jeśli wolisz całe */
+      background-size:cover !important; /* zamień na contain, jeśli chcesz całe */
     }
 
     /* Telefon: +70% */
@@ -39,7 +39,6 @@
         height:109px !important;
       }
     }
-
     /* Laptop: +75% */
     @media (min-width: 1024px){
       body.mezczyzna-page .grid-4 > .card img,
@@ -50,7 +49,7 @@
       }
     }
 
-    /* Podpisy – czysty tekst, wyśrodkowany; wyłączamy emotki dekoracyjne */
+    /* Podpis — czysty tekst, bez emotek dekoracyjnych */
     body.mezczyzna-page .grid-4 > .card span{
       display:block !important;
       text-decoration:none !important;
@@ -63,7 +62,7 @@
       content:none !important;
     }
 
-    /* Wyrównanie kart (gdyby jakiś globalny CSS „pchał” w bok) */
+    /* Gdyby coś „pchało” karty – centrujemy */
     body.mezczyzna-page .grid-4 > .card{ text-align:center !important; }
   </style>
 </head>
