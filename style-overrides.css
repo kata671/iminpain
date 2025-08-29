@@ -1,440 +1,55 @@
-/* Układ kafelków tylko na szczegoly.html */
-body[data-page="szczegoly"] #content .cards {
+/* === OVERRIDES – NIE RUSZA TAPETY === */
+
+/* 3 kolumny miniatur ZAWSZE (telefon + desktop) */
+body.kobieta-page .grid-4,
+body.mezczyzna-page .grid-4{
   display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  gap: 24px !important;
-  justify-items: center !important;
-  align-items: start !important;
-  max-width: 1100px !important;
-  margin: 28px auto !important;
-  padding: 0 8px !important;
+  grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+  gap: 16px !important;
+  align-items: stretch !important;
 }
 
-body[data-page="szczegoly"] #content .cards .card {
-  max-width: 320px;
-  border-radius: 16px;
-  background: rgba(34, 42, 90, .85);
-  border: 2px solid #5463b5;
-  box-shadow: 0 6px 16px rgba(0,0,0,.25);
-  transition: transform .15s, box-shadow .15s, background .15s;
-  padding: 16px;
-}
-
-body[data-page="szczegoly"] #content .cards .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(255,255,255,.12), 0 0 20px rgba(165,140,255,.25);
-}
-
-/* czerwony kafel */
-body[data-page="szczegoly"] #content .cards .card.emergency {
-  background: rgba(120, 8, 8, .22);
-  border: 2px solid #ff3c3c;
-  box-shadow: inset 0 0 2px rgba(255,60,60,.5), 0 6px 18px rgba(0,0,0,.35);
-}
-body[data-page="szczegoly"] #content .cards .card.emergency:hover {
-  box-shadow: 0 10px 28px rgba(0,0,0,.5), 0 0 28px rgba(255,40,40,.9);
-}
-
-/* RWD */
-@media (max-width:980px){
-  body[data-page="szczegoly"] #content .cards {
-    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
-  }
-}
-@media (max-width:640px){
-  body[data-page="szczegoly"] #content .cards {
-    grid-template-columns: minmax(0,1fr) !important;
-  }
-}
-/* Siatka kafelków na stronie szczegółów */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3, minmax(260px, 1fr));
-  gap:20px;
-  max-width:1100px;
-  margin:20px auto 28px;
-  padding:0 12px;
-  justify-content:center;
-  align-items:stretch;
-}
-
-/* 2 kolumny na tabletach */
-@media (max-width: 920px){
-  .cards{ grid-template-columns:repeat(2, minmax(240px,1fr)); }
-}
-
-/* 1 kolumna na telefonach */
-@media (max-width: 560px){
-  .cards{ grid-template-columns:1fr; }
-}
-
-/* Kafel bazowy */
-.card{
-  width:100%;
-  max-width:360px;
-  border-radius:16px;
-  border:1px solid rgba(180,180,255,.2);
-  background:rgba(34,42,90,.78);
-  box-shadow:0 4px 12px rgba(0,0,0,.3);
-  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-.card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 22px rgba(0,0,0,.42), 0 0 14px rgba(255,255,255,.3);
-}
-
-/* Czerwony kafel – zawsze wyraźny + mocny glow na hover */
-.card.emergency{
-  border:2px solid #ff4d4d;
-  background:rgba(120, 20, 20, .88);
-  color:#fff;
-  font-weight:700;
-}
-.card.emergency:hover{
-  box-shadow:0 0 28px rgba(255, 30, 30, .9);
-}
-/* --- SIATKA KAFELKÓW (Szczegóły) --- */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3, minmax(260px, 1fr));
-  gap:20px;
-  max-width:1100px;
-  margin:22px auto 30px;
-  padding:0 12px;
-
-  /* równe wysokości w całej siatce */
-  grid-auto-rows:1fr;
-}
-
-/* 2 kolumny na tabletach */
-@media (max-width: 920px){
-  .cards{ grid-template-columns:repeat(2, minmax(240px,1fr)); }
-}
-
-/* 1 kolumna na telefonach */
-@media (max-width: 560px){
-  .cards{ grid-template-columns:1fr; }
-}
-
-/* --- KAFEL --- */
-.card{
-  display:flex;            /* pozwala rozciągnąć zawartość na pełną wysokość */
-  flex-direction:column;
-  height:100%;
-
-  width:100%;
-  max-width:360px;
-  border-radius:16px;
-  border:1px solid rgba(180,180,255,.22);
-  background:rgba(34,42,90,.78);
-  box-shadow:0 4px 12px rgba(0,0,0,.3);
-  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-.card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 22px rgba(0,0,0,.42), 0 0 14px rgba(255,255,255,.28);
-}
-
-/* tytuł zawsze tej samej wysokości i ładnie wycentrowany */
-.card-caption{
-  min-height:46px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:700;
-  text-align:center;
-  padding:10px 12px 0;
-}
-
-/* listy */
-.card ul{ margin:10px 14px 14px; padding-left:20px; }
-.card li{ line-height:1.45; }
-
-/* czerwony kafel – wyraźny i z glowem */
-.card.emergency{
-  border:2px solid #ff4d4d;
-  background:rgba(120, 20, 20, .88);
-  color:#fff;
-  font-weight:700;
-}
-.card.emergency:hover{ box-shadow:0 0 28px rgba(255, 30, 30, .92); }
-/* --- USZTYWNIENIE SIATKI I „GĘSTE” UKŁADANIE --- */
-.cards{
-  display: grid;
-  grid-template-columns: repeat(3, minmax(260px, 1fr));
-  gap: 20px;
-  max-width: 1100px;
-  margin: 20px auto 28px;
-  padding: 0 12px;
-
-  /* klucz: pozwól późniejszym kaflom wskakiwać w wolne dziury */
-  grid-auto-flow: row dense;
-
-  /* rozciągaj pozycje w wierszu do tej samej wysokości */
-  align-items: stretch;
-  justify-items: stretch;
-}
-
-/* 2 kolumny na tabletach */
-@media (max-width: 920px){
-  .cards{ grid-template-columns: repeat(2, minmax(240px, 1fr)); }
-}
-
-/* 1 kolumna na telefonach */
-@media (max-width: 560px){
-  .cards{ grid-template-columns: 1fr; }
-}
-
-/* --- WNĘTRZE KAFELKA: FLEX, ŻEBY TREŚĆ UKŁADAŁA SIĘ RÓWNO --- */
-.card{
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  box-sizing: border-box;           /* brak „pompowania” wymiarów */
-}
-
-/* nagłówek karty – ta sama wysokość, ładne centrowanie */
-.card .card-caption{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;                 /* identyczny top we wszystkich */
-  font-weight: 700;
-  text-align: center;
-  padding: 8px 10px;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
-
-/* listy i akapity – ujednolicone marginesy */
-.card ul, .card p{
-  margin: 12px 12px 14px;
-  padding: 0;
-}
-.card li{
-  margin: 6px 0;
-  list-style: disc inside;
-}
-
-/* czerwony kafel – zostaw jak jest, tylko niech też się rozciąga */
-.card.emergency{
-  display: flex;
-  flex-direction: column;
-}
-
-/* (opcjonalnie) wyrównaj wysokość wierszy jeszcze mocniej */
-.cards > .card{ align-self: stretch; }
-/* Równe rzędy – stała wysokość kafelków + przewijalna treść */
-body[data-page="szczegoly"] .cards{
-  display:grid;
-  grid-template-columns:repeat(3, minmax(260px,1fr));
-  gap:20px;
-  max-width:1100px;
-  margin:20px auto 28px;
-  padding:0 12px;
-  align-items:stretch;
-  justify-items:stretch;
-}
-
-/* 2 kolumny – tablet */
-@media (max-width: 920px){
-  body[data-page="szczegoly"] .cards{ grid-template-columns:repeat(2, minmax(240px,1fr)); }
-}
-/* 1 kolumna – telefon */
-@media (max-width: 560px){
-  body[data-page="szczegoly"] .cards{ grid-template-columns:1fr; }
-}
-
-/* Karta z równą wysokością */
-body[data-page="szczegoly"] .card{
-  display:flex;
-  flex-direction:column;
-  box-sizing:border-box;
-  height: 330px;              /* <<< STAŁA WYSOKOŚĆ NA DESKTOPIE */
-  width:100%;
-  max-width:360px;
-}
-
-/* Nagłówek – stała wysokość, separator */
-body[data-page="szczegoly"] .card .card-caption{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:48px;
-  text-align:center;
-  font-weight:700;
-  padding:8px 10px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-/* Wnętrze przewijalne, żeby mieścić dłuższe listy */
-body[data-page="szczegoly"] .card ul,
-body[data-page="szczegoly"] .card p{
-  margin:12px 12px 14px;
-  padding:0;
-  overflow:auto;              /* <<< przewijane jeśli treści dużo */
-  flex:1;                     /* <<< wypełnia wysokość pod nagłówkiem */
-}
-body[data-page="szczegoly"] .card li{
-  margin:6px 0;
-  list-style:disc inside;
-}
-
-/* Czerwony kafel: ta sama wysokość co reszta */
-body[data-page="szczegoly"] .card.emergency{
-  height: 330px;              /* ta sama co .card */
-}
-/* === SZCZEGÓŁY: równe rzędy 3×, wyśrodkowane === */
-body[data-page="szczegoly"] .cards{
-  display:grid;
-  /* stałe, równe kolumny i centrowanie całej siatki */
-  grid-template-columns: repeat(3, 320px);
-  justify-content: center;
-  gap: 22px;
-  margin: 22px auto 32px;
-  padding: 0 12px;
-}
-
-/* Tablet: 2 kolumny */
-@media (max-width: 920px){
-  body[data-page="szczegoly"] .cards{
-    grid-template-columns: repeat(2, 320px);
-  }
-}
-/* Telefon: 1 kolumna, bez stałej wysokości */
-@media (max-width: 560px){
-  body[data-page="szczegoly"] .cards{
-    grid-template-columns: 1fr;
+/* Bardzo wąskie telefony – odrobinkę ciaśniej */
+@media (max-width: 380px){
+  body.kobieta-page .grid-4,
+  body.mezczyzna-page .grid-4{
+    gap: 12px !important;
   }
 }
 
-/* Karta – identyczne wymiary, równy nagłówek i przewijalny środek */
-body[data-page="szczegoly"] .card{
-  width: 320px;
-  height: 360px;              /* <- jeśli za niskie/wysokie: zmień 360 */
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-body[data-page="szczegoly"] .card .card-caption{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:52px;            /* równy „pasek” tytułu */
-  padding: 8px 10px;
-  text-align:center;
-  font-weight:700;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
-body[data-page="szczegoly"] .card ul,
-body[data-page="szczegoly"] .card p{
-  margin: 12px 12px 14px;
-  padding: 0;
-  flex: 1;                    /* wypełnia resztę karty */
-  overflow: auto;             /* przewijane, gdy treści dużo */
-}
-body[data-page="szczegoly"] .card li{
-  list-style: disc inside;
-  margin: 6px 0;
-}
-
-/* Czerwony kafel – ten sam rozmiar */
-body[data-page="szczegoly"] .card.emergency{
-  width: 320px;
-  height: 360px;
-}
-/* Spacery – wypełniacze siatki, by domknąć rzędy 3× */
-body[data-page="szczegoly"] .card.spacer{
-  visibility: hidden;       /* całkiem niewidoczne, ale zajmują miejsce */
-  pointer-events: none;     /* brak reakcji */
-  box-shadow: none !important;
-  border: none !important;
-  background: transparent !important;
-}
-/* === SZCZEGÓŁY — stały rozmiar i 3 kolumny === */
-body[data-page="szczegoly"] .cards{
-  display:grid;
-  grid-template-columns: repeat(3, 340px) !important;  /* 3 kolumny po 340px */
-  justify-content: center !important;
-  gap: 22px !important;
-  max-width: 1120px !important;
-  margin: 24px auto 40px !important;
-  padding: 0 12px !important;
-}
-
-/* Kafel — wymuś docelowy rozmiar niezależnie od innych reguł */
-body[data-page="szczegoly"] .card{
-  width: 340px !important;
-  height: 360px !important;
-  box-sizing: border-box !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-/* Tytuł w kaflu */
-body[data-page="szczegoly"] .card .card-caption{
-  min-height: 52px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+/* Spójny wygląd kafelka (BEZ ruszania globalnego .tile) */
+body.kobieta-page .grid-4 .card,
+body.mezczyzna-page .grid-4 .card{
+  padding: 14px !important;
+  border-radius: 20px !important;
   text-align: center !important;
+}
+
+/* Miniatury – stały rozmiar, ładny glow */
+body.kobieta-page .grid-4 .card img,
+body.mezczyzna-page .grid-4 .card img{
+  width: 110px !important;
+  height: 110px !important;
+  object-fit: cover !important;
+  border-radius: 14px !important;
+  display: block !important;
+  margin: 0 auto 8px !important;
+  box-shadow: 0 0 10px rgba(122,77,255,.25) !important;
+}
+
+/* Podpis pod miniaturą – czysty tekst */
+body.kobieta-page .grid-4 .card span,
+body.mezczyzna-page .grid-4 .card span{
+  display: block !important;
   font-weight: 700 !important;
+  text-decoration: none !important;
 }
 
-/* 👇 spacer — całkiem niewidoczny (żadnych ramek, cieni, tła) */
-body[data-page="szczegoly"] .card.spacer{
-  visibility: hidden !important;      /* zajmuje miejsce, ale jest niewidoczny */
-  pointer-events: none !important;
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-}
-/* --- TWARDY FIX DLA SZCZEGÓŁÓW (3 kolumny, bez dziur) --- */
-body[data-page="szczegoly"] .cards{
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(320px, 1fr)) !important;
-  grid-auto-flow: row !important;            /* bez „przeskakiwania” */
-  justify-content: center !important;
-  align-items: start !important;
-  gap: 22px !important;
-  max-width: 1120px !important;
-  margin: 24px auto 40px !important;
-  padding: 0 12px !important;
-}
-@media (max-width: 920px){
-  body[data-page="szczegoly"] .cards{
-    grid-template-columns: repeat(2, minmax(300px, 1fr)) !important;
+/* Desktop – ciut większe miniatury */
+@media (min-width: 1024px){
+  body.kobieta-page .grid-4 .card img,
+  body.mezczyzna-page .grid-4 .card img{
+    width: 130px !important;
+    height: 130px !important;
   }
-}
-@media (max-width: 560px){
-  body[data-page="szczegoly"] .cards{
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* Każda karta zajmuje DOKŁADNIE 1 kolumnę – nic nie span-uje szerzej */
-body[data-page="szczegoly"] .cards > .card{
-  grid-column: auto !important;
-  min-width: 0 !important;     /* zapobiega wypychaniu kolumn */
-}
-
-/* Czerwony kafel – tylko kosmetyka, nie wpływa na układ */
-body[data-page="szczegoly"] .card.emergency{
-  border: 2px solid #ff4d4d !important;
-  background: rgba(120,20,20,.88) !important;
-  color: #fff !important;
-  font-weight: 700 !important;
-}
-body[data-page="szczegoly"] .card.emergency:hover{
-  box-shadow: 0 0 28px rgba(255,30,30,.9) !important;
-}
-
-/* Na wypadek starych „spacerów” – nie pokazuj ich */
-body[data-page="szczegoly"] .cards > .card.spacer{
-  visibility: hidden !important;
-  pointer-events: none !important;
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  min-height: 0 !important;
-  padding: 0 !important;
 }
