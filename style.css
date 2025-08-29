@@ -395,3 +395,26 @@ body.mezczyzna-page .thumb {
     height: 112px;
   }
 }
+body.kobieta-page #areas-k .thumb,
+body.mezczyzna-page #areas-k .thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+@media (max-width: 767px) {
+  body.kobieta-page #areas-k .thumb,
+  body.mezczyzna-page #areas-k .thumb {
+    width: 109px;
+    height: 109px;
+  }
+}
+
+@media (min-width: 1024px) {
+  body.kobieta-page #areas-k .thumb,
+  body.mezczyzna-page #areas-k .thumb {
+    width: 112px;
+    height: 112px;
+  }
+}
