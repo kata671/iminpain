@@ -827,3 +827,20 @@ body.mezczyzna-page .grid-4 .card span{
     height:130px;
   }
 }
+/* --- MINIATURKI/KAFELKI: stałe 3 kolumny + większe miniatury na laptopie --- */
+body.kobieta-page .grid-4,
+body.mezczyzna-page .grid-4{
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px;
+}
+
+body.kobieta-page .grid-4 .card img,
+body.mezczyzna-page .grid-4 .card img{
+  width:100px; height:100px; object-fit:cover; border-radius:12px; display:block; margin:0 auto 8px;
+}
+
+@media (min-width:1024px){
+  body.kobieta-page .grid-4 .card img,
+  body.mezczyzna-page .grid-4 .card img{
+    width:130px; height:130px;
+  }
+}
