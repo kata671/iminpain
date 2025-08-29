@@ -347,3 +347,25 @@ body{color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Roboto,Ari
   font-weight: 700;
   text-align: center;
 }
+/* --- Powiększenie miniaturek tylko na stronach kobieta i mezczyzna --- */
+body.kobieta-page #areas-k .thumb,
+body.mezczyzna-page #areas-k .thumb {
+  width: 64px;
+  height: 64px;
+}
+
+@media (max-width: 767px) {
+  body.kobieta-page #areas-k .thumb,
+  body.mezczyzna-page #areas-k .thumb {
+    width: 109px;   /* 64 * 1.7 ≈ 109 */
+    height: 109px;
+  }
+}
+
+@media (min-width: 1024px) {
+  body.kobieta-page #areas-k .thumb,
+  body.mezczyzna-page #areas-k .thumb {
+    width: 112px;   /* 64 * 1.75 ≈ 112 */
+    height: 112px;
+  }
+}
