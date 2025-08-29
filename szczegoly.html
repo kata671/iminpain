@@ -6,11 +6,11 @@
   <title>Szczegóły</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Porządek tylko na tej stronie — zdjęcia równe, wycentrowane */
-    body.szczegoly-page .detail-hero img,
+    /* Tylko dla tej strony: równe, wyśrodkowane obrazy w treści */
     body.szczegoly-page .content img,
+    body.szczegoly-page #content img,
     body.szczegoly-page .info img,
-    body.szczegoly-page .card img {
+    body.szczegoly-page .cards .card img {
       max-width: 100%;
       height: auto;
       display: block;
@@ -45,10 +45,7 @@
   </header>
 
   <main class="container">
-    <!-- Opcjonalny obraz główny (jeśli chcesz) -->
     <section class="detail-hero" id="hero"></section>
-
-    <!-- Tu JS wstawi: Objawy / Przyczyny / Leczenie / Leki / Lekarze itd. -->
     <section id="content"></section>
   </main>
 
@@ -56,19 +53,17 @@
     <small>© 2025 • Boli-mnie.pl</small>
   </footer>
 
-  <!-- Ładuje dane wg parametru ?id=... -->
   <script src="content.js"></script>
   <script>
-    // (opcjonalnie) pokaż miniaturę w nagłówku, jeśli masz plik o tej samej nazwie:
+    // Opcjonalny „hero”: spróbuj dopasować obraz po ?id=
     (function(){
       const p = new URLSearchParams(location.search);
       const id = p.get('id') || '';
+      if(!id) return;
       const hero = document.getElementById('hero');
-      // Spróbujemy dopasować nazwę obrazka do id (np. kobieta-oko -> img/kobieta-oko.png)
       const guess = 'img/' + id + '.png';
       const img = new Image();
       img.onload = () => { hero.innerHTML = ''; img.alt = id; hero.appendChild(img); };
-      img.onerror = () => { /* brak obrazka — nic nie pokazuj */ };
       img.src = guess;
     })();
   </script>
