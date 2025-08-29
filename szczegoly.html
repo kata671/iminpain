@@ -4,14 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Szczegóły</title>
-
-  <link rel="stylesheet" href="style.css?v=details-restore" />
-
+  <link rel="stylesheet" href="style.css?v=details-final" />
   <style>
-    /* tylko kosmetyka – nic przy tapecie nie ruszamy */
-    body.szczegoly-page .detail-hero{max-width:980px;margin:24px auto;display:grid;gap:16px}
-    body.szczegoly-page #content .card{margin-bottom:12px}
-    body.szczegoly-page #content h3{margin:.4rem 0}
+    .detail-hero{max-width:980px;margin:24px auto;display:grid;gap:16px}
+    #content .card{margin-bottom:12px}
+    #content h3{margin:.4rem 0}
+    .detail-hero img{width:100%;height:auto;border-radius:18px;box-shadow:var(--glow);background:#0b1222}
   </style>
 </head>
 <body class="bg-med szczegoly-page">
@@ -36,90 +34,113 @@
 
   <footer class="site-footer"><small>© 2025 • Bolihelp.com</small></footer>
 
-  <!-- Twoje źródła danych (jeśli istnieją) -->
+  <!-- Twoje skrypty (jeśli istnieją) – nie usuwaj -->
   <script src="content.js?v=1" defer></script>
   <script src="details.js?v=1" defer></script>
   <script src="szczegoly.js?v=1" defer></script>
 
   <script>
   (function(){
-    // pobierz id z query string
-    const params = new URLSearchParams(location.search);
-    const id = params.get('id') || '';
+    const id = new URLSearchParams(location.search).get('id') || '';
 
-    // próby odczytu danych z różnych miejsc (w zależności co masz w repo)
-    function getDataById(key){
-      // 1) z globalnej mapy JS (content.js)
-      if (window.DETAILED_CONDITIONS && window.DETAILED_CONDITIONS[key]) {
-        return window.DETAILED_CONDITIONS[key];
-      }
-      if (window.CONDITIONS && window.CONDITIONS[key]) {
-        return window.CONDITIONS[key];
-      }
-      // 2) z elementu globalnego utworzonego przez details.js / szczegoly.js
-      if (window.DETAILS && window.DETAILS[key]) {
-        return window.DETAILS[key];
+    // aliasy pól (pl/en)
+    const pick = (o,keys)=> (o||[]).map ? o : keys.reduce((acc,k)=> acc || o?.[k], null);
+    const arr = v => Array.isArray(v) ? v : (typeof v==='string' ? v.split('|').map(s=>s.trim()).filter(Boolean) : []);
+    const labels = {
+      symptoms: ['symptoms','objawy'],
+      causes: ['causes','przyczyny','mozliwe_przyczyny','możliwe_przyczyny'],
+      firstAid: ['firstAid','first_aid','pierwsza_pomoc'],
+      whenToSeeDoctor: ['whenToSeeDoctor','kiedy_do_lekarza'],
+      otc: ['otc','bez_recepty'],
+      rx: ['rx','na_recepte','na_receptę'],
+      prevention: ['prevention','profilaktyka'],
+      diagnostics: ['diagnostics','badania','diagnostyka']
+    };
+
+    // 1) próba z globalnych obiektów JS
+    function fromGlobals(key){
+      const pools = [window.DETAILED_CONDITIONS, window.CONDITIONS, window.DETAILS];
+      for (const p of pools){
+        if (p && p[key]) return p[key];
       }
       return null;
     }
 
-    function renderFallback(){
-      document.getElementById('title').textContent = 'Brak danych';
-      document.getElementById('subtitle').textContent = 'Nie znaleziono opisu dla: ' + id;
-      document.getElementById('hero').style.display = 'none';
-      document.getElementById('content').innerHTML =
-        '<div class="card"><p>Spróbuj wrócić i wybrać inny obszar lub odśwież stronę.</p></div>';
+    // 2) próba z JSON (kilka możliwych ścieżek)
+    async function fromJsons(key){
+      const urls = [
+        'data/detailed_conditions.json',
+        'detailed_conditions.json',
+        'data/conditions.json',
+        'conditions.json'
+      ];
+      for (const url of urls){
+        try{
+          const r = await fetch(url, {cache:'no-store'});
+          if (!r.ok) continue;
+          const data = await r.json();
+          if (data && data[key]) return data[key];
+        }catch(e){/* skip */}
+      }
+      return null;
+    }
+
+    function normalize(raw){
+      if (!raw) return null;
+      const norm = {
+        title: raw.title || raw.nazwa || '',
+        subtitle: raw.subtitle || raw.podtytul || raw.podtytuł || '',
+        image: raw.image || raw.img || ''
+      };
+      for (const k in labels){
+        const val = labels[k].map(name=> raw[name]).find(v=> v!=null);
+        norm[k] = arr(val);
+      }
+      return norm;
+    }
+
+    function sectionHTML(label, items){
+      if (!items || !items.length) return '';
+      return `<div class="card"><h3>${label}</h3><ul>` +
+             items.map(li=>`<li>${li}</li>`).join('') +
+             `</ul></div>`;
     }
 
     function render(data){
-      // tytuł, podtytuł, obraz
       document.getElementById('title').textContent = data.title || 'Szczegóły';
       document.getElementById('subtitle').textContent = data.subtitle || '';
-      if (data.image){
-        const img = document.getElementById('hero');
-        img.src = data.image;
-        img.alt = data.title || '';
-      } else {
-        document.getElementById('hero').style.display = 'none';
-      }
+      const hero = document.getElementById('hero');
+      if (data.image){ hero.src = data.image; hero.alt = data.title || ''; } else { hero.style.display='none'; }
 
-      // sekcje treści
-      const ctn = document.getElementById('content');
-      const blocks = [];
+      const blocks = [
+        sectionHTML('Objawy', data.symptoms),
+        sectionHTML('Możliwe przyczyny', data.causes),
+        sectionHTML('Pierwsza pomoc', data.firstAid),
+        sectionHTML('Kiedy do lekarza', data.whenToSeeDoctor),
+        sectionHTML('Leki — Bez recepty', data.otc),
+        sectionHTML('Leki — Na receptę', data.rx),
+        sectionHTML('Profilaktyka', data.prevention),
+        sectionHTML('Badania / Diagnostyka', data.diagnostics),
+      ].filter(Boolean);
 
-      function section(label, arr){
-        if (!arr || !arr.length) return;
-        blocks.push(
-          '<div class="card"><h3>'+label+'</h3><ul>' +
-          arr.map(li => '<li>'+li+'</li>').join('') +
-          '</ul></div>'
-        );
-      }
-
-      section('Objawy', data.symptoms);
-      section('Możliwe przyczyny', data.causes);
-      section('Pierwsza pomoc', data.firstAid);
-      section('Kiedy do lekarza', data.whenToSeeDoctor);
-      section('Leki — Bez recepty', data.otc);
-      section('Leki — Na receptę', data.rx);
-      section('Profilaktyka', data.prevention);
-      section('Badania/Diagnostyka', data.diagnostics);
-
-      if (!blocks.length){
-        blocks.push('<div class="card"><p>Brak szczegółowych danych.</p></div>');
-      }
-      ctn.innerHTML = blocks.join('');
+      document.getElementById('content').innerHTML =
+        blocks.length ? blocks.join('') : `<div class="card"><p>Brak szczegółowych danych dla: ${id}</p></div>`;
     }
 
-    // Poczekaj chwilę aż content.js/szczegoly.js się załadują (defer)
-    function tryRender(attempts){
-      const data = getDataById(id);
-      if (data){ render(data); return; }
-      if (attempts <= 0){ renderFallback(); return; }
-      setTimeout(()=>tryRender(attempts-1), 60);
+    async function init(){
+      let raw = fromGlobals(id);
+      if (!raw) raw = await fromJsons(id);
+      const data = normalize(raw);
+      if (data) render(data);
+      else {
+        document.getElementById('title').textContent = 'Brak danych';
+        document.getElementById('subtitle').textContent = id;
+        document.getElementById('hero').style.display='none';
+        document.getElementById('content').innerHTML =
+          `<div class="card"><p>Nie znaleziono opisu. Upewnij się, że wpis istnieje w <code>content.js</code> lub w JSON.</p></div>`;
+      }
     }
-    tryRender(20); // ~1.2s łącznie
-
+    init();
   })();
   </script>
 </body>
