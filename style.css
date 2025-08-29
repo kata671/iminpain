@@ -650,3 +650,61 @@ body.mezczyzna-page .container .grid-4 > .card > span:last-child {
     line-height: 112px !important; font-size: 112px !important;
   }
 }
+/* =========== MINIATURKI – STRONY WYBORU OBSZARU BÓLU =========== */
+body.kobieta-page .grid-3 > .card,
+body.kobieta-page .grid-4 > .card,
+body.mezczyzna-page .grid-3 > .card,
+body.mezczyzna-page .grid-4 > .card {
+  text-align: center;
+  padding: 16px;
+  gap: 8px;
+}
+
+body.kobieta-page .grid-3 > .card img.thumb,
+body.kobieta-page .grid-4 > .card img.thumb,
+body.mezczyzna-page .grid-3 > .card img.thumb,
+body.mezczyzna-page .grid-4 > .card img.thumb {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 0 auto 8px auto;
+  box-shadow: 0 0 6px rgba(130,100,255,.35);
+}
+
+body.kobieta-page .grid-3 > .card span,
+body.kobieta-page .grid-4 > .card span,
+body.mezczyzna-page .grid-3 > .card span,
+body.mezczyzna-page .grid-4 > .card span {
+  display: block;
+  margin-top: 6px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none !important;
+}
+
+/* bardzo małe telefony */
+@media (max-width: 360px){
+  body.kobieta-page .grid-3 > .card img.thumb,
+  body.kobieta-page .grid-4 > .card img.thumb,
+  body.mezczyzna-page .grid-3 > .card img.thumb,
+  body.mezczyzna-page .grid-4 > .card img.thumb {
+    width: 60px; height: 60px;
+  }
+}
+
+/* laptopy/desktop – +75% (64→112) */
+@media (min-width: 1024px){
+  body.kobieta-page .grid-3 > .card,
+  body.kobieta-page .grid-4 > .card,
+  body.mezczyzna-page .grid-3 > .card,
+  body.mezczyzna-page .grid-4 > .card { padding: 14px; }
+
+  body.kobieta-page .grid-3 > .card img.thumb,
+  body.kobieta-page .grid-4 > .card img.thumb,
+  body.mezczyzna-page .grid-3 > .card img.thumb,
+  body.mezczyzna-page .grid-4 > .card img.thumb {
+    width: 112px; height: 112px;
+  }
+}
