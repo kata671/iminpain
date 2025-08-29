@@ -6,7 +6,7 @@
   <title>Szczegóły</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* TYLKO dla tej strony: obrazki w treści są równe i elegancko wyśrodkowane */
+    /* Porządek tylko na tej stronie — zdjęcia równe, wycentrowane */
     body.szczegoly-page .detail-hero img,
     body.szczegoly-page .content img,
     body.szczegoly-page .info img,
@@ -17,7 +17,6 @@
       margin: 8px auto;
       border-radius: 12px;
     }
-    /* Miniatury w kartach, jeśli takie masz po lewej/prawej */
     body.szczegoly-page .tile img,
     body.szczegoly-page .pill img {
       width: 140px;
@@ -26,7 +25,6 @@
       display: block;
       margin: 6px auto;
     }
-    /* Siatki kart wyrównane */
     body.szczegoly-page .info-grid,
     body.szczegoly-page .cards,
     body.szczegoly-page .tiles {
@@ -47,19 +45,32 @@
   </header>
 
   <main class="container">
-    <section class="detail-hero">
-      <!-- opcjonalny obraz „hero”, jeśli używasz -->
-    </section>
+    <!-- Opcjonalny obraz główny (jeśli chcesz) -->
+    <section class="detail-hero" id="hero"></section>
 
-    <section id="content">
-      <!-- treść ładowana przez content.js (Objawy/Przyczyny/Leczenie/Leki itd.) -->
-    </section>
+    <!-- Tu JS wstawi: Objawy / Przyczyny / Leczenie / Leki / Lekarze itd. -->
+    <section id="content"></section>
   </main>
 
   <footer class="site-footer">
     <small>© 2025 • Boli-mnie.pl</small>
   </footer>
 
+  <!-- Ładuje dane wg parametru ?id=... -->
   <script src="content.js"></script>
+  <script>
+    // (opcjonalnie) pokaż miniaturę w nagłówku, jeśli masz plik o tej samej nazwie:
+    (function(){
+      const p = new URLSearchParams(location.search);
+      const id = p.get('id') || '';
+      const hero = document.getElementById('hero');
+      // Spróbujemy dopasować nazwę obrazka do id (np. kobieta-oko -> img/kobieta-oko.png)
+      const guess = 'img/' + id + '.png';
+      const img = new Image();
+      img.onload = () => { hero.innerHTML = ''; img.alt = id; hero.appendChild(img); };
+      img.onerror = () => { /* brak obrazka — nic nie pokazuj */ };
+      img.src = guess;
+    })();
+  </script>
 </body>
 </html>
