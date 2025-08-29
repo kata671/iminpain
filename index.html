@@ -3,114 +3,127 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bolihelp — szybka pomoc i lokalizacja</title>
-
-  <!-- Twoje style główne -->
+  <title>Boli-mnie — Wybierz osobę</title>
   <link rel="stylesheet" href="style.css" />
-  <!-- (opcjonalnie) jeśli używasz: <link rel="stylesheet" href="style-overrides.css"> -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#7a4dff" />
+  <meta name="description" content="Szybko zlokalizuj ból, sprawdź pierwszą pomoc i znajdź najbliższą pomoc medyczną." />
 
-  <!-- Lekki styl tylko dla zielonej ikony „Apteka 24h” (bez dotykania tapety) -->
   <style>
-    .chip,
-    .quickbar .chip{
-      display:inline-flex; align-items:center; gap:.45rem;
-      padding:.45rem .8rem; border-radius:999px; font-weight:800; text-decoration:none;
-      border:1px solid var(--border, rgba(159,182,255,.27));
-      background:var(--card, rgba(16,23,40,.85));
-      color:var(--ink, #ecf3ff);
-      box-shadow: 0 0 14px rgba(122,77,255,.18), 0 0 36px rgba(74,208,255,.12);
+    .home-icons .qi { font-size: 1.15rem; line-height: 1; display:inline-block; transform: translateY(1px); }
+    .home-icons .quickbar a, .home-icons .quickbar button { padding: .55rem .9rem; }
+    .mini-icons { font-size:.9rem; opacity:.85; margin-left:4px; }
+
+    .hot-tiles { max-width: var(--max); margin: 12px auto 0; padding: 0 16px; }
+    .hot-tiles-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(4, 1fr);
     }
-    .chip-apteka24{
-      background: linear-gradient(180deg, rgba(18,197,91,.18), rgba(18,197,91,.10));
-      border-color: rgba(18,197,91,.45);
-      box-shadow: 0 0 10px rgba(18,197,91,.35), 0 0 28px rgba(18,197,91,.22);
-      position: relative;
+
+    /* 🔽 zmniejszone kafelki czerwony + zielone */
+    .hot-tile {
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      min-height:90px; border-radius:12px; font-weight:900; text-decoration:none; color:var(--ink);
+      text-align:center; padding:10px; border:1px solid var(--border);
+      transition: transform .16s, box-shadow .16s, border-color .16s;
     }
-    .chip-apteka24 .ico{ display:inline-block; font-weight:900; line-height:1; transform:translateY(-1px); }
-    .chip-apteka24:hover{ box-shadow: 0 0 16px rgba(18,197,91,.55), 0 0 40px rgba(18,197,91,.35); }
-    .chip-apteka24::after{
-      content:""; position:absolute; inset:-2px; border-radius:999px;
-      box-shadow: 0 0 14px rgba(18,197,91,.45), 0 0 30px rgba(18,197,91,.25);
-      opacity:.25; pointer-events:none; animation: aptekaPulse 1.8s ease-in-out infinite;
+    .hot-tile .ico { font-size: 1.2rem; margin-bottom:4px; }
+    .hot-tile .title { font-size:.9rem; }
+
+    .hot-red {
+      background: linear-gradient(180deg, rgba(255,77,90,.24), rgba(255,77,120,.18));
+      border-color: #ff9ca699;
+      animation: pulseRed 2s ease-in-out infinite;
     }
-    @keyframes aptekaPulse{ 0%,100%{opacity:.25} 50%{opacity:.55} }
+    @keyframes pulseRed {
+      0%   { box-shadow: 0 0 6px rgba(255,77,90,.55), 0 0 18px rgba(255,77,120,.35); transform: scale(1); }
+      50%  { box-shadow: 0 0 16px rgba(255,77,90,.95), 0 0 38px rgba(255,77,120,.6);  transform: scale(1.035); }
+      100% { box-shadow: 0 0 6px rgba(255,77,90,.55), 0 0 18px rgba(255,77,120,.35); transform: scale(1); }
+    }
+
+    .hot-green {
+      background: linear-gradient(180deg, rgba(8,40,20,.85), rgba(12,52,28,.78));
+      border-color: rgba(18,197,91,.35);
+      box-shadow: 0 0 10px rgba(18,197,91,.30), 0 0 22px rgba(18,197,91,.18);
+      animation: pulseGreen 2.6s ease-in-out infinite;
+    }
+    @keyframes pulseGreen {
+      0%   { box-shadow: 0 0 8px rgba(18,197,91,.28), 0 0 18px rgba(18,197,91,.16); transform: scale(1); }
+      50%  { box-shadow: 0 0 12px rgba(18,197,91,.48), 0 0 28px rgba(18,197,91,.30); transform: scale(1.012); }
+      100% { box-shadow: 0 0 8px rgba(18,197,91,.28), 0 0 18px rgba(18,197,91,.16); transform: scale(1); }
+    }
+
+    /* 🔽 zdjęcia kobieta/mezczyzna/dziecko zmniejszone */
+    .hero-card img { 
+      max-height:320px; 
+      width:auto; 
+      object-fit:contain; 
+    }
   </style>
 </head>
 
-<body class="bg-med home-page">
-  <!-- Pasek szybkich akcji -->
+<body class="bg-med home-icons">
+  <!-- Quickbar -->
   <nav class="quickbar">
-    <a href="index.html">🏠 Start</a>
-    <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
-    <a href="lokalizacja.html">📍 Lokalizacja</a>
-    <a href="qr-generator.html">📱 QR Code</a>
-    <!-- NOWOŚĆ: zielona ikona Apteka 24h -->
-    <a class="chip chip-apteka24" href="lokalizacja.html?apteka24=1" aria-label="Apteki czynne całą dobę">
-      <span class="ico">✚</span> Apteka 24h
+    <a href="tel:112"><span class="qi">📞</span> 112</a>
+    <a href="pierwsza-pomoc.html">
+      <span class="qi">⛑️</span> Pierwsza pomoc
+      <span class="mini-icons">🦴🧰</span>
     </a>
+    <a href="lokalizacja.html"><span class="qi">📍</span> Lokalizacja</a>
+
+    <input id="search" type="search" placeholder="np. ból brzucha, kolano..." aria-label="Wyszukaj objaw" />
+    <button id="search-btn"><span class="qi">🔎</span></button>
+    <button id="btn-voice"><span class="qi">🎤</span></button>
+    <button id="btn-locate"><span class="qi">🎯</span> Namierz mnie</button>
+    <button id="theme-toggle"><span class="qi">☀️/🌙</span></button>
   </nav>
 
+  <!-- 4 kafelki nad nagłówkiem -->
+  <section class="hot-tiles">
+    <div class="hot-tiles-grid">
+      <a class="hot-tile hot-red" href="tel:112" title="Zadzwoń 112">
+        <span class="ico">🚨</span><span class="title">Zgłoś wypadek</span>
+      </a>
+      <a class="hot-tile hot-green" href="pierwsza-pomoc.html#rko">
+        <span class="ico">❤️</span><span class="title">Reanimacja</span>
+      </a>
+      <a class="hot-tile hot-green" href="pierwsza-pomoc.html#dławienie">
+        <span class="ico">🫁</span><span class="title">Zadławienie</span>
+      </a>
+      <a class="hot-tile hot-green" href="pierwsza-pomoc.html#wypadek">
+        <span class="ico">🚧</span><span class="title">Ofiara wypadku</span>
+      </a>
+    </div>
+  </section>
+
   <header class="site-header">
-    <h1>Bolihelp</h1>
-    <p class="subtitle">Zlokalizuj ból • sprawdź objawy • znajdź pomoc w okolicy</p>
+    <h1>Wybierz, kogo dotyczy ból</h1>
+    <p class="subtitle">Interfejs dopasujemy do osoby. Zawsze w zasięgu ręki: pierwsza pomoc i lokalizacja.</p>
   </header>
 
   <main class="container">
-
-    <!-- 4 szybkie kafelki nad wyborem (zgodnie z wcześniejszym układem) -->
-    <section aria-label="Szybkie akcje">
-      <ul class="tiles tiles-3x2" style="list-style:none; padding:0; margin:16px 0;">
-        <li class="tile tile-accent pulse">
-          <a class="tile-btn" href="lokalizacja.html#zglos-wypadek" aria-label="Zgłoś wypadek">
-            🚨 <strong>Zgłoś wypadek</strong>
-          </a>
-        </li>
-        <li class="tile">
-          <a class="tile-btn" href="pierwsza-pomoc.html#reanimacja" aria-label="Reanimacja — instrukcja">
-            ❤️ <strong>Reanimacja</strong>
-          </a>
-        </li>
-        <li class="tile">
-          <a class="tile-btn" href="pierwsza-pomoc.html#zadlawienie" aria-label="Zadławienie — co robić">
-            🫁 <strong>Zadławienie</strong>
-          </a>
-        </li>
-        <li class="tile">
-          <a class="tile-btn" href="pierwsza-pomoc.html#ofiary-wypadku" aria-label="Ofiary wypadku — pierwsza pomoc">
-            🆘 <strong>Ofiary wypadku</strong>
-          </a>
-        </li>
-      </ul>
-    </section>
-
-    <!-- Wybór osoby -->
-    <section aria-labelledby="choose-title">
-      <h2 id="choose-title" style="margin-top:8px;">Wybierz, kogo dotyczy ból</h2>
-
-      <div class="grid-2" style="margin-top:12px;">
-        <a class="hero-card" href="kobieta.html" aria-label="Kobieta — wybierz obszar bólu">
-          <img src="img/hero-kobieta.png" alt="Kobieta — wizualizacja medyczna" />
-          <div><strong>Kobieta</strong></div>
-        </a>
-
-        <a class="hero-card" href="mezczyzna.html" aria-label="Mężczyzna — wybierz obszar bólu">
-          <img src="img/hero-mezczyzna.png" alt="Mężczyzna — wizualizacja medyczna" />
-          <div><strong>Mężczyzna</strong></div>
-        </a>
-      </div>
-
-      <div class="grid-2" style="margin-top:12px;">
-        <a class="hero-card" href="dziecko.html" aria-label="Dziecko — wybierz obszar bólu">
-          <img src="img/hero-dziecko.png" alt="Dziecko — wizualizacja medyczna" />
-          <div><strong>Dziecko</strong></div>
-        </a>
-      </div>
-    </section>
-
+    <div class="grid-2 hero-grid">
+      <a class="hero-card" href="kobieta.html" onclick="localStorage.setItem('sex','k')">
+        <img src="img/kobieta-final.png?v=1" alt="Kobieta" />
+        <span>👩 Kobieta</span>
+      </a>
+      <a class="hero-card" href="mezczyzna.html" onclick="localStorage.setItem('sex','m')">
+        <img src="img/mezczyzna-final.png?v=1" alt="Mężczyzna" />
+        <span>👨 Mężczyzna</span>
+      </a>
+      <a class="hero-card" href="dziecko.html" onclick="localStorage.setItem('sex','d')">
+        <img src="img/dziecko-final.png?v=1" alt="Dziecko" />
+        <span>🧒 Dziecko</span>
+      </a>
+    </div>
   </main>
 
-  <footer class="site-footer">
-    <small>© 2025 • Bolihelp.com</small>
-  </footer>
+  <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
+  <script src="app.js"></script>
+  <script>
+    document.getElementById('btn-locate')?.addEventListener('click',()=>{location.href='lokalizacja.html';});
+  </script>
 </body>
 </html>
