@@ -4,8 +4,48 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mężczyzna — wybierz obszar bólu</title>
-  <!-- dodajemy wersjonowanie, żeby ominąć cache -->
-  <link rel="stylesheet" href="style.css?v=fix-m1" />
+
+  <!-- Twój globalny CSS (z wersjonowaniem, by ominąć cache) -->
+  <link rel="stylesheet" href="style.css?v=fix-m2" />
+
+  <!-- ULTRA-BEZPIECZNY CSS TYLKO DLA TEJ STRONY -->
+  <style>
+    /* ZADZIAŁA nawet gdy globalny CSS nadpisuje reguły */
+    body.mezczyzna-page .card img {
+      display: block !important;
+      width: 64px !important;
+      height: 64px !important;
+      max-width: none !important;
+      max-height: none !important;
+      object-fit: cover !important;
+      border-radius: 10px !important;
+      margin: 0 auto 8px auto !important;
+    }
+    /* Telefon: +70% */
+    @media (max-width: 767px){
+      body.mezczyzna-page .card img {
+        width: 109px !important;
+        height: 109px !important;
+      }
+    }
+    /* Laptop: +75% */
+    @media (min-width: 1024px){
+      body.mezczyzna-page .card img {
+        width: 112px !important;
+        height: 112px !important;
+      }
+    }
+    /* Podpis — czysty tekst, wyśrodkowany */
+    body.mezczyzna-page .card span{
+      display: block !important;
+      text-decoration: none !important;
+      font-weight: 700 !important;
+      text-align: center !important;
+      margin-top: 6px !important;
+    }
+    /* Wyrównanie karty na środku (gdyby coś „pływało”) */
+    body.mezczyzna-page .card { text-align: center; }
+  </style>
 </head>
 <body class="bg-med mezczyzna-page">
 
