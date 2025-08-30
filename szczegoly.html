@@ -18,13 +18,11 @@
       </div>
       <div class="tools">
         <div class="actions">
-          <button id="btn-112" class="btn btn--red btn--call" type="button">112</button>
-          <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" 
-             target="_blank" rel="noopener">
-            <span class="apteka-dot" aria-hidden="true"></span>
-            <span>Apteka (otwarta)</span>
+          <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
+          <button id="btn-hosp" class="btn" type="button">✚ Szpitale / SOR</button>
+          <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener">
+            <span class="badge-round">apteka24</span>
           </a>
-          <button id="btn-loc" class="btn" type="button">🗺️ Pomoc w pobliżu</button>
         </div>
       </div>
     </header>
@@ -35,48 +33,42 @@
       </aside>
 
       <div class="panels">
-        <article class="panel">
+        <article id="objawy" class="panel">
           <header><h4>Objawy</h4></header>
           <div class="content">
             <ul>
-              <li>Ból miejscowy / promieniujący, tkliwość, obrzęk, zaczerwienienie.</li>
-              <li>Ograniczenie ruchu, sztywność, kłucie, pieczenie, uczucie rozpierania.</li>
-              <li>Objawy ogólne: gorączka, dreszcze, nudności, wymioty, osłabienie.</li>
-              <li><strong>Alarmowe:</strong> duszność, ból w klatce, zaburzenia mowy, asymetria twarzy, utrata przytomności, krwawienie nie do opanowania.</li>
+              <li>Ból miejscowy / promieniujący, obrzęk, zaczerwienienie, tkliwość.</li>
+              <li>Ograniczenie ruchu, pieczenie/kłucie, łzawienie (oko), szumy (ucho)…</li>
+              <li><strong>Alarmowe:</strong> duszność, ból w klatce, zaburzenia mowy/świadomości, asymetria twarzy, masywne krwawienie, uraz gałki ocznej.</li>
             </ul>
           </div>
         </article>
 
-        <article class="panel">
+        <article id="pierwszapomoc" class="panel">
           <header><h4>Pierwsza pomoc</h4></header>
           <div class="content">
-            <ol>
-              <li>Zadbaj o bezpieczeństwo, oceń oddech i świadomość poszkodowanego.</li>
-              <li>W razie wątpliwości — <strong>dzwoń 112</strong>.</li>
-              <li>Unieruchom bolesny obszar, schładzaj okładem 10–20 min (nie bezpośrednio na skórę).</li>
-              <li>W przypadku zadławienia: 5 uderzeń w okolicę międzyłopatkową, potem 5 uciśnięć nadbrzusza (u dorosłych). Przerwij gdy przestanie się dławić / utrata przytomności → RKO.</li>
-              <li>RKO: 30 uciśnięć klatki piersiowej : 2 oddechy, głębokość 5–6 cm, tempo ~100–120/min.</li>
-              <li>Przy ranach: uciśnij, opatrz, unieś kończynę jeśli to możliwe.</li>
+            <ol id="fa-steps">
+              <!-- uzupełnia main.js wg części ciała lub poradnika -->
             </ol>
           </div>
         </article>
 
-        <article class="panel">
+        <article id="leki" class="panel">
           <header><h4>Leki</h4></header>
           <div class="content">
             <div class="badges">
               <span class="badge badge--ok">Bez recepty</span>
               <span class="badge badge--rx">Na receptę</span>
             </div>
-            <p><strong>Bez recepty:</strong> paracetamol, ibuprofen (zgodnie z ulotką, uwaga na przeciwwskazania jak choroba wrzodowa). Preparaty z elektrolitami przy odwodnieniu. Maści chłodzące/rozgrzewające wg wskazań.</p>
-            <p><strong>Na receptę:</strong> silniejsze przeciwbólowe, przeciwzapalne, antybiotyki, leki rozkurczowe — <em>wyłącznie po ocenie lekarza</em>.</p>
+            <ul id="otc-list"></ul>
+            <ul id="rx-list"></ul>
           </div>
         </article>
 
-        <article class="panel">
+        <article id="lekarz" class="panel">
           <header><h4>Lekarz</h4></header>
           <div class="content">
-            <p>Skontaktuj się z <strong>POZ</strong> lub <strong>NPL</strong>. W ciężkich objawach (alarmowe) udaj się na <strong>SOR</strong>.</p>
+            <p>Kontakt z <strong>POZ</strong> / <strong>NPL</strong>. W ciężkich objawach (alarmowe) udaj się na <strong>SOR</strong>.</p>
             <a class="btn" style="margin-top:8px" href="https://www.google.com/maps/search/SOR+szpital+pomoc+medyczna/" target="_blank" rel="noopener">🔎 Znajdź najbliższy SOR</a>
           </div>
         </article>
