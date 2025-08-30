@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bolihelp-v8';
+const CACHE_NAME = 'bolihelp-v10';
 const ASSETS = [
   './',
   './index.html',
@@ -6,8 +6,8 @@ const ASSETS = [
   './mezczyzna.html',
   './dziecko.html',
   './szczegoly.html',
-  './assets/style.css?v=8',
-  './assets/main.js?v=8',
+  './assets/style.css?v=10',
+  './assets/main.js?v=10',
   './img/placeholder.png',
   './manifest.json'
 ];
@@ -18,9 +18,7 @@ self.addEventListener('install', e=>{
 });
 
 self.addEventListener('activate', e=>{
-  e.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.map(k => k !== CACHE_NAME && caches.delete(k))))
-  );
+  e.waitUntil(caches.keys().then(keys=>Promise.all(keys.map(k=>k!==CACHE_NAME && caches.delete(k)))));
   self.clients.claim();
 });
 
