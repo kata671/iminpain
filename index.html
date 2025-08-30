@@ -4,8 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Strona główna</title>
-  <link rel="stylesheet" href="assets/style.css" />
   <meta name="theme-color" content="#113763" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="assets/style.css?v=8" />
 </head>
 <body data-page="home">
   <div class="container">
@@ -25,28 +26,17 @@
       </div>
     </header>
 
-    <!-- Telefony alarmowe -->
     <div class="emergency-list" aria-label="Telefony alarmowe">
       <a href="tel:112">📞 112</a><a href="tel:999">🚑 999</a><a href="tel:998">🔥 998</a><a href="tel:997">👮 997</a>
     </div>
 
-    <!-- Zielone kafelki: wszystkie kierują do tej samej strony, ale pod konkretne sekcje -->
     <nav class="situations" aria-label="Sytuacje nagłe">
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc#fa-zadlawienie">
-        <span class="ico">🫁</span>Zadławienie
-      </a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc#fa-reanimacja">
-        <span class="ico">🚑</span>Reanimacja
-      </a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc#fa-wypadek">
-        <span class="ico">💥</span>Wypadek
-      </a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc#pierwszapomoc">
-        <span class="ico">❤️‍🩹</span>Pierwsza pomoc
-      </a>
+      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie"><span class="ico">🫁</span>Zadławienie</a>
+      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja"><span class="ico">🚑</span>Reanimacja</a>
+      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek"><span class="ico">💥</span>Wypadek</a>
+      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span>Pierwsza pomoc</a>
     </nav>
 
-    <!-- Szybkie akcje -->
     <div class="actions" role="navigation" aria-label="Szybkie akcje">
       <button id="btn-112" class="btn btn--red btn--call" type="button" aria-label="Zadzwoń na 112">📞 112</button>
       <button id="btn-hosp" class="btn btn--hosp" type="button" aria-label="Szpitale i SOR">🏥 Szpitale / SOR</button>
@@ -56,7 +46,6 @@
 
     <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
 
-    <!-- K/M/D – na laptopie w jednym rzędzie -->
     <section class="stack" aria-label="Wybór postaci">
       <article class="card">
         <a href="kobieta.html">
@@ -79,6 +68,6 @@
     </section>
   </div>
 
-  <script src="assets/main.js"></script>
+  <script src="assets/main.js?v=8"></script>
 </body>
 </html>
