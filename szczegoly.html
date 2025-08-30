@@ -1,148 +1,62 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Szczegóły — objawy i pomoc</title>
-  <link rel="stylesheet" href="style.css" />
-  <meta name="theme-color" content="#7a4dff" />
-  <style>
-    /* Nie zmieniam globalnego tła! Tylko UI tej podstrony. */
-    .detail-hero { display:none; margin:10px auto 14px; max-width:min(960px,95vw);
-      border-radius:14px; overflow:hidden; border:1px solid var(--border); background:var(--card);
-      box-shadow:0 0 18px rgba(122,77,255,.28), 0 0 36px rgba(80,180,255,.18);
-    }
-    .detail-hero img { width:100%; height:auto; max-height:320px; object-fit:cover; display:block; }
-    .section h2 { display:flex; align-items:center; gap:8px; }
-    .pill { display:inline-block; padding:.2rem .5rem; border-radius:999px; font-weight:800; font-size:.85rem; margin:.15rem .25rem 0 0; }
-    .pill-otc { background:rgba(18,197,91,.15); border:1px solid rgba(18,197,91,.45); color:#22c15a; }
-    .pill-rx  { background:rgba(255,77,90,.15); border:1px solid rgba(255,77,120,.45); color:#ff4d5a; }
-    .cta-row { display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 0; }
-    .btn { display:inline-block; padding:.6rem .9rem; border-radius:10px; font-weight:800; border:1px solid var(--border); background:var(--card); text-decoration:none; }
-    .btn-emg { background:linear-gradient(180deg, rgba(255,77,90,.24), rgba(255,77,120,.18)); border-color:#ff9ca699; animation:pulseRed 2s infinite; }
-    @keyframes pulseRed { 0%{box-shadow:0 0 6px rgba(255,77,90,.55),0 0 18px rgba(255,77,120,.35); transform:scale(1);} 50%{box-shadow:0 0 16px rgba(255,77,90,.95),0 0 38px rgba(255,77,120,.6); transform:scale(1.02);} 100%{box-shadow:0 0 6px rgba(255,77,90,.55),0 0 18px rgba(255,77,120,.35); transform:scale(1);} }
-    .note { opacity:.85; font-size:.95rem; }
-    ul { margin:.4rem 0 .2rem; }
-
-    /* Eleganckie przewijanie list, gdy treści jest dużo */
-    .section.card ul {
-      max-height: 240px;    /* widoczna wysokość; możesz podnieść/obniżyć */
-      overflow-y: auto;
-      padding-right: 8px;
-    }
-    .section.card ul::-webkit-scrollbar { width: 6px; }
-    .section.card ul::-webkit-scrollbar-track { background: transparent; }
-    .section.card ul::-webkit-scrollbar-thumb { background: rgba(122,77,255,.4); border-radius: 6px; }
-    .section.card ul::-webkit-scrollbar-thumb:hover { background: rgba(122,77,255,.6); }
-  </style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Szczegóły – Boli-help</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
-<body class="bg-med">
-  <nav class="quickbar">
-    <a href="index.html">🏠</a>
-    <a href="tel:112">📞 112</a>
-    <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
-    <a href="lokalizacja.html">📍 Lokalizacja</a>
-  </nav>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html"><span class="dot"></span> Boli-help</a>
+      <nav class="nav">
+        <a href="index.html">🏠 Strona główna</a>
+        <a href="tel:112">📞 112</a>
+        <a href="pierwsza-pomoc.html">🩺 Pierwsza pomoc</a>
+        <a href="lokalizacja.html">📍 Lokalizacja</a>
+      </nav>
+    </div>
+  </div>
 
   <header class="site-header">
-    <a class="back" href="javascript:history.back()">← Wróć</a>
-    <h1 id="title">Szczegóły</h1>
-    <p id="subtitle" class="subtitle">Przyczyny, objawy, pierwsza pomoc, leki i lekarze</p>
+    <h1 class="site-title" id="pageTitle">Oko — mężczyzna</h1>
+    <p class="subtitle">Przyczyny, objawy, pierwsza pomoc, leki i lekarze</p>
   </header>
 
-  <!-- Opcjonalne mini-hero (jeśli istnieje obraz: img/<osoba>-<część>.png) -->
-  <figure class="detail-hero" id="detailHero"><img id="heroImg" alt=""></figure>
-
   <main class="container">
-    <section class="section card" id="przyczyny">
-      <h2>🧩 Przyczyny</h2>
-      <ul id="list-przyczyny"></ul>
-    </section>
+    <!-- zachowujemy dużą ilustrację tej samej wielkości -->
+    <img src="img/oko-detail.png" alt="Oko – ilustracja" class="hero-photo" style="max-height:380px" />
 
-    <section class="section card" id="objawy">
-      <h2>🔍 Objawy</h2>
-      <ul id="list-objawy"></ul>
-    </section>
+    <section class="sections">
+      <article class="section">
+        <h3>Pierwsza pomoc</h3>
+        <p>Nie pocieraj oka. Przepłucz jałowym roztworem soli lub czystą wodą. Usuń widoczne ciała obce bez nacisku.</p>
+        <div class="badges"><span class="badge green">Bezpieczne</span></div>
+      </article>
 
-    <section class="section card" id="pp">
-      <h2>⛑️ Pierwsza pomoc</h2>
-      <ul id="list-pp"></ul>
-      <div class="cta-row">
-        <a class="btn btn-emg" href="tel:112">🚨 Zadzwoń 112</a>
-        <a class="btn" href="lokalizacja.html">📍 Znajdź najbliższą pomoc</a>
-      </div>
-    </section>
+      <article class="section">
+        <h3>Objawy</h3>
+        <ul>
+          <li>Ból, łzawienie, światłowstręt</li>
+          <li>Poczucie ciała obcego, zaczerwienienie</li>
+        </ul>
+      </article>
 
-    <section class="section card" id="leki">
-      <h2>💊 Leki</h2>
-      <div>
-        <span class="pill pill-otc">Bez recepty</span>
-        <span class="pill pill-rx">Na receptę</span>
-      </div>
-      <ul id="list-leki"></ul>
-    </section>
+      <article class="section">
+        <h3>Leki</h3>
+        <p><strong>Bez recepty:</strong> sztuczne łzy, roztwór NaCl 0.9%.</p>
+        <p><strong>Na receptę:</strong> antybiotyk przy nadkażeniu (wg lekarza).</p>
+        <div class="badges"><span class="badge green">Bez recepty</span><span class="badge red">Na receptę</span></div>
+      </article>
 
-    <section class="section card" id="lekarze">
-      <h2>🩺 Lekarze</h2>
-      <ul id="list-lekarze"></ul>
+      <article class="section">
+        <h3>Lekarz</h3>
+        <p>Skontaktuj się z okulistą, jeśli ból nasila się, pojawia się pogorszenie widzenia lub uraz penetrujący.</p>
+      </article>
     </section>
-
-    <p class="note">
-      Informacje mają charakter edukacyjny i nie zastępują konsultacji lekarskiej.
-      W nagłych przypadkach — <strong>dzwoń 112</strong>.
-    </p>
   </main>
 
-  <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
-
-  <!-- 1) baza treści -->
-  <script src="content.js?v=1"></script>
-
-  <!-- 2) logika wypełniania; nic poza tym nie zmieniam -->
-  <script>
-    const raw = new URLSearchParams(location.search).get('id') || '';
-
-    function normalize(s){
-      s = (s || '').toLowerCase().trim().replace(/\s+/g,'-').replace(/_/g,'-');
-      for(const p of ['kobieta','mezczyzna','dziecko']){
-        if(s.startsWith(p+'-')) return { osoba:p, part:s.slice(p.length+1) };
-      }
-      return { osoba:'kobieta', part:s };
-    }
-    const ctx = normalize(raw);
-
-    const PART_NAME = {
-      glowa:'Głowa', oko:'Oko', nos:'Nos', usta:'Usta', ucho:'Ucho',
-      serce:'Serce', pluca:'Płuca', kregoslup:'Kręgosłup', zoladek:'Żołądek',
-      watroba:'Wątroba', nerki:'Nerki', ramie:'Ramię', lokiec:'Łokieć',
-      dlon:'Dłoń', udo:'Udo', kolano:'Kolano', lydka:'Łydka', stopa:'Stopa',
-      ciaza:'Ciąża'
-    };
-
-    // Tytuł
-    const title = document.getElementById('title');
-    title.textContent = PART_NAME[ctx.part] ? `${PART_NAME[ctx.part]} — ${ctx.osoba}` : 'Szczegóły';
-
-    // Mini-hero jeśli istnieje obraz
-    (function hero(){
-      const src = `img/${ctx.osoba}-${ctx.part}.png`;
-      const img = document.getElementById('heroImg');
-      const box = document.getElementById('detailHero');
-      img.onload = ()=> box.style.display='block';
-      img.onerror = ()=> box.style.display='none';
-      img.src = src + '?v=1';
-    })();
-
-    // Render
-    function fill(content){
-      const toLis = arr => (arr||[]).map(x=>`<li>${Array.isArray(x)?x.join(' — '):x}</li>`).join('');
-      document.getElementById('list-przyczyny').innerHTML = toLis(content?.przyczyny);
-      document.getElementById('list-objawy').innerHTML    = toLis(content?.objawy);
-      document.getElementById('list-pp').innerHTML        = toLis(content?.pp);
-      document.getElementById('list-leki').innerHTML      = toLis(content?.leki);
-      document.getElementById('list-lekarze').innerHTML   = toLis(content?.lekarze);
-    }
-    fill((window.CONTENT||{})[ctx.part] || {});
-  </script>
+  <footer><small>© 2025 Boli-help</small></footer>
 </body>
 </html>
