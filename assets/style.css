@@ -197,3 +197,27 @@ body::after{
 /* Link powrotny */
 .back{display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:var(--muted)}
 .back:hover{color:var(--text)}
+/* --- lepsze skalowanie dużego podglądu na szczegółach --- */
+.preview{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.preview img{
+  width:100%;
+  max-height:60vh;      /* niech nie „wychodzi” za ekran */
+  object-fit:contain;   /* nie przycina – całość w kadrze */
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;
+}
+
+/* --- panele bez małych miniaturek w nagłówkach --- */
+.panel header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.panel header img{ display:none; } /* ukryj małe ikonki */
