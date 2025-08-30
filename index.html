@@ -4,9 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Strona główna</title>
-
   <link rel="stylesheet" href="assets/style.css" />
-  <meta name="theme-color" content="#0e2f50" />
+  <meta name="theme-color" content="#113763" />
 </head>
 <body data-page="home">
   <div class="container">
@@ -27,58 +26,54 @@
       </div>
     </header>
 
-    <!-- Kafelki sytuacyjne (z emotkami) -->
+    <!-- Kafelki sytuacyjne – prowadzą do sekcji Pierwsza pomoc -->
     <nav class="situations" aria-label="Sytuacje nagłe">
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie">
+      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie#pierwszapomoc">
         <span class="ico">🫁</span>Zadławienie
       </a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja">
+      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja#pierwszapomoc">
         <span class="ico">🚑</span>Reanimacja
       </a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek">
+      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek#pierwszapomoc">
         <span class="ico">💥</span>Wypadek
       </a>
       <a class="pill pill--red" href="tel:112">
-        <span class="ico">🆘</span>Zgłoś wypadek
+        <span class="ico">📞</span>Zadzwoń 112
       </a>
     </nav>
 
     <!-- Szybkie akcje -->
     <div class="actions" role="navigation" aria-label="Szybkie akcje">
-      <button id="btn-112" class="btn btn--red btn--call" type="button" aria-label="Zadzwoń na 112">112</button>
-      <a class="btn btn--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc">❤️‍🩹 Pierwsza pomoc</a>
-      <button id="btn-loc" class="btn" type="button">🗺️ Pomoc w pobliżu</button>
+      <button id="btn-112" class="btn btn--red btn--call" type="button" aria-label="Zadzwoń na 112">📞 112</button>
+      <a class="btn btn--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc#pierwszapomoc">❤️‍🩹 Pierwsza pomoc</a>
+      <button id="btn-hosp" class="btn" type="button">✚ Szpitale / SOR</button>
       <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener">
-        <span class="apteka-dot" aria-hidden="true"></span>
-        <span>Apteka (otwarta)</span>
+        <span class="badge-round">apteka24</span>
       </a>
     </div>
 
-    <!-- Podtytuł nad pierwszą kartą (jak prosiłaś) -->
-    <div class="section-intro">Boli mnie — wybierz obszar bólu</div>
+    <!-- Podtytuł nad pierwszą kartą -->
+    <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
 
-    <!-- Trzy duże karty jeden pod drugim -->
+    <!-- Trzy duże karty -->
     <section class="stack" aria-label="Wybór postaci">
       <article class="card">
         <a href="kobieta.html">
-          <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała"
-               onerror="this.src='img/placeholder.png'"/>
+          <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
           <div class="caption"><h3>Kobieta</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
 
       <article class="card">
         <a href="mezczyzna.html">
-          <img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała"
-               onerror="this.src='img/placeholder.png'"/>
+          <img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
           <div class="caption"><h3>Mężczyzna</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
 
       <article class="card">
         <a href="dziecko.html">
-          <img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała"
-               onerror="this.src='img/placeholder.png'"/>
+          <img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
           <div class="caption"><h3>Dziecko</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
