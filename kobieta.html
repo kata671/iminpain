@@ -3,73 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Boli Help — Strona główna</title>
-  <meta name="theme-color" content="#113763" />
-  <link rel="manifest" href="manifest.json" />
+  <title>Kobieta — wybierz część ciała</title>
   <link rel="stylesheet" href="assets/style.css" />
 </head>
-<body data-page="home">
+<body data-page="kobieta">
   <div class="container">
-    <header class="header">
+    <a class="back" href="index.html">← Powrót</a>
+
+    <header class="header" style="margin-top:6px">
       <div class="brand">
-        <h1>Boli Help</h1>
-        <small>Pomoc i pierwsza pomoc w nagłych sytuacjach</small>
+        <h1>Kobieta</h1>
+        <small>Wybierz część ciała lub organ</small>
       </div>
       <div class="tools">
-        <div class="search" role="search">
-          <input type="search" placeholder="Szukaj objawu, części ciała lub tematu…" aria-label="Szukaj" />
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
-                  stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
+        <div class="search"><input type="search" placeholder="Szukaj..."/></div>
       </div>
     </header>
 
-    <!-- Telefony alarmowe -->
-    <div class="emergency-list" aria-label="Telefony alarmowe">
-      <a href="tel:112">📞 112</a><a href="tel:999">🚑 999</a><a href="tel:998">🔥 998</a><a href="tel:997">👮 997</a>
-    </div>
-
-    <!-- Zielone kafelki: każdy otwiera swoją kompletną instrukcję -->
-    <nav class="situations" aria-label="Sytuacje nagłe">
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zadławienie"><span class="ico">🫁</span>Zadławienie</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja"><span class="ico">🚑</span>Reanimacja</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek"><span class="ico">💥</span>Wypadek</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span>Pierwsza pomoc</a>
-    </nav>
-
-    <!-- Szybkie akcje -->
-    <div class="actions" role="navigation" aria-label="Szybkie akcje">
-      <button id="btn-112" class="btn btn--red btn--call" type="button" aria-label="Zadzwoń na 112">📞 112</button>
-      <button id="btn-hosp" class="btn btn--hosp" type="button" aria-label="Szpitale i SOR">🏥 Szpitale / SOR</button>
-      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener"><span class="badge-round">apteka24</span></a>
-      <button id="btn-loc" class="btn" type="button">📍 Zlokalizuj mnie</button>
-    </div>
-
-    <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
-
-    <!-- K/M/D – na laptopie w jednym rzędzie -->
-    <section class="stack" aria-label="Wybór postaci">
-      <article class="card">
-        <a href="kobieta.html">
-          <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3>Kobieta</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
-      <article class="card">
-        <a href="mezczyzna.html">
-          <img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3>Mężczyzna</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
-      <article class="card">
-        <a href="dziecko.html">
-          <img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3>Dziecko</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
-    </section>
+    <div class="grid"></div>
   </div>
 
   <script src="assets/main.js"></script>
