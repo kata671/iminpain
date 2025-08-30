@@ -1,55 +1,29 @@
-/* Tylko 1 panel (poradniki) */
-.panels.single{ grid-template-columns: 1fr !important; }
-
-/* Plansze instruktażowe (jeśli używasz) */
-.board-row{ display:grid; gap:12px; margin-bottom:12px; grid-template-columns: 1fr; }
-@media(min-width:700px){ .board-row{ grid-template-columns: repeat(3,1fr); } }
-.board{
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 14px; overflow: hidden; box-shadow: var(--shadow);
+/* Czytelniejsze kroki w poradnikach */
+.panels.single .panel .content {
+  font-size: 17px;
+  line-height: 1.6;
 }
-.board img{ display:block; width:100%; height:auto; object-fit:cover; }
-.board figcaption{
-  padding:8px 10px; font-weight:700; font-size:14px; color:var(--text);
-  border-top:1px solid rgba(255,255,255,.12);
-  background: linear-gradient(180deg, rgba(34,0,56,.20), rgba(34,0,56,.12));
+.panels.single .panel .content ol,
+.panels.single .panel .content ul {
+  margin: 0.25rem 0 0.75rem 1.2rem;
+}
+.panels.single .panel .content li {
+  margin: 0.25rem 0;
 }
 
-/* ładniejsze ol/LI dla instrukcji – większa czcionka, odstępy, „krok” jako medalion */
-#pierwszapomoc .content{ --stepSize: 42px; }
-#pierwszapomoc .content ol{ counter-reset: step; list-style:none; margin:0; padding:0; }
-#pierwszapomoc .content ol li{
-  counter-increment: step;
+/* Ładniejszy panel Pierwsza pomoc (nagłówek + subtelna ozdoba) */
+#pierwszapomoc.panel header {
+  background: linear-gradient(180deg, rgba(25,242,166,0.10), rgba(25,242,166,0.04));
+  border-bottom-color: rgba(25,242,166,0.35);
+}
+#pierwszapomoc.panel .content {
   position: relative;
-  padding:14px 14px 14px calc(var(--stepSize) + 14px);
-  margin:10px 0;
-  font-size: 17px; line-height: 1.6;
-  background: linear-gradient(180deg, rgba(34,0,56,.28), rgba(34,0,56,.18));
-  border:1px solid rgba(162,122,255,.28); border-radius:14px; box-shadow: var(--shadow);
 }
-#pierwszapomoc .content ol li::before{
-  content: counter(step);
-  position:absolute; left:10px; top:50%; transform: translateY(-50%);
-  width: var(--stepSize); height: var(--stepSize); display:grid; place-items:center;
-  font-weight:900; font-size:18px;
-  border-radius:50%;
-  background: radial-gradient(closest-side, #18e6a0, #0d3d2e);
-  border:1px solid #19f2a688; box-shadow: 0 0 12px #19f2a655;
-}
-
-/* sekcje pomocnicze/toc w Pierwszej Pomocy */
-#fa-toc{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
-#fa-toc .badge{ background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.22); }
-
-/* „ładniejszy” wygląd panelu Pierwsza pomoc jako hero */
-#pierwszapomoc.panel{
-  background: linear-gradient(180deg, rgba(25,242,166,.06), rgba(162,122,255,.06)), var(--card-bg);
-  border-color: rgba(162,122,255,.35);
-}
-#pierwszapomoc.panel header h4{ letter-spacing:.3px }
-
-/* responsywnie powiększona czcionka na małych ekranach */
-@media (max-width: 520px){
-  #pierwszapomoc .content ol li{ font-size:16.5px; }
+#pierwszapomoc.panel .content::before {
+  content: "";
+  position: absolute; inset: 0 0 auto 0; height: 2px;
+  background: radial-gradient(8px 6px at 20% 50%, rgba(25,242,166,.9), transparent),
+              radial-gradient(8px 6px at 60% 50%, rgba(142,107,255,.7), transparent),
+              radial-gradient(8px 6px at 85% 50%, rgba(25,242,166,.6), transparent);
+  opacity: .6;
 }
