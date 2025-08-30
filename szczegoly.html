@@ -4,7 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Szczegóły</title>
-  <link rel="stylesheet" href="assets/style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="assets/style.css?v=8" />
 </head>
 <body data-page="szczegoly">
   <div class="container">
@@ -14,7 +15,7 @@
     <header class="header" style="margin-top:0">
       <div class="brand">
         <h1 id="detailTitle">Szczegóły</h1>
-        <small>Pierwsza pomoc, objawy, leki, lekarz</small>
+        <small>Pierwsza pomoc, objawy, przyczyny, leki, lekarz</small>
       </div>
       <div class="tools">
         <div class="actions">
@@ -35,19 +36,19 @@
       <div class="panels">
         <article id="objawy" class="panel">
           <header><h4>Objawy</h4></header>
-          <div class="content">
-            <ul>
-              <li>Ból miejscowy/promieniujący, obrzęk, zaczerwienienie, tkliwość.</li>
-              <li>Kontekstowe (np. oko: łzawienie, światłowstręt; ucho: szumy; kolano: obrzęk itp.).</li>
-              <li><strong>Alarmowe:</strong> duszność, ból w klatce, zaburzenia mowy/świadomości, uraz gałki ocznej, masywne krwawienie.</li>
-            </ul>
-          </div>
+          <div class="content"><ul id="symptoms-list"></ul></div>
+        </article>
+
+        <article id="przyczyny" class="panel">
+          <header><h4>Przyczyny</h4></header>
+          <div class="content"><ul id="causes-list"></ul></div>
         </article>
 
         <article id="pierwszapomoc" class="panel">
           <header><h4>Pierwsza pomoc</h4></header>
-          <div class="content">
-            <ol id="fa-steps"><!-- uzupełni main.js --></ol>
+          <div class="content" id="fa-container">
+            <div id="fa-toc"></div>
+            <ol id="fa-steps"></ol>
           </div>
         </article>
 
@@ -66,7 +67,7 @@
         <article id="lekarz" class="panel">
           <header><h4>Lekarz</h4></header>
           <div class="content">
-            <p>POZ / NPL; przy objawach alarmowych — SOR.</p>
+            <ul id="doctor-list"></ul>
             <a class="btn" style="margin-top:8px" href="https://www.google.com/maps/search/SOR+szpital+pomoc+medyczna/" target="_blank" rel="noopener">🔎 Znajdź najbliższy SOR</a>
           </div>
         </article>
@@ -74,6 +75,6 @@
     </section>
   </div>
 
-  <script src="assets/main.js"></script>
+  <script src="assets/main.js?v=8"></script>
 </body>
 </html>
