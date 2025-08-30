@@ -4,7 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Kobieta — wybierz część ciała</title>
-  <link rel="stylesheet" href="assets/style.css?v=4" />
+  <!-- cache-bust -->
+  <link rel="stylesheet" href="assets/style.css?v=7" />
+  <!-- jednorazowo: ubij service workera na tej stronie, żeby ominąć stary cache -->
+  <script>
+    (function(){
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(list => list.forEach(r => r.unregister()));
+      }
+    })();
+  </script>
 </head>
 <body data-page="kobieta">
   <div class="container">
@@ -23,7 +32,37 @@
     <div class="grid"></div>
   </div>
 
-  <script src="assets/main.js?v=4"></script>
+  <!-- cache-bust -->
+  <script src="assets/main.js?v=7"></script>
+
+  <!-- Fallback: jeśli JS się nie zbuduje w 700 ms, wstawiamy awaryjną siatkę -->
+  <script>
+    setTimeout(() => {
+      const grid = document.querySelector('.grid');
+      if (!grid) return;
+      if (!grid.querySelector('.tile')) {
+        console.warn('Fallback grid injected (assets/main.js nie zadziałał na czas).');
+        const parts = [
+          ['ciaza','Ciąża'], ['oko','Oko'], ['nos','Nos'], ['usta','Usta'], ['ucho','Ucho'],
+          ['glowa','Głowa'], ['klatka','Klatka piersiowa'], ['brzuch','Brzuch'], ['plecy','Plecy'],
+          ['ramie','Ramię'], ['dlon','Dłoń'], ['biodra','Biodra'], ['udo','Udo'],
+          ['kolano','Kolano'], ['lydka','Łydka'], ['stopy','Stopy'],
+          ['serce','Serce'], ['pluca','Płuca'], ['watroba','Wątroba'], ['zoladek','Żołądek'], ['nerki','Nerki']
+        ];
+        const frag = document.createDocumentFragment();
+        parts.forEach(([key,label])=>{
+          const a = document.createElement('a');
+          a.href = `szczegoly.html?typ=kobieta&czesc=${encodeURIComponent(key)}&label=${encodeURIComponent(label)}`;
+          const tile = document.createElement('div'); tile.className = 'tile'; tile.dataset.label = label.toLowerCase();
+          const img = document.createElement('img'); img.alt = label; img.loading = 'lazy'; img.src = `img/kobieta-${key}.png`; img.onerror = ()=>{ img.src='img/placeholder.png'; };
+          const cap = document.createElement('div'); cap.className = 'tcap'; cap.textContent = label;
+          a.appendChild(img); a.appendChild(cap); tile.appendChild(a); frag.appendChild(tile);
+        });
+        grid.appendChild(frag);
+      }
+    }, 700);
+  </script>
+
   <noscript>Ta strona wymaga JavaScript, aby wyświetlić siatkę części ciała.</noscript>
 </body>
 </html>
