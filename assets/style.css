@@ -27,3 +27,33 @@
               radial-gradient(8px 6px at 85% 50%, rgba(25,242,166,.6), transparent);
   opacity: .6;
 }
+/* Czytelniejsze kroki i listy w poradnikach (tryb planszy) */
+.panels.single .panel .content {
+  font-size: 17px;
+  line-height: 1.6;
+}
+.panels.single .panel .content ol,
+.panels.single .panel .content ul {
+  margin: 0.35rem 0 0.85rem 1.25rem;
+}
+.panels.single .panel .content li { margin: 0.28rem 0; }
+
+/* Nagłówek i subtelna ozdoba panelu Pierwsza pomoc */
+#pierwszapomoc.panel header {
+  background: linear-gradient(180deg, rgba(25,242,166,0.10), rgba(25,242,166,0.04));
+  border-bottom-color: rgba(25,242,166,0.35);
+}
+#pierwszapomoc.panel .content {
+  position: relative;
+}
+#pierwszapomoc.panel .content::before {
+  content: "";
+  position: absolute; inset: 0 0 auto 0; height: 2px;
+  background: radial-gradient(8px 6px at 20% 50%, rgba(25,242,166,.9), transparent),
+              radial-gradient(8px 6px at 60% 50%, rgba(142,107,255,.7), transparent),
+              radial-gradient(8px 6px at 85% 50%, rgba(25,242,166,.6), transparent);
+  opacity: .6;
+}
+
+/* Jednokolumnowe poradniki (plansze) */
+.panels.single { grid-template-columns: 1fr !important; }
