@@ -9,7 +9,6 @@
   --ring:0 0 0 2px inset rgba(255,255,255,.06);
   --violet:#8e6bff; --violet-glow:#8e6bff55;
 }
-/* reset + tło */
 *{box-sizing:border-box} html,body{margin:0;padding:0}
 body{
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,"Noto Sans",Arial,sans-serif;
@@ -34,14 +33,12 @@ body::after{
   background-size:420px auto; background-position:center; mix-blend-mode:screen; opacity:var(--hex-opacity);
 }
 
-/* layout */
 .container{width:100%;max-width:var(--maxw);margin:0 auto;padding:24px;position:relative;z-index:1}
 .header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:10px}
 .brand h1{margin:0;font-size:34px;letter-spacing:.3px}
 .brand small{display:block;margin-top:2px;color:var(--muted);font-weight:500}
 .subheadline{margin:8px 0 12px;color:var(--muted);font-size:15px}
 
-/* search */
 .tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .search{position:relative}
 .search input{
@@ -51,7 +48,6 @@ body::after{
 }
 .search svg{position:absolute; right:12px; top:50%; transform:translateY(-50%); opacity:.7}
 
-/* emergency list under search */
 .emergency-list{display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 6px}
 .emergency-list a{
   padding:6px 10px; border-radius:12px; text-decoration:none; color:var(--text);
@@ -59,7 +55,6 @@ body::after{
   font-weight:700; box-shadow:var(--ring)
 }
 
-/* actions */
 .actions{display:flex; flex-wrap:wrap; gap:10px; margin:8px 0 16px}
 .btn{
   display:inline-flex; align-items:center; gap:10px;
@@ -79,7 +74,6 @@ body::after{
 }
 @keyframes outlinePulse{0%{box-shadow:0 0 8px #ff5c5c55}50%{box-shadow:0 0 16px #ff5c5cbb}100%{box-shadow:0 0 8px #ff5c5c55}}
 
-/* round apteka24 badge */
 .badge-round{
   display:inline-flex; align-items:center; justify-content:center;
   width:38px; height:38px; border-radius:50%;
@@ -88,7 +82,6 @@ body::after{
   font-size:11px; font-weight:800; letter-spacing:.5px; text-transform:uppercase;
 }
 
-/* situations pills */
 .situations{display:flex; flex-wrap:wrap; gap:10px; margin:0 0 14px}
 .pill{
   padding:14px 18px; border-radius:14px;
@@ -102,7 +95,6 @@ body::after{
 .pill--green{background:linear-gradient(135deg,#0d3d2e,#14694d); border-color:#1bbf8a88; animation:glowPulseGreen 3.2s infinite}
 .pill--loc{background:linear-gradient(135deg,#0f2f4a,#164a73); border-color:#4bb8ff88}
 
-/* main cards (K/M/D) */
 .stack{display:flex; flex-direction:column; gap:16px; margin:0 0 22px}
 @media(min-width:1000px){ .stack{display:grid; grid-template-columns:repeat(3,1fr); gap:16px} }
 .card{
@@ -118,7 +110,6 @@ body::after{
 .caption h3{margin:0; font-size:20px; letter-spacing:.2px}
 .caption .arrow{opacity:.8}
 
-/* tiles grid: phone 3 col, laptop 4 col; square images, violet BG + glow */
 .grid{display:grid; gap:14px; grid-template-columns:repeat(3,1fr); margin:8px 0 24px}
 @media(min-width:1000px){ .grid{grid-template-columns:repeat(4,1fr)} }
 .tile{
@@ -131,7 +122,6 @@ body::after{
 .tile img{width:100%; aspect-ratio:1/1; object-fit:cover; display:block; background:rgba(0,0,0,.25)}
 .tile .tcap{padding:10px 12px; font-weight:600}
 
-/* details */
 .breadcrumb{margin:6px 0 12px; color:var(--muted)}
 .details{display:grid; gap:16px; grid-template-columns:1.1fr 2fr}
 @media (max-width:900px){.details{grid-template-columns:1fr}}
@@ -152,10 +142,19 @@ body::after{
 .panel header h4{margin:0; font-size:18px}
 .panel .content{padding:14px}
 #objawy.panel{border-top:3px solid #ffbf40aa}
+#przyczyny.panel{border-top:3px solid #c693ffcc}
 #pierwszapomoc.panel{border-top:3px solid #19f2a6aa}
 #leki.panel{border-top:3px solid #7cc6ffcc}
 #lekarz.panel{border-top:3px solid #c4a1ffcc}
 
-/* back link */
+.badges{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px}
+.badge{
+  display:inline-flex; align-items:center; gap:6px; padding:6px 10px;
+  border-radius:12px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.16);
+  font-weight:700; letter-spacing:.2px;
+}
+.badge--ok{color:#13e69d}
+.badge--rx{color:#ff6666}
+
 .back{display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:var(--muted)}
 .back:hover{color:var(--text)}
