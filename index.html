@@ -1,147 +1,63 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wybierz, kogo dotyczy ból</title>
-  <style>
-    /* Basic Styling - Adapt to your preferred CSS framework (like Bootstrap) */
-    body {
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f8f8f8;
-      color: #333;
-    }
-
-    .container {
-      width: 80%;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    header {
-      background-color: #f8f8f8;
-      color: #333;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .site-header {
-      font-size: 2.5em;
-      font-weight: bold;
-      margin-bottom: 30px;
-    }
-
-    .site-title {
-      font-size: 2.3em;
-      font-weight: bold;
-      margin-bottom: 20px;
-      color: #4469b4; /* Darker blue */
-    }
-
-    .subtitle {
-      font-size: 1.2em;
-      color: #666;
-      margin-bottom: 20px;
-    }
-
-    .hot-tiles-grid {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    .hot-tile {
-      width: 30%;
-      margin-bottom: 20px;
-    }
-
-    .hot-tile img {
-      width: 100%;
-      height: auto;
-      border-radius: 5px;
-    }
-
-    .hot-tile hover {
-      background-color: #e9ecef;
-    }
-
-    .hero-card {
-      border: 2px solid #e9ecef;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      padding: 20px;
-      text-align: center;
-      width: 300px; /* Adjust as needed */
-    }
-
-    .hero-card img {
-      width: 100%;
-      height: auto;
-    }
-
-    .hero-card span {
-      font-size: 1.1em;
-      color: #333;
-    }
-
-    .container-content {
-      padding: 20px;
-    }
-
-    footer {
-      background-color: #f8f8f8;
-      color: #333;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.8em;
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Boli-help — wybierz osobę</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <header>
-    <h1>Wybierz, kogo dotyczy ból</h1>
-    <p>Interfejs dopasujemy do osoby. Zawsze w zasięgu ręki: pierwsza pomoc i lokalizacja.</p>
+  <!-- TOPBAR z szybkimi linkami -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html"><span class="dot"></span> Boli-help</a>
+      <nav class="nav">
+        <a href="tel:112">📞 112</a>
+        <a href="pierwsza-pomoc.html">🩺 Pierwsza pomoc</a>
+        <a href="lokalizacja.html">📍 Lokalizacja</a>
+        <a href="zadlawienie.html">🫁 Zadławienie</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- tytuł -->
+  <header class="site-header">
+    <h1 class="site-title">Wybierz, kogo dotyczy ból</h1>
+    <p class="subtitle">Interfejs dopasujemy do osoby. Zawsze w zasięgu ręki: pierwsza pomoc i lokalizacja.</p>
   </header>
 
-  <main>
-    <section>
-      <div class="hot-tiles-grid">
-        <a class="hot-tile hot-red" href="kobieta.html" onclick="localStorage.setItem('sex','k')">
-          <span class="ico">🚨</span> Zgłoś wypadek
-        </a>
-        <a class="hot-tile hot-green" href="pierwsza-pomoc.html#rko">
-          <span class="ico">❤️</span> Pierwsza pomoc
-        </a>
-        <a class="hot-tile hot-green" href="pierwsza-pomoc.html#dławienie">
-          <span class="ico">🫁</span> Zadławienie
-        </a>
-        <a class="hot-tile hot-green" href="pierwsza-pomoc.html#wypadek">
-          <span class="ico">🚧</span> Ofiara wypadku
-        </a>
-      </div>
-    </section>
+  <main class="container">
+    <!-- opcjonalne duże zdjęcie (jeśli chcesz zostawić) -->
+    <!-- <img src="img/hero-men.jpg" class="hero-photo" alt="Bohater" /> -->
 
-    <section>
-      <div class="hero-grid">
-        <a class="hero-card" href="mezczyzna.html" onclick="localStorage.setItem('sex','m')">
-          <img src="img/mezczyzna-final.png?v=1" alt="Mężczyzna" />
-          <span>👨</span> Mężczyzna
-        </a>
-        <a class="hero-card" href="dziecko.html" onclick="localStorage.setItem('sex','d')">
-          <img src="img/dziecko-final.png?v=1" alt="Dziecko" />
-          <span>🧒</span> Dziecko
-        </a>
-      </div>
+    <!-- TRZY KAFELKI: KOBIETA / MĘŻCZYZNA / DZIECKO -->
+    <section class="hero-grid">
+      <a class="card-link" href="kobieta.html">
+        <article class="card">
+          <img src="img/kobieta-final.png" alt="Kobieta"/>
+          <div class="label">Kobieta</div>
+        </article>
+      </a>
+
+      <a class="card-link" href="mezczyzna.html">
+        <article class="card">
+          <img src="img/mezczyzna-final.png" alt="Mężczyzna"/>
+          <div class="label">Mężczyzna</div>
+        </article>
+      </a>
+
+      <a class="card-link" href="dziecko.html">
+        <article class="card">
+          <img src="img/dziecko-final.png" alt="Dziecko"/>
+          <div class="label">Dziecko</div>
+        </article>
+      </a>
     </section>
   </main>
 
   <footer>
-    <small>© 2025 • Boli-mnie.pl</small>
+    <small>© 2025 Boli-help</small>
   </footer>
-
 </body>
 </html>
