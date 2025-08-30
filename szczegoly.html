@@ -3,25 +3,104 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dziecko — wybierz część ciała</title>
+  <title>Szczegóły</title>
   <link rel="stylesheet" href="assets/style.css" />
 </head>
-<body data-page="dziecko">
+<body data-page="szczegoly">
   <div class="container">
-    <a class="back" href="index.html">← Powrót</a>
+    <!-- link powrotny -->
+    <a class="back" href="javascript:history.back()">← Wróć</a>
+    <div class="breadcrumb">Sekcja: <span></span></div>
 
-    <header class="header" style="margin-top:6px">
+    <!-- nagłówek -->
+    <header class="header" style="margin-top:0">
       <div class="brand">
-        <h1>Dziecko</h1>
-        <small>Wybierz część ciała lub organ</small>
+        <h1 id="detailTitle">Szczegóły</h1>
+        <small>Pierwsza pomoc, objawy, leki, lekarz</small>
       </div>
       <div class="tools">
-        <div class="search"><input type="search" placeholder="Szukaj..."/></div>
+        <div class="actions">
+          <button id="btn-112" class="btn btn--red btn--call" type="button">112</button>
+          <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" 
+             target="_blank" rel="noopener">
+            <span class="apteka-dot" aria-hidden="true"></span>
+            <span>Apteka (otwarta)</span>
+          </a>
+        </div>
       </div>
     </header>
 
-    <!-- tutaj miniaturki wypełni main.js -->
-    <div class="grid"></div>
+    <!-- sekcja główna -->
+    <section class="details">
+      <!-- podgląd głównego zdjęcia -->
+      <aside class="preview">
+        <img id="detailImg" alt="" />
+      </aside>
+
+      <!-- panele -->
+      <div class="panels">
+        <!-- Objawy -->
+        <article class="panel">
+          <header>
+            <img alt="Objawy" />
+            <h4>Objawy</h4>
+          </header>
+          <div class="content">
+            <ul>
+              <li>Typowe objawy dla tej części ciała / problemu.</li>
+              <li>Możliwe sygnały alarmowe (np. duszność, ból, utrata przytomności).</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Pierwsza pomoc -->
+        <article class="panel">
+          <header>
+            <img alt="Pierwsza pomoc" />
+            <h4>Pierwsza pomoc</h4>
+          </header>
+          <div class="content">
+            <ol>
+              <li>Zachowaj bezpieczeństwo i sprawdź świadomość poszkodowanego.</li>
+              <li>W razie wątpliwości — <strong>dzwoń 112</strong>.</li>
+              <li>Zastosuj odpowiednie procedury (np. ucisk, pozycja bezpieczna).</li>
+            </ol>
+          </div>
+        </article>
+
+        <!-- Leki -->
+        <article class="panel">
+          <header>
+            <img alt="Leki" />
+            <h4>Leki</h4>
+          </header>
+          <div class="content">
+            <div class="badges">
+              <span class="badge badge--ok">Bez recepty</span>
+              <span class="badge badge--rx">Na receptę</span>
+            </div>
+            <div>
+              <p><strong>Bez recepty:</strong> np. paracetamol, ibuprofen — stosuj wg ulotki.</p>
+              <p><strong>Na receptę:</strong> decyzja lekarza (np. antybiotyki, leki specjalistyczne).</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Lekarz -->
+        <article class="panel">
+          <header>
+            <img alt="Lekarz" />
+            <h4>Lekarz</h4>
+          </header>
+          <div class="content">
+            <p>Skontaktuj się z <strong>POZ</strong>, <strong>NPL</strong> lub <strong>SOR</strong>, 
+               jeśli objawy są poważne lub narastające.</p>
+            <a class="btn" style="margin-top:8px" href="https://www.google.com/maps/search/lekarz/" 
+               target="_blank" rel="noopener">Znajdź lekarza</a>
+          </div>
+        </article>
+      </div>
+    </section>
   </div>
 
   <script src="assets/main.js"></script>
