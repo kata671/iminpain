@@ -2,27 +2,16 @@
 const $ = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
 
-/* Połączenie z numerem 112 */
-function call112(){ 
-  window.location.href = 'tel:112'; 
-}
+function call112(){ window.location.href = 'tel:112'; }
 
-/* Geolokalizacja – otwarcie Google Maps z bieżącą lokalizacją */
+/* Lokalizacja → od razu mapa z pomocą (SOR, szpital, przychodnia, apteka) */
 function openMyLocation(){
-  if(!navigator.geolocation){
-    alert('Twoja przeglądarka nie obsługuje geolokalizacji.');
-    return;
-  }
-  navigator.geolocation.getCurrentPosition(pos=>{
-    const {latitude, longitude} = pos.coords;
-    const url = `https://www.google.com/maps?q=${latitude},${longitude}`;
-    window.open(url, '_blank');
-  }, ()=> {
-    window.open('https://www.google.com/maps/search/', '_blank');
-  });
+  // otwórz wyszukiwanie pomocy medycznej w pobliżu
+  const q = encodeURIComponent('SOR szpital pomoc medyczna przychodnia apteka');
+  window.open(`https://www.google.com/maps/search/${q}/`, '_blank');
 }
 
-/* Link do aptek otwartych teraz */
+/* Apteka „otwarta teraz” */
 function openPharmacy(){
   window.open('https://www.google.com/maps/search/apteka+otwarta+teraz/', '_blank');
 }
@@ -41,29 +30,23 @@ function attachGridSearch(){
   });
 }
 
-/* Lista części ciała i organów (po redukcji) */
+/* Lista części ciała i organów – po Twojej redukcji */
 const PARTS_COMMON = [
   ['oko','Oko'],['nos','Nos'],['usta','Usta'],['ucho','Ucho'],['glowa','Głowa'],
-  /* ['szyja','Szyja'],  USUNIĘTE */
   ['klatka','Klatka piersiowa'],['brzuch','Brzuch'],['plecy','Plecy'],
-  /* ['bark','Bark'], ['przedramie','Przedramię'],  USUNIĘTE */
-  ['ramie','Ramię'],
-  ['dlon','Dłoń'],['biodra','Biodra'],['udo','Udo'],['kolano','Kolano'],
-  ['lydka','Łydka'],['stopy','Stopy'],
+  ['ramie','Ramię'],['dlon','Dłoń'],['biodra','Biodra'],['udo','Udo'],
+  ['kolano','Kolano'],['lydka','Łydka'],['stopy','Stopy'],
   ['serce','Serce'],['pluca','Płuca'],['watroba','Wątroba'],['zoladek','Żołądek'],
-  /* ['jelita','Jelita'], ['mozg','Mózg'],  USUNIĘTE */
   ['nerki','Nerki']
 ];
 
-/* Generowanie miniaturek na stronach kobieta / mezczyzna / dziecko */
-function buildGrid(pageType){ // 'kobieta' | 'mezczyzna' | 'dziecko'
+/* Budowa siatki miniaturek */
+function buildGrid(pageType){
   const grid = $('.grid');
   if(!grid) return;
-
-  const parts = PARTS_COMMON;
   const frag = document.createDocumentFragment();
 
-  parts.forEach(([key,label])=>{
+  PARTS_COMMON.forEach(([key,label])=>{
     const a = document.createElement('a');
     a.href = `szczegoly.html?typ=${encodeURIComponent(pageType)}&czesc=${encodeURIComponent(key)}&label=${encodeURIComponent(label)}`;
 
@@ -91,7 +74,7 @@ function buildGrid(pageType){ // 'kobieta' | 'mezczyzna' | 'dziecko'
   attachGridSearch();
 }
 
-/* Szczegóły – ustaw dane z query string */
+/* Szczegóły – ustaw tytuł i obraz */
 function initDetails(){
   const params = new URLSearchParams(location.search);
   const typ = params.get('typ') || '';
@@ -101,7 +84,6 @@ function initDetails(){
   const bread = $('.breadcrumb span');
   const title = $('#detailTitle');
   const img = $('#detailImg');
-
   if(!title || !img) return;
 
   title.textContent = label || 'Szczegóły';
@@ -112,19 +94,13 @@ function initDetails(){
   img.onerror = ()=>{ img.src='img/placeholder.png'; };
 }
 
-/* ====== Auto-init na każdej stronie ====== */
+/* Auto-init */
 document.addEventListener('DOMContentLoaded', ()=>{
-  // przyciski akcji
   $$('#btn-112').forEach(b=>b.addEventListener('click', call112));
   $$('#btn-loc').forEach(b=>b.addEventListener('click', openMyLocation));
   $$('#btn-apteka').forEach(b=>b.addEventListener('click', openPharmacy));
 
-  // generowanie gridów na stronach postaci
   const page = document.body.dataset.page;
-  if(page==='kobieta' || page==='mezczyzna' || page==='dziecko'){
-    buildGrid(page);
-  }
-  if(page==='szczegoly'){ 
-    initDetails(); 
-  }
+  if(page==='kobieta' || page==='mezczyzna' || page==='dziecko'){ buildGrid(page); }
+  if(page==='szczegoly'){ initDetails(); }
 });
