@@ -1,132 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kobieta — wybór obszaru bólu</title>
-  <link rel="stylesheet" href="style.css" />
-  <meta name="theme-color" content="#7a4dff" />
-  <style>
-    /* Kwadratowe kafelki 3 w rzędzie + większa miniaturka + emotka po napisie */
-    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-    .card{
-      display:flex; align-items:center; justify-content:center; text-align:center;
-      flex-direction:column; gap:8px; padding:10px; aspect-ratio:1/1;
-    }
-    .card img.thumb{
-      width:44px; height:44px; object-fit:cover; border-radius:8px; margin:0;
-      box-shadow:0 0 6px rgba(130,100,255,.35);
-    }
-    .card .label{
-      font-weight:800; line-height:1.15;
-      display:inline-flex; align-items:center; gap:6px;
-    }
-    .card .label .emo{ opacity:.95; }
-    @media (max-width:420px){
-      .grid-3{ gap:10px; }
-      .card img.thumb{ width:40px; height:40px; }
-    }
-  </style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>👩 Kobieta — wybierz obszar bólu</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
-<body class="bg-med">
-  <nav class="quickbar">
-    <a href="index.html">🏠 Strona główna</a>
-    <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
-    <a href="lokalizacja.html">📍 Lokalizacja</a>
-  </nav>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html"><span class="dot"></span> Boli-help</a>
+      <nav class="nav">
+        <a href="index.html">🏠 Strona główna</a>
+        <a href="tel:112">📞 112</a>
+        <a href="pierwsza-pomoc.html">🩺 Pierwsza pomoc</a>
+        <a href="lokalizacja.html">📍 Lokalizacja</a>
+      </nav>
+    </div>
+  </div>
 
   <header class="site-header">
-    <h1>👩 Kobieta — wybierz obszar bólu</h1>
+    <h1 class="site-title">Kobieta — wybierz obszar bólu</h1>
+    <p class="subtitle">Dotknij odpowiedni obszar, aby przejść do szczegółów.</p>
   </header>
 
   <main class="container">
-    <div class="grid-3">
-
-      <!-- NOWA KATEGORIA: CIĄŻA -->
-      <a class="card" href="szczegoly.html?id=kobieta-ciaza">
-        <img src="img/kobieta-ciaza.png" alt="" class="thumb">
-        <span class="label"><span class="name">Ciąża</span><span class="emo">🤰</span></span>
-      </a>
-
-      <!-- Głowa i twarz -->
-      <a class="card" href="szczegoly.html?id=kobieta-oko">
-        <img src="img/kobieta-oko.png" alt="" class="thumb">
-        <span class="label"><span class="name">Oko</span><span class="emo">👁️</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-nos">
-        <img src="img/kobieta-nos.png" alt="" class="thumb">
-        <span class="label"><span class="name">Nos</span><span class="emo">👃</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-usta">
-        <img src="img/kobieta-usta.png" alt="" class="thumb">
-        <span class="label"><span class="name">Usta</span><span class="emo">👄</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-ucho">
-        <img src="img/kobieta-ucho.png" alt="" class="thumb">
-        <span class="label"><span class="name">Ucho</span><span class="emo">👂</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-glowa">
-        <img src="img/kobieta-glowa.png" alt="" class="thumb">
-        <span class="label"><span class="name">Głowa</span><span class="emo">🧠</span></span>
-      </a>
-
-      <!-- Tułów -->
-      <a class="card" href="szczegoly.html?id=kobieta-serce">
-        <img src="img/kobieta-serce.png" alt="" class="thumb">
-        <span class="label"><span class="name">Serce</span><span class="emo">❤️</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-pluca">
-        <img src="img/kobieta-pluca.png" alt="" class="thumb">
-        <span class="label"><span class="name">Płuca</span><span class="emo">🫁</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-kregoslup">
-        <img src="img/kobieta-kregoslup.png" alt="" class="thumb">
-        <span class="label"><span class="name">Kręgosłup</span><span class="emo">🧍‍♀️</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-zoladek">
-        <img src="img/kobieta-zoladek.png" alt="" class="thumb">
-        <span class="label"><span class="name">Żołądek</span><span class="emo">🫀</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-watroba">
-        <img src="img/kobieta-watroba.png" alt="" class="thumb">
-        <span class="label"><span class="name">Wątroba</span><span class="emo">🍃</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-nerki">
-        <img src="img/kobieta-nerki.png" alt="" class="thumb">
-        <span class="label"><span class="name">Nerki</span><span class="emo">💧</span></span>
-      </a>
-
-      <!-- Kończyny górne -->
-      <a class="card" href="szczegoly.html?id=kobieta-ramie">
-        <img src="img/kobieta-ramie.png" alt="" class="thumb">
-        <span class="label"><span class="name">Ramię</span><span class="emo">💪</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-lokiec">
-        <img src="img/kobieta-lokiec.png" alt="" class="thumb">
-        <span class="label"><span class="name">Łokieć</span><span class="emo">⚡</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-dlon">
-        <img src="img/kobieta-dlon.png" alt="" class="thumb">
-        <span class="label"><span class="name">Dłoń</span><span class="emo">✋</span></span>
-      </a>
-
-      <!-- Kończyny dolne -->
-      <a class="card" href="szczegoly.html?id=kobieta-udo">
-        <img src="img/kobieta-udo.png" alt="" class="thumb">
-        <span class="label"><span class="name">Udo</span><span class="emo">🦵</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-kolano">
-        <img src="img/kobieta-kolano.png" alt="" class="thumb">
-        <span class="label"><span class="name">Kolano</span><span class="emo">🦵</span></span>
-      </a>
-      <a class="card" href="szczegoly.html?id=kobieta-stopa">
-        <img src="img/kobieta-stopa.png" alt="" class="thumb">
-        <span class="label"><span class="name">Stopa</span><span class="emo">🦶</span></span>
-      </a>
-
-    </div>
+    <section class="hero-grid">
+      <a class="card-link" href="szczegoly.html?part=oko&sex=f"><article class="card"><img src="img/oko.png" alt="Oko"><div class="label">Oko</div></article></a>
+      <a class="card-link" href="szczegoly.html?part=nos&sex=f"><article class="card"><img src="img/nos.png" alt="Nos"><div class="label">Nos</div></article></a>
+      <a class="card-link" href="szczegoly.html?part=usta&sex=f"><article class="card"><img src="img/usta.png" alt="Usta"><div class="label">Usta</div></article></a>
+      <a class="card-link" href="szczegoly.html?part=ucho&sex=f"><article class="card"><img src="img/ucho.png" alt="Ucho"><div class="label">Ucho</div></article></a>
+      <a class="card-link" href="szczegoly.html?part=glowa&sex=f"><article class="card"><img src="img/glowa.png" alt="Głowa"><div class="label">Głowa</div></article></a>
+      <a class="card-link" href="szczegoly.html?part=serce&sex=f"><article class="card"><img src="img/serce.png" alt="Serce"><div class="label">Serce</div></article></a>
+      <a class="card-link" href="szczegoly.html?part=pluca&sex=f"><article class="card"><img src="img/pluca.png" alt="Płuca"><div class="label">Płuca</div></article></a>
+      <a class="card-link" href="szczegoly.html?part=kregoslup&sex=f"><article class="card"><img src="img/kregoslup.png" alt="Kręgosłup"><div class="label">Kręgosłup</div></article></a>
+      <a class="card-link" href="szczegoly.html?part=zoladek&sex=f"><article class="card"><img src="img/zoladek.png" alt="Żołądek"><div class="label">Żołądek</div></article></a>
+      <a class="card-link" href="szczegoly.html?part=watroba&sex=f"><article class="card"><img src="img/watroba.png" alt="Wątroba"><div class="label">Wątroba</div></article></a>
+      <a class="card-link" href="szczegoly.html?part=nerki&sex=f"><article class="card"><img src="img/nerki.png" alt="Nerki"><div class="label">Nerki</div></article></a>
+      <a class="card-link" href="szczegoly.html?part=ramie&sex=f"><article class="card"><img src="img/ramie.png" alt="Ramię"><div class="label">Ramię</div></article></a>
+    </section>
   </main>
 
-  <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
+  <footer><small>© 2025 Boli-help</small></footer>
 </body>
 </html>
