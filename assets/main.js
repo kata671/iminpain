@@ -39,7 +39,9 @@ function attachGridSearch(){
   });
 }
 
-/* lista części (po Twojej redukcji) */
+/* ===== LISTY CZĘŚCI CIAŁA ===== */
+
+/* ogólna lista */
 const PARTS_COMMON = [
   ['oko','Oko'],['nos','Nos'],['usta','Usta'],['ucho','Ucho'],['glowa','Głowa'],
   ['klatka','Klatka piersiowa'],['brzuch','Brzuch'],['plecy','Plecy'],
@@ -49,221 +51,231 @@ const PARTS_COMMON = [
   ['nerki','Nerki']
 ];
 
-/* budowa miniaturek (start od góry zdjęcia) */
+/* dodatki specyficzne dla stron */
+const PARTS_WOMAN_EXTRA = [
+  ['ciaza','Ciąża']
+];
+
+/* dobór listy w zależności od typu strony */
+function getPartsForPage(pageType){
+  if(pageType === 'kobieta'){
+    return [...PARTS_WOMAN_EXTRA, ...PARTS_COMMON];
+  }
+  // dla mezczyzna/dziecko – sama lista wspólna
+  return PARTS_COMMON;
+}
+
+/* budowa miniaturek (start od zdjęcia – bez #pierwszapomoc) */
 function buildGrid(pageType){
   const grid = $('.grid'); if(!grid) return;
   const frag = document.createDocumentFragment();
-  PARTS_COMMON.forEach(([key,label])=>{
+  const parts = getPartsForPage(pageType);
+
+  parts.forEach(([key,label])=>{
     const a = document.createElement('a');
     a.href = `szczegoly.html?typ=${encodeURIComponent(pageType)}&czesc=${encodeURIComponent(key)}&label=${encodeURIComponent(label)}`;
     const tile = document.createElement('div'); tile.className = 'tile'; tile.dataset.label = label.toLowerCase();
+
     const img = document.createElement('img');
-    img.alt = label; img.loading = 'lazy'; img.src = `img/${pageType}-${key}.png`;
+    img.alt = label; img.loading = 'lazy';
+    img.src = `img/${pageType}-${key}.png`;
     img.onerror = ()=>{ img.src = 'img/placeholder.png'; };
+
     const cap = document.createElement('div'); cap.className = 'tcap'; cap.textContent = label;
-    a.appendChild(img); a.appendChild(cap); tile.appendChild(a); frag.appendChild(tile);
+
+    a.appendChild(img); a.appendChild(cap);
+    tile.appendChild(a); frag.appendChild(tile);
   });
+
   grid.appendChild(frag);
   attachGridSearch();
 }
 
-/* PIERWSZA POMOC – pełna baza dla wszystkich części */
+/* ===== PIERWSZA POMOC – pełna baza (części + poradniki) ===== */
 const FIRST_AID_DB = {
-  // twarz / głowa
+  'pierwszopomoc': {
+    steps: [
+      'Zadbaj o własne bezpieczeństwo i oceń sytuację.',
+      'Sprawdź reakcję i oddech poszkodowanego.',
+      'Wezwij pomoc, gdy masz wątpliwości — 112.',
+      'Zatrzymaj masywne krwawienie uciskiem/opatrunkiem.',
+      'Brak oddechu: RKO 30:2 (100–120/min, 5–6 cm).',
+      'Pozycja bezpieczna, jeśli oddycha i nie reaguje.',
+      'Zadławienie: 5 uderzeń w plecy → 5 uciśnięć nadbrzusza.',
+      'Kontroluj stan do przyjazdu służb.'
+    ],
+    otc: [
+      'Apteczka: opatrunki, bandaże, rękawiczki, sól fizjologiczna.',
+      'Paracetamol/ibuprofen – zgodnie z ulotką (jeśli wskazane).'
+    ],
+    rx: ['Leczenie przyczynowe wg lekarza.']
+  },
+
+  /* ===== Ciąża (tylko Kobieta) ===== */
+  'ciaza': {
+    steps: [
+      'W przypadku dolegliwości w ciąży – unikaj ryzykownych czynności, odpocznij w wygodnej pozycji na lewym boku.',
+      'Nawadniaj się małymi łykami wody; obserwuj ruchy płodu (jeśli dotyczy trymestru).',
+      'Plamienie, nasilony ból brzucha/pleców, odpłynięcie płynu, osłabienie ruchów płodu, omdlenie → pilna konsultacja lekarska / SOR / IP.',
+      'Ból głowy + zaburzenia widzenia/obrzęki/nadciśnienie → pilnie skontaktuj się z lekarzem/112.',
+      'W urazach (upadek, brzuch): obserwacja i pilna ocena medyczna – nie zwlekaj.'
+    ],
+    otc: [
+      'Bezpieczniejsze zwykle: paracetamol (zgodnie z zaleceniem/lekarzem).',
+      'NIE zaleca się w ciąży: ibuprofen/naproksen (szczególnie w III trymestrze) – skonsultuj z lekarzem.',
+      'Doustne elektrolity przy odwodnieniu, preparaty z żelazem/folianem wg zaleceń.'
+    ],
+    rx: [
+      'Leczenie dobiera lekarz prowadzący ciążę / SOR po badaniu.'
+    ]
+  },
+
+  /* ===== twarz / głowa ===== */
   'oko': {
     steps: [
       'Nie trzeć oka; zdejmij soczewki, jeśli nosisz.',
-      'Płucz oko letnią wodą lub solą fizjologiczną przez 10–15 min.',
-      'Usuń ciała obce tylko przez płukanie (nie pęsetą).',
-      'Chemikalia / uraz penetrujący / nagłe pogorszenie widzenia → natychmiast SOR (112 jeśli trzeba).'
+      'Płucz oko letnią wodą lub solą fizjologiczną 10–15 min.',
+      'Ciała obce usuwaj tylko płukaniem (nie pęsetą).',
+      'Chemikalia / pogorszenie widzenia / uraz penetrujący → natychmiast SOR (112 w razie potrzeby).'
     ],
-    otc: [
-      'Sztuczne łzy / sól fizjologiczna (nawilżanie).',
-      'Paracetamol lub ibuprofen doustnie zgodnie z ulotką.'
-    ],
-    rx: [
-      'Antybiotykowe krople/maści, NLPZ do oka – po badaniu okulistycznym.'
-    ]
+    otc: ['Sztuczne łzy / NaCl; paracetamol wg ulotki.'],
+    rx: ['Krople/maści z antybiotykiem/NLPZ – po badaniu okulistycznym.']
   },
   'nos': {
     steps: [
-      'Przy krwawieniu: pochyl głowę do przodu, uciśnij skrzydełka nosa 10 min.',
-      'Chłodź kark i nasadę nosa (nie wkładaj waty głęboko).',
-      'Po urazie: nie dmuchaj mocno, kontroluj obrzęk, rozważ RTG przy deformacji.',
-      'Krwawienie nieustępujące >20 min lub zawroty/omdlenie → SOR.'
+      'Krwotok: pochyl głowę do przodu, uciśnij skrzydełka nosa 10 min.',
+      'Chłodź nasadę nosa i kark; nie wkładaj waty głęboko.',
+      'Po urazie nie dmuchaj mocno; przy deformacji → RTG/lek.',
+      'Krwawienie >20 min, zawroty, omdlenie → SOR.'
     ],
-    otc: [
-      'Roztwory soli morskiej / NaCl do nawilżania śluzówki.',
-      'Paracetamol/ibuprofen przeciwbólowo.'
-    ],
-    rx: ['Leki obkurczające śluzówkę, antybiotyki przy infekcji – decyzja lekarza.']
+    otc: ['Sól morska/NaCl; paracetamol/ibuprofen.'],
+    rx: ['Leki obkurczające, antybiotyk przy infekcji – wg lekarza.']
   },
   'usta': {
     steps: [
-      'Urazy tkanek miękkich: przepłucz zimną wodą, ucisk jałowym gazikiem.',
-      'Ułamany ząb – zabezpiecz fragment w mleku/NaCl, pilny stomatolog.',
+      'Rany: przemyj zimną wodą, uciśnij jałowym gazikiem.',
+      'Ułamany ząb → zabezpiecz w mleku/NaCl, pilny stomatolog.',
       'Silne krwawienie lub uraz szczęki → SOR.',
-      'Oparzenia chemiczne → natychmiastowe płukanie i pomoc medyczna.'
+      'Oparzenia chemiczne → natychmiast płucz i jedź do SOR.'
     ],
-    otc: ['Żele znieczulające miejscowo, paracetamol/ibuprofen.'],
-    rx: ['Antybiotykoterapia / zszycie ran – wg oceny lekarza/stomatologa.']
+    otc: ['Żele znieczulające, paracetamol/ibuprofen.'],
+    rx: ['Antybiotykoterapia / szycie ran – wg lekarza/stomatologa.']
   },
   'ucho': {
     steps: [
-      'Ból ucha: nie wkładaj patyczków/głębokich aplikatorów.',
-      'Podejrzenie ciała obcego: nie manipuluj – lekarz laryngolog.',
+      'Nie używaj patyczków ani ostrych narzędzi.',
+      'Ciało obce? – nie manipuluj; laryngolog.',
       'Wyciek krwisty po urazie głowy → pilnie SOR.',
-      'Ból + gorączka → konsultacja (zapalenie ucha).'
+      'Ból z gorączką → konsultacja (zapalenie ucha).'
     ],
-    otc: ['Paracetamol/ibuprofen; krople z oliwą/surfaktantem przy woskowinie.'],
-    rx: ['Antybiotyki krople/doustne przy zapaleniu – wg lekarza.']
+    otc: ['Paracetamol/ibuprofen; środki do rozpuszczania woszczyny.'],
+    rx: ['Antybiotyki krople/doustne – wg lekarza.']
   },
   'glowa': {
     steps: [
-      'Uraz: oceniaj świadomość, pamięć zdarzenia, wymioty, ból narastający.',
-      'Przyłóż zimny okład 10–20 min (przez tkaninę).',
+      'Uraz: oceń świadomość, wymioty, ból narastający.',
+      'Zimny okład 10–20 min (przez tkaninę).',
       'Utrata przytomności, wymioty, zaburzenia mowy/widzenia → SOR.',
-      'Podejrzenie wstrząśnienia mózgu: obserwacja 24–48 h, ogranicz wysiłek.'
+      'Podejrzenie wstrząśnienia: obserwacja 24–48h, ogranicz wysiłek.'
     ],
-    otc: ['Paracetamol (unikać ibuprofenu tuż po urazie głowy).'],
-    rx: ['Leki przeciwobrzękowe/przeciwwymiotne – wg lekarza.']
+    otc: ['Paracetamol (unikaj NLPZ tuż po urazie głowy).'],
+    rx: ['Leki przeciwwymiotne/przeciwobrzękowe – wg lekarza.']
   },
 
-  // tułów
+  /* ===== tułów ===== */
   'klatka': {
     steps: [
-      'Ból w klatce piersiowej traktuj poważnie; ogranicz wysiłek.',
-      'Jeśli ból uciskowy, promieniujący do barku/żuchwy, duszność, poty → 112.',
-      'Po urazie: unieruchom, chłodź, kontroluj oddychanie.'
+      'Ból w klatce traktuj poważnie; ogranicz wysiłek.',
+      'Uciskowy ból z dusznością/poty → 112 (podejrzenie serca).',
+      'Po urazie: unieruchom, chłodź, obserwuj oddech.'
     ],
-    otc: ['Przeciwbólowe (jeśli brak podejrzenia serca); plastry chłodzące na stłuczenia.'],
-    rx: ['Leczenie przyczynowe (kardiologiczne/pulmonologiczne/urazowe) – szpital.']
+    otc: ['Przeciwbólowe (gdy brak podejrzenia serca); plastry chłodzące.'],
+    rx: ['Leczenie przyczynowe (kardio/pneumo/uraz) – szpital.']
   },
   'brzuch': {
     steps: [
-      'Ból brzucha: obserwuj lokalizację, nudności, gorączkę, wymioty.',
-      'Nie podawaj jedzenia; małe łyki wody, jeśli nie wymiotuje.',
-      'Silny ból, „twardy” brzuch, krew w stolcu/wymiotach → SOR.'
+      'Obserwuj lokalizację bólu, nudności, gorączkę.',
+      'Nie jedz; małe łyki wody, jeśli nie wymiotujesz.',
+      'Silny ból, „twardy brzuch”, krew w stolcu/wymiotach → SOR.'
     ],
-    otc: ['Elektrolity, paracetamol; przy skurczach – drotaweryna (o ile brak przeciwwskazań).'],
-    rx: ['Leczenie przyczynowe (chirurg/gastroenterolog) – wg rozpoznania.']
+    otc: ['Elektrolity, paracetamol; skurcze – drotaweryna (jeśli możesz).'],
+    rx: ['Leczenie przyczynowe (chirurg/gastro) – wg rozpoznania.']
   },
   'plecy': {
     steps: [
-      'Odpoczynek, pozycja przeciwbólowa; zimny/ciepły okład (co lepiej znosisz).',
-      'Unikaj dźwigania; delikatny ruch zamiast leżenia stale.',
-      'Ból z drętwieniem kończyn, zaburzenia zwieraczy → pilna konsultacja.'
+      'Pozycja przeciwbólowa, delikatny ruch zamiast leżenia stale.',
+      'Zimny/ciepły okład (co działa lepiej). Unikaj dźwigania.',
+      'Drętwienie kończyn/zaburzenia zwieraczy → pilna konsultacja.'
     ],
     otc: ['Ibuprofen/naproksen (jeśli możesz), maści przeciwzapalne.'],
     rx: ['Miorelaksanty, silniejsze NLPZ, fizjoterapia – wg lekarza.']
   },
 
-  // kończyny
+  /* ===== kończyny ===== */
   'ramie': {
-    steps: [
-      'Uraz: unieruchom w temblaku, chłodź 10–20 min.',
-      'Zniekształcenie, duży ból, brak ruchu → RTG/SOR.',
-      'Bez urazu: przeciążenie – odpoczynek, ergonomia.'
-    ],
-    otc: ['Ibuprofen/naproksen, maści przeciwzapalne; plaster chłodzący.'],
+    steps: ['Uraz: temblak, chłodzenie 10–20 min.', 'Zniekształcenie/brak ruchu → RTG/SOR.', 'Przeciążenie: odpoczynek, ergonomia.'],
+    otc: ['NLPZ doustne/żele; plaster chłodzący.'],
     rx: ['Iniekcje dostawowe, rehabilitacja – wg lekarza.']
   },
   'dlon': {
-    steps: [
-      'Otarcia/rany: przemyj, uciśnij, załóż jałowy opatrunek.',
-      'Podejrzenie złamania: unieruchom w pozycji funkcjonalnej.',
-      'Głębokie skaleczenie/utrata czucia → SOR/ortopeda.'
-    ],
-    otc: ['Środki odkażające skórę, plastry/opatrunki, paracetamol/ibuprofen.'],
-    rx: ['Antybiotykoterapia, szycie ran, unieruchomienie – wg lekarza.']
+    steps: ['Rany: przemyj, uciśnij, opatrz.', 'Podejrzenie złamania: unieruchom w pozycji funkcjonalnej.', 'Głębokie skaleczenie/utrata czucia → SOR.'],
+    otc: ['Środki odkażające, opatrunki, paracetamol/ibuprofen.'],
+    rx: ['Szycie ran, antybiotykoterapia, unieruchomienie – wg lekarza.']
   },
   'biodra': {
-    steps: [
-      'Uraz: nie obciążaj, chłodź, unieruchom; ból/skrót kończyny → SOR.',
-      'Przeciążenie: odpoczynek, ćwiczenia rozciągające po ustąpieniu bólu.'
-    ],
-    otc: ['NLPZ doustne/żele (jeśli możesz), plastry przeciwbólowe.'],
-    rx: ['Fizjoterapia, iniekcje dostawowe – wg specjalisty.']
+    steps: ['Nie obciążaj po urazie; chłodź; skrót kończyny/ból silny → SOR.', 'Przeciążenie: odpoczynek, rozciąganie po ustąpieniu bólu.'],
+    otc: ['NLPZ doustne/żele; plastry przeciwbólowe.'],
+    rx: ['Fizjoterapia, iniekcje – wg specjalisty.']
   },
   'udo': {
-    steps: [
-      'Stłuczenie/naciągnięcie: protokół RICE (odpoczynek, lód, ucisk, uniesienie).',
-      'Nagły obrzęk, krwiak rozległy → rozważ USG/lekarską ocenę.'
-    ],
-    otc: ['Ibuprofen/naproksen, żele chłodzące.'],
-    rx: ['Rehabilitacja, ewentualne leczenie przeciwkrzepliwe przy rozległych krwiakach – wg lekarza.']
+    steps: ['RICE: odpoczynek, lód, ucisk, uniesienie.', 'Rozległy krwiak/obrzęk → USG/lekarska ocena.'],
+    otc: ['Ibuprofen/naproksen; żele chłodzące.'],
+    rx: ['Rehabilitacja; ewentualne leczenie przeciwkrzepliwe – wg lekarza.']
   },
   'kolano': {
-    steps: [
-      'Uraz: unieruchom, lód 10–20 min, nie obciążaj.',
-      '„Uciekanie”/blokowanie, duży obrzęk → ortopeda/RTG/USG.',
-      'Bez urazu: przeciążenie – odpoczynek, ćwiczenia stabilizacyjne.'
-    ],
+    steps: ['Uraz: unieruchom, lód 10–20 min, nie obciążaj.', 'Blokowanie/„uciekanie”, duży obrzęk → ortopeda/RTG/USG.'],
     otc: ['NLPZ doustne/żele; orteza elastyczna tymczasowo.'],
-    rx: ['Fizjoterapia, iniekcje kwasu HA/sterydowe – wg lekarza.']
+    rx: ['Fizjoterapia, iniekcje (HA/steryd) – wg lekarza.']
   },
   'lydka': {
-    steps: [
-      'Skurcz/przeciążenie: rozciąganie, delikatny masaż, ciepło.',
-      'Nagły ból + obrzęk jednostronny, ocieplenie → pilnie wyklucz zakrzepicę (lekarz).'
-    ],
+    steps: ['Skurcz/przeciążenie: rozciąganie, delikatny masaż, ciepło.', 'Ból + jednostronny obrzęk/ocieplenie → pilnie wyklucz zakrzepicę (lekarz).'],
     otc: ['Magnez (jeśli niedobory), NLPZ miejscowo.'],
     rx: ['Diagnostyka DVT i leczenie – pilnie wg lekarza.']
   },
   'stopy': {
-    steps: [
-      'Otarcia/pęcherze: nie przebijaj aseptycznie bez potrzeby, zabezpiecz.',
-      'Uraz skrętny: RICE (odpoczynek, lód, ucisk, uniesienie).',
-      'Silny ból/niemożność obciążenia → RTG.'
-    ],
+    steps: ['Pęcherze/otarcia: zabezpiecz; nie przebijaj bez potrzeby.', 'Skręcenie: RICE; silny ból/niemożność obciążenia → RTG.'],
     otc: ['Plastry na pęcherze, NLPZ żele/doustne.'],
-    rx: ['Stabilizacja ortezą/gips, rehabilitacja – wg lekarza.']
+    rx: ['Orteza/gips, rehabilitacja – wg lekarza.']
   },
 
-  // narządy wewnętrzne / objawy ogólne
+  /* ===== narządy / objawy ogólne ===== */
   'serce': {
-    steps: [
-      'Ból uciskowy za mostkiem ± promieniowanie do barku/żuchwy, duszność, poty → 112 natychmiast.',
-      'Odpoczynek, nie prowadź samochodu, kontroluj objawy.'
-    ],
+    steps: ['Ból uciskowy za mostkiem ± promieniowanie, duszność, zimne poty → 112.', 'Odpoczywaj; nie prowadź; czekaj na pomoc.'],
     otc: ['Brak specyficznych OTC na ostry ból wieńcowy.'],
-    rx: ['Leczenie kardiologiczne w szpitalu – wg rozpoznania (np. OZW).']
+    rx: ['Leczenie kardiologiczne szpitalne – wg rozpoznania.']
   },
   'pluca': {
-    steps: [
-      'Duszność, świsty, ból przy oddychaniu – ogranicz wysiłek, usiądź.',
-      'Nagła duszność/krwioplucie/ból opłucnowy → 112 / SOR.'
-    ],
-    otc: ['Inhalacje z soli hipertonicznej/izotonicznej (objawowo).'],
-    rx: ['Leczenie pulmonologiczne (np. zapalenie płuc/astma/ZP) – wg lekarza.']
+    steps: ['Duszność/świsty/ból przy oddychaniu – usiądź, ogranicz wysiłek.', 'Nagła duszność/krwioplucie/ból opłucnowy → 112 / SOR.'],
+    otc: ['Inhalacje z soli (objawowo).'],
+    rx: ['Leczenie pulmonologiczne – wg lekarza.']
   },
   'watroba': {
-    steps: [
-      'Ból w prawym podżebrzu, nudności – unikaj alkoholu i leków obciążających wątrobę.',
-      'Gorączka/zażółcenie skóry → pilna konsultacja.'
-    ],
-    otc: ['Unikaj przedawkowania paracetamolu; leki osłonowe tylko po zaleceniu.'],
+    steps: ['Ból w prawym podżebrzu: unikaj alkoholu i leków obciążających wątrobę.', 'Gorączka/zażółcenie skóry → pilna konsultacja.'],
+    otc: ['Unikaj nadmiaru paracetamolu; osłonowe tylko po zaleceniu.'],
     rx: ['Diagnostyka i leczenie hepatologiczne – wg lekarza.']
   },
   'zoladek': {
-    steps: [
-      'Ból nadbrzusza/zgaga – małe, lekkostrawne posiłki; unikaj alkoholu i NLPZ.',
-      'Krwiste wymioty/smoliste stolce → pilnie SOR.'
-    ],
-    otc: ['IPPy OTC (omeprazol itp.), leki zobojętniające, paracetamol przeciwbólowo.'],
-    rx: ['Eradykacja H. pylori / recepturowe IPP / gastroenterolog – wg lekarza.']
+    steps: ['Zgaga/nadbrzusze: małe, lekkostrawne posiłki; unikaj alkoholu i NLPZ.', 'Krwiste wymioty/smoliste stolce → pilnie SOR.'],
+    otc: ['IPP OTC, leki zobojętniające; paracetamol przeciwbólowo.'],
+    rx: ['Eradykacja H. pylori / recepturowe IPP – wg lekarza.']
   },
   'nerki': {
-    steps: [
-      'Ból w okolicy lędźwiowej promieniujący do pachwiny, nudności – pij małe porcje wody.',
-      'Gorączka, dreszcze, ból przy oddawaniu moczu → lekarz (możliwy ZUM/kolka).',
-      'Silny ból nieustępujący → SOR.'
-    ],
-    otc: ['Drotaweryna przy kolce (jeśli brak przeciwwskazań), paracetamol.'],
-    rx: ['Antybiotykoterapia przy ZUM, leczenie przeciwbólowe/uro – wg lekarza.']
+    steps: ['Ból lędźwi promieniujący do pachwiny – pij małe porcje wody.', 'Gorączka, dreszcze, ból przy mikcji → lekarz (ZUM/kolka).', 'Silny ból nieustępujący → SOR.'],
+    otc: ['Drotaweryna (jeśli możesz), paracetamol.'],
+    rx: ['Antybiotykoterapia lub leczenie urologiczne – wg lekarza.']
   },
 
-  // poradniki specjalne (linkowane z sytuacji)
+  /* ===== poradniki specjalne (zielone kafelki) ===== */
   'zadlawienie': {
     steps: [
       'Zachęć do kaszlu, jeśli drożność częściowa.',
@@ -276,7 +288,7 @@ const FIRST_AID_DB = {
     steps: [
       'Brak prawidłowego oddechu → wezwanie pomocy i rozpoczęcie RKO.',
       'Uciśnięcia: 100–120/min, głębokość 5–6 cm, stosunek 30:2.',
-      'Użyj AED gdy dostępny – postępuj zgodnie z komunikatami.'
+      'Użyj AED gdy dostępny – postępuj wg komunikatów.'
     ],
     otc: [], rx: []
   },
@@ -289,7 +301,6 @@ const FIRST_AID_DB = {
     otc: [], rx: []
   },
 
-  // fallback
   '_default': {
     steps: [
       'Zapewnij bezpieczeństwo i ocenę stanu.',
@@ -303,7 +314,6 @@ const FIRST_AID_DB = {
 
 /* Szczegóły – start od góry (zdjęcie) + treści */
 function initDetails(){
-  // Na mobile czasem przeglądarka wchodzi „w połowie” – wymuś start od góry
   window.scrollTo({top:0, behavior:'instant'});
   const p = new URLSearchParams(location.search);
   const typ = (p.get('typ')||'').toLowerCase();
@@ -323,6 +333,12 @@ function initDetails(){
   if(faList){ faList.innerHTML=''; (data.steps||[]).forEach(s=>{ const li=document.createElement('li'); li.textContent=s; faList.appendChild(li); }); }
   if(otcList){ otcList.innerHTML=''; (data.otc||[]).forEach(s=>{ const li=document.createElement('li'); li.textContent=s; otcList.appendChild(li); }); }
   if(rxList){ rxList.innerHTML=''; (data.rx||[]).forEach(s=>{ const li=document.createElement('li'); li.textContent=s; rxList.appendChild(li); }); }
+
+  // jeśli przyszliśmy z kotwicą #pierwszapomoc – przewiń do sekcji
+  if(location.hash === '#pierwszapomoc'){
+    const el = $('#pierwszapomoc');
+    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  }
 }
 
 /* attach */
