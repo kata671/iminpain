@@ -41,15 +41,18 @@ function attachGridSearch(){
   });
 }
 
-/* Lista części ciała i organów */
+/* Lista części ciała i organów (po redukcji) */
 const PARTS_COMMON = [
   ['oko','Oko'],['nos','Nos'],['usta','Usta'],['ucho','Ucho'],['glowa','Głowa'],
-  ['szyja','Szyja'],['klatka','Klatka piersiowa'],['brzuch','Brzuch'],['plecy','Plecy'],
-  ['bark','Bark'],['ramie','Ramię'],['lokiec','Łokieć'],['przedramie','Przedramię'],
+  /* ['szyja','Szyja'],  USUNIĘTE */
+  ['klatka','Klatka piersiowa'],['brzuch','Brzuch'],['plecy','Plecy'],
+  /* ['bark','Bark'], ['przedramie','Przedramię'],  USUNIĘTE */
+  ['ramie','Ramię'],
   ['dlon','Dłoń'],['biodra','Biodra'],['udo','Udo'],['kolano','Kolano'],
   ['lydka','Łydka'],['stopy','Stopy'],
   ['serce','Serce'],['pluca','Płuca'],['watroba','Wątroba'],['zoladek','Żołądek'],
-  ['nerki','Nerki'],['jelita','Jelita'],['mozg','Mózg']
+  /* ['jelita','Jelita'], ['mozg','Mózg'],  USUNIĘTE */
+  ['nerki','Nerki']
 ];
 
 /* Generowanie miniaturek na stronach kobieta / mezczyzna / dziecko */
@@ -98,7 +101,6 @@ function initDetails(){
   const bread = $('.breadcrumb span');
   const title = $('#detailTitle');
   const img = $('#detailImg');
-  const thumbs = $$('.panel header img');
 
   if(!title || !img) return;
 
@@ -108,12 +110,6 @@ function initDetails(){
   const src = `img/${typ}-${czesc}.png`;
   img.src = src; img.alt = label;
   img.onerror = ()=>{ img.src='img/placeholder.png'; };
-
-  thumbs.forEach(t=>{
-    t.src = src;
-    t.onerror = ()=>{ t.src='img/placeholder.png'; };
-    t.alt = label;
-  });
 }
 
 /* ====== Auto-init na każdej stronie ====== */
