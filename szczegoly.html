@@ -1,62 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Szczegóły – Boli-help</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dziecko — wybierz część ciała</title>
+  <link rel="stylesheet" href="assets/style.css" />
 </head>
-<body>
-  <div class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="index.html"><span class="dot"></span> Boli-help</a>
-      <nav class="nav">
-        <a href="index.html">🏠 Strona główna</a>
-        <a href="tel:112">📞 112</a>
-        <a href="pierwsza-pomoc.html">🩺 Pierwsza pomoc</a>
-        <a href="lokalizacja.html">📍 Lokalizacja</a>
-      </nav>
-    </div>
+<body data-page="dziecko">
+  <div class="container">
+    <a class="back" href="index.html">← Powrót</a>
+
+    <header class="header" style="margin-top:6px">
+      <div class="brand">
+        <h1>Dziecko</h1>
+        <small>Wybierz część ciała lub organ</small>
+      </div>
+      <div class="tools">
+        <div class="search"><input type="search" placeholder="Szukaj..."/></div>
+      </div>
+    </header>
+
+    <!-- tutaj miniaturki wypełni main.js -->
+    <div class="grid"></div>
   </div>
 
-  <header class="site-header">
-    <h1 class="site-title" id="pageTitle">Oko — mężczyzna</h1>
-    <p class="subtitle">Przyczyny, objawy, pierwsza pomoc, leki i lekarze</p>
-  </header>
-
-  <main class="container">
-    <!-- zachowujemy dużą ilustrację tej samej wielkości -->
-    <img src="img/oko-detail.png" alt="Oko – ilustracja" class="hero-photo" style="max-height:380px" />
-
-    <section class="sections">
-      <article class="section">
-        <h3>Pierwsza pomoc</h3>
-        <p>Nie pocieraj oka. Przepłucz jałowym roztworem soli lub czystą wodą. Usuń widoczne ciała obce bez nacisku.</p>
-        <div class="badges"><span class="badge green">Bezpieczne</span></div>
-      </article>
-
-      <article class="section">
-        <h3>Objawy</h3>
-        <ul>
-          <li>Ból, łzawienie, światłowstręt</li>
-          <li>Poczucie ciała obcego, zaczerwienienie</li>
-        </ul>
-      </article>
-
-      <article class="section">
-        <h3>Leki</h3>
-        <p><strong>Bez recepty:</strong> sztuczne łzy, roztwór NaCl 0.9%.</p>
-        <p><strong>Na receptę:</strong> antybiotyk przy nadkażeniu (wg lekarza).</p>
-        <div class="badges"><span class="badge green">Bez recepty</span><span class="badge red">Na receptę</span></div>
-      </article>
-
-      <article class="section">
-        <h3>Lekarz</h3>
-        <p>Skontaktuj się z okulistą, jeśli ból nasila się, pojawia się pogorszenie widzenia lub uraz penetrujący.</p>
-      </article>
-    </section>
-  </main>
-
-  <footer><small>© 2025 Boli-help</small></footer>
+  <script src="assets/main.js"></script>
 </body>
 </html>
