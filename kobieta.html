@@ -1,46 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>👩 Kobieta — wybierz obszar bólu</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kobieta — wybierz część ciała</title>
+  <link rel="stylesheet" href="assets/style.css" />
 </head>
-<body>
-  <div class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="index.html"><span class="dot"></span> Boli-help</a>
-      <nav class="nav">
-        <a href="index.html">🏠 Strona główna</a>
-        <a href="tel:112">📞 112</a>
-        <a href="pierwsza-pomoc.html">🩺 Pierwsza pomoc</a>
-        <a href="lokalizacja.html">📍 Lokalizacja</a>
-      </nav>
-    </div>
+<body data-page="kobieta">
+  <div class="container">
+    <a class="back" href="index.html">← Powrót</a>
+
+    <header class="header" style="margin-top:6px">
+      <div class="brand">
+        <h1>Kobieta</h1>
+        <small>Wybierz część ciała lub organ</small>
+      </div>
+      <div class="tools">
+        <div class="search"><input type="search" placeholder="Szukaj..."/></div>
+      </div>
+    </header>
+
+    <!-- tutaj miniaturki wypełni main.js -->
+    <div class="grid"></div>
   </div>
 
-  <header class="site-header">
-    <h1 class="site-title">Kobieta — wybierz obszar bólu</h1>
-    <p class="subtitle">Dotknij odpowiedni obszar, aby przejść do szczegółów.</p>
-  </header>
-
-  <main class="container">
-    <section class="hero-grid">
-      <a class="card-link" href="szczegoly.html?part=oko&sex=f"><article class="card"><img src="img/oko.png" alt="Oko"><div class="label">Oko</div></article></a>
-      <a class="card-link" href="szczegoly.html?part=nos&sex=f"><article class="card"><img src="img/nos.png" alt="Nos"><div class="label">Nos</div></article></a>
-      <a class="card-link" href="szczegoly.html?part=usta&sex=f"><article class="card"><img src="img/usta.png" alt="Usta"><div class="label">Usta</div></article></a>
-      <a class="card-link" href="szczegoly.html?part=ucho&sex=f"><article class="card"><img src="img/ucho.png" alt="Ucho"><div class="label">Ucho</div></article></a>
-      <a class="card-link" href="szczegoly.html?part=glowa&sex=f"><article class="card"><img src="img/glowa.png" alt="Głowa"><div class="label">Głowa</div></article></a>
-      <a class="card-link" href="szczegoly.html?part=serce&sex=f"><article class="card"><img src="img/serce.png" alt="Serce"><div class="label">Serce</div></article></a>
-      <a class="card-link" href="szczegoly.html?part=pluca&sex=f"><article class="card"><img src="img/pluca.png" alt="Płuca"><div class="label">Płuca</div></article></a>
-      <a class="card-link" href="szczegoly.html?part=kregoslup&sex=f"><article class="card"><img src="img/kregoslup.png" alt="Kręgosłup"><div class="label">Kręgosłup</div></article></a>
-      <a class="card-link" href="szczegoly.html?part=zoladek&sex=f"><article class="card"><img src="img/zoladek.png" alt="Żołądek"><div class="label">Żołądek</div></article></a>
-      <a class="card-link" href="szczegoly.html?part=watroba&sex=f"><article class="card"><img src="img/watroba.png" alt="Wątroba"><div class="label">Wątroba</div></article></a>
-      <a class="card-link" href="szczegoly.html?part=nerki&sex=f"><article class="card"><img src="img/nerki.png" alt="Nerki"><div class="label">Nerki</div></article></a>
-      <a class="card-link" href="szczegoly.html?part=ramie&sex=f"><article class="card"><img src="img/ramie.png" alt="Ramię"><div class="label">Ramię</div></article></a>
-    </section>
-  </main>
-
-  <footer><small>© 2025 Boli-help</small></footer>
+  <script src="assets/main.js"></script>
 </body>
 </html>
