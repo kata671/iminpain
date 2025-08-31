@@ -11,12 +11,20 @@
       --accent: #2ecc71;
       --text: #fff;
 
-      /* kolory kart po prawej */
-      --c-help: linear-gradient(135deg,#2ecc71,#1abc9c);
-      --c-sym:  linear-gradient(135deg,#e67e22,#f1c40f);
-      --c-cau:  linear-gradient(135deg,#9b59b6,#8e44ad);
-      --c-med:  linear-gradient(135deg,#16a085,#27ae60);
-      --c-doc:  linear-gradient(135deg,#e74c3c,#c0392b);
+      /* akcenty kart – eleganckie paski na górze */
+      --bar-help: linear-gradient(90deg,#2ecc71,#1abc9c);
+      --bar-sym:  linear-gradient(90deg,#f39c12,#f1c40f);
+      --bar-cau:  linear-gradient(90deg,#9b59b6,#8e44ad);
+      --bar-med:  linear-gradient(90deg,#16a085,#27ae60);
+      --bar-doc:  linear-gradient(90deg,#e74c3c,#c0392b);
+
+      /* badge kolory */
+      --badge-rx: #e74c3c;  /* Na receptę */
+      --badge-otc:#2ecc71;  /* Bez recepty */
+
+      /* scrollbar */
+      --scroll-bg: rgba(255,255,255,.15);
+      --scroll-thumb: rgba(255,255,255,.45);
     }
 
     /* tło jak u Ciebie */
@@ -36,26 +44,66 @@
     .hsection__text ul{margin:.25rem 0 0;padding-left:1.2rem;}
     .hsection__text li{font-size:1.12rem;line-height:1.7;}
 
-    /* BLOK ANATOMII: lewo obraz, prawo 5 kolorowych kart */
+    /* BLOK ANATOMII: lewo obraz, prawo 5 eleganckich kart */
     .anatomy{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
     .anatomy__media{background:rgba(0,0,0,.08);border-radius:12px;padding:.5rem;box-shadow:0 8px 22px rgba(0,0,0,.25);}
     .anatomy__media img{width:100%;height:auto;border-radius:10px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.3);}
 
     .anatomy__cards{display:grid;grid-template-columns:1fr;gap:1rem;}
-    .card{border-radius:12px;padding:1rem;box-shadow:0 6px 18px rgba(0,0,0,.25);background:var(--glass-strong);}
-    .card--help{background:var(--c-help);}
-    .card--sym{ background:var(--c-sym);}
-    .card--cau{ background:var(--c-cau);}
-    .card--med{ background:var(--c-med);}
-    .card--doc{ background:var(--c-doc);}
-    .card__title{margin:0 0 .4rem 0;font-size:1.25rem;font-weight:700;}
-    .card__body{font-size:1.08rem;}
-    .card__body ul{margin:.25rem 0 0;padding-left:1.2rem;}
-    .muted{opacity:.85}
 
+    /* Karta z paskiem u góry */
+    .card{
+      position:relative;
+      border-radius:12px;
+      background:var(--glass);
+      box-shadow:0 6px 18px rgba(0,0,0,.25);
+      overflow:hidden;
+    }
+    .card__bar{
+      height:8px;
+      width:100%;
+      background:var(--glass-strong);
+    }
+    .card--help .card__bar{ background: var(--bar-help); }
+    .card--sym  .card__bar{ background: var(--bar-sym);  }
+    .card--cau  .card__bar{ background: var(--bar-cau);  }
+    .card--med  .card__bar{ background: var(--bar-med);  }
+    .card--doc  .card__bar{ background: var(--bar-doc);  }
+
+    .card__inner{ padding:1rem 1rem 0.8rem; }
+    .card__title{margin:0 0 .5rem 0;font-size:1.28rem;font-weight:800;letter-spacing:.2px;}
+    .card__body{
+      font-size:1.08rem; line-height:1.7;
+      max-height: 340px; overflow:auto; padding-right:.25rem;
+    }
+
+    /* nowoczesny, dyskretny scrollbar */
+    .card__body::-webkit-scrollbar{width:10px;}
+    .card__body::-webkit-scrollbar-track{background:var(--scroll-bg);border-radius:10px;}
+    .card__body::-webkit-scrollbar-thumb{background:var(--scroll-thumb);border-radius:10px;}
+    .card__body{scrollbar-color: var(--scroll-thumb) var(--scroll-bg); scrollbar-width: thin;}
+
+    .card__body ul{margin:.25rem 0 0;padding-left:1.2rem;}
+    .muted{opacity:.9}
+
+    /* leki – znaczniki RX/OTC */
+    .pill{
+      display:inline-block; font-weight:700; font-size:.9rem;
+      padding:.2rem .55rem; border-radius:999px; margin:0 .35rem 0 0;
+      vertical-align:middle; line-height:1.2;
+      background:#fff; color:#222;
+    }
+    .pill--rx  { background: var(--badge-rx); color:#fff; }
+    .pill--otc { background: var(--badge-otc); color:#0d2; }
+
+    .col2{
+      display:grid; grid-template-columns:1fr 1fr; gap:.8rem 1.2rem;
+    }
     @media (max-width: 880px){
       .hsection{grid-template-columns:1fr;}
       .anatomy{grid-template-columns:1fr;}
+      .card__body{max-height: unset;}
+      .col2{grid-template-columns:1fr;}
     }
   </style>
 </head>
@@ -104,8 +152,8 @@
     };
 
     /* ======================================================
-       2) DANE „ANATOMIA” – TU WPISUJEMY TWOJE PEŁNE OPISY
-          (przykład dla kobieta→nos; resztę możesz dopisać)
+       2) DANE „ANATOMIA” – PRZYKŁAD ROZBUDOWANY (kobieta→nos)
+          Możesz w tym formacie dopisywać swoje „wypasione” treści
        ====================================================== */
     const ANATOMIA = {
       kobieta: {
@@ -113,66 +161,131 @@
           title: "Nos – kobieta",
           img: "/img/kobieta-nos.png",
           sections: {
-            help: `<ul>
-              <li>Krwawienie: pochyl głowę do przodu, uciskaj skrzydełka 10–15 min.</li>
-              <li>Zimny okład na nasadę nosa; nie wydmuchuj mocno.</li>
-              <li>Uraz: jeśli podejrzenie złamania → stabilizacja, chłodzenie, 112/SOR.</li>
-            </ul>`,
-            sym: `<ul>
-              <li>Krwawienie, ból, obrzęk, niedrożność, kichanie, upośledzenie węchu.</li>
-            </ul>`,
-            cau: `<ul>
-              <li>Infekcja, alergia, suchość śluzówki, uraz, nadciśnienie, leki przeciwkrzepliwe.</li>
-            </ul>`,
-            med: `<ul>
-              <li>Sól morska/izotoniczna, żele nawilżające; przy alergii: OTC antyhistaminowe (wg ulotki).</li>
-            </ul>`,
-            doc: `<ul>
-              <li>Krwawienie >20 min lub częste nawroty, podejrzenie złamania, ropna wydzielina, wysoka gorączka.</li>
-            </ul>`
+            help: `
+              <ul>
+                <li>Krwawienie: pochyl głowę do przodu, uciskaj skrzydełka 10–15 min.</li>
+                <li>Zimny okład na nasadę nosa; nie wydmuchuj mocno.</li>
+                <li>Uraz/złamanie – stabilizacja, chłodzenie, nie nastawiaj samodzielnie.</li>
+                <li>Nawilżanie śluzówki: sól morska/izotoniczna kilka razy dziennie.</li>
+              </ul>
+            `,
+            sym: `
+              <ul>
+                <li>Krwawienie z nosa (jedno- lub obustronne), zasychające strupy.</li>
+                <li>Niedrożność, zatkanie, kichanie; spadek węchu.</li>
+                <li>Ból/obrzęk po urazie, wyciek wodnisty z nosa.</li>
+              </ul>
+            `,
+            cau: `
+              <ul>
+                <li>Infekcje wirusowe/bakteryjne, alergiczny nieżyt nosa.</li>
+                <li>Suche powietrze, dłubanie w nosie, urazy.</li>
+                <li>Nadciśnienie, leki przeciwkrzepliwe, kruchość naczyń.</li>
+              </ul>
+            `,
+            med: `
+              <div class="col2">
+                <div>
+                  <div class="pill pill--otc">Bez recepty</div>
+                  <ul>
+                    <li>Sól morska/izotoniczna (nawilżanie).</li>
+                    <li>Żele/maści nawilżające śluzówkę.</li>
+                    <li>Krótko (max 3–5 dni): krople obkurczające (xylometazolina/oxymetazolina).</li>
+                    <li>Antyhistaminowe OTC w alergii (wg ulotki).</li>
+                  </ul>
+                </div>
+                <div>
+                  <div class="pill pill--rx">Na receptę</div>
+                  <ul>
+                    <li>GKS donosowe (np. mometazon, budezonid) w alergii/przewlekłym zapaleniu.</li>
+                    <li>Antybiotykoterapia przy bakteryjnych nadkażeniach – wg lekarza.</li>
+                    <li>Tamponada/nasączane opatrunki przy nawracających krwawieniach.</li>
+                  </ul>
+                </div>
+              </div>
+              <p class="muted">Uwaga: stosuj leki zgodnie z ulotką i zaleceniami specjalisty.</p>
+            `,
+            doc: `
+              <ul>
+                <li>Krwawienie > 20 min mimo ucisku/chłodzenia.</li>
+                <li>Nawracające krwawienia, silny ból, podejrzenie złamania.</li>
+                <li>Gorączka, ropna wydzielina, wyciek wodnisty po urazie głowy.</li>
+                <li>Duszność, znaczne upośledzenie węchu, nasilające się objawy.</li>
+              </ul>
+              <div class="muted"><strong>Czerwone flagi – kiedy się niepokoić:</strong>
+                utrata przytomności, krwotok masywny, objawy wstrząsu, trudności w oddychaniu – dzwoń 112.</div>
+            `
           }
         }
-        // tu możesz dopisać kolejne części kobiety…
+        // dopisz resztę części dla kobiety w tym samym układzie
       },
       mezczyzna: {
-        // dopisz swoje pozycje; domyślny szablon niżej i tak zadziała
+        // dopisz swoje części; jeśli brak – zadziała domyślny szablon poniżej
       },
       dziecko: {
-        // dopisz swoje pozycje; domyślny szablon niżej i tak zadziała
+        // dopisz swoje części; jeśli brak – zadziała domyślny szablon poniżej
       }
     };
 
     /* ======================================================
-       3) DOMYŚLNY SZABLON – gdy nie ma wpisu w ANATOMIA
-          (żeby nigdy nic nie zniknęło i wszystko było „wypasione”)
+       3) DOMYŚLNY SZABLON – bogaty, aby nigdy nic nie „znikło”
        ====================================================== */
     function defaultAnatomy(label){
       const part = label || "ta część ciała";
       return {
         title: label || "Szczegóły",
-        img: "", // ustawimy niżej automatyczną ścieżkę
+        img: "", // ustawimy auto-ścieżkę
         sections: {
-          help: `<ul>
-            <li>Jeśli wystąpi ból, obrzęk lub krwawienie – ogranicz ruch, chłodź 10–15 min, obserwuj.</li>
-            <li>W silnych objawach lub urazie – 112 / SOR.</li>
-          </ul>`,
-          sym: `<ul>
-            <li>Ból, obrzęk, zaczerwienienie, ograniczenie funkcji, wrażliwość na dotyk.</li>
-          </ul>`,
-          cau: `<ul>
-            <li>Uraz mechaniczny, przeciążenie, infekcja, alergia lub choroby przewlekłe.</li>
-          </ul>`,
-          med: `<ul>
-            <li>Preparaty OTC (zgodnie z ulotką) odpowiednie dla tej okolicy; nawilżanie/odciążenie.</li>
-          </ul>`,
-          doc: `<ul>
-            <li>Nasilające się lub utrzymujące objawy, deformacja, duszność, gorączka, u dzieci niepokój – konsultacja lekarska.</li>
-          </ul>`
+          help: `
+            <ul>
+              <li>Chłodzenie (10–15 min), odciążenie, unikanie drażnienia.</li>
+              <li>W razie krwawienia – ucisk miejscowy, obserwacja.</li>
+              <li>W nasilonych objawach – skontaktuj się z 112/SOR.</li>
+            </ul>
+          `,
+          sym: `
+            <ul>
+              <li>Ból, obrzęk, zaczerwienienie, ograniczenie funkcji.</li>
+              <li>Nasilona tkliwość, wydzielina/krwawienie (jeśli dotyczy).</li>
+            </ul>
+          `,
+          cau: `
+            <ul>
+              <li>Uraz mechaniczny, przeciążenie, infekcja, alergia.</li>
+              <li>Czynniki środowiskowe (suchość, pyły), choroby przewlekłe.</li>
+            </ul>
+          `,
+          med: `
+            <div class="col2">
+              <div>
+                <div class="pill pill--otc">Bez recepty</div>
+                <ul>
+                  <li>Preparaty przeciwbólowe/łagodzące OTC – zgodnie z ulotką.</li>
+                  <li>Środki miejscowe (nawilżające, osłonowe) jeśli wskazane.</li>
+                </ul>
+              </div>
+              <div>
+                <div class="pill pill--rx">Na receptę</div>
+                <ul>
+                  <li>Leki dobierane przez lekarza (np. GKS miejscowe, antybiotyki, silniejsze analgetyki) zależnie od rozpoznania.</li>
+                </ul>
+              </div>
+            </div>
+            <p class="muted">Uwaga: konsultuj dobór leków ze specjalistą.</p>
+          `,
+          doc: `
+            <ul>
+              <li>Silny ból, deformacja, objawy uogólnione, gorączka, duszność.</li>
+              <li>Brak poprawy lub narastanie dolegliwości mimo postępowania domowego.</li>
+            </ul>
+            <div class="muted"><strong>Czerwone flagi – kiedy się niepokoić:</strong>
+              nagłe pogorszenie, zaburzenia świadomości, masywny krwotok, objawy wstrząsu – dzwoń 112.</div>
+          `
         }
       };
     }
 
-    /* ======================== RENDERERY BLOKÓW ======================== */
+    /* ======================== RENDERERY ======================== */
     function makeFirstAidSection(d){
       const sec = document.createElement('section');
       sec.className = 'hsection hsection--fa';
@@ -185,47 +298,47 @@
       return sec;
     }
 
+    function cardTemplate(kind, title, body){
+      const kindClass = {
+        help:'card--help', sym:'card--sym', cau:'card--cau', med:'card--med', doc:'card--doc'
+      }[kind] || '';
+      return `
+        <div class="card ${kindClass}">
+          <div class="card__bar"></div>
+          <div class="card__inner">
+            <h3 class="card__title">${title}</h3>
+            <div class="card__body">${body || '<p class="muted">Brak danych.</p>'}</div>
+          </div>
+        </div>
+      `;
+    }
+
     function makeAnatomyView(d, imgAuto){
       const view = document.createElement('section');
       view.className = 'anatomy';
       const imgSrc = d.img && d.img.trim() ? d.img : imgAuto;
+      const S = d.sections || {};
       view.innerHTML = `
         <div class="anatomy__media">
           <img src="${imgSrc}" alt="${d.title}" onerror="this.src='/img/placeholder.png'">
         </div>
         <div class="anatomy__cards">
-          <div class="card card--help">
-            <h3 class="card__title">Pierwsza pomoc</h3>
-            <div class="card__body">${d.sections.help || '<p class="muted">Brak danych.</p>'}</div>
-          </div>
-          <div class="card card--sym">
-            <h3 class="card__title">Objawy</h3>
-            <div class="card__body">${d.sections.sym || '<p class="muted">Brak danych.</p>'}</div>
-          </div>
-          <div class="card card--cau">
-            <h3 class="card__title">Przyczyny</h3>
-            <div class="card__body">${d.sections.cau || '<p class="muted">Brak danych.</p>'}</div>
-          </div>
-          <div class="card card--med">
-            <h3 class="card__title">Leki</h3>
-            <div class="card__body">${d.sections.med || '<p class="muted">Brak danych.</p>'}</div>
-          </div>
-          <div class="card card--doc">
-            <h3 class="card__title">Kiedy do lekarza</h3>
-            <div class="card__body">${d.sections.doc || '<p class="muted">Brak danych.</p>'}</div>
-          </div>
+          ${cardTemplate('help','Pierwsza pomoc', S.help)}
+          ${cardTemplate('sym','Objawy', S.sym)}
+          ${cardTemplate('cau','Przyczyny', S.cau)}
+          ${cardTemplate('med','Leki', S.med)}
+          ${cardTemplate('doc','Kiedy do lekarza', S.doc)}
         </div>`;
       return view;
     }
 
-    /* =========================== LOGIKA WIDOKU =========================== */
+    /* =========================== LOGIKA =========================== */
     const qp    = new URLSearchParams(location.search);
     const typ   = (qp.get('typ')   || '').toLowerCase();   // porada | kobieta | mezczyzna | dziecko
     const czesc = (qp.get('czesc') || '').toLowerCase();
     const label = qp.get('label') || '';
     const titleEl = document.getElementById('page-title');
     const content = document.getElementById('content');
-
     function setTitle(txt){ titleEl.textContent = txt || 'Szczegóły'; }
 
     if (typ === 'porada') {
@@ -246,14 +359,10 @@
       // widok anatomiczny
       const store = ANATOMIA[typ] || {};
       let d = store[czesc];
-      // automatyczna ścieżka obrazka (gdy brak w danych)
       const autoImg = `/img/${typ}-${czesc}.png`;
-      if (!d) {
-        d = defaultAnatomy(label || czesc);
-        d.img = autoImg;
-      } else if (!d.img) {
-        d.img = autoImg;
-      }
+      if (!d) { d = defaultAnatomy(label || czesc); }
+      if (!d.img) d.img = autoImg;
+
       setTitle(d.title || label || 'Szczegóły');
       content.appendChild(makeAnatomyView(d, autoImg));
     }
