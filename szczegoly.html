@@ -5,67 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>BoliHelp – Szczegóły porady</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1e3c72, #2a5298); /* Twoje niebieskie tło */
-      color: #fff;
-    }
-    header {
-      padding: 1rem 2rem;
-    }
-    header a {
-      color: #fff;
-      text-decoration: none;
-    }
-    h1 {
-      margin: 0.5rem 0;
-      font-size: 1.8rem;
-    }
-    .container {
-      max-width: 1100px;
-      margin: 1.5rem auto;
-      padding: 0 1rem;
+    /* TŁO I BAZA */
+    :root { --glass: rgba(255,255,255,0.08); --glass-strong: rgba(255,255,255,0.12); --accent:#2ecc71; }
+    body { margin:0; font-family: Arial, sans-serif; background: linear-gradient(135deg,#1e3c72,#2a5298); color:#fff; line-height:1.55; }
+    a { color:#fff; text-decoration:none; }
+    header { padding: 1rem 1.25rem; }
+    h1 { margin:.25rem 0 0; font-size:1.9rem; }
+
+    /* KONTENER */
+    .container { max-width: 1100px; margin: 1.25rem auto 2.5rem; padding: 0 1rem; display: grid; gap: 1.5rem; }
+
+    /* SEKCJA POZIOMA: LEWO OBRAZ / PRAWO TEKST */
+    .hsection {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-    .card {
-      background: rgba(255,255,255,0.08);
-      border-radius: 12px;
+      gap: 1.25rem;
+      background: var(--glass);
+      border-radius: 14px;
       padding: 1rem;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 22px rgba(0,0,0,.25);
     }
-    .card--image {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .hsection + .hsection { background: var(--glass-strong); }
+
+    .hsection__media {
+      display:flex; align-items:center; justify-content:center;
+      background: rgba(0,0,0,.08); border-radius:12px; padding:.5rem;
     }
-    .card--image img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      background: #fff;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    .hsection__media img {
+      width:100%; height:auto; border-radius:10px; background:#fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,.3);
     }
-    .card--text h2 {
-      margin-top: 0;
-      font-size: 1.5rem;
-      border-bottom: 2px solid #2ecc71;
-      padding-bottom: .3rem;
+
+    .hsection__text h2 {
+      margin:.25rem 0 .5rem; font-size:1.6rem; border-bottom:2px solid var(--accent); padding-bottom:.35rem;
     }
-    .card--text p, .card--text li {
-      font-size: 1.15rem; /* opis większy i czytelniejszy */
-      line-height: 1.6;
-    }
-    ul {
-      margin: 0;
-      padding-left: 1.2rem;
-    }
-    @media (max-width: 800px) {
-      .container {
-        grid-template-columns: 1fr;
-      }
+    .hsection__text p, .hsection__text li { font-size:1.15rem; line-height:1.65; }
+    .hsection__text ul { margin:.25rem 0 0; padding-left:1.2rem; }
+
+    /* RESPONSYWNOŚĆ */
+    @media (max-width: 880px) {
+      .hsection { grid-template-columns: 1fr; }
+      .hsection__media img { max-width: 520px; margin: 0 auto; display:block; }
     }
   </style>
 </head>
@@ -76,23 +56,10 @@
     <h1 id="page-title">Szczegóły porady</h1>
   </header>
 
-  <div class="container">
-
-    <!-- LEWA: grafika -->
-    <div class="card card--image">
-      <img id="porada-img" src="/img/placeholder.png" alt="Grafika porady">
-    </div>
-
-    <!-- PRAWA: opis -->
-    <div class="card card--text">
-      <h2 id="section-title">Sekcja</h2>
-      <div id="section-text"></div>
-    </div>
-
-  </div>
+  <div class="container" id="content"><!-- JS wstawi sekcje tutaj --></div>
 
   <script>
-    // mapowanie danych
+    // dane: tytuły, ścieżki obrazów i opisy
     const DATA = {
       reanimacja: {
         title: "Reanimacja (RKO)",
@@ -101,11 +68,10 @@
           <ul>
             <li>Sprawdź przytomność i oddech.</li>
             <li>Wezwij pomoc – numer 112.</li>
-            <li>Uciskaj środek klatki piersiowej ok. 5 cm głęboko, 100–120 razy na minutę.</li>
-            <li>Cykl: 30 uciśnięć : 2 oddechy ratownicze.</li>
-            <li>Kontroluj oddech co pewien czas.</li>
-          </ul>
-        `
+            <li>Uciskaj środek klatki piersiowej ok. 5 cm, 100–120/min.</li>
+            <li>Cykl: 30 uciśnięć : 2 oddechy ratownicze (30:2).</li>
+            <li>Okresowo kontroluj oddech i stan poszkodowanego.</li>
+          </ul>`
       },
       zadlawienie: {
         title: "Zadławienie",
@@ -115,10 +81,9 @@
             <li>Skuteczny kaszel → zachęcaj do kaszlu, obserwuj.</li>
             <li>Całkowita niedrożność: 5 uderzeń w plecy → 5 uciśnięć nadbrzusza.</li>
             <li>Powtarzaj 5/5 do usunięcia przeszkody lub utraty przytomności.</li>
-            <li>Nieprzytomny: 112, rozpocznij RKO (30:2).</li>
-            <li>Niemowlę: 5 uderzeń w plecy → 5 uciśnięć klatki (2 palce).</li>
-          </ul>
-        `
+            <li>Nieprzytomny: 112 i RKO (30:2) – kontrola jamy ustnej po serii.</li>
+            <li>Niemowlę: 5 uderzeń w plecy → 5 ucisków klatki (2 palce).</li>
+          </ul>`
       },
       wypadek: {
         title: "Wypadek",
@@ -127,25 +92,50 @@
           <ul>
             <li>Oceń miejsce zdarzenia – najpierw Twoje bezpieczeństwo.</li>
             <li>Wezwij pomoc – 112.</li>
-            <li>Zabezpiecz miejsce: światła awaryjne, trójkąt ostrzegawczy.</li>
-            <li>Udziel pierwszej pomocy do przyjazdu ratowników.</li>
-          </ul>
-        `
+            <li>Zabezpiecz miejsce: światła awaryjne, trójkąt, strefa bezpieczeństwa.</li>
+            <li>Udziel pierwszej pomocy i monitoruj poszkodowanego do przyjazdu służb.</li>
+          </ul>`
       }
     };
 
-    // pobierz parametr ?czesc=...
-    const qp = new URLSearchParams(location.search);
-    const czesc = (qp.get('czesc') || "").toLowerCase();
+    // pomocniczo – tworzenie jednej poziomej sekcji
+    function makeSection(key) {
+      const d = DATA[key];
+      const wrapper = document.createElement('section');
+      wrapper.className = 'hsection';
+      wrapper.innerHTML = `
+        <div class="hsection__media">
+          <img src="${d.img}" alt="${d.title}" onerror="this.src='/img/placeholder.png'">
+        </div>
+        <div class="hsection__text">
+          <h2>${d.title}</h2>
+          ${d.text}
+        </div>`;
+      return wrapper;
+    }
 
-    if (DATA[czesc]) {
-      document.getElementById('page-title').textContent = DATA[czesc].title;
-      document.getElementById('section-title').textContent = DATA[czesc].title;
-      document.getElementById('porada-img').src = DATA[czesc].img;
-      document.getElementById('section-text').innerHTML = DATA[czesc].text;
+    // logika trybów
+    const qp = new URLSearchParams(location.search);
+    const czesc = (qp.get('czesc') || '').toLowerCase();
+    const content = document.getElementById('content');
+    const titleEl = document.getElementById('page-title');
+
+    if (czesc === 'pierwszopomoc') {
+      // widok z trzema poziomymi sekcjami po kolei
+      titleEl.textContent = 'Pierwsza pomoc – przegląd';
+      content.appendChild(makeSection('reanimacja'));
+      content.appendChild(makeSection('zadlawienie'));
+      content.appendChild(makeSection('wypadek'));
+    } else if (DATA[czesc]) {
+      // pojedyncza sekcja (np. czesc=reanimacja)
+      titleEl.textContent = DATA[czesc].title;
+      content.appendChild(makeSection(czesc));
     } else {
-      document.getElementById('section-title').textContent = "Brak danych";
-      document.getElementById('section-text').innerHTML = "<p>Wybierz właściwą sekcję porady.</p>";
+      // fallback
+      titleEl.textContent = 'Szczegóły porady';
+      const info = document.createElement('p');
+      info.textContent = 'Wybierz właściwą sekcję porady.';
+      content.appendChild(info);
     }
   </script>
 
