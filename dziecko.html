@@ -3,28 +3,65 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dziecko — wybierz część ciała</title>
-  <link rel="manifest" href="manifest.json" />
+  <title>Dziecko — wybór sekcji | Boli Help</title>
   <link rel="stylesheet" href="assets/style.css?v=10" />
 </head>
-<body data-page="dziecko">
+<body>
+  <div class="bg-anim" aria-hidden="true"></div>
   <div class="container">
-    <a class="back" href="index.html">← Powrót</a>
-
-    <header class="header" style="margin-top:6px">
+    <header class="header">
       <div class="brand">
         <h1>Dziecko</h1>
-        <small>Wybierz część ciała lub organ</small>
+        <small>Najczęstsze sytuacje i objawy</small>
       </div>
-      <div class="tools">
-        <div class="search"><input type="search" placeholder="Szukaj..."/></div>
-      </div>
+      <a class="chip" href="index.html" aria-label="Wróć na stronę główną">← Wróć</a>
     </header>
 
-    <div class="grid"></div>
-  </div>
+    <section class="stack" aria-label="Sekcje dziecko">
+      <!-- Dla części stron nie masz osobnych plików – kierujemy do wspólnego szablonu szczegółów -->
+      <article class="card">
+        <a class="card__link" href="szczegoly.html?typ=dziecko&czesc=goraczka&label=Gor%C4%85czka">
+          <div class="card__imgwrap"><img src="img/dziecko-goraczka.png" alt="Gorączka" onerror="this.src='img/placeholder.png'"></div>
+          <div class="caption"><h3>Gorączka</h3><span class="arrow">→</span></div>
+        </a>
+      </article>
 
+      <article class="card">
+        <a class="card__link" href="szczegoly.html?typ=dziecko&czesc=kaszel&label=Kaszel">
+          <div class="card__imgwrap"><img src="img/dziecko-kaszel.png" alt="Kaszel" onerror="this.src='img/placeholder.png'"></div>
+          <div class="caption"><h3>Kaszel</h3><span class="arrow">→</span></div>
+        </a>
+      </article>
+
+      <article class="card">
+        <a class="card__link" href="szczegoly.html?typ=dziecko&czesc=zadlawienie&label=Zad%C5%82awienie">
+          <div class="card__imgwrap"><img src="img/zadlawienie.png" alt="Zadławienie" onerror="this.src='img/placeholder.png'"></div>
+          <div class="caption"><h3>Zadławienie</h3><span class="arrow">→</span></div>
+        </a>
+      </article>
+
+      <article class="card">
+        <a class="card__link" href="szczegoly.html?typ=dziecko&czesc=urazy&label=Urazy">
+          <div class="card__imgwrap"><img src="img/wypadek.png" alt="Urazy / upadki" onerror="this.src='img/placeholder.png'"></div>
+          <div class="caption"><h3>Urazy / Upadki</h3><span class="arrow">→</span></div>
+        </a>
+      </article>
+
+      <article class="card">
+        <a class="card__link" href="szczegoly.html?typ=dziecko&czesc=biegunka&label=Biegunka">
+          <div class="card__imgwrap"><img src="img/uklad-pokarmowy.png" alt="Biegunka" onerror="this.src='img/placeholder.png'"></div>
+          <div class="caption"><h3>Biegunka</h3><span class="arrow">→</span></div>
+        </a>
+      </article>
+
+      <article class="card">
+        <a class="card__link" href="szczegoly.html?typ=dziecko&czesc=wysypka&label=Wysypka">
+          <div class="card__imgwrap"><img src="img/skora.png" alt="Wysypka" onerror="this.src='img/placeholder.png'"></div>
+          <div class="caption"><h3>Wysypka</h3><span class="arrow">→</span></div>
+        </a>
+      </article>
+    </section>
+  </div>
   <script src="assets/main.js?v=10"></script>
-  <noscript>Ta strona wymaga JavaScript, aby wyświetlić siatkę części ciała.</noscript>
 </body>
 </html>
