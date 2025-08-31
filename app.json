@@ -1,12 +1,22 @@
 {
   "expo": {
-    "extra": {
-      "eas": {
-        "projectId": "b7e5191d-2632-455d-9158-a12b20d8a7f3"
-      }
+    "name": "BoliHelp",
+    "slug": "bolihelp",
+    "owner": "kata671b",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": ["ios", "android"],
+    "sdkVersion": "51.0.0",
+    "main": "App.js",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
-    "android": {
-      "package": "com.kata671.bolihelp"
-    }
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["*/"]
   }
 }
