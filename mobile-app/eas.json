@@ -1,0 +1,13 @@
+{
+  "cli": {
+    "version": ">= 3.0.0"
+  },
+  "build": {
+    "android": {
+      "release": {
+        "workflow": "managed",
+        "buildType": "apk"
+      }
+    }
+  }
+}
