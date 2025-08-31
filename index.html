@@ -4,71 +4,177 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Strona główna</title>
-  <meta name="theme-color" content="#113763" />
+  <meta name="theme-color" content="#0f1020" />
   <link rel="manifest" href="manifest.json" />
+  <!-- Zostawiamy ten sam query param, żeby nie bawić się w cache-bust -->
   <link rel="stylesheet" href="assets/style.css?v=10" />
 </head>
 <body data-page="home">
+  <!-- Subtelne, lekkie tło (CSS animowane) -->
+  <div class="bg-anim" aria-hidden="true"></div>
+
   <div class="container">
+    <!-- HEADER -->
     <header class="header">
       <div class="brand">
         <h1>Boli Help</h1>
         <small>Pomoc i pierwsza pomoc w nagłych sytuacjach</small>
       </div>
+
       <div class="tools">
-        <div class="search" role="search">
-          <input type="search" placeholder="Szukaj objawu, części ciała lub tematu…" aria-label="Szukaj" />
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
-                  stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
+        <form class="search" role="search" action="szukaj.html">
+          <input type="search" name="q" placeholder="Szukaj objawu, części ciała lub tematu…" aria-label="Szukaj" />
+          <!-- Ikona lupy (SVG, spójny styl) -->
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 21l-4.3-4.3M16 10.5A5.5 5.5 0 1 1 5 10.5a5.5 5.5 0 0 1 11 0Z" />
           </svg>
-        </div>
+        </form>
       </div>
     </header>
 
-    <div class="emergency-list" aria-label="Telefony alarmowe">
-      <a href="tel:112">📞 112</a><a href="tel:999">🚑 999</a><a href="tel:998">🔥 998</a><a href="tel:997">👮 997</a>
-    </div>
-
-    <nav class="situations" aria-label="Sytuacje nagłe">
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie"><span class="ico">🫁</span>Zadławienie</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja"><span class="ico">🚑</span>Reanimacja</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek"><span class="ico">💥</span>Wypadek</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span>Pierwsza pomoc</a>
+    <!-- TELEFONY ALARMOWE (bez emotek, spójne chipsy) -->
+    <nav class="emergency" aria-label="Telefony alarmowe">
+      <a class="chip chip--danger" href="tel:112" aria-label="Zadzwoń 112">
+        <span class="chip__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.3 2.6 3.4 4.7 6 6l2-2a1 1 0 0 1 1.1-.22c1 .4 2 .68 3.1.82a1 1 0 0 1 .9 1v3.4a1 1 0 0 1-1.1 1c-8.8-.9-15.7-7.8-16.6-16.6A1 1 0 0 1 3 3.9h3.4a1 1 0 0 1 1 .9c.14 1.1.41 2.1.82 3.1a1 1 0 0 1-.22 1.1l-1.4 1.8Z"/></svg>
+        </span>
+        112
+      </a>
+      <a class="chip" href="tel:999" aria-label="Zadzwoń 999">
+        <span class="chip__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M7 20h10a2 2 0 0 0 2-2v-5h1a1 1 0 1 0 0-2h-1V8a2 2 0 0 0-2-2h-2.6L12.8 4H7A2 2 0 0 0 5 6v10a2 2 0 0 0 2 2Zm3-9h4v2h-4v4H8v-4H6v-2h2V7h2v4Z"/></svg>
+        </span>
+        999
+      </a>
+      <a class="chip" href="tel:998" aria-label="Zadzwoń 998">
+        <span class="chip__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 17h18l-1.5-6h-15L3 17Zm1.5-8h15L21 5h-4l-1-2H8L7 5H3l1.5 4ZM6 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm12 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></svg>
+        </span>
+        998
+      </a>
+      <a class="chip" href="tel:997" aria-label="Zadzwoń 997">
+        <span class="chip__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 0-5 5v3H5a1 1 0 0 0-1 1v9h16v-9a1 1 0 0 0-1-1h-2V7a5 5 0 0 0-5-5Zm-3 8V7a3 3 0 1 1 6 0v3H9Z"/></svg>
+        </span>
+        997
+      </a>
     </nav>
 
+    <!-- PILNE SYTUACJE (zielone pigułki, bez emotek) -->
+    <nav class="situations" aria-label="Sytuacje nagłe">
+      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie">
+        <span class="pill__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3c5 0 9 3.6 9 8.1 0 3.2-2.3 5.9-5.7 7.1-.3.1-.5.4-.6.7l-.3 2a1 1 0 0 1-1.5.7l-2.8-1.6a1 1 0 0 0-.7-.1C6.3 19.3 3 16.1 3 11.9 3 6.6 7 3 12 3Z"/></svg>
+        </span>
+        Zadławienie
+      </a>
+
+      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja">
+        <span class="pill__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h4"/></svg>
+        </span>
+        Reanimacja
+      </a>
+
+      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek">
+        <span class="pill__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 19h16l-2-7H6l-2 7Zm3-9h10l-2-5H9l-2 5Z"/></svg>
+        </span>
+        Wypadek
+      </a>
+
+      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc">
+        <span class="pill__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M10 7h4v3h3v4h-3v3h-4v-3H7v-4h3V7Z"/></svg>
+        </span>
+        Pierwsza pomoc
+      </a>
+    </nav>
+
+    <!-- AKCJE -->
     <div class="actions" role="navigation" aria-label="Szybkie akcje">
-      <button id="btn-112" class="btn btn--red btn--call" type="button" aria-label="Zadzwoń na 112">📞 112</button>
-      <button id="btn-hosp" class="btn btn--hosp" type="button" aria-label="Szpitale i SOR">🏥 Szpitale / SOR</button>
-      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener"><span class="badge-round">apteka24</span></a>
-      <button id="btn-loc" class="btn" type="button">📍 Zlokalizuj mnie</button>
+      <a id="btn-112" class="btn btn--red btn--call" href="tel:112" aria-label="Zadzwoń na 112">
+        <span class="btn__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.3 2.6 3.4 4.7 6 6l2-2a1 1 0 0 1 1.1-.22c1 .4 2 .68 3.1.82a1 1 0 0 1 .9 1v3.4a1 1 0 0 1-1.1 1c-8.8-.9-15.7-7.8-16.6-16.6A1 1 0 0 1 3 3.9h3.4a1 1 0 0 1 1 .9c.14 1.1.41 2.1.82 3.1a1 1 0 0 1-.22 1.1l-1.4 1.8Z"/></svg>
+        </span>
+        112
+      </a>
+
+      <button id="btn-hosp" class="btn btn--hosp" type="button" aria-label="Szpitale i SOR">
+        <span class="btn__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4V5Zm7 2v4H7V7h4Zm2 0h4v4h-4V7Zm-2 6v4H7v-4h4Zm2 0h4v4h-4v-4Z"/></svg>
+        </span>
+        Szpitale / SOR
+      </button>
+
+      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener" aria-label="Apteki czynne teraz">
+        <span class="btn__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M7 10h10v4H7v-4Zm2-6h6v4H9V4Zm-4 14h14v2H5v-2Z"/></svg>
+        </span>
+        <span class="badge-round">apteka24</span>
+      </a>
+
+      <button id="btn-loc" class="btn" type="button" aria-label="Zlokalizuj mnie">
+        <span class="btn__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2 6 20l6-4 6 4-6-18Z"/></svg>
+        </span>
+        Zlokalizuj mnie
+      </button>
     </div>
 
     <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
 
-    <!-- 3 karty w RZĘDZIE na laptopie; mniejsze obrazy -->
+    <!-- KARTY WYBORU POSTACI -->
     <section class="stack" aria-label="Wybór postaci">
       <article class="card">
-        <a href="kobieta.html">
-          <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+        <a href="kobieta.html" class="card__link">
+          <div class="card__imgwrap">
+            <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+          </div>
           <div class="caption"><h3>Kobieta</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
+
       <article class="card">
-        <a href="mezczyzna.html">
-          <img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+        <a href="mezczyzna.html" class="card__link">
+          <div class="card__imgwrap">
+            <img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+          </div>
           <div class="caption"><h3>Mężczyzna</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
+
       <article class="card">
-        <a href="dziecko.html">
-          <img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+        <a href="dziecko.html" class="card__link">
+          <div class="card__imgwrap">
+            <img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+          </div>
           <div class="caption"><h3>Dziecko</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
     </section>
   </div>
 
+  <!-- Twój skrypt może zostać: assets/main.js (hotspoty itd.) -->
   <script src="assets/main.js?v=10"></script>
+
+  <script>
+    // Akcja "Szpitale / SOR" — otwiera mapę z pobliża
+    document.getElementById('btn-hosp')?.addEventListener('click', ()=>{
+      window.open('https://www.google.com/maps/search/SOR+szpital+blisko+mn', '_blank');
+    });
+
+    // Lokalizacja — otwiera mapy z aktualną pozycją (jeśli dostępna)
+    document.getElementById('btn-loc')?.addEventListener('click', ()=>{
+      if (!navigator.geolocation) {
+        alert('Twoja przeglądarka nie obsługuje geolokalizacji.');
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(pos=>{
+        const { latitude, longitude } = pos.coords;
+        window.open(`https://www.google.com/maps?q=${latitude},${longitude}`, '_blank');
+      }, ()=>{ window.open('https://www.google.com/maps', '_blank'); });
+    });
+  </script>
 </body>
 </html>
