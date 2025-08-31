@@ -3,65 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BoliHelp – Pierwsza pomoc</title>
+  <title>BoliHelp – Szczegóły porady</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1e3c72, #2a5298); /* niebieskie tło jak u Ciebie */
+      background: linear-gradient(135deg, #1e3c72, #2a5298); /* Twoje niebieskie tło */
       color: #fff;
-      line-height: 1.5;
     }
     header {
-      text-align: center;
-      padding: 1rem;
+      padding: 1rem 2rem;
+    }
+    header a {
+      color: #fff;
+      text-decoration: none;
     }
     h1 {
       margin: 0.5rem 0;
-      font-size: 2rem;
+      font-size: 1.8rem;
     }
     .container {
-      max-width: 900px;
-      margin: 1rem auto;
+      max-width: 1100px;
+      margin: 1.5rem auto;
       padding: 0 1rem;
-    }
-    .section {
-      margin-bottom: 3rem;
-      background: rgba(255,255,255,0.07);
-      border-radius: 12px;
-      padding: 1.5rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      align-items: start;
-      gap: 1.2rem;
+      gap: 1.5rem;
     }
-    .section:nth-child(odd) {
-      background: rgba(255,255,255,0.10);
+    .card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
     }
-    .section h2 {
-      margin-top: 0;
-      font-size: 1.6rem;
-      border-bottom: 2px solid #2ecc71;
-      padding-bottom: 0.3rem;
+    .card--image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .section img {
+    .card--image img {
       width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: contain;
-      border-radius: 8px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+      height: auto;
+      border-radius: 10px;
       background: #fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
     }
-    .section p {
-      font-size: 1.1rem;
+    .card--text h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      border-bottom: 2px solid #2ecc71;
+      padding-bottom: .3rem;
     }
-    @media (max-width: 700px) {
-      .section {
+    .card--text p, .card--text li {
+      font-size: 1.15rem; /* opis większy i czytelniejszy */
+      line-height: 1.6;
+    }
+    ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+    @media (max-width: 800px) {
+      .container {
         grid-template-columns: 1fr;
-      }
-      .section img {
-        max-width: 80%;
-        margin: 0 auto;
       }
     }
   </style>
@@ -69,56 +72,82 @@
 <body>
 
   <header>
-    <h1>Pierwsza pomoc – szczegóły</h1>
+    <a href="index.html">← Wróć</a>
+    <h1 id="page-title">Szczegóły porady</h1>
   </header>
 
   <div class="container">
 
-    <!-- Reanimacja -->
-    <div class="section" id="sec-reanimacja">
-      <img id="img-reanimacja" src="/img/reanimacja.png" alt="Reanimacja">
-      <div>
-        <h2>Reanimacja (RKO)</h2>
-        <p>
-          1. Sprawdź przytomność i oddech. <br>
-          2. Jeśli brak reakcji — zadzwoń na 112. <br>
-          3. Ułóż poszkodowanego na twardym podłożu. <br>
-          4. Uciskaj środek klatki piersiowej ok. 5 cm, w tempie ok. 100–120 ud./min, z częstotliwością 30 ucisków, następnie 2 oddechy ratownicze (cykl 30:2). <br>
-          5. Kontroluj oddech co jakieś 30 sekund; jeśli powraca, przestań. 
-        </p>
-      </div>
+    <!-- LEWA: grafika -->
+    <div class="card card--image">
+      <img id="porada-img" src="/img/placeholder.png" alt="Grafika porady">
     </div>
 
-    <!-- Zadławienie -->
-    <div class="section" id="sec-zadlawienie">
-      <img id="img-zadlawienie" src="/img/zadlawienie.png" alt="Zadławienie">
-      <div>
-        <h2>Zadławienie</h2>
-        <p>
-          A) Jeśli poszkodowany kaszle skutecznie — zachęcaj do dalszego kaszlu, obserwuj. <br>
-          B) W przypadku całkowitej niedrożności dróg oddechowych — wykonaj 5 uderzeń między łopatki, a następnie 5 uciśnięć nadbrzusza (Heimlich). <br>
-          C) Powtarzaj serie 5/5 do usunięcia przeszkody lub utraty przytomności. <br>
-          D) Gdy poszkodowany stanie się nieprzytomny — zadzwoń 112, rozpocznij RKO (30:2), kontroluj jamę ustną po każdej serii. <br>
-          E) U niemowlęcia: 5 uderzeń w plecy + 5 ucisków klatki (użyj dwóch palców).
-        </p>
-      </div>
-    </div>
-
-    <!-- Wypadek -->
-    <div class="section" id="sec-wypadek">
-      <img id="img-wypadek" src="/img/wypadek.png" alt="Wypadek">
-      <div>
-        <h2>Wypadek</h2>
-        <p>
-          1. Oceń miejsce zdarzenia — zadbaj o swoje bezpieczeństwo (uwaga na ruch uliczny, ogień, zalania itp.). <br>
-          2. Zadzwoń po pomoc — 112. <br>
-          3. Zabezpiecz miejsce wypadku: włącz światła awaryjne, postaw trójkąt ostrzegawczy, zapewnij strefę bezpieczeństwa. <br>
-          4. Udziel pierwszej pomocy — sprawdź przytomność, oddychanie, ocieplaj poszkodowanego i zachowaj spokój do przyjazdu ratowników.
-        </p>
-      </div>
+    <!-- PRAWA: opis -->
+    <div class="card card--text">
+      <h2 id="section-title">Sekcja</h2>
+      <div id="section-text"></div>
     </div>
 
   </div>
+
+  <script>
+    // mapowanie danych
+    const DATA = {
+      reanimacja: {
+        title: "Reanimacja (RKO)",
+        img: "/img/reanimacja.png",
+        text: `
+          <ul>
+            <li>Sprawdź przytomność i oddech.</li>
+            <li>Wezwij pomoc – numer 112.</li>
+            <li>Uciskaj środek klatki piersiowej ok. 5 cm głęboko, 100–120 razy na minutę.</li>
+            <li>Cykl: 30 uciśnięć : 2 oddechy ratownicze.</li>
+            <li>Kontroluj oddech co pewien czas.</li>
+          </ul>
+        `
+      },
+      zadlawienie: {
+        title: "Zadławienie",
+        img: "/img/zadlawienie.png",
+        text: `
+          <ul>
+            <li>Skuteczny kaszel → zachęcaj do kaszlu, obserwuj.</li>
+            <li>Całkowita niedrożność: 5 uderzeń w plecy → 5 uciśnięć nadbrzusza.</li>
+            <li>Powtarzaj 5/5 do usunięcia przeszkody lub utraty przytomności.</li>
+            <li>Nieprzytomny: 112, rozpocznij RKO (30:2).</li>
+            <li>Niemowlę: 5 uderzeń w plecy → 5 uciśnięć klatki (2 palce).</li>
+          </ul>
+        `
+      },
+      wypadek: {
+        title: "Wypadek",
+        img: "/img/wypadek.png",
+        text: `
+          <ul>
+            <li>Oceń miejsce zdarzenia – najpierw Twoje bezpieczeństwo.</li>
+            <li>Wezwij pomoc – 112.</li>
+            <li>Zabezpiecz miejsce: światła awaryjne, trójkąt ostrzegawczy.</li>
+            <li>Udziel pierwszej pomocy do przyjazdu ratowników.</li>
+          </ul>
+        `
+      }
+    };
+
+    // pobierz parametr ?czesc=...
+    const qp = new URLSearchParams(location.search);
+    const czesc = (qp.get('czesc') || "").toLowerCase();
+
+    if (DATA[czesc]) {
+      document.getElementById('page-title').textContent = DATA[czesc].title;
+      document.getElementById('section-title').textContent = DATA[czesc].title;
+      document.getElementById('porada-img').src = DATA[czesc].img;
+      document.getElementById('section-text').innerHTML = DATA[czesc].text;
+    } else {
+      document.getElementById('section-title').textContent = "Brak danych";
+      document.getElementById('section-text').innerHTML = "<p>Wybierz właściwą sekcję porady.</p>";
+    }
+  </script>
 
 </body>
 </html>
