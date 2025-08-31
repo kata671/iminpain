@@ -1,75 +1,81 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BoliHelp – Szczegóły</title>
   <style>
-    :root { --glass: rgba(255,255,255,0.08); --glass-strong: rgba(255,255,255,0.12); --accent:#2ecc71; }
-    body { margin:0; font-family: Arial, sans-serif; background: linear-gradient(135deg,#1e3c72,#2a5298); color:#fff; line-height:1.55; }
-    a { color:#fff; text-decoration:none; }
-    header { padding: 1rem 1.25rem; }
-    h1 { margin:.25rem 0 0; font-size:1.9rem; }
+    :root{
+      --glass: rgba(255,255,255,.08);
+      --glass-strong: rgba(255,255,255,.12);
+      --accent: #2ecc71;
+      --text: #fff;
+    }
+    /* tło jak u Ciebie */
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#1e3c72,#2a5298);color:var(--text);line-height:1.55;}
+    a{color:var(--text);text-decoration:none;}
+    header{padding:1rem 1.25rem;}
+    h1{margin:.25rem 0 0;font-size:1.9rem;}
 
-    .container { max-width: 1100px; margin: 1.25rem auto 2.5rem; padding: 0 1rem; display: grid; gap: 1.5rem; }
+    .container{max-width:1100px;margin:1.25rem auto 2.5rem;padding:0 1rem;display:grid;gap:1.5rem;}
 
-    .hsection {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-      background: var(--glass);
-      border-radius: 14px;
-      padding: 1rem;
-      box-shadow: 0 8px 22px rgba(0,0,0,.25);
-    }
-    .hsection__media {
-      display:flex; align-items:center; justify-content:center;
-      background: rgba(0,0,0,.08); border-radius:12px; padding:.5rem;
-    }
-    .hsection__media img {
-      width:100%; height:auto; border-radius:10px; background:#fff;
-      box-shadow: 0 6px 18px rgba(0,0,0,.3);
-    }
-    .hsection__text h2 {
-      margin:.25rem 0 .5rem; font-size:1.6rem; border-bottom:2px solid var(--accent); padding-bottom:.35rem;
-    }
-    .hsection__text p, .hsection__text li { font-size:1.15rem; line-height:1.65; }
-    .hsection__text ul { margin:.25rem 0 0; padding-left:1.2rem; }
-    @media (max-width: 880px) {
-      .hsection { grid-template-columns: 1fr; }
-      .hsection__media img { max-width: 520px; margin: 0 auto; display:block; }
+    /* SEKCJA POZIOMA (lewo obraz / prawo treść) */
+    .hsection{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;background:var(--glass);border-radius:14px;padding:1rem;box-shadow:0 8px 22px rgba(0,0,0,.25);}
+    .hsection__media{display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.08);border-radius:12px;padding:.5rem;}
+    .hsection__media img{width:100%;height:auto;border-radius:10px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.30);}
+
+    /* KARTY z sekcjami po prawej */
+    .panel{background:var(--glass-strong);border-radius:12px;padding:1rem;box-shadow:0 6px 18px rgba(0,0,0,.25);}
+    .tabs{display:flex;flex-wrap:wrap;gap:.5rem .5rem;margin:0 0 .75rem 0;}
+    .tab{padding:.45rem .75rem;border-radius:8px;background:rgba(255,255,255,.12);cursor:pointer;font-weight:600;user-select:none;transition:background .15s ease,transform .15s ease;}
+    .tab:hover{background:rgba(255,255,255,.20);transform:translateY(-1px);}
+    .tab.active{background:var(--accent);color:#fff;}
+
+    .section-title{margin:.25rem 0 .5rem;font-size:1.45rem;border-bottom:2px solid var(--accent);padding-bottom:.3rem;}
+    .content-block{font-size:1.08rem;line-height:1.7;}
+    .content-block ul{margin:.25rem 0 0;padding-left:1.2rem;}
+    .muted{opacity:.8;}
+
+    /* „Pierwsza pomoc – przegląd”: trzy poziome sekcje z grafikami */
+    .hsection--fa + .hsection--fa{background:var(--glass-strong);}
+
+    @media (max-width: 880px){
+      .hsection{grid-template-columns:1fr;}
+      .hsection__media img{max-width:520px;margin:0 auto;display:block;}
     }
   </style>
 </head>
 <body>
-
   <header>
     <a href="index.html">← Wróć</a>
     <h1 id="page-title">Szczegóły</h1>
   </header>
 
-  <div class="container" id="content"></div>
+  <div class="container" id="content"><!-- JS wstawi treść --></div>
 
   <script>
-    // --------- DANE: PIERWSZA POMOC ---------
+    /* =========================
+       1) DANE „PIERWSZA POMOC”
+       ========================= */
     const FIRSTAID = {
       reanimacja: {
         title: "Reanimacja (RKO)",
         img: "/img/reanimacja.png",
         text: `<ul>
           <li>Sprawdź przytomność i oddech.</li>
-          <li>Wezwij pomoc – numer 112.</li>
-          <li>Uciskaj środek klatki piersiowej 100–120/min, głębokość 5 cm.</li>
-          <li>Cykl 30 uciśnięć : 2 oddechy (30:2).</li>
+          <li>Wezwij pomoc – 112.</li>
+          <li>Uciskaj środek klatki piersiowej ok. 5 cm, 100–120/min.</li>
+          <li>Cykl: 30 uciśnięć : 2 oddechy (30:2).</li>
         </ul>`
       },
       zadlawienie: {
         title: "Zadławienie",
         img: "/img/zadlawienie.png",
         text: `<ul>
-          <li>Skuteczny kaszel → zachęcaj, obserwuj.</li>
+          <li>Skuteczny kaszel → zachęcaj do kaszlu, obserwuj.</li>
           <li>Całkowita niedrożność: 5 uderzeń w plecy → 5 uciśnięć nadbrzusza.</li>
-          <li>Powtarzaj 5/5 do skutku lub utraty przytomności.</li>
+          <li>Powtarzaj 5/5 do usunięcia przeszkody lub utraty przytomności.</li>
+          <li>Nieprzytomny: 112 i RKO (30:2).</li>
         </ul>`
       },
       wypadek: {
@@ -84,82 +90,147 @@
       }
     };
 
-    // --------- DANE: ANATOMIA (PRZYKŁAD) ---------
+    /* ==================================
+       2) DANE „ANATOMIA” – TU PRZYWRACAMY
+          WSZYSTKIE TWOJE OPISY
+       ==================================
+       Wzór:
+       ANATOMIA[typ][czesc] = {
+         title: "Nos – kobieta",
+         img: "/img/kobieta-nos.png",
+         sections: {
+           pierwsza_pomoc: `<ul>...</ul>`,
+           objawy: `<ul>...</ul>`,
+           przyczyny: `<ul>...</ul>`,
+           leki: `<ul>...</ul>`,
+           lekarz: `<ul>...</ul>`
+         }
+       }
+       — poniżej przykład dla kobieta→nos (wklej swoje pełne, stare treści 1:1)
+    */
     const ANATOMIA = {
       kobieta: {
         nos: {
           title: "Nos – kobieta",
           img: "/img/kobieta-nos.png",
-          text: `<p>Opis budowy, przyczyny problemów, objawy i pierwsza pomoc dla sekcji "Nos" u kobiety.</p>`
+          sections: {
+            pierwsza_pomoc: `<ul>
+              <li>Uraz/krwawienie: pochyl głowę do przodu, uciskaj skrzydełka nosa 10–15 min.</li>
+              <li>Zimny okład na nasadę nosa.</li>
+              <li>Nie wydmuchuj mocno nosa, unikaj dłubania.</li>
+            </ul>`,
+            objawy: `<ul>
+              <li>Krwawienie z nosa, obrzęk, ból, niedrożność, katar, kichanie.</li>
+              <li>Uczucie zatkania, upośledzenie węchu.</li>
+            </ul>`,
+            przyczyny: `<ul>
+              <li>Infekcje, alergia, suchość śluzówek, urazy, nadciśnienie, leki przeciwkrzepliwe.</li>
+            </ul>`,
+            leki: `<ul>
+              <li>Doraźnie: sól morska/izotoniczna, nawilżające żele do nosa.</li>
+              <li>Przy alergii: leki antyhistaminowe (OTC) – zgodnie z ulotką.</li>
+            </ul>`,
+            lekarz: `<ul>
+              <li>Jeśli krwawienie nie ustępuje po 20 min lub nawraca często.</li>
+              <li>Jeśli podejrzewasz złamanie, silny ból, gorączkę lub ropną wydzielinę.</li>
+            </ul>`
+          }
         },
-        usta: {
-          title: "Usta – kobieta",
-          img: "/img/kobieta-usta.png",
-          text: `<p>Opis dla ust u kobiety...</p>`
-        }
-        // dodaj kolejne części ciała tutaj
+        /* PRZYKŁADOWE PUSTE SZABLONY – PODMIEŃ NA SWOJE TREŚCI */
+        usta:   { title:"Usta – kobieta",   img:"/img/kobieta-usta.png",   sections:{} },
+        oko:    { title:"Oko – kobieta",    img:"/img/kobieta-oko.png",    sections:{} },
+        ucho:   { title:"Ucho – kobieta",   img:"/img/kobieta-ucho.png",   sections:{} },
+        szyja:  { title:"Szyja – kobieta",  img:"/img/kobieta-szyja.png",  sections:{} },
+        /* ...dodaj wszystkie pozostałe części... */
       },
       mezczyzna: {
-        nos: {
-          title: "Nos – mężczyzna",
-          img: "/img/mezczyzna-nos.png",
-          text: `<p>Opis budowy i schorzeń nosa u mężczyzny...</p>`
-        }
-        // dodaj kolejne części ciała
+        nos:    { title:"Nos – mężczyzna",  img:"/img/mezczyzna-nos.png",  sections:{} },
+        /* ...pozostałe... */
       },
       dziecko: {
-        nos: {
-          title: "Nos – dziecko",
-          img: "/img/dziecko-nos.png",
-          text: `<p>Opis dla nosa u dziecka...</p>`
-        }
-        // kolejne części
+        nos:    { title:"Nos – dziecko",    img:"/img/dziecko-nos.png",    sections:{} },
+        /* ...pozostałe... */
       }
     };
 
-    // --------- GENERATOR SEKCJI ---------
-    function makeSection(title, img, text) {
+    /* ========= Pomocnicze: renderer kart/anatomii ========= */
+    function makeFirstAidSection(d){
       const sec = document.createElement('section');
-      sec.className = 'hsection';
+      sec.className = 'hsection hsection--fa';
       sec.innerHTML = `
-        <div class="hsection__media">
-          <img src="${img}" alt="${title}" onerror="this.src='/img/placeholder.png'">
-        </div>
+        <div class="hsection__media"><img src="${d.img}" alt="${d.title}" onerror="this.src='/img/placeholder.png'"></div>
         <div class="hsection__text">
-          <h2>${title}</h2>
-          ${text}
+          <h2 class="section-title">${d.title}</h2>
+          <div class="content-block">${d.text}</div>
         </div>`;
       return sec;
     }
 
-    // --------- LOGIKA WYBORU ---------
+    function makeAnatomySection(d){
+      const wrapper = document.createElement('section');
+      wrapper.className = 'hsection';
+      wrapper.innerHTML = `
+        <div class="hsection__media">
+          <img src="${d.img}" alt="${d.title}" onerror="this.src='/img/placeholder.png'">
+        </div>
+        <div class="panel">
+          <h2 class="section-title" id="anatomy-title">${d.title}</h2>
+          <div class="tabs" id="tabs">
+            <span class="tab active" data-k="pierwsza_pomoc">Pierwsza pomoc</span>
+            <span class="tab" data-k="objawy">Objawy</span>
+            <span class="tab" data-k="przyczyny">Przyczyny</span>
+            <span class="tab" data-k="leki">Leki</span>
+            <span class="tab" data-k="lekarz">Kiedy do lekarza</span>
+          </div>
+          <div class="content-block" id="tab-content"></div>
+        </div>`;
+      // po wstawieniu do DOM podpinamy logikę tabów
+      setTimeout(()=>{
+        const tabs = wrapper.querySelectorAll('.tab');
+        const out  = wrapper.querySelector('#tab-content');
+        const S    = d.sections || {};
+        function show(key){
+          tabs.forEach(t=>t.classList.toggle('active', t.dataset.k===key));
+          out.innerHTML = S[key] || `<p class="muted">Brak danych w tej sekcji.</p>`;
+        }
+        tabs.forEach(t=>t.addEventListener('click', ()=>show(t.dataset.k)));
+        show('pierwsza_pomoc'); // domyślnie
+      });
+      return wrapper;
+    }
+
+    /* ================= Logika wyboru widoku ================= */
     const qp = new URLSearchParams(location.search);
-    const typ = (qp.get('typ') || '').toLowerCase();   // kobieta / mezczyzna / dziecko / porada
+    const typ   = (qp.get('typ')   || '').toLowerCase();   // porada | kobieta | mezczyzna | dziecko
     const czesc = (qp.get('czesc') || '').toLowerCase();
-    const content = document.getElementById('content');
+    const label = qp.get('label') || '';
     const titleEl = document.getElementById('page-title');
+    const content = document.getElementById('content');
+
+    function setTitle(txt){ titleEl.textContent = txt || 'Szczegóły'; }
 
     if (typ === 'porada') {
       if (czesc === 'pierwszopomoc') {
-        titleEl.textContent = 'Pierwsza pomoc – przegląd';
-        content.appendChild(makeSection(FIRSTAID.reanimacja.title, FIRSTAID.reanimacja.img, FIRSTAID.reanimacja.text));
-        content.appendChild(makeSection(FIRSTAID.zadlawienie.title, FIRSTAID.zadlawienie.img, FIRSTAID.zadlawienie.text));
-        content.appendChild(makeSection(FIRSTAID.wypadek.title, FIRSTAID.wypadek.img, FIRSTAID.wypadek.text));
+        setTitle('Pierwsza pomoc – przegląd');
+        content.appendChild(makeFirstAidSection(FIRSTAID.reanimacja));
+        content.appendChild(makeFirstAidSection(FIRSTAID.zadlawienie));
+        content.appendChild(makeFirstAidSection(FIRSTAID.wypadek));
       } else if (FIRSTAID[czesc]) {
         const d = FIRSTAID[czesc];
-        titleEl.textContent = d.title;
-        content.appendChild(makeSection(d.title, d.img, d.text));
+        setTitle(d.title);
+        content.appendChild(makeFirstAidSection(d));
       } else {
-        content.innerHTML = "<p>Brak danych dla tej porady.</p>";
+        setTitle('Szczegóły porady');
+        content.innerHTML = '<p class="muted">Brak danych dla tej porady.</p>';
       }
     } else if (ANATOMIA[typ] && ANATOMIA[typ][czesc]) {
       const d = ANATOMIA[typ][czesc];
-      titleEl.textContent = d.title;
-      content.appendChild(makeSection(d.title, d.img, d.text));
+      setTitle(d.title || label || 'Szczegóły');
+      content.appendChild(makeAnatomySection(d));
     } else {
-      content.innerHTML = "<p>Brak danych.</p>";
+      setTitle(label || 'Szczegóły');
+      content.innerHTML = '<p class="muted">Brak danych. Upewnij się, że parametry <code>typ</code> i <code>czesc</code> są prawidłowe.</p>';
     }
   </script>
-
 </body>
 </html>
