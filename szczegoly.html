@@ -2,14 +2,15 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BoliHelp – Szczegóły porady</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BoliHelp – Pierwsza pomoc</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #1e3c72, #2a5298); /* niebieskie tło jak u Ciebie */
       color: #fff;
+      line-height: 1.5;
     }
     header {
       text-align: center;
@@ -17,136 +18,107 @@
     }
     h1 {
       margin: 0.5rem 0;
+      font-size: 2rem;
     }
-    main {
-      max-width: 1100px;
-      margin: 2rem auto;
+    .container {
+      max-width: 900px;
+      margin: 1rem auto;
       padding: 0 1rem;
+    }
+    .section {
+      margin-bottom: 3rem;
+      background: rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 1.5rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+      align-items: start;
+      gap: 1.2rem;
     }
-    .buttons {
-      text-align: center;
-      margin: 1rem 0;
+    .section:nth-child(odd) {
+      background: rgba(255,255,255,0.10);
     }
-    .btn {
-      display: inline-block;
-      padding: 0.7rem 1.2rem;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin: 0 0.3rem;
-      transition: background 0.2s ease, transform 0.2s ease;
+    .section h2 {
+      margin-top: 0;
+      font-size: 1.6rem;
+      border-bottom: 2px solid #2ecc71;
+      padding-bottom: 0.3rem;
     }
-    .btn-green {
-      background: #2ecc71;
-      color: #fff;
-    }
-    .btn-green:hover {
-      background: #27ae60;
-      transform: translateY(-2px);
-    }
-    .card {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-    }
-    .card--image {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .card--image .img-holder {
+    .section img {
       width: 100%;
-      aspect-ratio: 1/1;       /* kwadrat */
-      display: grid;
-      place-items: center;
-    }
-    .card--image img {
-      width: 100%;
-      height: 100%;
+      aspect-ratio: 1 / 1;
       object-fit: contain;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,.25);
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
       background: #fff;
     }
-    .card--text h2 {
-      margin-top: 0;
-      color: #fff;
+    .section p {
+      font-size: 1.1rem;
     }
-    .card--text ul {
-      padding-left: 1.2rem;
+    @media (max-width: 700px) {
+      .section {
+        grid-template-columns: 1fr;
+      }
+      .section img {
+        max-width: 80%;
+        margin: 0 auto;
+      }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Szczegóły porady</h1>
-    <div class="buttons">
-      <button class="btn btn-green" data-graphic="reanimacja">Reanimacja</button>
-      <button class="btn btn-green" data-graphic="wypadek">Wypadek</button>
-      <button class="btn btn-green" data-graphic="zadlawienie">Zadławienie</button>
-    </div>
+    <h1>Pierwsza pomoc – szczegóły</h1>
   </header>
 
-  <main>
-    <!-- LEWA KARTA Z OBRAZEM -->
-    <div class="card card--image" id="porada-box">
-      <div class="img-holder">
-        <img id="porada-img"
-             src="/img/placeholder.png"
-             alt="Grafika porady"
-             onerror="this.onerror=null;this.src='/img/placeholder.png';">
+  <div class="container">
+
+    <!-- Reanimacja -->
+    <div class="section" id="sec-reanimacja">
+      <img id="img-reanimacja" src="/img/reanimacja.png" alt="Reanimacja">
+      <div>
+        <h2>Reanimacja (RKO)</h2>
+        <p>
+          1. Sprawdź przytomność i oddech. <br>
+          2. Jeśli brak reakcji — zadzwoń na 112. <br>
+          3. Ułóż poszkodowanego na twardym podłożu. <br>
+          4. Uciskaj środek klatki piersiowej ok. 5 cm, w tempie ok. 100–120 ud./min, z częstotliwością 30 ucisków, następnie 2 oddechy ratownicze (cykl 30:2). <br>
+          5. Kontroluj oddech co jakieś 30 sekund; jeśli powraca, przestań. 
+        </p>
       </div>
     </div>
 
-    <!-- PRAWA KARTA Z TEKSTEM -->
-    <div class="card card--text">
-      <h2>Pierwsza pomoc</h2>
-      <ul>
-        <li>A) Skuteczny kaszel → zachęcaj do kaszlu, obserwuj.</li>
-        <li>B) Całkowita niedrożność: 5 uderzeń w plecy → 5 uciśnięć nadbrzusza.</li>
-        <li>C) Powtarzaj 5/5 do usunięcia przeszkody lub utraty przytomności.</li>
-        <li>D) Nieprzytomny: 112, RKO 30:2; kontrola jamy ustnej po 30.</li>
-        <li>E) Niemowlę: 5 uderzeń w plecy → 5 uciśnięć klatki (2 palce).</li>
-      </ul>
+    <!-- Zadławienie -->
+    <div class="section" id="sec-zadlawienie">
+      <img id="img-zadlawienie" src="/img/zadlawienie.png" alt="Zadławienie">
+      <div>
+        <h2>Zadławienie</h2>
+        <p>
+          A) Jeśli poszkodowany kaszle skutecznie — zachęcaj do dalszego kaszlu, obserwuj. <br>
+          B) W przypadku całkowitej niedrożności dróg oddechowych — wykonaj 5 uderzeń między łopatki, a następnie 5 uciśnięć nadbrzusza (Heimlich). <br>
+          C) Powtarzaj serie 5/5 do usunięcia przeszkody lub utraty przytomności. <br>
+          D) Gdy poszkodowany stanie się nieprzytomny — zadzwoń 112, rozpocznij RKO (30:2), kontroluj jamę ustną po każdej serii. <br>
+          E) U niemowlęcia: 5 uderzeń w plecy + 5 ucisków klatki (użyj dwóch palców).
+        </p>
+      </div>
     </div>
-  </main>
 
-  <script>
-    // mapowanie nazw na pliki
-    const GRAPHICS = {
-      reanimacja: '/img/reanimacja.png',
-      wypadek: '/img/wypadek.png',
-      zadlawienie: '/img/zadlawienie.png'
-    };
+    <!-- Wypadek -->
+    <div class="section" id="sec-wypadek">
+      <img id="img-wypadek" src="/img/wypadek.png" alt="Wypadek">
+      <div>
+        <h2>Wypadek</h2>
+        <p>
+          1. Oceń miejsce zdarzenia — zadbaj o swoje bezpieczeństwo (uwaga na ruch uliczny, ogień, zalania itp.). <br>
+          2. Zadzwoń po pomoc — 112. <br>
+          3. Zabezpiecz miejsce wypadku: włącz światła awaryjne, postaw trójkąt ostrzegawczy, zapewnij strefę bezpieczeństwa. <br>
+          4. Udziel pierwszej pomocy — sprawdź przytomność, oddychanie, ocieplaj poszkodowanego i zachowaj spokój do przyjazdu ratowników.
+        </p>
+      </div>
+    </div>
 
-    const imgEl = document.getElementById('porada-img');
-
-    function setGraphic(key) {
-      const src = GRAPHICS[key] || '/img/placeholder.png';
-      imgEl.src = src + '?v=' + Date.now(); // odśwież cache
-      imgEl.alt = key ? ('Grafika: ' + key) : 'Grafika porady';
-    }
-
-    // Ustaw obraz z parametru URL (np. ?czesc=zadlawienie)
-    const qp = new URLSearchParams(location.search);
-    const czesc = (qp.get('czesc') || '').toLowerCase();
-    if (czesc) setGraphic(czesc);
-
-    // Kliknięcia w przyciski
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-graphic]');
-      if (!btn) return;
-      e.preventDefault();
-      setGraphic(String(btn.getAttribute('data-graphic')).toLowerCase());
-    });
-  </script>
+  </div>
 
 </body>
 </html>
