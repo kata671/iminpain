@@ -1,80 +1,118 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Szczegóły</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="assets/style.css?v=10" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BoliHelp – Szczegóły porady</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #d8b4f8, #fcbad3);
+      color: #222;
+    }
+    header {
+      text-align: center;
+      padding: 1rem;
+    }
+    h1 {
+      margin: 0.5rem 0;
+    }
+    main {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1.5rem 0;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .btn-green {
+      background: #2ecc71;
+      color: #fff;
+    }
+    .btn-green:hover {
+      background: #27ae60;
+      transform: translateY(-2px);
+    }
+    .img-wrap {
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .img-wrap img {
+      width: 100%;
+      max-width: 900px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+  </style>
 </head>
-<body data-page="szczegoly">
-  <div class="container">
-    <a class="back" href="javascript:history.back()">← Wróć</a>
-    <div class="breadcrumb">Sekcja: <span></span></div>
+<body>
 
-    <header class="header" style="margin-top:0">
-      <div class="brand">
-        <h1 id="detailTitle">Szczegóły</h1>
-        <small>Pierwsza pomoc, objawy, przyczyny, leki, lekarz</small>
-      </div>
-      <div class="tools">
-        <div class="actions">
-          <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
-          <button id="btn-hosp" class="btn btn--hosp" type="button">🏥 Szpitale / SOR</button>
-          <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener">
-            <span class="badge-round">apteka24</span>
-          </a>
-        </div>
-      </div>
-    </header>
+  <header>
+    <h1>Szczegóły porady</h1>
+  </header>
 
-    <section class="details">
-      <aside class="preview">
-        <img id="detailImg" alt="" />
-      </aside>
+  <main>
+    <!-- przyciski -->
+    <div class="buttons">
+      <button class="btn btn-green" data-graphic="reanimacja">Reanimacja</button>
+      <button class="btn btn-green" data-graphic="wypadek">Wypadek</button>
+      <button class="btn btn-green" data-graphic="zadlawienie">Zadławienie</button>
+    </div>
 
-      <div class="panels">
-        <article id="objawy" class="panel">
-          <header><h4>Objawy</h4></header>
-          <div class="content"><ul id="symptoms-list"></ul></div>
-        </article>
+    <!-- miejsce na obraz -->
+    <div class="img-wrap">
+      <img id="porada-img"
+           src="/img/placeholder.png"
+           alt="Grafika porady"
+           onerror="this.onerror=null;this.src='/img/placeholder.png';">
+    </div>
+  </main>
 
-        <article id="przyczyny" class="panel">
-          <header><h4>Przyczyny</h4></header>
-          <div class="content"><ul id="causes-list"></ul></div>
-        </article>
+  <script>
+    // mapowanie nazw na pliki
+    const GRAPHICS = {
+      reanimacja: '/img/reanimacja.png',
+      wypadek: '/img/wypadek.png',
+      zadlawienie: '/img/zadlawienie.png'
+    };
 
-        <article id="pierwszapomoc" class="panel">
-          <header><h4>Pierwsza pomoc</h4></header>
-          <div class="content" id="fa-container">
-            <div id="fa-toc"></div>
-            <ol id="fa-steps"></ol>
-          </div>
-        </article>
+    const imgEl = document.getElementById('porada-img');
 
-        <article id="leki" class="panel">
-          <header><h4>Leki</h4></header>
-          <div class="content">
-            <div class="badges">
-              <span class="badge badge--ok">Bez recepty</span>
-              <span class="badge badge--rx">Na receptę</span>
-            </div>
-            <ul id="otc-list"></ul>
-            <ul id="rx-list"></ul>
-          </div>
-        </article>
+    function setGraphic(key) {
+      const src = GRAPHICS[key] || '/img/placeholder.png';
+      imgEl.src = src + '?v=' + Date.now(); // wymusza odświeżenie cache
+      imgEl.alt = key ? ('Grafika: ' + key) : 'Grafika porady';
+    }
 
-        <article id="lekarz" class="panel">
-          <header><h4>Lekarz</h4></header>
-          <div class="content">
-            <ul id="doctor-list"></ul>
-            <a class="btn" style="margin-top:8px" href="https://www.google.com/maps/search/SOR+szpital+pomoc+medyczna/" target="_blank" rel="noopener">🔎 Znajdź najbliższy SOR</a>
-          </div>
-        </article>
-      </div>
-    </section>
-  </div>
+    // 1) ustaw obraz na podstawie URLa (np. ?czesc=zadlawienie)
+    const qp = new URLSearchParams(location.search);
+    const czesc = (qp.get('czesc') || '').toLowerCase();
+    if (czesc) setGraphic(czesc);
 
-  <script src="assets/main.js?v=10"></script>
+    // 2) przełączanie po kliknięciu w przyciski
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-graphic]');
+      if (!btn) return;
+      e.preventDefault();
+      setGraphic(String(btn.getAttribute('data-graphic')).toLowerCase());
+    });
+  </script>
+
 </body>
 </html>
