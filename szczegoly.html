@@ -10,38 +10,52 @@
       --glass-strong: rgba(255,255,255,.12);
       --accent: #2ecc71;
       --text: #fff;
+
+      /* kolory kart po prawej */
+      --c-help: linear-gradient(135deg,#2ecc71,#1abc9c);
+      --c-sym:  linear-gradient(135deg,#e67e22,#f1c40f);
+      --c-cau:  linear-gradient(135deg,#9b59b6,#8e44ad);
+      --c-med:  linear-gradient(135deg,#16a085,#27ae60);
+      --c-doc:  linear-gradient(135deg,#e74c3c,#c0392b);
     }
+
     /* tło jak u Ciebie */
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#1e3c72,#2a5298);color:var(--text);line-height:1.55;}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#1e3c72,#2a5298);color:var(--text);line-height:1.6;}
     a{color:var(--text);text-decoration:none;}
     header{padding:1rem 1.25rem;}
     h1{margin:.25rem 0 0;font-size:1.9rem;}
 
     .container{max-width:1100px;margin:1.25rem auto 2.5rem;padding:0 1rem;display:grid;gap:1.5rem;}
 
-    /* SEKCJA POZIOMA (lewo obraz / prawo treść) */
+    /* POZIOME SEKCJE (używane dla pierwszej pomocy) */
     .hsection{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;background:var(--glass);border-radius:14px;padding:1rem;box-shadow:0 8px 22px rgba(0,0,0,.25);}
-    .hsection__media{display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.08);border-radius:12px;padding:.5rem;}
-    .hsection__media img{width:100%;height:auto;border-radius:10px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.30);}
-
-    /* KARTY z sekcjami po prawej */
-    .panel{background:var(--glass-strong);border-radius:12px;padding:1rem;box-shadow:0 6px 18px rgba(0,0,0,.25);}
-    .tabs{display:flex;flex-wrap:wrap;gap:.5rem .5rem;margin:0 0 .75rem 0;}
-    .tab{padding:.45rem .75rem;border-radius:8px;background:rgba(255,255,255,.12);cursor:pointer;font-weight:600;user-select:none;transition:background .15s ease,transform .15s ease;}
-    .tab:hover{background:rgba(255,255,255,.20);transform:translateY(-1px);}
-    .tab.active{background:var(--accent);color:#fff;}
-
-    .section-title{margin:.25rem 0 .5rem;font-size:1.45rem;border-bottom:2px solid var(--accent);padding-bottom:.3rem;}
-    .content-block{font-size:1.08rem;line-height:1.7;}
-    .content-block ul{margin:.25rem 0 0;padding-left:1.2rem;}
-    .muted{opacity:.8;}
-
-    /* „Pierwsza pomoc – przegląd”: trzy poziome sekcje z grafikami */
     .hsection--fa + .hsection--fa{background:var(--glass-strong);}
+    .hsection__media{display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.08);border-radius:12px;padding:.5rem;}
+    .hsection__media img{width:100%;height:auto;border-radius:10px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.3);}
+    .hsection__text h2{margin:.25rem 0 .5rem;font-size:1.6rem;border-bottom:2px solid var(--accent);padding-bottom:.35rem;}
+    .hsection__text ul{margin:.25rem 0 0;padding-left:1.2rem;}
+    .hsection__text li{font-size:1.12rem;line-height:1.7;}
+
+    /* BLOK ANATOMII: lewo obraz, prawo 5 kolorowych kart */
+    .anatomy{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
+    .anatomy__media{background:rgba(0,0,0,.08);border-radius:12px;padding:.5rem;box-shadow:0 8px 22px rgba(0,0,0,.25);}
+    .anatomy__media img{width:100%;height:auto;border-radius:10px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.3);}
+
+    .anatomy__cards{display:grid;grid-template-columns:1fr;gap:1rem;}
+    .card{border-radius:12px;padding:1rem;box-shadow:0 6px 18px rgba(0,0,0,.25);background:var(--glass-strong);}
+    .card--help{background:var(--c-help);}
+    .card--sym{ background:var(--c-sym);}
+    .card--cau{ background:var(--c-cau);}
+    .card--med{ background:var(--c-med);}
+    .card--doc{ background:var(--c-doc);}
+    .card__title{margin:0 0 .4rem 0;font-size:1.25rem;font-weight:700;}
+    .card__body{font-size:1.08rem;}
+    .card__body ul{margin:.25rem 0 0;padding-left:1.2rem;}
+    .muted{opacity:.85}
 
     @media (max-width: 880px){
       .hsection{grid-template-columns:1fr;}
-      .hsection__media img{max-width:520px;margin:0 auto;display:block;}
+      .anatomy{grid-template-columns:1fr;}
     }
   </style>
 </head>
@@ -75,7 +89,6 @@
           <li>Skuteczny kaszel → zachęcaj do kaszlu, obserwuj.</li>
           <li>Całkowita niedrożność: 5 uderzeń w plecy → 5 uciśnięć nadbrzusza.</li>
           <li>Powtarzaj 5/5 do usunięcia przeszkody lub utraty przytomności.</li>
-          <li>Nieprzytomny: 112 i RKO (30:2).</li>
         </ul>`
       },
       wypadek: {
@@ -90,117 +103,123 @@
       }
     };
 
-    /* ==================================
-       2) DANE „ANATOMIA” – TU PRZYWRACAMY
-          WSZYSTKIE TWOJE OPISY
-       ==================================
-       Wzór:
-       ANATOMIA[typ][czesc] = {
-         title: "Nos – kobieta",
-         img: "/img/kobieta-nos.png",
-         sections: {
-           pierwsza_pomoc: `<ul>...</ul>`,
-           objawy: `<ul>...</ul>`,
-           przyczyny: `<ul>...</ul>`,
-           leki: `<ul>...</ul>`,
-           lekarz: `<ul>...</ul>`
-         }
-       }
-       — poniżej przykład dla kobieta→nos (wklej swoje pełne, stare treści 1:1)
-    */
+    /* ======================================================
+       2) DANE „ANATOMIA” – TU WPISUJEMY TWOJE PEŁNE OPISY
+          (przykład dla kobieta→nos; resztę możesz dopisać)
+       ====================================================== */
     const ANATOMIA = {
       kobieta: {
         nos: {
           title: "Nos – kobieta",
           img: "/img/kobieta-nos.png",
           sections: {
-            pierwsza_pomoc: `<ul>
-              <li>Uraz/krwawienie: pochyl głowę do przodu, uciskaj skrzydełka nosa 10–15 min.</li>
-              <li>Zimny okład na nasadę nosa.</li>
-              <li>Nie wydmuchuj mocno nosa, unikaj dłubania.</li>
+            help: `<ul>
+              <li>Krwawienie: pochyl głowę do przodu, uciskaj skrzydełka 10–15 min.</li>
+              <li>Zimny okład na nasadę nosa; nie wydmuchuj mocno.</li>
+              <li>Uraz: jeśli podejrzenie złamania → stabilizacja, chłodzenie, 112/SOR.</li>
             </ul>`,
-            objawy: `<ul>
-              <li>Krwawienie z nosa, obrzęk, ból, niedrożność, katar, kichanie.</li>
-              <li>Uczucie zatkania, upośledzenie węchu.</li>
+            sym: `<ul>
+              <li>Krwawienie, ból, obrzęk, niedrożność, kichanie, upośledzenie węchu.</li>
             </ul>`,
-            przyczyny: `<ul>
-              <li>Infekcje, alergia, suchość śluzówek, urazy, nadciśnienie, leki przeciwkrzepliwe.</li>
+            cau: `<ul>
+              <li>Infekcja, alergia, suchość śluzówki, uraz, nadciśnienie, leki przeciwkrzepliwe.</li>
             </ul>`,
-            leki: `<ul>
-              <li>Doraźnie: sól morska/izotoniczna, nawilżające żele do nosa.</li>
-              <li>Przy alergii: leki antyhistaminowe (OTC) – zgodnie z ulotką.</li>
+            med: `<ul>
+              <li>Sól morska/izotoniczna, żele nawilżające; przy alergii: OTC antyhistaminowe (wg ulotki).</li>
             </ul>`,
-            lekarz: `<ul>
-              <li>Jeśli krwawienie nie ustępuje po 20 min lub nawraca często.</li>
-              <li>Jeśli podejrzewasz złamanie, silny ból, gorączkę lub ropną wydzielinę.</li>
+            doc: `<ul>
+              <li>Krwawienie >20 min lub częste nawroty, podejrzenie złamania, ropna wydzielina, wysoka gorączka.</li>
             </ul>`
           }
-        },
-        /* PRZYKŁADOWE PUSTE SZABLONY – PODMIEŃ NA SWOJE TREŚCI */
-        usta:   { title:"Usta – kobieta",   img:"/img/kobieta-usta.png",   sections:{} },
-        oko:    { title:"Oko – kobieta",    img:"/img/kobieta-oko.png",    sections:{} },
-        ucho:   { title:"Ucho – kobieta",   img:"/img/kobieta-ucho.png",   sections:{} },
-        szyja:  { title:"Szyja – kobieta",  img:"/img/kobieta-szyja.png",  sections:{} },
-        /* ...dodaj wszystkie pozostałe części... */
+        }
+        // tu możesz dopisać kolejne części kobiety…
       },
       mezczyzna: {
-        nos:    { title:"Nos – mężczyzna",  img:"/img/mezczyzna-nos.png",  sections:{} },
-        /* ...pozostałe... */
+        // dopisz swoje pozycje; domyślny szablon niżej i tak zadziała
       },
       dziecko: {
-        nos:    { title:"Nos – dziecko",    img:"/img/dziecko-nos.png",    sections:{} },
-        /* ...pozostałe... */
+        // dopisz swoje pozycje; domyślny szablon niżej i tak zadziała
       }
     };
 
-    /* ========= Pomocnicze: renderer kart/anatomii ========= */
+    /* ======================================================
+       3) DOMYŚLNY SZABLON – gdy nie ma wpisu w ANATOMIA
+          (żeby nigdy nic nie zniknęło i wszystko było „wypasione”)
+       ====================================================== */
+    function defaultAnatomy(label){
+      const part = label || "ta część ciała";
+      return {
+        title: label || "Szczegóły",
+        img: "", // ustawimy niżej automatyczną ścieżkę
+        sections: {
+          help: `<ul>
+            <li>Jeśli wystąpi ból, obrzęk lub krwawienie – ogranicz ruch, chłodź 10–15 min, obserwuj.</li>
+            <li>W silnych objawach lub urazie – 112 / SOR.</li>
+          </ul>`,
+          sym: `<ul>
+            <li>Ból, obrzęk, zaczerwienienie, ograniczenie funkcji, wrażliwość na dotyk.</li>
+          </ul>`,
+          cau: `<ul>
+            <li>Uraz mechaniczny, przeciążenie, infekcja, alergia lub choroby przewlekłe.</li>
+          </ul>`,
+          med: `<ul>
+            <li>Preparaty OTC (zgodnie z ulotką) odpowiednie dla tej okolicy; nawilżanie/odciążenie.</li>
+          </ul>`,
+          doc: `<ul>
+            <li>Nasilające się lub utrzymujące objawy, deformacja, duszność, gorączka, u dzieci niepokój – konsultacja lekarska.</li>
+          </ul>`
+        }
+      };
+    }
+
+    /* ======================== RENDERERY BLOKÓW ======================== */
     function makeFirstAidSection(d){
       const sec = document.createElement('section');
       sec.className = 'hsection hsection--fa';
       sec.innerHTML = `
         <div class="hsection__media"><img src="${d.img}" alt="${d.title}" onerror="this.src='/img/placeholder.png'"></div>
         <div class="hsection__text">
-          <h2 class="section-title">${d.title}</h2>
-          <div class="content-block">${d.text}</div>
+          <h2>${d.title}</h2>
+          ${d.text}
         </div>`;
       return sec;
     }
 
-    function makeAnatomySection(d){
-      const wrapper = document.createElement('section');
-      wrapper.className = 'hsection';
-      wrapper.innerHTML = `
-        <div class="hsection__media">
-          <img src="${d.img}" alt="${d.title}" onerror="this.src='/img/placeholder.png'">
+    function makeAnatomyView(d, imgAuto){
+      const view = document.createElement('section');
+      view.className = 'anatomy';
+      const imgSrc = d.img && d.img.trim() ? d.img : imgAuto;
+      view.innerHTML = `
+        <div class="anatomy__media">
+          <img src="${imgSrc}" alt="${d.title}" onerror="this.src='/img/placeholder.png'">
         </div>
-        <div class="panel">
-          <h2 class="section-title" id="anatomy-title">${d.title}</h2>
-          <div class="tabs" id="tabs">
-            <span class="tab active" data-k="pierwsza_pomoc">Pierwsza pomoc</span>
-            <span class="tab" data-k="objawy">Objawy</span>
-            <span class="tab" data-k="przyczyny">Przyczyny</span>
-            <span class="tab" data-k="leki">Leki</span>
-            <span class="tab" data-k="lekarz">Kiedy do lekarza</span>
+        <div class="anatomy__cards">
+          <div class="card card--help">
+            <h3 class="card__title">Pierwsza pomoc</h3>
+            <div class="card__body">${d.sections.help || '<p class="muted">Brak danych.</p>'}</div>
           </div>
-          <div class="content-block" id="tab-content"></div>
+          <div class="card card--sym">
+            <h3 class="card__title">Objawy</h3>
+            <div class="card__body">${d.sections.sym || '<p class="muted">Brak danych.</p>'}</div>
+          </div>
+          <div class="card card--cau">
+            <h3 class="card__title">Przyczyny</h3>
+            <div class="card__body">${d.sections.cau || '<p class="muted">Brak danych.</p>'}</div>
+          </div>
+          <div class="card card--med">
+            <h3 class="card__title">Leki</h3>
+            <div class="card__body">${d.sections.med || '<p class="muted">Brak danych.</p>'}</div>
+          </div>
+          <div class="card card--doc">
+            <h3 class="card__title">Kiedy do lekarza</h3>
+            <div class="card__body">${d.sections.doc || '<p class="muted">Brak danych.</p>'}</div>
+          </div>
         </div>`;
-      // po wstawieniu do DOM podpinamy logikę tabów
-      setTimeout(()=>{
-        const tabs = wrapper.querySelectorAll('.tab');
-        const out  = wrapper.querySelector('#tab-content');
-        const S    = d.sections || {};
-        function show(key){
-          tabs.forEach(t=>t.classList.toggle('active', t.dataset.k===key));
-          out.innerHTML = S[key] || `<p class="muted">Brak danych w tej sekcji.</p>`;
-        }
-        tabs.forEach(t=>t.addEventListener('click', ()=>show(t.dataset.k)));
-        show('pierwsza_pomoc'); // domyślnie
-      });
-      return wrapper;
+      return view;
     }
 
-    /* ================= Logika wyboru widoku ================= */
-    const qp = new URLSearchParams(location.search);
+    /* =========================== LOGIKA WIDOKU =========================== */
+    const qp    = new URLSearchParams(location.search);
     const typ   = (qp.get('typ')   || '').toLowerCase();   // porada | kobieta | mezczyzna | dziecko
     const czesc = (qp.get('czesc') || '').toLowerCase();
     const label = qp.get('label') || '';
@@ -223,13 +242,20 @@
         setTitle('Szczegóły porady');
         content.innerHTML = '<p class="muted">Brak danych dla tej porady.</p>';
       }
-    } else if (ANATOMIA[typ] && ANATOMIA[typ][czesc]) {
-      const d = ANATOMIA[typ][czesc];
-      setTitle(d.title || label || 'Szczegóły');
-      content.appendChild(makeAnatomySection(d));
     } else {
-      setTitle(label || 'Szczegóły');
-      content.innerHTML = '<p class="muted">Brak danych. Upewnij się, że parametry <code>typ</code> i <code>czesc</code> są prawidłowe.</p>';
+      // widok anatomiczny
+      const store = ANATOMIA[typ] || {};
+      let d = store[czesc];
+      // automatyczna ścieżka obrazka (gdy brak w danych)
+      const autoImg = `/img/${typ}-${czesc}.png`;
+      if (!d) {
+        d = defaultAnatomy(label || czesc);
+        d.img = autoImg;
+      } else if (!d.img) {
+        d.img = autoImg;
+      }
+      setTitle(d.title || label || 'Szczegóły');
+      content.appendChild(makeAnatomyView(d, autoImg));
     }
   </script>
 </body>
