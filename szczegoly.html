@@ -1,1112 +1,210 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>BoliHelp – Szczegóły</title>
-<meta name="description" content="Kompletny przewodnik: objawy, przyczyny, pierwsza pomoc, leki, rehabilitacja, czerwone flagi, mity, FAQ." />
-<style>
-/* ======= Design 2025 (SCOPED – tylko dla tej strony) ======= */
-:root{
-  --bg:#0f1020; --panel:#14152a; --card:#141733; --text:#f3f4fb; --muted:#b9b9d2;
-  --accent:#a46bff; --accent2:#5eead4; --ok:#70e1b1; --warn:#ffb86c; --danger:#ff6b6b;
-  --ring:0 0 0 3px rgba(164,107,255,.22);
-}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-a{color:inherit;text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:18px}
-
-/* anim tło */
-.bg-anim{position:fixed;inset:-10% -10% auto -10%;height:56vh;z-index:-1;pointer-events:none;
-  background:radial-gradient(40vw 35vh at 15% 10%, rgba(164,107,255,.18), transparent 60%),
-             radial-gradient(35vw 30vh at 85% 5%, rgba(94,234,212,.16), transparent 60%),
-             radial-gradient(50vw 45vh at 50% 100%, rgba(164,107,255,.16), transparent 60%);
-  filter:blur(14px) saturate(118%);animation:float 15s ease-in-out infinite alternate}
-@keyframes float{from{transform:translate3d(-6px,-4px,0)}to{transform:translate3d(6px,4px,0)}}
-
-/* header/hero */
-.header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
-.back{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
-.brand h1{margin:0;font-weight:900;letter-spacing:.3px;font-size:clamp(22px,3.2vw,32px)}
-.brand small{display:block;color:var(--muted);margin-top:4px}
-.detail-hero{position:relative;border-radius:22px;padding:22px;background:
-  linear-gradient(135deg, rgba(164,107,255,.18), rgba(94,234,212,.12)), var(--panel);
-  box-shadow:0 24px 60px rgba(0,0,0,.34);margin-bottom:10px}
-.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.pill{padding:6px 10px;border-radius:999px;font-size:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16)}
-.badge{padding:6px 10px;border-radius:10px;font-size:12px;border:1px solid transparent}
-.badge--ok{background:rgba(112,225,177,.18);border-color:rgba(112,225,177,.35)}
-.badge--info{background:rgba(164,107,255,.18);border-color:rgba(164,107,255,.35)}
-
-/* tabs */
-.tabs{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-.tab{appearance:none;border:0;cursor:pointer;color:var(--muted);font-weight:800;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.05);transition:.18s}
-.tab:hover{color:var(--text);transform:translateY(-1px)}
-.tab.is-active{color:var(--text);background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));box-shadow:var(--ring)}
-
-/* grid/cards */
-.panels{padding:16px 0}
-.panel{display:none;animation:fade .28s ease}
-.panel.is-active{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none}}
-
-.grid{display:grid;gap:14px;grid-template-columns:repeat(12,1fr)}
-.card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;grid-column:span 12;box-shadow:0 12px 24px rgba(0,0,0,.28)}
-.card h3{margin:.2rem 0 .6rem;font-size:1.05rem;letter-spacing:.2px}
-.card p{color:var(--muted)}
-.scroll{max-height:340px;overflow:auto;padding-right:6px}
-@media(min-width:860px){.col-4{grid-column:span 4}.col-6{grid-column:span 6}.col-8{grid-column:span 8}.col-12{grid-column:span 12}}
-
-.card--sym{border-color:rgba(94,234,212,.35)}
-.card--cause{border-color:rgba(164,107,255,.35)}
-.card--aid{border-color:rgba(112,225,177,.35)}
-.card--med{border-color:rgba(255,184,108,.35)}
-.card--rx{border-color:rgba(255,107,107,.35)}
-.card--rehab{border-color:rgba(94,234,212,.55);background:linear-gradient(180deg, rgba(94,234,212,.08), rgba(255,255,255,.03))}
-.strip{margin-top:10px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);font-weight:600}
-.strip--warn{border-color:rgba(255,184,108,.5);background:linear-gradient(180deg, rgba(255,184,108,.18), rgba(255,255,255,.04))}
-.cta{display:inline-block;margin-top:10px;padding:12px 16px;border-radius:12px;font-weight:900;background:linear-gradient(135deg, var(--accent), var(--accent2));color:#0c0c12}
-
-/* lists */
-.ul{margin:0;padding-left:1.2rem}
-.ul li{margin:.28rem 0}
-.ol{margin:0;padding-left:1.2rem}
-.ol li{margin:.34rem 0}
-
-/* risk */
-.risk{display:flex;align-items:center;gap:10px;margin-top:8px}
-.riskbar{position:relative;height:12px;flex:1;border-radius:999px;background:linear-gradient(90deg, var(--ok), #ffd86b, var(--danger));outline:1px solid rgba(255,255,255,.15)}
-.cursor{position:absolute;top:50%;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:var(--ring)}
-.label{min-width:110px;font-weight:800}
-
-/* flip (mity) */
-.flipwrap{perspective:1000px}
-.flip{position:relative;border-radius:14px;overflow:hidden;transform-style:preserve-3d;transition:transform .6s;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04))}
-.flip.is-flipped{transform:rotateY(180deg)}
-.flip .side{position:absolute;inset:0;padding:14px;backface-visibility:hidden}
-.flip .back{transform:rotateY(180deg)}
-.faq{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;margin:10px 0}
-.faq>summary{cursor:pointer;font-weight:800}
-.faq[open]{box-shadow:0 10px 18px rgba(0,0,0,.25)}
-
-small.disclaimer{display:block;margin-top:8px;color:var(--muted);opacity:.9}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Boli Help — Szczegóły</title>
+  <style>
+    :root{
+      --bg:#0d1022;           /* jaśniejsze, chłodne tło */
+      --panel:#131633;
+      --card: rgba(48, 28, 86, .45); /* ciemny, półprzezr. fiolet dla kart */
+      --text:#f3f4fb; --muted:#b9b9d2;
+      --accent:#a46bff; --accent2:#5eead4; --ok:#70e1b1; --warn:#ffb86c; --danger:#ff6b6b;
+    }
+    body{
+      margin:0; font-family: 'Inter',sans-serif; background:var(--bg); color:var(--text);
+    }
+    .bg-anim{
+      height:60vh;
+      background:
+        radial-gradient(42vw 36vh at 16% 12%, rgba(164,107,255,.22), transparent 60%),
+        radial-gradient(36vw 30vh at 84% 8%, rgba(94,234,212,.18), transparent 60%),
+        radial-gradient(50vw 48vh at 50% 105%, rgba(164,107,255,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+      filter: blur(12px) saturate(120%);
+    }
+    main{ max-width:1100px; margin:auto; padding:1rem; }
+    .tabs{ display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem; }
+    .tab{ padding:.6rem 1rem; border-radius:999px; cursor:pointer; background:rgba(255,255,255,.08); }
+    .tab.is-active{ background:var(--accent); color:white; }
+    .cards{ display:grid; gap:1rem; }
+    .card{
+      background: var(--card);
+      backdrop-filter: blur(8px) saturate(120%);
+      border: 1px solid rgba(164,107,255,.16);
+      border-radius:1rem; padding:1rem;
+      box-shadow: 0 14px 34px rgba(8,10,22,.45);
+      transition: box-shadow .22s, transform .22s, border-color .22s;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 18px 48px rgba(8,10,22,.55), 0 0 18px rgba(164,107,255,.20);
+    }
+    .card h3{
+      position: relative; margin:.1rem 0 .85rem; font-weight:900; letter-spacing:.3px;
+    }
+    .card h3::after{
+      content:""; display:block; height:1px; margin-top:.55rem;
+      background:linear-gradient(90deg, rgba(255,255,255,.36), rgba(255,255,255,.08) 45%, transparent);
+    }
+    .card h3:hover{ text-shadow:0 0 10px rgba(255,110,199,.35) }
+    /* kolorowe ramki */
+    .card--sym{  border-color: rgba(94,234,212,.45) }
+    .card--cause{border-color: rgba(164,107,255,.45) }
+    .card--aid{  border-color: rgba(112,225,177,.45) }
+    .card--med{  border-color: rgba(255,184,108,.45) }
+    .card--rx{   border-color: rgba(255,107,107,.55) }
+    .card--rehab{
+      border-color: rgba(94,234,212,.60);
+      background: linear-gradient(180deg, rgba(94,234,212,.10), rgba(255,255,255,.04));
+    }
+    .strip{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.16);
+      padding:.6rem 1rem; border-radius:.8rem; margin:.5rem 0;
+    }
+    .strip--warn{
+      background: linear-gradient(180deg, rgba(255,184,108,.18), rgba(255,255,255,.04));
+      border-color: rgba(255,184,108,.55);
+    }
+    /* akordeony */
+    .more-btn{
+      display:inline-block; margin-top:8px; padding:10px 14px; border-radius:10px;
+      font-weight:800; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18);
+      cursor:pointer; transition:.18s
+    }
+    .more-btn:hover{ box-shadow:0 0 0 2px rgba(255,110,199,.32), 0 0 14px rgba(255,110,199,.18) }
+    #bh-particles{
+      position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.5;
+      filter: blur(.2px) saturate(110%);
+    }
+  </style>
 </head>
 <body>
-<div class="bg-anim" aria-hidden="true"></div>
-<div class="container">
-  <div class="header">
-    <a class="back" href="javascript:history.back()">← Wróć</a>
-    <div class="brand">
-      <h1 id="title">Szczegóły</h1>
-      <small id="subtitle">Kompendium: objawy, przyczyny, pierwsza pomoc, leki, rehabilitacja.</small>
+  <div class="bg-anim"></div>
+  <canvas id="bh-particles" aria-hidden="true"></canvas>
+
+  <main>
+    <div class="tabs">
+      <div class="tab is-active">Objawy</div>
+      <div class="tab">Przyczyny</div>
+      <div class="tab">Pierwsza pomoc</div>
+      <div class="tab">Leki</div>
+      <div class="tab">Rehabilitacja</div>
+      <div class="tab">Kiedy się niepokoić</div>
+      <div class="tab">Mity vs Fakty</div>
+      <div class="tab">FAQ</div>
     </div>
-  </div>
 
-  <section class="detail-hero">
-    <div class="meta" id="meta"></div>
-    <nav class="tabs" role="tablist" aria-label="Sekcje">
-      <button class="tab is-active" data-tab="objawy">Objawy</button>
-      <button class="tab" data-tab="przyczyny">Przyczyny</button>
-      <button class="tab" data-tab="ppomoc">Pierwsza pomoc</button>
-      <button class="tab" data-tab="leki">Leki</button>
-      <button class="tab" data-tab="rehab">Rehabilitacja / Profilaktyka</button>
-      <button class="tab" data-tab="lekarz">Kiedy się niepokoić</button>
-      <button class="tab" data-tab="mity">Mity vs Fakty</button>
-      <button class="tab" data-tab="faq">FAQ</button>
-    </nav>
-  </section>
+    <div class="cards">
+      <section class="card card--sym"><h3>Objawy</h3><ul id="symp-common"></ul></section>
+      <section class="card card--cause"><h3>Przyczyny</h3><ul id="causes"></ul></section>
+      <section class="card card--aid"><h3>Pierwsza pomoc</h3><ul id="firstaid"></ul></section>
+      <section class="card card--med"><h3>Leki bez recepty</h3><ul id="meds-otc"></ul></section>
+      <section class="card card--rx"><h3>Leki na receptę</h3><ul id="meds-rx"></ul></section>
+      <section class="card card--rehab"><h3>Rehabilitacja / Profilaktyka</h3><ul id="rehab-home"></ul></section>
+      <section class="card card--cause" id="lekarz"><h3>Kiedy się niepokoić</h3><ul id="urgent"></ul></section>
+      <section class="card card--aid" id="mity"><h3>Mity vs Fakty</h3><div class="flip"><div class="front"><h3>Mit</h3></div><div class="back"><h3>Fakt</h3></div></div></section>
+      <section class="card card--sym"><h3>FAQ</h3>
+        <p id="q1s"></p><p id="q1a"></p>
+        <p id="q2s"></p><p id="q2a"></p>
+        <p id="q3s"></p><p id="q3a"></p>
+      </section>
+    </div>
+  </main>
 
-  <!-- PANELS -->
-  <section class="panels">
-    <!-- OBJAWY -->
-    <article class="panel is-active" id="objawy">
-      <div class="grid">
-        <div class="card card--sym col-4">
-          <h3>Najczęstsze</h3>
-          <ul class="ul" id="symp-common"></ul>
-        </div>
-        <div class="card card--sym col-4">
-          <h3>Warto obserwować</h3>
-          <ul class="ul" id="symp-watch"></ul>
-        </div>
-        <div class="card col-4" style="border-color:rgba(255,107,107,.45)">
-          <h3>Alarm</h3>
-          <ul class="ul" id="symp-alarm"></ul>
-          <a class="cta" href="tel:112">112 — połączenie alarmowe</a>
-        </div>
+  <script>
+    const typ = new URLSearchParams(location.search).get('typ');
+    const czesc = new URLSearchParams(location.search).get('czesc');
+    const data = {
+      common:["ból","zaczerwienienie","obrzęk","gorączka","osłabienie"],
+      causes:["infekcje","urazy","alergie","choroby przewlekłe"],
+      firstaid:["odpoczynek","zimne okłady","nawodnienie","środki przeciwbólowe OTC"],
+      otc:["paracetamol","ibuprofen","maści łagodzące"],
+      rx:["antybiotyki","sterydy","leki przeciwzapalne"],
+      rehab:["ćwiczenia rozciągające","fizjoterapia","zmiana stylu życia"],
+      urgent:["nagły ostry ból","utrata przytomności","krwotok","trudności w oddychaniu"],
+      myths:[{m:"ból zawsze oznacza chorobę poważną",f:"często to błaha przyczyna"}],
+      faq:[{q:"Jak postępować w domu?",a:"stosuj pierwszą pomoc i obserwuj czerwone flagi"}]
+    };
+    function fillList(id, arr){ const ul=document.getElementById(id); if(!ul) return;
+      arr.forEach(x=>{const li=document.createElement('li'); li.textContent=x; ul.appendChild(li);});
+    }
+    fillList('symp-common',data.common);
+    fillList('causes',data.causes);
+    fillList('firstaid',data.firstaid);
+    fillList('meds-otc',data.otc);
+    fillList('meds-rx',data.rx);
+    fillList('rehab-home',data.rehab);
+    fillList('urgent',data.urgent);
 
-        <div class="card col-6">
-          <h3>Twoje zaznaczenia</h3>
-          <p style="margin-top:-6px;color:var(--muted)">Zaznacz objawy — wskaźnik pokaże poziom ryzyka (informacyjnie).</p>
-          <div id="checkgrid" class="ul"></div>
-          <div class="risk">
-            <div class="label" id="risklabel">Niskie</div>
-            <div class="riskbar"><div class="cursor" id="riskcursor" style="left:5%"></div></div>
-          </div>
-          <small class="disclaimer">Wskaźnik ma charakter poglądowy i nie zastępuje badania lekarskiego.</small>
-        </div>
+    document.getElementById('q1s').textContent = data.faq[0]?.q;
+    document.getElementById('q1a').textContent = data.faq[0]?.a;
+  </script>
 
-        <div class="card card--aid col-6">
-          <h3>„1 minuta” – szybkie kroki</h3>
-          <ol class="ol" id="one-minute"></ol>
-          <div class="strip strip--warn">Nagłe, ciężkie objawy? Dzwoń <strong>112</strong> lub udaj się na SOR.</div>
-        </div>
-      </div>
-    </article>
+  <script>
+  /* === PARTICLES === */
+  (function particles(){
+    const c=document.getElementById('bh-particles'); if(!c) return;
+    const dpr=Math.min(2,window.devicePixelRatio||1);
+    const ctx=c.getContext('2d'); let W,H,dots=[];
+    function resize(){
+      W=c.width=Math.floor(innerWidth*dpr);
+      H=c.height=Math.floor(innerHeight*dpr);
+      c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px';
+      const target=Math.floor((innerWidth*innerHeight)/14000);
+      dots=Array.from({length:target},()=>({
+        x:Math.random()*W,y:Math.random()*H,
+        vx:(Math.random()-.5)*.12*dpr,vy:(Math.random()-.5)*.12*dpr,
+        r:(Math.random()*1.4+0.6)*dpr,a:Math.random()*.55+.25
+      }));
+    }
+    function step(){
+      ctx.clearRect(0,0,W,H);
+      for(const p of dots){
+        p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0||p.x>W) p.vx*=-1; if(p.y<0||p.y>H) p.vy*=-1;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        const grad=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3);
+        grad.addColorStop(0,`rgba(164,107,255,${0.22*p.a})`);
+        grad.addColorStop(1,`rgba(94,234,212,0)`);
+        ctx.fillStyle=grad; ctx.fill();
+      }
+      requestAnimationFrame(step);
+    }
+    addEventListener('resize',resize,{passive:true});
+    resize(); step();
+  })();
 
-    <!-- PRZYCZYNY -->
-    <article class="panel" id="przyczyny">
-      <div class="grid">
-        <div class="card card--cause col-6">
-          <h3>Co może być przyczyną</h3>
-          <div class="scroll"><ul class="ul" id="causes"></ul></div>
-        </div>
-        <div class="card col-6">
-          <h3>Czynniki ryzyka / wyzwalacze</h3>
-          <div class="scroll"><ul class="ul" id="triggers"></ul></div>
-        </div>
-      </div>
-    </article>
+  /* === AKORDEONY === */
+  (function acc(){
+    const ids=['symp-common','causes','firstaid','meds-otc','meds-rx','rehab-home','urgent'];
+    const LIM=4;
+    ids.forEach(id=>{
+      const el=document.getElementById(id); if(!el) return;
+      const items=[...el.children]; if(items.length<=LIM) return;
+      items.slice(LIM).forEach(li=>li.style.display='none');
+      const btn=document.createElement('button');
+      btn.className='more-btn'; btn.textContent='Pokaż więcej';
+      el.parentElement.appendChild(btn);
+      let open=false;
+      btn.addEventListener('click',()=>{
+        open=!open;
+        items.slice(LIM).forEach(li=>li.style.display=open?'':'none');
+        btn.textContent=open?'Pokaż mniej':'Pokaż więcej';
+      });
+    });
+  })();
 
-    <!-- PIERWSZA POMOC -->
-    <article class="panel" id="ppomoc">
-      <div class="grid">
-        <div class="card card--aid col-6">
-          <h3>Kroki domowe (krok po kroku)</h3>
-          <div class="scroll"><ol class="ol" id="firstaid"></ol></div>
-        </div>
-        <div class="card col-6">
-          <h3>Rób / Nie rób</h3>
-          <div class="scroll"><ul class="ul" id="dosdonts"></ul></div>
-        </div>
-      </div>
-    </article>
-
-    <!-- LEKI -->
-    <article class="panel" id="leki">
-      <div class="grid">
-        <div class="card card--med col-6">
-          <h3>Bez recepty (OTC)</h3>
-          <div class="scroll"><ul class="ul" id="meds-otc"></ul></div>
-        </div>
-        <div class="card card--rx col-6">
-          <h3>Na receptę (Rx) – decyzja lekarza</h3>
-          <div class="scroll"><ul class="ul" id="meds-rx"></ul></div>
-        </div>
-      </div>
-      <div class="card">
-        <p class="strip">Informacje o lekach mają charakter edukacyjny. Zawsze czytaj ulotkę i konsultuj z lekarzem lub farmaceutą (szczególnie w ciąży, u dzieci i przy chorobach przewlekłych).</p>
-      </div>
-    </article>
-
-    <!-- REHABILITACJA -->
-    <article class="panel" id="rehab">
-      <div class="grid">
-        <div class="card card--rehab col-6">
-          <h3>Ćwiczenia / domowa rehabilitacja</h3>
-          <div class="scroll"><ul class="ul" id="rehab-home"></ul></div>
-        </div>
-        <div class="card col-6">
-          <h3>Fizjoterapia / profilaktyka</h3>
-          <div class="scroll"><ul class="ul" id="rehab-physio"></ul></div>
-        </div>
-        <div class="card col-12">
-          <h3>Styl życia / zapobieganie</h3>
-          <div class="scroll"><ul class="ul" id="prevention"></ul></div>
-        </div>
-      </div>
-    </article>
-
-    <!-- KIEDY DO LEKARZA -->
-    <article class="panel" id="lekarz">
-      <div class="grid">
-        <div class="card col-6">
-          <h3>Pilnie (dzisiaj)</h3>
-          <ul class="ul" id="urgent"></ul>
-        </div>
-        <div class="card col-6">
-          <h3>Planowo</h3>
-          <ul class="ul" id="routine"></ul>
-        </div>
-      </div>
-    </article>
-
-    <!-- MITY -->
-    <article class="panel" id="mity">
-      <div class="grid" id="myths"></div>
-    </article>
-
-    <!-- FAQ -->
-    <article class="panel" id="faq">
-      <details class="faq"><summary id="q1s"></summary><p id="q1a"></p></details>
-      <details class="faq"><summary id="q2s"></summary><p id="q2a"></p></details>
-      <details class="faq"><summary id="q3s"></summary><p id="q3a"></p></details>
-    </article>
-  </section>
-</div>
-
-<script>
-/* === URL params === */
-const qp = new URLSearchParams(location.search);
-const typ   = (qp.get('typ')||'ogolne').toLowerCase();
-const czesc = (qp.get('czesc')||'glowa').toLowerCase();
-const label = decodeURIComponent(qp.get('label')||czesc.charAt(0).toUpperCase()+czesc.slice(1));
-document.getElementById('title').textContent = label;
-
-/* === Tabs === */
-document.querySelectorAll('.tab').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('is-active'));
-    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('is-active'));
-    btn.classList.add('is-active');
-    document.getElementById(btn.dataset.tab).classList.add('is-active');
-    window.scrollTo({top:0, behavior:'smooth'});
-  });
-});
-
-/* === Bogata baza treści — dopasowana do części ciała ===
-   Każdy wpis: common, watch, alarm, check, oneMinute,
-   causes (lista), triggers (lista),
-   firstaid (lista), dosdonts (lista),
-   meds_otc (lista), meds_rx (lista),
-   rehab_home (lista), rehab_physio (lista), prevention (lista),
-   urgent (lista), routine (lista),
-   myths ([{myth,fact}]), faq ([{q,a}]),
-   tags (lista), subtitle (string)
-*/
-const DB = {
-  nos: {
-    subtitle: "Nos – od kataru po epistaksję: co jest typowe, a co wymaga reakcji.",
-    tags:[typ,"otolaryngologia","materiał informacyjny","zweryfikowane"],
-    common:["katar wodnisty/śluzowy","zatkany nos","kichanie","świąd nosa","spływanie wydzieliny po tylnej ścianie gardła"],
-    watch:["katar ropny >7 dni","ból twarzy przy pochylaniu","brak węchu (anosmia) utrzymujący się","krwawienia nawracające"],
-    alarm:["krwotok nieustępujący >20 min mimo ucisku","jednostronny cuchnący wyciek (zwł. u dziecka – ciało obce)","nagła utrata węchu po urazie głowy","wysoka gorączka z silnym bólem zatok"],
-    check:["wodnisty katar","zatkanie nosa","ból zatok","krwawienie z nosa","utrata węchu"],
-    oneMinute:["Pochyl głowę lekko do przodu","Płucz nos solą fizjologiczną/morską","Nawilżaj powietrze","Przyłóż zimny okład na nasadę nosa","Unikaj dymu i silnego dmuchania"],
-    causes:[
-      "infekcje wirusowe (przeziębienie)","alergiczny nieżyt nosa","ostre/przewlekłe zapalenie zatok","polipy nosa","skrzywiona przegroda","suchość śluzówki (klimatyzacja, ogrzewanie)","uraz nosa / naczynka krwionośne","polekowe zapalenie błony śluzowej (nadużycie kropli obkurczających)"
-    ],
-    triggers:["pyłki traw/drzew","roztocza","dym tytoniowy","nagłe zmiany temperatury","suche powietrze","perfumeria/aerozole"],
-    firstaid:[
-      "Płukanie nosa roztworem soli (izotonicznej/hipertonicznej) 2–4×/d","Inhalacje parowe lub z soli hipertonicznej","Nawodnienie i odpoczynek","Przy krwawieniu: ucisk skrzydełek 10–15 min, zimny okład, nie odchylaj głowy do tyłu","Sen z lekko uniesioną głową"
-    ],
-    dosdonts:[
-      "Tak: delikatnie wydmuchuj po jednym nozdrzu","Tak: krótkotrwale stosuj krople obkurczające (max 3–5 dni)","Nie: nadużywaj ksylometazoliny/oksymetazoliny","Nie: dłub w nosie (uraz śluzówki)"
-    ],
-    meds_otc:[
-      "Sól morska/izotoniczna (spraye, płukanki) — nawilżanie i oczyszczanie","Antyhistaminowe OTC przy alergii (np. cetyryzyna, loratadyna)","Krótkotrwale aerozole obkurczające (ksylo/oksy-metazolina) — max 3–5 dni","Leki przeciwbólowe/przeciwgorączkowe (paracetamol, ibuprofen – jeśli możesz)"
-    ],
-    meds_rx:[
-      "Glikokortykosteroidy donosowe przy alergii/polipach","Antybiotyk przy powikłanym bakteryjnym zapaleniu zatok (wg lekarza)","Immunoterapia swoista przy alergii (kwalifikacja laryngolog/alergolog)"
-    ],
-    rehab_home:[
-      "Nawilżanie śluzówki: nawilżacz + sól izotoniczna","Ćwiczenia oddechowe przez nos (wdech 4 s – wydech 6 s)","Higiena snu: pozycja na plecach z uniesieniem głowy"
-    ],
-    rehab_physio:[
-      "Trening oddechowy pod okiem fizjoterapeuty oddechowego","Edukacja dot. ekspozycji alergenów i techniki płukania nosa"
-    ],
-    prevention:[
-      "Unikaj dymu i suchego powietrza","Płucz nos po ekspozycji na alergeny","Krótko stosuj krople obkurczające, nie przewlekle"
-    ],
-    urgent:[
-      "Krwotok nieustępujący >20 min lub bardzo obfity","Silny ból zatok z gorączką i obrzękiem twarzy","Uraz nosa z deformacją / trudności w oddychaniu"
-    ],
-    routine:["Nawracające infekcje? — konsultacja laryngologiczna","Podejrzenie alergii — testy alergiczne"],
-    myths:[
-      {myth:"Katar trzeba mocno wysmarkać",fact:"Zbyt silne dmuchanie podrażnia i nasila obrzęk."},
-      {myth:"Krople obkurczające można brać długo",fact:"Po kilku dniach grożą polekowym obrzękiem śluzówki."}
-    ],
-    faq:[
-      {q:"Czy przewlekły katar to zawsze alergia?",a:"Nie — może to być przewlekłe zapalenie zatok lub suchość śluzówki."},
-      {q:"Co z krwawieniem u dziecka?",a:"Często to uraz śluzówki. Ucisk 10–15 min, zimny okład. Jeśli nie ustępuje — lekarz."},
-      {q:"Czy olejki eteryczne są bezpieczne?",a:"Uważaj przy astmie i u dzieci — mogą drażnić."}
-    ]
-  },
-
-  oczy: {
-    subtitle:"Oczy – od podrażnienia po nagłe pogorszenie widzenia.",
-    tags:[typ,"okulistyka","materiał informacyjny","zweryfikowane"],
-    common:["zaczerwienienie","łzawienie","swędzenie","uczucie piasku","światłowstręt (łagodny)"],
-    watch:["ropna wydzielina rano","sklejone rzęsy","pieczenie po pracy przy ekranie","zamglone widzenie okresowe"],
-    alarm:["nagła utrata ostrości widzenia","ból oka ze światłowstrętem i nudnościami","półprzezroczysta zasłona / mroczek po urazie","podejrzenie oparzenia chemicznego"],
-    check:["zaczerwienienie","łzawienie","ból oka","gorsze widzenie","światłowstręt"],
-    oneMinute:["Przepłucz oko solą/jałową wodą","Chłodny kompres przy podrażnieniu","Odpocznij od ekranu (20-20-20)","Nie trzyj oczu","Przy chemikaliach: płucz 15–30 min i SOR"],
-    causes:[
-      "zapalenie spojówek (wirusowe/bakteryjne)","alergiczne zapalenie spojówek","zespół suchego oka","ciało obce","uraz rogówki","jaskra ostra (nagły ból + nudności)","zapalenie tęczówki (ból + światłowstręt)"
-    ],
-    triggers:["długie patrzenie w ekran","suche/klimatyzowane pomieszczenia","alergeny (pyłki, kurz)","szkła kontaktowe noszone zbyt długo"],
-    firstaid:[
-      "Sztuczne łzy 4–6×/d (bez konserwantów)","Chłodne kompresy","Higiena brzegów powiek (blefaritis)","Nie używaj cudzych kropli/maści"
-    ],
-    dosdonts:["Tak: przerwy 20-20-20","Tak: zmniejsz jasność ekranu","Nie: soczewki podczas ostrego zapalenia","Nie: makijaż przy ropnej wydzielinie"],
-    meds_otc:[
-      "Sztuczne łzy, żele nawilżające","Antyhistaminowe krople OTC przy alergii (ketotifen/azelastyna – lokalnie)","NLPZ/paracetamol na ból (jeśli możesz)"
-    ],
-    meds_rx:[
-      "Antybiotyk w kroplach przy bakteryjnym zapaleniu (wg okulisty)","Sterydy/NSAID krople przy zapaleniu (tylko z zalecenia)","Leczenie jaskry — pilnie okulista"
-    ],
-    rehab_home:[
-      "Higiena pracy wzrokowej: przerwy, oświetlenie pośrednie, nawilżacz","Ćwiczenia akomodacji: patrz daleko–blisko 10×"
-    ],
-    rehab_physio:[
-      "Edukacja ergonomii stanowiska","Terapia widzenia (u specjalistów) przy astenopii"
-    ],
-    prevention:[
-      "Sztuczne łzy przy ekranie","Regularne badania okulistyczne, zwłaszcza przy cukrzycy/wysokiej wadzie"
-    ],
-    urgent:["Nagły ból oka + nudności / tęczowe koła — SOR","Oparzenie chemiczne — natychmiast płucz i SOR","Uraz oka z krwawieniem do komory przedniej"],
-    routine:["Nawracające podrażnienia? — kontrola okulistyczna","Dobór okularów/filtrów światła niebieskiego"],
-    myths:[
-      {myth:"Czytanie przy słabym świetle psuje wzrok na stałe",fact:"Może męczyć, ale nie powoduje trwałej wady."},
-      {myth:"Krople sterydowe można kupić i stosować samemu",fact:"Nie — ryzyko powikłań rogówki i jaskry."}
-    ],
-    faq:[
-      {q:"Czy można płukać oko kranówką?",a:"Lepiej jałowy roztwór soli. Kranówka tylko awaryjnie."},
-      {q:"Czy pracując przy ekranie warto nosić soczewki?",a:"Lepsze będą okulary — soczewki wysuszają."},
-      {q:"Jak długo utrzymuje się zapalenie spojówek?",a:"Zwykle 7–10 dni; jeśli dłużej lub pogarsza się — lekarz."}
-    ]
-  },
-
-  ucho: {
-    subtitle:"Ucho – ból, wyciek, zatkanie. Kiedy działać szybko?",
-    tags:[typ,"otolaryngologia","materiał informacyjny","zweryfikowane"],
-    common:["zatkanie ucha","szumy uszne","ból przy żuciu","swędzenie przewodu słuchowego"],
-    watch:["ból ucha po kąpieli","uczucie płynu w uchu","przejściowe pogorszenie słuchu"],
-    alarm:["silny ból z gorączką u dziecka","ropny/krwisty wyciek","nagła głuchota jednostronna","zawroty głowy + nudności"],
-    check:["ból ucha","zatkanie","wyciek","szumy","zawroty"],
-    oneMinute:["Ciepły okład (nie gorący)","Nie wkładaj patyczków do ucha","Jeśli woda — głowę na bok, delikatnie osusz","Silny ból/gorączka u dziecka — konsultacja"],
-    causes:[
-      "ostre zapalenie ucha środkowego (zwł. u dzieci)","zapalenie przewodu słuchowego (po basenie)","korek woskowinowy","dysfunkcja trąbki słuchowej (katar/loty)","uraz akustyczny","nagła głuchota czuciowo-nerwowa"
-    ],
-    triggers:["kąpiel/basen","przeziębienie/katar","lot samolotem","głośna muzyka"],
-    firstaid:[
-      "Osuszanie ucha po kąpieli (ręcznik, nie patyczki)","Krople na woskowinę (glicerol/olejki) przy zatkaniu","Unikaj wody przy zapaleniu","Ból — leki przeciwbólowe, jeśli możesz"
-    ],
-    dosdonts:[
-      "Tak: zabezpieczaj ucho przed wodą przy zapaleniu","Nie: patyczki (ryzyko urazu i wepchnięcia woskowiny)","Nie: samodzielne płukanie przy wycieku/urazie"
-    ],
-    meds_otc:[
-      "Krople zmiękczające woskowinę","Paracetamol/ibuprofen przeciwbólowo (jeśli możesz)","Krople z alkoholem izopropylowym po basenie (osuszające)"
-    ],
-    meds_rx:[
-      "Antybiotyk przy ostrym zapaleniu ucha (wg lekarza)","Krople z antybiotykiem/sterydem w zap. przewodu słuchowego","Leczenie nagłej głuchoty — pilna otolaryngologia"
-    ],
-    rehab_home:[
-      "Ćwiczenia wyrównawcze trąbki słuchowej (po katarze: ziewanie, manewr Toynbee delikatnie)","Higiena słuchu: przerwy od hałasu"
-    ],
-    rehab_physio:[
-      "Edukacja dot. autoinflacji (ostrożnie, bez bólu)","Terapia szumów (maskowanie, TRT) – specjaliści"
-    ],
-    prevention:[
-      "Ochronniki słuchu na koncertach","Unikaj patyczków i agresywnego czyszczenia","Susz ucho po basenie"
-    ],
-    urgent:["Silny ból + gorączka u dziecka","Nagła utrata słuchu jednostronna","Zawroty + oczopląs, nudności","Uraz z krwawym wyciekiem"],
-    routine:["Nawracające zapalenia — laryngolog","Szumy uszne — diagnostyka słuchu"],
-    myths:[
-      {myth:"Patyczki higieniczne są do czyszczenia uszu",fact:"Nie — są do małżowiny, nie do kanału słuchowego."},
-      {myth:"Woda utleniona zawsze dobra na korek",fact:"Może podrażniać — lepiej preparaty do woskowiny."}
-    ],
-    faq:[
-      {q:"Czy można latać samolotem przy katarze?",a:"Można, ale żuj gumę, nawilżaj nos; przy silnym bólu/wysięku — odłóż lot."},
-      {q:"Kiedy płukanie ucha?",a:"Tylko bez perforacji błony bębenkowej i bez zakażenia — zleca lekarz."},
-      {q:"Szumy po koncercie?",a:"Zwykle ustępują w 24–48 h; jeśli nie — audiolog."}
-    ]
-  },
-
-  gardlo: {
-    subtitle:"Gardło – ból, chrypka, połykanie: domowe sposoby i kiedy lekarz.",
-    tags:[typ,"laryngologia","materiał informacyjny","zweryfikowane"],
-    common:["ból gardła","drapanie","chrypka","ból przy połykaniu","powiększone migdałki"],
-    watch:["gorączka 37.5–38.5°C","biały nalot na migdałkach","węzły chłonne bolesne","kaszel nocny"],
-    alarm:["duszność/ślinotok (u dziecka)","trismus (szczękościsk)","głośny świst krtaniowy","podejrzenie ropnia okołomigdałkowego"],
-    check:["ból przy połykaniu","gorączka","naloty","chrypka","ślinotok u dziecka"],
-    oneMinute:["Nawadniaj często, małe łyki","Płukanki szałwia/rumianek/sola","Nawilżaj powietrze","Unikaj dymu i zimnych napojów"],
-    causes:[
-      "wirusowe zapalenie gardła (najczęściej)","angina paciorkowcowa","zapalenie krtani (chrypka)","refluks (pieczenie, suchy kaszel)","alergia/poekspozycyjne podrażnienie"
-    ],
-    triggers:["zimne/klimatyzacja","dym tytoniowy","głośna mowa/śpiew","alergeny"],
-    firstaid:[
-      "Płukanki 3–4×/d","Pastylki łagodzące ból i nawilżające","Ciepłe okłady na szyję","Odpoczynek głosu (przy chrypce)"
-    ],
-    dosdonts:["Tak: ciepłe napoje, miód (jeśli możesz)","Nie: alkohol/ostre przyprawy przy bólu","Nie: antybiotyk „na wszelki wypadek”"],
-    meds_otc:[
-      "Pastylki z anestetykiem/antyseptykiem","NLPZ/paracetamol na ból/gorączkę (jeśli możesz)","Syropy nawilżające przy kaszlu"
-    ],
-    meds_rx:[
-      "Antybiotyk przy potwierdzonej anginie (wg wytycznych)","IPP przy refluksie (po kwalifikacji)","Steryd inhalacyjny/krtaniowy przy zapaleniu (wg lekarza)"
-    ],
-    rehab_home:[
-      "Higiena głosu: mów cicho, nie szeptem, rób przerwy","Nawilżanie inhalatorem (0.9% NaCl)","Trening przepony (oddech nosem – wydech ustami)"
-    ],
-    rehab_physio:[
-      "Terapia głosu (foniatra/logopeda) przy przewlekłej chrypce","Edukacja pozycjonowania szyi (ergonomia)"
-    ],
-    prevention:[
-      "Unikaj dymu, nawilżaj powietrze","Nawodnienie i przerwy dla głosu","Leczenie refluksu, jeśli obecny"
-    ],
-    urgent:["Duszność, ślinotok u dziecka, szczękościsk — SOR","Wysoka gorączka z ropnym nalotem i silnym bólem — pilnie lekarz"],
-    routine:["Nawracające anginy — laryngolog","Chrypka >2 tyg. — konsultacja"],
-    myths:[
-      {myth:"Szept oszczędza gardło",fact:"Nie — bardziej męczy fałdy głosowe."},
-      {myth:"Antybiotyk zawsze na ból gardła",fact:"Wirusy są najczęstsze — antybiotyk nie działa."}
-    ],
-    faq:[
-      {q:"Czy miód pomaga?",a:"Może łagodzić; nie u dzieci <1 r.ż."},
-      {q:"Czy można ćwiczyć?",a:"Lekkie spacery tak; gorączka — odpoczynek."},
-      {q:"Jak długo trwa ból gardła?",a:"Zwykle 3–7 dni; dłużej → konsultacja."}
-    ]
-  },
-
-  glowa: {
-    subtitle:"Ból głowy – kiedy to napięciowy, kiedy migrena, a kiedy alarm.",
-    tags:[typ,"neurologia","materiał informacyjny","zweryfikowane"],
-    common:["uciskowa obręcz czoła/karku","nadwrażliwość na stres/ekran","sztywność karku (łagodna)"],
-    watch:["tętniący jednostronny ból (migrena)","nudności/wymioty w migrenie","aura: mroczki, zygzaki"],
-    alarm:["„najsilniejszy ból w życiu”","ból z gorączką i sztywnością karku","zaburzenia mowy/widzenia, niedowład","nagły ból po urazie"],
-    check:["ucisk opaski","tętnienie","światłowstręt","nudności","zaburzenia mowy/widzenia"],
-    oneMinute:["Ciche ciemne pomieszczenie","Nawadnianie","Krótka drzemka/relaks mięśni karku","Chłodny okład na czoło","Proste NLPZ/paracetamol jeśli możesz (wcześnie w napadzie)"],
-    causes:[
-      "napięciowy ból głowy (stres, mięśnie)","migrena (neurogenny)","odwodnienie, hipoglikemia","wzrok (nadwyrężenie)","infekcje zatok","nadciśnienie (rzadziej jako jedyna przyczyna)","nadużycie leków przeciwbólowych (bóle polekowe)"
-    ],
-    triggers:["brak snu","kofeina/alkohol","migające światła/ekran","zmiany hormonalne","pogoda"],
-    firstaid:[
-      "Odpoczynek i wyciszenie bodźców","Nawodnienie, mały posiłek","Rozluźnienie karku/masaż skroni","Leki przeciwbólowe w dawkach zalecanych (jeśli możesz)"
-    ],
-    dosdonts:[
-      "Tak: dziennik bólów (wyzwalacze)","Tak: przerwy od ekranu","Nie: codzienne branie NLPZ (ryzyko polekowych)","Nie: intensywny wysiłek w ostrym napadzie"
-    ],
-    meds_otc:[
-      "Paracetamol, ibuprofen, kwas acetylosalicylowy (jeśli nie ma przeciwwskazań)","Preparaty z kofeiną (ostrożnie)","Magnez/rutyna – wsparcie (dowody umiarkowane)"
-    ],
-    meds_rx:[
-      "Triptany w migrenie (wg lekarza)","Leczenie profilaktyczne migreny (beta-blokery, topiramat itd.)","Leki rozluźniające mięśnie przy napięciowych (wybrane przypadki)"
-    ],
-    rehab_home:[
-      "Ćwiczenia karku i retrakcja szyi (McKenzie – delikatnie)","Techniki relaksacji/oddech 4-7-8","Higiena snu (stałe pory)"
-    ],
-    rehab_physio:[
-      "Fizjoterapia szyjno-czaszkowa (manualna)","Ćwiczenia postawy/ergonomia stanowiska"
-    ],
-    prevention:[
-      "Sen 7–8h, regularne posiłki","Nawadnianie, ogranicz alkohol/kofeinę","Monitoruj wyzwalacze (aplikacja/dziennik)"
-    ],
-    urgent:[
-      "Nagły, najsilniejszy ból","Sztywność karku + gorączka","Objawy ogniskowe (niedowład, mowa, widzenie)","Ból po urazie głowy, utrata przytomności"
-    ],
-    routine:["Nawroty >4 dni/msc — profilaktyka","Dziennik bólów do kontroli"],
-    myths:[
-      {myth:"Nadciśnienie to główna przyczyna bólu głowy",fact:"Rzadko – częściej napięciowe/migrena."},
-      {myth:"Kawa zawsze pomaga",fact:"U części osób wyzwala napady."}
-    ],
-    faq:[
-      {q:"Czy MRI zawsze potrzebny?",a:"Nie – przy stabilnych, typowych bólach napięciowych/migrenie bez czerwonych flag."},
-      {q:"Czy meteorologia ma znaczenie?",a:"U niektórych tak – warto śledzić korelacje."},
-      {q:"Czy okulary z filtrem pomagają?",a:"Mogą zmniejszyć zmęczenie oczu przy ekranie."}
-    ]
-  },
-
-  klatka: {
-    subtitle:"Klatka piersiowa – ból, ucisk, kaszel. Co domowo, co pilnie?",
-    tags:[typ,"pulmonologia/kardiologia","materiał informacyjny","zweryfikowane"],
-    common:["ból mięśniowy po wysiłku/kasłu","kłucie zależne od ruchu/oddechu","kaszel suchy/mokry","duszność przy wysiłku (łagodna)"],
-    watch:["ból palący za mostkiem po posiłku (refluks)","kaszel >3 tygodni (przewlekły)","stan podgorączkowy z bólem przy oddechu"],
-    alarm:["ucisk gniotący promieniujący do lewej ręki/żuchwy","nagła duszność spoczynkowa","krwioplucie","omdlenie"],
-    check:["kaszel","duszność","ból przy oddechu","zgaga/retrosternalny ból po posiłku","promieniowanie bólu"],
-    oneMinute:["Usiądź, uspokój oddech (wdech nosem 4s – wydech ustami 6s)","Poluzuj ciasne ubrania","Jeśli podejrzewasz refluks – szklanka wody, pozycja półsiedząca","Przy silnym, gniotącym bólu — 112"],
-    causes:[
-      "mięśniowo-szkieletowe (przeciążenie, zapalenie chrząstek)","zapalne opłucnej (ból przy oddechu)","refluks/zgaga","astma/POChP (świsty, duszność)","infekcje dolnych dróg oddechowych","choroba wieńcowa / OZW (alarm)"
-    ],
-    triggers:["zimne powietrze","wysiłek bez rozgrzewki","pozycja zgarbiona/ergonomia","późne ciężkie posiłki (refluks)"],
-    firstaid:[
-      "Odpoczynek i ciepło na mięśnie klatki","Ćwiczenia oddechowe (wdech nosem – długi wydech ustami)","Nawodnienie, miód przy kaszlu (jeśli możesz)","Unikaj dźwigania do ustąpienia bólu"
-    ],
-    dosdonts:[
-      "Tak: rozciąganie mięśni piersiowych/pleców","Tak: poduszka wyżej przy nocnym kaszlu","Nie: intensywny trening w ostrym bólu","Nie: palenie papierosów"
-    ],
-    meds_otc:[
-      "Syropy przeciwkaszlowe lub wykrztuśne (w zależności od kaszlu)","NLPZ/paracetamol na ból","Preparaty na zgagę (alginiaty, IPP krótkotrwale OTC)"
-    ],
-    meds_rx:[
-      "Leki przeciwastmatyczne (wg rozpoznania)","Antybiotyk przy bakteryjnym zapaleniu (wg lekarza)","Leczenie kardiologiczne w dławicy/OZW — pilnie"
-    ],
-    rehab_home:[
-      "Codzienne ćwiczenia oddechowe i rozciąganie klatki","Spacery w tempie konwersacyjnym (bez zadyszki)","Edukacja pozycji otwartej klatki (ergonomia)"
-    ],
-    rehab_physio:[
-      "Fizjoterapia oddechowa (toilette bronchique) przy zaleganiu wydzieliny","Trening wytrzymałościowy stopniowany po infekcji"
-    ],
-    prevention:[
-      "Rzuć palenie","Kontrola masy ciała, aktywność 150 min/tyg","Unikaj późnych ciężkich posiłków (refluks)"
-    ],
-    urgent:["Silny ucisk, zimny pot, nudności → 112","Nagła duszność spoczynkowa, sinica","Krwioplucie, omdlenie"],
-    routine:["Kaszel >3 tygodni — diagnostyka","Bóle nawracające przy wysiłku — kardiolog"],
-    myths:[
-      {myth:"Zgaga to zawsze serce",fact:"Często przełyk/refluks; serce ma inny charakter bólu."},
-      {myth:"Kaszel trzeba tłumić zawsze",fact:"Przy produktywnym lepiej ułatwiać odkrztuszanie."}
-    ],
-    faq:[
-      {q:"Czy ibuprofen szkodzi na żołądek?",a:"Przy dłuższym stosowaniu/na czczo — tak. Krótkotrwale i z posiłkiem – mniejsze ryzyko."},
-      {q:"Kiedy wrócić do sportu po infekcji?",a:"Gdy bez gorączki i duszności w spoczynku; stopniowo zwiększaj obciążenie."},
-      {q:"Czy miód dla każdego?",a:"Nie dla dzieci <1 r.ż. i alergików na produkty pszczele."}
-    ]
-  },
-
-  pluca: {
-    subtitle:"Układ oddechowy – duszność, kaszel, świsty.",
-    tags:[typ,"pulmonologia","materiał informacyjny","zweryfikowane"],
-    common:["kaszel suchy/mokry","krótszy oddech przy wysiłku","świsty","ból przy głębokim wdechu"],
-    watch:["kaszel >3 tyg.","nocne pobudki z kaszlem","gorączka >38°C z kaszlem"],
-    alarm:["duszność spoczynkowa","krwioplucie","sinica warg/paznokci","nagły ból w klatce + duszność"],
-    check:["suchy kaszel","mokry kaszel","duszność","ból przy oddechu","świsty"],
-    oneMinute:["Usiądź, oddychaj spokojnie (pursed-lip)","Nawodnienie, nawilż powietrze","Okno/świeże powietrze (jeśli bez smogu)","Gorączka/duszność — konsultacja"],
-    causes:[
-      "infekcje wirusowe/bakteryjne","astma/POChP","alergie wziewne","refluks z mikroaspiracją","zatorowość płucna (alarm)","odma opłucnowa (alarm)"
-    ],
-    triggers:["zimne powietrze","alergeny/pyłki","dym, aerozole","wysiłek bez rozgrzewki"],
-    firstaid:[
-      "Nawadnianie, inhalacje z 0.9% NaCl","Technika oddychania wydłużonego wydechu","Pozycja podparta przy duszności","Kontrola temperatury i odpoczynek"
-    ],
-    dosdonts:["Tak: spacer w tempie bez zadyszki","Nie: intensywny wysiłek w ostrych objawach","Nie: palenie i bierne wdychanie dymu"],
-    meds_otc:[
-      "Syropy (wykrztuśne przy gęstej wydzielinie, przeciwkaszlowe przy suchym)","Paracetamol/NLPZ na gorączkę i ból"
-    ],
-    meds_rx:[
-      "Wziewne bronchodilatatory/sterydy (astma/POChP)","Antybiotyki przy bakteryjnym zapaleniu (wg lekarza)","Leczenie zatorowości/odmy — SOR"
-    ],
-    rehab_home:[
-      "Ćwiczenia oddechowe 2× dziennie (pursed-lip, segmentalne)","Oklepywanie/przenoszenie wydzieliny (wg instruktażu)","Stopniowy powrót do aktywności po infekcji"
-    ],
-    rehab_physio:[
-      "Fizjoterapia oddechowa, trenażery oddechowe","Edukacja techniki kaszlu efektywnego"
-    ],
-    prevention:[
-      "Szczepienia (grypa, COVID, pneumokoki wg zaleceń)","Rzuć palenie","Kontrola alergii"
-    ],
-    urgent:["Duszność spoczynkowa/sinica","Krwioplucie","Nagły ból klatki + duszność (odma/zatorowość)"],
-    routine:["Kaszel >3 tygodni — konsultacja","Nawracające infekcje — diagnostyka"],
-    myths:[
-      {myth:"Na kaszel najlepszy syrop z cebuli",fact:"Może łagodzić, ale nie zastąpi leczenia przy poważnych przyczynach."},
-      {myth:"Astma mija sama",fact:"Wymaga kontroli i leczenia przewlekłego."}
-    ],
-    faq:[
-      {q:"Czy nawilżacz pomaga?",a:"Tak, przy suchej atmosferze; dbaj o czystość urządzenia."},
-      {q:"Czy warto mierzyć saturację?",a:"Przy duszności tak — <94% w spoczynku wymaga konsultacji."},
-      {q:"Kiedy RTG płuc?",a:"Decyduje lekarz (podejrzenie zapalenia, przewlekły kaszel itd.)."}
-    ]
-  },
-
-  brzuch: {
-    subtitle:"Brzuch – ból, wzdęcia, nudności. Co domowo, a co pilnie?",
-    tags:[typ,"gastroenterologia","materiał informacyjny","zweryfikowane"],
-    common:["ból rozlany po posiłku","wzdęcia, gazy","nudności","biegunka/luźne stolce","zgaga/odbijanie"],
-    watch:["ból w prawym podżebrzu po tłustym posiłku","naprzemiennie biegunka–zaparcie (IBS)","utrata apetytu","stan podgorączkowy"],
-    alarm:["nagły ostry ból w prawym dole brzucha (wyrostek)","krew w stolcu/ czarne stolce","żółtaczka + ból/odbarwiony stolec","wymioty nie do opanowania/odwodnienie"],
-    check:["ból rozlany","biegunka","zaparcie","nudności/wymioty","krew w stolcu"],
-    oneMinute:["Nawodnienie (małe łyki co 5–10 min)","Lekkostrawna dieta (BRAT) 24–48 h","Ciepły okład przy kolkowych bólach (bez gorączki)","Unikaj alkoholu i tłustych potraw","Silny ostry ból/krwawienie — 112/SOR"],
-    causes:[
-      "niestrawność, nadkwasota","wirusowe zatrucie pokarmowe","zespół jelita drażliwego (IBS)","kamica pęcherzyka/kolka żółciowa","zapalenie wyrostka (alarm)","OZT (ostre zap. trzustki – ból promieniujący do pleców)","choroby zapalne jelit (CU/CD)"
-    ],
-    triggers:["tłuste/smażone","alkohol","stres","leki drażniące żołądek (NLPZ)"],
-    firstaid:[
-      "Nawodnienie doustne (ORS przy biegunce)","Dieta lekkostrawna (ryż, banan, tost)","Kroplowe napary z mięty/imbiru (nudności)","Odpoczynek, ciepło na brzuch (bez gorączki)"
-    ],
-    dosdonts:[
-      "Tak: małe porcje częściej","Tak: probiotyk przy biegunce poantybiotykowej","Nie: alkohol i tłuste jedzenie","Nie: NLPZ na czczo przy bólu brzucha"
-    ],
-    meds_otc:[
-      "Leki na zgagę (alginiaty/antacida), krótko IPP OTC","Probiotyki (biegunka poantybiotykowa)","Loperamid na biegunkę bez gorączki/krwi (ostrożnie)","Drotaweryna na skurczowy ból (jeśli możesz)"
-    ],
-    meds_rx:[
-      "Antybiotyki przy bakteryjnych zakażeniach (wg lekarza)","Leczenie kamicy dróg żółciowych/trzustki — szpitalnie","Leczenie IBD (specjalistyczne)"
-    ],
-    rehab_home:[
-      "Łagodne spacery po posiłku (perystaltyka)","Ćwiczenia oddechowo-przeponowe (uśmierzają napięcie trzewne)","Dziennik objawów i produktów wyzwalających"
-    ],
-    rehab_physio:[
-      "Terapia wisceralna (u doświadczonych terapeutów) – wybrane przypadki","Edukacja dietetyczna (FODMAP przy IBS z dietetykiem)"
-    ],
-    prevention:[
-      "Regularne posiłki, mniej tłuszczu/alkoholu","Uważność na leki drażniące żołądek","Higiena żywności i rąk"
-    ],
-    urgent:["Nagły ostry ból w prawym dole + gorączka — pilnie","Czarny/krwisty stolec","Wymioty nie do opanowania/odwodnienie"],
-    routine:["Przewlekłe bóle po posiłkach — gastroenterolog","IBS – praca z dietetykiem"],
-    myths:[
-      {myth:"Węgiel leczy każdą biegunkę",fact:"Może nie pomóc przy wielu przyczynach; ważniejsze nawadnianie."},
-      {myth:"Zgaga = choroba serca",fact:"Najczęściej przełyk/refluks."}
-    ],
-    faq:[
-      {q:"Czy jogurt zawsze dobry przy biegunce?",a:"Nie każda biegunka; lepsze zbilansowane probiotyki."},
-      {q:"Kiedy USG brzucha?",a:"Bóle prawy łuk żebrowy, utrzymujące się dolegliwości — decyduje lekarz."},
-      {q:"Czy stres nasila objawy?",a:"Tak, jelita reagują na stres – pomoże relaks i regularność."}
-    ]
-  },
-
-  nerki: {
-    subtitle:"Nerki – ból lędźwi, krwiomocz, obrzęki.",
-    tags:[typ,"nefrologia","materiał informacyjny","zweryfikowane"],
-    common:["tępy ból lędźwi jednostronny","częstsze oddawanie moczu","pieczenie przy mikcji","obrzęki pod oczami/rankiem"],
-    watch:["gorączka 37.5–38.5 z bólem lędźwi","mętny/kwaśny zapach moczu","nocne oddawanie moczu"],
-    alarm:["silny kolkowy ból promieniujący do pachwiny (kolka nerkowa)","gorączka >38.5 z dreszczami","krwiomocz","nudności/wymioty + odwodnienie"],
-    check:["ból lędźwi","gorączka","pieczenie przy mikcji","krwiomocz","nudności"],
-    oneMinute:["Nawodnij się (jeśli możesz)","Ciepło na okolicę lędźwi","Unikaj wstrzymywania moczu","Silny ból + gorączka — pilnie lekarz"],
-    causes:[
-      "ZUM (zap. pęcherza/odmiedniczkowe)","kamica nerkowa","odwodnienie","przerost prostaty (u mężczyzn)","kłębuszkowe zapalenia (krwiomocz) – specjalis."
-    ],
-    triggers:["małe picie wody","zakażenia","sola/oksalany (kamica)"],
-    firstaid:[
-      "Nawadnianie doustne","Rozgrzewanie (jeśli bez gorączki)","Leki przeciwbólowe (jeśli możesz)","Kontroluj kolor ilość moczu"
-    ],
-    dosdonts:["Tak: częste mikcje","Nie: samodzielnie antybiotyków","Nie: długie wstrzymywanie moczu"],
-    meds_otc:[
-      "Paracetamol/NLPZ (ostrożnie w chorobach nerek)","Preparaty na ZUM (np. żurawina – dowody ograniczone)","Alfa-blokery tylko z zalecenia lekarza (nie OTC)"
-    ],
-    meds_rx:[
-      "Antybiotyk w ZUM (wg posiewu)","Leczenie kolki (p/bólowe, rozkurczowe, urolog)","Leczenie przeszkody podpęcherzowej (urolog)"
-    ],
-    rehab_home:[
-      "Nawadnianie 2–2.5 l/d (jeśli brak przeciwwskazań)","Ruch i spacery (perystaltyka/oddawanie kamieni)","Ćwiczenia dna miednicy (profilaktyka ZUM u kobiet)"
-    ],
-    rehab_physio:[
-      "Edukacja nawyków mikcyjnych","Współpraca z urologiem/nefrologiem"
-    ],
-    prevention:[
-      "Pij odpowiednio, nie wstrzymuj moczu","Higiena intymna (od przodu do tyłu)","Dieta uboga w sól przy kamicy"
-    ],
-    urgent:["Silny ból + gorączka/dreszcze","Brak możliwości oddania moczu","Krwiomocz obfity"],
-    routine:["Nawracające ZUM — diagnostyka","Kamica — ocena metaboliczna"],
-    myths:[
-      {myth:"Żurawina wyleczy każde ZUM",fact:"Może pomóc profilaktycznie, ale nie zastąpi antybiotyku przy zakażeniu."},
-      {myth:"Ból lędźwi zawsze od nerek",fact:"Często to mięśnie/kręgosłup."}
-    ],
-    faq:[
-      {q:"Czy gorączka zawsze oznacza odmiedniczkowe?",a:"Często tak – wymaga pilnej konsultacji."},
-      {q:"Ile pić wody?",a:"Zwykle 30 ml/kg/d, jeśli brak przeciwwskazań."},
-      {q:"Czy sauna pomaga?",a:"Może odwadniać – pij więcej wody."}
-    ]
-  },
-
-  plecy: {
-    subtitle:"Plecy/lędźwie – przeciążenie czy rwa? Jak ulżyć i wrócić do formy.",
-    tags:[typ,"ortopedia","materiał informacyjny","zweryfikowane"],
-    common:["ból po długim siedzeniu","sztywność poranna","tkliwość mięśni przy ucisku"],
-    watch:["ból promieniujący do pośladka/uda","mrowienie stopy","pogorszenie przy skłonie"],
-    alarm:["nietrzymanie moczu/stolca","drętwienie w „siodełku”","osłabienie siły w stopie (opadanie)","ból pourazowy z silnym ograniczeniem ruchu"],
-    check:["ból miejscowy","promieniowanie","mrowienie/drętwienie","osłabienie","problemy z mikcją"],
-    oneMinute:["Pozycja odciążająca (na boku z poduszką między kolanami)","Ciepło na mięśnie (nie przy ostrym urazie)","Delikatny spacer 5–10 min","Nie leż cały dzień — mikro-ruch pomaga"],
-    causes:[
-      "przeciążenie mięśni/przykurcze","dyskopatia/ucisk korzeni","zablokowania stawowe","osteoporoza (złamania) – u seniorów","infekcje/guzy (rzadko – alarm wg objawów ogólnych)"
-    ],
-    triggers:["długie siedzenie","dźwiganie bez techniki","stres","brak snu"],
-    firstaid:[
-      "Odciążenie i krótkie okresy odpoczynku","LEKKI ruch w granicach bólu","Leki przeciwbólowe jeśli możesz","Stopniowy powrót do aktywności"
-    ],
-    dosdonts:["Tak: core stability/oddech przeponowy","Tak: ergonomia pracy (monitor na wysokości oczu)","Nie: „przeleżeć” tygodnia w łóżku","Nie: gwałtowne skręty/dźwiganie"],
-    meds_otc:[
-      "Paracetamol/NLPZ (jeśli brak przeciwwskazań)","Maści p/bólowe (mentol, diklofenak)","Plastry rozgrzewające"
-    ],
-    meds_rx:[
-      "Leki zwiotczające mięśnie (krótkotrwale)","Zastrzyki sterydowe przy korzeniowym — wg specjalisty","Leczenie operacyjne w wybranych przypadkach"
-    ],
-    rehab_home:[
-      "Ćwiczenia McKenzie (retrakcja) – delikatnie","Rozciąganie zginaczy bioder/pośladków","Codzienne spacery 20–30 min","Nauka bezpiecznego dźwigania (przysiad, nie zgarbienie)"
-    ],
-    rehab_physio:[
-      "Terapia manualna/neuromobilizacja","Trening stabilizacji (core)","Plan powrotu do pracy/sportu"
-    ],
-    prevention:[
-      "Stół/krzesło ergonomiczne","Przerwy co 45–60 min (2–3 min ruchu)","Wzmacnianie brzucha/pośladków 2–3×/tyg"
-    ],
-    urgent:["Zespół ogona końskiego (nietrzymanie, znieczulenie siodełkowe) — pilnie","Uraz + silny ból, deformacja","Gorączka + ból pleców u immunoniekompetentnych"],
-    routine:["Nawracające bóle — fizjoterapia","Objawy korzeniowe utrzymują się >6 tyg. — neurolog/ortopeda"],
-    myths:[
-      {myth:"Tylko leżenie leczy ból pleców",fact:"Ruch dawkowany przyspiesza powrót do zdrowia."},
-      {myth:"„Wypadł mi dysk” zawsze wymaga operacji",fact:"Większość poprawia się zachowawczo."}
-    ],
-    faq:[
-      {q:"Czy pas lędźwiowy pomaga?",a:"Doraźnie przy dźwiganiu/ostrym epizodzie tak, ale nie na stałe."},
-      {q:"Czy rezonans od razu?",a:"Jeśli brak czerwonych flag — zwykle nie od razu."},
-      {q:"Kiedy wracać do sportu?",a:"Gdy ból maleje i zakres ruchu wraca — stopniowo."}
-    ]
-  },
-
-  biodra: {
-    subtitle:"Biodra – przeciążenia, zapalenia, promieniowanie do uda.",
-    tags:[typ,"ortopedia","materiał informacyjny","zweryfikowane"],
-    common:["ból po długim siedzeniu","sztywność przy wstawaniu","trzaski/przeskakiwanie (snapping hip)"],
-    watch:["ból boczny biodra przy chodzie (zap. pasma biodrowo-piszcz.)","tkliwość krętarza większego","ograniczenie rotacji wewnętrznej"],
-    alarm:["uraz z niemożnością obciążania","gorączka + ból/staw gorący","nagły ból u seniora (złamanie)"],
-    check:["ból przy chodzie","sztywność poranna","trzaski","promieniowanie do uda"],
-    oneMinute:["Odpocznij od obciążeń","Chłodzenie 10–15 min po wysiłku","Łagodne rozciąganie zginaczy biodra","Kijki przy dłuższych dystansach (odciążenie)"],
-    causes:[
-      "przeciążenie ścięgien/zginaczy","zapalenie kaletki krętarzowej","konflikt udowo-panewkowy","choroba zwyrodnieniowa","złamanie zmęczeniowe"
-    ],
-    triggers:["długie siedzenie","nagły wzrost aktywności","bieganie po twardym"],
-    firstaid:[
-      "Reguła POLICE: ochronić–optymalnie obciążać–chłodzić–kompresja–unoszenie","Modyfikacja treningu (objętość, technika)","Leki p/bólowe (jeśli możesz)"
-    ],
-    dosdonts:["Tak: mobilizacja biodra/pośladków","Nie: bieg pod ból","Nie: dźwiganie z rotacją"],
-    meds_otc:["NLPZ/paracetamol doraźnie","Maści p/zapalne","Suplementy stawowe – efekt zmienny"],
-    meds_rx:["Iniekcje sterydowe do kaletki (wybrane przypadki)","Leczenie operacyjne konfliktu – ortopeda"],
-    rehab_home:[
-      "Mostki, clamshell, rozciąganie zginaczy i pasma biodrowo-piszcz.","Ćwiczenia równowagi (single-leg stand)","Stopniowy powrót do biegania (return-to-run)"
-    ],
-    rehab_physio:["Terapia manualna biodra/kręgosłupa lędźwiowego","Program wzmacniania pośladków (glute med/max)"],
-    prevention:["Rozgrzewka, progres obciążeń ≤10%/tydz","Buty dopasowane, miękka nawierzchnia","Waga w normie"],
-    urgent:["Uraz + brak możliwości stania/obciążania","Gorący, zaczerwieniony staw, gorączka"],
-    routine:["Ból >6 tyg. – fizjoterapeuta/ortopeda"],
-    myths:[
-      {myth:"Strzelające biodro to zawsze coś groźnego",fact:"Często przeskakujące ścięgno – leczone zachowawczo."},
-      {myth:"Trzeba całkiem przestać się ruszać",fact:"Lepiej mądrze dozować aktywność."}
-    ],
-    faq:[
-      {q:"Czy spacer szkodzi?",a:"Nie – zwykle pomaga, jeśli bez bólu kulącego."},
-      {q:"Kiedy RTG/MRI?",a:"Przy urazie, braku poprawy, objawach strukturalnych."},
-      {q:"Czy wizyta u fizjo pomoże?",a:"Tak – dobierze ćwiczenia i techniki odciążenia."}
-    ]
-  },
-
-  kolano: {
-    subtitle:"Kolano – ból, obrzęk, chrupanie. Co robić domowo i kiedy lekarz.",
-    tags:[typ,"ortopedia","materiał informacyjny","zweryfikowane"],
-    common:["ból przy schodzeniu w dół","sztywność po siedzeniu","trzeszczenia (krepitacje)"],
-    watch:["obrzęk po wysiłku","„uciekanie” kolana","ból przy kucaniu","tkliwość rzepki"],
-    alarm:["uraz z „kliknięciem” i obrzękiem natychmiast","brak możliwości wyprostu/zgięcia","gorący, zaczerwieniony staw + gorączka"],
-    check:["ból przy schodach","obrzęk","niestałość","krepitacje","zakres ruchu"],
-    oneMinute:["Odpocznij, schłodź 10–15 min, uciśnij bandażem, unieś (POLICE)","Chodź z mniejszym krokiem, unikaj kucania","Lekkie wyprosty w siedzie w granicach bez bólu"],
-    causes:[
-      "przeciążenie rzepkowo-udowe (PFPS)","zapalenie ścięgna rzepki (skoczka)","uszkodzenie łąkotki","choroba zwyrodnieniowa","zapalenie stawu (dna/infekcja – alarm)"
-    ],
-    triggers:["skoki, biegi po schodach","brak stabilizacji biodra","nadwaga"],
-    firstaid:[
-      "Chłodzenie po wysiłku, kompresja","Ogranicz aktywności wywołujące ból","Ćw. izometryczne czworogłowego (bez bólu)"
-    ],
-    dosdonts:["Tak: wzmacniaj pośladki i czworogłowe","Nie: długie kucanie/klękanie","Nie: skręty na zablokowanym kolanie"],
-    meds_otc:[
-      "NLPZ/paracetamol doraźnie","Maści p/zapalne","Opaski stabilizujące (krótkoterminowo)"
-    ],
-    meds_rx:[
-      "Iniekcje dostawowe (kw. hialuronowy/steryd – wg wskazań)","Artroskopia przy mechanicznych objawach (wg ortopedy)"
-    ],
-    rehab_home:[
-      "Ćw. zamkniętego łańcucha (przysiady do krzesła)","Propriocepcja (poduszka sensomotoryczna)","Roller na pasmo biodrowo-piszczelowe"
-    ],
-    rehab_physio:["Indywidualny plan wzmocnienia/rozciągania","Trening wzorca ruchu (kolano nad stopą)"],
-    prevention:["Progresja obciążeń ≤10%/tydz","Buty i powierzchnia adekwatne","Kontrola masy ciała"],
-    urgent:["Uraz + blokowanie kolana/duży obrzęk","Gorący zaczerwieniony staw + gorączka"],
-    routine:["Ból >6 tyg./nawraca — fizjoterapeuta/ortopeda"],
-    myths:[
-      {myth:"Strzelanie zawsze niszczy staw",fact:"Samo strzelanie bez bólu nie musi być patologiczne."},
-      {myth:"Opaska załatwi sprawę",fact:"Pomoc doraźna — sednem jest rehabilitacja."}
-    ],
-    faq:[
-      {q:"Czy mogę biegać?",a:"Po ustąpieniu bólu i z planem powrotu; zacznij od marszobiegów."},
-      {q:"Czy ciepło czy zimno?",a:"Po wysiłku i przy obrzęku — zimno; w sztywności przewlekłej — ciepło."},
-      {q:"Kiedy MRI?",a:"Gdy podejrzenie łąkotki/ACL, brak poprawy."}
-    ]
-  },
-
-  stopy: {
-    subtitle:"Stopy – pięta, śródstopie, drętwienia. Domowa ulga i powrót do aktywności.",
-    tags:[typ,"podologia/ortopedia","materiał informacyjny","zweryfikowane"],
-    common:["ból pięty rano","tkliwość śródstopia","modzele/otarcia","drętwienie palców","sztywność po spoczynku"],
-    watch:["ból nasila się przy długim staniu","obrzęk grzbietu stopy","strzelanie przy palcach (neuroma Mortona)"],
-    alarm:["sinienie/bladość stopy + ból spoczynkowy","nagły brak czucia/ruchu","objawy zakażenia rany z gorączką"],
-    check:["ból pięty","otarcia/odciski","drętwienie","obrzęk","rany/infekcja"],
-    oneMinute:["Odpoczynek/odciążenie","Chłodzenie 10–12 min","Zmiana obuwia/wkładki żelowe","Unieś nogi po długim staniu","Rana? — oczyść, opatrunek, obserwuj"],
-    causes:[
-      "zapalenie rozcięgna podeszwowego (plantar fasciitis)","ostroga piętowa (często wtórna)","neuroma Mortona","przeciążenia biegowe","neuropatia (cukrzyca)","niewygodne obuwie"
-    ],
-    triggers:["długie stanie/bieganie","twarda nawierzchnia","ciasne buty","nadwaga"],
-    firstaid:[
-      "Ogranicz stanie/bieganie do czasu poprawy","Ćw. rozciągające łydkę/Achilessa","Masaż piłeczką pod stopą 5–10 min","Plastry na odciski/otarcia"
-    ],
-    dosdonts:["Tak: zmień buty na amortyzowane","Tak: wkładki wspierające łuk","Nie: ścinanie odcisków zbyt głęboko","Nie: kontynuuj bieg pod ostry ból"],
-    meds_otc:[
-      "Maści p/zapalne na bolesne miejsca","NLPZ/paracetamol doraźnie","Maści na pękające pięty (mocznik)"]
-    ,
-    meds_rx:[
-      "Iniekcje sterydowe (wybrane przypadki)","Leczenie neuropatii (neurolog/diabetolog)","Antybiotyk przy zakażonych ranach (wg lekarza)"
-    ],
-    rehab_home:[
-      "Rozciąganie łydki 2× dziennie (20–30 s ×3)","Masaż piłeczką, ręcznikiem pod stopą","Chód na piętach/palcach – delikatnie","Kąpiele solankowe na obrzęk"
-    ],
-    rehab_physio:[
-      "Dobór wkładek/obuwia, trening chodu","Fala uderzeniowa/terapie fizykalne – wg wskazań"
-    ],
-    prevention:["Rotacja obuwia, wkładki wspierające łuk","Progresja obciążeń ≤10%/tydz","Redukcja masy, jeżeli wskazana"],
-    urgent:["Sina/blada stopa + ból spoczynkowy","Głębokie rany u cukrzyków","Nagły brak czucia/ruchu"],
-    routine:["Ból >6 tyg., nawracający — podolog/ortopeda"],
-    myths:[
-      {myth:"Ból pięty = ostroga",fact:"Częściej zapalenie rozcięgna."},
-      {myth:"Twarde wkładki są zdrowsze",fact:"Dobór indywidualny — komfort i biomechanika ważniejsze."}
-    ],
-    faq:[
-      {q:"Czy chodzenie boso pomaga?",a:"W domu na miękkim podłożu – często tak."},
-      {q:"Czy ostroga zawsze wymaga operacji?",a:"Nie – większość poprawia się zachowawczo."},
-      {q:"Czy wkładki żelowe szkodzą?",a:"Nie – mogą dawać ulgę przy staniu."}
-    ]
-  },
-
-  skora: {
-    subtitle:"Skóra – wysypki, swędzenie, rany. Co domowo i kiedy lekarz.",
-    tags:[typ,"dermatologia","materiał informacyjny","zweryfikowane"],
-    common:["suchość, pękanie","rumień po drażnieniu","świąd","pokrzywka kontaktowa"],
-    watch:["wysypka po leku","rozległe łuszczenie","sączenie z rany","przebarwienia"],
-    alarm:["szybko szerzący się rumień z gorączką","ból nasila się i pojawia się ropa","pęcherze rozległe/odwodnienie u dziecka"],
-    check:["świąd","rumień","łuszczenie","pęcherze","ropa"],
-    oneMinute:["Delikatne mycie, brak tarcia","Emolient po myciu","Zimny okład na świąd","Unikaj potencjalnego alergenu"],
-    causes:[
-      "kontaktowe zapalenie skóry (alergiczne/podrażnieniowe)","atopowe zapalenie (AZS)","grzybica skóry","opryszczka/półpasiec","liszajec (bakteryjne)"]
-    ,
-    triggers:["detergenty, nikiel","suchy klimat","nowe kosmetyki","pot, ocieranie"],
-    firstaid:[
-      "Emolienty 2–3×/d","Kompresy z NaCl na sączące rany","Higiena i przewiewne ubrania","Odstaw nowy kosmetyk/detergent"
-    ],
-    dosdonts:["Tak: krótki prysznic, letnia woda","Nie: gorące kąpiele i drapanie","Nie: wspólne ręczniki przy zmianach zakaźnych"],
-    meds_otc:[
-      "Kremy z hydrokortyzonem 1% krótkotrwale przy świądzie","Maści cynkowe na sączenie","Leki p/histaminowe na świąd"
-    ],
-    meds_rx:[
-      "Silniejsze sterydy miejscowe/kalcyneuryny (dermatolog)","Antybiotyk/lek p/grzybiczy przy zakażeniu","Leczenie półpaśca/HSV"
-    ],
-    rehab_home:[
-      "Pielęgnacja bariery: emolient po myciu","Unikaj drażniących tkanin (wełna)","Nawadnianie organizmu"
-    ],
-    rehab_physio:["Edukacja pielęgnacji skóry","Fototerapia w AZS (u specjalisty)"],
-    prevention:["Test płatkowy przy podejrzeniu alergii","Krótka, chłodna kąpiel, delikatne detergenty"],
-    urgent:["Gorączka + rozległy, bolesny rumień","Rozległe pęcherze/podejrzenie SJS/TEN — SOR"],
-    routine:["Nawracające zmiany — dermatolog"],
-    myths:[
-      {myth:"Sterydy miejscowe zawsze szkodzą",fact:"Stosowane krótko i właściwie – bezpieczne i skuteczne."},
-      {myth:"Wysypka po każdym leku to alergia",fact:"Nie zawsze – bywa odczyn nieswoisty."}
-    ],
-    faq:[
-      {q:"Czy solarium pomaga?",a:"Nie zalecane – zwiększa ryzyko raka skóry."},
-      {q:"Czy dieta leczy AZS?",a:"Dieta wspiera, ale leczenie miejscowe jest podstawą."},
-      {q:"Czy można ćwiczyć?",a:"Tak, ale prysznic i emolient po, by zmniejszyć podrażnienie."}
-    ]
-  },
-
-  /* DODATKOWE: serce, kaszel, goraczka, zadlawienie
-   (żeby linki specjalne też miały treść bogatą)
-  */
-  serce: {
-    subtitle:"Serce – dławica czy zgaga? Alarm czy nie?",
-    tags:[typ,"kardiologia","materiał informacyjny","zweryfikowane"],
-    common:["ucisk w klatce przy wysiłku ustępujący w spoczynku","kołatania","zadyszka przy wchodzeniu po schodach"],
-    watch:["ból po posiłku/zgaga (raczej przełyk)","obrzęki kostek wieczorem","męczliwość"],
-    alarm:["gniotący ból >20 min spoczynkowo","promieniowanie do lewej ręki/żuchwy","zimny pot, nudności, duszność","omdlenie"],
-    check:["ucisk","promieniowanie","zadyszka","obrzęki","omdlenia"],
-    oneMinute:["Usiądź, odpoczywaj","Jeśli masz nitroglicerynę — zastosuj wg zaleceń","Silny ucisk + objawy ogólne — 112"],
-    causes:["choroba wieńcowa","arytmie","kardiomiopatie","refluks/mięśniowy ból (mimikry)"],
-    triggers:["wysiłek/zimno","stres","późne posiłki (zgaga)"],
-    firstaid:["Odpoczynek","Obserwacja objawów towarzyszących","112 przy typowych objawach OZW"],
-    dosdonts:["Tak: dziennik objawów","Nie: ignoruj nawracający ucisk przy wysiłku"],
-    meds_otc:["Brak specyficznych na „serce” OTC – konsultuj","NLPZ ostrożnie (mogą pogarszać serce)"],
-    meds_rx:["Leczenie wieńcowej/arytmii wg kardiologa","Leki przeciwpłytkowe, statyny – wg wskazań"],
-    rehab_home:["Spacer codziennie (jeśli bez duszności)","Dieta śródziemnomorska"],
-    rehab_physio:["Kardiorehabilitacja po incydencie (skierowanie)"],
-    prevention:["Kontrola ciśnienia, cukru, lipidów","Rzuć palenie, sen 7–8h"],
-    urgent:["Objawy z listy alarmowej — 112"],
-    routine:["Bóle wysiłkowe — kardiolog"],
-    myths:[
-      {myth:"Każdy ból klatki to zawał",fact:"Wiele jest mięśniowych/przełykowych."},
-      {myth:"Jak przejdzie, to znaczy że nic",fact:"Nawracające objawy wymagają oceny."}
-    ],
-    faq:[
-      {q:"Czy smartwatche wykryją zawał?",a:"Mogą wykryć arytmie, ale nie zastąpią EKG."},
-      {q:"Czy kawa szkodzi?",a:"U większości umiarkowanie jest bezpieczna."},
-      {q:"Czy stres może dawać bóle?",a:"Tak – mięśniowo i naczynioskurczowo."}
-    ]
-  },
-
-  kaszel: {
-    subtitle:"Kaszel – suchy czy mokry? Kiedy leczyć, kiedy czekać.",
-    tags:[typ,"pulmonologia","materiał informacyjny","zweryfikowane"],
-    common:["drapanie w gardle","kaszel suchy na początku infekcji","kaszel po wysiłku/na zimnie"],
-    watch:["kaszel mokry z wydzieliną","kaszel >3 tygodni","nocne napady u dzieci"],
-    alarm:["krwioplucie","duszność spoczynkowa","sinica","ból klatki z dusznością"],
-    check:["suchy","mokry","nocny","z wydzieliną","z dusznością"],
-    oneMinute:["Nawodnienie, inhalacje NaCl","Miód (jeśli możesz), odpoczynek","Unikaj dymu/zimna","Gorączka/duszność — konsultacja"],
-    causes:["infekcje wirusowe/bakteryjne","astma/POChP","refluks","leki (ACEI)"],
-    triggers:["zimno","alergeny","dym","wysiłek"],
-    firstaid:["Inhalacje, nawilżanie","Pozycja półsiedząca w nocy","Syrop dobrany do typu kaszlu"],
-    dosdonts:["Tak: wietrz mieszkanie","Nie: tłum kaszlu produktywnego bez potrzeby"],
-    meds_otc:["Przeciwkaszlowe (suchy), wykrztuśne (mokry)","Paracetamol/NLPZ na gorączkę"],
-    meds_rx:["Wziewne leki przy astmie/POChP","Antybiotyk przy zapaleniu bakteryjnym wg lekarza"],
-    rehab_home:["Ćwiczenia oddechowe i efektywny kaszel","Spacery bez forsowania"],
-    rehab_physio:["Drenaż ułożeniowy przy zaleganiu wydzieliny"],
-    prevention:["Szczepienia, rzuć palenie"],
-    urgent:["Krwioplucie, sinica, duszność – pilnie"],
-    routine:["Kaszel >3 tygodni — konsultacja"],
-    myths:[
-      {myth:"Syrop z cebuli leczy wszystko",fact:"Może łagodzić, ale nie każdą przyczynę."},
-      {myth:"Kaszel trzeba zawsze tłumić",fact:"Nie, przy mokrym ułatwiaj odkrztuszanie."}
-    ],
-    faq:[
-      {q:"Czy pić dużo?",a:"Tak — rozrzedza wydzielinę."},
-      {q:"Czy biegać w trakcie?",a:"Lepiej spacery – nie forsuj."},
-      {q:"Czy spacer na zimnie szkodzi?",a:"U wrażliwych nasila — lepiej ciepły szalik."}
-    ]
-  },
-
-  goraczka: {
-    subtitle:"Gorączka – kiedy czekać, kiedy działać.",
-    tags:[typ,"medycyna ogólna","materiał informacyjny","zweryfikowane"],
-    common:["dreszcze","ból mięśni","osłabienie","ból głowy"],
-    watch:[">38°C >3 dni","wysypka z gorączką","ból gardła i węzły"],
-    alarm:[">39.5°C z zaburzeniami świadomości","sztywność karku","trudności w oddychaniu","odwodnienie u dziecka/seniorów"],
-    check:["wysoka temp.","dreszcze","ból mięśni","senność","wysypka"],
-    oneMinute:["Nawadniaj (ORS), odpoczywaj","Lek p/gorączkowy (jeśli możesz)","Chłodne okłady czoła/pachwin","Warstwowe ubranie"],
-    causes:["infekcje wirusowe/bakteryjne","odwodnienie/udar cieplny","zapalenia autoimmunologiczne"],
-    triggers:["zakażenia","przegrzanie"],
-    firstaid:["Nawadnianie, leki p/gorączkowe","Chłodzenie fizyczne (bez lodu)","Kontrola objawów towarzyszących"],
-    dosdonts:["Tak: mierz temp. regularnie","Nie: alkohol na poty","Nie: przegrzewanie kołdrami"],
-    meds_otc:["Paracetamol/ibuprofen (jeśli możesz)","Elektrolity doustne"],
-    meds_rx:["Antybiotyk tylko przy potwierdzeniu bakteryjnej etiologii"],
-    rehab_home:["Odpoczynek, lekka dieta","Stopniowy powrót do aktywności po ustąpieniu"],
-    rehab_physio:["Brak specyficznej – obserwacja i rekonwalescencja"],
-    prevention:["Szczepienia, higiena rąk, sen"],
-    urgent:["Bardzo wysoka gorączka + zaburzenia świadomości — 112","Sztywność karku, wysypka krwotoczna — SOR"],
-    routine:[">3 dni bez poprawy — lekarz"],
-    myths:[
-      {myth:"Gorączkę trzeba zbijać do 36.6",fact:"Celem jest komfort i bezpieczeństwo, nie „idealna” wartość."},
-      {myth:"Paracetamol i ibuprofen zawsze razem",fact:"Nie łącz rutynowo bez zaleceń."}
-    ],
-    faq:[
-      {q:"Czy naprzemiennie paracetamol/ibuprofen?",a:"Możliwe z zachowaniem dawek i odstępów — skonsultuj przy wątpliwościach."},
-      {q:"Kąpiel chłodna?",a:"Może pomóc, ale bez zimnej wody/lodu."},
-      {q:"Kiedy badania?",a:"Przy utrzymującej się >3 dni, nietypowych objawach."}
-    ]
-  },
-
-  zadlawienie: {
-    subtitle:"Zadławienie – co robić natychmiast (dorośli/dzieci).",
-    tags:[typ,"pierwsza pomoc","materiał informacyjny","zweryfikowane"],
-    common:["kaszel napadowy","chwytanie się za szyję","brak możliwości mówienia","świsty","sinienie"],
-    watch:["kaszel efektywny – pozwól kaszleć i obserwuj"],
-    alarm:["brak przepływu powietrza – nie może mówić/oddychać","utarta przytomności"],
-    check:["kaszel","głos","duszność","sinica"],
-    oneMinute:["Zachęcaj do kaszlu jeśli skuteczny","Jeśli nieskuteczny: 5 uderzeń między łopatki","Następnie 5 uciśnięć nadbrzusza (Heimlich) u dorosłych","U niemowląt: 5 uderzeń w plecy + 5 uciśnięć klatki (nie Heimlich)","Utrata przytomności — RKO i wezwij 112"],
-    causes:["pokarm (orzechy, mięso), małe przedmioty (dzieci)"],
-    triggers:["jedzenie w pośpiechu","mówienie/śmiech podczas jedzenia"],
-    firstaid:["Procedury jak wyżej + 112 przy nieskutecznym kaszlu"],
-    dosdonts:["Nie: wkładaj palców na ślepo do gardła","Nie: u niemowląt ucisków nadbrzusza"],
-    meds_otc:["brak – to sytuacja pierwszej pomocy"],
-    meds_rx:["brak"],
-    rehab_home:["Po epizodzie: miękka dieta kilka dni, nawodnienie"],
-    rehab_physio:["Edukacja połykania (logopeda) przy zaburzeniach neurologicznych"],
-    prevention:["Dokładne gryzienie, brak rozmów/śmiechu z jedzeniem","Unikaj małych twardych pokarmów u dzieci <4 r.ż."],
-    urgent:["Brak oddechu/głosu — natychmiast 112","Utrata przytomności — RKO"],
-    routine:["Nawracające epizody — laryngolog/logopeda"],
-    myths:[
-      {myth:"Wlej wodę do gardła",fact:"Ryzyko aspiracji — absolutnie nie."},
-      {myth:"Uderzenia w plecy szkodzą zawsze",fact:"Są zalecane, gdy kaszel nieskuteczny."}
-    ],
-    faq:[
-      {q:"Czy w Heimlichu można złamać żebra?",a:"Można – ale priorytetem jest udrożnienie dróg oddechowych."},
-      {q:"Czy po epizodzie i poprawie trzeba do lekarza?",a:"Warto skontrolować, zwłaszcza jeśli była sinica/utrata przytomności."},
-      {q:"Czy dzieciom robi się Heimlicha?",a:"Nie niemowlętom – inne procedury (5 uderzeń + 5 uciśnięć kl. piersiowej)."}
-    ]
-  }
-};
-
-/* === Wybór danych wg czesc === */
-const data = DB[czesc] || DB['glowa'];
-
-/* Ustaw hero */
-document.getElementById('subtitle').textContent = data.subtitle || "";
-const meta = document.getElementById('meta');
-(data.tags||[]).forEach(t=>{
-  const s = document.createElement('span');
-  s.className = t==="zweryfikowane" ? "badge badge--ok" : (t==="materiał informacyjny" ? "badge badge--info" : "pill");
-  s.textContent = t;
-  meta.appendChild(s);
-});
-
-/* Helper do list */
-const fillList = (id, arr)=>{ const el=document.getElementById(id); el.innerHTML=""; (arr||[]).forEach(x=>{const li=document.createElement('li'); li.textContent=x; el.appendChild(li);}); };
-const fillFlip = (arr)=>{
-  const root=document.getElementById('myths'); root.innerHTML="";
-  (arr||[]).forEach(m=>{
-    const wrap=document.createElement('div'); wrap.className='flipwrap col-6';
-    wrap.innerHTML = `<div class="flip"><div class="side front"><h3>Mit</h3><p>${m.myth}</p></div><div class="side back"><h3>Fakt</h3><p>${m.fact}</p></div></div>`;
-    wrap.querySelector('.flip').addEventListener('click', e=> e.currentTarget.classList.toggle('is-flipped'));
-    root.appendChild(wrap);
-  });
-};
-
-/* OBJAWY */
-fillList('symp-common', data.common);
-fillList('symp-watch', data.watch);
-fillList('symp-alarm', data.alarm);
-
-/* checkgrid + risk */
-const cg = document.getElementById('checkgrid'); let checks=0;
-(czesc in DB ? DB[czesc].check : []).forEach((x,i)=>{
-  const li=document.createElement('li'); li.style.listStyle='none';
-  li.innerHTML = `<label style="display:flex;gap:10px;align-items:center"><input type="checkbox" style="accent-color: var(--accent);transform:scale(1.05)"><span>${x}</span></label>`;
-  const cb = li.querySelector('input');
-  cb.addEventListener('change', ()=>{ checks += cb.checked ? 1 : -1; updateRisk(); saveLocal(); });
-  cg.appendChild(li);
-});
-const riskC = document.getElementById('riskcursor');
-const riskL = document.getElementById('risklabel');
-function updateRisk(){
-  const total = Math.max(1, (DB[czesc]?.check||[]).length);
-  const pct = Math.min(95, 5 + (checks/total) * 90);
-  riskC.style.left = pct + '%';
-  riskL.textContent = pct<30 ? 'Niskie' : (pct<60 ? 'Umiarkowane' : 'Wysokie');
-}
-function saveLocal(){
-  const arr=[...cg.querySelectorAll('input')].map(i=>i.checked);
-  localStorage.setItem('bh-'+czesc+'-checks', JSON.stringify(arr));
-}
-(function loadLocal(){
-  const raw = localStorage.getItem('bh-'+czesc+'-checks'); if(!raw) return;
-  const arr = JSON.parse(raw); checks = 0;
-  [...cg.querySelectorAll('input')].forEach((i,idx)=>{ i.checked = !!arr[idx]; if(i.checked) checks++; });
-  updateRisk();
-})();
-
-/* 1 minuta */
-fillList('one-minute', data.oneMinute);
-
-/* PRZYCZYNY */
-fillList('causes', data.causes);
-fillList('triggers', data.triggers);
-
-/* PIERWSZA POMOC */
-fillList('firstaid', data.firstaid);
-fillList('dosdonts', data.dosdonts);
-
-/* LEKI */
-fillList('meds-otc', data.meds_otc);
-fillList('meds-rx', data.meds_rx);
-
-/* REHAB */
-fillList('rehab-home', data.rehab_home);
-fillList('rehab-physio', data.rehab_physio);
-fillList('prevention', data.prevention);
-
-/* LEKARZ */
-fillList('urgent', data.urgent);
-fillList('routine', data.routine);
-
-/* MITY / FAQ */
-fillFlip(data.myths);
-const faq = data.faq||[];
-document.getElementById('q1s').textContent = faq[0]?.q || "Jak postępować w domu?";
-document.getElementById('q1a').textContent = faq[0]?.a || "Stosuj kroki z sekcji Pierwsza pomoc i obserwuj czerwone flagi.";
-document.getElementById('q2s').textContent = faq[1]?.q || "Jakie leki można stosować?";
-document.getElementById('q2a').textContent = faq[1]?.a || "Zobacz sekcję Leki (OTC/Rx) i skonsultuj z lekarzem/farmaceutą.";
-document.getElementById('q3s').textContent = faq[2]?.q || "Kiedy do lekarza?";
-document.getElementById('q3a').textContent = faq[2]?.a || "Jeśli pojawią się czerwone flagi lub brak poprawy.";
-
-/* Tytuł */
-document.title = `BoliHelp – ${label}`;
-</script>
+  /* === SOS ACCENT === */
+  (function sos(){
+    const panel=document.getElementById('lekarz'); if(!panel) return;
+    const box=document.createElement('div');
+    box.className='strip strip--warn';
+    box.innerHTML='Masz objawy alarmowe? <strong>Nie zwlekaj.</strong> <a class="cta" href="tel:112">Zadzwoń 112</a>';
+    panel.appendChild(box);
+  })();
+  </script>
 </body>
 </html>
