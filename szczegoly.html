@@ -855,5 +855,61 @@
       resize(); step();
     })();
   </script>
+<!-- HOTFIX: start od góry + przycisk Wstecz (scoped do szczegoly.html) -->
+<style>
+  /* Styl tylko dla wstrzykniętej belki wstecz */
+  .hotfix-backbar{
+    display:flex;gap:8px;margin:8px 0 12px
+  }
+  .hotfix-backbar button{
+    appearance:none;border:1px solid rgba(164,107,255,.35);
+    background:rgba(60,32,100,.28);color:#eef2ff;font-weight:700;
+    padding:8px 12px;border-radius:999px;cursor:pointer;
+    box-shadow:0 6px 14px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.18);
+    transition:transform .2s ease
+  }
+  .hotfix-backbar button:hover{transform:translateY(-1px)}
+</style>
+<script>
+(function(){
+  // Działaj tylko na stronie szczegółów
+  if (document.body.getAttribute('data-page') !== 'szczegoly') return;
+
+  // 1) Zawsze startuj od góry i usuń #hash (który mógł wymuszać scroll)
+  window.addEventListener('DOMContentLoaded', function(){
+    if (location.hash) {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+    // twardo na górę po renderze
+    setTimeout(function(){ window.scrollTo({top:0, left:0, behavior:'auto'}); }, 0);
+  });
+
+  // 2) Wstrzyknij pasek "← Wstecz" (jeśli go nie ma) na szczycie .container
+  const container = document.querySelector('.container') || document.body;
+  const already = container.querySelector('.hotfix-backbar, .backbar, #btnBack');
+  if (!already) {
+    const bar = document.createElement('nav');
+    bar.className = 'hotfix-backbar';
+    bar.setAttribute('aria-label', 'Wstecz');
+    bar.innerHTML = '<button type="button" id="hotfixBackBtn">← Wstecz</button>';
+    container.prepend(bar);
+
+    const btn = bar.querySelector('#hotfixBackBtn');
+    btn.addEventListener('click', function(){
+      // Spróbuj cofnąć historię, a jeśli brak – wylicz sensowny fallback z ?typ=
+      if (document.referrer && document.referrer.includes(location.host)) {
+        history.back();
+        return;
+      }
+      const p = new URLSearchParams(location.search);
+      const typ = (p.get('typ')||'').toLowerCase();
+      if (typ === 'kobieta') location.href = 'kobieta.html';
+      else if (typ === 'mezczyzna') location.href = 'mezczyzna.html';
+      else if (typ === 'dziecko') location.href = 'dziecko.html';
+      else location.href = 'index.html';
+    });
+  }
+})();
+</script>
 </body>
 </html>
