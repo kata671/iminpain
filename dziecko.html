@@ -1,136 +1,36 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <!-- BoliHelp • Kafle wyboru (DZIECKO) • 2025 • v1.1 -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Dziecko</title>
   <meta name="theme-color" content="#0e1230" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="assets/style.css?v=10" />
+
   <style>
-    :root{
-      --bg:#0e1230; --text:#eef2ff; --muted:#b8c2e0;
-      --vio:rgba(60,32,100,.32); --stroke:rgba(164,107,255,.22);
-      --glow-pink: rgba(255,110,199,.26); --glow-pink-strong: rgba(255,110,199,.38);
-      --radius:16px; --gap:14px;
-    }
-    *{box-sizing:border-box} html,body{height:100%}
-    body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial}
-
-    .bg-anim{position:fixed;inset:0;z-index:-3;pointer-events:none;
-      background:
-        radial-gradient(42vw 36vh at 16% 12%, var(--glow-pink), transparent 60%),
-        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
-        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-      filter: blur(10px) saturate(118%);
-    }
-    .grid-bg{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.22;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
-      background-size:160px 138px; background-position:center;
-    }
-
-    .hero{max-width:1100px;margin:16px auto 12px;padding:16px;border-radius:18px;border:1px solid var(--stroke);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      backdrop-filter: blur(6px) saturate(120%); box-shadow:0 18px 48px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18)}
-    .hero h1{margin:0 0 4px;font:900 22px/1.2 system-ui} .hero p{margin:0;color:var(--muted);font-size:14px}
-
-    .wrap{max-width:1100px;margin:0 auto 38px;padding:0 16px}
-    .tiles{display:grid;gap:14px;grid-template-columns:repeat(3,1fr)}
-    @media (max-width:980px){.tiles{grid-template-columns:repeat(2,1fr)}} @media (max-width:620px){.tiles{grid-template-columns:1fr}}
-
-    .tile{
-      position:relative;display:flex;flex-direction:column;overflow:hidden;border-radius:16px;background:var(--vio);
-      border:1px solid var(--stroke);backdrop-filter:saturate(120%) blur(6px);
-      transition:.2s transform,.2s box-shadow,.2s border-color;min-height:144px;
-      box-shadow: 0 10px 24px rgba(255,110,199,.10), 0 0 0 1px rgba(164,107,255,.14) inset;
-    }
-    .tile:hover{
-      transform:translateY(-2px);
-      box-shadow: 0 16px 36px rgba(255,110,199,.18), 0 0 22px var(--glow-pink-strong), 0 0 0 1px rgba(164,107,255,.36) inset;
-      border-color: rgba(164,107,255,.45);
-    }
-
-    .ph{flex:1;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));display:flex;align-items:center;justify-content:center;overflow:hidden}
-    img{width:100%;height:100%;object-fit:cover;display:block}
-    .title{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;border-top:1px solid var(--stroke);
-      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02))}
-    .tile b{font:900 16px/1.2 system-ui} .chip{font:700 12px/1 system-ui;border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 8px;background:rgba(255,255,255,.06)}
-    a.tile{text-decoration:none;color:inherit}
-
-    .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-      background:radial-gradient(40% 60% at 70% 10%, rgba(94,234,212,.18), transparent 60%),radial-gradient(40% 60% at 20% 80%, rgba(255,110,199,.18), transparent 60%);
-      color:#e6f0ff;font:800 15px/1.2 system-ui;letter-spacing:.2px}
+    /* Ten sam styl miniaturek */
+    .grid-thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;}
+    .grid-thumbs .thumb{border-radius:14px;overflow:hidden;background:rgba(60,32,100,.32);border:1px solid rgba(164,107,255,.22);box-shadow:0 6px 14px rgba(255,110,199,.1);text-align:center;transition:.2s;}
+    .grid-thumbs .thumb img{width:100%;height:140px;object-fit:contain;display:block;}
+    .grid-thumbs .thumb span{display:block;padding:6px 8px;font-weight:700;color:#eef2ff;}
+    @media (min-width:981px){.grid-thumbs{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}.grid-thumbs .thumb img{height:120px;}}
+    @media (max-width:980px){.grid-thumbs{grid-template-columns:repeat(2,1fr) !important;}.grid-thumbs .thumb img{height:110px;}}
+    @media (max-width:640px){.grid-thumbs{grid-template-columns:repeat(2,1fr) !important;gap:10px;}.grid-thumbs .thumb img{height:70px;}.grid-thumbs .thumb span{font-size:12px;}}
   </style>
 </head>
-<body>
-  <div class="bg-anim" aria-hidden="true"></div>
-  <div class="grid-bg" aria-hidden="true"></div>
+<body data-page="dziecko">
+  <div class="container">
+    <header class="header">
+      <h1>Dziecko — wybierz część ciała</h1>
+    </header>
 
-  <header class="hero" role="region" aria-label="Nagłówek">
-    <h1>Boli Help — Dziecko</h1>
-    <p>Wybierz obszar ciała, aby przejść do szczegółów dopasowanych do wieku.</p>
-  </header>
-
-  <main class="wrap">
-    <section class="tiles" id="tiles" aria-label="Wybór części ciała (dziecko)"></section>
-  </main>
-
-  <script>
-    (function(){
-      const TYPE = 'dziecko';
-      const AREAS = [
-        {czesc:"oko",     label:"Oko",      router:"oczy",    alt:["oczy"]},
-        {czesc:"nos",     label:"Nos"},
-        {czesc:"gardlo",  label:"Gardło"},
-        {czesc:"glowa",   label:"Głowa"},
-        {czesc:"klatka-piersiowa", label:"Klatka piersiowa", router:"klatka", alt:["klatka"]},
-        {czesc:"brzuch",  label:"Brzuch"},
-        {czesc:"plecy",   label:"Plecy"},
-        {czesc:"ramie",   label:"Ramię",   router:"plecy",   alt:["ramię","reka"]},
-        {czesc:"dlon",    label:"Dłoń",    router:"plecy",   alt:["dłoń","reka"]},
-        {czesc:"biodra",  label:"Biodra"},
-        {czesc:"udo",     label:"Udo",     router:"biodra"},
-        {czesc:"stopy",   label:"Stopy"},
-        {czesc:"serce",   label:"Serce"},
-        {czesc:"pluca",   label:"Płuca"},
-        {czesc:"watroba", label:"Wątroba", router:"brzuch"},
-        {czesc:"zoladek", label:"Żołądek", router:"brzuch"},
-        {czesc:"nerki",   label:"Nerki"}
-      ];
-
-      const grid = document.getElementById('tiles');
-
-      function pickImage(type, czesc, alt){
-        const list = [
-          `img/${type}-${czesc}.png`, `img/${type}-${czesc}.webp`,
-          ...(alt||[]).flatMap(a=>[`img/${type}-${a}.png`,`img/${type}-${a}.webp`])
-        ];
-        return list[0];
-      }
-      function href(type, czesc, label, router){
-        const target = router || czesc;
-        return `szczegoly.html?typ=${encodeURIComponent(type)}&czesc=${encodeURIComponent(target)}&label=${encodeURIComponent(label)}`;
-      }
-
-      AREAS.forEach(a=>{
-        const link=document.createElement('a');
-        link.className='tile';
-        link.href=href(TYPE,a.czesc,a.label,a.router);
-        link.setAttribute('aria-label',a.label);
-
-        const ph=document.createElement('div'); ph.className='ph';
-        const img=new Image();
-        img.alt=a.label; img.src=pickImage(TYPE,a.czesc,a.alt);
-        img.loading='lazy'; img.decoding='async';
-        img.onerror=()=>{ ph.innerHTML=`<div class="placeholder">${a.label}</div>`; };
-        ph.appendChild(img);
-
-        const bar=document.createElement('div'); bar.className='title';
-        bar.innerHTML=`<b>${a.label}</b><span class="chip">${TYPE}</span>`;
-
-        link.appendChild(ph); link.appendChild(bar); grid.appendChild(link);
-      });
-    })();
-  </script>
-</body>
-</html>
+    <section class="grid-thumbs">
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=oko&label=Oko"><img src="img/dziecko-oko.png" alt="Oko"><span>Oko</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=nos&label=Nos"><img src="img/dziecko-nos.png" alt="Nos"><span>Nos</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=gardlo&label=Gardło"><img src="img/dziecko-gardlo.png" alt="Gardło"><span>Gardło</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=glowa&label=Głowa"><img src="img/dziecko-glowa.png" alt="Głowa"><span>Głowa</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=klatka&label=Klatka"><img src="img/dziecko-klatka.png" alt="Klatka"><span>Klatka</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=brzuch&label=Brzuch"><img src="img/dziecko-brzuch.png" alt="Brzuch"><span>Brzuch</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=plecy&label=Plecy"><img src="img/dziecko-plecy.png" alt="Plecy"><span>Plecy</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=biodra&label=Biodra"><img src="img/dziecko-biodra.png" alt="Biodra"><span>B
