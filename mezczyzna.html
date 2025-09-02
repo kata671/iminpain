@@ -28,3 +28,75 @@
   <noscript>Ta strona wymaga JavaScript, aby wyświetlić siatkę części ciała.</noscript>
 </body>
 </html>
+<script>
+/* Bridge → nowy szczegoly.html (plug&play)
+   Wstaw identyczny fragment w: kobieta.html, mezczyzna.html, dziecko.html
+*/
+(function(){
+  // 1) Ustal typ na podstawie ścieżki/pliku (fallback: atrybut na body, jeśli masz)
+  var path = (location.pathname || "").toLowerCase();
+  var TYP =
+    /kobieta/.test(path) ? "kobieta" :
+    /mezczyzna/.test(path) ? "mezczyzna" :
+    /dziecko/.test(path) ? "dziecko" :
+    (document.body.dataset.gender || "kobieta");
+
+  // 2) Mapy nazw (area -> czesc + label do wyświetlenia)
+  var NAME = {
+    head:   {czesc:"glowa",    label:"Głowa"},
+    eyes:   {czesc:"oczy",     label:"Oczy"},
+    ear:    {czesc:"ucho",     label:"Ucho"},
+    nose:   {czesc:"nos",      label:"Nos"},
+    throat: {czesc:"gardlo",   label:"Gardło"},
+    chest:  {czesc:"klatka",   label:"Klatka piersiowa"},
+    lungs:  {czesc:"pluca",    label:"Płuca"},
+    heart:  {czesc:"serce",    label:"Serce"},
+    abdomen:{czesc:"brzuch",   label:"Brzuch"},
+    back:   {czesc:"plecy",    label:"Plecy"},
+    kidney: {czesc:"nerki",    label:"Nerki"},
+    hip:    {czesc:"biodra",   label:"Biodra"},
+    knee:   {czesc:"kolano",   label:"Kolano"},
+    feet:   {czesc:"stopy",    label:"Stopy"},
+    skin:   {czesc:"skora",    label:"Skóra"},
+    cough:  {czesc:"kaszel",   label:"Kaszel"},
+    fever:  {czesc:"goraczka", label:"Gorączka"},
+    choke:  {czesc:"zadlawienie",label:"Zadławienie"},
+    // aliasy często spotykane w hotspotach/starych linkach:
+    head_f: {czesc:"glowa",    label:"Głowa"},
+    torso:  {czesc:"brzuch",   label:"Brzuch"},
+    legs:   {czesc:"stopy",    label:"Stopy"}
+  };
+
+  // 3) Funkcja przekierowania
+  function go(czesc, label){
+    if(!czesc){ return; }
+    var url = "szczegoly.html?typ="+encodeURIComponent(TYP)
+            + "&czesc="+encodeURIComponent(czesc)
+            + "&label="+encodeURIComponent(label || czesc);
+    location.href = url;
+  }
+
+  // 4) Przechwytywanie klików na hotspotach .segment (jeśli są)
+  document.querySelectorAll('.segment,[data-area]').forEach(function(el){
+    el.addEventListener('click', function(e){
+      var area = (el.dataset.area || "").toLowerCase();
+      var n = NAME[area] || null;
+      if(n){ e.preventDefault(); go(n.czesc, n.label); }
+    }, {passive:false});
+  });
+
+  // 5) Przepisanie starych linków (np. female-head.html itp.) na nowy router
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var h = a.getAttribute('href') || "";
+    var m;
+    // dopasuj stare nazwy typu: female-head.html / male-legs.html / ...-torso.html
+    if((m = h.match(/(female|male|child).*?(head|eyes|ear|nose|throat|chest|lungs|heart|abdomen|back|kidney|hip|knee|feet|skin|cough|fever|choke|torso|legs)/i))){
+      var area = (m[2]||"").toLowerCase();
+      var n = NAME[area];
+      if(n){
+        a.addEventListener('click', function(e){ e.preventDefault(); go(n.czesc, n.label); });
+      }
+    }
+  });
+})();
+</script>
