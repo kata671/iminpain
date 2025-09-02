@@ -100,3 +100,64 @@
   });
 })();
 </script>
+<script>
+/* Fallback Panel 2025 — pokaż siatkę wyboru, jeśli nie ma miniaturek/hotspotów */
+(function(){
+  var hasThumbs = document.querySelector('.segment,[data-area], .card, .stack, .miniatures, .grid-thumbs, .body-map, a[href*="head"], a[href*="nose"]');
+  if (hasThumbs) return; // nic nie rób, jeśli miniaturki/hotspoty istnieją
+
+  // typ z pliku/ścieżki
+  var path = (location.pathname||"").toLowerCase();
+  var TYP =
+    /kobieta/.test(path) ? "kobieta" :
+    /mezczyzna/.test(path) ? "mezczyzna" :
+    /dziecko/.test(path) ? "dziecko" :
+    (document.body.dataset.gender || "kobieta");
+
+  var AREAS = [
+    {czesc:"glowa", label:"Głowa"}, {czesc:"oczy", label:"Oczy"}, {czesc:"ucho", label:"Ucho"},
+    {czesc:"nos", label:"Nos"}, {czesc:"gardlo", label:"Gardło"}, {czesc:"klatka", label:"Klatka piersiowa"},
+    {czesc:"pluca", label:"Płuca"}, {czesc:"serce", label:"Serce"}, {czesc:"brzuch", label:"Brzuch"},
+    {czesc:"plecy", label:"Plecy"}, {czesc:"nerki", label:"Nerki"}, {czesc:"biodra", label:"Biodra"},
+    {czesc:"kolano", label:"Kolano"}, {czesc:"stopy", label:"Stopy"}, {czesc:"skora", label:"Skóra"},
+    {czesc:"kaszel", label:"Kaszel"}, {czesc:"goraczka", label:"Gorączka"}, {czesc:"zadlawienie", label:"Zadławienie"}
+  ];
+
+  // style (lokalne, bez konfliktów)
+  var css = document.createElement('style');
+  css.textContent = `
+    .bh-fallback-wrap{max-width:1100px;margin:24px auto;padding:0 16px 40px}
+    .bh-fallback{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+    .bh-fallback h2{color:#eaf1ff;font:800 18px/1.2 system-ui;margin:0 0 10px}
+    .bh-tile{border-radius:14px;padding:14px;border:1px solid rgba(164,107,255,.22);
+      background:rgba(60,32,100,.25);backdrop-filter:saturate(120%) blur(6px);color:#f0f4ff;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease}
+    .bh-tile:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(8,10,22,.35),0 0 18px rgba(164,107,255,.18);
+      border-color:rgba(94,234,212,.5)}
+    .bh-tile b{font-weight:900;letter-spacing:.2px}
+    .bh-pill{font:700 12px/1 system-ui;border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 8px;
+      background:rgba(255,255,255,.06);opacity:.9}
+  `;
+  document.head.appendChild(css);
+
+  var box = document.createElement('section');
+  box.className = 'bh-fallback-wrap';
+  box.innerHTML = `
+    <h2>Wybierz obszar (tryb awaryjny)</h2>
+    <div class="bh-fallback" role="navigation" aria-label="Wybór części ciała"></div>
+  `;
+  var grid = box.querySelector('.bh-fallback');
+  AREAS.forEach(function(a){
+    var tile = document.createElement('a');
+    tile.className = 'bh-tile';
+    tile.href = 'szczegoly.html?typ='+encodeURIComponent(TYP)+'&czesc='+encodeURIComponent(a.czesc)+'&label='+encodeURIComponent(a.label);
+    tile.innerHTML = `<b>${a.label}</b><span class="bh-pill">${TYP}</span>`;
+    grid.appendChild(tile);
+  });
+
+  // wstaw nad stopką/na końcu kontenera
+  var anchor = document.querySelector('.container, main, body');
+  (anchor||document.body).appendChild(box);
+})();
+</script>
