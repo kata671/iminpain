@@ -1,174 +1,42 @@
-<!doctype html>
-<html lang="pl">
-<head>
-  <!-- BoliHelp • Strona główna • 2025 • v1.8 (większe kafelki i zdjęcia; tapeta i logika bez zmian) -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Boli Help — Strona główna</title>
-  <meta name="theme-color" content="#0e1230" />
+<style>
+  /* GRID miniaturek */
+  .grid-thumbs{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+    gap:14px;
+  }
+  .grid-thumbs .thumb{
+    border-radius:14px;
+    overflow:hidden;
+    background:rgba(60,32,100,.32);
+    border:1px solid rgba(164,107,255,.22);
+    box-shadow:0 6px 14px rgba(255,110,199,.1);
+    text-align:center;
+    transition:.2s;
+  }
+  .grid-thumbs .thumb img{
+    width:100%; height:140px; object-fit:contain; display:block;
+  }
+  .grid-thumbs .thumb span{
+    display:block; padding:6px 8px; font-weight:700; color:#eef2ff;
+  }
 
-  <!-- Twoje istniejące zasoby – bez zmian -->
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="assets/style.css?v=10" />
+  /* Laptop – trochę mniejsze miniatury */
+  @media (min-width:981px){
+    .grid-thumbs{ grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); }
+    .grid-thumbs .thumb img{ height:120px; }
+  }
 
-  <style>
-    /* ========= TAPETA (jak w v1.7) ========= */
-    html,body{height:100%}
-    body[data-page="home"]{
-      position:relative;
-      background:#0e1230 !important;
-      color:#eef2ff;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    }
-    body[data-page="home"]::before,
-    body[data-page="home"]::after,
-    body[data-page="home"] .container::before,
-    body[data-page="home"] .container::after{
-      content:none !important; display:none !important; background:none !important;
-    }
-    .bh-wallpaper, .bh-grid{ position:fixed; inset:0; pointer-events:none; }
-    .bh-wallpaper{
-      z-index:0;
-      background:
-        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
-        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
-        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-      filter: blur(10px) saturate(118%);
-    }
-    .bh-grid{
-      z-index:1; opacity:.22;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
-      background-size:160px 138px; background-position:center;
-    }
-    .bh-floor-fade{
-      position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
-      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));
-    }
-    body[data-page="home"] .container{
-      position:relative; z-index:3; background:transparent !important;
-      max-width:1100px; margin:0 auto; padding:0 16px;
-    }
+  /* Tablet */
+  @media (max-width:980px){
+    .grid-thumbs{ grid-template-columns:repeat(2,1fr) !important; }
+    .grid-thumbs .thumb img{ height:110px; }
+  }
 
-    /* ========= GRID 3 KAFELKÓW (poziomo) ========= */
-    @media (min-width:981px){
-      section.stack[style]{ grid-template-columns:repeat(3,1fr) !important; }
-    }
-    @media (max-width:980px){
-      section.stack[style]{ grid-template-columns:repeat(2,1fr) !important; }
-    }
-    @media (max-width:640px){
-      section.stack[style]{ grid-template-columns:1fr !important; }
-    }
-    section.stack[style] > *{
-      grid-column:auto !important;
-      min-width:0 !important;
-    }
-
-    /* ========= Karty i zdjęcia – WIĘKSZE ========= */
-    .card{
-      border-radius:18px; overflow:hidden;
-      background:rgba(60,32,100,.32);
-      border:1px solid rgba(164,107,255,.22);
-      box-shadow:0 10px 22px rgba(255,110,199,.12), 0 0 0 1px rgba(164,107,255,.14) inset;
-      transition:.22s;
-      min-height:200px;             /* było 160px → większa karta */
-    }
-    .card a{
-      /* było minmax(110px,150px) → większe okno na obraz */
-      display:grid; grid-template-rows:minmax(140px, 200px) auto; height:100%;
-      text-decoration:none; color:inherit;
-    }
-    .card img{
-      width:100%; height:100%;
-      object-fit:contain; object-position:center; display:block;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-    }
-    .card .caption{
-      display:flex; align-items:center; justify-content:space-between; gap:8px;
-      padding:12px 14px;                     /* trochę większy oddech */
-      border-top:1px solid rgba(164,107,255,.22);
-      background:rgba(255,255,255,.04);
-      min-height:56px;                       /* było 50px */
-      text-align:left;
-    }
-    .card h3{ margin:0; font:900 17px/1.3 system-ui; color:#eef2ff }
-  </style>
-</head>
-
-<body data-page="home">
-  <!-- TAPETA (warstwy) -->
-  <div class="bh-wallpaper" aria-hidden="true"></div>
-  <div class="bh-grid" aria-hidden="true"></div>
-  <div class="bh-floor-fade" aria-hidden="true"></div>
-
-  <div class="container">
-    <!-- Header (bez zmian) -->
-    <header class="header">
-      <div class="brand">
-        <h1>Boli Help</h1>
-        <small>Pomoc i pierwsza pomoc w nagłych sytuacjach</small>
-      </div>
-      <div class="tools">
-        <div class="search" role="search">
-          <input type="search" placeholder="Szukaj objawu, części ciała lub tematu…" aria-label="Szukaj" />
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
-                  stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-      </div>
-    </header>
-
-    <!-- Telefony (bez zmian) -->
-    <div class="emergency-list" aria-label="Telefony alarmowe">
-      <a href="tel:112">📞 112</a><a href="tel:999">🚑 999</a><a href="tel:998">🔥 998</a><a href="tel:997">👮 997</a>
-    </div>
-
-    <!-- Sytuacje (bez zmian) -->
-    <nav class="situations" aria-label="Sytuacje nagłe">
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie"><span class="ico">🫁</span>Zadławienie</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja"><span class="ico">🚑</span>Reanimacja</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek"><span class="ico">💥</span>Wypadek</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span>Pierwsza pomoc</a>
-    </nav>
-
-    <!-- Szybkie akcje (bez zmian ID/ikon/linków) -->
-    <div class="actions" role="navigation" aria-label="Szybkie akcje">
-      <button id="btn-112" class="btn btn--red btn--call" type="button" aria-label="Zadzwoń na 112">📞 112</button>
-      <button id="btn-hosp" class="btn btn--hosp" type="button" aria-label="Szpitale i SOR">🏥 Szpitale / SOR</button>
-      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener"><span class="badge-round">apteka24</span></a>
-      <button id="btn-loc" class="btn" type="button">📍 Zlokalizuj mnie</button>
-    </div>
-
-    <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
-
-    <!-- 3 kafelki – poziomo (inline grid) -->
-    <section class="stack"
-      aria-label="Wybór postaci"
-      style="display:grid;gap:16px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
-      <article class="card">
-        <a href="kobieta.html">
-          <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3>Kobieta</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
-      <article class="card">
-        <a href="mezczyzna.html">
-          <img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3>Mężczyzna</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
-      <article class="card">
-        <a href="dziecko.html">
-          <img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3>Dziecko</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
-    </section>
-  </div>
-
-  <!-- Twój oryginalny skrypt – bez zmian -->
-  <script src="assets/main.js?v=10"></script>
-</body>
-</html>
+  /* Telefon – też 2 w poziomie, ale 65% wielkości */
+  @media (max-width:640px){
+    .grid-thumbs{ grid-template-columns:repeat(2,1fr) !important; gap:10px; }
+    .grid-thumbs .thumb img{ height:70px; }
+    .grid-thumbs .thumb span{ font-size:12px; }
+  }
+</style>
