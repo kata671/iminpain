@@ -1,15 +1,156 @@
 <!doctype html>
 <html lang="pl">
 <head>
+  <!-- BoliHelp • Strona główna • 2025 • v1.0 (tapeta + 3 kafelki podrasowane, bez zmian funkcji) -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Strona główna</title>
   <meta name="theme-color" content="#113763" />
+
+  <!-- Twoje oryginalne zasoby — zostawiamy, nic nie usuwam -->
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="assets/style.css?v=10" />
+
+  <!-- Dodatkowy, bezpieczny „skin” (tylko styl) – nie zmienia logiki -->
+  <style>
+    :root{
+      --bg:#0e1230;
+      --text:#eef2ff;
+      --muted:#b8c2e0;
+      --vio:rgba(60,32,100,.32);
+      --stroke:rgba(164,107,255,.22);
+      --pink:rgba(255,110,199,.26);
+      --pink-strong:rgba(255,110,199,.38);
+      --radius:18px;
+    }
+    /* TAPETA jak na pozostałych stronach */
+    body[data-page="home"]{
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    body[data-page="home"] .bh-bg-anim{
+      position:fixed; inset:0; z-index:-3; pointer-events:none;
+      background:
+        radial-gradient(42vw 36vh at 16% 12%, var(--pink), transparent 60%),
+        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
+        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+      filter: blur(10px) saturate(118%);
+    }
+    body[data-page="home"] .bh-grid-bg{
+      position:fixed; inset:0; z-index:-2; pointer-events:none; opacity:.22;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3g fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
+      background-size:160px 138px; background-position:center;
+    }
+
+    /* Nagłówek – lekki glass */
+    body[data-page="home"] .header{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;
+      padding:14px;
+      box-shadow:0 14px 34px rgba(8,10,22,.42);
+      backdrop-filter: blur(8px) saturate(120%);
+      margin-top:16px;
+    }
+    body[data-page="home"] .brand h1{ color:#eaf1ff; margin:0 0 4px; letter-spacing:.3px }
+    body[data-page="home"] .brand small{ color:var(--muted) }
+
+    /* Lista alarmowa – delikatne kapsle (bez zmiany treści) */
+    body[data-page="home"] .emergency-list{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:12px; padding:8px; gap:8px;
+      display:flex; flex-wrap:wrap; justify-content:center;
+      box-shadow:0 10px 24px rgba(8,10,22,.35);
+    }
+    body[data-page="home"] .emergency-list a{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:8px 12px; border-radius:999px;
+      background:rgba(60,32,100,.28);
+      border:1px solid var(--stroke);
+      color:#f6f8ff; text-decoration:none; font-weight:800;
+      transition:.22s transform,.22s box-shadow,.22s border-color;
+    }
+    body[data-page="home"] .emergency-list a:hover{
+      transform:translateY(-1px);
+      box-shadow:0 0 0 2px var(--pink), 0 10px 28px rgba(8,10,22,.35);
+      border-color:rgba(164,107,255,.45);
+    }
+
+    /* Szybkie akcje – zostają jak są, tylko lekki lift tła */
+    body[data-page="home"] .actions{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:10px;
+      box-shadow:0 10px 24px rgba(8,10,22,.35); display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
+    }
+
+    /* Sekcja „Boli mnie — wybierz...” */
+    body[data-page="home"] .subheadline{ color:#eaf1ff; font-weight:900; letter-spacing:.3px }
+
+    /* >>> 3 KAFELKI – ulepszone (bez zmian w linkach/altach) */
+    body[data-page="home"] .stack{
+      display:grid; gap:14px;
+      grid-template-columns:repeat(3,1fr);
+    }
+    @media (max-width:980px){ body[data-page="home"] .stack{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ body[data-page="home"] .stack{grid-template-columns:1fr} }
+
+    body[data-page="home"] .card{
+      border-radius:var(--radius);
+      overflow:hidden;
+      background:var(--vio);
+      border:1px solid var(--stroke);
+      box-shadow: 0 10px 24px rgba(255,110,199,.10), 0 0 0 1px rgba(164,107,255,.14) inset;
+      backdrop-filter:saturate(120%) blur(6px);
+      transition:.22s transform,.22s box-shadow,.22s border-color;
+      min-height: 220px; /* trochę wyższe wizualnie, ale responsywne */
+    }
+    body[data-page="home"] .card:hover{
+      transform:translateY(-2px);
+      box-shadow: 0 16px 36px rgba(255,110,199,.18), 0 0 22px var(--pink-strong), 0 0 0 1px rgba(164,107,255,.36) inset;
+      border-color: rgba(164,107,255,.45);
+    }
+    body[data-page="home"] .card a{ display:flex; flex-direction:column; text-decoration:none; color:inherit; height:100% }
+    body[data-page="home"] .card img{
+      width:100%; height:100%; object-fit:cover; flex:1;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    }
+    body[data-page="home"] .card .caption{
+      display:flex; align-items:center; justify-content:space-between; gap:8px;
+      padding:12px 14px;
+      border-top:1px solid var(--stroke);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    }
+    body[data-page="home"] .card h3{ margin:0; font:900 18px/1.2 system-ui; letter-spacing:.3px; color:#eaf1ff }
+    body[data-page="home"] .card .arrow{ opacity:.8 }
+
+    /* Sekcja „Sytuacje nagłe” – delikatniejszy wygląd pigułek, bez ruszania treści */
+    body[data-page="home"] .situations .pill{
+      border:1px solid var(--stroke);
+      background:rgba(60,32,100,.28);
+      color:#f6f8ff;
+      transition:.22s box-shadow, .22s transform, .22s border-color;
+    }
+    body[data-page="home"] .situations .pill:hover{
+      transform:translateY(-1px);
+      box-shadow:0 0 0 2px var(--pink), 0 10px 28px rgba(8,10,22,.35);
+      border-color:rgba(164,107,255,.45);
+    }
+
+    /* Pojemnik główny */
+    body[data-page="home"] .container{ position:relative; z-index:0; }
+  </style>
 </head>
+
 <body data-page="home">
+  <!-- TAPETA (stała na całą stronę) -->
+  <div class="bh-bg-anim" aria-hidden="true"></div>
+  <div class="bh-grid-bg" aria-hidden="true"></div>
+
   <div class="container">
+    <!-- Twój oryginalny header – zostaje -->
     <header class="header">
       <div class="brand">
         <h1>Boli Help</h1>
@@ -26,10 +167,12 @@
       </div>
     </header>
 
+    <!-- Telefony alarmowe – bez zmian treści -->
     <div class="emergency-list" aria-label="Telefony alarmowe">
       <a href="tel:112">📞 112</a><a href="tel:999">🚑 999</a><a href="tel:998">🔥 998</a><a href="tel:997">👮 997</a>
     </div>
 
+    <!-- Sytuacje nagłe – bez zmian linków -->
     <nav class="situations" aria-label="Sytuacje nagłe">
       <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie"><span class="ico">🫁</span>Zadławienie</a>
       <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja"><span class="ico">🚑</span>Reanimacja</a>
@@ -37,6 +180,7 @@
       <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span>Pierwsza pomoc</a>
     </nav>
 
+    <!-- Szybkie akcje – bez zmian ID i linków -->
     <div class="actions" role="navigation" aria-label="Szybkie akcje">
       <button id="btn-112" class="btn btn--red btn--call" type="button" aria-label="Zadzwoń na 112">📞 112</button>
       <button id="btn-hosp" class="btn btn--hosp" type="button" aria-label="Szpitale i SOR">🏥 Szpitale / SOR</button>
@@ -46,7 +190,7 @@
 
     <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
 
-    <!-- 3 karty w RZĘDZIE na laptopie; mniejsze obrazy -->
+    <!-- 3 NOWOCZESNE KAFELKI (zostawiam Twoje linki/obrazy/alt) -->
     <section class="stack" aria-label="Wybór postaci">
       <article class="card">
         <a href="kobieta.html">
@@ -69,6 +213,7 @@
     </section>
   </div>
 
+  <!-- Twój oryginalny skrypt – zostawiamy -->
   <script src="assets/main.js?v=10"></script>
 </body>
 </html>
