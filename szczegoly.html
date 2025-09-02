@@ -4,28 +4,47 @@
 <head>
   <!--
     BoliHelp • Szczegóły 2025 (samowystarczalny plik)
-    Wersja: 1.1.0  •  Tryb ZERO-RYZYKA
-    Zmiany: jaśniejsze tło + widoczne cząsteczki, karty bardziej transparentne,
-            Ryzyko przeniesione do karty „Kiedy się niepokoić”, tryb 1-karta-na-razie,
-            akordeony naprawione (płynny expand).
+    Wersja: 1.2.0  •  Tryb ZERO-RYZYKA
+    Nowe: interaktywny pasek „Ryzyko” (checkboxy → dynamiczna ocena),
+          tło z różowym i zielonym światłem, cząsteczki + siatka molekularna (hex),
+          kolorowe glow tabów, akcenty niebieskie/białe.
   -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Szczegóły</title>
-  <meta name="theme-color" content="#0f1530" />
+  <meta name="theme-color" content="#101534" />
   <style>
     :root{
-      --bg:#0e1230;                             /* jaśniejsze tło bazowe */
-      --card: rgba(60, 32, 100, .32);           /* bardziej transparentne karty */
-      --text:#eef2ff; --muted:#b8bfd6;
-      --accent:#a46bff; --accent2:#5eead4; --pink:#ff6ec7;
-      --ok:#70e1b1; --warn:#ffb86c; --danger:#ff6b6b;
+      --bg:#0e1230;
+      --light-pink: rgba(255,110,199,.26);
+      --light-green: rgba(94,234,212,.22);
+
+      --card: rgba(60, 32, 100, .30);
+      --text:#eef2ff; 
+      --muted:#b8c2e0;    /* niebieskawy opis */
+      --accent:#a46bff; 
+      --accent2:#5eead4; 
+      --pink:#ff6ec7;
+      --ok:#70e1b1; 
+      --warn:#ffb86c; 
+      --danger:#ff6b6b;
       --stroke: rgba(164,107,255,.16);
       --shadow: 0 14px 34px rgba(8,10,22,.42);
       --shadow-2: 0 18px 48px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18);
       --radius:16px;
       --gap:14px;
       --speed:.24s;
+
+      /* kolory dla tabów (spójne z kartami) */
+      --c-symptoms: rgba(94,234,212,.45);
+      --c-causes:   rgba(164,107,255,.45);
+      --c-firstaid: rgba(112,225,177,.45);
+      --c-otc:      rgba(255,184,108,.55);
+      --c-rx:       rgba(255,107,107,.55);
+      --c-rehab:    rgba(94,234,212,.60);
+      --c-urgent:   rgba(255,184,108,.70);
+      --c-myths:    rgba(164,107,255,.60);
+      --c-faq:      rgba(94,234,212,.45);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -35,18 +54,18 @@
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
 
-    /* Plamy tła */
+    /* TŁO: różowe + zielone światło (plamy), cząsteczki i siatka molekularna (hex) */
     .bg-anim{
-      position:fixed; inset:0; z-index:-2; pointer-events:none;
+      position:fixed; inset:0; z-index:-3; pointer-events:none;
       background:
-        radial-gradient(42vw 36vh at 16% 12%, rgba(164,107,255,.26), transparent 60%),
-        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
-        radial-gradient(50vw 48vh at 50% 105%, rgba(164,107,255,.20), transparent 60%),
+        radial-gradient(42vw 36vh at 16% 12%, var(--light-pink), transparent 60%),
+        radial-gradient(36vw 30vh at 84% 10%, var(--light-green), transparent 60%),
+        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
         linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
       filter: blur(12px) saturate(118%);
     }
-    /* Cząsteczki — podbite, żeby były widoczne */
-    #bh-particles{ position:fixed; inset:0; z-index:-1; opacity:.75; pointer-events:none }
+    #mol-grid{ position:fixed; inset:0; z-index:-2; opacity:.25; pointer-events:none; }
+    #bh-particles{ position:fixed; inset:0; z-index:-1; opacity:.80; pointer-events:none }
 
     header.app{ max-width:1100px; margin:16px auto 0; padding:16px 16px 8px; }
     main{ max-width:1100px; margin:0 auto 72px; padding:0 16px 24px; }
@@ -56,31 +75,42 @@
       border:1px solid var(--stroke); border-radius:var(--radius); padding:16px;
       backdrop-filter: blur(6px) saturate(120%); box-shadow: var(--shadow);
     }
-    .hero-top{
-      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
-    }
-    .crumbs{font-weight:700; letter-spacing:.2px; color:var(--muted)}
+    .hero-top{ display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+    .crumbs{font-weight:700; letter-spacing:.2px; color:#cfe2ff} /* niebieski akcent */
     .label{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
       background: rgba(164,107,255,.18); border:1px solid var(--stroke); font-weight:800; letter-spacing:.3px; }
     .hero-note{ margin-top:10px; color:var(--muted); font-size:13px; }
+    .legend{ color:#d6e4ff; font-weight:700; margin-top:6px; font-size:13px }
 
-    /* Tabs (chips) jako TABLISTA */
+    /* TABY (chips) jako tablist — z kolorowym glow */
     .tabs{ display:flex; flex-wrap:wrap; gap:8px; margin:16px 0 8px; }
     .tab{
       padding:9px 13px; border-radius:10px; font-weight:800; letter-spacing:.2px; cursor:pointer; user-select:none;
-      background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16); transition: box-shadow var(--speed), transform var(--speed);
+      background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16);
+      transition: box-shadow var(--speed), transform var(--speed), border-color var(--speed);
+      color:#e9efff;
     }
-    .tab:hover{ box-shadow:0 0 0 2px rgba(255,110,199,.32), 0 0 12px rgba(255,110,199,.18) }
+    .tab:hover{ transform: translateY(-1px); }
     .tab[aria-selected="true"]{
       background: linear-gradient(180deg, rgba(164,107,255,.18), rgba(255,255,255,.05));
       border-color: rgba(164,107,255,.45);
       box-shadow: 0 0 0 2px rgba(164,107,255,.25), 0 8px 22px rgba(0,0,0,.25);
     }
+    /* kolorowy glow na hover per typ */
+    .tab[data-variant="symptoms"]:hover{ box-shadow:0 0 0 2px var(--c-symptoms), 0 0 14px rgba(94,234,212,.22) }
+    .tab[data-variant="causes"]:hover  { box-shadow:0 0 0 2px var(--c-causes),   0 0 14px rgba(164,107,255,.22) }
+    .tab[data-variant="firstaid"]:hover{ box-shadow:0 0 0 2px var(--c-firstaid), 0 0 14px rgba(112,225,177,.22) }
+    .tab[data-variant="otc"]:hover     { box-shadow:0 0 0 2px var(--c-otc),      0 0 14px rgba(255,184,108,.22) }
+    .tab[data-variant="rx"]:hover      { box-shadow:0 0 0 2px var(--c-rx),       0 0 14px rgba(255,107,107,.22) }
+    .tab[data-variant="rehab"]:hover   { box-shadow:0 0 0 2px var(--c-rehab),    0 0 14px rgba(94,234,212,.24) }
+    .tab[data-variant="urgent"]:hover  { box-shadow:0 0 0 2px var(--c-urgent),   0 0 14px rgba(255,184,108,.28) }
+    .tab[data-variant="myths"]:hover   { box-shadow:0 0 0 2px var(--c-myths),    0 0 14px rgba(164,107,255,.24) }
+    .tab[data-variant="faq"]:hover     { box-shadow:0 0 0 2px var(--c-faq),      0 0 14px rgba(94,234,212,.22) }
 
-    /* Karta uniwersalna */
+    /* KARTA (1 naraz) */
     .cards{ margin-top:8px }
     .card{
-      display:none; /* tryb 1-karta-na-razie */
+      display:none;
       background: var(--card); color:var(--text);
       border:1px solid var(--stroke); border-radius:var(--radius);
       padding:16px 16px 14px; backdrop-filter: blur(10px) saturate(125%);
@@ -91,26 +121,26 @@
     .card:hover{ transform: translateY(-2px); box-shadow: var(--shadow-2) }
 
     .card h3{
-      position:relative; margin:.15rem 0 .85rem; font-size:16px; font-weight:900; letter-spacing:.3px;
+      position:relative; margin:.15rem 0 .85rem; font-size:16px; font-weight:900; letter-spacing:.3px; color:#e6f0ff;
     }
     .card h3::after{
       content:""; display:block; height:1px; margin-top:.55rem;
-      background:linear-gradient(90deg, rgba(255,255,255,.36), rgba(255,255,255,.08) 45%, transparent);
+      background:linear-gradient(90deg, rgba(207,226,255,.55), rgba(255,255,255,.08) 45%, transparent);
     }
     .card h3:hover{ text-shadow: 0 0 10px rgba(255,110,199,.35) }
 
     /* kolorowe krawędzie */
-    .card[data-type="symptoms"]{border-color: rgba(94,234,212,.45)}
-    .card[data-type="causes"]  {border-color: rgba(164,107,255,.45)}
-    .card[data-type="firstaid"]{border-color: rgba(112,225,177,.45)}
-    .card[data-type="otc"]     {border-color: rgba(255,184,108,.45)}
-    .card[data-type="rx"]      {border-color: rgba(255,107,107,.55)}
-    .card[data-type="rehab"]   {border-color: rgba(94,234,212,.60); background: linear-gradient(180deg, rgba(94,234,212,.08), rgba(255,255,255,.04));}
-    .card[data-type="urgent"]  {border-color: rgba(255,184,108,.60)}
-    .card[data-type="myths"]   {border-color: rgba(164,107,255,.45)}
-    .card[data-type="faq"]     {border-color: rgba(94,234,212,.35)}
+    .card[data-type="symptoms"]{border-color: var(--c-symptoms)}
+    .card[data-type="causes"]  {border-color: var(--c-causes)}
+    .card[data-type="firstaid"]{border-color: var(--c-firstaid)}
+    .card[data-type="otc"]     {border-color: var(--c-otc)}
+    .card[data-type="rx"]      {border-color: var(--c-rx)}
+    .card[data-type="rehab"]   {border-color: var(--c-rehab); background: linear-gradient(180deg, rgba(94,234,212,.08), rgba(255,255,255,.04));}
+    .card[data-type="urgent"]  {border-color: var(--c-urgent)}
+    .card[data-type="myths"]   {border-color: var(--c-myths)}
+    .card[data-type="faq"]     {border-color: var(--c-faq)}
 
-    /* mini-ikony w nagłówkach */
+    /* mini-ikony */
     .card h3::before{
       content:""; display:inline-block; vertical-align:middle; width:18px; height:18px; margin-right:8px; margin-bottom:3px;
       background: currentColor; opacity:.9; mask-repeat:no-repeat; mask-size:contain; mask-position:center;
@@ -127,21 +157,33 @@
 
     ul.clean{ list-style:none; margin:0; padding:0 }
     ul.clean li{
-      padding:8px 10px; border-radius:10px; margin-bottom:7px;
+      position:relative;
+      padding:10px 12px 10px 36px; border-radius:10px; margin-bottom:7px;
       border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.03);
+      color:#f6f8ff;
     }
+    /* checkbox */
+    .cb{
+      position:absolute; left:10px; top:50%; transform:translateY(-50%);
+      width:18px; height:18px; border-radius:4px;
+      border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.05);
+      display:inline-block;
+    }
+    .cb.checked{ background:#fff; box-shadow:0 0 0 2px rgba(164,107,255,.25) inset }
+    .li-checked{ outline:1px solid rgba(164,107,255,.45); background: rgba(164,107,255,.10) }
 
-    /* „Pokaż więcej” – płynny expand */
+    /* Expand */
     .more-wrap{ margin-top:10px }
     .more-btn{
       display:inline-block; margin-top:8px; padding:10px 14px; border-radius:10px; font-weight:800;
       background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); cursor:pointer; transition: box-shadow var(--speed);
+      color:#e9efff;
     }
     .more-btn:hover{ box-shadow:0 0 0 2px rgba(255,110,199,.32), 0 0 14px rgba(255,110,199,.18) }
     .more-content{ overflow:hidden; max-height:0; transition:max-height .3s ease; }
-    .more-content.open{ max-height:1200px } /* bez „magic numbers” – to bezpieczny maks do treści */
+    .more-content.open{ max-height:1200px }
 
-    /* Pasek info/CTA */
+    /* Pasek info/CTA + Ryzyko w karcie „urgent” */
     .strip{ background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
       border: 1px solid rgba(255,255,255,.16); padding:.7rem 1rem; border-radius:.8rem; margin:.6rem 0; }
     .strip--warn{ background: linear-gradient(180deg, rgba(255,184,108,.18), rgba(255,255,255,.04)); border-color: rgba(255,184,108,.55); }
@@ -149,21 +191,19 @@
       border:1px solid rgba(255,255,255,.18); text-decoration:none; color:var(--text); }
     .cta:hover{ box-shadow:0 0 0 2px rgba(255,110,199,.32), 0 0 14px rgba(255,110,199,.18) }
 
-    /* Mini risk bar w KARcie „Kiedy się niepokoić” */
-    .risk-mini{
-      display:flex; align-items:center; gap:8px; float:right; margin-top:-2px;
-    }
+    .risk-mini{ display:flex; align-items:center; gap:8px; float:right; margin-top:-2px; }
     .riskbar{ position:relative; width:160px; height:10px; border-radius:999px; overflow:hidden;
       outline:1px solid rgba(255,255,255,.16);
       background: linear-gradient(90deg, var(--ok), #ffd16c, var(--danger)); }
     .cursor{ position:absolute; top:50%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%;
-      background:#fff; box-shadow: 0 0 0 3px rgba(164,107,255,.25), 0 6px 16px rgba(0,0,0,.35); }
+      background:#fff; box-shadow: 0 0 0 3px rgba(164,107,255,.25), 0 6px 16px rgba(0,0,0,.35); transition:left .25s ease; }
 
     .sr-only{ position:absolute !important; left:-9999px !important; }
   </style>
 </head>
 <body>
   <div class="bg-anim" aria-hidden="true"></div>
+  <canvas id="mol-grid" aria-hidden="true"></canvas>
   <canvas id="bh-particles" aria-hidden="true"></canvas>
 
   <header class="app" aria-label="Nawigacja lokalna">
@@ -175,20 +215,21 @@
 
       <!-- Tabs -->
       <div class="tabs" role="tablist" aria-label="Sekcje treści">
-        <button class="tab" role="tab" aria-selected="true"  data-target="#s-objawy">Objawy</button>
-        <button class="tab" role="tab" aria-selected="false" data-target="#s-przyczyny">Przyczyny</button>
-        <button class="tab" role="tab" aria-selected="false" data-target="#s-aid">Pierwsza pomoc</button>
-        <button class="tab" role="tab" aria-selected="false" data-target="#s-otc">Leki OTC</button>
-        <button class="tab" role="tab" aria-selected="false" data-target="#s-rx">Leki na receptę</button>
-        <button class="tab" role="tab" aria-selected="false" data-target="#s-rehab">Rehabilitacja / Profilaktyka</button>
-        <button class="tab" role="tab" aria-selected="false" data-target="#s-urgent">Kiedy się niepokoić</button>
-        <button class="tab" role="tab" aria-selected="false" data-target="#s-mity">Mity vs Fakty</button>
-        <button class="tab" role="tab" aria-selected="false" data-target="#s-faq">FAQ</button>
+        <button class="tab" data-variant="symptoms" role="tab" aria-selected="true"  data-target="#s-objawy">Objawy</button>
+        <button class="tab" data-variant="causes"   role="tab" aria-selected="false" data-target="#s-przyczyny">Przyczyny</button>
+        <button class="tab" data-variant="firstaid" role="tab" aria-selected="false" data-target="#s-aid">Pierwsza pomoc</button>
+        <button class="tab" data-variant="otc"      role="tab" aria-selected="false" data-target="#s-otc">Leki OTC</button>
+        <button class="tab" data-variant="rx"       role="tab" aria-selected="false" data-target="#s-rx">Leki na receptę</button>
+        <button class="tab" data-variant="rehab"    role="tab" aria-selected="false" data-target="#s-rehab">Rehabilitacja / Profilaktyka</button>
+        <button class="tab" data-variant="urgent"   role="tab" aria-selected="false" data-target="#s-urgent">Kiedy się niepokoić</button>
+        <button class="tab" data-variant="myths"    role="tab" aria-selected="false" data-target="#s-mity">Mity vs Fakty</button>
+        <button class="tab" data-variant="faq"      role="tab" aria-selected="false" data-target="#s-faq">FAQ</button>
       </div>
 
       <p class="hero-note">
         Edukacyjnie, nie diagnostycznie. W nagłej, ciężkiej dolegliwości lub przy czerwonych flagach — skorzystaj z <b>112</b> lub SOR.
       </p>
+      <p class="legend">Zaznacz widoczne u Ciebie objawy — pasek <b>Ryzyko</b> w karcie „Kiedy się niepokoić” dostosuje się automatycznie.</p>
     </div>
   </header>
 
@@ -259,7 +300,7 @@
         <h3 id="h-urgent">
           Kiedy się niepokoić (czerwone flagi)
           <span class="risk-mini" aria-label="Szacowany poziom ryzyka">
-            <small style="color:var(--muted);font-weight:700">Ryzyko</small>
+            <small style="color:#d6e4ff;font-weight:700">Ryzyko</small>
             <span class="riskbar"><span class="cursor" id="risk-cursor-card" style="left:15%"></span></span>
           </span>
         </h3>
@@ -295,7 +336,7 @@
     document.getElementById('crumb-label').textContent = LABEL;
     document.getElementById('label-text').innerHTML = '<b>'+ LABEL + '</b> • ' + TYP;
 
-    /* Tabs → pokazuj tylko 1 kartę naraz */
+    /* TABY — 1 karta naraz */
     const tabs = Array.from(document.querySelectorAll('.tab'));
     const panels = Array.from(document.querySelectorAll('.card[role="tabpanel"]'));
     function showPanel(targetSel){
@@ -306,7 +347,6 @@
       tabs.forEach(t=>{
         t.setAttribute('aria-selected', t.getAttribute('data-target')===targetSel ? 'true':'false');
       });
-      // scroll do góry kart
       document.querySelector(targetSel)?.scrollIntoView({behavior:'smooth', block:'start'});
     }
     tabs.forEach(t=>{
@@ -337,7 +377,7 @@
         "Utrata przytomności, zaburzenia świadomości, drgawki",
         "Trudności w oddychaniu lub sinica",
         "Krwawienie, którego nie można zatamować",
-        "Gorączka > 39°C utrzymująca się mimo leczenia lub ze sztywnością karku",
+        "Gorączka > 39°C mimo leczenia lub ze sztywnością karku",
         "Nowe objawy neurologiczne (niedowład, zaburzenia mowy, wzroku)"
       ],
       mythsCommon: [
@@ -352,7 +392,7 @@
       ]
     };
 
-    /* Treści (skrócone tutaj do najważniejszych — edukacyjne) */
+    /* Treści (skrócone — edukacyjne) */
     const CONTENT = {
       nos: { label:"Nos", risk:20,
         symptoms:["Katar wodnisty/gęsty","Zatkanie nosa, upośledzenie węchu","Kichanie/świąd (alergia)","Ból/tkliwość zatok","Krwawienie z nosa",{t:"U dzieci: oddychanie przez usta, chrapanie", audience:"child"}],
@@ -546,10 +586,10 @@
         causes:["Kęs pokarmu, małe przedmioty","Szybkie jedzenie, śmiech przy posiłku"],
         firstaid:[
           {t:"Skuteczny kaszel? — Zachęcaj do kaszlu, obserwuj", audience:"all"},
-          {t:"Dorosły: 5 uderzeń między łopatki → Heimlich (uciski nadbrzusza)", audience:"adult"},
+          {t:"Dorosły: 5 uderzeń pleców → Heimlich (uciski nadbrzusza)", audience:"adult"},
           {t:"Dziecko >1 r.ż.: 5 uderzeń pleców → 5 uciśnięć nadbrzusza", audience:"child"},
           {t:"Niemowlę <1 r.ż.: 5 uderzeń pleców → 5 uciśnięć klatki (2 palce)", audience:"child"},
-          {t:"Utrata przytomności: RKO 30:2, 112, AED jeżeli dostępny", audience:"all"}
+          {t:"Utrata przytomności: RKO 30:2, 112, AED jeśli dostępny", audience:"all"}
         ],
         otc:["Brak — działaj wg procedury pierwszej pomocy"],
         rx:["—"],
@@ -576,19 +616,12 @@
       }
     };
 
-    /* Fallback */
+    /* FALLBACK */
     const FALLBACK = { label: LABEL || CZESC, risk: 25, ...CONTENT.glowa };
     const entry = CONTENT[CZESC] || FALLBACK;
     document.getElementById('label-text').innerHTML = '<b>'+ (entry.label||LABEL) + '</b> • ' + TYP;
 
-    /* Ryzyko → tylko w karcie „urgent” (mini bar) */
-    (function setRisk(r){
-      const val = Math.max(0, Math.min(100, r||25));
-      const c = document.getElementById('risk-cursor-card');
-      if(c) c.style.left = val + '%';
-    })(entry.risk);
-
-    /* Filtr dla dzieci */
+    /* Ryzyko — dynamiczne na podstawie zaznaczonych elementów */
     const isChild = (TYP === 'dziecko');
     const allowItem = (item)=> {
       if(typeof item === 'string') return true;
@@ -598,28 +631,68 @@
     };
     const textOf = (item)=> typeof item === 'string' ? item : item.t;
 
-    /* Renderowanie list z „Pokaż więcej” (płynny expand) */
-    function renderList(baseId, arr, threshold=7){
+    // słowa-klucze dla wyższych wag
+    const HIGH_RISK_PHRASES = ["duszność","sinica","utrata przytomności","krwawienie","nagła","najgorszy ból","omdlenie","krwioplucie"];
+    const MID_RISK_PHRASES  = ["gorączka","sztywność karku","silny ból","utrzymujące się","zaburzenia widzenia","zawroty"];
+
+    function weightFor(text, bucket){
+      const s = text.toLowerCase();
+      // czerwone flagi z definicji
+      if(bucket==='urgent') return 30;
+      // słowa kluczowe
+      if(HIGH_RISK_PHRASES.some(k=>s.includes(k))) return 20;
+      if(MID_RISK_PHRASES.some(k=>s.includes(k)))  return 10;
+      // zwykły objaw
+      if(bucket==='symptoms') return 8;
+      return 0;
+    }
+
+    let selectedWeights = 0;
+    function updateRisk(){
+      const base = Math.max(0, Math.min(100, entry.risk||25));
+      const val = Math.max(0, Math.min(100, base + selectedWeights));
+      const c = document.getElementById('risk-cursor-card');
+      if(c) c.style.left = val + '%';
+    }
+
+    function renderListInteractive(baseId, arr, bucket, threshold=7){
       const list = document.getElementById(baseId);
-      const wrap = document.getElementById('mw-' + baseId.replace('meds-','').replace('symp-','symp').replace('-otc','-otc')); // mapka prosta
+      const wrap = document.getElementById('mw-' + baseId.replace('meds-','').replace('symp-','symp').replace('-otc','-otc'));
       const moreContent = document.getElementById('mc-' + baseId.replace('symp-','symp').replace('meds-','').replace('-otc','-otc'));
 
       if(!list) return;
       list.innerHTML = '';
-      const visible = [];
-      const hidden  = [];
+      const visible = []; const hidden = [];
       (arr||[]).forEach(it => (allowItem(it) ? visible.push(textOf(it)) : null));
-      // jeśli dużo pozycji — część do „more”
       const head = visible.slice(0, threshold);
       const tail = visible.slice(threshold);
 
-      head.forEach(t => { const li=document.createElement('li'); li.textContent=t; list.appendChild(li); });
+      function makeLi(txt){
+        const li = document.createElement('li');
+        const cb = document.createElement('span'); cb.className='cb'; cb.setAttribute('role','checkbox'); cb.setAttribute('aria-checked','false');
+        li.appendChild(cb);
+        const w = weightFor(txt, bucket);
+        li.dataset.weight = String(w);
+        li.appendChild(document.createTextNode(txt));
+        function toggle(){
+          const checked = cb.classList.toggle('checked');
+          li.classList.toggle('li-checked', checked);
+          cb.setAttribute('aria-checked', checked?'true':'false');
+          selectedWeights += (checked? +w : -w);
+          updateRisk();
+        }
+        li.addEventListener('click', (e)=>{ if(e.target!==cb) toggle(); });
+        cb.addEventListener('click', (e)=>{ e.stopPropagation(); toggle(); });
+        return li;
+      }
+
+      head.forEach(t => list.appendChild(makeLi(t)));
 
       if(tail.length && wrap && moreContent){
         wrap.hidden = false;
         moreContent.innerHTML = '';
         const ul = document.createElement('ul'); ul.className='clean';
-        tail.forEach(t => { const li=document.createElement('li'); li.textContent=t; ul.appendChild(li); });
+        tail.forEach(t => ul.appendChild(makeLi(t)));
         moreContent.appendChild(ul);
         const btn = wrap.querySelector('.more-btn');
         let open=false;
@@ -637,6 +710,8 @@
       ul.innerHTML = '';
       (arr||[]).forEach(x=>{
         const li = document.createElement('li');
+        const cb = document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
+        li.appendChild(cb);
         const m = document.createElement('div');
         const f = document.createElement('div');
         m.innerHTML = '<strong>Mit:</strong> ' + (x.m||'—');
@@ -650,26 +725,69 @@
       ul.innerHTML = '';
       (arr||[]).forEach(x=>{
         const li = document.createElement('li');
-        li.innerHTML = '<strong>'+ (x.q||'Pytanie') +'</strong><div style="margin-top:4px;color:var(--muted)">'+ (x.a||'Odpowiedź') +'</div>';
+        const cb = document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
+        li.appendChild(cb);
+        li.innerHTML += '<strong>'+ (x.q||'Pytanie') +'</strong><div style="margin-top:4px;color:var(--muted)">'+ (x.a||'Odpowiedź') +'</div>';
         ul.appendChild(li);
       });
     }
 
-    /* Render sekcji */
-    renderList('symp-common', entry.symptoms);
-    renderList('causes',     entry.causes);
-    renderList('firstaid',   entry.firstaid);
-    renderList('meds-otc',   entry.otc);
-    renderList('meds-rx',    entry.rx);
-    renderList('rehab',      entry.rehab);
-    renderList('urgent',     entry.urgent, 6); // zwykle krótsza, ale zostawiamy expand
+    /* Render sekcji (interaktywne listy z wagami) */
+    renderListInteractive('symp-common', entry.symptoms, 'symptoms');
+    renderListInteractive('causes',     entry.causes,   'causes');
+    renderListInteractive('firstaid',   entry.firstaid, 'firstaid');
+    renderListInteractive('meds-otc',   entry.otc,      'otc');
+    renderListInteractive('meds-rx',    entry.rx,       'rx');
+    renderListInteractive('rehab',      entry.rehab,    'rehab');
+    renderListInteractive('urgent',     entry.urgent,   'urgent', 6);
     fillPairs('myths',       entry.myths);
     fillFAQ('faq',           entry.faq);
 
-    /* Ustaw start: OBJAWY */
+    /* Ustaw start: OBJAWY i ryzyko bazowe */
+    selectedWeights = 0;
+    updateRisk();
     showPanel('#s-objawy');
 
-    /* Cząsteczki — minimalna liczba punktów, żeby były widoczne */
+    /* Siatka molekularna (hex) — subtelna */
+    (function hexGrid(){
+      const c = document.getElementById('mol-grid'); if(!c) return;
+      const ctx = c.getContext('2d');
+      let W,H,dpr;
+      function draw(){
+        dpr = Math.min(2, window.devicePixelRatio||1);
+        W = c.width  = Math.floor(innerWidth * dpr);
+        H = c.height = Math.floor(innerHeight * dpr);
+        c.style.width  = innerWidth + 'px';
+        c.style.height = innerHeight + 'px';
+        ctx.clearRect(0,0,W,H);
+        ctx.strokeStyle = 'rgba(173,216,255,0.20)'; // jasny niebieski
+        ctx.lineWidth   = 0.8 * dpr;
+
+        // parametry hexa
+        const size = 18 * dpr;
+        const h = Math.sin(Math.PI/3) * size;
+        const r = Math.cos(Math.PI/3) * size;
+        for(let y = -size; y < H + size; y += h){
+          for(let x = -size; x < W + size; x += size*1.5){
+            const offsetX = ((Math.floor(y/h)%2)===0) ? 0 : size*0.75;
+            const cx = x + offsetX, cy = y;
+            ctx.beginPath();
+            for(let i=0;i<6;i++){
+              const ang = Math.PI/3 * i;
+              const px = cx + size * Math.cos(ang);
+              const py = cy + size * Math.sin(ang);
+              if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+            }
+            ctx.closePath();
+            ctx.stroke();
+          }
+        }
+      }
+      addEventListener('resize', draw, {passive:true});
+      draw();
+    })();
+
+    /* Cząsteczki */
     (function particles(){
       const c = document.getElementById('bh-particles'); if(!c) return;
       const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
@@ -678,7 +796,7 @@
       let W,H,dots=[];
       function targetCount(){
         const t = Math.floor((innerWidth*innerHeight)/12000);
-        return Math.max(80, Math.min(220, t)); // min 80 żeby było widać
+        return Math.max(90, Math.min(240, t));
       }
       function resize(){
         W = c.width  = Math.floor(innerWidth * dpr);
@@ -688,8 +806,8 @@
         const N = targetCount();
         dots = Array.from({length:N}, ()=>({
           x: Math.random()*W, y: Math.random()*H,
-          vx:(Math.random()-.5)*.16*dpr, vy:(Math.random()-.5)*.16*dpr,
-          r: (Math.random()*1.6+0.8)*dpr, a: Math.random()*.6+.25
+          vx:(Math.random()-.5)*.18*dpr, vy:(Math.random()-.5)*.18*dpr,
+          r: (Math.random()*1.7+0.9)*dpr, a: Math.random()*.6+.25
         }));
       }
       function step(){
@@ -711,7 +829,7 @@
       resize(); step();
     })();
 
-    /* Dostępność: strzałki między tabami */
+    /* Dostępność klawiatury w tabach */
     (function tabsKeyboard(){
       const order = tabs;
       tabs.forEach((t,i)=>{
@@ -721,7 +839,6 @@
         });
       });
     })();
-
   </script>
 </body>
 </html>
