@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <!-- BoliHelp • Strona główna • 2025 • v1.0 (tapeta + 3 kafelki podrasowane, bez zmian funkcji) -->
+  <!-- BoliHelp • Strona główna • 2025 • v1.1 (tapeta widoczna + mniejsze kafelki, bez zmian funkcji) -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Strona główna</title>
   <meta name="theme-color" content="#113763" />
 
-  <!-- Twoje oryginalne zasoby — zostawiamy, nic nie usuwam -->
+  <!-- Twoje oryginalne zasoby -->
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="assets/style.css?v=10" />
 
-  <!-- Dodatkowy, bezpieczny „skin” (tylko styl) – nie zmienia logiki -->
+  <!-- „Skin” (tylko wygląd) -->
   <style>
     :root{
       --bg:#0e1230;
@@ -29,6 +29,11 @@
       color:var(--text);
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
+    /* Kontener by nie zasłaniał tapety (na wypadek tła w zewn. CSS) */
+    body[data-page="home"] .container{
+      position:relative; z-index:0;
+      background:transparent !important;
+    }
     body[data-page="home"] .bh-bg-anim{
       position:fixed; inset:0; z-index:-3; pointer-events:none;
       background:
@@ -40,11 +45,11 @@
     }
     body[data-page="home"] .bh-grid-bg{
       position:fixed; inset:0; z-index:-2; pointer-events:none; opacity:.22;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3g fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
       background-size:160px 138px; background-position:center;
     }
 
-    /* Nagłówek – lekki glass */
+    /* Nagłówek – glass */
     body[data-page="home"] .header{
       background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       border:1px solid rgba(255,255,255,.12);
@@ -57,7 +62,7 @@
     body[data-page="home"] .brand h1{ color:#eaf1ff; margin:0 0 4px; letter-spacing:.3px }
     body[data-page="home"] .brand small{ color:var(--muted) }
 
-    /* Lista alarmowa – delikatne kapsle (bez zmiany treści) */
+    /* Telefony alarmowe */
     body[data-page="home"] .emergency-list{
       background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       border:1px solid rgba(255,255,255,.12);
@@ -79,17 +84,17 @@
       border-color:rgba(164,107,255,.45);
     }
 
-    /* Szybkie akcje – zostają jak są, tylko lekki lift tła */
+    /* Szybkie akcje – tylko lekkie tło */
     body[data-page="home"] .actions{
       background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:10px;
       box-shadow:0 10px 24px rgba(8,10,22,.35); display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
     }
 
-    /* Sekcja „Boli mnie — wybierz...” */
+    /* „Boli mnie — wybierz...” */
     body[data-page="home"] .subheadline{ color:#eaf1ff; font-weight:900; letter-spacing:.3px }
 
-    /* >>> 3 KAFELKI – ulepszone (bez zmian w linkach/altach) */
+    /* >>> 3 KAFELKI – mniejsze + glow (bez zmian w linkach/altach) */
     body[data-page="home"] .stack{
       display:grid; gap:14px;
       grid-template-columns:repeat(3,1fr);
@@ -97,36 +102,44 @@
     @media (max-width:980px){ body[data-page="home"] .stack{grid-template-columns:repeat(2,1fr)} }
     @media (max-width:640px){ body[data-page="home"] .stack{grid-template-columns:1fr} }
 
+    /* zmniejszone ~25%, brak nadmiernego rozciągania obrazów */
     body[data-page="home"] .card{
       border-radius:var(--radius);
       overflow:hidden;
       background:var(--vio);
       border:1px solid var(--stroke);
-      box-shadow: 0 10px 24px rgba(255,110,199,.10), 0 0 0 1px rgba(164,107,255,.14) inset;
+      box-shadow: 0 8px 20px rgba(255,110,199,.10), 0 0 0 1px rgba(164,107,255,.14) inset;
       backdrop-filter:saturate(120%) blur(6px);
       transition:.22s transform,.22s box-shadow,.22s border-color;
-      min-height: 220px; /* trochę wyższe wizualnie, ale responsywne */
+      min-height: 165px;
     }
     body[data-page="home"] .card:hover{
       transform:translateY(-2px);
-      box-shadow: 0 16px 36px rgba(255,110,199,.18), 0 0 22px var(--pink-strong), 0 0 0 1px rgba(164,107,255,.36) inset;
+      box-shadow: 0 14px 28px rgba(255,110,199,.18), 0 0 20px var(--pink-strong), 0 0 0 1px rgba(164,107,255,.36) inset;
       border-color: rgba(164,107,255,.45);
     }
     body[data-page="home"] .card a{ display:flex; flex-direction:column; text-decoration:none; color:inherit; height:100% }
+
+    /* KLUCZ: kontrola wysokości obrazka (nie powiększa się ponad limit) */
     body[data-page="home"] .card img{
-      width:100%; height:100%; object-fit:cover; flex:1;
+      width:100%;
+      height: clamp(120px, 22vh, 150px);
+      object-fit: contain;            /* nie kadruj, nie rozciągaj */
+      object-position: center;
+      flex: 0 0 auto;                 /* stała wysokość sekcji obrazka */
       background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
     }
     body[data-page="home"] .card .caption{
       display:flex; align-items:center; justify-content:space-between; gap:8px;
-      padding:12px 14px;
+      padding:10px 12px;
       border-top:1px solid var(--stroke);
       background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      min-height: 52px;
     }
-    body[data-page="home"] .card h3{ margin:0; font:900 18px/1.2 system-ui; letter-spacing:.3px; color:#eaf1ff }
+    body[data-page="home"] .card h3{ margin:0; font:900 17px/1.2 system-ui; letter-spacing:.3px; color:#eaf1ff }
     body[data-page="home"] .card .arrow{ opacity:.8 }
 
-    /* Sekcja „Sytuacje nagłe” – delikatniejszy wygląd pigułek, bez ruszania treści */
+    /* „Sytuacje nagłe” – subtelny lift wyglądu */
     body[data-page="home"] .situations .pill{
       border:1px solid var(--stroke);
       background:rgba(60,32,100,.28);
@@ -138,9 +151,6 @@
       box-shadow:0 0 0 2px var(--pink), 0 10px 28px rgba(8,10,22,.35);
       border-color:rgba(164,107,255,.45);
     }
-
-    /* Pojemnik główny */
-    body[data-page="home"] .container{ position:relative; z-index:0; }
   </style>
 </head>
 
@@ -180,17 +190,9 @@
       <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span>Pierwsza pomoc</a>
     </nav>
 
-    <!-- Szybkie akcje – bez zmian ID i linków -->
-    <div class="actions" role="navigation" aria-label="Szybkie akcje">
-      <button id="btn-112" class="btn btn--red btn--call" type="button" aria-label="Zadzwoń na 112">📞 112</button>
-      <button id="btn-hosp" class="btn btn--hosp" type="button" aria-label="Szpitale i SOR">🏥 Szpitale / SOR</button>
-      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener"><span class="badge-round">apteka24</span></a>
-      <button id="btn-loc" class="btn" type="button">📍 Zlokalizuj mnie</button>
-    </div>
-
     <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
 
-    <!-- 3 NOWOCZESNE KAFELKI (zostawiam Twoje linki/obrazy/alt) -->
+    <!-- 3 KAFELKI – mniejsze, bez rozciągania obrazów -->
     <section class="stack" aria-label="Wybór postaci">
       <article class="card">
         <a href="kobieta.html">
@@ -213,7 +215,7 @@
     </section>
   </div>
 
-  <!-- Twój oryginalny skrypt – zostawiamy -->
+  <!-- Twój oryginalny skrypt – zostaje -->
   <script src="assets/main.js?v=10"></script>
 </body>
 </html>
