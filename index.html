@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <!-- BoliHelp • Strona główna • 2025 • v1.7 (tapeta naprawiona + 3 kafelki poziomo + mniejsze zdjęcia) -->
+  <!-- BoliHelp • Strona główna • 2025 • v1.8 (większe kafelki i zdjęcia; tapeta i logika bez zmian) -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Strona główna</title>
@@ -12,26 +12,21 @@
   <link rel="stylesheet" href="assets/style.css?v=10" />
 
   <style>
-    /* ========= TAPETA: pewna widoczność + usunięcie „starego kafla” ========= */
+    /* ========= TAPETA (jak w v1.7) ========= */
     html,body{height:100%}
     body[data-page="home"]{
       position:relative;
-      background:#0e1230 !important; /* baza */
+      background:#0e1230 !important;
       color:#eef2ff;
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
-    /* Wyłącz ewentualne tła/pseudo-elementy, które przykrywały tapetę */
     body[data-page="home"]::before,
     body[data-page="home"]::after,
     body[data-page="home"] .container::before,
     body[data-page="home"] .container::after{
       content:none !important; display:none !important; background:none !important;
     }
-
-    /* Warstwy tapety – pod treścią, ale ponad tłem body */
-    .bh-wallpaper, .bh-grid{
-      position:fixed; inset:0; pointer-events:none;
-    }
+    .bh-wallpaper, .bh-grid{ position:fixed; inset:0; pointer-events:none; }
     .bh-wallpaper{
       z-index:0;
       background:
@@ -46,20 +41,16 @@
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
       background-size:160px 138px; background-position:center;
     }
-    /* Subtelny „floor fade”, który maskuje resztkowy cień na dole (jeśli jakiś stary blok go zostawiał) */
     .bh-floor-fade{
       position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
       background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));
     }
-
-    /* Treść ponad tapetą */
     body[data-page="home"] .container{
       position:relative; z-index:3; background:transparent !important;
       max-width:1100px; margin:0 auto; padding:0 16px;
     }
 
     /* ========= GRID 3 KAFELKÓW (poziomo) ========= */
-    /* Wymuszamy GRID inline na <section>, a tu tylko sterujemy liczbą kolumn */
     @media (min-width:981px){
       section.stack[style]{ grid-template-columns:repeat(3,1fr) !important; }
     }
@@ -69,23 +60,23 @@
     @media (max-width:640px){
       section.stack[style]{ grid-template-columns:1fr !important; }
     }
-    /* Jeżeli zewnętrzny CSS próbował rozciągać kafel na cały wiersz: zgaś to */
     section.stack[style] > *{
       grid-column:auto !important;
       min-width:0 !important;
     }
 
-    /* ========= Karty i zdjęcia (mniejsze, równe) ========= */
+    /* ========= Karty i zdjęcia – WIĘKSZE ========= */
     .card{
       border-radius:18px; overflow:hidden;
       background:rgba(60,32,100,.32);
       border:1px solid rgba(164,107,255,.22);
-      box-shadow:0 8px 20px rgba(255,110,199,.10), 0 0 0 1px rgba(164,107,255,.14) inset;
+      box-shadow:0 10px 22px rgba(255,110,199,.12), 0 0 0 1px rgba(164,107,255,.14) inset;
       transition:.22s;
-      min-height:160px;
+      min-height:200px;             /* było 160px → większa karta */
     }
     .card a{
-      display:grid; grid-template-rows:minmax(110px, 150px) auto; height:100%;
+      /* było minmax(110px,150px) → większe okno na obraz */
+      display:grid; grid-template-rows:minmax(140px, 200px) auto; height:100%;
       text-decoration:none; color:inherit;
     }
     .card img{
@@ -95,13 +86,13 @@
     }
     .card .caption{
       display:flex; align-items:center; justify-content:space-between; gap:8px;
-      padding:10px 12px;
+      padding:12px 14px;                     /* trochę większy oddech */
       border-top:1px solid rgba(164,107,255,.22);
       background:rgba(255,255,255,.04);
-      min-height:50px;
+      min-height:56px;                       /* było 50px */
       text-align:left;
     }
-    .card h3{ margin:0; font:900 16px/1.25 system-ui; color:#eef2ff }
+    .card h3{ margin:0; font:900 17px/1.3 system-ui; color:#eef2ff }
   </style>
 </head>
 
@@ -152,10 +143,10 @@
 
     <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
 
-    <!-- 3 kafelki – poziomo na laptopie; inline grid gwarantuje układ -->
+    <!-- 3 kafelki – poziomo (inline grid) -->
     <section class="stack"
       aria-label="Wybór postaci"
-      style="display:grid;gap:14px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
+      style="display:grid;gap:16px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
       <article class="card">
         <a href="kobieta.html">
           <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
