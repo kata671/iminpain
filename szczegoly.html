@@ -2,44 +2,36 @@
 <html lang="pl">
 <head>
   <!--
-    BoliHelp • Szczegóły 2025 (samowystarczalny plik)
-    Wersja: 1.3.0  •  Tryb ZERO-RYZYKA
+    BoliHelp • SZCZEGÓŁY 2025 • v1.4 • samowystarczalny
     Zmiany:
-      • „Kiedy się niepokoić” przeniesione do karty „Objawy” (znika osobny tab).
-      • Interaktywny pasek Ryzyka (checkboxy w Objawach i Czerwonych flagach).
-      • Efekt końcowy przy wysokim ryzyku (pulsujący alert + CTA + wibracja jeśli możliwe).
-      • Tło: różowe + zielone światło, cząsteczki oraz siatka molekularna (hex).
-      • Taby: transparentne, kolorowe glow dopasowane do obwódek.
-      • Checkboxy tylko w Objawach i Czerwonych flagach; reszta list bez checkboxów.
-      • Mobile-first, bez zewnętrznych zależności.
+      • TŁO: ta sama szeroka siatka molekularna jak na stronach z miniaturkami (CSS background), plus różowo-zielone światła.
+      • KARTY: w pełni działające taby (Objawy/Przyczyny/Pierwsza pomoc/OTC/Rx/Rehab/Mity/FAQ).
+      • „Kiedy się niepokoić” przeniesione do OBJAWÓW, połączone z paskiem Ryzyka.
+      • Checkboxy tylko w Objawach i w Czerwonych flagach; reszta list czysta (bez checkboxów).
+      • Routing z aliasami (oko→oczy, klatka-piersiowa→klatka, watroba/zoladek→brzuch, ramie/dlon→plecy, udo→biodra).
+      • Mobile-first, bez zależności zewnętrznych. Edukacja, nie diagnoza.
   -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Szczegóły</title>
-  <meta name="theme-color" content="#101534" />
+  <meta name="theme-color" content="#0e1230" />
   <style>
     :root{
       --bg:#0e1230;
-      --light-pink: rgba(255,110,199,.26);
-      --light-green: rgba(94,234,212,.22);
-
-      --card: rgba(60, 32, 100, .30);
       --text:#eef2ff;
-      --muted:#b8c2e0;          /* niebieskawy opis */
-      --accent:#a46bff;
-      --accent2:#5eead4;
-      --pink:#ff6ec7;
-      --ok:#70e1b1;
-      --warn:#ffb86c;
-      --danger:#ff6b6b;
-      --stroke: rgba(164,107,255,.16);
-      --shadow: 0 14px 34px rgba(8,10,22,.42);
-      --shadow-2: 0 18px 48px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18);
-      --radius:16px;
-      --gap:14px;
-      --speed:.24s;
+      --muted:#b8c2e0;
 
-      /* kolory dla tabów (spójne z kartami) */
+      --card: rgba(60,32,100,.30);        /* pół-transparentny fiolet */
+      --stroke: rgba(164,107,255,.18);    /* delikatna obwódka */
+      --accent:#a46bff;
+      --pink:#ff6ec7;
+      --teal:#5eead4;
+
+      --ok:#70e1b1; --warn:#ffd16c; --danger:#ff6b6b;
+
+      --radius:16px; --gap:14px; --speed:.24s;
+
+      /* kolory glow tabów */
       --c-symptoms: rgba(94,234,212,.55);
       --c-causes:   rgba(164,107,255,.55);
       --c-firstaid: rgba(112,225,177,.55);
@@ -49,25 +41,31 @@
       --c-myths:    rgba(164,107,255,.65);
       --c-faq:      rgba(94,234,212,.55);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{box-sizing:border-box} html,body{height:100%}
     body{
-      margin:0; color:var(--text); background:var(--bg);
-      font: 15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
+      margin:0; background:var(--bg); color:var(--text);
+      font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
 
-    /* TŁO: różowe + zielone światło (plamy), siatka molekularna, cząsteczki */
+    /* TŁO — identyczne jak na stronach z miniaturkami */
     .bg-anim{
       position:fixed; inset:0; z-index:-3; pointer-events:none;
       background:
-        radial-gradient(42vw 36vh at 16% 12%, var(--light-pink), transparent 60%),
-        radial-gradient(36vw 30vh at 84% 10%, var(--light-green), transparent 60%),
+        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.26), transparent 60%),
+        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
         radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
         linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-      filter: blur(12px) saturate(118%);
+      filter: blur(10px) saturate(118%);
     }
-    #mol-grid{ position:fixed; inset:0; z-index:-2; opacity:.26; pointer-events:none; }
+    .grid-bg{
+      position:fixed; inset:0; z-index:-2; pointer-events:none; opacity:.22;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
+      background-size:160px 138px;      /* szeroka siatka */
+      background-position:center;
+    }
+    /* Cząsteczki (subtelne) */
     #bh-particles{ position:fixed; inset:0; z-index:-1; opacity:.85; pointer-events:none }
 
     header.app{ max-width:1100px; margin:16px auto 0; padding:16px 16px 8px; }
@@ -76,10 +74,11 @@
     .hero{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       border:1px solid var(--stroke); border-radius:var(--radius); padding:16px;
-      backdrop-filter: blur(6px) saturate(120%); box-shadow: var(--shadow);
+      backdrop-filter: blur(6px) saturate(120%);
+      box-shadow: 0 18px 48px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18);
     }
     .hero-top{ display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
-    .crumbs{font-weight:700; letter-spacing:.2px; color:#cfe2ff} /* niebieski akcent */
+    .crumbs{font-weight:800; letter-spacing:.2px; color:#cfe2ff}
     .label{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
       background: rgba(164,107,255,.18); border:1px solid var(--stroke); font-weight:800; letter-spacing:.3px; }
     .hero-note{ margin-top:10px; color:var(--muted); font-size:13px; }
@@ -89,12 +88,10 @@
     .tabs{ display:flex; flex-wrap:wrap; gap:8px; margin:16px 0 8px; }
     .tab{
       padding:9px 13px; border-radius:10px; font-weight:800; letter-spacing:.2px; cursor:pointer; user-select:none;
-      background: transparent; border:1px solid rgba(255,255,255,.16);
+      background: transparent; border:1px solid rgba(255,255,255,.16); color:#e9efff;
       transition: box-shadow var(--speed), transform var(--speed), border-color var(--speed), background var(--speed);
-      color:#e9efff;
     }
     .tab:hover{ transform: translateY(-1px); }
-    /* kolor bazowy obramowania per wariant (też gdy nieaktywny) */
     .tab[data-variant="symptoms"]{ border-color: rgba(94,234,212,.25) }
     .tab[data-variant="causes"]  { border-color: rgba(164,107,255,.25) }
     .tab[data-variant="firstaid"]{ border-color: rgba(112,225,177,.25) }
@@ -103,7 +100,6 @@
     .tab[data-variant="rehab"]   { border-color: rgba(94,234,212,.28) }
     .tab[data-variant="myths"]   { border-color: rgba(164,107,255,.28) }
     .tab[data-variant="faq"]     { border-color: rgba(94,234,212,.25) }
-    /* hover glow */
     .tab[data-variant="symptoms"]:hover{ box-shadow:0 0 0 2px var(--c-symptoms), 0 0 14px rgba(94,234,212,.22) }
     .tab[data-variant="causes"]:hover  { box-shadow:0 0 0 2px var(--c-causes),   0 0 14px rgba(164,107,255,.22) }
     .tab[data-variant="firstaid"]:hover{ box-shadow:0 0 0 2px var(--c-firstaid), 0 0 14px rgba(112,225,177,.22) }
@@ -112,7 +108,6 @@
     .tab[data-variant="rehab"]:hover   { box-shadow:0 0 0 2px var(--c-rehab),    0 0 14px rgba(94,234,212,.24) }
     .tab[data-variant="myths"]:hover   { box-shadow:0 0 0 2px var(--c-myths),    0 0 14px rgba(164,107,255,.24) }
     .tab[data-variant="faq"]:hover     { box-shadow:0 0 0 2px var(--c-faq),      0 0 14px rgba(94,234,212,.22) }
-    /* aktywne (selected) — mocny glow w kolorze wariantu */
     .tab[aria-selected="true"][data-variant="symptoms"]{ border-color: var(--c-symptoms); box-shadow:0 0 0 2px var(--c-symptoms), 0 8px 22px rgba(0,0,0,.25) }
     .tab[aria-selected="true"][data-variant="causes"]  { border-color: var(--c-causes);   box-shadow:0 0 0 2px var(--c-causes),   0 8px 22px rgba(0,0,0,.25) }
     .tab[aria-selected="true"][data-variant="firstaid"]{ border-color: var(--c-firstaid); box-shadow:0 0 0 2px var(--c-firstaid), 0 8px 22px rgba(0,0,0,.25) }
@@ -125,26 +120,23 @@
     /* KARTY */
     .cards{ margin-top:8px }
     .card{
-      display:none; /* 1 karta na raz */
-      background: var(--card); color:var(--text);
+      display:none;
+      background: var(--card);
       border:1px solid var(--stroke); border-radius:var(--radius);
       padding:16px 16px 14px; backdrop-filter: blur(10px) saturate(125%);
-      box-shadow: var(--shadow); transition: transform var(--speed), box-shadow var(--speed), border-color var(--speed);
+      box-shadow: 0 14px 34px rgba(8,10,22,.42);
+      transition: transform var(--speed), box-shadow var(--speed), border-color var(--speed);
+      color:var(--text);
     }
-    .card[aria-hidden="false"]{ display:block; animation: fadeIn .28s ease both }
-    @keyframes fadeIn { from{opacity:.0; transform:translateY(4px)} to{opacity:1; transform:none} }
-    .card:hover{ transform: translateY(-2px); box-shadow: var(--shadow-2) }
+    .card[aria-hidden="false"]{ display:block; animation:fadeIn .28s ease both }
+    @keyframes fadeIn{ from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none} }
+    .card:hover{ transform: translateY(-2px); box-shadow: 0 18px 48px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18) }
 
-    .card h3{
-      position:relative; margin:.15rem 0 .85rem; font-size:16px; font-weight:900; letter-spacing:.3px; color:#e6f0ff;
-    }
+    .card h3{ position:relative; margin:.15rem 0 .85rem; font-size:16px; font-weight:900; letter-spacing:.3px; color:#e6f0ff }
     .card h3::after{
       content:""; display:block; height:1px; margin-top:.55rem;
       background:linear-gradient(90deg, rgba(207,226,255,.55), rgba(255,255,255,.08) 45%, transparent);
     }
-    .card h3:hover{ text-shadow: 0 0 10px rgba(255,110,199,.35) }
-
-    /* kolorowe krawędzie */
     .card[data-type="symptoms"]{border-color: rgba(94,234,212,.55)}
     .card[data-type="causes"]  {border-color: rgba(164,107,255,.55)}
     .card[data-type="firstaid"]{border-color: rgba(112,225,177,.55)}
@@ -154,35 +146,15 @@
     .card[data-type="myths"]   {border-color: rgba(164,107,255,.65)}
     .card[data-type="faq"]     {border-color: rgba(94,234,212,.55)}
 
-    /* mini-ikony */
-    .card h3::before{
-      content:""; display:inline-block; vertical-align:middle; width:18px; height:18px; margin-right:8px; margin-bottom:3px;
-      background: currentColor; opacity:.9; mask-repeat:no-repeat; mask-size:contain; mask-position:center;
-    }
-    .card[data-type="symptoms"] h3::before{ mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="%23000"/><path d="M11.2 7h1.6v4.2l3 1.8-.8 1.3L11.2 12V7z" fill="%23000"/></svg>'); }
-    .card[data-type="causes"]   h3::before{ mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M12 2l9 4v6c0 5-3.5 9.7-9 10-5.5-.3-9-5-9-10V6l9-4zM11 8h2v5h-2zm0 6h2v2h-2z"/></svg>'); }
-    .card[data-type="firstaid"] h3::before{ mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M7 7V5a2 2 0 012-2h6a2 2 0 012 2v2h2a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h2zm4 4V9h2v2h2v2h-2v2h-2v-2H9v-2h2z"/></svg>'); }
-    .card[data-type="otc"]      h3::before{ mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="8" rx="2" ry="2" fill="%23000"/><rect x="3" y="12" width="18" height="8" rx="2" ry="2" fill="%23000"/></svg>'); }
-    .card[data-type="rx"]       h3::before{ mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M5 3h10a2 2 0 012 2v4H5V5a2 2 0 012-2zM5 11h14v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6zm3 2v2h2v2h2v-2h2v-2h-2v-2h-2v2H8z"/></svg>'); }
-    .card[data-type="rehab"]    h3::before{ mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M7 20v-2h4v2H7zm6 0v-2h4v2h-4zM6 4h12l-1 8H7L6 4zm3 10h6l-1 2H10l-1-2z"/></svg>'); }
-    .card[data-type="myths"]    h3::before{ mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox=\'0 0 24 24\'><path fill=\'%23000\' d=\'M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v4h4v2h-4v4h-2v-4H7v-2h4V7h2z\'/></svg>'); }
-    .card[data-type="faq"]      h3::before{ mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox=\'0 0 24 24\'><path fill=\'%23000\' d=\'M12 3a9 9 0 019 9 9 9 0 11-9-9zm-1 14h2v-2h-2v2zm1-12a4 4 0 00-4 4h2a2 2 0 114 0c0 1-1 1.5-1.8 2.1-.7.5-1.2.9-1.2 1.9v1h2v-.7c0-.5.3-.8.9-1.2 1.2-.9 2.1-1.6 2.1-3.1a4 4 0 00-4-4z\'/></svg>'); }
-
-    /* listy */
+    /* Listy */
     ul.clean{ list-style:none; margin:0; padding:0 }
     ul.clean li{
-      position:relative;
-      padding:10px 12px 10px 36px; border-radius:10px; margin-bottom:7px;
-      border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.03);
-      color:#f6f8ff;
+      position:relative; padding:10px 12px 10px 36px; border-radius:10px; margin-bottom:7px;
+      border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.03); color:#f6f8ff;
     }
-    /* checkbox tylko w objawach i czerwonych flagach */
-    .cb{
-      position:absolute; left:10px; top:50%; transform:translateY(-50%);
+    .cb{ position:absolute; left:10px; top:50%; transform:translateY(-50%);
       width:18px; height:18px; border-radius:4px;
-      border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.05);
-      display:inline-block;
-    }
+      border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.05); display:inline-block }
     .cb.checked{ background:#fff; box-shadow:0 0 0 2px rgba(164,107,255,.25) inset }
     .li-checked{ outline:1px solid rgba(164,107,255,.45); background: rgba(164,107,255,.10) }
 
@@ -190,23 +162,22 @@
     .more-wrap{ margin-top:10px }
     .more-btn{
       display:inline-block; margin-top:8px; padding:10px 14px; border-radius:10px; font-weight:800;
-      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); cursor:pointer; transition: box-shadow var(--speed);
-      color:#e9efff;
+      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); cursor:pointer; color:#e9efff;
+      transition: box-shadow var(--speed);
     }
     .more-btn:hover{ box-shadow:0 0 0 2px rgba(255,110,199,.32), 0 0 14px rgba(255,110,199,.18) }
     .more-content{ overflow:hidden; max-height:0; transition:max-height .3s ease; }
     .more-content.open{ max-height:1200px }
 
-    /* Pasek info/CTA + Ryzyko w OBJAWACH */
+    /* Ryzyko (w OBJAWACH) */
     .subhead{ margin:.9rem 0 .5rem; font-weight:900; color:#e6f0ff; }
     .risk-mini{ display:flex; align-items:center; gap:10px; margin:.15rem 0 .35rem }
     .risk-mini small{ color:#d6e4ff; font-weight:800 }
     .riskbar{ position:relative; width:200px; height:12px; border-radius:999px; overflow:hidden;
       outline:1px solid rgba(255,255,255,.16);
-      background: linear-gradient(90deg, var(--ok), #ffd16c, var(--danger)); }
+      background: linear-gradient(90deg, var(--ok), var(--warn), var(--danger)); }
     .cursor{ position:absolute; top:50%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%;
       background:#fff; transition:left .25s ease; }
-    /* efekt końcowy przy wysokim ryzyku */
     .riskbar.high .cursor{ animation:pulse 1s infinite }
     @keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(255,107,107,.45)} 70%{ box-shadow:0 0 0 14px rgba(255,107,107,0)} 100%{ box-shadow:0 0 0 0 rgba(255,107,107,0)} }
     .strip{ background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
@@ -221,10 +192,12 @@
   </style>
 </head>
 <body>
+  <!-- TŁO -->
   <div class="bg-anim" aria-hidden="true"></div>
-  <canvas id="mol-grid" aria-hidden="true"></canvas>
+  <div class="grid-bg" aria-hidden="true"></div>
   <canvas id="bh-particles" aria-hidden="true"></canvas>
 
+  <!-- HERO -->
   <header class="app" aria-label="Nawigacja lokalna">
     <div class="hero" role="region" aria-label="Nagłówek szczegółów">
       <div class="hero-top">
@@ -232,7 +205,7 @@
         <div class="label"><span id="label-icon" aria-hidden="true">●</span><span id="label-text"><b>—</b></span></div>
       </div>
 
-      <!-- Tabs (bez „Kiedy się niepokoić” — jest w Objawach) -->
+      <!-- Tabs -->
       <div class="tabs" role="tablist" aria-label="Sekcje treści">
         <button class="tab" data-variant="symptoms" role="tab" aria-selected="true"  data-target="#s-objawy">Objawy</button>
         <button class="tab" data-variant="causes"   role="tab" aria-selected="false" data-target="#s-przyczyny">Przyczyny</button>
@@ -244,16 +217,15 @@
         <button class="tab" data-variant="faq"      role="tab" aria-selected="false" data-target="#s-faq">FAQ</button>
       </div>
 
-      <p class="hero-note">
-        Edukacyjnie, nie diagnostycznie. W nagłej, ciężkiej dolegliwości lub przy czerwonych flagach — skorzystaj z <b>112</b> lub SOR.
-      </p>
+      <p class="hero-note">Edukacyjnie, nie diagnostycznie. W nagłej, ciężkiej dolegliwości lub przy czerwonych flagach — skorzystaj z <b>112</b> lub SOR.</p>
       <p class="legend">Zaznacz <strong>objawy</strong> i <strong>czerwone flagi</strong> w karcie „Objawy” — pasek <b>Ryzyko</b> zareaguje automatycznie.</p>
     </div>
   </header>
 
+  <!-- KARTY -->
   <main>
     <section class="cards" aria-label="Karty z informacjami szczegółowymi">
-      <!-- OBJAWY (zawiera też „Kiedy się niepokoić”) -->
+      <!-- OBJAWY (zawiera „Kiedy się niepokoić”) -->
       <article class="card" data-type="symptoms" id="s-objawy" aria-labelledby="h-obj" role="tabpanel" aria-hidden="false">
         <h3 id="h-obj">Objawy</h3>
         <ul class="clean" id="symp-common"></ul>
@@ -277,18 +249,98 @@
           <a class="cta" id="cta-112" href="tel:112" aria-label="Zadzwoń na numer alarmowy 112">Zadzwoń 112</a>
         </div>
       </article>
+
+      <!-- PRZYCZYNY -->
+      <article class="card" data-type="causes" id="s-przyczyny" aria-labelledby="h-cause" role="tabpanel" aria-hidden="true">
+        <h3 id="h-cause">Przyczyny</h3>
+        <ul class="clean" id="causes"></ul>
+        <div class="more-wrap" id="mw-causes" hidden>
+          <div class="more-content" id="mc-causes"></div>
+          <button class="more-btn" data-more="causes">Pokaż więcej</button>
+        </div>
+      </article>
+
+      <!-- PIERWSZA POMOC -->
+      <article class="card" data-type="firstaid" id="s-aid" aria-labelledby="h-aid" role="tabpanel" aria-hidden="true">
+        <h3 id="h-aid">Pierwsza pomoc</h3>
+        <ul class="clean" id="firstaid"></ul>
+        <div class="more-wrap" id="mw-firstaid" hidden>
+          <div class="more-content" id="mc-firstaid"></div>
+          <button class="more-btn" data-more="firstaid">Pokaż więcej</button>
+        </div>
+      </article>
+
+      <!-- OTC -->
+      <article class="card" data-type="otc" id="s-otc" aria-labelledby="h-otc" role="tabpanel" aria-hidden="true">
+        <h3 id="h-otc">Leki bez recepty (OTC)</h3>
+        <ul class="clean" id="meds-otc"></ul>
+        <div class="more-wrap" id="mw-meds-otc" hidden>
+          <div class="more-content" id="mc-meds-otc"></div>
+          <button class="more-btn" data-more="meds-otc">Pokaż więcej</button>
+        </div>
+      </article>
+
+      <!-- RX -->
+      <article class="card" data-type="rx" id="s-rx" aria-labelledby="h-rx" role="tabpanel" aria-hidden="true">
+        <h3 id="h-rx">Leki na receptę (informacyjnie)</h3>
+        <ul class="clean" id="meds-rx"></ul>
+        <div class="more-wrap" id="mw-meds-rx" hidden>
+          <div class="more-content" id="mc-meds-rx"></div>
+          <button class="more-btn" data-more="meds-rx">Pokaż więcej</button>
+        </div>
+      </article>
+
+      <!-- REHAB -->
+      <article class="card" data-type="rehab" id="s-rehab" aria-labelledby="h-rehab" role="tabpanel" aria-hidden="true">
+        <h3 id="h-rehab">Rehabilitacja / Profilaktyka</h3>
+        <ul class="clean" id="rehab"></ul>
+        <div class="more-wrap" id="mw-rehab" hidden>
+          <div class="more-content" id="mc-rehab"></div>
+          <button class="more-btn" data-more="rehab">Pokaż więcej</button>
+        </div>
+      </article>
+
+      <!-- MITY -->
+      <article class="card" data-type="myths" id="s-mity" aria-labelledby="h-mity" role="tabpanel" aria-hidden="true">
+        <h3 id="h-mity">Mity vs Fakty</h3>
+        <ul class="clean" id="myths"></ul>
+      </article>
+
+      <!-- FAQ -->
+      <article class="card" data-type="faq" id="s-faq" aria-labelledby="h-faq" role="tabpanel" aria-hidden="true">
+        <h3 id="h-faq">FAQ</h3>
+        <ul class="clean" id="faq"></ul>
+      </article>
+    </section>
+  </main>
+
   <script>
-    /* Router i parametry */
+    /* === ROUTER & PARAMS === */
     const qs = new URLSearchParams(location.search);
-    const TYP   = (qs.get('typ')||'kobieta').toLowerCase();   // 'kobieta' | 'mezczyzna' | 'dziecko'
-    const CZESC = (qs.get('czesc')||'glowa').toLowerCase();
-    const LABEL = (qs.get('label')||CZESC).toString();
+    const RAW_TYP   = (qs.get('typ')||'kobieta').toLowerCase();
+    const RAW_CZESC = (qs.get('czesc')||'glowa').toLowerCase();
+    const RAW_LABEL = (qs.get('label')||RAW_CZESC).toString();
+
+    /* Aliasy sekcji -> istniejące treści */
+    const ALIAS = {
+      'oko':'oczy',
+      'klatka-piersiowa':'klatka',
+      'watroba':'brzuch',
+      'zoladek':'brzuch',
+      'ramie':'plecy',
+      'dłoń':'plecy','dlon':'plecy',
+      'udo':'biodra'
+    };
+
+    const TYP   = RAW_TYP;
+    const CZESC = ALIAS[RAW_CZESC] || RAW_CZESC;
+    const LABEL = RAW_LABEL;
 
     document.getElementById('crumb-typ').textContent = TYP;
     document.getElementById('crumb-label').textContent = LABEL;
     document.getElementById('label-text').innerHTML = '<b>'+ LABEL + '</b> • ' + TYP;
 
-    /* TABY — 1 karta naraz */
+    /* === TABY === */
     const tabs = Array.from(document.querySelectorAll('.tab'));
     const panels = Array.from(document.querySelectorAll('.card[role="tabpanel"]'));
     function showPanel(targetSel){
@@ -297,7 +349,9 @@
         p.setAttribute('aria-hidden', active? 'false':'true');
       });
       tabs.forEach(t=>{
-        t.setAttribute('aria-selected', t.getAttribute('data-target')===targetSel ? 'true':'false');
+        const on = t.getAttribute('data-target')===targetSel;
+        t.setAttribute('aria-selected', on?'true':'false');
+        if(on) t.focus({preventScroll:true});
       });
       document.querySelector(targetSel)?.scrollIntoView({behavior:'smooth', block:'start'});
     }
@@ -307,8 +361,17 @@
         if(e.key==='Enter' || e.key===' '){ e.preventDefault(); t.click(); }
       });
     });
+    (function tabsKeyboard(){
+      const order = tabs;
+      tabs.forEach((t,i)=>{
+        t.addEventListener('keydown',e=>{
+          if(e.key==='ArrowRight'){ e.preventDefault(); order[(i+1)%order.length].focus(); }
+          if(e.key==='ArrowLeft'){ e.preventDefault(); order[(i-1+order.length)%order.length].focus(); }
+        });
+      });
+    })();
 
-    /* Wspólne bazy */
+    /* === BAZY WSPÓLNE === */
     const BASE = {
       rehabCommon: [
         "Sen i regeneracja — 7–9 h na dobę, stałe pory snu",
@@ -344,7 +407,7 @@
       ]
     };
 
-    /* Treści (edukacyjne) */
+    /* === TREŚCI (edukacyjne) === */
     const CONTENT = {
       nos: { label:"Nos", risk:20,
         symptoms:["Katar wodnisty/gęsty","Zatkanie nosa, upośledzenie węchu","Kichanie/świąd (alergia)","Ból/tkliwość zatok","Krwawienie z nosa",{t:"U dzieci: oddychanie przez usta, chrapanie", audience:"child"}],
@@ -568,12 +631,12 @@
       }
     };
 
-    /* FALLBACK */
+    /* === FALLBACK + WYBÓR TREŚCI === */
     const FALLBACK = { label: LABEL || CZESC, risk: 25, ...CONTENT.glowa };
     const entry = CONTENT[CZESC] || FALLBACK;
     document.getElementById('label-text').innerHTML = '<b>'+ (entry.label||LABEL) + '</b> • ' + TYP;
 
-    /* Ryzyko — dynamiczne na podstawie zaznaczonych elementów (Objawy + Czerwone flagi) */
+    /* === RYZYKO === */
     const isChild = (TYP === 'dziecko');
     const allowItem = (item)=> {
       if(typeof item === 'string') return true;
@@ -583,10 +646,8 @@
     };
     const textOf = (item)=> typeof item === 'string' ? item : item.t;
 
-    // słowa-klucze dla wag
     const HIGH_RISK_PHRASES = ["duszność","sinica","utrata przytomności","krwawienie","nagła","najgorszy ból","omdlenie","krwioplucie"];
     const MID_RISK_PHRASES  = ["gorączka","sztywność karku","silny ból","utrzymujące się","zaburzenia widzenia","zawroty"];
-
     function weightFor(text, bucket){
       const s = (text||"").toLowerCase();
       if(bucket==='urgent') return 30;
@@ -599,14 +660,13 @@
     let selectedWeights = 0;
     function updateRisk(){
       const base = Math.max(0, Math.min(100, entry.risk||25));
-      const val = Math.max(0, Math.min(100, base + selectedWeights));
+      const val  = Math.max(0, Math.min(100, base + selectedWeights));
       const c = document.getElementById('risk-cursor-card');
       const bar = document.getElementById('riskbar');
       const lbl = document.getElementById('risk-label');
       if(c){ c.style.left = val + '%'; }
       if(lbl){
-        let t="niskie";
-        if(val>=70) t="wysokie"; else if(val>=40) t="umiarkowane";
+        let t="niskie"; if(val>=70) t="wysokie"; else if(val>=40) t="umiarkowane";
         lbl.textContent = t;
       }
       if(bar){
@@ -616,11 +676,11 @@
         const cta = document.getElementById('cta-112');
         strip?.classList.toggle('alert', high);
         cta?.classList.toggle('cta-alert', high);
-        if(high && navigator.vibrate){ try{ navigator.vibrate(120);}catch(_){ } }
+        if(high && navigator.vibrate){ try{ navigator.vibrate(120);}catch(_){} }
       }
     }
 
-    /* Render — interaktywnie tylko: symp-common i urgent; reszta list plain */
+    /* === RENDERERY === */
     function renderListInteractive(baseId, arr, bucket, threshold=7){
       const list = document.getElementById(baseId);
       const wrap = document.getElementById('mw-' + baseId);
@@ -685,7 +745,6 @@
 
       function makeLi(txt){
         const li = document.createElement('li');
-        // puste miejsce po lewej dla spójności wizualnej (bez checkboxa)
         const cb = document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
         li.appendChild(cb);
         li.appendChild(document.createTextNode(txt));
@@ -738,7 +797,7 @@
       });
     }
 
-    /* Render sekcji */
+    /* === RENDER SEKCJI === */
     renderListInteractive('symp-common', entry.symptoms, 'symptoms');
     renderListInteractive('urgent',      entry.urgent,   'urgent', 6);
 
@@ -751,49 +810,10 @@
     fillPairs('myths', entry.myths);
     fillFAQ('faq',     entry.faq);
 
-    /* Ustaw start: OBJAWY i ryzyko bazowe */
-    selectedWeights = 0;
-    (function initRisk(){ updateRisk(); })();
-    showPanel('#s-objawy');
+    /* Start: OBJAWY + ryzyko bazowe */
+    selectedWeights = 0; updateRisk(); showPanel('#s-objawy');
 
-    /* Siatka molekularna (hex) — subtelna */
-    (function hexGrid(){
-      const c = document.getElementById('mol-grid'); if(!c) return;
-      const ctx = c.getContext('2d');
-      let W,H,dpr;
-      function draw(){
-        dpr = Math.min(2, window.devicePixelRatio||1);
-        W = c.width  = Math.floor(innerWidth * dpr);
-        H = c.height = Math.floor(innerHeight * dpr);
-        c.style.width  = innerWidth + 'px';
-        c.style.height = innerHeight + 'px';
-        ctx.clearRect(0,0,W,H);
-        ctx.strokeStyle = 'rgba(173,216,255,0.20)';
-        ctx.lineWidth   = 0.8 * dpr;
-
-        const size = 18 * dpr;
-        const h = Math.sin(Math.PI/3) * size;
-        for(let y = -size; y < H + size; y += h){
-          for(let x = -size; x < W + size; x += size*1.5){
-            const offsetX = ((Math.floor(y/h)%2)===0) ? 0 : size*0.75;
-            const cx = x + offsetX, cy = y;
-            ctx.beginPath();
-            for(let i=0;i<6;i++){
-              const ang = Math.PI/3 * i;
-              const px = cx + size * Math.cos(ang);
-              const py = cy + size * Math.sin(ang);
-              if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
-            }
-            ctx.closePath();
-            ctx.stroke();
-          }
-        }
-      }
-      addEventListener('resize', draw, {passive:true});
-      draw();
-    })();
-
-    /* Cząsteczki */
+    /* === CZĄSTECZKI (subtelne, wydajne) === */
     (function particles(){
       const c = document.getElementById('bh-particles'); if(!c) return;
       const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
@@ -802,7 +822,7 @@
       let W,H,dots=[];
       function targetCount(){
         const t = Math.floor((innerWidth*innerHeight)/12000);
-        return Math.max(90, Math.min(240, t));
+        return Math.max(90, Math.min(220, t));
       }
       function resize(){
         W = c.width  = Math.floor(innerWidth * dpr);
@@ -834,18 +854,6 @@
       addEventListener('resize', resize, {passive:true});
       resize(); step();
     })();
-
-    /* Dostępność klawiatury w tabach */
-    (function tabsKeyboard(){
-      const order = tabs;
-      tabs.forEach((t,i)=>{
-        t.addEventListener('keydown',e=>{
-          if(e.key==='ArrowRight'){ e.preventDefault(); order[(i+1)%order.length].focus(); }
-          if(e.key==='ArrowLeft'){ e.preventDefault(); order[(i-1+order.length)%order.length].focus(); }
-        });
-      });
-    })();
   </script>
 </body>
 </html>
-
