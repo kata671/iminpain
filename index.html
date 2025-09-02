@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <!-- BoliHelp • Strona główna • 2025 • v1.4 (inline grid na 3 kafelki, reszta bez zmian) -->
+  <!-- BoliHelp • Strona główna • 2025 • v1.5 -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Strona główna</title>
@@ -11,17 +11,67 @@
   <link rel="stylesheet" href="assets/style.css?v=10" />
 
   <style>
-    /* tylko responsywność dla inline grida */
+    /* TAPETA */
+    body[data-page="home"]{
+      position:relative;
+      background:#0e1230;
+      color:#eef2ff;
+    }
+    body[data-page="home"] .bh-wallpaper,
+    body[data-page="home"] .bh-grid{
+      position:fixed; inset:0; pointer-events:none;
+    }
+    body[data-page="home"] .bh-wallpaper{
+      z-index:-2;
+      background:
+        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.3), transparent 60%),
+        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
+        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+      filter: blur(10px) saturate(118%);
+    }
+    body[data-page="home"] .bh-grid{
+      z-index:-1;
+      opacity:.22;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
+      background-size:160px 138px; background-position:center;
+    }
+
+    /* GRID dla kafelków */
+    @media (min-width:981px){
+      section.stack[style]{ grid-template-columns:repeat(3,1fr) !important; }
+    }
     @media (max-width:980px){
-      section.stack[style]{
-        grid-template-columns: repeat(2,1fr) !important;
-      }
+      section.stack[style]{ grid-template-columns:repeat(2,1fr) !important; }
     }
     @media (max-width:640px){
-      section.stack[style]{
-        grid-template-columns: 1fr !important;
-      }
+      section.stack[style]{ grid-template-columns:1fr !important; }
     }
+
+    /* Karty — mniejsze */
+    .card{
+      min-height:160px;
+      border-radius:18px;
+      overflow:hidden;
+      background:rgba(60,32,100,.32);
+      border:1px solid rgba(164,107,255,.22);
+      box-shadow:0 8px 20px rgba(255,110,199,.1), 0 0 0 1px rgba(164,107,255,.14) inset;
+      transition:.22s;
+    }
+    .card img{
+      display:block;
+      max-height:140px;
+      width:auto;
+      margin:0 auto;
+      object-fit:contain;
+    }
+    .card .caption{
+      padding:10px 12px;
+      text-align:center;
+      border-top:1px solid rgba(164,107,255,.22);
+      background:rgba(255,255,255,.04);
+    }
+    .card h3{ margin:0; font:900 16px/1.3 system-ui; color:#eef2ff }
   </style>
 </head>
 
@@ -67,10 +117,10 @@
 
     <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
 
-    <!-- 3 kafelki z inline grid -->
+    <!-- KAFELKI z inline grid -->
     <section class="stack"
       aria-label="Wybór postaci"
-      style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:stretch;">
+      style="display:grid;gap:14px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
       <article class="card">
         <a href="kobieta.html">
           <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
