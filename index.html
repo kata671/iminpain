@@ -1,43 +1,58 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <!-- BoliHelp • Strona główna • 2025 • v1.5 -->
+  <!-- BoliHelp • Strona główna • 2025 • v1.6 (tapeta widoczna, 3 kafelki poziomo, mniejsze zdjęcia) -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Strona główna</title>
   <meta name="theme-color" content="#0e1230" />
 
+  <!-- Twoje istniejące zasoby – bez zmian -->
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="assets/style.css?v=10" />
 
   <style>
-    /* TAPETA */
+    /* ========= TAPETA (pewna widoczność) ========= */
     body[data-page="home"]{
-      position:relative;
-      background:#0e1230;
+      position:relative; /* stacking context dla tła */
+      background:#0e1230 !important;  /* baza pod tapetę */
       color:#eef2ff;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
-    body[data-page="home"] .bh-wallpaper,
-    body[data-page="home"] .bh-grid{
+    /* Jeśli globalny CSS rysuje pseudo-tło, wyłączamy je tylko tu */
+    body[data-page="home"]::before,
+    body[data-page="home"]::after,
+    body[data-page="home"] .container::before,
+    body[data-page="home"] .container::after{
+      content:none !important; display:none !important; background:none !important;
+    }
+    /* Warstwy tapety */
+    .bh-wallpaper, .bh-grid{
       position:fixed; inset:0; pointer-events:none;
     }
-    body[data-page="home"] .bh-wallpaper{
-      z-index:-2;
+    .bh-wallpaper{
+      z-index:0;
       background:
-        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.3), transparent 60%),
+        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
         radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
         radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
         linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
       filter: blur(10px) saturate(118%);
     }
-    body[data-page="home"] .bh-grid{
-      z-index:-1;
+    .bh-grid{
+      z-index:1; /* nad warstwą światła, pod treścią */
       opacity:.22;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
       background-size:160px 138px; background-position:center;
     }
+    /* Treść ponad tapetą */
+    body[data-page="home"] .container{
+      position:relative; z-index:2; background:transparent !important;
+      max-width:1100px; margin:0 auto; padding:0 16px;
+    }
 
-    /* GRID dla kafelków */
+    /* ========= UKŁAD 3 KAFELKÓW (poziomo) ========= */
+    /* Inline style na <section> gwarantuje grid; media query tylko do zmian kolumn */
     @media (min-width:981px){
       section.stack[style]{ grid-template-columns:repeat(3,1fr) !important; }
     }
@@ -48,39 +63,43 @@
       section.stack[style]{ grid-template-columns:1fr !important; }
     }
 
-    /* Karty — mniejsze */
+    /* ========= Karty i obrazy (mniejsze, równe) ========= */
     .card{
-      min-height:160px;
-      border-radius:18px;
-      overflow:hidden;
+      border-radius:18px; overflow:hidden;
       background:rgba(60,32,100,.32);
       border:1px solid rgba(164,107,255,.22);
-      box-shadow:0 8px 20px rgba(255,110,199,.1), 0 0 0 1px rgba(164,107,255,.14) inset;
+      box-shadow:0 8px 20px rgba(255,110,199,.10), 0 0 0 1px rgba(164,107,255,.14) inset;
       transition:.22s;
+      min-height:160px;
+    }
+    .card a{
+      display:grid; grid-template-rows:minmax(110px, 150px) auto; height:100%;
+      text-decoration:none; color:inherit;
     }
     .card img{
-      display:block;
-      max-height:140px;
-      width:auto;
-      margin:0 auto;
-      object-fit:contain;
+      width:100%; height:100%;
+      object-fit:contain; object-position:center;
+      display:block; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
     }
     .card .caption{
+      display:flex; align-items:center; justify-content:space-between; gap:8px;
       padding:10px 12px;
-      text-align:center;
       border-top:1px solid rgba(164,107,255,.22);
       background:rgba(255,255,255,.04);
+      min-height:50px;
+      text-align:left;
     }
-    .card h3{ margin:0; font:900 16px/1.3 system-ui; color:#eef2ff }
+    .card h3{ margin:0; font:900 16px/1.25 system-ui; color:#eef2ff }
   </style>
 </head>
 
 <body data-page="home">
-  <!-- TAPETA -->
+  <!-- TAPETA (warstwy) -->
   <div class="bh-wallpaper" aria-hidden="true"></div>
   <div class="bh-grid" aria-hidden="true"></div>
 
   <div class="container">
+    <!-- Header (bez zmian) -->
     <header class="header">
       <div class="brand">
         <h1>Boli Help</h1>
@@ -97,10 +116,12 @@
       </div>
     </header>
 
+    <!-- Telefony (bez zmian) -->
     <div class="emergency-list" aria-label="Telefony alarmowe">
       <a href="tel:112">📞 112</a><a href="tel:999">🚑 999</a><a href="tel:998">🔥 998</a><a href="tel:997">👮 997</a>
     </div>
 
+    <!-- Sytuacje (bez zmian) -->
     <nav class="situations" aria-label="Sytuacje nagłe">
       <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie"><span class="ico">🫁</span>Zadławienie</a>
       <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja"><span class="ico">🚑</span>Reanimacja</a>
@@ -108,6 +129,7 @@
       <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span>Pierwsza pomoc</a>
     </nav>
 
+    <!-- Szybkie akcje (bez zmian ID/ikon/linków) -->
     <div class="actions" role="navigation" aria-label="Szybkie akcje">
       <button id="btn-112" class="btn btn--red btn--call" type="button" aria-label="Zadzwoń na 112">📞 112</button>
       <button id="btn-hosp" class="btn btn--hosp" type="button" aria-label="Szpitale i SOR">🏥 Szpitale / SOR</button>
@@ -117,7 +139,7 @@
 
     <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
 
-    <!-- KAFELKI z inline grid -->
+    <!-- 3 kafelki – NA PEWNO w poziomie na laptopie -->
     <section class="stack"
       aria-label="Wybór postaci"
       style="display:grid;gap:14px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
@@ -142,6 +164,7 @@
     </section>
   </div>
 
+  <!-- Twój oryginalny skrypt – bez zmian -->
   <script src="assets/main.js?v=10"></script>
 </body>
 </html>
