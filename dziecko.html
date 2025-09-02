@@ -1,163 +1,94 @@
 <!doctype html>
 <html lang="pl">
 <head>
+  <!-- BoliHelp • Kafle wyboru (DZIECKO) • 2025 • v1.0 • samowystarczalny -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dziecko — wybierz część ciała</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="assets/style.css?v=10" />
+  <title>Boli Help — Dziecko</title>
+  <meta name="theme-color" content="#0e1230" />
+  <style>
+    :root{--bg:#0e1230;--text:#eef2ff;--muted:#b8c2e0;--vio:rgba(60,32,100,.32);--stroke:rgba(164,107,255,.22);
+      --glow:rgba(164,107,255,.24);--radius:16px;--gap:14px}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    .bg-anim{position:fixed;inset:0;z-index:-3;pointer-events:none;
+      background:
+        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.26), transparent 60%),
+        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
+        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+      filter: blur(10px) saturate(118%);
+    }
+    .grid-bg{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.22;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
+      background-size:160px 138px; background-position:center;
+    }
+    .hero{max-width:1100px;margin:16px auto 12px;padding:16px;border-radius:18px;border:1px solid rgba(164,107,255,.22);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      backdrop-filter: blur(6px) saturate(120%); box-shadow:0 18px 48px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18)}
+    .hero h1{margin:0 0 4px;font:900 22px/1.2 system-ui} .hero p{margin:0;color:#b8c2e0;font-size:14px}
+    .wrap{max-width:1100px;margin:0 auto 38px;padding:0 16px}
+    .tiles{display:grid;gap:14px;grid-template-columns:repeat(3,1fr)}
+    @media (max-width:980px){.tiles{grid-template-columns:repeat(2,1fr)}} @media (max-width:620px){.tiles{grid-template-columns:1fr}}
+    .tile{position:relative;display:flex;flex-direction:column;overflow:hidden;border-radius:16px;background:rgba(60,32,100,.32);
+      border:1px solid rgba(164,107,255,.22);backdrop-filter:saturate(120%) blur(6px);transition:.2s transform,.2s box-shadow,.2s border-color;min-height:180px}
+    .tile:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(8,10,22,.42), 0 0 18px rgba(164,107,255,.24)}
+    .ph{flex:1;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));display:flex;align-items:center;justify-content:center;overflow:hidden}
+    img{width:100%;height:100%;object-fit:cover;display:block}
+    .title{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;border-top:1px solid rgba(164,107,255,.22);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02))}
+    .tile b{font:900 16px/1.2 system-ui} .chip{font:700 12px/1 system-ui;border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 8px;background:rgba(255,255,255,.06)}
+    a.tile{text-decoration:none;color:inherit}
+    .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+      background:radial-gradient(40% 60% at 70% 10%, rgba(94,234,212,.18), transparent 60%),radial-gradient(40% 60% at 20% 80%, rgba(255,110,199,.18), transparent 60%);
+      color:#e6f0ff;font:800 15px/1.2 system-ui;letter-spacing:.2px}
+  </style>
 </head>
-<body data-page="dziecko">
-  <div class="container">
-    <a class="back" href="index.html">← Powrót</a>
+<body>
+  <div class="bg-anim" aria-hidden="true"></div>
+  <div class="grid-bg" aria-hidden="true"></div>
 
-    <header class="header" style="margin-top:6px">
-      <div class="brand">
-        <h1>Dziecko</h1>
-        <small>Wybierz część ciała lub organ</small>
-      </div>
-      <div class="tools">
-        <div class="search"><input type="search" placeholder="Szukaj..."/></div>
-      </div>
-    </header>
+  <header class="hero" role="region" aria-label="Nagłówek">
+    <h1>Boli Help — Dziecko</h1>
+    <p>Wybierz obszar ciała, aby przejść do szczegółów dopasowanych do wieku.</p>
+  </header>
 
-    <div class="grid"></div>
-  </div>
+  <main class="wrap">
+    <section class="tiles" id="tiles" aria-label="Wybór części ciała (dziecko)"></section>
+  </main>
 
-  <script src="assets/main.js?v=10"></script>
-  <noscript>Ta strona wymaga JavaScript, aby wyświetlić siatkę części ciała.</noscript>
+  <script>
+    (function(){
+      const TYPE = 'dziecko';
+      const AREAS = [
+        {czesc:"glowa",label:"Głowa"},{czesc:"oczy",label:"Oczy",alt:["oko"]},{czesc:"ucho",label:"Ucho"},
+        {czesc:"nos",label:"Nos"},{czesc:"gardlo",label:"Gardło"},
+        {czesc:"klatka",label:"Klatka piersiowa",alt:["klatka-piersiowa"]},{czesc:"pluca",label:"Płuca"},
+        {czesc:"serce",label:"Serce"},{czesc:"brzuch",label:"Brzuch"},
+        {czesc:"plecy",label:"Plecy"},{czesc:"nerki",label:"Nerki"},
+        {czesc:"biodra",label:"Biodra"},{czesc:"kolano",label:"Kolano"},
+        {czesc:"stopy",label:"Stopy"},{czesc:"skora",label:"Skóra"},
+        {czesc:"kaszel",label:"Kaszel"},{czesc:"goraczka",label:"Gorączka"},
+        {czesc:"zadlawienie",label:"Zadławienie"}
+      ];
+      const grid = document.getElementById('tiles');
+      function pickImage(type, czesc, alt){
+        const c=[`img/${type}-${czesc}.png`,`img/${type}-${czesc}.webp`,...(alt||[]).flatMap(a=>[`img/${type}-${a}.png`,`img/${type}-${a}.webp`])];
+        return c[0];
+      }
+      function href(type, czesc, label){
+        return `szczegoly.html?typ=${encodeURIComponent(type)}&czesc=${encodeURIComponent(czesc)}&label=${encodeURIComponent(label)}`;
+      }
+      AREAS.forEach(a=>{
+        const link=document.createElement('a'); link.className='tile'; link.href=href(TYPE,a.czesc,a.label); link.setAttribute('aria-label',a.label);
+        const ph=document.createElement('div'); ph.className='ph';
+        const img=new Image(); img.alt=a.label; img.src=pickImage(TYPE,a.czesc,a.alt); img.loading='lazy'; img.decoding='async';
+        img.onerror=()=>{ ph.innerHTML=`<div class="placeholder">${a.label}</div>`; };
+        ph.appendChild(img);
+        const bar=document.createElement('div'); bar.className='title'; bar.innerHTML=`<b>${a.label}</b><span class="chip">${TYPE}</span>`;
+        link.appendChild(ph); link.appendChild(bar); grid.appendChild(link);
+      });
+    })();
+  </script>
 </body>
 </html>
-<script>
-/* Bridge → nowy szczegoly.html (plug&play)
-   Wstaw identyczny fragment w: kobieta.html, mezczyzna.html, dziecko.html
-*/
-(function(){
-  // 1) Ustal typ na podstawie ścieżki/pliku (fallback: atrybut na body, jeśli masz)
-  var path = (location.pathname || "").toLowerCase();
-  var TYP =
-    /kobieta/.test(path) ? "kobieta" :
-    /mezczyzna/.test(path) ? "mezczyzna" :
-    /dziecko/.test(path) ? "dziecko" :
-    (document.body.dataset.gender || "kobieta");
-
-  // 2) Mapy nazw (area -> czesc + label do wyświetlenia)
-  var NAME = {
-    head:   {czesc:"glowa",    label:"Głowa"},
-    eyes:   {czesc:"oczy",     label:"Oczy"},
-    ear:    {czesc:"ucho",     label:"Ucho"},
-    nose:   {czesc:"nos",      label:"Nos"},
-    throat: {czesc:"gardlo",   label:"Gardło"},
-    chest:  {czesc:"klatka",   label:"Klatka piersiowa"},
-    lungs:  {czesc:"pluca",    label:"Płuca"},
-    heart:  {czesc:"serce",    label:"Serce"},
-    abdomen:{czesc:"brzuch",   label:"Brzuch"},
-    back:   {czesc:"plecy",    label:"Plecy"},
-    kidney: {czesc:"nerki",    label:"Nerki"},
-    hip:    {czesc:"biodra",   label:"Biodra"},
-    knee:   {czesc:"kolano",   label:"Kolano"},
-    feet:   {czesc:"stopy",    label:"Stopy"},
-    skin:   {czesc:"skora",    label:"Skóra"},
-    cough:  {czesc:"kaszel",   label:"Kaszel"},
-    fever:  {czesc:"goraczka", label:"Gorączka"},
-    choke:  {czesc:"zadlawienie",label:"Zadławienie"},
-    // aliasy często spotykane w hotspotach/starych linkach:
-    head_f: {czesc:"glowa",    label:"Głowa"},
-    torso:  {czesc:"brzuch",   label:"Brzuch"},
-    legs:   {czesc:"stopy",    label:"Stopy"}
-  };
-
-  // 3) Funkcja przekierowania
-  function go(czesc, label){
-    if(!czesc){ return; }
-    var url = "szczegoly.html?typ="+encodeURIComponent(TYP)
-            + "&czesc="+encodeURIComponent(czesc)
-            + "&label="+encodeURIComponent(label || czesc);
-    location.href = url;
-  }
-
-  // 4) Przechwytywanie klików na hotspotach .segment (jeśli są)
-  document.querySelectorAll('.segment,[data-area]').forEach(function(el){
-    el.addEventListener('click', function(e){
-      var area = (el.dataset.area || "").toLowerCase();
-      var n = NAME[area] || null;
-      if(n){ e.preventDefault(); go(n.czesc, n.label); }
-    }, {passive:false});
-  });
-
-  // 5) Przepisanie starych linków (np. female-head.html itp.) na nowy router
-  document.querySelectorAll('a[href]').forEach(function(a){
-    var h = a.getAttribute('href') || "";
-    var m;
-    // dopasuj stare nazwy typu: female-head.html / male-legs.html / ...-torso.html
-    if((m = h.match(/(female|male|child).*?(head|eyes|ear|nose|throat|chest|lungs|heart|abdomen|back|kidney|hip|knee|feet|skin|cough|fever|choke|torso|legs)/i))){
-      var area = (m[2]||"").toLowerCase();
-      var n = NAME[area];
-      if(n){
-        a.addEventListener('click', function(e){ e.preventDefault(); go(n.czesc, n.label); });
-      }
-    }
-  });
-})();
-</script>
-<script>
-/* Fallback Panel 2025 — pokaż siatkę wyboru, jeśli nie ma miniaturek/hotspotów */
-(function(){
-  var hasThumbs = document.querySelector('.segment,[data-area], .card, .stack, .miniatures, .grid-thumbs, .body-map, a[href*="head"], a[href*="nose"]');
-  if (hasThumbs) return; // nic nie rób, jeśli miniaturki/hotspoty istnieją
-
-  // typ z pliku/ścieżki
-  var path = (location.pathname||"").toLowerCase();
-  var TYP =
-    /kobieta/.test(path) ? "kobieta" :
-    /mezczyzna/.test(path) ? "mezczyzna" :
-    /dziecko/.test(path) ? "dziecko" :
-    (document.body.dataset.gender || "kobieta");
-
-  var AREAS = [
-    {czesc:"glowa", label:"Głowa"}, {czesc:"oczy", label:"Oczy"}, {czesc:"ucho", label:"Ucho"},
-    {czesc:"nos", label:"Nos"}, {czesc:"gardlo", label:"Gardło"}, {czesc:"klatka", label:"Klatka piersiowa"},
-    {czesc:"pluca", label:"Płuca"}, {czesc:"serce", label:"Serce"}, {czesc:"brzuch", label:"Brzuch"},
-    {czesc:"plecy", label:"Plecy"}, {czesc:"nerki", label:"Nerki"}, {czesc:"biodra", label:"Biodra"},
-    {czesc:"kolano", label:"Kolano"}, {czesc:"stopy", label:"Stopy"}, {czesc:"skora", label:"Skóra"},
-    {czesc:"kaszel", label:"Kaszel"}, {czesc:"goraczka", label:"Gorączka"}, {czesc:"zadlawienie", label:"Zadławienie"}
-  ];
-
-  // style (lokalne, bez konfliktów)
-  var css = document.createElement('style');
-  css.textContent = `
-    .bh-fallback-wrap{max-width:1100px;margin:24px auto;padding:0 16px 40px}
-    .bh-fallback{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
-    .bh-fallback h2{color:#eaf1ff;font:800 18px/1.2 system-ui;margin:0 0 10px}
-    .bh-tile{border-radius:14px;padding:14px;border:1px solid rgba(164,107,255,.22);
-      background:rgba(60,32,100,.25);backdrop-filter:saturate(120%) blur(6px);color:#f0f4ff;
-      display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;
-      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease}
-    .bh-tile:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(8,10,22,.35),0 0 18px rgba(164,107,255,.18);
-      border-color:rgba(94,234,212,.5)}
-    .bh-tile b{font-weight:900;letter-spacing:.2px}
-    .bh-pill{font:700 12px/1 system-ui;border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 8px;
-      background:rgba(255,255,255,.06);opacity:.9}
-  `;
-  document.head.appendChild(css);
-
-  var box = document.createElement('section');
-  box.className = 'bh-fallback-wrap';
-  box.innerHTML = `
-    <h2>Wybierz obszar (tryb awaryjny)</h2>
-    <div class="bh-fallback" role="navigation" aria-label="Wybór części ciała"></div>
-  `;
-  var grid = box.querySelector('.bh-fallback');
-  AREAS.forEach(function(a){
-    var tile = document.createElement('a');
-    tile.className = 'bh-tile';
-    tile.href = 'szczegoly.html?typ='+encodeURIComponent(TYP)+'&czesc='+encodeURIComponent(a.czesc)+'&label='+encodeURIComponent(a.label);
-    tile.innerHTML = `<b>${a.label}</b><span class="bh-pill">${TYP}</span>`;
-    grid.appendChild(tile);
-  });
-
-  // wstaw nad stopką/na końcu kontenera
-  var anchor = document.querySelector('.container, main, body');
-  (anchor||document.body).appendChild(box);
-})();
-</script>
