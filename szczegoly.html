@@ -855,5 +855,47 @@
       resize(); step();
     })();
   </script>
+<!-- PATCH START: przycisk Wróć (2025-09-03) -->
+<script>
+(function(){
+  // jeśli przycisk już istnieje – nie duplikuj
+  if (document.getElementById('btnBackSafe')) return;
+
+  // pasek z guzikiem
+  const bar = document.createElement('nav');
+  bar.className = 'backbar';
+  bar.setAttribute('aria-label','Wróć');
+  bar.style.cssText = 'display:flex;gap:8px;margin:8px 0 12px';
+
+  const btn = document.createElement('button');
+  btn.id = 'btnBackSafe';
+  btn.textContent = '← Wróć';
+  btn.style.cssText = `
+    appearance:none;
+    border:1px solid rgba(164,107,255,.25);
+    background:rgba(60,32,100,.28);
+    color:#eef2ff;
+    font-weight:700;
+    padding:10px 14px;
+    border-radius:12px;
+    cursor:pointer;
+    box-shadow:0 6px 16px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.12);
+  `;
+  btn.addEventListener('click',()=>{
+    const typ = (new URLSearchParams(location.search).get('typ')||'').toLowerCase();
+    if (document.referrer && document.referrer.includes(location.host)) { history.back(); return; }
+    if (typ==='kobieta') location.href='kobieta.html';
+    else if (typ==='mezczyzna') location.href='mezczyzna.html';
+    else if (typ==='dziecko') location.href='dziecko.html';
+    else location.href='index.html';
+  });
+
+  bar.appendChild(btn);
+  // wstaw na górę kontenera
+  const container = document.querySelector('.container')||document.body;
+  container.prepend(bar);
+})();
+</script>
+<!-- PATCH END -->
 </body>
 </html>
