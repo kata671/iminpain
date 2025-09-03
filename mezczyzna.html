@@ -1,5 +1,70 @@
 <!doctype html>
 <html lang="pl">
+<!-- PATCH START: MINI — tapeta + rozmiar kafelków (2025-09-03) -->
+<style>
+  /* 1) Tapeta (siatka molekularna + delikatne glowy) tylko na stronach mini */
+  body.bh2025-mini{
+    /* bazowy granat */
+    background:
+      radial-gradient(1200px 800px at 12% 10%, rgba(255, 105, 180, .14), transparent 60%),
+      radial-gradient(1200px 800px at 88% 85%, rgba(0, 255, 180, .12), transparent 60%),
+      #0e1222;
+  }
+  /* warstwa siatki: lekka, powtarzalna */
+  body.bh2025-mini::before{
+    content:"";
+    position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.22;
+    background-image: url("data:image/svg+xml;utf8,\
+      <svg xmlns='http://www.w3.org/2000/svg' width='280' height='280' viewBox='0 0 280 280'>\
+        <defs>\
+          <pattern id='g' width='28' height='28' patternUnits='userSpaceOnUse' patternTransform='scale(1)'>\
+            <circle cx='14' cy='14' r='1.2' fill='%23a46bff' fill-opacity='0.45'/>\
+            <line x1='14' y1='0' x2='14' y2='28' stroke='%23a46bff' stroke-opacity='0.08' stroke-width='1'/>\
+            <line x1='0' y1='14' x2='28' y2='14' stroke='%23a46bff' stroke-opacity='0.08' stroke-width='1'/>\
+          </pattern>\
+        </defs>\
+        <rect width='100%' height='100%' fill='url(%23g)'/>\
+      </svg>");
+    background-size: 560px 560px;
+    backdrop-filter: none;
+  }
+
+  /* 2) Kontener: ograniczenie szerokości, żeby obrazki nie rosły zbyt mocno */
+  .bh2025-mini .container{
+    max-width: 1160px; /* kompromis: estetycznie i czytelnie na laptopie */
+    margin: 0 auto;
+    padding-inline: 16px;
+    position: relative; z-index: 0;
+  }
+
+  /* 3) Siatka miniaturek: stabilny układ + kontrola rozmiaru kart */
+  .bh2025-mini section.stack{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 kolumny na laptopie */
+    gap: 16px;
+  }
+  @media (max-width: 1023.98px){
+    .bh2025-mini section.stack{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  }
+  @media (max-width: 639.98px){
+    .bh2025-mini section.stack{ gap: 12px; }
+  }
+
+  /* 4) Karty: doprecyzowanie wymiarów obrazów – estetyczna wysokość bez „puchnięcia” */
+  .bh2025-mini article.card img{
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    max-height: clamp(140px, 24vw, 230px); /* SRD: tel 140–, laptop 230 max */
+  }
+
+  /* 5) Minimalny kontrast caption na tapecie */
+  .bh2025-mini article.card .caption{
+    background: linear-gradient(180deg, rgba(10,12,24,0) 0%, rgba(10,12,24,.55) 60%, rgba(10,12,24,.78) 100%);
+  }
+</style>
+<!-- PATCH END -->
 <head>
   <!-- BoliHelp • MĘŻCZYZNA (miniatury) • v2025-09-03 • Back + polerka kafelków • ZERO-RYZYKA -->
   <meta charset="utf-8" />
