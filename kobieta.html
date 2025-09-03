@@ -1,5 +1,48 @@
 <!doctype html>
 <html lang="pl">
+<!-- PATCH START: Tapeta + rozmiar kafelków (stabilizacja) -->
+<style>
+  /* Tło z glow + siatka, tylko na stronach mini */
+  body.bh2025-mini{
+    background:
+      radial-gradient(1200px 800px at 12% 10%, rgba(255,105,180,.14), transparent 60%),
+      radial-gradient(1200px 800px at 88% 85%, rgba(0,255,180,.12), transparent 60%),
+      #0e1222 !important;
+  }
+  body.bh2025-mini::before{
+    content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.22;
+    background-image:url("data:image/svg+xml;utf8,\
+      <svg xmlns='http://www.w3.org/2000/svg' width='280' height='280' viewBox='0 0 280 280'>\
+        <defs><pattern id='g' width='28' height='28' patternUnits='userSpaceOnUse'>\
+          <circle cx='14' cy='14' r='1.2' fill='%23a46bff' fill-opacity='0.45'/>\
+          <line x1='14' y1='0' x2='14' y2='28' stroke='%23a46bff' stroke-opacity='0.08' stroke-width='1'/>\
+          <line x1='0' y1='14' x2='28' y2='14' stroke='%23a46bff' stroke-opacity='0.08' stroke-width='1'/>\
+        </pattern></defs><rect width='100%' height='100%' fill='url(%23g)'/></svg>");
+    background-size:560px 560px;
+  }
+
+  /* Wymuś przeźroczystość tła kontenera, gdyby globalny CSS go kolorował */
+  .bh2025-mini .container{ background:transparent !important; max-width:1160px; margin:0 auto; padding-inline:16px }
+
+  /* Stabilna siatka miniaturek (3/2/2 kolumny) – !important, aby wygrać z globalnym CSS */
+  .bh2025-mini section.stack{
+    display:grid !important; grid-template-columns:repeat(3, minmax(0,1fr)) !important; gap:16px !important;
+  }
+  @media (max-width:1023.98px){
+    .bh2025-mini section.stack{ grid-template-columns:repeat(2, minmax(0,1fr)) !important; }
+  }
+  @media (max-width:639.98px){
+    .bh2025-mini section.stack{ gap:12px !important; }
+  }
+
+  /* Obrazy: nie „puchną” na pełną wysokość – trzymamy proporcje i limit */
+  .bh2025-mini article.card img{
+    width:100% !important; height:auto !important;
+    aspect-ratio:4/3 !important; object-fit:cover !important;
+    max-height: clamp(140px, 24vw, 230px) !important;
+  }
+</style>
+<!-- PATCH END -->
 <head>
   <!-- BoliHelp • KOBIETA (miniatury) • v2025-09-03 • Back + polerka kafelków • ZERO-RYZYKA -->
   <meta charset="utf-8" />
