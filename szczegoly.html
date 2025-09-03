@@ -495,5 +495,50 @@
     flagsWrap.addEventListener('change', updateRisk); updateRisk();
   })();
   </script>
+<!-- HOTFIX: start od góry + przycisk Wstecz -->
+<style>
+  .hotfix-backbar{display:flex;gap:8px;margin:8px 0 12px}
+  .hotfix-backbar button{
+    appearance:none;border:1px solid rgba(164,107,255,.35);
+    background:rgba(60,32,100,.28);color:#eef2ff;font-weight:700;
+    padding:8px 12px;border-radius:999px;cursor:pointer;
+    box-shadow:0 6px 14px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.18);
+    transition:transform .2s ease
+  }
+  .hotfix-backbar button:hover{transform:translateY(-1px)}
+</style>
+<script>
+(function(){
+  // 1) Zawsze startuj od góry i usuń #hash (który wymuszał scroll w dół)
+  window.addEventListener('DOMContentLoaded', function(){
+    if (location.hash) {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+    setTimeout(function(){ window.scrollTo({top:0, left:0, behavior:'auto'}); }, 0);
+  });
+
+  // 2) Wstrzyknij pasek "← Wstecz" tylko jeśli go nie ma
+  const container = document.querySelector('.container') || document.body;
+  if (!container.querySelector('.hotfix-backbar') &&
+      !container.querySelector('.backbar') &&
+      !container.querySelector('#btnBack')) {
+    const bar = document.createElement('nav');
+    bar.className = 'hotfix-backbar';
+    bar.setAttribute('aria-label', 'Wstecz');
+    bar.innerHTML = '<button type="button" id="hotfixBackBtn">← Wstecz</button>';
+    container.prepend(bar);
+
+    const params = new URLSearchParams(location.search);
+    const typ = (params.get('typ')||'').toLowerCase();
+    document.getElementById('hotfixBackBtn').addEventListener('click', function(){
+      if (document.referrer && document.referrer.includes(location.host)) { history.back(); return; }
+      if (typ==='kobieta') location.href='kobieta.html';
+      else if (typ==='mezczyzna') location.href='mezczyzna.html';
+      else if (typ==='dziecko') location.href='dziecko.html';
+      else location.href='index.html';
+    });
+  }
+})();
+</script>
 </body>
 </html>
