@@ -1,70 +1,5 @@
 <!doctype html>
 <html lang="pl">
-<!-- PATCH START: MINI — tapeta + rozmiar kafelków (2025-09-03) -->
-<style>
-  /* 1) Tapeta (siatka molekularna + delikatne glowy) tylko na stronach mini */
-  body.bh2025-mini{
-    /* bazowy granat */
-    background:
-      radial-gradient(1200px 800px at 12% 10%, rgba(255, 105, 180, .14), transparent 60%),
-      radial-gradient(1200px 800px at 88% 85%, rgba(0, 255, 180, .12), transparent 60%),
-      #0e1222;
-  }
-  /* warstwa siatki: lekka, powtarzalna */
-  body.bh2025-mini::before{
-    content:"";
-    position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.22;
-    background-image: url("data:image/svg+xml;utf8,\
-      <svg xmlns='http://www.w3.org/2000/svg' width='280' height='280' viewBox='0 0 280 280'>\
-        <defs>\
-          <pattern id='g' width='28' height='28' patternUnits='userSpaceOnUse' patternTransform='scale(1)'>\
-            <circle cx='14' cy='14' r='1.2' fill='%23a46bff' fill-opacity='0.45'/>\
-            <line x1='14' y1='0' x2='14' y2='28' stroke='%23a46bff' stroke-opacity='0.08' stroke-width='1'/>\
-            <line x1='0' y1='14' x2='28' y2='14' stroke='%23a46bff' stroke-opacity='0.08' stroke-width='1'/>\
-          </pattern>\
-        </defs>\
-        <rect width='100%' height='100%' fill='url(%23g)'/>\
-      </svg>");
-    background-size: 560px 560px;
-    backdrop-filter: none;
-  }
-
-  /* 2) Kontener: ograniczenie szerokości, żeby obrazki nie rosły zbyt mocno */
-  .bh2025-mini .container{
-    max-width: 1160px; /* kompromis: estetycznie i czytelnie na laptopie */
-    margin: 0 auto;
-    padding-inline: 16px;
-    position: relative; z-index: 0;
-  }
-
-  /* 3) Siatka miniaturek: stabilny układ + kontrola rozmiaru kart */
-  .bh2025-mini section.stack{
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 kolumny na laptopie */
-    gap: 16px;
-  }
-  @media (max-width: 1023.98px){
-    .bh2025-mini section.stack{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-  }
-  @media (max-width: 639.98px){
-    .bh2025-mini section.stack{ gap: 12px; }
-  }
-
-  /* 4) Karty: doprecyzowanie wymiarów obrazów – estetyczna wysokość bez „puchnięcia” */
-  .bh2025-mini article.card img{
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    width: 100%;
-    height: auto;
-    max-height: clamp(140px, 24vw, 230px); /* SRD: tel 140–, laptop 230 max */
-  }
-
-  /* 5) Minimalny kontrast caption na tapecie */
-  .bh2025-mini article.card .caption{
-    background: linear-gradient(180deg, rgba(10,12,24,0) 0%, rgba(10,12,24,.55) 60%, rgba(10,12,24,.78) 100%);
-  }
-</style>
-<!-- PATCH END -->
 <head>
   <!-- BoliHelp • KOBIETA (miniatury) • v2025-09-03 • Back + polerka kafelków • ZERO-RYZYKA -->
   <meta charset="utf-8" />
@@ -156,13 +91,118 @@
           <div class="caption"><h3>Gardło</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
+      <!-- Tułów -->
       <article class="card">
         <a href="szczegoly.html?typ=kobieta&czesc=glowa&label=Głowa">
           <img src="img/kobieta-glowa.png" alt="Głowa" onerror="this.src='img/placeholder.png'"/>
           <div class="caption"><h3>Głowa</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
-      <!-- ...tu pozostałe artykuły (klatka, płuca, serce, brzuch, biodra, stopy itd.) analogicznie jak wcześniej... -->
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=klatka&label=Klatka%20piersiowa">
+          <img src="img/kobieta-klatka.png" alt="Klatka piersiowa" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Klatka piersiowa</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=pluca&label=Płuca">
+          <img src="img/kobieta-pluca.png" alt="Płuca" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Płuca</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=serce&label=Serce">
+          <img src="img/kobieta-serce.png" alt="Serce" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Serce</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=brzuch&label=Brzuch">
+          <img src="img/kobieta-brzuch.png" alt="Brzuch" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Brzuch</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=watroba&label=Wątroba">
+          <img src="img/kobieta-watroba.png" alt="Wątroba" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Wątroba</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=zoladek&label=Żołądek">
+          <img src="img/kobieta-zoladek.png" alt="Żołądek" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Żołądek</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=nerki&label=Nerki">
+          <img src="img/kobieta-nerki.png" alt="Nerki" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Nerki</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=plecy&label=Plecy">
+          <img src="img/kobieta-plecy.png" alt="Plecy" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Plecy</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+
+      <!-- Kończyny -->
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=ramie&label=Ramię">
+          <img src="img/kobieta-ramie.png" alt="Ramię" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Ramię</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=dlon&label=Dłoń">
+          <img src="img/kobieta-dlon.png" alt="Dłoń" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Dłoń</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=biodra&label=Biodra">
+          <img src="img/kobieta-biodra.png" alt="Biodra" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Biodra</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=udo&label=Udo">
+          <img src="img/kobieta-udo.png" alt="Udo" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Udo</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=kolano&label=Kolano">
+          <img src="img/kobieta-kolano.png" alt="Kolano" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Kolano</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=stopy&label=Stopy">
+          <img src="img/kobieta-stopy.png" alt="Stopy" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Stopy</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+
+      <!-- Dodatkowe narządy -->
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=skora&label=Skóra">
+          <img src="img/kobieta-skora.png" alt="Skóra" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Skóra</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+
+      <!-- Specjalne: Ciąża -->
+      <article class="card">
+        <a href="szczegoly.html?typ=kobieta&czesc=ciaza&label=Ciąża">
+          <img src="img/kobieta-ciaza.png" alt="Ciąża" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Ciąża</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
     </section>
   </div>
 
