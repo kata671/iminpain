@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="pl">
 <head>
+  <!-- BoliHelp • SZCZEGÓŁY • v2025-09-03r2 • samowystarczalny -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Szczegóły</title>
@@ -8,14 +9,25 @@
   <style>
     :root{
       --bg:#0e1230; --text:#eef2ff; --muted:#b8c2e0;
-      --vio:rgba(60,32,100,.32); --stroke:rgba(164,107,255,.25);
+      --vio:rgba(60,32,100,.28); --stroke:rgba(164,107,255,.25);
       --card:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      --shadow:0 10px 24px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.12);
+      --glow:#ff6ec7;
+      --obj:rgba(99,102,241,.22);    /* niebieski */
+      --prz:rgba(16,185,129,.22);    /* zielony */
+      --pom:rgba(236,72,153,.22);    /* różowy */
+      --lek:rgba(249,115,22,.22);    /* pomarańcz */
+      --reh:rgba(34,197,94,.22);     /* jasna zieleń */
+      --mit:rgba(168,85,247,.22);    /* fiolet */
+      --faq:rgba(59,130,246,.22);    /* niebieski 2 */
     }
+    html,body{height:100%}
     body[data-page="szczegoly"]{
       margin:0; background:var(--bg); color:var(--text);
       font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
-    /* Tapeta */
+    /* Tapeta + siatka molekularna */
     .detail-wallpaper,.detail-grid{ position:fixed; inset:0; pointer-events:none }
     .detail-wallpaper{
       z-index:0; filter: blur(10px) saturate(118%);
@@ -32,50 +44,80 @@
     }
     .container{ position:relative; z-index:2; max-width:1100px; margin:0 auto; padding:12px 16px 40px }
 
-    /* Guzik wstecz */
+    /* Pasek wstecz */
     .backbar{ display:flex; gap:8px; margin:8px 0 12px }
     .backbar button{
       appearance:none; border:1px solid var(--stroke); background:var(--vio);
-      color:var(--text); font-weight:700; padding:8px 12px; border-radius:999px; cursor:pointer;
+      color:var(--text); font-weight:700; padding:10px 14px; border-radius:12px; cursor:pointer;
+      box-shadow:var(--shadow);
+      transition:transform .2s ease;
     }
+    .backbar button:hover{ transform:translateY(-1px) }
 
     /* Hero */
     .hero{
       display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:10px;
       background:var(--card); border:1px solid var(--stroke); border-radius:16px; padding:14px 14px 10px;
+      box-shadow:var(--shadow); backdrop-filter:blur(8px) saturate(120%);
     }
     .hero h1{margin:0 0 6px; font-size:22px}
     .meta{display:flex; gap:10px; flex-wrap:wrap}
-    .tag{ border-radius:999px; padding:6px 10px; font-weight:800; border:1px solid var(--stroke); background:rgba(60,32,100,.28); }
+    .tag{ border-radius:10px; padding:6px 10px; font-weight:800; border:1px solid var(--stroke); background:rgba(60,32,100,.28); }
 
-    /* Tabs z kolorami */
+    /* Tabs — prostokątne, eleganckie */
     .tabs{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:12px 0}
     .tabs .tab{
-      padding:10px 14px; border-radius:999px; font-weight:800; color:#fff;
-      text-decoration:none; transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      position:relative; display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 16px; min-height:44px;
+      border-radius:12px; font-weight:800; color:#fff; text-decoration:none;
       border:1px solid rgba(164,107,255,.35);
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
     }
-    .tabs .tab[data-tab="objawy"]{background:rgba(99,102,241,.25);box-shadow:0 0 10px rgba(99,102,241,.6);}
-    .tabs .tab[data-tab="przyczyny"]{background:rgba(16,185,129,.25);box-shadow:0 0 10px rgba(16,185,129,.6);}
-    .tabs .tab[data-tab="pomoc"]{background:rgba(236,72,153,.25);box-shadow:0 0 10px rgba(236,72,153,.6);}
-    .tabs .tab[data-tab="leki"]{background:rgba(249,115,22,.25);box-shadow:0 0 10px rgba(249,115,22,.6);}
-    .tabs .tab[data-tab="rehab"]{background:rgba(34,197,94,.25);box-shadow:0 0 10px rgba(34,197,94,.6);}
-    .tabs .tab[data-tab="mity"]{background:rgba(168,85,247,.25);box-shadow:0 0 10px rgba(168,85,247,.6);}
-    .tabs .tab[data-tab="faq"]{background:rgba(59,130,246,.25);box-shadow:0 0 10px rgba(59,130,246,.6);}
-    .tabs .tab:hover{transform:translateY(-2px)}
-    .tabs .tab.is-active{border-color:#fff;box-shadow:0 0 14px rgba(255,255,255,.7);}
+    .tabs .tab:hover{ transform:translateY(-2px) }
+    .tabs .tab.is-active{ border-color:#fff; box-shadow:0 0 16px rgba(255,255,255,.6) }
+
+    /* Przypisanie kolorów i glow */
+    .tabs .tab[data-tab="objawy"]{background:var(--obj); box-shadow:0 0 12px rgba(99,102,241,.55)}
+    .tabs .tab[data-tab="przyczyny"]{background:var(--prz); box-shadow:0 0 12px rgba(16,185,129,.55)}
+    .tabs .tab[data-tab="pomoc"]{background:var(--pom); box-shadow:0 0 12px rgba(236,72,153,.55)}
+    .tabs .tab[data-tab="leki"]{background:var(--lek); box-shadow:0 0 12px rgba(249,115,22,.55)}
+    .tabs .tab[data-tab="rehab"]{background:var(--reh); box-shadow:0 0 12px rgba(34,197,94,.55)}
+    .tabs .tab[data-tab="mity"]{background:var(--mit); box-shadow:0 0 12px rgba(168,85,247,.55)}
+    .tabs .tab[data-tab="faq"]{background:var(--faq); box-shadow:0 0 12px rgba(59,130,246,.55)}
 
     /* Karty sekcji */
-    .card{background:var(--card); border:1px solid var(--stroke); border-radius:16px; padding:14px; margin-bottom:12px}
-    .card h2{font-size:18px; margin:0 0 8px}
+    .card{
+      background:var(--card); border:1px solid var(--stroke); border-radius:16px; padding:14px;
+      box-shadow:var(--shadow); margin-bottom:12px;
+    }
+    .card h2{ display:flex; align-items:center; gap:10px; font-size:18px; margin:0 0 8px; padding-bottom:8px; border-bottom:1px solid rgba(164,107,255,.22) }
+
+    /* Akordeon */
+    details{ border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:10px 12px; background:rgba(255,255,255,.03); margin:8px 0 }
+    details[open]{ background:rgba(255,255,255,.05) }
+    summary{ cursor:pointer; font-weight:800 }
+    summary::-webkit-details-marker{ display:none }
+
+    /* Czerwone flagi + ryzyko */
+    .flags{ display:grid; gap:8px; margin:8px 0 }
+    .flag{ display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:10px;
+      background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12) }
+    .flag input{ width:18px; height:18px }
+    .riskwrap{ margin:12px 0 6px }
+    .riskbar{ height:12px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); position:relative; overflow:hidden; }
+    .riskfill{ position:absolute; left:0; top:0; bottom:0; width:0%; background:linear-gradient(90deg, #22c55e, #f59e0b, #ef4444); box-shadow:0 0 18px rgba(239,68,68,.35); transition:width .25s ease; }
+    .risklabel{ display:flex; justify-content:space-between; font-size:12px; color:#b8c2e0; margin-top:6px }
+    .riskmsg{ margin-top:8px; font-weight:800 }
   </style>
 </head>
 <body data-page="szczegoly">
-  <div class="detail-wallpaper"></div>
-  <div class="detail-grid"></div>
+  <div class="detail-wallpaper" aria-hidden="true"></div>
+  <div class="detail-grid" aria-hidden="true"></div>
 
   <div class="container" id="app">
-    <nav class="backbar"><button type="button" id="btnBack">← Wstecz</button></nav>
+    <nav class="backbar" aria-label="Wstecz">
+      <button type="button" id="btnBack">← Wstecz</button>
+    </nav>
 
     <header class="hero">
       <div>
@@ -100,49 +142,70 @@
     </nav>
 
     <section id="sec-objawy" class="card" data-section="objawy">
-      <h2>Objawy</h2>
+      <h2>Objawy — co możesz zauważyć</h2>
       <div id="objawy"></div>
+
+      <div class="flagbox" style="margin-top:12px">
+        <strong>Kiedy się niepokoić</strong>
+        <div class="flags" id="flags"></div>
+        <div class="riskwrap">
+          <div class="riskbar"><div class="riskfill" id="riskfill"></div></div>
+          <div class="risklabel"><span>Niskie</span><span>Średnie</span><span>Wysokie</span></div>
+          <div id="riskmsg" class="riskmsg">Zaznacz objawy alarmowe, aby oszacować pilność.</div>
+        </div>
+      </div>
     </section>
+
     <section id="sec-przyczyny" class="card" data-section="przyczyny" style="display:none">
-      <h2>Przyczyny</h2>
+      <h2>Przyczyny — możliwe źródła dolegliwości</h2>
       <div id="przyczyny"></div>
     </section>
+
     <section id="sec-pomoc" class="card" data-section="pomoc" style="display:none">
-      <h2>Pierwsza pomoc</h2>
+      <h2>Pierwsza pomoc — co zrobić teraz</h2>
       <div id="pomoc"></div>
     </section>
+
     <section id="sec-leki" class="card" data-section="leki" style="display:none">
-      <h2>Leki</h2>
+      <h2>Leki — OTC / Rx</h2>
       <div id="leki"></div>
     </section>
+
     <section id="sec-rehab" class="card" data-section="rehab" style="display:none">
       <h2>Rehabilitacja / Profilaktyka</h2>
       <div id="rehab"></div>
     </section>
+
     <section id="sec-mity" class="card" data-section="mity" style="display:none">
       <h2>Mity vs Fakty</h2>
       <div id="mity"></div>
     </section>
+
     <section id="sec-faq" class="card" data-section="faq" style="display:none">
       <h2>FAQ</h2>
       <div id="faq"></div>
+    </section>
+
+    <section style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:10px;">
+      <small style="color:#b8c2e0">Informacje mają charakter edukacyjny i nie zastępują porady lekarskiej. W razie wątpliwości zadzwoń 112.</small>
     </section>
   </div>
 
   <script>
   (function(){
+    // --- Parametry z URL
     const params = new URLSearchParams(location.search);
-    const typ   = (params.get('typ')||'').toLowerCase();
-    const czesc = (params.get('czesc')||'').toLowerCase();
-    const label = params.get('label')||'Szczegóły';
+    const typ   = (params.get('typ')||'porada').toLowerCase();
+    const czesc = (params.get('czesc')||'ogolne').toLowerCase();
+    const label = params.get('label') || (czesc.charAt(0).toUpperCase()+czesc.slice(1));
 
-    // startuj od góry
+    // --- Start od góry + bez hash
     window.addEventListener('DOMContentLoaded', ()=>{
       if (location.hash) history.replaceState(null,'',location.pathname+location.search);
       setTimeout(()=>window.scrollTo({top:0,left:0,behavior:'auto'}),0);
     });
 
-    // wstecz
+    // --- Wstecz z fallbackiem
     document.getElementById('btnBack').addEventListener('click',()=>{
       if (document.referrer && document.referrer.includes(location.host)) history.back();
       else {
@@ -153,25 +216,294 @@
       }
     });
 
-    // ustaw tytuły
-    document.title = 'Boli Help — ' + decodeURIComponent(label);
-    document.getElementById('heading').textContent = decodeURIComponent(label);
+    // --- Ustaw tytuły
+    document.title = 'Boli Help — ' + decodeURIComponent(label||'Szczegóły');
+    document.getElementById('heading').textContent = decodeURIComponent(label||'Szczegóły');
     document.getElementById('tagTyp').textContent   = 'typ: ' + typ;
     document.getElementById('tagCzesc').textContent = 'obszar: ' + czesc;
-    document.getElementById('tagLabel').textContent = 'etykieta: ' + decodeURIComponent(label);
+    document.getElementById('tagLabel').textContent = 'etykieta: ' + decodeURIComponent(label||'');
 
-    // obsługa zakładek
-    document.querySelector('.tabs').addEventListener('click', e=>{
+    // --- Zakładki bez przewijania strony
+    document.querySelector('.tabs').addEventListener('click', (e)=>{
       const a = e.target.closest('.tab'); if(!a) return;
       e.preventDefault();
       const key = a.dataset.tab;
       document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('is-active', t===a));
       document.querySelectorAll('[data-section]').forEach(sec=>sec.style.display = (sec.dataset.section===key)?'':'none');
       const topCard = document.getElementById('sec-'+key);
-      if(topCard) topCard.scrollIntoView({behavior:'smooth', block:'start'});
+      if (topCard) topCard.scrollIntoView({behavior:'smooth', block:'start'});
     });
 
-    // tutaj podstawienie treści (masz już je w repo – zostają bez zmian!)
+    // ====== BAZA TREŚCI (pełna) ======
+    const BASE = {
+      ogolne: {
+        objawy:["Ból, dyskomfort lub ucisk.","Objawy towarzyszące: gorączka, osłabienie, nudności, zawroty głowy."],
+        przyczyny:["Przeciążenie, uraz, infekcja, choroby przewlekłe.","Stres, odwodnienie, niedobory snu."],
+        pomoc:["Odpoczynek, nawodnienie, lekkostrawna dieta.","Okłady zimne/ciepłe zależnie od dolegliwości.","Obserwuj czerwone flagi."],
+        leki:{otc:["Paracetamol zgodnie z ulotką.","Ibuprofen (jeśli brak przeciwwskazań)."], rx:["Konsultacja lekarska przy braku poprawy."]},
+        rehab:["Higiena snu, regularny ruch, techniki relaksacyjne.","Unikaj czynników nasilających ból."],
+        flags:["Silny nagły ból narastający.","Duszność, sinica, zaburzenia świadomości.","Gorączka > 39°C utrzymująca się.","Objawy udaru (asymetria, mowa, niedowład)."],
+        mity:[{m:"„Ból zawsze oznacza coś poważnego”",f:"Nie — kontekst i objawy towarzyszące są kluczowe."},
+              {m:"„Gorączkę trzeba zbić do 36,6”",f:"Celem jest komfort i bezpieczeństwo, nie idealna liczba."}],
+        faq:[{q:"Kiedy iść do lekarza?",a:"Gdy objawy trwają >3–5 dni, nasilają się lub pojawiają się czerwone flagi."},
+             {q:"Czy mogę ćwiczyć?",a:"Przy łagodnych objawach — lekki ruch tak, intensywny wysiłek odłóż."}]
+      },
+
+      oko: {
+        objawy:["Ból/ucisk, łzawienie, światłowstręt, zaczerwienienie, gorsze widzenie.","Uczucie ciała obcego, wydzielina."],
+        przyczyny:["Zapalenie spojówek/rogówki, alergia, uraz/otarcie, suche oko.","Jaskra ostra (nagły ból + halo + nudności) — pilnie!"],
+        pomoc:["Nie pocieraj oka. Płucz jałową solą. Zdejmij soczewki.","Chłodny kompres, ogranicz ekrany."],
+        leki:{otc:["Sztuczne łzy bez konserwantów.","Krople przeciwalergiczne (azelastyna/ketotyfen)."], rx:["Antybiotyk w zapaleniu bakteryjnym po ocenie."]},
+        rehab:["Higiena ekranu (20–20–20).","Nawilżanie powietrza, częste mruganie."],
+        flags:["Nagły silny ból i spadek widzenia.","Uraz penetrujący/ciało obce.","Półpasiec oczny (wysypka + ból)."],
+        mity:[{m:"„Czerwone oko = infekcja”",f:"Może to być alergia, suchość albo jaskra ostra."}],
+        faq:[{q:"Płukać wodą z kranu?",a:"Lepiej jałową solą; kranówka może podrażniać."}]
+      },
+      nos: {
+        objawy:["Katar, zatkanie, ból/ucisk zatok, krwawienie.","Utrata węchu, kichanie."],
+        przyczyny:["Wirus, alergia, zapalenie zatok, suche powietrze, uraz.","Nadciśnienie (częste krwawienia)."],
+        pomoc:["Nawilżanie śluzówki (sól fizjologiczna), para, płyny.","Krwawienie: ucisk skrzydełek 10 min, głowa do przodu, zimny okład."],
+        leki:{otc:["Ksylometazolina/oksymetazolina max 3–5 dni.","Antyhistaminowe przy alergii."], rx:["Antybiotyk w bakteryjnym zap. zatok po ocenie."]},
+        rehab:["Nawilżacz, aerozole z solą morską.","Unikaj dymu i silnych zapachów."],
+        flags:["Silny ból zatok + gorączka >38.5°C >3 dni.","Krwotok >20 min, krwawienie z tyłu gardła.","Obrzęk twarzy, wysokie ciśnienie."],
+        mity:[{m:"„Głowa do tyłu przy krwawieniu”",f:"Nie — do przodu i ucisk skrzydełek."}],
+        faq:[{q:"Dmuchanie nosa podczas krwawienia?",a:"Nie — po ustaniu delikatnie oczyść po nawilżeniu."}]
+      },
+      ucho: {
+        objawy:["Ból ucha, szumy, uczucie zatkania, wyciek, gorączka u dziecka.","Zawroty głowy."],
+        przyczyny:["Zapalenie ucha środkowego, czop woskowinowy, zapalenie przewodu słuchowego (po basenie)."],
+        pomoc:["Ciepły okład, odpoczynek. Nie używaj patyczków!","Przy zawrotach — usiądź, unikaj nagłych ruchów."],
+        leki:{otc:["Paracetamol/ibuprofen przeciwbólowo.","Krople zmiękczające woskowinę."], rx:["Antybiotyk krople/systemowo wg lekarza."]},
+        rehab:["Ochrona przed hałasem i wodą.","Manewry Epleya przy BPPV — po potwierdzeniu."],
+        flags:["Silny ból z wysoką gorączką u <6 m-cy.","Zawroty + objawy neurologiczne.","Wyciek krwisty po urazie."],
+        mity:[{m:"„Patyczki są bezpieczne”",f:"Zwiększają ryzyko urazu i czopu."}],
+        faq:[{q:"Lot samolotem?",a:"Przy ostrym zapaleniu — odłóż."}]
+      },
+      gardlo: {
+        objawy:["Ból gardła, trudność w przełykaniu, chrypka.","Powiększone węzły, gorączka, naloty."],
+        przyczyny:["Wirusy (najczęściej), angina paciorkowcowa, refluks, przeciążenie głosu."],
+        pomoc:["Nawadnianie, pastylki łagodzące, miód (>1 r.ż.), odpoczynek głosu."],
+        leki:{otc:["NLPZ/Paracetamol, aerozole antyseptyczne."], rx:["Antybiotyk przy potwierdzeniu bakteryjnym."]},
+        rehab:["Nawilżanie, unikanie dymu, technika mówienia."],
+        flags:["Duszność, szczękościsk, ślinotok (ropień okołomigdałkowy).",">7 dni z wysoką gorączką."],
+        mity:[{m:"„Antybiotyk na każdy ból gardła”",f:"Większość to wirusy."}],
+        faq:[{q:"Czy lody pomagają?",a:"Chłodne pokarmy mogą chwilowo łagodzić ból."}]
+      },
+      glowa: {
+        objawy:["Ból jednostronny/obustronny, pulsujący/uciskowy, z nudnościami, światłowstręt."],
+        przyczyny:["Napięciowy, migrena, odwodnienie, nadciśnienie, infekcja.","Uraz — pilna ocena."],
+        pomoc:["Ciemne, ciche miejsce, nawodnienie, zimny okład.","Sen, rozciąganie karku."],
+        leki:{otc:["Paracetamol, ibuprofen; tryptany w migrenie po ocenie."], rx:["Profilaktyka migren — neurolog."]},
+        rehab:["Dzienniczek bólów, ergonomia, relaks."],
+        flags:["„Najgorszy ból życia”, nagły grzmotowy.","Objawy udaru (mowa, niedowład).","Po urazie + zaburzenia świadomości."],
+        mity:[{m:"„Kawa zawsze szkodzi”",f:"U części pomaga w migrenie; indywidualnie."}],
+        faq:[{q:"Kiedy TK/MR?",a:"Przy czerwonych flagach lub nieprawidłowym badaniu neuro."}]
+      },
+
+      klatka: {
+        objawy:["Ucisk/ból w klatce, duszność, kołatania, ból przy oddychaniu."],
+        przyczyny:["Mięśniowo-szkieletowe, refluks, lęk, astma/POChP, zap. opłucnej.","Zawał/PE — wykluczyć przy flagach."],
+        pomoc:["Spokój, pozycja półsiedząca, kontrola oddechu (powolne wdechy)."],
+        leki:{otc:["NLPZ przy bólach mięśniowych (jeśli brak przeciwwskazań)."], rx:["Nitrogliceryna/ASA tylko na zlecenie."]},
+        rehab:["Ćwiczenia oddechowe, unikanie dymu, kontrola stresu."],
+        flags:["Ucisk promieniujący do lewej ręki/szczęki + zimny pot.","Nagła duszność, kaszel z krwią.","Uraz klatki + duszność."],
+        mity:[{m:"„Młody nie ma zawału”",f:"Rzadziej, ale możliwe; liczą się objawy i czynniki ryzyka."}],
+        faq:[{q:"To może być refluks?",a:"Pieczenie za mostkiem po posiłku sugeruje refluks."}]
+      },
+      pluca: {
+        objawy:["Kaszel, duszność, świsty, ból przy oddychaniu, gorączka."],
+        przyczyny:["Infekcja, astma, zapalenie płuc, zatorowość, odma (po urazie)."],
+        pomoc:["Usiądź, uspokój oddech, ciepły napój.","Unikaj wysiłku przy duszności do oceny lekarskiej."],
+        leki:{otc:["Syropy wykrztuśne/łagodzące objawy."], rx:["Antybiotyk/steroid wziewny — według przyczyny."]},
+        rehab:["Rehabilitacja oddechowa przy chorobach przewlekłych.","Rzucenie palenia."],
+        flags:["Duszność spoczynkowa, sinica, saturacja <94% (jeśli masz pulsoksymetr).","Ból klatki + krwioplucie."],
+        mity:[{m:"„Kaszel = antybiotyk”",f:"Większość przyczyn to wirusy."}],
+        faq:[{q:"Kiedy RTG?",a:"Przy podejrzeniu zapalenia płuc i utrzymujących się objawach."}]
+      },
+      serce: {
+        objawy:["Ucisk za mostkiem, duszność, kołatania, zawroty."],
+        przyczyny:["Dławica, zawał, zap. osierdzia, arytmie; także refluks/mięśnie."],
+        pomoc:["Spokój, pozycja półsiedząca; nie prowadź auta; obserwuj flagi."],
+        leki:{otc:["Brak OTC „na zawał”."], rx:["Leki kardiologiczne tylko wg zaleceń."]},
+        rehab:["Ruch aerobowy, kontrola lipidów, ciśnienia, snu, masy ciała."],
+        flags:["Ucisk promieniujący + zimny pot/nudności.","Duszność spoczynkowa, omdlenie."],
+        mity:[{m:"„Zawsze po lewej”",f:"Ból może promieniować też do barku, żuchwy, pleców."}],
+        faq:[{q:"Ból przy ucisku mostka?",a:"Często mięśnie/chrząstki; ale flagi = pilna ocena."}]
+      },
+
+      brzuch: {
+        objawy:["Ból (nad-, śród-, podbrzusze), nudności, wymioty, biegunka lub zaparcie."],
+        przyczyny:["Niestrawność, wirus żołądkowo-jelitowy, zapalenie wyrostka, kamica żółciowa, wrzody."],
+        pomoc:["Nawadnianie (elektrolity), lekkostrawna dieta, odpoczynek."],
+        leki:{otc:["Paracetamol; przy biegunce — elektrolity, loperamid (dorośli)."], rx:["IPP/dalsza diagnostyka — po ocenie."]},
+        rehab:["Regularne posiłki, ograniczenie alkoholu i tłustych potraw."],
+        flags:["Ból narastający z obroną mięśniową; krew w stolcu/wymiotach.","Wysoka gorączka + sztywność brzucha.","Ból po urazie."],
+        mity:[{m:"„Zawsze głodówka”",f:"Przy łagodnej niestrawności — lekkie posiłki są OK, kluczowe jest nawodnienie."}],
+        faq:[{q:"Kiedy USG?",a:"Przy podejrzeniu kamicy, tętniaka lub w przewlekłych dolegliwościach."}]
+      },
+      nerki: {
+        objawy:["Ból lędźwi promieniujący do pachwiny, pieczenie przy mikcji, krwiomocz."],
+        przyczyny:["Kamica, ZUM, kolka nerkowa, zapalenie miedniczek."],
+        pomoc:["Nawadnianie, ciepły okład na okolicę lędźwiową."],
+        leki:{otc:["NLPZ na ból (jeśli brak przeciwwskazań)."], rx:["Antybiotyk przy ZUM — po badaniu moczu."]},
+        rehab:["Dużo płynów, ograniczenie soli (zależnie od typu kamieni)."],
+        flags:["Gorączka + ból pleców i dreszcze.","Brak moczu lub silny ból jednostronny."],
+        mity:[{m:"„Żurawina leczy każdy ZUM”",f:"Może zmniejszać ryzyko nawrotów; nie leczy ostrego ZUM."}],
+        faq:[{q:"Kiedy SOR?",a:"Gdy ból nie do opanowania, wysoka gorączka lub wymioty uniemożliwiają płyny."}]
+      },
+      plecy: {
+        objawy:["Ból lędźwi, sztywność, promieniowanie do nogi (rwa)."],
+        przyczyny:["Przeciążenie, dyskopatia, zła ergonomia."],
+        pomoc:["Ciepło, umiarkowany ruch, pozycja przeciwbólowa."],
+        leki:{otc:["NLPZ/Paracetamol, maści rozgrzewające."], rx:["Miorelaksanty/fizjoterapia — wg lekarza."]},
+        rehab:["CORE, rozciąganie zginaczy biodra i kulszowo-goleniowych, ergonomia siedzenia."],
+        flags:["Zatrzymanie moczu/stolca, znieczulenie w „siadle” — pilnie!","Uraz + niedowład."],
+        mity:[{m:"„Leżenie najlepsze”",f:"Krótko tak, zwykle lepszy łagodny ruch."}],
+        faq:[{q:"Kiedy rezonans?",a:"Przy deficytach neurologicznych lub braku poprawy >6 tyg."}]
+      },
+
+      biodra: {
+        objawy:["Ból w pachwinie/biodrze, ograniczenie ruchu."],
+        przyczyny:["Przeciążenie, zapalenie kaletki, zwyrodnienie.","U dzieci — choroba Perthesa (rzadko)."],
+        pomoc:["Odciążenie, zimny okład po wysiłku, ciepło przy sztywności."],
+        leki:{otc:["NLPZ miejscowo/doustnie."], rx:["Zastrzyki dostawowe — ortopeda."]},
+        rehab:["Ćwiczenia ROM, wzmacnianie pośladków."],
+        flags:["Silny ból po urazie, brak obciążania.","Gorączka + ból (zap. stawu)."],
+        mity:[{m:"„Strzelanie stawów szkodzi”",f:"Nie musi; ważny jest ból/obrzęk."}],
+        faq:[{q:"Rozgrzewka?",a:"Zmniejsza ryzyko przeciążeń."}]
+      },
+      kolano: {
+        objawy:["Ból, obrzęk, niestabilność, trzeszczenia."],
+        przyczyny:["Uraz łąkotki/ACL, przeciążenie, chondromalacja, dna."],
+        pomoc:["RICE: odpoczynek, lód 10–15 min, kompresja, elewacja."],
+        leki:{otc:["NLPZ krótko."], rx:["Rehabilitacja, iniekcje — ortopeda."]},
+        rehab:["Wzmacnianie czworogłowego i pośladków; praca nad osiowaniem kolana."],
+        flags:["Blokowanie stawu, duży krwiak po urazie.","Gorączka + zaczerwienienie stawu."],
+        mity:[{m:"„Przysiady niszczą kolana”",f:"Poprawna technika i progresja są bezpieczne."}],
+        faq:[{q:"Kiedy RTG/MR?",a:"Uraz z obrzękiem/niestabilnością lub ból przewlekły."}]
+      },
+      stopy: {
+        objawy:["Ból śródstopia/pięty, obrzęk, drętwienie."],
+        przyczyny:["Płaskostopie, ostroga piętowa, przeciążenie, uraz."],
+        pomoc:["Odpoczynek, rolowanie podeszwy, zimny okład."],
+        leki:{otc:["NLPZ doraźnie."], rx:["Wkładki, fizjoterapia, iniekcje — specjalista."]},
+        rehab:["Rozciąganie rozcięgna podeszwowego i łydki, obuwie z amortyzacją."],
+        flags:["Silny ból + zasinienie po urazie (złamanie)."],
+        mity:[{m:"„Chodzenie boso szkodzi”",f:"U wielu poprawia czucie — zależnie od przypadku."}],
+        faq:[{q:"Taśmy kinesio?",a:"Mogą zmniejszać ból jako wsparcie, nie leczą przyczyny."}]
+      },
+      skora: {
+        objawy:["Wysypka, świąd, zaczerwienienie, pęcherze, obrzęk."],
+        przyczyny:["Alergia, kontaktowe zapalenie, infekcje, ukąszenia."],
+        pomoc:["Zimny okład, usuń drażniący czynnik, delikatne mycie."],
+        leki:{otc:["Antyhistaminowe, maść z hydrokortyzonem (krótko)."], rx:["Silniejsze steroidy, antybiotyk — wg lekarza."]},
+        rehab:["Emolienty, bawełna, krótkie prysznice, bez gorącej wody."],
+        flags:["Szybko szerząca się pokrzywka + duszność (anafilaksja).","Rozległe pęcherze/oparzenia."],
+        mity:[{m:"„Słońce leczy trądzik”",f:"Maskuje, a długofalowo nasila zmiany."}],
+        faq:[{q:"Dermatolog pilnie?",a:"Bąble/pęcherze, ból skóry, gorączka, rozległość zmian."}]
+      },
+
+      kaszel: {
+        objawy:["Kaszel suchy/mokry, świsty, ból gardła."],
+        przyczyny:["Wirusy, astma, refluks, POChP, krztusiec."],
+        pomoc:["Nawadnianie, miód (>1 r.ż.), nawilżanie powietrza."],
+        leki:{otc:["Przeciwkaszlowy na noc, wykrztuśny w dzień (nie łącz jednocześnie)."], rx:["Steroid wziewny/antybiotyk wg przyczyny."]},
+        rehab:["Ćwiczenia oddechowe, pozycja drenażowa (po nauce)."],
+        flags:["Krwioplucie, duszność spoczynkowa, kaszel >3 tyg."],
+        mity:[{m:"„Kaszel = antybiotyk”",f:"Najczęściej wirusowy — leczenie objawowe."}],
+        faq:[{q:"Inhalacje solą?",a:"Mogą nawilżyć drogi oddechowe i złagodzić objawy."}]
+      },
+      goraczka: {
+        objawy:["Temp. >38°C, dreszcze, bóle mięśni, ból głowy."],
+        przyczyny:["Infekcje, odczyny zapalne, rzadziej leki/autoimmunologiczne."],
+        pomoc:["Płyny, odpoczynek, lekkie ubranie, chłodne okłady czoła/karku."],
+        leki:{otc:["Paracetamol, ibuprofen (nie naprzemiennie „na sztywno”)."], rx:["Ocena przy FUO."]},
+        rehab:["Higiena rąk, wietrzenie, szczepienia."],
+        flags:[">39.5°C, sztywność karku, zaburzenia świadomości.","U <3 m-cy gorączka — pilnie!"],
+        mity:[{m:"„Trzeba zbić do normy”",f:"Celem jest komfort i bezpieczeństwo, nie konkretna liczba."}],
+        faq:[{q:"Chłodne kąpiele?",a:"Unikaj drastycznego chłodzenia — lepsze okłady, płyny i leki."}]
+      },
+      zadlawienie: {
+        objawy:["Kaszel, świsty, trudność w oddychaniu, sinica, niemożność mówienia."],
+        przyczyny:["Ciało obce w drogach oddechowych."],
+        pomoc:[
+          "Jeśli poszkodowany kaszle i oddycha — zachęcaj do kaszlu.",
+          "Gdy kaszel nieskuteczny: 5 uderzeń między łopatki.",
+          "Jeśli nieskuteczne: 5 uciśnięć nadbrzusza (Heimlich) u dorosłych i dzieci >1 r.ż.",
+          "U niemowląt: 5 uderzeń + 5 uciśnięć klatki (2 palce).",
+          "Utrata przytomności: RKO i 112."
+        ],
+        leki:{otc:[], rx:[]},
+        rehab:["Ocena laryngologiczna po ciężkim epizodzie zadławienia."],
+        flags:["Sinica, brak możliwości mówienia/oddychania, utrata przytomności — natychmiast 112."],
+        mity:[{m:"„Palcami wyjmę najlepiej”",f:"Ryzyko wepchnięcia ciała obcego głębiej — nie rób tego."}],
+        faq:[{q:"Popić wodą pomaga?",a:"Nie — ryzyko aspiracji do płuc."}]
+      },
+      ciaza: {
+        objawy:["Nudności/wymioty, bóle podbrzusza, obrzęki, zgaga, kołatania."],
+        przyczyny:["Fizjologiczne zmiany ciążowe, infekcje, niedokrwistość, nadciśnienie ciążowe."],
+        pomoc:["Nawadnianie, małe częste posiłki, lewy bok przy zawrotach."],
+        leki:{otc:["Paracetamol (preferowany przeciwbólowy w ciąży)."], rx:["Decyzje lekarskie zależnie od trymestru."]},
+        rehab:["Spacery, ćwiczenia dna miednicy, unikanie długiego stania."],
+        flags:["Plamienie/krwawienie + ból, silne bóle głowy + mroczki (preeklampsja), mniej ruchów płodu."],
+        mity:[{m:"„W ciąży nie wolno ćwiczyć”",f:"U większości umiarkowany ruch jest zalecany."}],
+        faq:[{q:"Kiedy SOR/Izba?",a:"Krwawienie, silny ból, odpływanie płynu, brak ruchów płodu."}]
+      }
+    };
+
+    // --- Filtrowanie dla dzieci
+    const isChild = (typ==='dziecko');
+    function filterForChild(section){
+      if(!isChild) return section;
+      const s = JSON.parse(JSON.stringify(section));
+      if(s.leki){
+        if(s.leki.otc) s.leki.otc = s.leki.otc.filter(x=>!/(loperamid|alkohol|nitro|asa)/i.test(x));
+        if(s.leki.rx)  s.leki.rx  = s.leki.rx.filter(x=>!/(nitro|asa|iniekc)/i.test(x));
+      }
+      if(czesc==='zadlawienie'){
+        s.pomoc = s.pomoc.map(x=>x.replace(/dzieci >1 r\.ż\./,"dzieci >1 r.ż. (nie u niemowląt)"));
+      }
+      return s;
+    }
+    const DATA = filterForChild(BASE[czesc] || BASE.ogolne);
+
+    // --- Render
+    const $ = id=>document.getElementById(id);
+    const renderList = arr => (!arr||!arr.length) ? '<p style="color:#b8c2e0">Brak danych.</p>' : '<ul>'+arr.map(x=>`<li>${x}</li>`).join('')+'</ul>';
+
+    $('objawy').innerHTML    = renderList(DATA.objawy);
+    $('przyczyny').innerHTML = renderList(DATA.przyczyny);
+    $('pomoc').innerHTML     = renderList(DATA.pomoc);
+    $('leki').innerHTML      = DATA.leki
+      ? `<div style="display:grid;gap:12px;grid-template-columns:2fr 1fr">
+           <div><h3>OTC</h3>${renderList(DATA.leki.otc||[])}</div>
+           <div><h3>Na receptę</h3>${renderList(DATA.leki.rx||[])}</div>
+         </div>`
+      : '<p style="color:#b8c2e0">Brak danych.</p>';
+    $('rehab').innerHTML     = renderList(DATA.rehab);
+    $('mity').innerHTML      = (DATA.mity||[]).map(x=>`<details><summary>${x.m}</summary><p>${x.f}</p></details>`).join('') || '<p style="color:#b8c2e0">Brak danych.</p>';
+    $('faq').innerHTML       = (DATA.faq||[]).map(x=>`<details><summary>${x.q}</summary><p>${x.a}</p></details>`).join('') || '<p style="color:#b8c2e0">Brak pytań.</p>';
+
+    // --- Czerwone flagi + pasek ryzyka
+    const flagsWrap = $('flags');
+    (DATA.flags||[]).forEach((txt)=>{
+      const row = document.createElement('label');
+      row.className='flag';
+      row.innerHTML = `<input type="checkbox"><span>${txt}</span>`;
+      flagsWrap.appendChild(row);
+    });
+    const riskfill = $('riskfill'), riskmsg = $('riskmsg');
+    function updateRisk(){
+      const t = (DATA.flags||[]).length;
+      const c = flagsWrap.querySelectorAll('input:checked').length;
+      const pct = t ? Math.round(100*c/t) : 0;
+      riskfill.style.width = pct+'%';
+      riskmsg.textContent = (pct===0) ? "Ryzyko niskie: obserwuj i stosuj pierwszą pomoc."
+        : (pct<50) ? "Ryzyko umiarkowane: rozważ konsultację planową/teleporadę."
+        : (pct<80) ? "Ryzyko podwyższone: przyspiesz konsultację — rozważ NPL."
+        : "Ryzyko wysokie: pilna ocena (SOR/112) w zależności od dynamiki.";
+    }
+    flagsWrap.addEventListener('change', updateRisk); updateRisk();
   })();
   </script>
 </body>
