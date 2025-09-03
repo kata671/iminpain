@@ -899,3 +899,47 @@
 <!-- PATCH END -->
 </body>
 </html>
+<!-- PATCH START: Start od "Objawy" i od góry (bez zmian treści) -->
+<script>
+(function(){
+  function startAtSymptoms(){
+    // 1) Usuń ewentualny #hash z URL, żeby nie przeskakiwało w dół
+    if (location.hash) {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+
+    // 2) Ustaw widoczność sekcji: pokaż tylko "objawy"
+    var objawy = document.getElementById('sec-objawy') || document.querySelector('#objawy, #sec_objawy');
+    if (objawy){
+      // ukryj inne sekcje, ale nie zmieniaj ich treści
+      var sections = document.querySelectorAll('[data-section], section[id^="sec-"]');
+      sections.forEach(function(sec){
+        // pokaż tylko "objawy" (rozpoznajemy po data-section="objawy" lub id zawierającym "objawy")
+        var isSymptoms = (sec.dataset && sec.dataset.section === 'objawy') ||
+                         (sec.id && /objawy/i.test(sec.id));
+        sec.style.display = isSymptoms ? '' : 'none';
+      });
+    }
+
+    // 3) Podświetl zakładkę "Objawy" jeśli są zakładki
+    var tabs = document.querySelectorAll('.tabs .tab, [data-tab]');
+    if (tabs.length){
+      tabs.forEach(function(t){
+        var isSymptoms = (t.dataset && t.dataset.tab === 'objawy') ||
+                         (t.hash && /objawy/i.test(t.hash));
+        t.classList.toggle('is-active', !!isSymptoms);
+      });
+    }
+
+    // 4) Przewiń elegancko na samą górę (po krótkim czasie, żeby wygrać z layoutem)
+    setTimeout(function(){
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }, 0);
+  }
+
+  // Uruchom po załadowaniu DOM; drugi raz po 150 ms na wszelki wypadek (layouty z obrazkami)
+  document.addEventListener('DOMContentLoaded', startAtSymptoms);
+  setTimeout(startAtSymptoms, 150);
+})();
+</script>
+<!-- PATCH END -->
