@@ -284,3 +284,63 @@
   </script>
 </body>
 </html>
+<!-- PATCH START: bh-back-only (2025-09-03) -->
+<script>
+(function(){
+  // Nie duplikuj
+  if (document.getElementById('bhBackSafe')) return;
+
+  // Utwórz host z Shadow DOM, żeby styl nie kolidował z CSS strony
+  var host = document.createElement('div');
+  host.id = 'bhBackSafe';
+  // Wstaw na górę głównego kontenera
+  (document.querySelector('.container') || document.body).prepend(host);
+
+  var useShadow = !!host.attachShadow;
+  var root = useShadow ? host.attachShadow({mode:'open'}) : host;
+
+  // Styl w 100% izolowany (cień)
+  var css = `
+    :host { all: initial; display:block; margin:10px 0 12px; }
+    button {
+      all: unset;
+      font: 700 14px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Noto Sans", Arial;
+      color: #eef2ff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      background: rgba(60,32,100,.28);
+      border: 1px solid rgba(164,107,255,.28);
+      box-shadow: 0 6px 16px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.12);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    button:hover { transform: translateY(-1px); }
+    button:focus-visible { outline: 2px solid rgba(164,107,255,.7); outline-offset: 2px; }
+  `;
+
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.setAttribute('aria-label','Wróć do poprzedniej strony');
+  btn.textContent = '← Wróć';
+
+  if (useShadow){
+    var style = document.createElement('style');
+    style.textContent = css;
+    root.appendChild(style);
+    root.appendChild(btn);
+  } else {
+    // Fallback bez Shadow DOM (starsze przeglądarki)
+    host.style.margin = '10px 0 12px';
+    btn.style.cssText = 'appearance:none;border:1px solid rgba(164,107,255,.28);background:rgba(60,32,100,.28);color:#eef2ff;font-weight:700;padding:10px 14px;border-radius:12px;cursor:pointer;box-shadow:0 6px 16px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.12)';
+    root.appendChild(btn);
+  }
+
+  btn.addEventListener('click', function(){
+    // 1) Jeśli przyszliśmy z Twojej domeny — wstecz
+    if (document.referrer && document.referrer.includes(location.host)) { history.back(); return; }
+    // 2) W przeciwnym wypadku – na stronę główną
+    location.href = 'index.html';
+  });
+})();
+</script>
+<!-- PATCH END: bh-back-only -->
