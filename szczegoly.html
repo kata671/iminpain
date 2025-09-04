@@ -866,5 +866,37 @@
 })();
 </script>
 <!-- PATCH END: szczegoly scroll-to-top (2025-09-03) -->
+<!-- PATCH START: szczegoly — zawsze od góry (2025-09-04) -->
+<style>
+  /* Wyłącz płynne przewijanie, żeby nie „dobijało” do środka */
+  html { scroll-behavior: auto !important; }
+</style>
+<script>
+(function(){
+  if (document.body.getAttribute('data-page') !== 'szczegoly') return;
+
+  // 1) Wyłącz automatyczne przywracanie pozycji przez przeglądarkę
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e){}
+
+  // 2) Funkcja kotwica na górę
+  function toTop(){ window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); }
+
+  // 3) Zneutralizuj autofocus, który potrafi przewinąć stronę
+  var af = document.querySelector('[autofocus]');
+  if (af) try { af.blur(); } catch(e){}
+
+  // 4) Kilka pewnych momentów + retry po małych opóźnieniach (Layout Shift)
+  toTop();                               // natychmiast
+  document.addEventListener('DOMContentLoaded', toTop, { once:true });
+  window.addEventListener('load', toTop, { once:true });
+  window.addEventListener('pageshow', function(ev){ if (ev.persisted) toTop(); }, { once:true });
+
+  // retry – gdyby coś jeszcze później „pchnęło” layout (np. obrazy)
+  setTimeout(toTop, 50);
+  setTimeout(toTop, 120);
+  setTimeout(toTop, 250);
+})();
+</script>
+<!-- PATCH END: szczegoly — zawsze od góry (2025-09-04) -->
 </body>
 </html>
