@@ -855,5 +855,16 @@
       resize(); step();
     })();
   </script>
+<!-- PATCH START: szczegoly scroll-to-top (2025-09-03) -->
+<script>
+(function(){
+  if (document.body.getAttribute('data-page') === 'szczegoly') {
+    // Wyłącz przywracanie pozycji przez przeglądarkę i wymuś górę
+    try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e){}
+    requestAnimationFrame(function(){ window.scrollTo(0,0); });
+  }
+})();
+</script>
+<!-- PATCH END: szczegoly scroll-to-top (2025-09-03) -->
 </body>
 </html>
