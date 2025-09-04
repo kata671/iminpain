@@ -1,4 +1,77 @@
 <!doctype html>
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Boli Help — Kobieta</title>
+  <meta name="theme-color" content="#0e1230" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="assets/style.css?v=10" />
+  <style>
+    body[data-page="kobieta"]{
+      background:#0e1230; color:#eef2ff;
+      margin:0; padding:0;
+    }
+    .container{max-width:1100px;margin:0 auto;padding:0 16px}
+
+    /* ===== PRZYCISK WRÓĆ ===== */
+    #bhBackMini{
+      appearance:none;
+      border:1px solid rgba(164,107,255,.28);
+      background:rgba(60,32,100,.28);
+      color:#eef2ff;
+      font-weight:700;
+      padding:10px 14px;
+      border-radius:12px;
+      cursor:pointer;
+      margin:12px 0 20px 0;
+      box-shadow:
+        0 6px 16px rgba(8,10,22,.35),
+        inset 0 0 0 1px rgba(164,107,255,.12),
+        0 0 8px rgba(164,107,255,.45);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    #bhBackMini:hover{
+      transform:translateY(-1px);
+      border-color:rgba(164,107,255,.55);
+      box-shadow:
+        0 10px 20px rgba(8,10,22,.45),
+        0 0 14px rgba(164,107,255,.65),
+        inset 0 0 0 1px rgba(164,107,255,.18);
+    }
+    #bhBackMini:focus-visible{
+      outline:2px solid rgba(164,107,255,.75);
+      outline-offset:2px;
+    }
+  </style>
+</head>
+<body data-page="kobieta">
+  <div class="container">
+    <!-- PRZYCISK WRÓĆ -->
+    <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
+
+    <header class="header"><h1>Kobieta — wybierz część ciała</h1></header>
+    <section class="grid-thumbs">
+      <!-- Twoje miniaturki -->
+    </section>
+  </div>
+
+  <script>
+    (function(){
+      var btn=document.getElementById('bhBackMini');
+      if(!btn) return;
+      btn.addEventListener('click', function(){
+        if(document.referrer && document.referrer.includes(location.host)){
+          history.back();
+        } else {
+          location.href='index.html';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
