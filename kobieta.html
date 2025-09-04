@@ -1,113 +1,4 @@
 <!doctype html>
-<!doctype html>
-<html lang="pl">
-<!-- PATCH START: restore-wallpaper+thumbs CSS (kobieta) -->
-<style id="bh-restore-wall-css">
-/* RESTORE PATCH 2025-09-04 • kobieta */
-html,body{height:100%}
-body[data-page="kobieta"]{background:#0e1230;color:#eef2ff}
-.bh-wallpaper,.bh-grid{position:fixed;inset:0;pointer-events:none}
-.bh-wallpaper{
-  z-index:0;
-  background:
-    radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
-    radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
-    radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-  filter: blur(10px) saturate(118%);
-}
-.bh-grid{
-  z-index:1;opacity:.22;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
-  background-size:160px 138px;background-position:center;
-}
-.bh-floor-fade{position:fixed;left:0;right:0;bottom:0;height:120px;z-index:2;pointer-events:none;background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6))}
-.container{position:relative;z-index:3;background:transparent}
-.grid-thumbs{display:grid;gap:16px}
-@media (min-width:981px){.grid-thumbs{grid-template-columns:repeat(3,1fr)}}
-@media (max-width:980px){.grid-thumbs{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:640px){.grid-thumbs{grid-template-columns:repeat(2,1fr);gap:12px}}
-.thumb{border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;display:block;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(60,32,100,.32);border:1px solid rgba(164,107,255,.28);box-shadow:0 8px 18px rgba(8,10,22,.35), 0 0 0 1px rgba(164,107,255,.18) inset;backdrop-filter:saturate(120%) blur(6px);transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease}
-.thumb:hover{transform:translateY(-3px);box-shadow:0 16px 28px rgba(8,10,22,.45), 0 0 18px rgba(164,107,255,.30), 0 0 0 1px rgba(164,107,255,.34) inset;border-color:rgba(164,107,255,.45)}
-.thumb:focus-visible{outline:2px solid rgba(164,107,255,.65);outline-offset:2px;border-radius:18px}
-.thumb img{width:100%;display:block;object-fit:contain;object-position:center;background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));height:150px}
-@media (max-width:980px){.thumb img{height:110px}}
-@media (max-width:640px){.thumb img{height:84px}}
-.thumb span{display:block;padding:10px 12px;font-weight:800;letter-spacing:.2px;color:#eef2ff;border-top:1px solid rgba(164,107,255,.22);background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));text-align:center}
-@media (max-width:640px){.thumb span{font-size:12.5px;padding:8px 10px}}
-</style>
-<!-- PATCH END: restore-wallpaper+thumbs CSS (kobieta) -->
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Boli Help — Kobieta</title>
-  <meta name="theme-color" content="#0e1230" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="assets/style.css?v=10" />
-  <style>
-    body[data-page="kobieta"]{
-      background:#0e1230; color:#eef2ff;
-      margin:0; padding:0;
-    }
-    .container{max-width:1100px;margin:0 auto;padding:0 16px}
-
-    /* ===== PRZYCISK WRÓĆ ===== */
-    #bhBackMini{
-      appearance:none;
-      border:1px solid rgba(164,107,255,.28);
-      background:rgba(60,32,100,.28);
-      color:#eef2ff;
-      font-weight:700;
-      padding:10px 14px;
-      border-radius:12px;
-      cursor:pointer;
-      margin:12px 0 20px 0;
-      box-shadow:
-        0 6px 16px rgba(8,10,22,.35),
-        inset 0 0 0 1px rgba(164,107,255,.12),
-        0 0 8px rgba(164,107,255,.45);
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-    }
-    #bhBackMini:hover{
-      transform:translateY(-1px);
-      border-color:rgba(164,107,255,.55);
-      box-shadow:
-        0 10px 20px rgba(8,10,22,.45),
-        0 0 14px rgba(164,107,255,.65),
-        inset 0 0 0 1px rgba(164,107,255,.18);
-    }
-    #bhBackMini:focus-visible{
-      outline:2px solid rgba(164,107,255,.75);
-      outline-offset:2px;
-    }
-  </style>
-</head>
-<body data-page="kobieta">
-  <div class="container">
-    <!-- PRZYCISK WRÓĆ -->
-    <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
-
-    <header class="header"><h1>Kobieta — wybierz część ciała</h1></header>
-    <section class="grid-thumbs">
-      <!-- Twoje miniaturki -->
-    </section>
-  </div>
-
-  <script>
-    (function(){
-      var btn=document.getElementById('bhBackMini');
-      if(!btn) return;
-      btn.addEventListener('click', function(){
-        if(document.referrer && document.referrer.includes(location.host)){
-          history.back();
-        } else {
-          location.href='index.html';
-        }
-      });
-    })();
-  </script>
-</body>
-</html>
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
@@ -117,66 +8,109 @@ body[data-page="kobieta"]{background:#0e1230;color:#eef2ff}
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="assets/style.css?v=10" />
   <style>
+    /* ===== TAPETA (jak na stronie głównej) ===== */
+    html,body{height:100%}
     body[data-page="kobieta"]{
-      background:#0e1230; color:#eef2ff;
-      margin:0; padding:0;
+      position:relative; background:#0e1230 !important; color:#eef2ff;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
-    .container{max-width:1100px;margin:0 auto;padding:0 16px}
+    /* wyłącz ewentualne pseudo-tła tylko na tej stronie */
+    body[data-page="kobieta"]::before,
+    body[data-page="kobieta"]::after,
+    body[data-page="kobieta"] .container::before,
+    body[data-page="kobieta"] .container::after{ content:none !important; display:none !important; }
 
-    /* ===== PRZYCISK WRÓĆ ===== */
-    #bhBackMini{
-      appearance:none;
+    .bh-wallpaper,.bh-grid{position:fixed; inset:0; pointer-events:none}
+    .bh-wallpaper{
+      z-index:0;
+      background:
+        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
+        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
+        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+      filter: blur(10px) saturate(118%);
+    }
+    .bh-grid{
+      z-index:1; opacity:.22;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
+      background-size:160px 138px; background-position:center;
+    }
+    .bh-floor-fade{
+      position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
+      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));
+    }
+    .container{position:relative; z-index:3; background:transparent !important; max-width:1100px; margin:0 auto; padding:0 16px}
+
+    /* ===== SIATKA MINIATUREK ===== */
+    .grid-thumbs{display:grid;gap:16px;}
+    @media (min-width:981px){ .grid-thumbs{grid-template-columns:repeat(3,1fr)} }
+    @media (max-width:980px){ .grid-thumbs{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ .grid-thumbs{grid-template-columns:repeat(2,1fr);gap:12px} }
+
+    /* ===== KAFELKI (kolor + glass + glow) ===== */
+    .thumb{
+      border-radius:16px; overflow:hidden; text-decoration:none; color:inherit; display:block;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+        rgba(60,32,100,.32); /* stały fiolet pod spodem, by „nie bielało” */
       border:1px solid rgba(164,107,255,.28);
-      background:rgba(60,32,100,.28);
-      color:#eef2ff;
-      font-weight:700;
-      padding:10px 14px;
-      border-radius:12px;
-      cursor:pointer;
-      margin:12px 0 20px 0;
-      box-shadow:
-        0 6px 16px rgba(8,10,22,.35),
-        inset 0 0 0 1px rgba(164,107,255,.12),
-        0 0 8px rgba(164,107,255,.45);
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      box-shadow:0 8px 18px rgba(8,10,22,.35), 0 0 0 1px rgba(164,107,255,.18) inset;
+      backdrop-filter:saturate(120%) blur(6px);
+      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
     }
-    #bhBackMini:hover{
-      transform:translateY(-1px);
-      border-color:rgba(164,107,255,.55);
-      box-shadow:
-        0 10px 20px rgba(8,10,22,.45),
-        0 0 14px rgba(164,107,255,.65),
-        inset 0 0 0 1px rgba(164,107,255,.18);
+    .thumb:hover{
+      transform:translateY(-3px);
+      box-shadow:0 16px 28px rgba(8,10,22,.45), 0 0 18px rgba(164,107,255,.30), 0 0 0 1px rgba(164,107,255,.34) inset;
+      border-color:rgba(164,107,255,.45);
     }
-    #bhBackMini:focus-visible{
-      outline:2px solid rgba(164,107,255,.75);
-      outline-offset:2px;
+    .thumb:focus-visible{ outline:2px solid rgba(164,107,255,.65); outline-offset:2px; border-radius:18px }
+
+    /* Obrazki — rozmiary jak ustalone: laptop +25%, tel +20% */
+    .thumb img{
+      width:100%; display:block; object-fit:contain; object-position:center;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      height:140px; /* baza */
     }
+    @media (min-width:981px){ .thumb img{ height:150px } }   /* laptop */
+    @media (max-width:980px){ .thumb img{ height:110px } }   /* tablet */
+    @media (max-width:640px){ .thumb img{ height:84px } }    /* telefon: +20% */
+
+    .thumb span{
+      display:block; padding:10px 12px; font-weight:800; letter-spacing:.2px; color:#eef2ff;
+      border-top:1px solid rgba(164,107,255,.22);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      text-align:center;
+    }
+    @media (max-width:640px){ .thumb span{ font-size:12.5px; padding:8px 10px } }
   </style>
 </head>
 <body data-page="kobieta">
-  <div class="container">
-    <!-- PRZYCISK WRÓĆ -->
-    <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
+  <!-- TAPETA -->
+  <div class="bh-wallpaper" aria-hidden="true"></div>
+  <div class="bh-grid" aria-hidden="true"></div>
+  <div class="bh-floor-fade" aria-hidden="true"></div>
 
+  <div class="container">
     <header class="header"><h1>Kobieta — wybierz część ciała</h1></header>
-    <section class="grid-thumbs">
-      <!-- Twoje miniaturki -->
+
+    <section class="grid-thumbs" aria-label="Miniatury — kobieta">
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=oko&label=Oko"><img src="img/kobieta-oko.png" alt="Oko"><span>Oko</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=nos&label=Nos"><img src="img/kobieta-nos.png" alt="Nos"><span>Nos</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=gardlo&label=Gard%C5%82o"><img src="img/kobieta-gardlo.png" alt="Gardło"><span>Gardło</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=glowa&label=G%C5%82owa"><img src="img/kobieta-glowa.png" alt="Głowa"><span>Głowa</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=klatka&label=Klatka%20piersiowa"><img src="img/kobieta-klatka.png" alt="Klatka piersiowa"><span>Klatka</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=brzuch&label=Brzuch"><img src="img/kobieta-brzuch.png" alt="Brzuch"><span>Brzuch</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=plecy&label=Plecy"><img src="img/kobieta-plecy.png" alt="Plecy"><span>Plecy</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=biodra&label=Biodra"><img src="img/kobieta-biodra.png" alt="Biodra"><span>Biodra</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=udo&label=Udo"><img src="img/kobieta-udo.png" alt="Udo"><span>Udo</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=stopy&label=Stopy"><img src="img/kobieta-stopy.png" alt="Stopy"><span>Stopy</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=serce&label=Serce"><img src="img/kobieta-serce.png" alt="Serce"><span>Serce</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=pluca&label=P%C5%82uca"><img src="img/kobieta-pluca.png" alt="Płuca"><span>Płuca</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=watroba&label=W%C4%85troba"><img src="img/kobieta-watroba.png" alt="Wątroba"><span>Wątroba</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=zoladek&label=%C5%BBo%C5%82%C4%85dek"><img src="img/kobieta-zoladek.png" alt="Żołądek"><span>Żołądek</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=nerki&label=Nerki"><img src="img/kobieta-nerki.png" alt="Nerki"><span>Nerki</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=ciaza&label=Ci%C4%85%C5%BCa"><img src="img/kobieta-ciaza.png" alt="Ciąża"><span>Ciąża</span></a>
     </section>
   </div>
-
-  <script>
-    (function(){
-      var btn=document.getElementById('bhBackMini');
-      if(!btn) return;
-      btn.addEventListener('click', function(){
-        if(document.referrer && document.referrer.includes(location.host)){
-          history.back();
-        } else {
-          location.href='index.html';
-        }
-      });
-    })();
-  </script>
 </body>
 </html>
