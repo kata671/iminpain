@@ -133,3 +133,19 @@ footer{
   .nav a{padding:.3rem .5rem}
   .card img{max-width:120px}
 }
+/* Styl dla przycisku "Wróć do poprzedniej strony" */
+button {
+    background-color: #007BFF; /* kolor tła - niebieski */
+    color: white; /* kolor tekstu - biały */
+    padding: 10px 20px; /* odstęp wewnątrz przycisku */
+    border: none; /* usuwa domyślną ramkę */
+    border-radius: 5px; /* zaokrągla rogi */
+    cursor: pointer; /* zmienia kursor na łapkę, gdy najedziesz myszką */
+    font-size: 16px; /* wielkość czcionki */
+    transition: background-color 0.3s ease; /* płynne przejście koloru po najechaniu */
+}
+
+/* Styl po najechaniu myszką */
+button:hover {
+    background-color: #0056b3; /* ciemniejszy niebieski po najechaniu */
+}
