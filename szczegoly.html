@@ -900,3 +900,65 @@
 <!-- PATCH END: szczegoly — zawsze od góry (2025-09-04) -->
 </body>
 </html>
+<!-- PATCH START: szczegoly — twarde otwieranie od góry (2025-09-04) -->
+<style>
+  /* Na czas ładowania wyłącz smooth scroll, żeby nie „dobiło” do środka */
+  html { scroll-behavior: auto !important; }
+</style>
+<script>
+(function(){
+  if (document.body.getAttribute('data-page') !== 'szczegoly') return;
+
+  // 0) Usuń #hash z URL (często powoduje przewinięcie do środka)
+  try{
+    if (location.hash) {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+  }catch(e){}
+
+  // 1) Zablokuj przywracanie pozycji przez przeglądarkę
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e){}
+
+  // 2) Tymczasowo „wycisz” scrollIntoView i przechwyć scrollTo na rozruch
+  var _siv = Element.prototype.scrollIntoView;
+  var _st  = window.scrollTo;
+  var lockUntil = Date.now() + 900; // ms
+  Element.prototype.scrollIntoView = function(){ if (Date.now() < lockUntil) return; return _siv.apply(this, arguments); };
+  window.scrollTo = function(a,b){
+    if (Date.now() < lockUntil) { _st.call(window, 0, 0); return; }
+    // po okresie blokady — normalnie
+    return (b === undefined) ? _st.call(window, a) : _st.call(window, a, b);
+  };
+
+  // 3) Zneutralizuj autofocus, który potrafi przewinąć
+  var af = document.querySelector('[autofocus]');
+  if (af) try { af.blur(); } catch(e){}
+
+  // 4) Funkcja pewnego przewinięcia na górę (wielokrotnie, bo mogą dochodzić obrazy/układ)
+  function toTopHard(){
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    _st.call(window, 0, 0);
+  }
+
+  // 5) Seria wywołań w kluczowych momentach + krótkie retry
+  toTopHard(); // natychmiast
+  document.addEventListener('DOMContentLoaded', toTopHard, { once:true });
+  window.addEventListener('load', toTopHard, { once:true });
+  window.addEventListener('pageshow', function(ev){ if (ev.persisted) toTopHard(); }, { once:true });
+
+  // Krótkie „młotkowanie” przez 600 ms (co 60 ms) na wypadek późnych layoutów
+  var t0 = Date.now();
+  var iv = setInterval(function(){
+    toTopHard();
+    if (Date.now() - t0 > 600) clearInterval(iv);
+  }, 60);
+
+  // 6) Po 1s przywróć oryginalne metody, żeby nie wpływać na późniejszą nawigację
+  setTimeout(function(){
+    Element.prototype.scrollIntoView = _siv;
+    window.scrollTo = _st;
+  }, 1000);
+})();
+</script>
+<!-- PATCH END: szczegoly — twarde otwieranie od góry (2025-09-04) -->
