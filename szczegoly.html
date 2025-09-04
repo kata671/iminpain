@@ -1,5 +1,44 @@
 <!doctype html>
 <html lang="pl">
+<!-- PATCH START: szczegoly — twarda blokada scrollu na starcie -->
+<style id="bh-lock-scroll">html,body{overflow:hidden!important}</style>
+<script>
+/* Działa tylko na stronach szczegółów */
+(function(){
+  // Poczekaj aż <body> istnieje (gdy wstrzykujemy w <head>)
+  function ready(fn){ if(document.readyState!=='loading'){fn()} else {document.addEventListener('DOMContentLoaded',fn,{once:true})} }
+  ready(function(){
+    // Jeśli to nie jest strona szczegółów – nic nie rób
+    if(document.body.getAttribute('data-page')!=='szczegoly'){ return; }
+
+    // Wyłącz przywracanie pozycji przez przeglądarkę
+    try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
+
+    // Usuń hash, który potrafi ściągnąć w środek
+    try{ if(location.hash){ history.replaceState(null,'',location.pathname+location.search); } }catch(e){}
+
+    // Twardo ustaw na górę kilka razy (na wypadek opóźnionych layoutów)
+    function toTop(){ window.scrollTo(0,0); document.documentElement.scrollTop=0; document.body.scrollTop=0; }
+    toTop();
+    setTimeout(toTop, 60);
+    setTimeout(toTop, 160);
+    setTimeout(toTop, 300);
+
+    // Odblokuj przewijanie po krótkiej chwili
+    setTimeout(function(){
+      var lock=document.getElementById('bh-lock-scroll');
+      if(lock) lock.remove();
+      toTop();
+    }, 420);
+
+    // Obsługa powrotu z bfcache (np. z wstecz)
+    window.addEventListener('pageshow', function(ev){
+      if(ev.persisted){ toTop(); }
+    }, {once:true});
+  });
+})();
+</script>
+<!-- PATCH END: szczegoly — twarda blokada scrollu na starcie -->
 <head>
   <!--
     BoliHelp • SZCZEGÓŁY 2025 • v1.4 • samowystarczalny
