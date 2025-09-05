@@ -9,7 +9,10 @@
   <link rel="stylesheet" href="assets/style.css?v=10" />
   <style>
     html,body{height:100%}
-    body[data-page="dziecko"]{ position:relative; background:#0e1230 !important; color:#eef2ff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    body[data-page="dziecko"]{
+      position:relative; background:#0e1230 !important; color:#eef2ff;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
     body[data-page="dziecko"]::before,
     body[data-page="dziecko"]::after,
     body[data-page="dziecko"] .container::before,
@@ -23,6 +26,7 @@
       linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)); filter: blur(10px) saturate(118%); }
     .bh-grid{ z-index:1; opacity:.22; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E"); background-size:160px 138px; background-position:center;}
     .bh-floor-fade{ position:fixed;left:0;right:0;bottom:0;height:120px;z-index:2;pointer-events:none;background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6)); }
+
     .container{ position:relative; z-index:3; background:transparent !important; max-width:1100px; margin:0 auto; padding:0 16px }
 
     .grid-thumbs{display:grid;gap:16px;}
@@ -48,6 +52,16 @@
 
     .thumb span{ display:block; padding:10px 12px; font-weight:800; letter-spacing:.2px; color:#eef2ff; border-top:1px solid rgba(164,107,255,.22); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); text-align:center; }
     @media (max-width:640px){ .thumb span{ font-size:12.5px; padding:8px 10px } }
+
+    /* PRZYCISK WRÓĆ */
+    #bhBackMini{
+      appearance:none;border:1px solid rgba(164,107,255,.28);background:rgba(60,32,100,.28);color:#eef2ff;
+      font-weight:700;padding:10px 14px;border-radius:12px;cursor:pointer;margin:16px 0;
+      box-shadow:0 6px 16px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.12), 0 0 8px rgba(164,107,255,.45);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    #bhBackMini:hover{ transform:translateY(-1px); border-color:rgba(164,107,255,.55); box-shadow:0 10px 20px rgba(8,10,22,.45), 0 0 14px rgba(164,107,255,.65), inset 0 0 0 1px rgba(164,107,255,.18) }
+    #bhBackMini:focus-visible{ outline:2px solid rgba(164,107,255,.75); outline-offset:2px }
   </style>
 </head>
 <body data-page="dziecko">
@@ -56,6 +70,9 @@
   <div class="bh-floor-fade" aria-hidden="true"></div>
 
   <div class="container">
+    <!-- GUZIK WRÓĆ -->
+    <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
+
     <header class="header"><h1>Dziecko — wybierz część ciała</h1></header>
 
     <section class="grid-thumbs" aria-label="Miniatury — dziecko">
@@ -76,5 +93,20 @@
       <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=nerki&label=Nerki"><img src="img/dziecko-nerki.png" alt="Nerki"><span>Nerki</span></a>
     </section>
   </div>
+
+  <script>
+    // Obsługa guzika "Wróć"
+    (function(){
+      var btn = document.getElementById('bhBackMini');
+      if(!btn) return;
+      btn.addEventListener('click', function(){
+        if (document.referrer && document.referrer.includes(location.host)) {
+          history.back();
+        } else {
+          location.href = 'index.html';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
