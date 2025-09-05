@@ -1,7 +1,7 @@
-/* Boli Help — Gry / Trening — v3
-   Zawiera: RKO Tempo Tap, Zadławienie 5+5 (auto-start), AED Timing,
-            Reflex Triage, Germ Smash
-   Zapamiętuje najlepsze wyniki w localStorage.
+/* Boli Help — Gry / Trening — v3.1
+   Poprawki:
+   - Reflex Triage: delegacja click na planszy (klik działa gdziekolwiek w komórce), kursor, flash.
+   - Germ Smash: zarazki sterowane inline style (widoczne w 100%), dłuższy „stay”, większy rozmiar.
 */
 (function(){
   const $ = sel => document.querySelector(sel);
@@ -255,7 +255,7 @@
     updateUi();
   })();
 
-  // ====== Reflex Triage ======
+  // ====== Reflex Triage (naprawione klikanie pacjentów) ======
   (function(){
     const board = $('#trBoard');
     const start = $('#trStart'), reset = $('#trReset');
@@ -269,30 +269,52 @@
 
     const emojis = ['🤕','🤒','🤧','🤢','🤕','🤒','🤧','🥴','😵‍💫'];
 
-    // Tworzymy 9 komórek
+    // Tworzymy 9 komórek (większy hit-area + kursor)
     const cells = [];
     for(let i=0;i<9;i++){
-      const c=document.createElement('div'); c.className='triage-cell'; c.dataset.color='';
-      const face=document.createElement('div'); face.textContent = emojis[i%emojis.length];
-      const badge=document.createElement('div'); badge.className='triage-badge'; badge.textContent=''; c.appendChild(face); c.appendChild(badge);
+      const c=document.createElement('div');
+      c.className='triage-cell';
+      c.dataset.color='';
+      c.style.cursor='pointer';
+      c.setAttribute('role','button');
+      c.setAttribute('aria-label','Pacjent');
+      const face=document.createElement('div');
+      face.textContent = emojis[i%emojis.length];
+      face.style.fontSize='28px';
+      face.style.pointerEvents='none'; // klik przechwytuje komórka
+      const badge=document.createElement('div'); badge.className='triage-badge'; badge.textContent='';
+      c.appendChild(face); c.appendChild(badge);
       board.appendChild(c); cells.push(c);
-      c.addEventListener('click', ()=>{
-        if(!running) return;
-        const col = c.dataset.color;
-        if(!col) return; // pusta
-        if(col===target){
-          score += 5; scEl.textContent = String(score);
-          c.dataset.color='';
-          c.classList.remove('triage-red','triage-yellow','triage-green');
-          badge.textContent='';
-          showToast('✅ Dobry priorytet +5');
-        } else {
-          lives = Math.max(0, lives-1); lvEl.textContent = String(lives);
-          showToast('❌ Zły kolor');
-          if(lives===0) stop(true);
-        }
-      });
     }
+
+    // Delegacja click: działa na całej planszy, w tym na „twarzy”
+    board.addEventListener('click', (e)=>{
+      if(!running) return;
+      const cell = e.target.closest('.triage-cell');
+      if(!cell || !board.contains(cell)) return;
+      const col = cell.dataset.color;
+      if(!col) return; // pusta
+      const badge = cell.querySelector('.triage-badge');
+      if(col===target){
+        score += 5; scEl.textContent = String(score);
+        cell.dataset.color='';
+        cell.classList.remove('triage-red','triage-yellow','triage-green');
+        if(badge) badge.textContent='';
+        // flash trafienia
+        cell.style.transition='box-shadow .15s ease';
+        cell.style.boxShadow='0 0 0 2px rgba(94,234,212,.8), 0 0 22px rgba(94,234,212,.35)';
+        setTimeout(()=>{ cell.style.boxShadow=''; }, 160);
+        showToast('✅ Dobry priorytet +5');
+      } else {
+        lives = Math.max(0, lives-1); lvEl.textContent = String(lives);
+        // flash błędu
+        cell.style.transition='box-shadow .15s ease';
+        cell.style.boxShadow='0 0 0 2px rgba(255,99,99,.8), 0 0 22px rgba(255,99,99,.35)';
+        setTimeout(()=>{ cell.style.boxShadow=''; }, 160);
+        showToast('❌ Zły kolor');
+        if(lives===0) stop(true);
+      }
+    });
 
     function setMode(col){
       target=col;
@@ -312,15 +334,14 @@
       const col = colors[Math.floor(Math.random()*colors.length)];
       c.dataset.color = col;
       c.classList.add('triage-'+col);
-      badge.textContent = col==='red' ? '🔴' : col==='yellow' ? '🟡' : '🟢';
+      if(badge) badge.textContent = col==='red' ? '🔴' : col==='yellow' ? '🟡' : '🟢';
       // znikanie po czasie
       setTimeout(()=>{
         if(c.dataset.color===col){ // nie kliknięto
           c.dataset.color='';
           c.classList.remove('triage-red','triage-yellow','triage-green');
-          badge.textContent='';
-          // utrata życia tylko jeśli był naszym celem
-          if(col===target){
+          if(badge) badge.textContent='';
+          if(col===target){ // kara tylko gdy przegapiono cel
             lives = Math.max(0, lives-1); lvEl.textContent = String(lives);
             if(lives===0) stop(true);
           }
@@ -352,12 +373,16 @@
     }
 
     start.addEventListener('click', ()=>{ if(!running) startRun(); });
-    reset.addEventListener('click', ()=>{ stop(false); scEl.textContent='0'; lvEl.textContent='3'; tEl.textContent='30s'; cells.forEach(c=>{ c.dataset.color=''; c.classList.remove('triage-red','triage-yellow','triage-green'); c.querySelector('.triage-badge').textContent=''; }); });
+    reset.addEventListener('click', ()=>{
+      stop(false);
+      scEl.textContent='0'; lvEl.textContent='3'; tEl.textContent='30s';
+      cells.forEach(c=>{ c.dataset.color=''; c.classList.remove('triage-red','triage-yellow','triage-green'); const b=c.querySelector('.triage-badge'); if(b) b.textContent=''; });
+    });
 
     const best = getBest('triage'); if(best!=null && bestEl) bestEl.textContent = `Najlepszy wynik: ${best}`;
   })();
 
-  // ====== Germ Smash ======
+  // ====== Germ Smash (zarazki zawsze widoczne) ======
   (function(){
     const board = $('#gmBoard');
     const start = $('#gmStart'), reset = $('#gmReset');
@@ -372,11 +397,24 @@
     const holes=[];
     for(let i=0;i<9;i++){
       const hole=document.createElement('div'); hole.className='germ-hole';
-      const germ=document.createElement('div'); germ.className='germ'; germ.textContent = Math.random()<0.5 ? '🦠' : '🤢';
-      hole.appendChild(germ); board.appendChild(hole); holes.push({hole,germ,up:false,timeout:null});
+      hole.style.cursor='pointer';
+      const germ=document.createElement('div');
+      germ.className='germ';
+      germ.textContent = Math.random()<0.5 ? '🦠' : '🤢';
+      // wymuszenie widoczności przez inline style (nadpisuje CSS)
+      Object.assign(germ.style,{
+        position:'absolute', left:'0', right:'0', bottom:'0', top:'auto',
+        display:'grid', placeItems:'center',
+        height:'0', transition:'height .12s ease',
+        fontSize:'32px', filter:'drop-shadow(0 2px 6px rgba(0,0,0,.35))',
+        pointerEvents:'auto', userSelect:'none'
+      });
+      hole.appendChild(germ); board.appendChild(hole);
+      holes.push({hole,germ,up:false,timeout:null});
       germ.addEventListener('click', ()=>{
         if(!running || !holes[i].up) return;
-        holes[i].up=false; germ.classList.remove('show');
+        holes[i].up=false;
+        germ.style.height='0';
         score += 3; scEl.textContent = String(score);
         showToast('🧼 Sru! +3');
       });
@@ -386,15 +424,20 @@
       const available = holes.filter(h=>!h.up);
       if(!available.length) return;
       const h = available[Math.floor(Math.random()*available.length)];
-      h.up=true; h.germ.textContent = Math.random()<0.5 ? '🦠' : '🤢'; h.germ.classList.add('show');
-      const stay = 450 + Math.random()*400;
-      h.timeout = setTimeout(()=>{ h.up=false; h.germ.classList.remove('show'); }, stay);
+      h.up=true;
+      h.germ.textContent = Math.random()<0.5 ? '🦠' : '🤢';
+      h.germ.style.height='100%';     // pokaż
+      const stay = 700 + Math.random()*600; // 0.7–1.3s (dłużej, wyraźniej)
+      h.timeout = setTimeout(()=>{
+        h.up=false;
+        h.germ.style.height='0';      // schowaj
+      }, stay);
     }
 
     function stop(final=false){
       running=false;
       clearInterval(timer); clearInterval(spawnTimer);
-      holes.forEach(h=>{ h.up=false; h.germ.classList.remove('show'); clearTimeout(h.timeout); });
+      holes.forEach(h=>{ h.up=false; h.germ.style.height='0'; clearTimeout(h.timeout); });
       if(final){
         const best = getBest('germ') ?? 0;
         if(score>best){ setBest('germ', score); }
@@ -404,7 +447,7 @@
     }
     function startRun(){
       score=0; scEl.textContent='0'; tEl.textContent='30s'; running=true; t0=performance.now();
-      spawnTimer = setInterval(popOne, 420);
+      spawnTimer = setInterval(popOne, 500); // spokojniejsze tempo
       timer = setInterval(()=>{
         const left = Math.max(0, DURATION-(performance.now()-t0));
         tEl.textContent = Math.ceil(left/1000)+'s';
