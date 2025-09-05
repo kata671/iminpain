@@ -93,11 +93,8 @@
     BoliHelp • Strona główna • v2.3 (2025-09-05)
     Zmiany:
       • NOWOŚĆ: Modal „Podgląd porad” dla: Zadławienie, Reanimacja, Wypadek, Pierwsza pomoc.
-        – lewa kolumna: proste, czytelne instrukcje obrazkowe (inline SVG, bez CDN),
-        – prawa kolumna: kroki krok-po-kroku,
-        – dół: placeholder filmu (podmień na własny .mp4 w assets/videos/…).
-      • Bezpieczne przechwycenie kliknięć na pigułkach (nav.situations) – brak zmian w innych elementach.
-      • Zachowane: tapeta, 3 kafelki, mini-quiz (z poprzedniej wersji).
+      • Mini-quiz: NAPRAWA — zliczanie punktów i nagroda (konfetti + toast) po zakończeniu.
+        (bez zapisu do localStorage; zero zmian w innych częściach strony)
   -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -258,7 +255,7 @@
       <a class="pill pill--green" data-porada="pierwszopomoc" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span>Pierwsza pomoc</a>
     </nav>
 
-    <!-- Launcher mini-quizu (z poprzedniej wersji) -->
+    <!-- Launcher mini-quizu -->
     <div class="bh2025-quiz-launch" aria-hidden="false" aria-label="Sekcja edukacyjna">
       <span class="dot" aria-hidden="true"></span>
       <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button" aria-haspopup="dialog" aria-controls="bh2025QuizModal">
@@ -298,7 +295,8 @@
       </article>
     </section>
   </div>
-  <!-- Modal quizu (bez zmian) -->
+
+  <!-- Modal quizu -->
   <div id="bh2025QuizModal" class="bh2025-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025QuizTitle">
     <div class="bh2025-modal__panel">
       <div class="bh2025-modal__head">
@@ -356,7 +354,7 @@
   <!-- Twój skrypt (zostaje) -->
   <script src="assets/main.js?v=10"></script>
 
-  <!-- Logika mini-quizu (z poprzedniej wersji) -->
+  <!-- Logika mini-quizu (NAPRAWIONA: liczenie punktów + nagroda) -->
   <script>
   (function(){
     const openBtn = document.getElementById('bh2025QuizOpen');
@@ -406,6 +404,8 @@
     ];
 
     let step=0, lock=false;
+    const chosen = new Array(QUIZ.length).fill(null); // true/false/null
+
     function setProgress(){
       stepEl.textContent = (step+1);
       const left = 6 + (step/(QUIZ.length-1||1))*88;
@@ -415,12 +415,13 @@
       const item = QUIZ[step];
       qEl.textContent = item.q;
       aEl.innerHTML = '';
-      item.a.forEach((opt)=>{
+      item.a.forEach((opt, idx)=>{
         const b = document.createElement('button');
         b.type='button'; b.className='bh2025-ans'; b.textContent=opt.t;
         b.addEventListener('click', ()=>{
           if(lock) return; lock=true;
           const good = opt.ok;
+          chosen[step] = !!good;               // <<< ZAPIS WYBORU
           b.classList.add(good?'correct':'wrong');
           const note = document.createElement('div');
           note.className='bh2025-muted'; note.style.marginTop='6px';
@@ -434,13 +435,62 @@
       setProgress();
       nextBtn.textContent = step===QUIZ.length-1 ? "Zakończ" : "Dalej";
     }
-    function open(){ modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; step=0; render(); }
+    function open(){ modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; step=0; chosen.fill(null); render(); }
     function close(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+
+    // NAGRODA — lekkie konfetti + toast (bez zapisu, bez wpływu na inne elementy)
+    function award(score){
+      // toast
+      const toast=document.createElement('div');
+      toast.textContent = `Brawo! Wynik: ${score}/${QUIZ.length}`;
+      Object.assign(toast.style,{
+        position:'fixed',left:'50%',bottom:'26px',transform:'translateX(-50%)',
+        background:'rgba(60,32,100,.85)',color:'#eef2ff',padding:'10px 14px',
+        border:'1px solid rgba(164,107,255,.35)',borderRadius:'12px',
+        boxShadow:'0 10px 26px rgba(8,10,22,.45)',fontWeight:'800',zIndex:10000
+      });
+      document.body.appendChild(toast);
+      setTimeout(()=>{ toast.remove(); }, 2600);
+
+      // konfetti (tymczasowy canvas, po animacji znika)
+      const c=document.createElement('canvas'); c.width=innerWidth; c.height=innerHeight;
+      Object.assign(c.style,{position:'fixed',inset:'0',pointerEvents:'none',zIndex:9999});
+      document.body.appendChild(c);
+      const ctx=c.getContext('2d');
+      let parts=Array.from({length: score===QUIZ.length? 140:90},()=>({
+        x:Math.random()*c.width, y:-20,
+        vx:-1+Math.random()*2, vy:2+Math.random()*2.5,
+        size:3+Math.random()*4, rot:Math.random()*6, vr:-.2+Math.random()*.4,
+        color: score===QUIZ.length ? ['#5eead4','#a46bff','#ffd16c'][Math.floor(Math.random()*3)] : 'rgba(255,255,255,.8)',
+        life: 90
+      }));
+      (function tick(){
+        ctx.clearRect(0,0,c.width,c.height);
+        parts.forEach(p=>{
+          p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr; p.vy+=0.02; p.life--;
+          ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+          ctx.fillStyle=p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
+          ctx.restore();
+        });
+        parts=parts.filter(p=>p.life>0);
+        if(parts.length) requestAnimationFrame(tick); else c.remove();
+      })();
+    }
+
     openBtn.addEventListener('click', open);
     closeBtn.addEventListener('click', close);
     modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
-    restart.addEventListener('click', ()=>{ step=0; render(); });
-    nextBtn.addEventListener('click', ()=>{ if(step<QUIZ.length-1){ step++; render(); } else { close(); } });
+    restart.addEventListener('click', ()=>{ step=0; chosen.fill(null); render(); });
+    nextBtn.addEventListener('click', ()=>{
+      if(step<QUIZ.length-1){
+        step++; render();
+      } else {
+        // KONIEC QUIZU — oblicz wynik i nagródź
+        const score = chosen.reduce((s,v)=> s + (v===true?1:0), 0);
+        award(score);
+        close();
+      }
+    });
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') close(); });
   })();
   </script>
@@ -459,7 +509,6 @@
 
     if(!poradaModal) return;
 
-    // Proste obrazki (inline SVG) — czytelne piktogramy, zero zewnętrznych plików
     const SVG = {
       zadlawienie: `
         <svg width="100%" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
@@ -501,7 +550,6 @@
         </svg>`
     };
 
-    // Kroki — zwięźle i praktycznie
     const STEPS = {
       zadlawienie: [
         "Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.",
@@ -533,13 +581,7 @@
       ]
     };
 
-    // Mapa wideo (opcjonalnie – podmień ścieżki na realne pliki)
-    const VIDEO = {
-      zadlawienie: null, // np. "assets/videos/zadlawienie.mp4"
-      reanimacja: null,  // np. "assets/videos/reanimacja.mp4"
-      wypadek: null,     // np. "assets/videos/wypadek.mp4"
-      pierwszopomoc: null
-    };
+    const VIDEO = { zadlawienie:null, reanimacja:null, wypadek:null, pierwszopomoc:null };
 
     function openPorada(key, title){
       poradaTitle.textContent = title || 'Porada';
@@ -550,13 +592,11 @@
         const li=document.createElement('li'); li.textContent=txt; stepsOl.appendChild(li);
       });
 
-      // Wideo: jeśli jest plik w mapie — renderuj <video>, inaczej placeholder
-      videoWrap.innerHTML=''; // czyść
+      videoWrap.innerHTML='';
       const src = VIDEO[key];
       if(src){
         const v = document.createElement('video');
-        v.setAttribute('controls','controls');
-        v.setAttribute('playsinline','');
+        v.setAttribute('controls','controls'); v.setAttribute('playsinline','');
         v.setAttribute('style','width:100%;border-radius:12px;background:rgba(255,255,255,.04)');
         const s = document.createElement('source'); s.src = src; s.type='video/mp4';
         v.appendChild(s); videoWrap.appendChild(v);
@@ -576,13 +616,12 @@
     poradaModal.addEventListener('click', (e)=>{ if(e.target===poradaModal) closePorada(); });
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && poradaModal.getAttribute('aria-hidden')==='false') closePorada(); });
 
-    // Przechwyć kliknięcia pigułek (zostawiamy href jako fallback)
     const nav = document.querySelector('nav.situations');
     if(nav){
       nav.addEventListener('click', (e)=>{
         const a = e.target.closest('a[data-porada]');
         if(!a) return;
-        e.preventDefault(); // pokaż modal zamiast przechodzić
+        e.preventDefault();
         const key = a.getAttribute('data-porada');
         const title = a.textContent.trim();
         openPorada(key, title);
@@ -590,8 +629,9 @@
     }
   })();
   </script>
-<style>
-  /* bh2025 – autouzupełnianie wyszukiwarki (tylko na stronie głównej) */
+
+  <!-- Wyszukiwarka z podpowiedziami -->
+  <style>
   .bh2025-suggest{position:absolute;right:0;left:0;top:100%;margin-top:6px;z-index:50;
     background:rgba(60,32,100,.96); border:1px solid rgba(164,107,255,.28); border-radius:12px;
     box-shadow:0 16px 34px rgba(8,10,22,.52); overflow:hidden; display:none}
@@ -607,171 +647,106 @@
   .bh2025-sg-ico{width:18px;height:18px;display:inline-grid;place-items:center;border-radius:6px;
     background:rgba(164,107,255,.18); font-size:12px}
   .bh2025-sg-sub{margin-left:auto;font-size:12px;color:#b8c2e0}
-  /* kontener pozycji listy względem istniejącego .search */
   .header .tools .search{position:relative}
-</style>
+  </style>
 
-<script>
-(function(){
-  const input = document.querySelector('.header .tools .search input[type="search"]');
-  if(!input) return;
+  <script>
+  (function(){
+    const input = document.querySelector('.header .tools .search input[type="search"]');
+    if(!input) return;
 
-  // Słownik: części ciała / tematy -> slug „czesc” + przyjazna etykieta + aliasy
-  const PARTS = [
-    {id:'oko',       label:'Oko',        alias:['oko','oczy','wzrok']},
-    {id:'nos',       label:'Nos',        alias:['nos','zatoki','katar']},
-    {id:'gardlo',    label:'Gardło',     alias:['gardlo','gardło','angina','chrypka']},
-    {id:'glowa',     label:'Głowa',      alias:['glowa','głowa','migrena','ból głowy']},
-    {id:'klatka',    label:'Klatka piersiowa', alias:['klatka','pierś','serce ból','mostek']},
-    {id:'pluca',     label:'Płuca',      alias:['płuca','pluca','duszność','astma']},
-    {id:'brzuch',    label:'Brzuch',     alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
-    {id:'nerki',     label:'Nerki',      alias:['nerki','kolka','lędźwie','ledzwi']},
-    {id:'plecy',     label:'Plecy',      alias:['plecy','kręgosłup','kregoslup','rwa']},
-    {id:'biodra',    label:'Biodra/Uda', alias:['biodro','biodra','udo','pachwina']},
-    {id:'kolano',    label:'Kolano',     alias:['kolano','rzepka','łąkotka','lakotka']},
-    {id:'stopy',     label:'Stopy',      alias:['stopa','stopy','pięta','pieta','rozcięgno']},
-    {id:'skora',     label:'Skóra',      alias:['skora','skóra','wysypka','świąd','alergia']},
-    {id:'serce',     label:'Serce',      alias:['serce','kołatania','kolatania','arytmia']},
-    {id:'kaszel',    label:'Kaszel',     alias:['kaszel','kaszle']},
-    {id:'goraczka',  label:'Gorączka',   alias:['gorączka','goraczka','temperatura']},
-    // tematy SOS
-    {id:'zadlawienie', label:'Zadławienie (SOS)', alias:['zadławienie','zadlawienie','zadławił','zadlawil'] , sos:true},
-    {id:'reanimacja',  label:'Reanimacja (RKO)',  alias:['reanimacja','rko','resuscytacja'] , sos:true},
-    {id:'wypadek',     label:'Wypadek (pierwsze kroki)', alias:['wypadek','kolizja','potrącenie','potracenie'] , sos:true},
-    {id:'pierwszopomoc',label:'Pierwsza pomoc',   alias:['pierwsza pomoc','pierwszopomoc','abc'] , sos:true}
-  ];
+    const PARTS = [
+      {id:'oko',       label:'Oko',        alias:['oko','oczy','wzrok']},
+      {id:'nos',       label:'Nos',        alias:['nos','zatoki','katar']},
+      {id:'gardlo',    label:'Gardło',     alias:['gardlo','gardło','angina','chrypka']},
+      {id:'glowa',     label:'Głowa',      alias:['glowa','głowa','migrena','ból głowy']},
+      {id:'klatka',    label:'Klatka piersiowa', alias:['klatka','pierś','serce ból','mostek']},
+      {id:'pluca',     label:'Płuca',      alias:['płuca','pluca','duszność','astma']},
+      {id:'brzuch',    label:'Brzuch',     alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
+      {id:'nerki',     label:'Nerki',      alias:['nerki','kolka','lędźwie','ledzwi']},
+      {id:'plecy',     label:'Plecy',      alias:['plecy','kręgosłup','kregoslup','rwa']},
+      {id:'biodra',    label:'Biodra/Uda', alias:['biodro','biodra','udo','pachwina']},
+      {id:'kolano',    label:'Kolano',     alias:['kolano','rzepka','łąkotka','lakotka']},
+      {id:'stopy',     label:'Stopy',      alias:['stopa','stopy','pięta','pieta','rozcięgno']},
+      {id:'skora',     label:'Skóra',      alias:['skora','skóra','wysypka','świąd','alergia']},
+      {id:'serce',     label:'Serce',      alias:['serce','kołatania','kolatania','arytmia']},
+      {id:'kaszel',    label:'Kaszel',     alias:['kaszel','kaszle']},
+      {id:'goraczka',  label:'Gorączka',   alias:['gorączka','goraczka','temperatura']},
+      {id:'zadlawienie', label:'Zadławienie (SOS)', alias:['zadławienie','zadlawienie','zadławił','zadlawil'] , sos:true},
+      {id:'reanimacja',  label:'Reanimacja (RKO)',  alias:['reanimacja','rko','resuscytacja'] , sos:true},
+      {id:'wypadek',     label:'Wypadek (pierwsze kroki)', alias:['wypadek','kolizja','potrącenie','potracenie'] , sos:true},
+      {id:'pierwszopomoc',label:'Pierwsza pomoc',   alias:['pierwsza pomoc','pierwszopomoc','abc'] , sos:true}
+    ];
+    const GENDERS = [
+      {id:'kobieta',label:'Kobieta'},{id:'mezczyzna',label:'Mężczyzna'},{id:'dziecko',label:'Dziecko'}
+    ];
 
-  const GENDERS = [
-    {id:'kobieta',    label:'Kobieta'},
-    {id:'mezczyzna',  label:'Mężczyzna'},
-    {id:'dziecko',    label:'Dziecko'}
-  ];
+    const panel = document.createElement('div');
+    panel.className = 'bh2025-suggest';
+    panel.setAttribute('role','listbox');
+    panel.setAttribute('aria-hidden','true');
+    panel.innerHTML = `<div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>`;
+    input.parentElement.appendChild(panel);
+    const list = panel.querySelector('#bh2025List');
 
-  // Utwórz panel podpowiedzi pod istniejącym polem
-  const panel = document.createElement('div');
-  panel.className = 'bh2025-suggest';
-  panel.setAttribute('role','listbox');
-  panel.setAttribute('aria-hidden','true');
-  panel.innerHTML = `
-    <div class="bh2025-sg-head">Podpowiedzi</div>
-    <ul class="bh2025-sg-list" id="bh2025List"></ul>
-  `;
-  input.parentElement.appendChild(panel);
-  const list = panel.querySelector('#bh2025List');
+    let results = [], active = -1;
 
-  let results = [];   // bieżące propozycje (obiekty z url/label)
-  let active = -1;    // index zaznaczenia klawiaturą
-
-  function buildUrls(hit){
-    // Jeśli temat SOS – prowadź do szczegółów typu „porada”
-    if(hit.sos){
-      const url = `szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
-      return [{label: hit.label, url, sub:'SOS'}];
-    }
-    // Standard: pokaż 3 linki od razu (dla Kobieta/Mężczyzna/Dziecko)
-    return GENDERS.map(g=>{
-      const url = `szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
-      return {label:`${hit.label} • ${g.label}`, url, sub:g.label};
-    });
-  }
-
-  function search(q){
-    const s = q.trim().toLowerCase();
-    if(!s) return [];
-    // dopasowanie po aliasach albo po fragmencie id/label
-    const hits = PARTS.filter(p =>
-      p.alias?.some(a => a.includes(s)) ||
-      p.id.includes(s) || p.label.toLowerCase().includes(s)
-    ).slice(0,6);
-    // spłaszcz do listy linków
-    return hits.flatMap(buildUrls).slice(0,12);
-  }
-
-  function render(){
-    list.innerHTML = '';
-    active = -1;
-    results.forEach((r,idx)=>{
-      const li = document.createElement('li');
-      li.setAttribute('role','option');
-      li.className='bh2025-sg-item';
-      li.dataset.index = String(idx);
-      li.innerHTML = `
-        <span class="bh2025-sg-ico">🔎</span>
-        <span>${r.label}</span>
-        <span class="bh2025-sg-sub">${r.sub||''}</span>
-      `;
-      li.addEventListener('mouseenter', ()=>setActive(idx));
-      li.addEventListener('mouseleave', ()=>setActive(-1));
-      li.addEventListener('click', ()=>go(idx));
-      list.appendChild(li);
-    });
-    panel.setAttribute('aria-hidden', results.length ? 'false':'true');
-  }
-
-  function setActive(i){
-    active = i;
-    list.querySelectorAll('.bh2025-sg-item').forEach((el,idx)=>{
-      el.setAttribute('aria-selected', (idx===active)?'true':'false');
-    });
-  }
-
-  function go(idx){
-    const item = results[idx];
-    if(!item) return;
-    window.location.href = item.url;
-  }
-
-  // Obsługa wpisywania
-  input.addEventListener('input', ()=>{
-    results = search(input.value);
-    render();
-  });
-
-  // Klawisze: Enter / Esc / ↑ / ↓
-  input.addEventListener('keydown', (e)=>{
-    const shown = panel.getAttribute('aria-hidden')==='false';
-    if(e.key==='ArrowDown'){
-      if(!shown){ results = search(input.value); render(); }
-      setActive( (active+1+results.length)%results.length );
-      e.preventDefault();
-    } else if(e.key==='ArrowUp'){
-      if(!shown){ results = search(input.value); render(); }
-      setActive( (active-1+results.length)%results.length );
-      e.preventDefault();
-    } else if(e.key==='Enter'){
-      if(shown && active>=0){ e.preventDefault(); go(active); }
-      else {
-        // brak zaznaczenia – idź do najlepszego dopasowania (pierwszy)
-        if(!results.length){ results = search(input.value); }
-        if(results[0]) go(0);
+    function buildUrls(hit){
+      if(hit.sos){
+        const url = `szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
+        return [{label: hit.label, url, sub:'SOS'}];
       }
-    } else if(e.key==='Escape'){
-      panel.setAttribute('aria-hidden','true');
-      active=-1;
+      return GENDERS.map(g=>{
+        const url = `szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
+        return {label:`${hit.label} • ${g.label}`, url, sub:g.label};
+      });
     }
-  });
 
-  // Klik poza panelem chowa podpowiedzi
-  document.addEventListener('click', (e)=>{
-    if(!panel.contains(e.target) && e.target!==input){
-      panel.setAttribute('aria-hidden','true');
-      active=-1;
+    function search(q){
+      const s = q.trim().toLowerCase(); if(!s) return [];
+      const hits = PARTS.filter(p =>
+        p.alias?.some(a => a.includes(s)) || p.id.includes(s) || p.label.toLowerCase().includes(s)
+      ).slice(0,6);
+      return hits.flatMap(buildUrls).slice(0,12);
     }
-  });
 
-  // Klik na ikonę lupy (jeżeli była dodana obok inputu)
-  const svg = input.parentElement.querySelector('svg');
-  if(svg){
-    svg.style.cursor='pointer';
-    svg.addEventListener('click', ()=>{
-      results = search(input.value);
-      if(results.length){
-        panel.setAttribute('aria-hidden','false');
-        render();
-      }
+    function render(){
+      list.innerHTML = ''; active = -1;
+      results.forEach((r,idx)=>{
+        const li = document.createElement('li');
+        li.setAttribute('role','option'); li.className='bh2025-sg-item'; li.dataset.index = String(idx);
+        li.innerHTML = `<span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>`;
+        li.addEventListener('mouseenter', ()=>setActive(idx));
+        li.addEventListener('mouseleave', ()=>setActive(-1));
+        li.addEventListener('click', ()=>go(idx));
+        list.appendChild(li);
+      });
+      panel.setAttribute('aria-hidden', results.length ? 'false':'true');
+    }
+    function setActive(i){
+      active = i;
+      list.querySelectorAll('.bh2025-sg-item').forEach((el,idx)=>{
+        el.setAttribute('aria-selected', (idx===active)?'true':'false');
+      });
+    }
+    function go(idx){
+      const item = results[idx]; if(!item) return;
+      window.location.href = item.url;
+    }
+
+    input.addEventListener('input', ()=>{ results = search(input.value); render(); });
+    input.addEventListener('keydown', (e)=>{
+      const shown = panel.getAttribute('aria-hidden')==='false';
+      if(e.key==='ArrowDown'){ if(!shown){ results = search(input.value); render(); } setActive( (active+1+results.length)%results.length ); e.preventDefault(); }
+      else if(e.key==='ArrowUp'){ if(!shown){ results = search(input.value); render(); } setActive( (active-1+results.length)%results.length ); e.preventDefault(); }
+      else if(e.key==='Enter'){
+        if(shown && active>=0){ e.preventDefault(); go(active); }
+        else { if(!results.length){ results = search(input.value); } if(results[0]) go(0); }
+      } else if(e.key==='Escape'){ panel.setAttribute('aria-hidden','true'); active=-1; }
     });
-  }
-})();
-</script>
+    document.addEventListener('click', (e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); active=-1; } });
+    const svg = input.parentElement.querySelector('svg'); if(svg){ svg.style.cursor='pointer'; svg.addEventListener('click', ()=>{ results = search(input.value); if(results.length){ panel.setAttribute('aria-hidden','false'); render(); } }); }
+  })();
+  </script>
 </body>
 </html>
