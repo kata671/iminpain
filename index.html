@@ -10,43 +10,10 @@
   <link rel="stylesheet" href="assets/style.css?v=10" />
 
   <style>
-    /* ========= KOLORY ========= */
-    :root{
-      /* zielone (SOS) */
-      --bhG: 34,227,160;
-      --bhG2: 20,160,120;
-      /* niebieskie (gry) */
-      --bhB: 91,178,255;
-      --bhB2: 40,120,200;
-      /* czerwone (Szpitale/SOR) */
-      --bhR: 255, 99, 99;
-      /* quiz */
-      --bh2025-accent:#a46bff; --bh2025-teal:#5eead4; --bh2025-pink:#ff6ec7;
-      --bh2025-card:rgba(60,32,100,.36); --bh2025-stroke:rgba(164,107,255,.25);
-    }
-
-    /* Pulsy/glow */
-    @keyframes glow-green {
-      0%,100% { box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhG), .25) inset, 0 0 14px rgba(var(--bhG), .20); }
-      50%     { box-shadow:0 12px 26px rgba(8,10,22,.45), 0 0 0 1px rgba(var(--bhG), .35) inset, 0 0 26px rgba(var(--bhG), .42); }
-    }
-    @keyframes glow-blue {
-      0%,100% { box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhB), .25) inset, 0 0 16px rgba(var(--bhB), .26); }
-      50%     { box-shadow:0 12px 26px rgba(8,10,22,.45), 0 0 0 1px rgba(var(--bhB), .35) inset, 0 0 28px rgba(var(--bhB), .46); }
-    }
-    @keyframes glow-badge {
-      0%,100% { box-shadow:0 6px 18px rgba(8,10,22,.35), inset 0 0 0 1px rgba(var(--bhG), .20), 0 0 14px rgba(var(--bhG), .30); }
-      50%     { box-shadow:0 10px 24px rgba(8,10,22,.45), inset 0 0 0 1px rgba(var(--bhG), .28), 0 0 22px rgba(var(--bhG), .48); }
-    }
-    @keyframes red-pulse {
-      0%,100% { box-shadow:0 8px 18px rgba(255,80,80,.25), 0 0 0 0 rgba(255,80,80,.0); }
-      50%     { box-shadow:0 12px 28px rgba(255,80,80,.35), 0 0 0 6px rgba(255,80,80,.14); }
-    }
-
-    /* ========= TŁO / TAPETA ========= */
+    /* Tapeta i tło */
     html,body{height:100%}
     body[data-page="home"]{
-      position:relative; background:#0e1230; color:#eef2ff;
+      position:relative; background:#0e1230 !important; color:#eef2ff;
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
     body[data-page="home"]::before,
@@ -75,7 +42,7 @@
     }
     .container{position:relative;z-index:3;max-width:1100px;margin:0 auto;padding:16px}
 
-    /* ========= KAFELKI POSTACI ========= */
+    /* Karty postaci */
     @media (min-width:981px){ section.stack[style]{grid-template-columns:repeat(3,1fr) !important;} }
     @media (max-width:980px){ section.stack[style]{grid-template-columns:repeat(2,1fr) !important;} }
     @media (max-width:640px){ section.stack[style]{grid-template-columns:1fr !important;} }
@@ -88,152 +55,97 @@
     .card .caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;
       border-top:1px solid rgba(164,107,255,.22);background:rgba(255,255,255,.04)}
 
-    /* ========= PIGUŁKI (SOS zielone + GRY niebieski) ========= */
-    .situations .pill{
-      display:inline-flex;align-items:center;gap:8px;margin:4px 6px 8px 0;text-decoration:none;
-      font-weight:800;border-radius:999px;padding:10px 14px;line-height:1;border:1px solid transparent;
-      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease, color .2s ease;
-      color:#f2f6ff;
-    }
-    .situations .pill .ico{
-      display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;
-    }
+    /* Zielone guziki SOS */
+    :root{ --bhG:34,227,160; --bhG2:20,160,120; }
     .situations .pill.pill--green{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(var(--bhG2), .15);
-      border:1px solid rgba(var(--bhG), .55);
+      color:#fff; border:1px solid rgba(var(--bhG), .55);
       box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhG), .25) inset, 0 0 18px rgba(var(--bhG), .18);
+      backdrop-filter:saturate(125%) blur(4px);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
     }
-    .situations .pill.pill--green .ico{
-      background: rgba(var(--bhG), .18);
-      box-shadow: inset 0 0 0 1px rgba(var(--bhG), .25);
-    }
-    .situations .pill.pill--green:hover,
-    .situations .pill.pill--green:focus-visible{
-      transform:translateY(-1px);
-      border-color:rgba(var(--bhG), .85);
-      box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(var(--bhG), .65), 0 0 26px rgba(var(--bhG), .45);
-      outline:none;
-    }
-    .situations .pill.pill--blue{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(var(--bhB2), .16);
-      border:1px solid rgba(var(--bhB), .55);
-      box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhB), .25) inset, 0 0 18px rgba(var(--bhB), .28);
-    }
-    .situations .pill.pill--blue .ico{
-      background: rgba(var(--bhB), .18);
-      box-shadow: inset 0 0 0 1px rgba(var(--bhB), .25);
-    }
-    .situations .pill.pill--blue:hover,
-    .situations .pill.pill--blue:focus-visible{
-      transform:translateY(-1px);
-      border-color:rgba(var(--bhB), .85);
-      box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(var(--bhB), .65), 0 0 26px rgba(var(--bhB), .45);
-      outline:none;
-    }
-    @media (prefers-reduced-motion: no-preference){
-      .situations .pill.pill--green{ animation: glow-green 3.4s ease-in-out infinite; }
-      .situations .pill.pill--blue { animation: glow-blue  3.0s ease-in-out infinite; }
-    }
+    .situations .pill.pill--green:hover{transform:translateY(-1px);border-color:rgba(var(--bhG), .85)}
 
-    /* ========= apteka24 badge ========= */
+    /* Niebieski guzik Gry */
+    :root{ --bhB:91,178,255; --bhB2:40,120,200; }
+    .situations .pill.pill--blue{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(var(--bhB2), .15);
+      color:#fff; border:1px solid rgba(var(--bhB), .55);
+      box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhB), .25) inset, 0 0 18px rgba(var(--bhB), .28);
+      backdrop-filter:saturate(125%) blur(4px);
+    }
+    .situations .pill.pill--blue:hover{transform:translateY(-1px);border-color:rgba(var(--bhB), .85)}
+
+    /* Apteka24 zielone świecenie */
     #btn-apteka .badge-round{
       background: rgba(var(--bhG), .18);
       color: #eafff7;
       border:1px solid rgba(var(--bhG), .55);
-      box-shadow:
-        0 6px 18px rgba(8,10,22,.35),
-        inset 0 0 0 1px rgba(var(--bhG), .20),
-        0 0 14px rgba(var(--bhG), .30);
-      text-transform: none; letter-spacing:.2px; font-weight:800;
-      border-radius:999px; padding:6px 10px; display:inline-block;
-      transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
-    }
-    #btn-apteka:hover .badge-round,
-    #btn-apteka:focus-visible .badge-round{
-      transform: translateY(-1px);
-      border-color: rgba(var(--bhG), .85);
-      box-shadow:
-        0 10px 24px rgba(8,10,22,.45),
-        0 0 0 2px rgba(var(--bhG), .65),
-        0 0 22px rgba(var(--bhG), .45);
-    }
-    @media (prefers-reduced-motion: no-preference){
-      #btn-apteka .badge-round{ animation: glow-badge 2.4s ease-in-out infinite; }
+      padding:4px 10px;font-weight:800;border-radius:12px;
+      box-shadow:0 6px 18px rgba(8,10,22,.35), 0 0 14px rgba(var(--bhG), .30);
     }
 
-    /* ========= PRZYCISK SZPITALE / SOR — czerwona pulsująca ramka ========= */
-    #btn-hosp{
-      border:2px solid rgba(var(--bhR), .55) !important;
-      box-shadow:0 6px 16px rgba(var(--bhR), .18) !important;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)) !important;
-      color:#ffecec !important;
-      border-radius:12px !important;
+    /* Czerwony puls Szpitale/SOR */
+    @keyframes pulseRed{
+      0%{box-shadow:0 0 0 0 rgba(255,0,0,.6)}
+      70%{box-shadow:0 0 0 10px rgba(255,0,0,0)}
+      100%{box-shadow:0 0 0 0 rgba(255,0,0,0)}
     }
-    @media (prefers-reduced-motion: no-preference){
-      #btn-hosp{ animation: red-pulse 1.9s ease-in-out infinite; }
+    #btn-hosp{border:2px solid #ff4444;animation:pulseRed 2s infinite;border-radius:12px}
+
+    /* === FIX: style dla modala PORADA === */
+    .bh2025-porada{
+      position:fixed; inset:0; z-index:9998;
+      display:none;
+      background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95));
+      backdrop-filter:saturate(120%) blur(6px);
     }
-
-    /* ========= QUIZ ========= */
-    .bh2025-cta-quiz{ appearance:none;border:1px solid var(--bh2025-stroke);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      color:#eef2ff;border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer;
-      box-shadow:0 8px 20px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.10);
-      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
-    .bh2025-cta-quiz:hover{ transform:translateY(-1px); border-color:rgba(164,107,255,.45);
-      box-shadow:0 12px 26px rgba(8,10,22,.45),0 0 18px rgba(164,107,255,.28),inset 0 0 0 1px rgba(164,107,255,.18)}
-    .bh2025-quiz-launch{display:inline-flex;align-items:center;gap:8px;margin:10px 0 0}
-    .bh2025-quiz-launch .dot{width:9px;height:9px;border-radius:50%;background:var(--bh2025-teal);box-shadow:0 0 12px var(--bh2025-teal)}
-
-    .bh2025-modal{position:fixed;inset:0;display:none;z-index:9999;background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.88), rgba(14,18,48,.92));backdrop-filter:saturate(120%) blur(6px)}
-    .bh2025-modal[aria-hidden="false"]{display:block}
-    .bh2025-modal__panel{position:relative;max-width:720px;margin:6vh auto;background:var(--bh2025-card);border:1px solid var(--bh2025-stroke);border-radius:18px;padding:16px;box-shadow:0 18px 46px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18);color:#eef2ff}
-    .bh2025-modal__head{display:flex;justify-content:space-between;align-items:center;gap:12px}
-    .bh2025-close{appearance:none;background:transparent;border:1px solid var(--bh2025-stroke);color:#e7eaff;border-radius:10px;padding:6px 10px;cursor:pointer}
-
-    .bh2025-progress{display:flex;align-items:center;gap:10px;margin:8px 0 12px}
-    .bh2025-progress__bar{flex:1;height:12px;border-radius:999px;outline:1px solid rgba(255,255,255,.14);background:linear-gradient(90deg,var(--bh2025-teal), var(--bh2025-pink));position:relative;overflow:hidden}
-    .bh2025-progress__cursor{position:absolute;top:50%;transform:translate(-50%,-50%);left:6%;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(94,234,212,.35),0 0 18px rgba(94,234,212,.25);transition:left .28s ease}
-    .bh2025-progress__label{font-weight:800;color:#d6e4ff}
-    .bh2025-answers{display:grid;gap:10px}
-    .bh2025-ans{appearance:none;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);border-radius:12px;padding:10px 12px;color:#eef2ff;text-align:left;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
-    .bh2025-ans:hover{transform:translateY(-1px);border-color:rgba(164,107,255,.45);box-shadow:0 12px 24px rgba(8,10,22,.45),0 0 16px rgba(164,107,255,.25)}
-    .bh2025-ans.correct{box-shadow:0 0 0 2px rgba(94,234,212,.45), 0 0 20px rgba(94,234,212,.28)}
-    .bh2025-ans.wrong{box-shadow:0 0 0 2px rgba(255,107,107,.5), 0 0 20px rgba(255,107,107,.28)}
-    .bh2025-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+    .bh2025-porada[aria-hidden="false"]{ display:block; }
+    .bh2025-porada__panel{
+      position:relative; max-width:980px; margin:5vh auto; padding:16px;
+      background:rgba(60,32,100,.36);
+      border:1px solid rgba(164,107,255,.25); border-radius:18px;
+      color:#eef2ff;
+      box-shadow:0 18px 46px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18);
+    }
+    .bh2025-porada__head{ display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:8px; }
+    .bh2025-porada__title{ font-weight:900; letter-spacing:.3px; }
+    .bh2025-chip{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px;
+      border-radius:999px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); font-weight:800; }
+    .bh2025-porada__grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:14px; }
+    @media (max-width:900px){ .bh2025-porada__grid{ grid-template-columns:1fr; } }
+    .bh2025-porada__svg{ min-height:260px; display:flex; align-items:center; justify-content:center;
+      border-radius:14px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); }
+    .bh2025-steps{ border-radius:14px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); padding:12px; }
+    .bh2025-steps ol{ margin:0; padding-left:18px; }
+    .bh2025-steps li{ margin:8px 0; }
+    #bh2025PoradaClose{ appearance:none; background:transparent; border:1px solid rgba(164,107,255,.25);
+      color:#e7eaff; border-radius:10px; padding:6px 10px; cursor:pointer; }
+    #bh2025PoradaClose:hover{ box-shadow:0 0 0 2px rgba(255,110,199,.28) }
   </style>
 </head>
 
 <body data-page="home">
-  <!-- Tapeta -->
-  <div class="bh-wallpaper" aria-hidden="true"></div>
-  <div class="bh-grid" aria-hidden="true"></div>
-  <div class="bh-floor-fade" aria-hidden="true"></div>
+  <div class="bh-wallpaper"></div>
+  <div class="bh-grid"></div>
+  <div class="bh-floor-fade"></div>
 
   <div class="container">
-    <!-- Header -->
     <header class="header">
       <div class="brand">
         <h1>Boli Help</h1>
         <small>Pomoc i pierwsza pomoc w nagłych sytuacjach</small>
       </div>
       <div class="tools">
-        <div class="search" role="search">
-          <input type="search" placeholder="Szukaj objawu, części ciała lub tematu…" aria-label="Szukaj" />
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
-                  stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
+        <div class="search"><input type="search" placeholder="Szukaj…" /></div>
       </div>
     </header>
 
-    <!-- Numery alarmowe -->
-    <div class="emergency-list" aria-label="Telefony alarmowe">
+    <div class="emergency-list">
       <a href="tel:112">📞 112</a><a href="tel:999">🚑 999</a><a href="tel:998">🔥 998</a><a href="tel:997">👮 997</a>
     </div>
 
-    <!-- Pigułki SOS + Gry -->
-    <nav class="situations" aria-label="Sytuacje nagłe">
+    <nav class="situations">
       <a class="pill pill--green" data-porada="zadlawienie" href="#"><span class="ico">🫁</span>Zadławienie</a>
       <a class="pill pill--green" data-porada="reanimacja" href="#"><span class="ico">🚑</span>Reanimacja</a>
       <a class="pill pill--green" data-porada="wypadek" href="#"><span class="ico">💥</span>Wypadek</a>
@@ -241,482 +153,30 @@
       <a class="pill pill--blue" href="gry.html"><span class="ico">🎮</span>Gry / Trening</a>
     </nav>
 
-    <!-- Quiz -->
-    <div class="bh2025-quiz-launch" aria-hidden="false" aria-label="Sekcja edukacyjna">
-      <span class="dot" aria-hidden="true"></span>
-      <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button" aria-haspopup="dialog" aria-controls="bh2025QuizModal">
-        Sprawdź się: Pierwsza pomoc
-      </button>
+    <div class="bh2025-quiz-launch">
+      <span class="dot"></span>
+      <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button">Sprawdź się: Pierwsza pomoc</button>
     </div>
 
-    <!-- Szybkie akcje -->
-    <div class="actions" role="navigation" aria-label="Szybkie akcje">
-      <button id="btn-112" class="btn btn--red btn--call" type="button" aria-label="Zadzwoń na 112">📞 112</button>
-      <button id="btn-hosp" class="btn btn--hosp" type="button" aria-label="Szpitale i SOR">🏥 Szpitale / SOR</button>
-      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener"><span class="badge-round">apteka24</span></a>
+    <div class="actions">
+      <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
+      <button id="btn-hosp" class="btn btn--hosp" type="button">🏥 Szpitale / SOR</button>
+      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank"><span class="badge-round">apteka24</span></a>
       <button id="btn-loc" class="btn" type="button">📍 Zlokalizuj mnie</button>
     </div>
 
     <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
-
-    <!-- 3 kafelki -->
-    <section class="stack" aria-label="Wybór postaci"
-      style="display:grid;gap:16px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
-      <article class="card">
-        <a href="kobieta.html">
-          <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3>Kobieta</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
-      <article class="card">
-        <a href="mezczyzna.html">
-          <img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3>Mężczyzna</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
-      <article class="card">
-        <a href="dziecko.html">
-          <img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3>Dziecko</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
+    <section class="stack" style="display:grid;gap:16px;grid-template-columns:repeat(3,1fr);">
+      <article class="card"><a href="kobieta.html"><img src="img/kobieta-model1.png" alt="Kobieta"><div class="caption"><h3>Kobieta</h3><span>→</span></div></a></article>
+      <article class="card"><a href="mezczyzna.html"><img src="img/mezczyzna-model1.png" alt="Mężczyzna"><div class="caption"><h3>Mężczyzna</h3><span>→</span></div></a></article>
+      <article class="card"><a href="dziecko.html"><img src="img/dziecko-model1.png" alt="Dziecko"><div class="caption"><h3>Dziecko</h3><span>→</span></div></a></article>
     </section>
   </div>
 
-  <!-- Modal QUIZ -->
-  <div id="bh2025QuizModal" class="bh2025-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025QuizTitle">
-    <div class="bh2025-modal__panel">
-      <div class="bh2025-modal__head">
-        <div>
-          <div id="bh2025QuizTitle" class="bh2025-modal__title">Mini-quiz: czy wiesz co zrobić?</div>
-          <div class="bh2025-muted" id="bh2025QuizSubtitle">3 szybkie pytania: zadławienie, reanimacja, pozycja bezpieczna.</div>
-        </div>
-        <button class="bh2025-close" type="button" id="bh2025QuizClose" aria-label="Zamknij">✕</button>
-      </div>
-      <div class="bh2025-modal__body">
-        <div class="bh2025-progress" aria-label="Postęp">
-          <div class="bh2025-progress__bar"><span class="bh2025-progress__cursor" id="bh2025QuizCursor"></span></div>
-          <div class="bh2025-progress__label"><span id="bh2025QuizStep">1</span>/3</div>
-        </div>
-        <div class="bh2025-q" id="bh2025QuizQuestion">…</div>
-        <div class="bh2025-answers" id="bh2025QuizAnswers"></div>
-        <div class="bh2025-actions">
-          <button class="bh2025-ghost" type="button" id="bh2025QuizRestart">Zacznij od nowa</button>
-          <button class="bh2025-primary" type="button" id="bh2025QuizNext">Dalej</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- QUIZ i PORADA modale -->
+  <div id="bh2025QuizModal" class="bh2025-modal" aria-hidden="true"></div>
+  <div id="bh2025Porada" class="bh2025-porada" aria-hidden="true"></div>
 
-  <!-- Modal PORADA -->
-  <div id="bh2025Porada" class="bh2025-porada" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025PoradaTitle">
-    <div class="bh2025-porada__panel">
-      <div class="bh2025-porada__head">
-        <div class="bh2025-porada__title" id="bh2025PoradaTitle">Porada</div>
-        <div class="bh2025-chip" id="bh2025PoradaChip">SOS • instrukcja</div>
-        <button class="bh2025-close" type="button" id="bh2025PoradaClose" aria-label="Zamknij">✕</button>
-      </div>
-
-      <div class="bh2025-porada__grid">
-        <div class="bh2025-porada__svg" id="bh2025PoradaSvg" aria-label="Instrukcja obrazkowa"></div>
-        <div class="bh2025-steps"><ol id="bh2025PoradaSteps"></ol></div>
-      </div>
-
-      <div class="bh2025-video" style="margin-top:12px;border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.04);padding:12px">
-        <div class="bh2025-muted" style="margin-bottom:8px;font-weight:800">Materiał wideo</div>
-        <div id="bh2025VideoWrap"><div class="ph" id="bh2025VideoPh"><span>🎬</span><span>Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code></span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Skrypt ogólny (Twój) -->
   <script src="assets/main.js?v=10"></script>
-
-  <!-- Logika quizu (z KONFETTI) -->
-  <script>
-  (function(){
-    const openBtn = document.getElementById('bh2025QuizOpen');
-    const modal   = document.getElementById('bh2025QuizModal');
-    const closeBtn= document.getElementById('bh2025QuizClose');
-    const restart = document.getElementById('bh2025QuizRestart');
-    const nextBtn = document.getElementById('bh2025QuizNext');
-
-    const qEl     = document.getElementById('bh2025QuizQuestion');
-    const aEl     = document.getElementById('bh2025QuizAnswers');
-    const stepEl  = document.getElementById('bh2025QuizStep');
-    const cursor  = document.getElementById('bh2025QuizCursor');
-
-    if(!openBtn || !modal) return;
-
-    const QUIZ = [
-      {
-        q: "Ktoś się dławi i nie może mówić. Co robisz najpierw?",
-        a: [
-          {t:"Zachęcam do kaszlu, jeśli nieskuteczny — 5 uderzeń między łopatki", ok:true},
-          {t:"Podaję wodę, żeby popchnąć kęs", ok:false},
-          {t:"Wkładam palec i „na ślepo” próbuję wyjąć", ok:false}
-        ],
-        hintOk:"Tak! Najpierw kaszel. Jeśli nieskuteczny → uderzenia w plecy.",
-        hintBad:"Uwaga — woda/„wymiatanie” palcem może pogorszyć sytuację."
-      },
-      {
-        q: "Brak oddechu. Co z RKO u dorosłego?",
-        a: [
-          {t:"Uciski 100–120/min, głębokość ~5–6 cm, centrum mostka", ok:true},
-          {t:"Uciski 40/min, byle gdzie", ok:false},
-          {t:"Czekam na karetkę bez ucisków", ok:false}
-        ],
-        hintOk:"Super! Tempo 100–120/min i środek mostka są kluczowe.",
-        hintBad:"To zbyt wolno/bez ucisków — liczy się szybka, prawidłowa RKO."
-      },
-      {
-        q: "Poszkodowany oddycha, ale nie reaguje. Co dalej?",
-        a: [
-          {t:"Pozycja bezpieczna i kontrola oddechu", ok:true},
-          {t:"Podaję napój i zostawiam siedzącego", ok:false},
-          {t:"Kładę na plecach bez kontroli drożności", ok:false}
-        ],
-        hintOk:"Tak — pozycja bezpieczna i stała kontrola oddechu.",
-        hintBad:"To nie jest bezpieczne."
-      }
-    ];
-
-    let step=0, lock=false;
-    const chosen = new Array(QUIZ.length).fill(null);
-
-    function setProgress(){
-      stepEl.textContent = (step+1);
-      const left = 6 + (step/(QUIZ.length-1||1))*88;
-      cursor.style.left = left + '%';
-    }
-    function render(){
-      const item = QUIZ[step];
-      qEl.textContent = item.q;
-      aEl.innerHTML = '';
-      item.a.forEach((opt)=>{
-        const b = document.createElement('button');
-        b.type='button'; b.className='bh2025-ans'; b.textContent=opt.t;
-        b.addEventListener('click', ()=>{
-          if(lock) return; lock=true;
-          const good = opt.ok;
-          chosen[step] = !!good;
-          b.classList.add(good?'correct':'wrong');
-          const note = document.createElement('div');
-          note.className='bh2025-muted'; note.style.marginTop='6px';
-          note.textContent = good ? item.hintOk : item.hintBad;
-          b.after(note);
-          if(navigator.vibrate) try{ navigator.vibrate(good?80:160); }catch(_){}
-          setTimeout(()=>{ lock=false; }, 320);
-        });
-        aEl.appendChild(b);
-      });
-      setProgress();
-      nextBtn.textContent = step===QUIZ.length-1 ? "Zakończ" : "Dalej";
-    }
-    function open(){ modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; step=0; chosen.fill(null); render(); }
-    function close(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-
-    // Toast + KONFETTI
-    function award(score){
-      // toast
-      const toast=document.createElement('div');
-      toast.textContent = `Brawo! Wynik: ${score}/${QUIZ.length}`;
-      Object.assign(toast.style,{
-        position:'fixed',left:'50%',bottom:'26px',transform:'translateX(-50%)',
-        background:'rgba(60,32,100,.85)',color:'#eef2ff',padding:'10px 14px',
-        border:'1px solid rgba(164,107,255,.35)',borderRadius:'12px',
-        boxShadow:'0 10px 26px rgba(8,10,22,.45)',fontWeight:'800',zIndex:10000
-      });
-      document.body.appendChild(toast);
-      setTimeout(()=>{ toast.remove(); }, 2600);
-
-      // konfetti
-      const c=document.createElement('canvas'); c.width=innerWidth; c.height=innerHeight;
-      Object.assign(c.style,{position:'fixed',inset:'0',pointerEvents:'none',zIndex:9999});
-      document.body.appendChild(c);
-      const ctx=c.getContext('2d');
-      let parts=Array.from({length: score===QUIZ.length? 140:90},()=>({
-        x:Math.random()*c.width, y:-20,
-        vx:-1+Math.random()*2, vy:2+Math.random()*2.5,
-        size:3+Math.random()*4, rot:Math.random()*6, vr:-.2+Math.random()*.4,
-        color: score===QUIZ.length ? ['#5eead4','#a46bff','#ffd16c'][Math.floor(Math.random()*3)] : 'rgba(255,255,255,.85)',
-        life: 90
-      }));
-      (function tick(){
-        ctx.clearRect(0,0,c.width,c.height);
-        parts.forEach(p=>{
-          p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr; p.vy+=0.02; p.life--;
-          ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
-          ctx.fillStyle=p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
-          ctx.restore();
-        });
-        parts=parts.filter(p=>p.life>0);
-        if(parts.length) requestAnimationFrame(tick); else c.remove();
-      })();
-    }
-
-    openBtn.addEventListener('click', open);
-    closeBtn.addEventListener('click', close);
-    modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
-    restart.addEventListener('click', ()=>{ step=0; chosen.fill(null); render(); });
-    nextBtn.addEventListener('click', ()=>{
-      if(step<QUIZ.length-1){ step++; render(); }
-      else { const score = chosen.reduce((s,v)=> s + (v===true?1:0), 0); award(score); close(); }
-    });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') close(); });
-  })();
-  </script>
-
-  <!-- Logika PORAD (pigułki SOS) — wersja odporna na błędy -->
-  <script>
-  (function(){
-    // Elementy modala PORADA
-    const poradaModal = document.getElementById('bh2025Porada');
-    if(!poradaModal) return;
-
-    const poradaTitle = document.getElementById('bh2025PoradaTitle');
-    const poradaChip  = document.getElementById('bh2025PoradaChip');
-    const svgWrap     = document.getElementById('bh2025PoradaSvg');
-    const stepsOl     = document.getElementById('bh2025PoradaSteps');
-    const videoWrap   = document.getElementById('bh2025VideoWrap');
-    const videoPh     = document.getElementById('bh2025VideoPh');
-
-    // Proste SVG + kroki
-    const SVG = {
-      zadlawienie: `
-        <svg width="100%" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#5eead4" stop-opacity=".5"/><stop offset="1" stop-color="#a46bff" stop-opacity=".4"/></linearGradient></defs>
-          <rect x="8" y="8" width="384" height="204" rx="14" fill="url(#g1)" opacity=".18" stroke="rgba(255,255,255,.25)"/>
-          <circle cx="95" cy="85" r="36" fill="none" stroke="#cfe2ff" stroke-width="3"/>
-          <rect x="70" y="118" width="50" height="60" rx="8" fill="none" stroke="#cfe2ff" stroke-width="3"/>
-          <path d="M250 75 q20 10 0 20 q20 10 0 20" fill="none" stroke="#ff6ec7" stroke-width="6" stroke-linecap="round"/>
-          <rect x="230" y="120" width="70" height="28" rx="6" fill="none" stroke="#5eead4" stroke-width="4"/>
-          <text x="265" y="140" text-anchor="middle" fill="#eaf2ff" font-size="12" font-weight="700">5× plecy</text>
-        </svg>`,
-      reanimacja: `
-        <svg width="100%" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="8" width="384" height="204" rx="14" fill="rgba(94,234,212,.15)" stroke="rgba(255,255,255,.25)"/>
-          <rect x="40" y="150" width="320" height="14" rx="7" fill="#ff6b6b"/>
-          <rect x="180" y="70" width="40" height="80" rx="8" fill="#a46bff"/>
-          <rect x="165" y="60" width="70" height="12" rx="6" fill="#5eead4"/>
-          <text x="200" y="185" text-anchor="middle" fill="#eaf2ff" font-size="12" font-weight="800">Uciski 100–120/min</text>
-        </svg>`,
-      wypadek: `
-        <svg width="100%" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="8" width="384" height="204" rx="14" fill="rgba(255,184,108,.14)" stroke="rgba(255,255,255,.25)"/>
-          <polygon points="60,160 100,80 140,160" fill="#ffd16c" stroke="#ffb86c"/>
-          <rect x="220" y="120" width="120" height="18" rx="9" fill="#ff6b6b"/>
-          <text x="280" y="80" text-anchor="middle" fill="#eaf2ff" font-size="12" font-weight="800">Zabezpiecz miejsce</text>
-        </svg>`,
-      pierwszopomoc: `
-        <svg width="100%" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="8" width="384" height="204" rx="14" fill="rgba(164,107,255,.14)" stroke="rgba(255,255,255,.25)"/>
-          <rect x="60" y="70" width="80" height="80" rx="10" fill="#5eead4"/>
-          <rect x="260" y="70" width="80" height="80" rx="10" fill="#a46bff"/>
-          <text x="100" y="170" text-anchor="middle" fill="#eaf2ff" font-size="12" font-weight="800">ABC</text>
-          <text x="300" y="170" text-anchor="middle" fill="#eaf2ff" font-size="12" font-weight="800">112</text>
-        </svg>`
-    };
-
-    const STEPS = {
-      zadlawienie: [
-        "Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.",
-        "Brak skutecznego kaszlu: 5 uderzeń w plecy między łopatki.",
-        "Jeśli nieskuteczne: 5 uciśnięć nadbrzusza (ucisk Heimlicha).",
-        "Na zmianę: 5 plecy ↔ 5 nadbrzusze, aż do skutku.",
-        "Utrata przytomności: RKO 30:2, wezwij 112, użyj AED jeśli jest."
-      ],
-      reanimacja: [
-        "Sprawdź bezpieczeństwo, reakcję i oddech (max 10 s).",
-        "Brak oddechu: zadzwoń 112 (głośnomówiący).",
-        "Uciski: 100–120/min, głęb. ~5–6 cm, środek mostka.",
-        "30 uciśnięć : 2 oddechy (jeśli umiesz i chcesz).",
-        "Kontynuuj do przyjazdu służb lub powrotu oddechu."
-      ],
-      wypadek: [
-        "Zabezpiecz miejsce: światła awaryjne, trójkąt, kamizelka.",
-        "Oceń liczbę poszkodowanych i zagrożenia (ogień, ruch).",
-        "Wezwij 112: podaj miejsce i liczbę poszkodowanych.",
-        "Priorytet: przytomność, oddech, krwotoki.",
-        "Nie przestawiaj bez potrzeby; kontroluj oddech."
-      ],
-      pierwszopomoc: [
-        "ABC: drożność dróg oddechowych, oddech, krążenie.",
-        "Pozycja bezpieczna u nieprzytomnego z oddechem.",
-        "Silny krwotok: ucisk bezpośredni/opatrunek uciskowy.",
-        "Oparzenia: chłodź wodą 20 min; nie przebijaj pęcherzy.",
-        "Dzwoń po pomoc, gdy masz wątpliwości."
-      ]
-    };
-
-    const VIDEO = { zadlawienie:null, reanimacja:null, wypadek:null, pierwszopomoc:null };
-
-    function openPorada(key, title){
-      if(!poradaTitle || !poradaChip || !svgWrap || !stepsOl || !videoWrap) return;
-
-      poradaTitle.textContent = title || 'Porada';
-      poradaChip.textContent  = 'SOS • instrukcja';
-      svgWrap.innerHTML       = SVG[key] || '';
-      stepsOl.innerHTML       = '';
-      (STEPS[key]||[]).forEach(txt=>{
-        const li=document.createElement('li'); li.textContent=txt; stepsOl.appendChild(li);
-      });
-
-      videoWrap.innerHTML='';
-      const src = VIDEO[key];
-      if(src){
-        const v = document.createElement('video');
-        v.setAttribute('controls','controls'); v.setAttribute('playsinline','');
-        v.setAttribute('style','width:100%;border-radius:12px;background:rgba(255,255,255,.04)');
-        const s = document.createElement('source'); s.src = src; s.type='video/mp4';
-        v.appendChild(s); videoWrap.appendChild(v);
-      } else if(videoPh){
-        videoWrap.appendChild(videoPh.cloneNode(true));
-      }
-
-      poradaModal.setAttribute('aria-hidden','false');
-      document.body.style.overflow='hidden';
-    }
-    function closePorada(){
-      poradaModal.setAttribute('aria-hidden','true');
-      document.body.style.overflow='';
-    }
-
-    const poradaClose = document.getElementById('bh2025PoradaClose');
-    if(poradaClose) poradaClose.addEventListener('click', closePorada);
-    poradaModal.addEventListener('click', (e)=>{ if(e.target===poradaModal) closePorada(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && poradaModal.getAttribute('aria-hidden')==='false') closePorada(); });
-
-    const nav = document.querySelector('nav.situations');
-    if(nav){
-      nav.addEventListener('click', (e)=>{
-        const a = e.target.closest('a[data-porada]');
-        if(!a) return;
-        e.preventDefault();
-        const key = a.getAttribute('data-porada');
-        const title = a.textContent.trim();
-        openPorada(key, title);
-      }, { passive:false });
-    }
-  })();
-  </script>
-
-  <!-- Wyszukiwarka z podpowiedziami -->
-  <style>
-  .bh2025-suggest{position:absolute;right:0;left:0;top:100%;margin-top:6px;z-index:50;
-    background:rgba(60,32,100,.96); border:1px solid rgba(164,107,255,.28); border-radius:12px;
-    box-shadow:0 16px 34px rgba(8,10,22,.52); overflow:hidden; display:none}
-  .bh2025-suggest[aria-hidden="false"]{display:block}
-  .bh2025-sg-head{padding:8px 12px; font-weight:800; letter-spacing:.2px; color:#cfe2ff;
-    border-bottom:1px solid rgba(164,107,255,.18); background:rgba(255,255,255,.03)}
-  .bh2025-sg-list{list-style:none;margin:0;padding:6px}
-  .bh2025-sg-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;
-    cursor:pointer; color:#eef2ff; text-decoration:none; border:1px solid transparent}
-  .bh2025-sg-item:hover,
-  .bh2025-sg-item[aria-selected="true"]{background:rgba(255,255,255,.06); border-color:rgba(164,107,255,.28);
-    box-shadow:inset 0 0 0 1px rgba(164,107,255,.16)}
-  .bh2025-sg-ico{width:18px;height:18px;display:inline-grid;place-items:center;border-radius:6px;
-    background:rgba(164,107,255,.18); font-size:12px}
-  .bh2025-sg-sub{margin-left:auto;font-size:12px;color:#b8c2e0}
-  .header .tools .search{position:relative}
-  </style>
-  <script>
-  (function(){
-    const input = document.querySelector('.header .tools .search input[type="search"]');
-    if(!input) return;
-
-    const PARTS = [
-      {id:'oko',       label:'Oko',        alias:['oko','oczy','wzrok']},
-      {id:'nos',       label:'Nos',        alias:['nos','zatoki','katar']},
-      {id:'gardlo',    label:'Gardło',     alias:['gardlo','gardło','angina','chrypka']},
-      {id:'glowa',     label:'Głowa',      alias:['glowa','głowa','migrena','ból głowy']},
-      {id:'klatka',    label:'Klatka piersiowa', alias:['klatka','pierś','serce ból','mostek']},
-      {id:'pluca',     label:'Płuca',      alias:['płuca','pluca','duszność','astma']},
-      {id:'brzuch',    label:'Brzuch',     alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
-      {id:'nerki',     label:'Nerki',      alias:['nerki','kolka','lędźwie','ledzwi']},
-      {id:'plecy',     label:'Plecy',      alias:['plecy','kręgosłup','kregoslup','rwa']},
-      {id:'biodra',    label:'Biodra/Uda', alias:['biodro','biodra','udo','pachwina']},
-      {id:'kolano',    label:'Kolano',     alias:['kolano','rzepka','łąkotka','lakotka']},
-      {id:'stopy',     label:'Stopy',      alias:['stopa','stopy','pięta','pieta','rozcięgno']},
-      {id:'skora',     label:'Skóra',      alias:['skora','skóra','wysypka','świąd','alergia']},
-      {id:'serce',     label:'Serce',      alias:['serce','kołatania','kolatania','arytmia']},
-      {id:'kaszel',    label:'Kaszel',     alias:['kaszel','kaszle']},
-      {id:'goraczka',  label:'Gorączka',   alias:['gorączka','goraczka','temperatura']},
-      {id:'zadlawienie', label:'Zadławienie (SOS)', alias:['zadławienie','zadlawienie','zadławił','zadlawil'] , sos:true},
-      {id:'reanimacja',  label:'Reanimacja (RKO)',  alias:['reanimacja','rko','resuscytacja'] , sos:true},
-      {id:'wypadek',     label:'Wypadek (pierwsze kroki)', alias:['wypadek','kolizja','potrącenie','potracenie'] , sos:true},
-      {id:'pierwszopomoc',label:'Pierwsza pomoc',   alias:['pierwsza pomoc','pierwszopomoc','abc'] , sos:true}
-    ];
-    const GENDERS = [
-      {id:'kobieta',label:'Kobieta'},{id:'mezczyzna',label:'Mężczyzna'},{id:'dziecko',label:'Dziecko'}
-    ];
-
-    const panel = document.createElement('div');
-    panel.className = 'bh2025-suggest';
-    panel.setAttribute('role','listbox');
-    panel.setAttribute('aria-hidden','true');
-    panel.innerHTML = `<div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>`;
-    input.parentElement.appendChild(panel);
-    const list = panel.querySelector('#bh2025List');
-
-    let results = [], active = -1;
-
-    function buildUrls(hit){
-      if(hit.sos){
-        const url = `szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
-        return [{label: hit.label, url, sub:'SOS'}];
-      }
-      return GENDERS.map(g=>{
-        const url = `szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
-        return {label:`${hit.label} • ${g.label}`, url, sub:g.label};
-      });
-    }
-
-    function search(q){
-      const s = q.trim().toLowerCase(); if(!s) return [];
-      const hits = PARTS.filter(p =>
-        p.alias?.some(a => a.includes(s)) || p.id.includes(s) || p.label.toLowerCase().includes(s)
-      ).slice(0,6);
-      return hits.flatMap(buildUrls).slice(0,12);
-    }
-
-    function render(){
-      list.innerHTML = ''; active = -1;
-      results.forEach((r,idx)=>{
-        const li = document.createElement('li');
-        li.setAttribute('role','option'); li.className='bh2025-sg-item'; li.dataset.index = String(idx);
-        li.innerHTML = `<span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>`;
-        li.addEventListener('mouseenter', ()=>setActive(idx));
-        li.addEventListener('mouseleave', ()=>setActive(-1));
-        li.addEventListener('click', ()=>go(idx));
-        list.appendChild(li);
-      });
-      panel.setAttribute('aria-hidden', results.length ? 'false':'true');
-    }
-    function setActive(i){
-      active = i;
-      list.querySelectorAll('.bh2025-sg-item').forEach((el,idx)=>{
-        el.setAttribute('aria-selected', (idx===active)?'true':'false');
-      });
-    }
-    function go(idx){
-      const item = results[idx]; if(!item) return;
-      window.location.href = item.url;
-    }
-
-    input.addEventListener('input', ()=>{ results = search(input.value); render(); });
-    input.addEventListener('keydown', (e)=>{
-      const shown = panel.getAttribute('aria-hidden')==='false';
-      if(e.key==='ArrowDown'){ if(!shown){ results = search(input.value); render(); } setActive( (active+1+results.length)%results.length ); e.preventDefault(); }
-      else if(e.key==='ArrowUp'){ if(!shown){ results = search(input.value); render(); } setActive( (active-1+results.length)%results.length ); e.preventDefault(); }
-      else if(e.key==='Enter'){
-        if(shown && active>=0){ e.preventDefault(); go(active); }
-        else { if(!results.length){ results = search(input.value); } if(results[0]) go(0); }
-      } else if(e.key==='Escape'){ panel.setAttribute('aria-hidden','true'); active=-1; }
-    });
-    document.addEventListener('click', (e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); active=-1; } });
-    const svg = input.parentElement.querySelector('svg'); if(svg){ svg.style.cursor='pointer'; svg.addEventListener('click', ()=>{ results = search(input.value); if(results.length){ panel.setAttribute('aria-hidden','false'); render(); } }); }
-  })();
-  </script>
 </body>
 </html>
