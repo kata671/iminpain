@@ -502,5 +502,188 @@
     }
   })();
   </script>
+<style>
+  /* bh2025 – autouzupełnianie wyszukiwarki (tylko na stronie głównej) */
+  .bh2025-suggest{position:absolute;right:0;left:0;top:100%;margin-top:6px;z-index:50;
+    background:rgba(60,32,100,.96); border:1px solid rgba(164,107,255,.28); border-radius:12px;
+    box-shadow:0 16px 34px rgba(8,10,22,.52); overflow:hidden; display:none}
+  .bh2025-suggest[aria-hidden="false"]{display:block}
+  .bh2025-sg-head{padding:8px 12px; font-weight:800; letter-spacing:.2px; color:#cfe2ff;
+    border-bottom:1px solid rgba(164,107,255,.18); background:rgba(255,255,255,.03)}
+  .bh2025-sg-list{list-style:none;margin:0;padding:6px}
+  .bh2025-sg-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;
+    cursor:pointer; color:#eef2ff; text-decoration:none; border:1px solid transparent}
+  .bh2025-sg-item:hover,
+  .bh2025-sg-item[aria-selected="true"]{background:rgba(255,255,255,.06); border-color:rgba(164,107,255,.28);
+    box-shadow:inset 0 0 0 1px rgba(164,107,255,.16)}
+  .bh2025-sg-ico{width:18px;height:18px;display:inline-grid;place-items:center;border-radius:6px;
+    background:rgba(164,107,255,.18); font-size:12px}
+  .bh2025-sg-sub{margin-left:auto;font-size:12px;color:#b8c2e0}
+  /* kontener pozycji listy względem istniejącego .search */
+  .header .tools .search{position:relative}
+</style>
+
+<script>
+(function(){
+  const input = document.querySelector('.header .tools .search input[type="search"]');
+  if(!input) return;
+
+  // Słownik: części ciała / tematy -> slug „czesc” + przyjazna etykieta + aliasy
+  const PARTS = [
+    {id:'oko',       label:'Oko',        alias:['oko','oczy','wzrok']},
+    {id:'nos',       label:'Nos',        alias:['nos','zatoki','katar']},
+    {id:'gardlo',    label:'Gardło',     alias:['gardlo','gardło','angina','chrypka']},
+    {id:'glowa',     label:'Głowa',      alias:['glowa','głowa','migrena','ból głowy']},
+    {id:'klatka',    label:'Klatka piersiowa', alias:['klatka','pierś','serce ból','mostek']},
+    {id:'pluca',     label:'Płuca',      alias:['płuca','pluca','duszność','astma']},
+    {id:'brzuch',    label:'Brzuch',     alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
+    {id:'nerki',     label:'Nerki',      alias:['nerki','kolka','lędźwie','ledzwi']},
+    {id:'plecy',     label:'Plecy',      alias:['plecy','kręgosłup','kregoslup','rwa']},
+    {id:'biodra',    label:'Biodra/Uda', alias:['biodro','biodra','udo','pachwina']},
+    {id:'kolano',    label:'Kolano',     alias:['kolano','rzepka','łąkotka','lakotka']},
+    {id:'stopy',     label:'Stopy',      alias:['stopa','stopy','pięta','pieta','rozcięgno']},
+    {id:'skora',     label:'Skóra',      alias:['skora','skóra','wysypka','świąd','alergia']},
+    {id:'serce',     label:'Serce',      alias:['serce','kołatania','kolatania','arytmia']},
+    {id:'kaszel',    label:'Kaszel',     alias:['kaszel','kaszle']},
+    {id:'goraczka',  label:'Gorączka',   alias:['gorączka','goraczka','temperatura']},
+    // tematy SOS
+    {id:'zadlawienie', label:'Zadławienie (SOS)', alias:['zadławienie','zadlawienie','zadławił','zadlawil'] , sos:true},
+    {id:'reanimacja',  label:'Reanimacja (RKO)',  alias:['reanimacja','rko','resuscytacja'] , sos:true},
+    {id:'wypadek',     label:'Wypadek (pierwsze kroki)', alias:['wypadek','kolizja','potrącenie','potracenie'] , sos:true},
+    {id:'pierwszopomoc',label:'Pierwsza pomoc',   alias:['pierwsza pomoc','pierwszopomoc','abc'] , sos:true}
+  ];
+
+  const GENDERS = [
+    {id:'kobieta',    label:'Kobieta'},
+    {id:'mezczyzna',  label:'Mężczyzna'},
+    {id:'dziecko',    label:'Dziecko'}
+  ];
+
+  // Utwórz panel podpowiedzi pod istniejącym polem
+  const panel = document.createElement('div');
+  panel.className = 'bh2025-suggest';
+  panel.setAttribute('role','listbox');
+  panel.setAttribute('aria-hidden','true');
+  panel.innerHTML = `
+    <div class="bh2025-sg-head">Podpowiedzi</div>
+    <ul class="bh2025-sg-list" id="bh2025List"></ul>
+  `;
+  input.parentElement.appendChild(panel);
+  const list = panel.querySelector('#bh2025List');
+
+  let results = [];   // bieżące propozycje (obiekty z url/label)
+  let active = -1;    // index zaznaczenia klawiaturą
+
+  function buildUrls(hit){
+    // Jeśli temat SOS – prowadź do szczegółów typu „porada”
+    if(hit.sos){
+      const url = `szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
+      return [{label: hit.label, url, sub:'SOS'}];
+    }
+    // Standard: pokaż 3 linki od razu (dla Kobieta/Mężczyzna/Dziecko)
+    return GENDERS.map(g=>{
+      const url = `szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
+      return {label:`${hit.label} • ${g.label}`, url, sub:g.label};
+    });
+  }
+
+  function search(q){
+    const s = q.trim().toLowerCase();
+    if(!s) return [];
+    // dopasowanie po aliasach albo po fragmencie id/label
+    const hits = PARTS.filter(p =>
+      p.alias?.some(a => a.includes(s)) ||
+      p.id.includes(s) || p.label.toLowerCase().includes(s)
+    ).slice(0,6);
+    // spłaszcz do listy linków
+    return hits.flatMap(buildUrls).slice(0,12);
+  }
+
+  function render(){
+    list.innerHTML = '';
+    active = -1;
+    results.forEach((r,idx)=>{
+      const li = document.createElement('li');
+      li.setAttribute('role','option');
+      li.className='bh2025-sg-item';
+      li.dataset.index = String(idx);
+      li.innerHTML = `
+        <span class="bh2025-sg-ico">🔎</span>
+        <span>${r.label}</span>
+        <span class="bh2025-sg-sub">${r.sub||''}</span>
+      `;
+      li.addEventListener('mouseenter', ()=>setActive(idx));
+      li.addEventListener('mouseleave', ()=>setActive(-1));
+      li.addEventListener('click', ()=>go(idx));
+      list.appendChild(li);
+    });
+    panel.setAttribute('aria-hidden', results.length ? 'false':'true');
+  }
+
+  function setActive(i){
+    active = i;
+    list.querySelectorAll('.bh2025-sg-item').forEach((el,idx)=>{
+      el.setAttribute('aria-selected', (idx===active)?'true':'false');
+    });
+  }
+
+  function go(idx){
+    const item = results[idx];
+    if(!item) return;
+    window.location.href = item.url;
+  }
+
+  // Obsługa wpisywania
+  input.addEventListener('input', ()=>{
+    results = search(input.value);
+    render();
+  });
+
+  // Klawisze: Enter / Esc / ↑ / ↓
+  input.addEventListener('keydown', (e)=>{
+    const shown = panel.getAttribute('aria-hidden')==='false';
+    if(e.key==='ArrowDown'){
+      if(!shown){ results = search(input.value); render(); }
+      setActive( (active+1+results.length)%results.length );
+      e.preventDefault();
+    } else if(e.key==='ArrowUp'){
+      if(!shown){ results = search(input.value); render(); }
+      setActive( (active-1+results.length)%results.length );
+      e.preventDefault();
+    } else if(e.key==='Enter'){
+      if(shown && active>=0){ e.preventDefault(); go(active); }
+      else {
+        // brak zaznaczenia – idź do najlepszego dopasowania (pierwszy)
+        if(!results.length){ results = search(input.value); }
+        if(results[0]) go(0);
+      }
+    } else if(e.key==='Escape'){
+      panel.setAttribute('aria-hidden','true');
+      active=-1;
+    }
+  });
+
+  // Klik poza panelem chowa podpowiedzi
+  document.addEventListener('click', (e)=>{
+    if(!panel.contains(e.target) && e.target!==input){
+      panel.setAttribute('aria-hidden','true');
+      active=-1;
+    }
+  });
+
+  // Klik na ikonę lupy (jeżeli była dodana obok inputu)
+  const svg = input.parentElement.querySelector('svg');
+  if(svg){
+    svg.style.cursor='pointer';
+    svg.addEventListener('click', ()=>{
+      results = search(input.value);
+      if(results.length){
+        panel.setAttribute('aria-hidden','false');
+        render();
+      }
+    });
+  }
+})();
+</script>
 </body>
 </html>
