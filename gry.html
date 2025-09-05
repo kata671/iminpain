@@ -5,257 +5,56 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Gry / Trening</title>
   <meta name="theme-color" content="#0e1230" />
-
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="assets/style.css?v=10" />
-
-  <style>
-    /* Tapeta i tło (spójne z index) */
-    html,body{height:100%}
-    body{
-      position:relative; background:#0e1230; color:#eef2ff;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    }
-    .bh-wallpaper,.bh-grid{position:fixed;inset:0;pointer-events:none}
-    .bh-wallpaper{
-      z-index:0;
-      background:
-        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
-        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
-        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-      filter: blur(10px) saturate(118%);
-    }
-    .bh-grid{
-      z-index:1; opacity:.22;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
-      background-size:160px 138px; background-position:center;
-    }
-    .bh-floor-fade{position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
-      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));}
-    .container{position:relative;z-index:3;max-width:1100px;margin:0 auto;padding:16px}
-
-    /* Nagłówek */
-    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-    .brand h1{margin:0}
-    .brand small{opacity:.8}
-
-    /* Grid kart gier */
-    .games-grid{ display:grid; gap:16px; margin:12px 0 8px; grid-template-columns:repeat(3,1fr) }
-    @media (max-width:980px){ .games-grid{ grid-template-columns:repeat(2,1fr) } }
-    @media (max-width:640px){ .games-grid{ grid-template-columns:1fr } }
-
-    .game-card{
-      border-radius:18px; background:rgba(60,32,100,.32); border:1px solid rgba(164,107,255,.22);
-      box-shadow:0 10px 22px rgba(255,110,199,.12), 0 0 0 1px rgba(164,107,255,.14) inset;
-      padding:14px; display:flex; gap:12px; align-items:flex-start;
-      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-    .game-card:hover{ transform:translateY(-2px); box-shadow:0 16px 30px rgba(8,10,22,.5) }
-    .game-ico{ width:42px; height:42px; border-radius:12px; display:grid; place-items:center;
-      background:rgba(94,234,212,.15); border:1px solid rgba(94,234,212,.35); font-size:22px; }
-    .game-title{ font-weight:900; letter-spacing:.3px; margin:0 0 4px; }
-    .game-desc{ color:#cfe2ff; font-size:13px; margin:0 0 6px }
-    .game-actions{ display:flex; gap:8px; flex-wrap:wrap }
-    .btn{
-      appearance:none; border:1px solid rgba(164,107,255,.28); background:rgba(255,255,255,.06);
-      color:#eef2ff; border-radius:12px; padding:8px 12px; font-weight:800; cursor:pointer;
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-    }
-    .btn:hover{ transform:translateY(-1px); border-color:rgba(164,107,255,.55); box-shadow:0 10px 24px rgba(8,10,22,.45) }
-
-    /* Modale gier */
-    .g-modal{ position:fixed; inset:0; display:none; z-index:9999;
-      background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95));
-      backdrop-filter:saturate(120%) blur(6px); }
-    .g-modal[aria-hidden="false"]{ display:block }
-    .g-panel{
-      position:relative; max-width:900px; margin:6vh auto; padding:16px;
-      background:rgba(60,32,100,.36); border:1px solid rgba(164,107,255,.25); border-radius:18px;
-      box-shadow:0 18px 46px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18); color:#eef2ff;
-    }
-    .g-head{ display:flex; justify-content:space-between; align-items:center; gap:12px }
-    .g-title{ font-weight:900; letter-spacing:.3px }
-    .g-close{ appearance:none; background:transparent; border:1px solid rgba(164,107,255,.25);
-      color:#e7eaff; border-radius:10px; padding:6px 10px; cursor:pointer }
-    .g-close:hover{ box-shadow:0 0 0 2px rgba(255,110,199,.28) }
-    .g-body{ margin-top:12px }
-
-    /* Wspólne elementy gier */
-    .pad{ display:grid; place-items:center; min-height:260px; border-radius:14px;
-      background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.16); padding:14px }
-    .stats{ border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.16); padding:12px }
-    .stat{ display:flex; justify-content:space-between; margin:6px 0; font-weight:800 }
-    .bar{ height:12px; border-radius:999px; outline:1px solid rgba(255,255,255,.16);
-      background:linear-gradient(90deg, #5eead4, #ff6ec7); position:relative; overflow:hidden }
-    .cursor{ position:absolute; top:50%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%;
-      background:#fff; box-shadow:0 0 0 2px rgba(94,234,212,.35), 0 0 18px rgba(94,234,212,.25); transition:left .28s ease }
-
-    /* AED timing specyficzne */
-    .aed-track{position:relative;height:14px;border-radius:999px;background:rgba(255,255,255,.1);outline:1px solid rgba(255,255,255,.18)}
-    .aed-zone{position:absolute;top:0;bottom:0;border-radius:999px;background:rgba(94,234,212,.35)}
-    .aed-marker{position:absolute;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:#fff;
-      box-shadow:0 0 0 2px rgba(94,234,212,.35),0 0 18px rgba(94,234,212,.25)}
-
-    /* Toast */
-    .toast{ position:fixed; right:16px; bottom:16px; z-index:10000; display:none }
-    .toast.show{ display:block; animation:fadeIn .25s ease both }
-    .toast .box{ background:rgba(60,32,100,.9); border:1px solid rgba(164,107,255,.35); color:#eafff7;
-      border-radius:12px; padding:10px 12px; box-shadow:0 14px 28px rgba(8,10,22,.5) }
-    @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px) } to{ opacity:1; transform:none } }
-
-    a.back{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#cfe2ff;margin:6px 0 12px}
-    a.back:hover{text-decoration:underline}
-  </style>
+  <link rel="stylesheet" href="asset/style.css?v=10" />
 </head>
 
-<body>
-  <div class="bh-wallpaper" aria-hidden="true"></div>
-  <div class="bh-grid" aria-hidden="true"></div>
-  <div class="bh-floor-fade" aria-hidden="true"></div>
+<body data-page="gry">
+  <div class="bh-wallpaper"></div>
+  <div class="bh-grid"></div>
+  <div class="bh-floor-fade"></div>
 
   <div class="container">
     <header class="header">
       <div class="brand">
-        <h1>Gry / Trening</h1>
-        <small>Ucz się pierwszej pomocy bawiąc się</small>
+        <h1>🎮 Gry / Trening</h1>
+        <small>Nauka i ćwiczenie pierwszej pomocy</small>
       </div>
-      <div><a href="index.html" class="back">← Wróć na stronę główną</a></div>
     </header>
 
-    <section class="games-grid" aria-label="Edukacja interaktywna — gry">
-      <article class="game-card">
-        <div class="game-ico">💓</div>
+    <section class="bh-games-grid">
+      <article class="bh-games-card">
+        <div class="bh-games-ico">💓</div>
         <div>
-          <div class="game-title">RKO Tempo Tap</div>
-          <p class="game-desc">Utrzymaj tempo <b>100–120/min</b> przez 30 sekund. Nauka rytmu ucisków.</p>
-          <div class="game-actions">
-            <button class="btn" data-game-open="rko">Start</button>
-          </div>
+          <div class="bh-games-title">RKO Tempo Tap</div>
+          <p class="bh-games-desc">Utrzymaj tempo <b>100–120/min</b> przez 30 s — trenuj prawidłowy rytm ucisków.</p>
+          <div class="bh-games-actions"><button class="bh-games-btn" data-game-open="rko">Start</button></div>
         </div>
       </article>
 
-      <article class="game-card">
-        <div class="game-ico">🫁</div>
+      <article class="bh-games-card">
+        <div class="bh-games-ico">🫁</div>
         <div>
-          <div class="game-title">Zadławienie 5+5</div>
-          <p class="game-desc">Trenuj sekwencję: <b>5 uderzeń w plecy</b> ↔ <b>5 uciśnięć nadbrzusza</b>.</p>
-          <div class="game-actions">
-            <button class="btn" data-game-open="zadlawienie">Start</button>
-          </div>
+          <div class="bh-games-title">Zadławienie 5+5</div>
+          <p class="bh-games-desc">Trenuj sekwencję <b>5 uderzeń w plecy</b> ↔ <b>5 uciśnięć nadbrzusza</b>.</p>
+          <div class="bh-games-actions"><button class="bh-games-btn" disabled>Wkrótce</button></div>
         </div>
       </article>
 
-      <article class="game-card">
-        <div class="game-ico">⚡</div>
+      <article class="bh-games-card">
+        <div class="bh-games-ico">⚡</div>
         <div>
-          <div class="game-title">AED Timing</div>
-          <p class="game-desc">Wyczuj moment: naciśnij <b>WYŁADOWANIE</b> w zielonej strefie. 3 rundy.</p>
-          <div class="game-actions">
-            <button class="btn" data-game-open="aed">Start</button>
-          </div>
+          <div class="bh-games-title">AED Timing</div>
+          <p class="bh-games-desc">Ćwicz użycie AED: wstrzymaj uciski, wyzwól impuls i wróć do RKO.</p>
+          <div class="bh-games-actions"><button class="bh-games-btn" disabled>Wkrótce</button></div>
         </div>
       </article>
     </section>
   </div>
 
-  <!-- Modale -->
-  <!-- RKO -->
-  <div id="gRko" class="g-modal" aria-hidden="true" role="dialog" aria-labelledby="gRkoTitle">
-    <div class="g-panel">
-      <div class="g-head">
-        <div class="g-title" id="gRkoTitle">💓 RKO Tempo Tap</div>
-        <button class="g-close" data-game-close>✕</button>
-      </div>
-      <div class="g-body">
-        <div class="pad">
-          <button class="btn" id="rkoTap" style="width:220px;height:220px;border-radius:50%;font-size:16px;font-weight:900">
-            Stukaj rytm<br>100–120/min<br><small>(klik/space)</small>
-          </button>
-        </div>
-        <div class="stats">
-          <div class="stat"><span>BPM</span><span id="rkoBpm">0</span></div>
-          <div class="stat"><span>W zakresie</span><span id="rkoInRange">0%</span></div>
-          <div class="bar" aria-label="Postęp treningu">
-            <span class="cursor" id="rkoCursor" style="left:6%"></span>
-          </div>
-          <div class="stat"><span>Czas</span><span id="rkoTime">30s</span></div>
-          <div class="game-actions" style="margin-top:10px">
-            <button class="btn" id="rkoStart">Start 30s</button>
-            <button class="btn" id="rkoReset">Reset</button>
-          </div>
-          <p class="game-desc" style="margin-top:8px">Cel: utrzymaj <b>≥70%</b> czasu w zakresie 100–120 BPM, aby zdobyć odznakę <b>Tempo Master</b>.</p>
-          <p class="game-desc" id="rkoBest" style="opacity:.85"></p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Modale gier -->
+  <div id="bhGamesRkoModal" class="bh-games-modal" aria-hidden="true"></div>
 
-  <!-- Zadławienie 5+5 -->
-  <div id="gZdl" class="g-modal" aria-hidden="true" role="dialog" aria-labelledby="gZdlTitle">
-    <div class="g-panel">
-      <div class="g-head">
-        <div class="g-title" id="gZdlTitle">🫁 Zadławienie 5+5</div>
-        <button class="g-close" data-game-close>✕</button>
-      </div>
-      <div class="g-body">
-        <div class="pad" style="text-align:center">
-          <p style="margin:4px 0 12px">Wykonuj <b>na zmianę</b> 5 uderzeń w plecy i 5 uciśnięć nadbrzusza. Utrzymaj tempo (maks. 60 s).</p>
-          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-            <button class="btn" id="zdlBack">Uderzenie w plecy</button>
-            <button class="btn" id="zdlAbd">Ucisk nadbrzusza</button>
-            <button class="btn" id="zdlStart">Start</button>
-            <button class="btn" id="zdlReset">Reset</button>
-          </div>
-        </div>
-        <div class="stats">
-          <div class="stat"><span>Etap</span><span id="zdlStage">Plecy (1/5)</span></div>
-          <div class="stat"><span>Poprawność sekwencji</span><span id="zdlSeq">OK</span></div>
-          <div class="stat"><span>Czas</span><span id="zdlTime">60s</span></div>
-          <div class="stat"><span>Wynik</span><span id="zdlScore">0</span></div>
-          <p class="game-desc" id="zdlBest" style="opacity:.85"></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AED Timing -->
-  <div id="gAed" class="g-modal" aria-hidden="true" role="dialog" aria-labelledby="gAedTitle">
-    <div class="g-panel">
-      <div class="g-head">
-        <div class="g-title" id="gAedTitle">⚡ AED Timing</div>
-        <button class="g-close" data-game-close>✕</button>
-      </div>
-      <div class="g-body">
-        <div class="pad">
-          <div style="width:100%;max-width:560px">
-            <p style="margin:4px 0 12px">Kliknij <b>WYŁADOWANIE</b>, gdy znacznik wejdzie w <b>zieloną strefę</b>. 3 rundy, każda 5 prób.</p>
-            <div class="aed-track" id="aedTrack">
-              <div class="aed-zone" id="aedZone" style="left:40%;right:35%"></div>
-              <div class="aed-marker" id="aedMarker" style="left:6%"></div>
-            </div>
-            <div class="game-actions" style="margin-top:12px;display:flex;gap:8px;align-items:center">
-              <button class="btn" id="aedShock">WYŁADOWANIE</button>
-              <button class="btn" id="aedStart">Start rundy</button>
-              <button class="btn" id="aedReset">Reset</button>
-            </div>
-          </div>
-        </div>
-        <div class="stats">
-          <div class="stat"><span>Runda</span><span id="aedRound">1/3</span></div>
-          <div class="stat"><span>Trafienia</span><span id="aedHits">0/0</span></div>
-          <div class="stat"><span>Wynik łączny</span><span id="aedScore">0</span></div>
-          <p class="game-desc" id="aedBest" style="opacity:.85"></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast -->
-  <div class="toast" id="gToast" role="status" aria-live="polite">
-    <div class="box" id="gToastText">🏅 Odznaka!</div>
-  </div>
-
-  <script src="assets/games.js?v=2"></script>
+  <script src="asset/games.js?v=2"></script>
 </body>
 </html>
