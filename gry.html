@@ -1,0 +1,62 @@
+<!doctype html>
+<style>
+html,body{height:100%}
+body{background:#0e1230;color:#eef2ff;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.container{max-width:1100px;margin:0 auto;padding:16px}
+.bh-games-grid{ display:grid; gap:16px; margin:18px 0 8px; grid-template-columns:repeat(3,1fr) }
+@media (max-width:980px){ .bh-games-grid{ grid-template-columns:repeat(2,1fr) } }
+@media (max-width:640px){ .bh-games-grid{ grid-template-columns:1fr } }
+.bh-games-card{ border-radius:18px; background:rgba(60,32,100,.32); border:1px solid rgba(164,107,255,.22); box-shadow:0 10px 22px rgba(255,110,199,.12), 0 0 0 1px rgba(164,107,255,.14) inset; padding:14px; display:flex; gap:12px; align-items:flex-start; transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.bh-games-card:hover{ transform:translateY(-2px); box-shadow:0 16px 30px rgba(8,10,22,.5) }
+.bh-games-ico{ width:42px; height:42px; border-radius:12px; display:grid; place-items:center; background:rgba(94,234,212,.15); border:1px solid rgba(94,234,212,.35); font-size:22px; }
+.bh-games-title{ font-weight:900; letter-spacing:.3px; margin:0 0 4px; }
+.bh-games-desc{ color:#cfe2ff; font-size:13px; margin:0 0 6px }
+.bh-games-actions{ display:flex; gap:8px; flex-wrap:wrap }
+.bh-games-btn{ appearance:none; border:1px solid rgba(164,107,255,.28); background:rgba(255,255,255,.06); color:#eef2ff; border-radius:12px; padding:8px 12px; font-weight:800; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+.bh-games-btn:hover{ transform:translateY(-1px); border-color:rgba(164,107,255,.55); box-shadow:0 10px 24px rgba(8,10,22,.45) }
+
+
+/* RKO Tempo Tap */
+.rko-wrap{ display:grid; grid-template-columns:1.2fr 1fr; gap:16px; margin-top:12px }
+@media (max-width:900px){ .rko-wrap{ grid-template-columns:1fr } }
+.pad{ display:grid; place-items:center; min-height:260px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.16) }
+.pad .tap{ width:220px; height:220px; border-radius:50%; display:grid; place-items:center; background:radial-gradient(circle at 50% 35%, rgba(94,234,212,.22), rgba(164,107,255,.16)); box-shadow:0 0 0 2px rgba(94,234,212,.35), 0 0 34px rgba(94,234,212,.22); font-weight:900; letter-spacing:.5px; text-align:center; line-height:1.2; cursor:pointer; user-select:none; transition: transform .08s ease; }
+.pad .tap:active{ transform:scale(.985) }
+.stats{ border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.16); padding:12px }
+.stat{ display:flex; justify-content:space-between; margin:6px 0; font-weight:800 }
+.bar{ height:12px; border-radius:999px; outline:1px solid rgba(255,255,255,.16); background:linear-gradient(90deg, #5eead4, #ff6ec7); position:relative; overflow:hidden }
+.cursor{ position:absolute; top:50%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#fff; box-shadow:0 0 0 2px rgba(94,234,212,.35), 0 0 18px rgba(94,234,212,.25); transition:left .28s ease }
+.toast{ position:fixed; right:16px; bottom:16px; z-index:10000; display:none }
+.toast.show{ display:block; animation:fadeIn .25s ease both }
+.toast .box{ background:rgba(60,32,100,.9); border:1px solid rgba(164,107,255,.35); color:#eafff7; border-radius:12px; padding:10px 12px; box-shadow:0 14px 28px rgba(8,10,22,.5) }
+@keyframes fadeIn{ from{ opacity:0; transform:translateY(6px) } to{ opacity:1; transform:none } }
+a.back{display:inline-flex;gap:8px;align-items:center;text-decoration:none;color:#cfe2ff;border:1px solid rgba(164,107,255,.28);padding:8px 12px;border-radius:12px}
+</style>
+</head>
+<body>
+<div class="container">
+<header style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+<h1 style="margin:0">🎮 Gry / Trening</h1>
+<a href="index.html" class="back">← Powrót</a>
+</header>
+
+
+<section class="bh-games-grid" aria-label="Wybór gry">
+<article class="bh-games-card">
+<div class="bh-games-ico">💓</div>
+<div>
+<div class="bh-games-title">RKO Tempo Tap</div>
+<p class="bh-games-desc">Utrzymaj tempo <b>100–120/min</b> przez 30 s — trenuj prawidłowy rytm ucisków.</p>
+<div class="bh-games-actions"><button class="bh-games-btn" id="openRko">Start</button></div>
+</div>
+</article>
+<article class="bh-games-card" aria-disabled="true">
+<div class="bh-games-ico">🫁</div>
+<div>
+<div class="bh-games-title">Zadławienie 5+5</div>
+<p class="bh-games-desc">Sekwencja 5 uderzeń ↔ 5 uciśnięć — <i>wkrótce</i>.</p>
+<div class="bh-games-actions"><button class="bh-games-btn" disabled>Wkrótce</button></div>
+</div>
+</article>
+<article class="bh-games-card" aria-disabled="true">
+<div
