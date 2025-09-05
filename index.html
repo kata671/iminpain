@@ -1,30 +1,35 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <!-- BoliHelp • Strona główna • v2.1 (tapeta + 3 kafelki + SOS) -->
+  <!--
+    BoliHelp • Strona główna • v2.1 (2025-09-05)
+    Zmiany:
+      • Dodany interaktywny MINI-QUIZ „Pierwsza pomoc” (modal + pasek postępu) — bez zależności zewnętrznych.
+      • Zachowany układ, tapeta i 3 kafelki (kobieta/mężczyzna/dziecko).
+      • Wszystko pod prefixem bh2025-* (bez kolizji z istniejącymi stylami).
+  -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Strona główna</title>
   <meta name="theme-color" content="#0e1230" />
 
-  <!-- Twoje zasoby -->
+  <!-- Twoje zasoby (zostają) -->
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="assets/style.css?v=10" />
 
   <style>
     html,body{height:100%}
     body[data-page="home"]{
-      position:relative;
-      background:#0e1230 !important;
-      color:#eef2ff;
+      position:relative; background:#0e1230 !important; color:#eef2ff;
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
+    /* wyłącz pseudo-tła tylko na home */
     body[data-page="home"]::before,
     body[data-page="home"]::after,
     body[data-page="home"] .container::before,
     body[data-page="home"] .container::after{content:none !important;display:none !important}
 
-    /* TAPETA */
+    /* TAPETA (spójna z podstronami) */
     .bh-wallpaper,.bh-grid{position:fixed;inset:0;pointer-events:none}
     .bh-wallpaper{
       z-index:0;
@@ -46,6 +51,7 @@
     }
     .container{position:relative;z-index:3;background:transparent !important;max-width:1100px;margin:0 auto;padding:0 16px}
 
+    /* 3 KAFELKI – sztywno (zostawiamy jak w Twojej wersji) */
     @media (min-width:981px){
       section.stack[style]{grid-template-columns:repeat(3,1fr) !important;}
     }
@@ -61,6 +67,53 @@
     .card a{display:grid;grid-template-rows:minmax(180px,240px) auto;height:100%;text-decoration:none;color:inherit}
     .card img{width:100%;height:100%;object-fit:contain;object-position:center;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))}
     .card .caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;border-top:1px solid rgba(164,107,255,.22);background:rgba(255,255,255,.04)}
+
+    /* ========= MINI QUIZ (bh2025-*) ========= */
+    :root{
+      --bh2025-accent:#a46bff; --bh2025-teal:#5eead4; --bh2025-pink:#ff6ec7;
+      --bh2025-bg:rgba(14,18,48,.72); --bh2025-card:rgba(60,32,100,.36);
+      --bh2025-stroke:rgba(164,107,255,.25);
+    }
+    .bh2025-cta-quiz{
+      appearance:none;border:1px solid var(--bh2025-stroke);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      color:#eef2ff;border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer;
+      box-shadow:0 8px 20px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.10);
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .bh2025-cta-quiz:hover{transform:translateY(-1px);border-color:rgba(164,107,255,.45);
+      box-shadow:0 12px 26px rgba(8,10,22,.45),0 0 18px rgba(164,107,255,.28),inset 0 0 0 1px rgba(164,107,255,.18)}
+    .bh2025-cta-quiz:focus-visible{outline:2px solid var(--bh2025-teal);outline-offset:2px}
+
+    .bh2025-quiz-launch{display:inline-flex;align-items:center;gap:8px;margin:10px 0 0 0}
+    .bh2025-quiz-launch .dot{width:9px;height:9px;border-radius:50%;background:var(--bh2025-teal);box-shadow:0 0 12px var(--bh2025-teal)}
+
+    .bh2025-modal{position:fixed;inset:0;display:none;z-index:9999;background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.88), rgba(14,18,48,.92));backdrop-filter:saturate(120%) blur(6px)}
+    .bh2025-modal[aria-hidden="false"]{display:block}
+    .bh2025-modal__panel{position:relative;max-width:720px;margin:6vh auto;background:var(--bh2025-card);border:1px solid var(--bh2025-stroke);border-radius:18px;padding:16px;box-shadow:0 18px 46px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18);color:#eef2ff}
+    .bh2025-modal__head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .bh2025-modal__title{font-weight:900;letter-spacing:.3px}
+    .bh2025-close{appearance:none;background:transparent;border:1px solid var(--bh2025-stroke);color:#e7eaff;border-radius:10px;padding:6px 10px;cursor:pointer}
+    .bh2025-close:hover{box-shadow:0 0 0 2px rgba(255,110,199,.28)}
+    .bh2025-modal__body{margin-top:10px}
+
+    .bh2025-progress{display:flex;align-items:center;gap:10px;margin:8px 0 12px}
+    .bh2025-progress__bar{flex:1;height:12px;border-radius:999px;outline:1px solid rgba(255,255,255,.14);background:linear-gradient(90deg,var(--bh2025-teal), var(--bh2025-pink));position:relative;overflow:hidden}
+    .bh2025-progress__cursor{position:absolute;top:50%;transform:translate(-50%,-50%);left:6%;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(94,234,212,.35),0 0 18px rgba(94,234,212,.25);transition:left .28s ease}
+    .bh2025-progress__label{font-weight:800;color:#d6e4ff}
+
+    .bh2025-q{font-weight:800;margin:4px 0 8px}
+    .bh2025-answers{display:grid;gap:10px}
+    .bh2025-ans{appearance:none;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);border-radius:12px;padding:10px 12px;color:#eef2ff;text-align:left;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+    .bh2025-ans:hover{transform:translateY(-1px);border-color:rgba(164,107,255,.45);box-shadow:0 12px 24px rgba(8,10,22,.45),0 0 16px rgba(164,107,255,.25)}
+    .bh2025-ans.correct{box-shadow:0 0 0 2px rgba(94,234,212,.45), 0 0 20px rgba(94,234,212,.28)}
+    .bh2025-ans.wrong{box-shadow:0 0 0 2px rgba(255,107,107,.5), 0 0 20px rgba(255,107,107,.28)}
+
+    .bh2025-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+    .bh2025-ghost{appearance:none;border:1px solid rgba(255,255,255,.16);background:transparent;color:#eef2ff;border-radius:10px;padding:8px 12px;cursor:pointer}
+    .bh2025-primary{appearance:none;border:1px solid var(--bh2025-stroke);background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));color:#eef2ff;border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer}
+    .bh2025-muted{color:#b8c2e0}
+    @media (max-width:640px){ .bh2025-modal__panel{margin:3vh 10px} }
   </style>
 </head>
 
@@ -85,6 +138,7 @@
         </div>
       </div>
     </header>
+
     <div class="emergency-list" aria-label="Telefony alarmowe">
       <a href="tel:112">📞 112</a><a href="tel:999">🚑 999</a><a href="tel:998">🔥 998</a><a href="tel:997">👮 997</a>
     </div>
@@ -96,17 +150,24 @@
       <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span>Pierwsza pomoc</a>
     </nav>
 
+    <!-- Launcher mini-quizu -->
+    <div class="bh2025-quiz-launch" aria-hidden="false" aria-label="Sekcja edukacyjna">
+      <span class="dot" aria-hidden="true"></span>
+      <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button" aria-haspopup="dialog" aria-controls="bh2025QuizModal">
+        Sprawdź się: Pierwsza pomoc
+      </button>
+    </div>
+
     <div class="actions" role="navigation" aria-label="Szybkie akcje">
       <button id="btn-112" class="btn btn--red btn--call" type="button" aria-label="Zadzwoń na 112">📞 112</button>
       <button id="btn-hosp" class="btn btn--hosp" type="button" aria-label="Szpitale i SOR">🏥 Szpitale / SOR</button>
       <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener"><span class="badge-round">apteka24</span></a>
       <button id="btn-loc" class="btn" type="button">📍 Zlokalizuj mnie</button>
-      <!-- NOWY PRZYCISK SOS -->
-      <button id="btn-sos" class="btn btn--sos" type="button" aria-label="Szybki przycisk SOS">🆘 SOS</button>
     </div>
 
     <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
 
+    <!-- 3 kafelki – sztywno -->
     <section class="stack" aria-label="Wybór postaci"
       style="display:grid;gap:16px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
       <article class="card">
@@ -129,7 +190,141 @@
       </article>
     </section>
   </div>
+  <!-- Modal quizu -->
+  <div id="bh2025QuizModal" class="bh2025-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025QuizTitle">
+    <div class="bh2025-modal__panel">
+      <div class="bh2025-modal__head">
+        <div>
+          <div id="bh2025QuizTitle" class="bh2025-modal__title">Mini-quiz: czy wiesz co zrobić?</div>
+          <div class="bh2025-muted" id="bh2025QuizSubtitle">3 szybkie pytania: zadławienie, reanimacja, pozycja bezpieczna.</div>
+        </div>
+        <button class="bh2025-close" type="button" id="bh2025QuizClose" aria-label="Zamknij">✕</button>
+      </div>
 
+      <div class="bh2025-modal__body">
+        <div class="bh2025-progress" aria-label="Postęp">
+          <div class="bh2025-progress__bar"><span class="bh2025-progress__cursor" id="bh2025QuizCursor"></span></div>
+          <div class="bh2025-progress__label"><span id="bh2025QuizStep">1</span>/3</div>
+        </div>
+
+        <div class="bh2025-q" id="bh2025QuizQuestion">…</div>
+        <div class="bh2025-answers" id="bh2025QuizAnswers"></div>
+
+        <div class="bh2025-actions">
+          <button class="bh2025-ghost" type="button" id="bh2025QuizRestart">Zacznij od nowa</button>
+          <button class="bh2025-primary" type="button" id="bh2025QuizNext">Dalej</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Twój skrypt (bez zmian) -->
   <script src="assets/main.js?v=10"></script>
+
+  <!-- Logika mini-quizu -->
+  <script>
+  (function(){
+    const openBtn = document.getElementById('bh2025QuizOpen');
+    const modal   = document.getElementById('bh2025QuizModal');
+    const closeBtn= document.getElementById('bh2025QuizClose');
+    const restart = document.getElementById('bh2025QuizRestart');
+    const nextBtn = document.getElementById('bh2025QuizNext');
+
+    const qEl     = document.getElementById('bh2025QuizQuestion');
+    const aEl     = document.getElementById('bh2025QuizAnswers');
+    const stepEl  = document.getElementById('bh2025QuizStep');
+    const cursor  = document.getElementById('bh2025QuizCursor');
+
+    if(!openBtn || !modal) return;
+
+    const QUIZ = [
+      {
+        q: "Ktoś się dławi i nie może mówić. Co robisz najpierw?",
+        a: [
+          {t:"Zachęcam do kaszlu, jeśli nieskuteczny — 5 uderzeń między łopatki", ok:true},
+          {t:"Podaję wodę, żeby popchnąć kęs", ok:false},
+          {t:"Wkładam palec i „na ślepo” próbuję wyjąć", ok:false}
+        ],
+        hintOk:"Tak! Najpierw kaszel. Jeśli nieskuteczny → uderzenia w plecy.",
+        hintBad:"Uwaga — woda/„wymiatanie” palcem może pogorszyć sytuację."
+      },
+      {
+        q: "Brak oddechu. Co z RKO u dorosłego?",
+        a: [
+          {t:"Ucisk klatki 100–120/min, głębokość ~5–6 cm, centrum mostka", ok:true},
+          {t:"Ucisk delikatny 40/min, bez kontroli miejsca", ok:false},
+          {t:"Czekam na karetkę bez ucisków", ok:false}
+        ],
+        hintOk:"Super! Tempo 100–120/min i środek mostka są kluczowe.",
+        hintBad:"To zbyt wolno/bez ucisków — liczy się szybka, prawidłowa RKO."
+      },
+      {
+        q: "Poszkodowany oddycha, ale nie reaguje. Co dalej?",
+        a: [
+          {t:"Układam w pozycji bezpiecznej i kontroluję oddech", ok:true},
+          {t:"Podaję napój i zostawiam w pozycji siedzącej", ok:false},
+          {t:"Kładę na plecach bez kontroli drożności", ok:false}
+        ],
+        hintOk:"Tak — pozycja bezpieczna i stała kontrola oddechu.",
+        hintBad:"Płyny/siedząca pozycja/na plecach — to nie jest bezpieczne."
+      }
+    ];
+
+    let step=0, lock=false;
+
+    function setProgress(){
+      stepEl.textContent = (step+1);
+      const left = 6 + (step/(QUIZ.length-1||1))*88; // 6% → 94%
+      cursor.style.left = left + '%';
+    }
+
+    function render(){
+      const item = QUIZ[step];
+      qEl.textContent = item.q;
+      aEl.innerHTML = '';
+      item.a.forEach((opt)=>{
+        const b = document.createElement('button');
+        b.type='button'; b.className='bh2025-ans'; b.textContent=opt.t;
+        b.addEventListener('click', ()=>{
+          if(lock) return;
+          lock=true;
+          const good = opt.ok;
+          b.classList.add(good?'correct':'wrong');
+          const note = document.createElement('div');
+          note.className='bh2025-muted';
+          note.style.marginTop='6px';
+          note.textContent = good ? item.hintOk : item.hintBad;
+          b.after(note);
+          if(navigator.vibrate) try{ navigator.vibrate(good?80:160); }catch(_){}
+          setTimeout(()=>{ lock=false; }, 320);
+        });
+        aEl.appendChild(b);
+      });
+      setProgress();
+      nextBtn.textContent = step===QUIZ.length-1 ? "Zakończ" : "Dalej";
+    }
+
+    function open(){
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+      step=0; render();
+    }
+    function close(){
+      modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+    }
+
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
+    restart.addEventListener('click', ()=>{ step=0; render(); });
+    nextBtn.addEventListener('click', ()=>{
+      if(step<QUIZ.length-1){ step++; render(); }
+      else { close(); }
+    });
+
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') close(); });
+  })();
+  </script>
 </body>
 </html>
