@@ -1,13 +1,13 @@
-/* Boli Help — Gry / Trening — v3.1
-   Poprawki:
-   - Reflex Triage: delegacja click na planszy (klik działa gdziekolwiek w komórce), kursor, flash.
-   - Germ Smash: zarazki sterowane inline style (widoczne w 100%), dłuższy „stay”, większy rozmiar.
+/* Boli Help — Gry / Trening — v3.2
+   Zmiany:
+   - Germ Smash: widoczność na 100% (opacity/scale, tło-kółko, zIndex, pointer-events)
+   - Reflex Triage: auto-wybór koloru co ~2s + pulsujący highlight celu
 */
 (function(){
   const $ = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
 
-  // ====== Modal: open/close dla wszystkich gier ======
+  // ====== Modal: open/close ======
   const openMap = { rko:'#gRko', zadlawienie:'#gZdl', aed:'#gAed', triage:'#gTriage', germ:'#gGerm' };
 
   document.addEventListener('click', (e)=>{
@@ -28,16 +28,16 @@
   });
   document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ $$('.bh-games-modal[aria-hidden="false"]').forEach(m=>{ m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }); } });
 
-  // ====== Toast + Best wyniki ======
+  // ====== Toast + Best ======
   const toast = $('#gToast'), toastText = $('#gToastText');
   function showToast(msg){
     if(!toast) return;
     toastText.textContent = msg;
     toast.classList.add('show');
-    setTimeout(()=>toast.classList.remove('show'), 2000);
+    setTimeout(()=>toast.classList.remove('show'), 1800);
   }
-  function setBest(label, value){ localStorage.setItem(`bh_best_${label}`, String(value)); }
-  function getBest(label){ const v = localStorage.getItem(`bh_best_${label}`); return v ? Number(v) : null; }
+  const setBest = (k,v)=>localStorage.setItem('bh_best_'+k, String(v));
+  const getBest = (k)=>{ const v=localStorage.getItem('bh_best_'+k); return v?Number(v):null; };
 
   // ====== RKO Tempo Tap ======
   (function(){
@@ -54,7 +54,7 @@
     const DURATION = 30_000; // 30s
     let times=[], running=false, t0=0, timer=null, inRangeMs=0, lastTick=0;
 
-    function fmt(ms){ return Math.max(0, Math.ceil(ms/1000))+'s'; }
+    const fmt = ms => Math.max(0, Math.ceil(ms/1000))+'s';
     function computeBpm(){
       if(times.length<2) return 0;
       const lastN = times.slice(-8);
@@ -76,8 +76,8 @@
       if(final){
         const score = Math.round((inRangeMs/DURATION)*100);
         const best = getBest('rko') ?? 0;
-        if(score>best){ setBest('rko', score); }
-        bestEl.textContent = `Najlepszy wynik: ${Math.max(best, score)}%`;
+        if(score>best) setBest('rko', score);
+        bestEl.textContent = `Najlepszy wynik: ${Math.max(best||0, score)}%`;
         if(score>=70) showToast('🏅 Tempo Master (≥70%)');
       }
     }
@@ -86,18 +86,18 @@
       tEl.textContent = fmt(DURATION);
       timer = setInterval(()=>{
         const now=performance.now();
-        const elapsed = now - t0;
         updateRange(now - lastTick);
         lastTick = now;
+        const elapsed = now - t0;
         tEl.textContent = fmt(DURATION - elapsed);
         cursorProgress(DURATION - elapsed);
-        if(elapsed>=DURATION){ stop(true); }
+        if(elapsed>=DURATION) stop(true);
       }, 80);
     }
     tap.addEventListener('click', ()=>{ if(!running) return; times.push(performance.now()); bpmEl.textContent = computeBpm(); });
     document.addEventListener('keydown', (e)=>{ if(e.key===' ' && !$('#gRko').hasAttribute('aria-hidden')){ e.preventDefault(); tap.click(); } });
 
-    start.addEventListener('click', ()=>{ if(running) return; startRun(); });
+    start.addEventListener('click', ()=>{ if(!running) startRun(); });
     reset.addEventListener('click', ()=>{ stop(false); bpmEl.textContent='0'; inrEl.textContent='0%'; cur.style.left='6%'; tEl.textContent='30s'; });
 
     const best = getBest('rko'); if(best!=null) bestEl.textContent = `Najlepszy wynik: ${best}%`;
@@ -124,7 +124,6 @@
       else { stage='back'; countBack=0; }
       updateUi();
     }
-
     function realTap(kind){
       if(kind==='back'){ countBack++; total++; if(countBack===5) switchStage(); }
       else { countAbd++; total++; if(countAbd===5) switchStage(); }
@@ -140,13 +139,12 @@
       }
       realTap(kind);
     }
-
     function stop(final=false){
       running=false; clearInterval(timer); timer=null;
       if(final){
         const best = getBest('zdl') ?? 0;
-        if(total>best){ setBest('zdl', total); }
-        bestEl.textContent = `Najlepszy wynik: ${Math.max(best, total)}`;
+        if(total>best) setBest('zdl', total);
+        bestEl.textContent = `Najlepszy wynik: ${Math.max(best||0, total)}`;
         if(total>=20) showToast('🏅 Airway Hero (20+)');
       }
     }
@@ -154,12 +152,11 @@
       stage='back'; countBack=0; countAbd=0; total=0; running=true; t0=performance.now();
       tEl.textContent = '60s'; seqEl.textContent='OK'; seqEl.style.color='#cfe2ff'; updateUi();
       timer=setInterval(()=>{
-        const now=performance.now();
-        const left = Math.max(0, LIMIT-(now-t0));
+        const left = Math.max(0, LIMIT-(performance.now()-t0));
         tEl.textContent = Math.ceil(left/1000)+'s';
-        if(left<=0){ stop(true); }
+        if(left<=0) stop(true);
       }, 100);
-      if(primeKind){ realTap(primeKind); }
+      if(primeKind) realTap(primeKind);
     }
 
     bBack.addEventListener('click', ()=> tap('back'));
@@ -235,12 +232,12 @@
         stopAnim();
         if(round>=3){
           const best = getBest('aed') ?? 0;
-          if(score>best){ setBest('aed', score); }
-          if(bestEl) bestEl.textContent = `Najlepszy wynik: ${Math.max(best, score)}`;
+          if(score>best) setBest('aed', score);
+          if(bestEl) bestEl.textContent = `Najlepszy wynik: ${Math.max(best||0, score)}`;
           if(score>=100) showToast('🏅 Shock Ready (100+)');
           round=1; tries=0; hits=0; speed=0.25; pos=6; dir=1; updateUi();
         } else {
-          showToast(`Runda ${round} finiszuje — Start rundy`);
+          showToast(`Runda ${round} zakończona — Start rundy`);
           round++; tries=0; hits=0; updateUi();
         }
       }
@@ -255,21 +252,23 @@
     updateUi();
   })();
 
-  // ====== Reflex Triage (naprawione klikanie pacjentów) ======
+  // ====== Reflex Triage (auto-kolor + highlight celu) ======
   (function(){
     const board = $('#trBoard');
     const start = $('#trStart'), reset = $('#trReset');
     const bR = $('#trRed'), bY = $('#trYellow'), bG = $('#trGreen');
     const modeEl = $('#trMode'), tEl = $('#trTime'), scEl = $('#trScore'), lvEl = $('#trLives'), bestEl = $('#trBest');
-    if(!board || !start || !bR) return;
+    if(!board || !start) return;
 
     const DURATION = 30_000;
-    let running=false, t0=0, timer=null, spawnTimer=null;
+    let running=false, t0=0, timer=null, spawnTimer=null, targetTimer=null;
     let target='red', score=0, lives=3;
 
     const emojis = ['🤕','🤒','🤧','🤢','🤕','🤒','🤧','🥴','😵‍💫'];
+    const colors = ['red','yellow','green'];
+    const colorLabel = c => c==='red'?'🔴 Czerwony':c==='yellow'?'🟡 Żółty':'🟢 Zielony';
 
-    // Tworzymy 9 komórek (większy hit-area + kursor)
+    // 9 komórek
     const cells = [];
     for(let i=0;i<9;i++){
       const c=document.createElement('div');
@@ -277,94 +276,117 @@
       c.dataset.color='';
       c.style.cursor='pointer';
       c.setAttribute('role','button');
-      c.setAttribute('aria-label','Pacjent');
       const face=document.createElement('div');
       face.textContent = emojis[i%emojis.length];
       face.style.fontSize='28px';
-      face.style.pointerEvents='none'; // klik przechwytuje komórka
+      face.style.pointerEvents='none';
       const badge=document.createElement('div'); badge.className='triage-badge'; badge.textContent='';
       c.appendChild(face); c.appendChild(badge);
       board.appendChild(c); cells.push(c);
     }
 
-    // Delegacja click: działa na całej planszy, w tym na „twarzy”
+    function updateModeLabel(){
+      modeEl.textContent = 'Klikaj: ' + colorLabel(target);
+    }
+    function setMode(col){
+      target = col; updateModeLabel();
+      // podświetl już istniejące cele
+      cells.forEach(c=>{
+        if(c.dataset.color===col){
+          c.style.boxShadow='0 0 0 2px rgba(94,234,212,.8), 0 0 22px rgba(94,234,212,.35)';
+        } else {
+          c.style.boxShadow='';
+        }
+      });
+    }
+
+    // Auto-zmiana koloru celu co ~2s (można też ręcznie przyciskami)
+    function startTargetCallout(){
+      targetTimer = setInterval(()=>{
+        const newCol = colors[Math.floor(Math.random()*colors.length)];
+        setMode(newCol);
+      }, 2000);
+    }
+    function stopTargetCallout(){ clearInterval(targetTimer); targetTimer=null; }
+
+    // Delegacja klików
     board.addEventListener('click', (e)=>{
       if(!running) return;
       const cell = e.target.closest('.triage-cell');
       if(!cell || !board.contains(cell)) return;
       const col = cell.dataset.color;
-      if(!col) return; // pusta
+      if(!col) return;
       const badge = cell.querySelector('.triage-badge');
       if(col===target){
         score += 5; scEl.textContent = String(score);
         cell.dataset.color='';
         cell.classList.remove('triage-red','triage-yellow','triage-green');
         if(badge) badge.textContent='';
-        // flash trafienia
+        // flash zielony
         cell.style.transition='box-shadow .15s ease';
-        cell.style.boxShadow='0 0 0 2px rgba(94,234,212,.8), 0 0 22px rgba(94,234,212,.35)';
+        cell.style.boxShadow='0 0 0 2px rgba(94,234,212,.9), 0 0 26px rgba(94,234,212,.45)';
         setTimeout(()=>{ cell.style.boxShadow=''; }, 160);
         showToast('✅ Dobry priorytet +5');
       } else {
         lives = Math.max(0, lives-1); lvEl.textContent = String(lives);
-        // flash błędu
         cell.style.transition='box-shadow .15s ease';
-        cell.style.boxShadow='0 0 0 2px rgba(255,99,99,.8), 0 0 22px rgba(255,99,99,.35)';
+        cell.style.boxShadow='0 0 0 2px rgba(255,99,99,.9), 0 0 26px rgba(255,99,99,.45)';
         setTimeout(()=>{ cell.style.boxShadow=''; }, 160);
         showToast('❌ Zły kolor');
         if(lives===0) stop(true);
       }
     });
 
-    function setMode(col){
-      target=col;
-      modeEl.textContent = col==='red' ? '🔴 Czerwony' : col==='yellow' ? '🟡 Żółty' : '🟢 Zielony';
-    }
-    bR.addEventListener('click', ()=> setMode('red'));
-    bY.addEventListener('click', ()=> setMode('yellow'));
-    bG.addEventListener('click', ()=> setMode('green'));
+    // Przyciski trybu (ręczna zmiana celu)
+    bR && bR.addEventListener('click', ()=> setMode('red'));
+    bY && bY.addEventListener('click', ()=> setMode('yellow'));
+    bG && bG.addEventListener('click', ()=> setMode('green'));
 
     function spawn(){
-      // losowa pusta komórka
       const empty = cells.filter(c => !c.dataset.color);
       if(!empty.length) return;
       const c = empty[Math.floor(Math.random()*empty.length)];
       const badge = c.querySelector('.triage-badge');
-      const colors = ['red','yellow','green'];
       const col = colors[Math.floor(Math.random()*colors.length)];
       c.dataset.color = col;
       c.classList.add('triage-'+col);
       if(badge) badge.textContent = col==='red' ? '🔴' : col==='yellow' ? '🟡' : '🟢';
-      // znikanie po czasie
+      // highlight jeśli to cel
+      if(col===target){
+        c.style.boxShadow='0 0 0 2px rgba(94,234,212,.8), 0 0 22px rgba(94,234,212,.35)';
+      } else {
+        c.style.boxShadow='';
+      }
+      // znikanie po 1.5s
       setTimeout(()=>{
-        if(c.dataset.color===col){ // nie kliknięto
+        if(c.dataset.color===col){
           c.dataset.color='';
           c.classList.remove('triage-red','triage-yellow','triage-green');
           if(badge) badge.textContent='';
-          if(col===target){ // kara tylko gdy przegapiono cel
+          c.style.boxShadow='';
+          if(col===target){
             lives = Math.max(0, lives-1); lvEl.textContent = String(lives);
             if(lives===0) stop(true);
           }
         }
-      }, 1200);
+      }, 1500);
     }
 
     function stop(final=false){
       running=false;
-      clearInterval(timer); clearInterval(spawnTimer);
-      timer=spawnTimer=null;
+      clearInterval(timer); clearInterval(spawnTimer); stopTargetCallout();
       if(final){
         const best = getBest('triage') ?? 0;
-        if(score>best){ setBest('triage', score); }
-        if(bestEl) bestEl.textContent = `Najlepszy wynik: ${Math.max(best, score)}`;
+        if(score>best) setBest('triage', score);
+        if(bestEl) bestEl.textContent = `Najlepszy wynik: ${Math.max(best||0, score)}`;
         if(score>=80) showToast('🏅 Triage Ninja (80+)');
       }
     }
     function startRun(){
       score=0; lives=3; t0=performance.now(); running=true;
       scEl.textContent='0'; lvEl.textContent='3'; tEl.textContent='30s';
-      setMode('red');
-      spawnTimer = setInterval(spawn, 500);
+      setMode('red'); updateModeLabel(); startTargetCallout();
+      spawnTimer = setInterval(spawn, 480);
       timer = setInterval(()=>{
         const left = Math.max(0, DURATION-(performance.now()-t0));
         tEl.textContent = Math.ceil(left/1000)+'s';
@@ -374,15 +396,15 @@
 
     start.addEventListener('click', ()=>{ if(!running) startRun(); });
     reset.addEventListener('click', ()=>{
-      stop(false);
-      scEl.textContent='0'; lvEl.textContent='3'; tEl.textContent='30s';
-      cells.forEach(c=>{ c.dataset.color=''; c.classList.remove('triage-red','triage-yellow','triage-green'); const b=c.querySelector('.triage-badge'); if(b) b.textContent=''; });
+      clearInterval(timer); clearInterval(spawnTimer); stopTargetCallout(); running=false;
+      scEl.textContent='0'; lvEl.textContent='3'; tEl.textContent='30s'; setMode('red');
+      cells.forEach(c=>{ c.dataset.color=''; c.classList.remove('triage-red','triage-yellow','triage-green'); const b=c.querySelector('.triage-badge'); if(b) b.textContent=''; c.style.boxShadow=''; });
     });
 
     const best = getBest('triage'); if(best!=null && bestEl) bestEl.textContent = `Najlepszy wynik: ${best}`;
   })();
 
-  // ====== Germ Smash (zarazki zawsze widoczne) ======
+  // ====== Germ Smash (opacity/scale, kółko tła, wysoka widoczność) ======
   (function(){
     const board = $('#gmBoard');
     const start = $('#gmStart'), reset = $('#gmReset');
@@ -396,28 +418,47 @@
     // plansza 3x3
     const holes=[];
     for(let i=0;i<9;i++){
-      const hole=document.createElement('div'); hole.className='germ-hole';
-      hole.style.cursor='pointer';
+      const hole=document.createElement('div'); hole.className='germ-hole'; hole.style.position='relative';
       const germ=document.createElement('div');
-      germ.className='germ';
-      germ.textContent = Math.random()<0.5 ? '🦠' : '🤢';
-      // wymuszenie widoczności przez inline style (nadpisuje CSS)
+      // rdzeń zarazka: emoji na kółku tła
+      germ.innerHTML = `<div style="
+        position:absolute; inset:0; display:grid; place-items:center;
+        width:100%; height:100%;
+        ">
+        <div style="
+          width:66px; height:66px; border-radius:50%;
+          background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.85), rgba(255,255,255,.55));
+          box-shadow: 0 6px 16px rgba(0,0,0,.45);
+          display:grid; place-items:center;
+        ">
+          <span class="emj" style="font-size:34px; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35))">🦠</span>
+        </div>
+      </div>`;
+      // kontener animacji + widoczności
       Object.assign(germ.style,{
-        position:'absolute', left:'0', right:'0', bottom:'0', top:'auto',
+        position:'absolute', inset:'0',
         display:'grid', placeItems:'center',
-        height:'0', transition:'height .12s ease',
-        fontSize:'32px', filter:'drop-shadow(0 2px 6px rgba(0,0,0,.35))',
-        pointerEvents:'auto', userSelect:'none'
+        opacity:'0', transform:'scale(.6)',
+        transition:'opacity .12s ease, transform .12s ease',
+        zIndex:'5', pointerEvents:'none', // gdy ukryty
       });
       hole.appendChild(germ); board.appendChild(hole);
       holes.push({hole,germ,up:false,timeout:null});
-      germ.addEventListener('click', ()=>{
+
+      // klik na całej „dziurce”
+      hole.style.cursor='pointer';
+      hole.addEventListener('click', ()=>{
         if(!running || !holes[i].up) return;
         holes[i].up=false;
-        germ.style.height='0';
+        germ.style.opacity='0'; germ.style.transform='scale(.6)'; germ.style.pointerEvents='none';
         score += 3; scEl.textContent = String(score);
         showToast('🧼 Sru! +3');
       });
+    }
+
+    function setEmoji(germEl){
+      const span = germEl.querySelector('.emj');
+      if(span) span.textContent = Math.random()<0.5 ? '🦠' : '🤢';
     }
 
     function popOne(){
@@ -425,29 +466,33 @@
       if(!available.length) return;
       const h = available[Math.floor(Math.random()*available.length)];
       h.up=true;
-      h.germ.textContent = Math.random()<0.5 ? '🦠' : '🤢';
-      h.germ.style.height='100%';     // pokaż
-      const stay = 700 + Math.random()*600; // 0.7–1.3s (dłużej, wyraźniej)
+      setEmoji(h.germ);
+      h.germ.style.opacity='1';
+      h.germ.style.transform='scale(1)';
+      h.germ.style.pointerEvents='auto';
+      const stay = 800 + Math.random()*800; // 0.8–1.6s
       h.timeout = setTimeout(()=>{
         h.up=false;
-        h.germ.style.height='0';      // schowaj
+        h.germ.style.opacity='0';
+        h.germ.style.transform='scale(.6)';
+        h.germ.style.pointerEvents='none';
       }, stay);
     }
 
     function stop(final=false){
       running=false;
       clearInterval(timer); clearInterval(spawnTimer);
-      holes.forEach(h=>{ h.up=false; h.germ.style.height='0'; clearTimeout(h.timeout); });
+      holes.forEach(h=>{ h.up=false; h.germ.style.opacity='0'; h.germ.style.transform='scale(.6)'; h.germ.style.pointerEvents='none'; clearTimeout(h.timeout); });
       if(final){
         const best = getBest('germ') ?? 0;
-        if(score>best){ setBest('germ', score); }
-        if(bestEl) bestEl.textContent = `Najlepszy wynik: ${Math.max(best, score)}`;
+        if(score>best) setBest('germ', score);
+        if(bestEl) bestEl.textContent = `Najlepszy wynik: ${Math.max(best||0, score)}`;
         if(score>=60) showToast('🏅 Hygiene Hero (60+)');
       }
     }
     function startRun(){
       score=0; scEl.textContent='0'; tEl.textContent='30s'; running=true; t0=performance.now();
-      spawnTimer = setInterval(popOne, 500); // spokojniejsze tempo
+      spawnTimer = setInterval(popOne, 520); // spokojniejsze tempo
       timer = setInterval(()=>{
         const left = Math.max(0, DURATION-(performance.now()-t0));
         tEl.textContent = Math.ceil(left/1000)+'s';
