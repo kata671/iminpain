@@ -1,5 +1,5 @@
-/* Boli Help — Gry / Trening — v2
-   Zawiera: RKO Tempo Tap, Zadławienie 5+5, AED Timing
+/* Boli Help — Gry / Trening — v2.1
+   Zawiera: RKO Tempo Tap, Zadławienie 5+5 (auto-start na 1. tap), AED Timing
    Zapamiętuje najlepsze wyniki w localStorage.
 */
 (function(){
@@ -25,7 +25,11 @@
   $$('.bh-games-modal').forEach(m=>{
     m.addEventListener('click', (e)=>{ if(e.target===m){ m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; } });
   });
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ $$('.bh-games-modal[aria-hidden="false"]').forEach(m=>{ m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }); } });
+  document.addEventListener('keydown', (e)=>{
+    if(e.key==='Escape'){
+      $$('.bh-games-modal[aria-hidden="false"]').forEach(m=>{ m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; });
+    }
+  });
 
   // ====== Toast ======
   const toast = $('#gToast'), toastText = $('#gToastText');
@@ -102,7 +106,7 @@
     const best = getBest('rko'); if(best!=null) bestEl.textContent = `Najlepszy wynik: ${best}%`;
   })();
 
-  // ====== Zadławienie 5+5 ======
+  // ====== Zadławienie 5+5 (auto-start na 1. klik) ======
   (function(){
     const start = $('#zdlStart'), reset = $('#zdlReset');
     const bBack = $('#zdlBack'), bAbd = $('#zdlAbd');
@@ -123,21 +127,25 @@
       else { stage='back'; countBack=0; }
       updateUi();
     }
+
+    function realTap(kind){
+      if(kind==='back'){ countBack++; total++; if(countBack===5) switchStage(); }
+      else { countAbd++; total++; if(countAbd===5) switchStage(); }
+      seqEl.textContent='OK'; seqEl.style.color='#cfe2ff'; updateUi();
+      if(total>=10 && stage==='back' && countBack===0){ showToast('✅ Pełny cykl 5+5 ukończony!'); }
+    }
+
     function tap(kind){
-      if(!running) return;
+      // AUTO-START: pierwszy tap uruchamia grę i zalicza ruch
+      if(!running){ startRun(kind); return; }
       if(kind!==stage){
         seqEl.textContent='BŁĄD (kolejność)'; seqEl.style.color='#ffb3b3';
         total = Math.max(0, total-1); scEl.textContent = String(total);
         return;
       }
-      if(kind==='back'){ countBack++; total++; if(countBack===5) switchStage(); }
-      else { countAbd++; total++; if(countAbd===5) switchStage(); }
-
-      seqEl.textContent='OK'; seqEl.style.color='#cfe2ff'; updateUi();
-
-      // pełny cykl 5+5 (10 ruchów) – informacja
-      if(total>=10 && stage==='back' && countBack===0){ showToast('✅ Pełny cykl 5+5 ukończony!'); }
+      realTap(kind);
     }
+
     function stop(final=false){
       running=false; clearInterval(timer); timer=null;
       if(final){
@@ -147,7 +155,7 @@
         if(total>=20) showToast('🏅 Odznaka: Airway Hero (20 poprawnych)');
       }
     }
-    function startRun(){
+    function startRun(primeKind){
       stage='back'; countBack=0; countAbd=0; total=0; running=true; t0=performance.now();
       tEl.textContent = '60s'; seqEl.textContent='OK'; seqEl.style.color='#cfe2ff'; updateUi();
       timer=setInterval(()=>{
@@ -156,12 +164,22 @@
         tEl.textContent = Math.ceil(left/1000)+'s';
         if(left<=0){ stop(true); }
       }, 100);
+      // jeżeli start z pierwszego tapnięcia — zalicz od razu ten ruch
+      if(primeKind){ realTap(primeKind); }
     }
 
     bBack.addEventListener('click', ()=> tap('back'));
     bAbd.addEventListener('click', ()=> tap('abd'));
     start.addEventListener('click', ()=>{ if(!running) startRun(); });
     reset.addEventListener('click', ()=>{ stop(false); stage='back'; countBack=0; countAbd=0; total=0; tEl.textContent='60s'; seqEl.textContent='OK'; seqEl.style.color='#cfe2ff'; updateUi(); });
+
+    // Skróty klawiaturowe: B = plecy, A = nadbrzusze
+    document.addEventListener('keydown', (e)=>{
+      const modalOpen = !$('#gZdl').hasAttribute('aria-hidden');
+      if(!modalOpen) return;
+      if(e.key.toLowerCase()==='b'){ e.preventDefault(); bBack.click(); }
+      if(e.key.toLowerCase()==='a'){ e.preventDefault(); bAbd.click(); }
+    });
 
     const best = getBest('zdl'); if(best!=null) bestEl.textContent = `Najlepszy wynik (poprawne ruchy): ${best}`;
   })();
@@ -201,8 +219,8 @@
 
     start.addEventListener('click', ()=>{
       if(running) return;
-      if(tries>=5){ // nowa runda
-        tries=0; hits=0; round = Math.min(3, round+1); speed += 0.05; // trudniej
+      if(tries>=5){
+        tries=0; hits=0; round = Math.min(3, round+1); speed += 0.05;
       }
       setZoneRandom();
       dir = Math.random()<0.5 ? 1 : -1;
@@ -223,7 +241,6 @@
           if(score>best){ setBest('aed', score); }
           bestEl && (bestEl.textContent = `Najlepszy wynik: ${Math.max(best, score)}`);
           if(score>=100) showToast('🏅 Odznaka: Shock Ready (100 pkt)');
-          // reset na kolejną sesję
           round=1; tries=0; hits=0; speed=0.25; pos=6; dir=1; updateUi();
         } else {
           showToast(`Runda ${round} zakończona — naciśnij Start rundy`);
