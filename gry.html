@@ -1,20 +1,26 @@
 <!doctype html>
 <html lang="pl">
 <head>
+  <!-- BoliHelp • Gry / Trening • v3.5 -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Gry / Trening</title>
   <meta name="theme-color" content="#0e1230" />
+
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="assets/style.css?v=10" />
 
   <style>
-    /* Tapeta jak na stronie głównej */
+    /* Podstawowe tło jak na stronie głównej */
     html,body{height:100%}
-    body{
-      position:relative; background:#0e1230; color:#eef2ff;
+    body[data-page="games"]{
+      position:relative; background:#0e1230 !important; color:#eef2ff;
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
+    body[data-page="games"]::before,
+    body[data-page="games"]::after,
+    body[data-page="games"] .container::before,
+    body[data-page="games"] .container::after{content:none !important;display:none !important}
     .bh-wallpaper,.bh-grid{position:fixed;inset:0;pointer-events:none}
     .bh-wallpaper{
       z-index:0;
@@ -30,16 +36,14 @@
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
       background-size:160px 138px; background-position:center;
     }
-    .bh-floor-fade{position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
-      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));}
-    .container{position:relative;z-index:3;max-width:1100px;margin:0 auto;padding:16px;background:transparent !important}
-
-    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-    .brand h1{margin:0}
-    .brand small{opacity:.85}
+    .bh-floor-fade{
+      position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
+      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));
+    }
+    .container{position:relative;z-index:3;background:transparent !important;max-width:1100px;margin:0 auto;padding:0 16px}
 
     /* Karty gier */
-    .bh-games-grid{ display:grid; gap:16px; margin:12px 0 8px; grid-template-columns:repeat(3,1fr) }
+    .bh-games-grid{ display:grid; gap:16px; margin:18px 0 8px; grid-template-columns:repeat(3,1fr) }
     @media (max-width:980px){ .bh-games-grid{ grid-template-columns:repeat(2,1fr) } }
     @media (max-width:640px){ .bh-games-grid{ grid-template-columns:1fr } }
     .bh-games-card{
@@ -67,7 +71,7 @@
       backdrop-filter:saturate(120%) blur(6px); }
     .bh-games-modal[aria-hidden="false"]{ display:block }
     .bh-games-panel{
-      position:relative; max-width:900px; margin:6vh auto; padding:16px;
+      position:relative; max-width:960px; margin:6vh auto; padding:16px;
       background:rgba(60,32,100,.36); border:1px solid rgba(164,107,255,.25); border-radius:18px;
       box-shadow:0 18px 46px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18); color:#eef2ff;
     }
@@ -78,253 +82,346 @@
     .bh-games-close:hover{ box-shadow:0 0 0 2px rgba(255,110,199,.28) }
     .bh-games-body{ margin-top:12px }
 
-    /* Wspólne elementy panelu gry */
-    .pad{ display:grid; place-items:center; min-height:260px; border-radius:14px;
-      background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.16); padding:14px }
-    .stats{ border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.16); padding:12px }
-    .stat{ display:flex; justify-content:space-between; margin:6px 0; font-weight:800 }
-    .bar{ height:12px; border-radius:999px; outline:1px solid rgba(255,255,255,.16);
+    /* Wspólne bloki w grach */
+    .bh-games-stats{ border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.16); padding:12px }
+    .bh-games-stat{ display:flex; justify-content:space-between; margin:6px 0; font-weight:800 }
+    .bh-games-bar{ height:12px; border-radius:999px; outline:1px solid rgba(255,255,255,.16);
       background:linear-gradient(90deg, #5eead4, #ff6ec7); position:relative; overflow:hidden }
-    .cursor{ position:absolute; top:50%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%;
+    .bh-games-cursor{ position:absolute; top:50%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%;
       background:#fff; box-shadow:0 0 0 2px rgba(94,234,212,.35), 0 0 18px rgba(94,234,212,.25); transition:left .28s ease }
 
-    /* Triage — plansza */
-    .triage-board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
-    .triage-cell{height:86px;border-radius:12px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);font-size:26px;position:relative;overflow:hidden}
-    .triage-badge{position:absolute;bottom:6px;right:6px;font-size:11px;font-weight:900;padding:3px 6px;border-radius:999px}
-    .triage-red{background:rgba(255,99,99,.25);border:1px solid rgba(255,99,99,.45)}
-    .triage-yellow{background:rgba(255,204,102,.25);border:1px solid rgba(255,204,102,.45)}
-    .triage-green{background:rgba(94,234,212,.22);border:1px solid rgba(94,234,212,.45)}
+    /* Reflex Triage plansza */
+    .triage-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px }
+    .triage-cell{
+      border-radius:12px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16);
+      min-height:90px; display:grid; place-items:center; position:relative; user-select:none;
+    }
+    .triage-badge{ position:absolute; top:8px; right:8px; font-size:14px; opacity:.95 }
 
-    /* Germ Smash — plansza */
-    .germ-board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
-    .germ-hole{height:86px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);position:relative;overflow:hidden}
-    .germ{position:absolute;inset:auto 0 0 0;margin:auto;width:100%;height:0;display:grid;place-items:center;font-size:28px;transition:height .12s ease}
-    .germ.show{height:100%}
+    /* Toast */
+    .bh-games-toast{ position:fixed; right:16px; bottom:16px; z-index:10000; display:none }
+    .bh-games-toast.show{ display:block; animation:fadeIn .25s ease both }
+    .bh-games-toast .box{ background:rgba(60,32,100,.9); border:1px solid rgba(164,107,255,.35); color:#eafff7;
+      border-radius:12px; padding:10px 12px; box-shadow:0 14px 28px rgba(8,10,22,.5) }
+    @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px) } to{ opacity:1; transform:none } }
   </style>
 </head>
 
-<body>
-  <!-- Tapeta -->
+<body data-page="games">
+  <!-- TŁO -->
   <div class="bh-wallpaper" aria-hidden="true"></div>
   <div class="bh-grid" aria-hidden="true"></div>
   <div class="bh-floor-fade" aria-hidden="true"></div>
 
   <div class="container">
-    <header class="header">
+    <!-- Nagłówek / nawigacja -->
+    <header class="header" style="display:flex;justify-content:space-between;align-items:center;padding:14px 0">
       <div class="brand">
-        <h1>🎮 Gry / Trening</h1>
-        <small>Nauka i ćwiczenie pierwszej pomocy</small>
+        <h1 style="margin:0">🎮 Gry / Trening</h1>
+        <small>Ucz się przez zabawę — tempo RKO, AED, triage i więcej</small>
       </div>
-      <div><a href="index.html" style="color:#cfe2ff;text-decoration:none">← Strona główna</a></div>
+      <nav>
+        <a href="index.html" class="bh-games-btn" style="text-decoration:none">← Powrót</a>
+      </nav>
     </header>
 
-    <section class="bh-games-grid" aria-label="Edukacja interaktywna — gry">
-      <article class="bh-games-card">
-        <div class="bh-games-ico">💓</div>
-        <div>
-          <div class="bh-games-title">RKO Tempo Tap</div>
-          <p class="bh-games-desc">Utrzymaj tempo <b>100–120/min</b> przez 30 sekund. Nauka rytmu ucisków.</p>
-          <div class="bh-games-actions"><button class="bh-games-btn" data-game-open="rko">Start</button></div>
-        </div>
-      </article>
+    <!-- Siatka kart gier -->
+    <section aria-label="Edukacja interaktywna — gry" style="margin-top:8px">
+      <div class="bh-games-grid">
+        <!-- RKO Tempo Tap -->
+        <article class="bh-games-card">
+          <div class="bh-games-ico">💓</div>
+          <div>
+            <div class="bh-games-title">RKO Tempo Tap</div>
+            <p class="bh-games-desc">Utrzymaj tempo <b>100–120/min</b> przez 30 s — ćwicz rytm ucisków.</p>
+            <div class="bh-games-actions">
+              <button class="bh-games-btn" data-game-open="rko">Start</button>
+            </div>
+          </div>
+        </article>
 
-      <article class="bh-games-card">
-        <div class="bh-games-ico">🫁</div>
-        <div>
-          <div class="bh-games-title">Zadławienie 5+5</div>
-          <p class="bh-games-desc">Sekwencja: <b>5 uderzeń w plecy</b> ↔ <b>5 uciśnięć nadbrzusza</b>. Ćwicz przez 60 s.</p>
-          <div class="bh-games-actions"><button class="bh-games-btn" data-game-open="zadlawienie">Start</button></div>
-        </div>
-      </article>
+        <!-- Zadławienie 5+5 -->
+        <article class="bh-games-card">
+          <div class="bh-games-ico">🫁</div>
+          <div>
+            <div class="bh-games-title">Zadławienie 5+5</div>
+            <p class="bh-games-desc">Trenuj sekwencję <b>5 uderzeń</b> ↔ <b>5 uciśnięć nadbrzusza</b> w 60 s.</p>
+            <div class="bh-games-actions">
+              <button class="bh-games-btn" data-game-open="zadlawienie">Start</button>
+            </div>
+          </div>
+        </article>
 
-      <article class="bh-games-card">
-        <div class="bh-games-ico">⚡</div>
-        <div>
-          <div class="bh-games-title">AED Timing</div>
-          <p class="bh-games-desc">Naciśnij <b>WYŁADOWANIE</b> w zielonej strefie. 3 rundy po 5 prób.</p>
-          <div class="bh-games-actions"><button class="bh-games-btn" data-game-open="aed">Start</button></div>
-        </div>
-      </article>
+        <!-- AED Timing -->
+        <article class="bh-games-card">
+          <div class="bh-games-ico">⚡</div>
+          <div>
+            <div class="bh-games-title">AED Timing</div>
+            <p class="bh-games-desc">Wyceluj wyładowanie, gdy znacznik jest w strefie — 3 rundy, rosnąca trudność.</p>
+            <div class="bh-games-actions">
+              <button class="bh-games-btn" data-game-open="aed">Start</button>
+            </div>
+          </div>
+        </article>
 
-      <article class="bh-games-card">
-        <div class="bh-games-ico">🚦</div>
-        <div>
-          <div class="bh-games-title">Reflex Triage</div>
-          <p class="bh-games-desc">Klikaj właściwy priorytet (🔴/🟡/🟢) — zdobywaj punkty i nie trać żyć!</p>
-          <div class="bh-games-actions"><button class="bh-games-btn" data-game-open="triage">Start</button></div>
-        </div>
-      </article>
+        <!-- Reflex Triage -->
+        <article class="bh-games-card">
+          <div class="bh-games-ico">🚑</div>
+          <div>
+            <div class="bh-games-title">Reflex Triage</div>
+            <p class="bh-games-desc">Klikaj pacjentów w kolorze aktualnego priorytetu. Uważaj na życie!</p>
+            <div class="bh-games-actions">
+              <button class="bh-games-btn" data-game-open="triage">Start</button>
+            </div>
+          </div>
+        </article>
 
-      <article class="bh-games-card">
-        <div class="bh-games-ico">🧫</div>
-        <div>
-          <div class="bh-games-title">Germ Smash</div>
-          <p class="bh-games-desc">Whack-a-mole! Klikaj zarazki zanim znikną. 30 sekund zabawy :)</p>
-          <div class="bh-games-actions"><button class="bh-games-btn" data-game-open="germ">Start</button></div>
-        </div>
-      </article>
+        <!-- Germ Smash (można zostawić; naprawimy później widoczność) -->
+        <article class="bh-games-card">
+          <div class="bh-games-ico">🦠</div>
+          <div>
+            <div class="bh-games-title">Germ Smash</div>
+            <p class="bh-games-desc">Klikaj zarazki na planszy 3×3. Prosto, szybko, higienicznie!</p>
+            <div class="bh-games-actions">
+              <button class="bh-games-btn" data-game-open="germ">Start</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- NOWE: Symptom Detective -->
+        <article class="bh-games-card">
+          <div class="bh-games-ico">🕵️‍♀️</div>
+          <div>
+            <div class="bh-games-title">Symptom Detective</div>
+            <p class="bh-games-desc">Wybierz właściwą akcję dla „mini-przypadku” — szybki trening decyzji.</p>
+            <div class="bh-games-actions">
+              <button class="bh-games-btn" data-game-open="symptom">Start</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- NOWE: Red Flag or Not? -->
+        <article class="bh-games-card">
+          <div class="bh-games-ico">🚩</div>
+          <div>
+            <div class="bh-games-title">Red Flag or Not?</div>
+            <p class="bh-games-desc">Czy to czerwona flaga? Kliknij TAK/NIE i sprawdź objaśnienia.</p>
+            <div class="bh-games-actions">
+              <button class="bh-games-btn" data-game-open="redflags">Start</button>
+            </div>
+          </div>
+        </article>
+      </div>
     </section>
   </div>
 
-  <!-- Modale gier -->
-  <!-- RKO -->
-  <div id="gRko" class="bh-games-modal" aria-hidden="true" role="dialog" aria-labelledby="gRkoTitle">
+  <!-- ===== TOAST (wspólny) ===== -->
+  <div class="bh-games-toast" id="gToast" role="status" aria-live="polite">
+    <div class="box" id="gToastText">OK</div>
+  </div>
+
+  <!-- ===== MODALE GIER ===== -->
+
+  <!-- RKO Tempo Tap -->
+  <div id="gRko" class="bh-games-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="gRkoTitle">
     <div class="bh-games-panel">
       <div class="bh-games-head">
         <div class="bh-games-title-xl" id="gRkoTitle">💓 RKO Tempo Tap</div>
-        <button class="bh-games-close" data-game-close>✕</button>
+        <button class="bh-games-close" type="button" data-game-close>✕</button>
       </div>
       <div class="bh-games-body">
-        <div class="pad">
-          <button class="bh-games-btn" id="rkoTap" style="width:220px;height:220px;border-radius:50%;font-size:16px;font-weight:900">
-            Stukaj rytm<br>100–120/min<br><small>(klik/space)</small>
-          </button>
-        </div>
-        <div class="stats">
-          <div class="stat"><span>BPM</span><span id="rkoBpm">0</span></div>
-          <div class="stat"><span>W zakresie</span><span id="rkoInRange">0%</span></div>
-          <div class="bar" aria-label="Postęp treningu">
-            <span class="cursor" id="rkoCursor" style="left:6%"></span>
+        <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:16px">
+          <div class="bh-games-stats" style="display:grid;place-items:center;min-height:260px">
+            <button class="bh-games-btn" id="rkoTap" style="width:220px;height:220px;border-radius:50%;font-weight:900">
+              Stukaj rytm<br>100–120/min<br><small>(klik/space)</small>
+            </button>
           </div>
-          <div class="stat"><span>Czas</span><span id="rkoTime">30s</span></div>
-          <div class="bh-games-actions" style="margin-top:10px">
-            <button class="bh-games-btn" id="rkoStart">Start 30s</button>
-            <button class="bh-games-btn" id="rkoReset">Reset</button>
+          <div class="bh-games-stats">
+            <div class="bh-games-stat"><span>BPM</span><span id="rkoBpm">0</span></div>
+            <div class="bh-games-stat"><span>W zakresie</span><span id="rkoInRange">0%</span></div>
+            <div class="bh-games-bar" aria-label="Postęp"><span class="bh-games-cursor" id="rkoCursor" style="left:6%"></span></div>
+            <div class="bh-games-stat"><span>Czas</span><span id="rkoTime">30s</span></div>
+            <div class="bh-games-stat"><span>Najlepszy</span><span id="rkoBest">—</span></div>
+            <div class="bh-games-actions" style="margin-top:10px">
+              <button class="bh-games-btn" id="rkoStart">Start 30s</button>
+              <button class="bh-games-btn" id="rkoReset">Reset</button>
+            </div>
           </div>
-          <p class="bh-games-desc" style="margin-top:8px">Cel: utrzymaj <b>≥70%</b> czasu w zakresie — odznaka <b>Tempo Master</b>.</p>
-          <p class="bh-games-desc" id="rkoBest" style="opacity:.85"></p>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Zadławienie 5+5 -->
-  <div id="gZdl" class="bh-games-modal" aria-hidden="true" role="dialog" aria-labelledby="gZdlTitle">
+  <div id="gZdl" class="bh-games-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="gZdlTitle">
     <div class="bh-games-panel">
       <div class="bh-games-head">
         <div class="bh-games-title-xl" id="gZdlTitle">🫁 Zadławienie 5+5</div>
-        <button class="bh-games-close" data-game-close>✕</button>
+        <button class="bh-games-close" type="button" data-game-close>✕</button>
       </div>
       <div class="bh-games-body">
-        <div class="pad" style="text-align:center">
-          <p style="margin:4px 0 12px">Wykonuj <b>na zmianę</b> 5 uderzeń w plecy i 5 uciśnięć nadbrzusza (limit 60 s).</p>
-          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-            <button class="bh-games-btn" id="zdlBack">Uderzenie w plecy</button>
-            <button class="bh-games-btn" id="zdlAbd">Ucisk nadbrzusza</button>
-            <button class="bh-games-btn" id="zdlStart">Start</button>
-            <button class="bh-games-btn" id="zdlReset">Reset</button>
-          </div>
+        <div class="bh-games-stats" style="margin-bottom:12px">
+          <div class="bh-games-stat"><span>Etap</span><span id="zdlStage">Plecy (1/5)</span></div>
+          <div class="bh-games-stat"><span>Poprawność</span><span id="zdlSeq">OK</span></div>
+          <div class="bh-games-stat"><span>Czas</span><span id="zdlTime">60s</span></div>
+          <div class="bh-games-stat"><span>Powtórzeń</span><span id="zdlScore">0</span></div>
+          <div class="bh-games-stat"><span>Najlepszy</span><span id="zdlBest">—</span></div>
         </div>
-        <div class="stats">
-          <div class="stat"><span>Etap</span><span id="zdlStage">Plecy (1/5)</span></div>
-          <div class="stat"><span>Poprawność sekwencji</span><span id="zdlSeq">OK</span></div>
-          <div class="stat"><span>Czas</span><span id="zdlTime">60s</span></div>
-          <div class="stat"><span>Wynik</span><span id="zdlScore">0</span></div>
-          <p class="bh-games-desc" id="zdlBest" style="opacity:.85"></p>
+        <div class="bh-games-actions" style="margin-bottom:10px">
+          <button class="bh-games-btn" id="zdlBack">Uderzenie w plecy (B)</button>
+          <button class="bh-games-btn" id="zdlAbd">Ucisk nadbrzusza (A)</button>
+        </div>
+        <div class="bh-games-actions">
+          <button class="bh-games-btn" id="zdlStart">Start 60s</button>
+          <button class="bh-games-btn" id="zdlReset">Reset</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- AED Timing -->
-  <div id="gAed" class="bh-games-modal" aria-hidden="true" role="dialog" aria-labelledby="gAedTitle">
+  <div id="gAed" class="bh-games-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="gAedTitle">
     <div class="bh-games-panel">
       <div class="bh-games-head">
         <div class="bh-games-title-xl" id="gAedTitle">⚡ AED Timing</div>
-        <button class="bh-games-close" data-game-close>✕</button>
+        <button class="bh-games-close" type="button" data-game-close>✕</button>
       </div>
       <div class="bh-games-body">
-        <div class="pad">
-          <div style="width:100%;max-width:560px;margin:0 auto">
-            <p style="margin:4px 0 12px">Kliknij <b>WYŁADOWANIE</b>, gdy znacznik jest w <b>zielonej strefie</b>. 3 rundy × 5 prób.</p>
-            <div class="bar" style="height:auto;padding:10px">
-              <div class="aed-track" id="aedTrack" style="height:14px;position:relative;border-radius:999px;background:rgba(255,255,255,.1);outline:1px solid rgba(255,255,255,.18)">
-                <div class="aed-zone" id="aedZone" style="position:absolute;top:0;bottom:0;border-radius:999px;background:rgba(94,234,212,.35);left:40%;right:35%"></div>
-                <div class="aed-marker" id="aedMarker" style="position:absolute;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(94,234,212,.35),0 0 18px rgba(94,234,212,.25);left:6%"></div>
-              </div>
-              <div class="bh-games-actions" style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-                <button class="bh-games-btn" id="aedShock">WYŁADOWANIE</button>
-                <button class="bh-games-btn" id="aedStart">Start rundy</button>
-                <button class="bh-games-btn" id="aedReset">Reset</button>
-              </div>
-            </div>
+        <div class="bh-games-stats" style="margin-bottom:12px">
+          <div class="bh-games-stat"><span>Runda</span><span id="aedRound">1/3</span></div>
+          <div class="bh-games-stat"><span>Trafienia</span><span id="aedHits">0/0</span></div>
+          <div class="bh-games-stat"><span>Wynik</span><span id="aedScore">0</span></div>
+          <div class="bh-games-stat"><span>Najlepszy</span><span id="aedBest">—</span></div>
+        </div>
+        <div class="bh-games-stats" style="margin-bottom:12px">
+          <div style="position:relative;height:24px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16)">
+            <div id="aedTrack" style="position:absolute;left:6%;right:6%;top:50%;height:6px;border-radius:999px;background:#a46bff;transform:translateY(-50%)"></div>
+            <div id="aedZone" style="position:absolute;left:40%;right:40%;top:50%;height:14px;border-radius:999px;background:rgba(94,234,212,.35);transform:translateY(-50%)"></div>
+            <div id="aedMarker" style="position:absolute;left:6%;top:50%;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(94,234,212,.35),0 0 18px rgba(94,234,212,.25);transform:translate(-50%,-50%)"></div>
           </div>
         </div>
-        <div class="stats">
-          <div class="stat"><span>Runda</span><span id="aedRound">1/3</span></div>
-          <div class="stat"><span>Trafienia</span><span id="aedHits">0/0</span></div>
-          <div class="stat"><span>Wynik łączny</span><span id="aedScore">0</span></div>
-          <p class="bh-games-desc" id="aedBest" style="opacity:.85"></p>
+        <div class="bh-games-actions">
+          <button class="bh-games-btn" id="aedStart">Start</button>
+          <button class="bh-games-btn" id="aedShock">Wstrząs</button>
+          <button class="bh-games-btn" id="aedReset">Reset</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Reflex Triage -->
-  <div id="gTriage" class="bh-games-modal" aria-hidden="true" role="dialog" aria-labelledby="gTriageTitle">
+  <div id="gTriage" class="bh-games-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="gTriageTitle">
     <div class="bh-games-panel">
       <div class="bh-games-head">
-        <div class="bh-games-title-xl" id="gTriageTitle">🚦 Reflex Triage</div>
-        <button class="bh-games-close" data-game-close>✕</button>
+        <div class="bh-games-title-xl" id="gTriageTitle">🚑 Reflex Triage</div>
+        <button class="bh-games-close" type="button" data-game-close>✕</button>
       </div>
       <div class="bh-games-body">
-        <div class="pad" style="text-align:center">
-          <p style="margin:4px 0 8px">Klikaj pacjentów zgodnie z priorytetem: <b>🔴Czerwony</b> &nbsp; <b>🟡Żółty</b> &nbsp; <b>🟢Zielony</b>.</p>
-          <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:8px">
-            <button class="bh-games-btn" id="trRed">🔴 Czerwony</button>
-            <button class="bh-games-btn" id="trYellow">🟡 Żółty</button>
-            <button class="bh-games-btn" id="trGreen">🟢 Zielony</button>
-            <button class="bh-games-btn" id="trStart">Start 30s</button>
-            <button class="bh-games-btn" id="trReset">Reset</button>
+        <div class="bh-games-stats" style="margin-bottom:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <div class="bh-games-stat"><span>Tryb</span><span id="trMode">Klikaj: 🔴 Czerwony</span></div>
+            <div class="bh-games-stat"><span>Czas</span><span id="trTime">30s</span></div>
+            <div class="bh-games-stat"><span>Wynik</span><span id="trScore">0</span></div>
+            <div class="bh-games-stat"><span>Życia</span><span id="trLives">3</span></div>
+            <div class="bh-games-stat"><span>Najlepszy</span><span id="trBest">—</span></div>
+            <div class="bh-games-actions" style="margin-top:8px">
+              <button class="bh-games-btn" id="trStart">Start</button>
+              <button class="bh-games-btn" id="trReset">Reset</button>
+            </div>
+            <div class="bh-games-actions" style="margin-top:8px">
+              <button class="bh-games-btn" id="trRed">🔴</button>
+              <button class="bh-games-btn" id="trYellow">🟡</button>
+              <button class="bh-games-btn" id="trGreen">🟢</button>
+            </div>
           </div>
-          <div class="triage-board" id="trBoard">
-            <!-- 3x3 komórki tworzone w JS -->
+          <div>
+            <div id="trBoard" class="triage-grid" aria-label="Plansza Triage"></div>
           </div>
-        </div>
-        <div class="stats">
-          <div class="stat"><span>Tryb</span><span id="trMode">Wybierz kolor</span></div>
-          <div class="stat"><span>Czas</span><span id="trTime">30s</span></div>
-          <div class="stat"><span>Wynik</span><span id="trScore">0</span></div>
-          <div class="stat"><span>Życia</span><span id="trLives">3</span></div>
-          <p class="bh-games-desc" id="trBest" style="opacity:.85"></p>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Germ Smash -->
-  <div id="gGerm" class="bh-games-modal" aria-hidden="true" role="dialog" aria-labelledby="gGermTitle">
+  <div id="gGerm" class="bh-games-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="gGermTitle">
     <div class="bh-games-panel">
       <div class="bh-games-head">
-        <div class="bh-games-title-xl" id="gGermTitle">🧫 Germ Smash</div>
-        <button class="bh-games-close" data-game-close>✕</button>
+        <div class="bh-games-title-xl" id="gGermTitle">🦠 Germ Smash</div>
+        <button class="bh-games-close" type="button" data-game-close>✕</button>
       </div>
       <div class="bh-games-body">
-        <div class="pad" style="text-align:center">
-          <p style="margin:4px 0 8px">Klikaj „zarazki” (🦠/🤢) zanim znikną. Czas: 30s.</p>
-          <div class="germ-board" id="gmBoard">
-            <!-- 3x3 dołki tworzone w JS -->
-          </div>
-          <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">
-            <button class="bh-games-btn" id="gmStart">Start</button>
-            <button class="bh-games-btn" id="gmReset">Reset</button>
-          </div>
+        <div class="bh-games-stats" style="margin-bottom:12px">
+          <div class="bh-games-stat"><span>Czas</span><span id="gmTime">30s</span></div>
+          <div class="bh-games-stat"><span>Wynik</span><span id="gmScore">0</span></div>
+          <div class="bh-games-stat"><span>Najlepszy</span><span id="gmBest">—</span></div>
         </div>
-        <div class="stats">
-          <div class="stat"><span>Czas</span><span id="gmTime">30s</span></div>
-          <div class="stat"><span>Wynik</span><span id="gmScore">0</span></div>
-          <p class="bh-games-desc" id="gmBest" style="opacity:.85"></p>
+        <div id="gmBoard" aria-label="Plansza Germ Smash" style="margin-bottom:12px"></div>
+        <div class="bh-games-actions">
+          <button class="bh-games-btn" id="gmStart">Start</button>
+          <button class="bh-games-btn" id="gmReset">Reset</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Toast (odznaki itp.) -->
-  <div class="toast" id="gToast" role="status" aria-live="polite">
-    <div class="box" id="gToastText">🏅 Odznaka!</div>
+  <!-- NOWE: Symptom Detective -->
+  <div id="gSymptom" class="bh-games-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="symTitle">
+    <div class="bh-games-panel">
+      <div class="bh-games-head">
+        <div class="bh-games-title-xl" id="symTitle">🕵️‍♀️ Symptom Detective</div>
+        <button class="bh-games-close" type="button" data-game-close>✕</button>
+      </div>
+      <div class="bh-games-body">
+        <div class="bh-games-stats" style="margin-bottom:12px">
+          <div class="bh-games-stat"><span>Czas</span><span id="symTime">60s</span></div>
+          <div class="bh-games-stat"><span>Wynik</span><span id="symScore">0</span></div>
+          <div class="bh-games-stat"><span>Najlepszy</span><span id="symBest">—</span></div>
+        </div>
+        <div style="border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:12px;background:rgba(255,255,255,.05)">
+          <div id="symCase" style="font-weight:800;margin-bottom:10px">—</div>
+          <div id="symAnswers" class="bh-games-actions"></div>
+        </div>
+        <div class="bh-games-actions" style="margin-top:12px">
+          <button class="bh-games-btn" id="symStart">Start 60s</button>
+          <button class="bh-games-btn" id="symReset">Reset</button>
+        </div>
+        <p class="bh-games-desc" style="margin-top:8px">+10 za dobry wybór, −5 za zły. Z krótkimi wskazówkami do nauki.</p>
+      </div>
+    </div>
   </div>
 
-  <script src="assets/games.js?v=3"></script>
+  <!-- NOWE: Red Flag or Not? -->
+  <div id="gRedflags" class="bh-games-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="rfTitle">
+    <div class="bh-games-panel">
+      <div class="bh-games-head">
+        <div class="bh-games-title-xl" id="rfTitle">🚩 Red Flag or Not?</div>
+        <button class="bh-games-close" type="button" data-game-close>✕</button>
+      </div>
+      <div class="bh-games-body">
+        <div class="bh-games-stats" style="margin-bottom:12px">
+          <div class="bh-games-stat"><span>Czas</span><span id="rfTime">45s</span></div>
+          <div class="bh-games-stat"><span>Wynik</span><span id="rfScore">0</span></div>
+          <div class="bh-games-stat"><span>Najlepszy</span><span id="rfBest">—</span></div>
+        </div>
+        <div style="border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:12px;background:rgba(255,255,255,.05)">
+          <div id="rfPrompt" style="font-weight:800;margin-bottom:10px">—</div>
+          <div class="bh-games-actions">
+            <button class="bh-games-btn" id="rfYes">🚩 Red flag</button>
+            <button class="bh-games-btn" id="rfNo">✅ Nie</button>
+          </div>
+          <div id="rfExplain" class="bh2025-muted" style="margin-top:8px"></div>
+        </div>
+        <div class="bh-games-actions" style="margin-top:12px">
+          <button class="bh-games-btn" id="rfStart">Start 45s</button>
+          <button class="bh-games-btn" id="rfReset">Reset</button>
+        </div>
+        <p class="bh-games-desc" style="margin-top:8px">Ucz się rozpoznawać pilne objawy i reagować właściwie.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skrypty -->
+  <script src="assets/main.js?v=10"></script>
+  <script src="assets/games.js?v=3.5"></script>
 </body>
 </html>
