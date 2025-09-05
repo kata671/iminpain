@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="assets/style.css?v=10" />
 
   <style>
-    /* ========= KOLORY (glow) ========= */
+    /* ========= KOLORY ========= */
     :root{
       /* zielone (SOS) */
       --bhG: 34,227,160;     /* jasny mięta */
@@ -18,13 +18,26 @@
       /* niebieskie (gry) */
       --bhB: 91,178,255;     /* jasny niebieski */
       --bhB2: 40,120,200;    /* ciemniejszy */
+      /* czerwone (Szpitale/SOR) */
+      --bhR: 255, 99, 99;
     }
 
-    /* Puls używany przez pigułki i apteka24 */
-    @keyframes bh-pulse{
-      0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0), 0 0 12px currentColor; }
-      50%  { box-shadow: 0 0 0 6px currentColor, 0 0 22px currentColor; }
-      100% { box-shadow: 0 0 0 0 rgba(255,255,255,0), 0 0 12px currentColor; }
+    /* Subtelne pulsy bez manipulowania kolorem tekstu */
+    @keyframes glow-green {
+      0%,100% { box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhG), .25) inset, 0 0 14px rgba(var(--bhG), .20); }
+      50%     { box-shadow:0 12px 26px rgba(8,10,22,.45), 0 0 0 1px rgba(var(--bhG), .35) inset, 0 0 26px rgba(var(--bhG), .42); }
+    }
+    @keyframes glow-blue {
+      0%,100% { box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhB), .25) inset, 0 0 16px rgba(var(--bhB), .26); }
+      50%     { box-shadow:0 12px 26px rgba(8,10,22,.45), 0 0 0 1px rgba(var(--bhB), .35) inset, 0 0 28px rgba(var(--bhB), .46); }
+    }
+    @keyframes glow-badge {
+      0%,100% { box-shadow:0 6px 18px rgba(8,10,22,.35), inset 0 0 0 1px rgba(var(--bhG), .20), 0 0 14px rgba(var(--bhG), .30); }
+      50%     { box-shadow:0 10px 24px rgba(8,10,22,.45), inset 0 0 0 1px rgba(var(--bhG), .28), 0 0 22px rgba(var(--bhG), .48); }
+    }
+    @keyframes red-pulse {
+      0%,100% { box-shadow:0 8px 18px rgba(255,80,80,.25), 0 0 0 0 rgba(255,80,80,.0); }
+      50%     { box-shadow:0 12px 28px rgba(255,80,80,.35), 0 0 0 6px rgba(255,80,80,.14); }
     }
 
     /* ========= TŁO / TAPETA ========= */
@@ -76,7 +89,8 @@
     .situations .pill{
       display:inline-flex;align-items:center;gap:8px;margin:4px 6px 8px 0;text-decoration:none;
       font-weight:800;border-radius:999px;padding:10px 14px;line-height:1;border:1px solid transparent;
-      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease, color .2s ease;
+      color:#f2f6ff;
     }
     .situations .pill .ico{
       display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;
@@ -84,9 +98,8 @@
     /* zielony wariant */
     .situations .pill.pill--green{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(var(--bhG2), .15);
-      color:#eafff7; border:1px solid rgba(var(--bhG), .55);
+      border:1px solid rgba(var(--bhG), .55);
       box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhG), .25) inset, 0 0 18px rgba(var(--bhG), .18);
-      backdrop-filter:saturate(125%) blur(4px);
     }
     .situations .pill.pill--green .ico{
       background: rgba(var(--bhG), .18);
@@ -102,9 +115,8 @@
     /* niebieski wariant (gry) */
     .situations .pill.pill--blue{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(var(--bhB2), .16);
-      color:#eaf6ff; border:1px solid rgba(var(--bhB), .55);
+      border:1px solid rgba(var(--bhB), .55);
       box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhB), .25) inset, 0 0 18px rgba(var(--bhB), .28);
-      backdrop-filter:saturate(125%) blur(4px);
     }
     .situations .pill.pill--blue .ico{
       background: rgba(var(--bhB), .18);
@@ -118,17 +130,14 @@
       outline:none;
     }
     @media (prefers-reduced-motion: no-preference){
-      .situations .pill.pill--green{ animation: bh-pulse 3.6s ease-in-out infinite; color: rgba(var(--bhG), .0); }
-      .situations .pill.pill--blue{ animation: bh-pulse 3s ease-in-out infinite; color: rgba(var(--bhB), .0); }
-      /* uwaga: sam efekt shadow korzysta z currentColor z :before, więc dodajemy kolory poniżej */
-      .situations .pill.pill--green{ --shadow: rgba(var(--bhG), .28); text-shadow: 0 0 0 var(--shadow); }
-      .situations .pill.pill--blue { --shadow: rgba(var(--bhB), .28); text-shadow: 0 0 0 var(--shadow); }
+      .situations .pill.pill--green{ animation: glow-green 3.4s ease-in-out infinite; }
+      .situations .pill.pill--blue { animation: glow-blue  3.0s ease-in-out infinite; }
     }
 
     /* ========= apteka24 badge ========= */
     #btn-apteka .badge-round{
       background: rgba(var(--bhG), .18);
-      color: #eafff7;
+      color: #eafff7; /* <-- TEKST WIDOCZNY */
       border:1px solid rgba(var(--bhG), .55);
       box-shadow:
         0 6px 18px rgba(8,10,22,.35),
@@ -148,7 +157,19 @@
         0 0 22px rgba(var(--bhG), .45);
     }
     @media (prefers-reduced-motion: no-preference){
-      #btn-apteka .badge-round{ animation: bh-pulse 2.4s ease-in-out infinite; color: rgba(var(--bhG), .0); }
+      #btn-apteka .badge-round{ animation: glow-badge 2.4s ease-in-out infinite; }
+    }
+
+    /* ========= PRZYCISK SZPITALE / SOR — czerwona pulsująca ramka ========= */
+    #btn-hosp{
+      border:2px solid rgba(var(--bhR), .55) !important;
+      box-shadow:0 6px 16px rgba(var(--bhR), .18) !important;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)) !important;
+      color:#ffecec !important;
+      border-radius:12px !important;
+    }
+    @media (prefers-reduced-motion: no-preference){
+      #btn-hosp{ animation: red-pulse 1.9s ease-in-out infinite; }
     }
 
     /* ========= QUIZ / PORADA (kontener) ========= */
@@ -323,7 +344,7 @@
   <!-- Skrypt ogólny (Twój) -->
   <script src="assets/main.js?v=10"></script>
 
-  <!-- Logika quizu (działa) -->
+  <!-- Logika quizu (z KONFETTI) -->
   <script>
   (function(){
     const openBtn = document.getElementById('bh2025QuizOpen');
@@ -407,7 +428,9 @@
     function open(){ modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; step=0; chosen.fill(null); render(); }
     function close(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
 
+    // Toast + KONFETTI
     function award(score){
+      // toast
       const toast=document.createElement('div');
       toast.textContent = `Brawo! Wynik: ${score}/${QUIZ.length}`;
       Object.assign(toast.style,{
@@ -418,6 +441,30 @@
       });
       document.body.appendChild(toast);
       setTimeout(()=>{ toast.remove(); }, 2600);
+
+      // konfetti
+      const c=document.createElement('canvas'); c.width=innerWidth; c.height=innerHeight;
+      Object.assign(c.style,{position:'fixed',inset:'0',pointerEvents:'none',zIndex:9999});
+      document.body.appendChild(c);
+      const ctx=c.getContext('2d');
+      let parts=Array.from({length: score===QUIZ.length? 140:90},()=>({
+        x:Math.random()*c.width, y:-20,
+        vx:-1+Math.random()*2, vy:2+Math.random()*2.5,
+        size:3+Math.random()*4, rot:Math.random()*6, vr:-.2+Math.random()*.4,
+        color: score===QUIZ.length ? ['#5eead4','#a46bff','#ffd16c'][Math.floor(Math.random()*3)] : 'rgba(255,255,255,.85)',
+        life: 90
+      }));
+      (function tick(){
+        ctx.clearRect(0,0,c.width,c.height);
+        parts.forEach(p=>{
+          p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr; p.vy+=0.02; p.life--;
+          ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+          ctx.fillStyle=p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
+          ctx.restore();
+        });
+        parts=parts.filter(p=>p.life>0);
+        if(parts.length) requestAnimationFrame(tick); else c.remove();
+      })();
     }
 
     openBtn.addEventListener('click', open);
@@ -516,6 +563,14 @@
     const VIDEO = { zadlawienie:null, reanimacja:null, wypadek:null, pierwszopomoc:null };
 
     function openPorada(key, title){
+      const poradaModal  = document.getElementById('bh2025Porada');
+      const poradaTitle  = document.getElementById('bh2025PoradaTitle');
+      const poradaChip   = document.getElementById('bh2025PoradaChip');
+      const svgWrap      = document.getElementById('bh2025PoradaSvg');
+      const stepsOl      = document.getElementById('bh2025PoradaSteps');
+      const videoWrap    = document.getElementById('bh2025VideoWrap');
+      const videoPh      = document.getElementById('bh2025VideoPh');
+
       poradaTitle.textContent = title || 'Porada';
       poradaChip.textContent  = 'SOS • instrukcja';
       svgWrap.innerHTML       = SVG[key] || '';
@@ -540,13 +595,15 @@
       document.body.style.overflow='hidden';
     }
     function closePorada(){
+      const poradaModal  = document.getElementById('bh2025Porada');
       poradaModal.setAttribute('aria-hidden','true');
       document.body.style.overflow='';
     }
 
+    const poradaClose  = document.getElementById('bh2025PoradaClose');
     poradaClose.addEventListener('click', closePorada);
-    poradaModal.addEventListener('click', (e)=>{ if(e.target===poradaModal) closePorada(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && poradaModal.getAttribute('aria-hidden')==='false') closePorada(); });
+    document.getElementById('bh2025Porada').addEventListener('click', (e)=>{ if(e.target.id==='bh2025Porada') closePorada(); });
+    document.addEventListener('keydown', (e)=>{ const m=document.getElementById('bh2025Porada'); if(e.key==='Escape' && m.getAttribute('aria-hidden')==='false') closePorada(); });
 
     const nav = document.querySelector('nav.situations');
     if(nav){
