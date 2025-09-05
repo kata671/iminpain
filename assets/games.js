@@ -1,7 +1,7 @@
-/* Boli Help — Gry / Trening — v3.2
-   Zmiany:
-   - Germ Smash: widoczność na 100% (opacity/scale, tło-kółko, zIndex, pointer-events)
-   - Reflex Triage: auto-wybór koloru co ~2s + pulsujący highlight celu
+/* Boli Help — Gry / Trening — v3.3 (easy/visible)
+   Usprawnienia:
+   - Germ Smash: duże, kontrastowe kółko z białą obwódką, wolniejsze tempo, dłuższa widoczność.
+   - Reflex Triage: wolniejsza zmiana koloru celu, dłuższa żywotność pacjentów, max 4 aktywnych.
 */
 (function(){
   const $ = sel => document.querySelector(sel);
@@ -97,7 +97,7 @@
     tap.addEventListener('click', ()=>{ if(!running) return; times.push(performance.now()); bpmEl.textContent = computeBpm(); });
     document.addEventListener('keydown', (e)=>{ if(e.key===' ' && !$('#gRko').hasAttribute('aria-hidden')){ e.preventDefault(); tap.click(); } });
 
-    start.addEventListener('click', ()=>{ if(!running) startRun(); });
+    start.addEventListener('click', ()=>{ if(running) return; startRun(); });
     reset.addEventListener('click', ()=>{ stop(false); bpmEl.textContent='0'; inrEl.textContent='0%'; cur.style.left='6%'; tEl.textContent='30s'; });
 
     const best = getBest('rko'); if(best!=null) bestEl.textContent = `Najlepszy wynik: ${best}%`;
@@ -252,7 +252,7 @@
     updateUi();
   })();
 
-  // ====== Reflex Triage (auto-kolor + highlight celu) ======
+  // ====== Reflex Triage (wolniej, dłużej, max 4 aktywnych) ======
   (function(){
     const board = $('#trBoard');
     const start = $('#trStart'), reset = $('#trReset');
@@ -285,31 +285,23 @@
       board.appendChild(c); cells.push(c);
     }
 
-    function updateModeLabel(){
-      modeEl.textContent = 'Klikaj: ' + colorLabel(target);
-    }
+    function updateModeLabel(){ modeEl.textContent = 'Klikaj: ' + colorLabel(target); }
     function setMode(col){
       target = col; updateModeLabel();
-      // podświetl już istniejące cele
       cells.forEach(c=>{
         if(c.dataset.color===col){
-          c.style.boxShadow='0 0 0 2px rgba(94,234,212,.8), 0 0 22px rgba(94,234,212,.35)';
+          c.style.boxShadow='0 0 0 2px rgba(94,234,212,.85), 0 0 22px rgba(94,234,212,.4)';
         } else {
           c.style.boxShadow='';
         }
       });
     }
 
-    // Auto-zmiana koloru celu co ~2s (można też ręcznie przyciskami)
-    function startTargetCallout(){
-      targetTimer = setInterval(()=>{
-        const newCol = colors[Math.floor(Math.random()*colors.length)];
-        setMode(newCol);
-      }, 2000);
-    }
+    // Auto-zmiana koloru celu co 3.5s (wolniej)
+    function startTargetCallout(){ targetTimer = setInterval(()=>{ setMode(colors[Math.floor(Math.random()*colors.length)]); }, 3500); }
     function stopTargetCallout(){ clearInterval(targetTimer); targetTimer=null; }
 
-    // Delegacja klików
+    // Kliki
     board.addEventListener('click', (e)=>{
       if(!running) return;
       const cell = e.target.closest('.triage-cell');
@@ -319,30 +311,31 @@
       const badge = cell.querySelector('.triage-badge');
       if(col===target){
         score += 5; scEl.textContent = String(score);
-        cell.dataset.color='';
-        cell.classList.remove('triage-red','triage-yellow','triage-green');
-        if(badge) badge.textContent='';
-        // flash zielony
+        cell.dataset.color=''; cell.classList.remove('triage-red','triage-yellow','triage-green'); if(badge) badge.textContent='';
         cell.style.transition='box-shadow .15s ease';
-        cell.style.boxShadow='0 0 0 2px rgba(94,234,212,.9), 0 0 26px rgba(94,234,212,.45)';
-        setTimeout(()=>{ cell.style.boxShadow=''; }, 160);
+        cell.style.boxShadow='0 0 0 2px rgba(94,234,212,.95), 0 0 26px rgba(94,234,212,.5)';
+        setTimeout(()=>{ cell.style.boxShadow=''; }, 180);
         showToast('✅ Dobry priorytet +5');
       } else {
         lives = Math.max(0, lives-1); lvEl.textContent = String(lives);
         cell.style.transition='box-shadow .15s ease';
-        cell.style.boxShadow='0 0 0 2px rgba(255,99,99,.9), 0 0 26px rgba(255,99,99,.45)';
-        setTimeout(()=>{ cell.style.boxShadow=''; }, 160);
+        cell.style.boxShadow='0 0 0 2px rgba(255,99,99,.95), 0 0 26px rgba(255,99,99,.5)';
+        setTimeout(()=>{ cell.style.boxShadow=''; }, 180);
         showToast('❌ Zły kolor');
         if(lives===0) stop(true);
       }
     });
 
-    // Przyciski trybu (ręczna zmiana celu)
+    // Ręczna zmiana celu
     bR && bR.addEventListener('click', ()=> setMode('red'));
     bY && bY.addEventListener('click', ()=> setMode('yellow'));
     bG && bG.addEventListener('click', ()=> setMode('green'));
 
+    function activeCount(){ return cells.filter(c => !!c.dataset.color).length; }
+
     function spawn(){
+      // mniej spawnow i limit aktywnych
+      if(activeCount() >= 4) return;
       const empty = cells.filter(c => !c.dataset.color);
       if(!empty.length) return;
       const c = empty[Math.floor(Math.random()*empty.length)];
@@ -351,25 +344,17 @@
       c.dataset.color = col;
       c.classList.add('triage-'+col);
       if(badge) badge.textContent = col==='red' ? '🔴' : col==='yellow' ? '🟡' : '🟢';
-      // highlight jeśli to cel
-      if(col===target){
-        c.style.boxShadow='0 0 0 2px rgba(94,234,212,.8), 0 0 22px rgba(94,234,212,.35)';
-      } else {
-        c.style.boxShadow='';
-      }
-      // znikanie po 1.5s
+      if(col===target){ c.style.boxShadow='0 0 0 2px rgba(94,234,212,.85), 0 0 22px rgba(94,234,212,.4)'; }
+      // dłuższa żywotność: ~2.2s
       setTimeout(()=>{
         if(c.dataset.color===col){
-          c.dataset.color='';
-          c.classList.remove('triage-red','triage-yellow','triage-green');
-          if(badge) badge.textContent='';
-          c.style.boxShadow='';
+          c.dataset.color=''; c.classList.remove('triage-red','triage-yellow','triage-green'); if(badge) badge.textContent=''; c.style.boxShadow='';
           if(col===target){
             lives = Math.max(0, lives-1); lvEl.textContent = String(lives);
             if(lives===0) stop(true);
           }
         }
-      }, 1500);
+      }, 2200);
     }
 
     function stop(final=false){
@@ -386,7 +371,8 @@
       score=0; lives=3; t0=performance.now(); running=true;
       scEl.textContent='0'; lvEl.textContent='3'; tEl.textContent='30s';
       setMode('red'); updateModeLabel(); startTargetCallout();
-      spawnTimer = setInterval(spawn, 480);
+      // wolniejsze tempo pojawiania
+      spawnTimer = setInterval(spawn, 700);
       timer = setInterval(()=>{
         const left = Math.max(0, DURATION-(performance.now()-t0));
         tEl.textContent = Math.ceil(left/1000)+'s';
@@ -404,7 +390,7 @@
     const best = getBest('triage'); if(best!=null && bestEl) bestEl.textContent = `Najlepszy wynik: ${best}`;
   })();
 
-  // ====== Germ Smash (opacity/scale, kółko tła, wysoka widoczność) ======
+  // ====== Germ Smash (duże, kontrastowe kółko, wolniej, dłużej) ======
   (function(){
     const board = $('#gmBoard');
     const start = $('#gmStart'), reset = $('#gmReset');
@@ -419,45 +405,37 @@
     const holes=[];
     for(let i=0;i<9;i++){
       const hole=document.createElement('div'); hole.className='germ-hole'; hole.style.position='relative';
+      // „zarazek” jako duże kółko z emoji w środku — super kontrast
       const germ=document.createElement('div');
-      // rdzeń zarazka: emoji na kółku tła
-      germ.innerHTML = `<div style="
-        position:absolute; inset:0; display:grid; place-items:center;
-        width:100%; height:100%;
-        ">
-        <div style="
-          width:66px; height:66px; border-radius:50%;
-          background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.85), rgba(255,255,255,.55));
-          box-shadow: 0 6px 16px rgba(0,0,0,.45);
-          display:grid; place-items:center;
-        ">
-          <span class="emj" style="font-size:34px; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35))">🦠</span>
-        </div>
-      </div>`;
-      // kontener animacji + widoczności
-      Object.assign(germ.style,{
-        position:'absolute', inset:'0',
-        display:'grid', placeItems:'center',
-        opacity:'0', transform:'scale(.6)',
-        transition:'opacity .12s ease, transform .12s ease',
-        zIndex:'5', pointerEvents:'none', // gdy ukryty
-      });
+      germ.innerHTML = `<div class="germ-core" style="
+        position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) scale(.7);
+        width:88px; height:88px; border-radius:50%;
+        background:#2ce6a0; /* mocny zielony */
+        border:3px solid #ffffff; 
+        box-shadow:0 8px 24px rgba(0,0,0,.55), 0 0 22px rgba(44,230,160,.45);
+        display:grid; place-items:center;
+        opacity:0; transition:opacity .14s ease, transform .14s ease;
+        z-index:20; pointer-events:none;">
+          <span class="emj" style="font-size:38px; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35))">🦠</span>
+        </div>`;
       hole.appendChild(germ); board.appendChild(hole);
-      holes.push({hole,germ,up:false,timeout:null});
-
-      // klik na całej „dziurce”
+      const core = germ.querySelector('.germ-core');
+      holes.push({hole, core, up:false, timeout:null});
       hole.style.cursor='pointer';
+
       hole.addEventListener('click', ()=>{
         if(!running || !holes[i].up) return;
         holes[i].up=false;
-        germ.style.opacity='0'; germ.style.transform='scale(.6)'; germ.style.pointerEvents='none';
+        core.style.opacity='0';
+        core.style.transform='translate(-50%,-50%) scale(.7)';
+        core.style.pointerEvents='none';
         score += 3; scEl.textContent = String(score);
         showToast('🧼 Sru! +3');
       });
     }
 
-    function setEmoji(germEl){
-      const span = germEl.querySelector('.emj');
+    function setEmoji(coreEl){
+      const span = coreEl.querySelector('.emj');
       if(span) span.textContent = Math.random()<0.5 ? '🦠' : '🤢';
     }
 
@@ -466,23 +444,23 @@
       if(!available.length) return;
       const h = available[Math.floor(Math.random()*available.length)];
       h.up=true;
-      setEmoji(h.germ);
-      h.germ.style.opacity='1';
-      h.germ.style.transform='scale(1)';
-      h.germ.style.pointerEvents='auto';
-      const stay = 800 + Math.random()*800; // 0.8–1.6s
+      setEmoji(h.core);
+      h.core.style.opacity='1';
+      h.core.style.transform='translate(-50%,-50%) scale(1)';
+      h.core.style.pointerEvents='auto';
+      const stay = 1500 + Math.random()*700; // 1.5–2.2s dłużej i czytelniej
       h.timeout = setTimeout(()=>{
         h.up=false;
-        h.germ.style.opacity='0';
-        h.germ.style.transform='scale(.6)';
-        h.germ.style.pointerEvents='none';
+        h.core.style.opacity='0';
+        h.core.style.transform='translate(-50%,-50%) scale(.7)';
+        h.core.style.pointerEvents='none';
       }, stay);
     }
 
     function stop(final=false){
       running=false;
       clearInterval(timer); clearInterval(spawnTimer);
-      holes.forEach(h=>{ h.up=false; h.germ.style.opacity='0'; h.germ.style.transform='scale(.6)'; h.germ.style.pointerEvents='none'; clearTimeout(h.timeout); });
+      holes.forEach(h=>{ h.up=false; h.core.style.opacity='0'; h.core.style.transform='translate(-50%,-50%) scale(.7)'; h.core.style.pointerEvents='none'; clearTimeout(h.timeout); });
       if(final){
         const best = getBest('germ') ?? 0;
         if(score>best) setBest('germ', score);
@@ -492,7 +470,7 @@
     }
     function startRun(){
       score=0; scEl.textContent='0'; tEl.textContent='30s'; running=true; t0=performance.now();
-      spawnTimer = setInterval(popOne, 520); // spokojniejsze tempo
+      spawnTimer = setInterval(popOne, 800); // wolniej (łatwiej)
       timer = setInterval(()=>{
         const left = Math.max(0, DURATION-(performance.now()-t0));
         tEl.textContent = Math.ceil(left/1000)+'s';
