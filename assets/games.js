@@ -1,13 +1,14 @@
-/* Boli Help — Gry / Trening — v2.1
-   Zawiera: RKO Tempo Tap, Zadławienie 5+5 (auto-start na 1. tap), AED Timing
+/* Boli Help — Gry / Trening — v3
+   Zawiera: RKO Tempo Tap, Zadławienie 5+5 (auto-start), AED Timing,
+            Reflex Triage, Germ Smash
    Zapamiętuje najlepsze wyniki w localStorage.
 */
 (function(){
   const $ = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
 
-  // ====== Modal: open/close (działa dla wszystkich gier) ======
-  const openMap = { rko:'#gRko', zadlawienie:'#gZdl', aed:'#gAed' };
+  // ====== Modal: open/close dla wszystkich gier ======
+  const openMap = { rko:'#gRko', zadlawienie:'#gZdl', aed:'#gAed', triage:'#gTriage', germ:'#gGerm' };
 
   document.addEventListener('click', (e)=>{
     const openBtn = e.target.closest('[data-game-open]');
@@ -25,19 +26,15 @@
   $$('.bh-games-modal').forEach(m=>{
     m.addEventListener('click', (e)=>{ if(e.target===m){ m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; } });
   });
-  document.addEventListener('keydown', (e)=>{
-    if(e.key==='Escape'){
-      $$('.bh-games-modal[aria-hidden="false"]').forEach(m=>{ m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; });
-    }
-  });
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ $$('.bh-games-modal[aria-hidden="false"]').forEach(m=>{ m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }); } });
 
-  // ====== Toast ======
+  // ====== Toast + Best wyniki ======
   const toast = $('#gToast'), toastText = $('#gToastText');
   function showToast(msg){
     if(!toast) return;
     toastText.textContent = msg;
     toast.classList.add('show');
-    setTimeout(()=>toast.classList.remove('show'), 2600);
+    setTimeout(()=>toast.classList.remove('show'), 2000);
   }
   function setBest(label, value){ localStorage.setItem(`bh_best_${label}`, String(value)); }
   function getBest(label){ const v = localStorage.getItem(`bh_best_${label}`); return v ? Number(v) : null; }
@@ -81,7 +78,7 @@
         const best = getBest('rko') ?? 0;
         if(score>best){ setBest('rko', score); }
         bestEl.textContent = `Najlepszy wynik: ${Math.max(best, score)}%`;
-        if(score>=70) showToast('🏅 Odznaka: Tempo Master (≥70% w zakresie)');
+        if(score>=70) showToast('🏅 Tempo Master (≥70%)');
       }
     }
     function startRun(){
@@ -106,7 +103,7 @@
     const best = getBest('rko'); if(best!=null) bestEl.textContent = `Najlepszy wynik: ${best}%`;
   })();
 
-  // ====== Zadławienie 5+5 (auto-start na 1. klik) ======
+  // ====== Zadławienie 5+5 (auto-start) ======
   (function(){
     const start = $('#zdlStart'), reset = $('#zdlReset');
     const bBack = $('#zdlBack'), bAbd = $('#zdlAbd');
@@ -132,11 +129,9 @@
       if(kind==='back'){ countBack++; total++; if(countBack===5) switchStage(); }
       else { countAbd++; total++; if(countAbd===5) switchStage(); }
       seqEl.textContent='OK'; seqEl.style.color='#cfe2ff'; updateUi();
-      if(total>=10 && stage==='back' && countBack===0){ showToast('✅ Pełny cykl 5+5 ukończony!'); }
+      if(total>=10 && stage==='back' && countBack===0){ showToast('✅ Pełny cykl 5+5!'); }
     }
-
     function tap(kind){
-      // AUTO-START: pierwszy tap uruchamia grę i zalicza ruch
       if(!running){ startRun(kind); return; }
       if(kind!==stage){
         seqEl.textContent='BŁĄD (kolejność)'; seqEl.style.color='#ffb3b3';
@@ -151,8 +146,8 @@
       if(final){
         const best = getBest('zdl') ?? 0;
         if(total>best){ setBest('zdl', total); }
-        bestEl.textContent = `Najlepszy wynik (poprawne ruchy): ${Math.max(best, total)}`;
-        if(total>=20) showToast('🏅 Odznaka: Airway Hero (20 poprawnych)');
+        bestEl.textContent = `Najlepszy wynik: ${Math.max(best, total)}`;
+        if(total>=20) showToast('🏅 Airway Hero (20+)');
       }
     }
     function startRun(primeKind){
@@ -164,7 +159,6 @@
         tEl.textContent = Math.ceil(left/1000)+'s';
         if(left<=0){ stop(true); }
       }, 100);
-      // jeżeli start z pierwszego tapnięcia — zalicz od razu ten ruch
       if(primeKind){ realTap(primeKind); }
     }
 
@@ -173,15 +167,14 @@
     start.addEventListener('click', ()=>{ if(!running) startRun(); });
     reset.addEventListener('click', ()=>{ stop(false); stage='back'; countBack=0; countAbd=0; total=0; tEl.textContent='60s'; seqEl.textContent='OK'; seqEl.style.color='#cfe2ff'; updateUi(); });
 
-    // Skróty klawiaturowe: B = plecy, A = nadbrzusze
     document.addEventListener('keydown', (e)=>{
-      const modalOpen = !$('#gZdl').hasAttribute('aria-hidden');
-      if(!modalOpen) return;
+      const open = !$('#gZdl').hasAttribute('aria-hidden');
+      if(!open) return;
       if(e.key.toLowerCase()==='b'){ e.preventDefault(); bBack.click(); }
       if(e.key.toLowerCase()==='a'){ e.preventDefault(); bAbd.click(); }
     });
 
-    const best = getBest('zdl'); if(best!=null) bestEl.textContent = `Najlepszy wynik (poprawne ruchy): ${best}`;
+    const best = getBest('zdl'); if(best!=null) bestEl.textContent = `Najlepszy wynik: ${best}`;
   })();
 
   // ====== AED Timing ======
@@ -215,7 +208,11 @@
       anim = requestAnimationFrame(tick);
     }
     function stopAnim(){ running=false; if(anim) cancelAnimationFrame(anim); anim=null; }
-    function updateUi(){ rEl && (rEl.textContent = `${round}/3`); hitsEl && (hitsEl.textContent = `${hits}/${tries}`); scoreEl && (scoreEl.textContent = String(score)); }
+    function updateUi(){
+      if(rEl) rEl.textContent = `${round}/3`;
+      if(hitsEl) hitsEl.textContent = `${hits}/${tries}`;
+      if(scoreEl) scoreEl.textContent = String(score);
+    }
 
     start.addEventListener('click', ()=>{
       if(running) return;
@@ -231,19 +228,19 @@
     shock.addEventListener('click', ()=>{
       if(!running) return;
       tries++;
-      if(zoneHit()){ hits++; score += 10; showToast('⚡ Trafione wyładowanie! +10'); }
-      else { showToast('❌ Za wcześnie/za późno'); }
+      if(zoneHit()){ hits++; score += 10; showToast('⚡ Trafione! +10'); }
+      else { showToast('❌ Pudło'); }
       updateUi();
       if(tries>=5){
         stopAnim();
         if(round>=3){
           const best = getBest('aed') ?? 0;
           if(score>best){ setBest('aed', score); }
-          bestEl && (bestEl.textContent = `Najlepszy wynik: ${Math.max(best, score)}`);
-          if(score>=100) showToast('🏅 Odznaka: Shock Ready (100 pkt)');
+          if(bestEl) bestEl.textContent = `Najlepszy wynik: ${Math.max(best, score)}`;
+          if(score>=100) showToast('🏅 Shock Ready (100+)');
           round=1; tries=0; hits=0; speed=0.25; pos=6; dir=1; updateUi();
         } else {
-          showToast(`Runda ${round} zakończona — naciśnij Start rundy`);
+          showToast(`Runda ${round} finiszuje — Start rundy`);
           round++; tries=0; hits=0; updateUi();
         }
       }
@@ -256,6 +253,169 @@
 
     const best = getBest('aed'); if(best!=null && bestEl) bestEl.textContent = `Najlepszy wynik: ${best}`;
     updateUi();
+  })();
+
+  // ====== Reflex Triage ======
+  (function(){
+    const board = $('#trBoard');
+    const start = $('#trStart'), reset = $('#trReset');
+    const bR = $('#trRed'), bY = $('#trYellow'), bG = $('#trGreen');
+    const modeEl = $('#trMode'), tEl = $('#trTime'), scEl = $('#trScore'), lvEl = $('#trLives'), bestEl = $('#trBest');
+    if(!board || !start || !bR) return;
+
+    const DURATION = 30_000;
+    let running=false, t0=0, timer=null, spawnTimer=null;
+    let target='red', score=0, lives=3;
+
+    const emojis = ['🤕','🤒','🤧','🤢','🤕','🤒','🤧','🥴','😵‍💫'];
+
+    // Tworzymy 9 komórek
+    const cells = [];
+    for(let i=0;i<9;i++){
+      const c=document.createElement('div'); c.className='triage-cell'; c.dataset.color='';
+      const face=document.createElement('div'); face.textContent = emojis[i%emojis.length];
+      const badge=document.createElement('div'); badge.className='triage-badge'; badge.textContent=''; c.appendChild(face); c.appendChild(badge);
+      board.appendChild(c); cells.push(c);
+      c.addEventListener('click', ()=>{
+        if(!running) return;
+        const col = c.dataset.color;
+        if(!col) return; // pusta
+        if(col===target){
+          score += 5; scEl.textContent = String(score);
+          c.dataset.color='';
+          c.classList.remove('triage-red','triage-yellow','triage-green');
+          badge.textContent='';
+          showToast('✅ Dobry priorytet +5');
+        } else {
+          lives = Math.max(0, lives-1); lvEl.textContent = String(lives);
+          showToast('❌ Zły kolor');
+          if(lives===0) stop(true);
+        }
+      });
+    }
+
+    function setMode(col){
+      target=col;
+      modeEl.textContent = col==='red' ? '🔴 Czerwony' : col==='yellow' ? '🟡 Żółty' : '🟢 Zielony';
+    }
+    bR.addEventListener('click', ()=> setMode('red'));
+    bY.addEventListener('click', ()=> setMode('yellow'));
+    bG.addEventListener('click', ()=> setMode('green'));
+
+    function spawn(){
+      // losowa pusta komórka
+      const empty = cells.filter(c => !c.dataset.color);
+      if(!empty.length) return;
+      const c = empty[Math.floor(Math.random()*empty.length)];
+      const badge = c.querySelector('.triage-badge');
+      const colors = ['red','yellow','green'];
+      const col = colors[Math.floor(Math.random()*colors.length)];
+      c.dataset.color = col;
+      c.classList.add('triage-'+col);
+      badge.textContent = col==='red' ? '🔴' : col==='yellow' ? '🟡' : '🟢';
+      // znikanie po czasie
+      setTimeout(()=>{
+        if(c.dataset.color===col){ // nie kliknięto
+          c.dataset.color='';
+          c.classList.remove('triage-red','triage-yellow','triage-green');
+          badge.textContent='';
+          // utrata życia tylko jeśli był naszym celem
+          if(col===target){
+            lives = Math.max(0, lives-1); lvEl.textContent = String(lives);
+            if(lives===0) stop(true);
+          }
+        }
+      }, 1200);
+    }
+
+    function stop(final=false){
+      running=false;
+      clearInterval(timer); clearInterval(spawnTimer);
+      timer=spawnTimer=null;
+      if(final){
+        const best = getBest('triage') ?? 0;
+        if(score>best){ setBest('triage', score); }
+        if(bestEl) bestEl.textContent = `Najlepszy wynik: ${Math.max(best, score)}`;
+        if(score>=80) showToast('🏅 Triage Ninja (80+)');
+      }
+    }
+    function startRun(){
+      score=0; lives=3; t0=performance.now(); running=true;
+      scEl.textContent='0'; lvEl.textContent='3'; tEl.textContent='30s';
+      setMode('red');
+      spawnTimer = setInterval(spawn, 500);
+      timer = setInterval(()=>{
+        const left = Math.max(0, DURATION-(performance.now()-t0));
+        tEl.textContent = Math.ceil(left/1000)+'s';
+        if(left<=0) stop(true);
+      }, 120);
+    }
+
+    start.addEventListener('click', ()=>{ if(!running) startRun(); });
+    reset.addEventListener('click', ()=>{ stop(false); scEl.textContent='0'; lvEl.textContent='3'; tEl.textContent='30s'; cells.forEach(c=>{ c.dataset.color=''; c.classList.remove('triage-red','triage-yellow','triage-green'); c.querySelector('.triage-badge').textContent=''; }); });
+
+    const best = getBest('triage'); if(best!=null && bestEl) bestEl.textContent = `Najlepszy wynik: ${best}`;
+  })();
+
+  // ====== Germ Smash ======
+  (function(){
+    const board = $('#gmBoard');
+    const start = $('#gmStart'), reset = $('#gmReset');
+    const tEl = $('#gmTime'), scEl = $('#gmScore'), bestEl = $('#gmBest');
+    if(!board || !start) return;
+
+    const DURATION = 30_000;
+    let running=false, t0=0, timer=null, spawnTimer=null;
+    let score=0;
+
+    // plansza 3x3
+    const holes=[];
+    for(let i=0;i<9;i++){
+      const hole=document.createElement('div'); hole.className='germ-hole';
+      const germ=document.createElement('div'); germ.className='germ'; germ.textContent = Math.random()<0.5 ? '🦠' : '🤢';
+      hole.appendChild(germ); board.appendChild(hole); holes.push({hole,germ,up:false,timeout:null});
+      germ.addEventListener('click', ()=>{
+        if(!running || !holes[i].up) return;
+        holes[i].up=false; germ.classList.remove('show');
+        score += 3; scEl.textContent = String(score);
+        showToast('🧼 Sru! +3');
+      });
+    }
+
+    function popOne(){
+      const available = holes.filter(h=>!h.up);
+      if(!available.length) return;
+      const h = available[Math.floor(Math.random()*available.length)];
+      h.up=true; h.germ.textContent = Math.random()<0.5 ? '🦠' : '🤢'; h.germ.classList.add('show');
+      const stay = 450 + Math.random()*400;
+      h.timeout = setTimeout(()=>{ h.up=false; h.germ.classList.remove('show'); }, stay);
+    }
+
+    function stop(final=false){
+      running=false;
+      clearInterval(timer); clearInterval(spawnTimer);
+      holes.forEach(h=>{ h.up=false; h.germ.classList.remove('show'); clearTimeout(h.timeout); });
+      if(final){
+        const best = getBest('germ') ?? 0;
+        if(score>best){ setBest('germ', score); }
+        if(bestEl) bestEl.textContent = `Najlepszy wynik: ${Math.max(best, score)}`;
+        if(score>=60) showToast('🏅 Hygiene Hero (60+)');
+      }
+    }
+    function startRun(){
+      score=0; scEl.textContent='0'; tEl.textContent='30s'; running=true; t0=performance.now();
+      spawnTimer = setInterval(popOne, 420);
+      timer = setInterval(()=>{
+        const left = Math.max(0, DURATION-(performance.now()-t0));
+        tEl.textContent = Math.ceil(left/1000)+'s';
+        if(left<=0) stop(true);
+      }, 120);
+    }
+
+    start.addEventListener('click', ()=>{ if(!running) startRun(); });
+    reset.addEventListener('click', ()=>{ stop(false); scEl.textContent='0'; tEl.textContent='30s'; });
+
+    const best = getBest('germ'); if(best!=null && bestEl) bestEl.textContent = `Najlepszy wynik: ${best}`;
   })();
 
 })();
