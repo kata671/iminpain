@@ -2,11 +2,14 @@
 <html lang="pl">
 <head>
   <!--
-    BoliHelp • Strona główna • v2.1 (2025-09-05)
+    BoliHelp • Strona główna • v2.3 (2025-09-05)
     Zmiany:
-      • Dodany interaktywny MINI-QUIZ „Pierwsza pomoc” (modal + pasek postępu) — bez zależności zewnętrznych.
-      • Zachowany układ, tapeta i 3 kafelki (kobieta/mężczyzna/dziecko).
-      • Wszystko pod prefixem bh2025-* (bez kolizji z istniejącymi stylami).
+      • NOWOŚĆ: Modal „Podgląd porad” dla: Zadławienie, Reanimacja, Wypadek, Pierwsza pomoc.
+        – lewa kolumna: proste, czytelne instrukcje obrazkowe (inline SVG, bez CDN),
+        – prawa kolumna: kroki krok-po-kroku,
+        – dół: placeholder filmu (podmień na własny .mp4 w assets/videos/…).
+      • Bezpieczne przechwycenie kliknięć na pigułkach (nav.situations) – brak zmian w innych elementach.
+      • Zachowane: tapeta, 3 kafelki, mini-quiz (z poprzedniej wersji).
   -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -29,7 +32,7 @@
     body[data-page="home"] .container::before,
     body[data-page="home"] .container::after{content:none !important;display:none !important}
 
-    /* TAPETA (spójna z podstronami) */
+    /* TAPETA */
     .bh-wallpaper,.bh-grid{position:fixed;inset:0;pointer-events:none}
     .bh-wallpaper{
       z-index:0;
@@ -51,7 +54,7 @@
     }
     .container{position:relative;z-index:3;background:transparent !important;max-width:1100px;margin:0 auto;padding:0 16px}
 
-    /* 3 KAFELKI – sztywno (zostawiamy jak w Twojej wersji) */
+    /* 3 KAFELKI – sztywno (jak w Twojej wersji) */
     @media (min-width:981px){
       section.stack[style]{grid-template-columns:repeat(3,1fr) !important;}
     }
@@ -84,7 +87,6 @@
     .bh2025-cta-quiz:hover{transform:translateY(-1px);border-color:rgba(164,107,255,.45);
       box-shadow:0 12px 26px rgba(8,10,22,.45),0 0 18px rgba(164,107,255,.28),inset 0 0 0 1px rgba(164,107,255,.18)}
     .bh2025-cta-quiz:focus-visible{outline:2px solid var(--bh2025-teal);outline-offset:2px}
-
     .bh2025-quiz-launch{display:inline-flex;align-items:center;gap:8px;margin:10px 0 0 0}
     .bh2025-quiz-launch .dot{width:9px;height:9px;border-radius:50%;background:var(--bh2025-teal);box-shadow:0 0 12px var(--bh2025-teal)}
 
@@ -114,6 +116,24 @@
     .bh2025-primary{appearance:none;border:1px solid var(--bh2025-stroke);background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));color:#eef2ff;border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer}
     .bh2025-muted{color:#b8c2e0}
     @media (max-width:640px){ .bh2025-modal__panel{margin:3vh 10px} }
+
+    /* ===== Modal PORADA (instrukcja obrazkowa + kroki + video placeholder) ===== */
+    .bh2025-porada{position:fixed;inset:0;display:none;z-index:9998;background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95));backdrop-filter:saturate(120%) blur(6px)}
+    .bh2025-porada[aria-hidden="false"]{display:block}
+    .bh2025-porada__panel{position:relative;max-width:980px;margin:5vh auto;background:rgba(60,32,100,.36);border:1px solid rgba(164,107,255,.25);border-radius:18px;padding:16px;box-shadow:0 18px 46px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18);color:#eef2ff}
+    .bh2025-porada__head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}
+    .bh2025-porada__title{font-weight:900;letter-spacing:.3px}
+    .bh2025-porada__grid{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
+    @media (max-width:900px){ .bh2025-porada__grid{grid-template-columns:1fr} }
+    .bh2025-porada__svg{border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);min-height:260px;display:flex;align-items:center;justify-content:center}
+    .bh2025-steps{border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);padding:12px}
+    .bh2025-steps ol{margin:0;padding-left:18px}
+    .bh2025-steps li{margin:8px 0}
+    .bh2025-video{margin-top:12px;border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.04);padding:12px}
+    .bh2025-video .ph{display:flex;align-items:center;gap:10px;justify-content:center;padding:26px;border-radius:12px;border:1px dashed rgba(255,255,255,.22)}
+    .bh2025-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);font-weight:800}
+    .bh2025-close--porada{appearance:none;background:transparent;border:1px solid rgba(164,107,255,.25);color:#e7eaff;border-radius:10px;padding:6px 10px;cursor:pointer}
+    .bh2025-close--porada:hover{box-shadow:0 0 0 2px rgba(255,110,199,.28)}
   </style>
 </head>
 
@@ -144,13 +164,13 @@
     </div>
 
     <nav class="situations" aria-label="Sytuacje nagłe">
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie"><span class="ico">🫁</span>Zadławienie</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja"><span class="ico">🚑</span>Reanimacja</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek"><span class="ico">💥</span>Wypadek</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span>Pierwsza pomoc</a>
+      <a class="pill pill--green" data-porada="zadlawienie" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie"><span class="ico">🫁</span>Zadławienie</a>
+      <a class="pill pill--green" data-porada="reanimacja" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja"><span class="ico">🚑</span>Reanimacja</a>
+      <a class="pill pill--green" data-porada="wypadek" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek"><span class="ico">💥</span>Wypadek</a>
+      <a class="pill pill--green" data-porada="pierwszopomoc" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span>Pierwsza pomoc</a>
     </nav>
 
-    <!-- Launcher mini-quizu -->
+    <!-- Launcher mini-quizu (z poprzedniej wersji) -->
     <div class="bh2025-quiz-launch" aria-hidden="false" aria-label="Sekcja edukacyjna">
       <span class="dot" aria-hidden="true"></span>
       <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button" aria-haspopup="dialog" aria-controls="bh2025QuizModal">
@@ -190,7 +210,7 @@
       </article>
     </section>
   </div>
-  <!-- Modal quizu -->
+  <!-- Modal quizu (bez zmian) -->
   <div id="bh2025QuizModal" class="bh2025-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025QuizTitle">
     <div class="bh2025-modal__panel">
       <div class="bh2025-modal__head">
@@ -200,16 +220,13 @@
         </div>
         <button class="bh2025-close" type="button" id="bh2025QuizClose" aria-label="Zamknij">✕</button>
       </div>
-
       <div class="bh2025-modal__body">
         <div class="bh2025-progress" aria-label="Postęp">
           <div class="bh2025-progress__bar"><span class="bh2025-progress__cursor" id="bh2025QuizCursor"></span></div>
           <div class="bh2025-progress__label"><span id="bh2025QuizStep">1</span>/3</div>
         </div>
-
         <div class="bh2025-q" id="bh2025QuizQuestion">…</div>
         <div class="bh2025-answers" id="bh2025QuizAnswers"></div>
-
         <div class="bh2025-actions">
           <button class="bh2025-ghost" type="button" id="bh2025QuizRestart">Zacznij od nowa</button>
           <button class="bh2025-primary" type="button" id="bh2025QuizNext">Dalej</button>
@@ -218,10 +235,40 @@
     </div>
   </div>
 
-  <!-- Twój skrypt (bez zmian) -->
+  <!-- Modal PORADA -->
+  <div id="bh2025Porada" class="bh2025-porada" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025PoradaTitle">
+    <div class="bh2025-porada__panel">
+      <div class="bh2025-porada__head">
+        <div class="bh2025-porada__title" id="bh2025PoradaTitle">Porada</div>
+        <div class="bh2025-chip" id="bh2025PoradaChip">SOS • instrukcja</div>
+        <button class="bh2025-close--porada" type="button" id="bh2025PoradaClose" aria-label="Zamknij">✕</button>
+      </div>
+
+      <div class="bh2025-porada__grid">
+        <div class="bh2025-porada__svg" id="bh2025PoradaSvg" aria-label="Instrukcja obrazkowa">
+          <!-- SVG generowane skryptem -->
+        </div>
+        <div class="bh2025-steps">
+          <ol id="bh2025PoradaSteps"></ol>
+        </div>
+      </div>
+
+      <div class="bh2025-video">
+        <div class="bh2025-muted" style="margin-bottom:8px;font-weight:800">Materiał wideo</div>
+        <div id="bh2025VideoWrap">
+          <div class="ph" id="bh2025VideoPh">
+            <span>🎬</span>
+            <span>Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Twój skrypt (zostaje) -->
   <script src="assets/main.js?v=10"></script>
 
-  <!-- Logika mini-quizu -->
+  <!-- Logika mini-quizu (z poprzedniej wersji) -->
   <script>
   (function(){
     const openBtn = document.getElementById('bh2025QuizOpen');
@@ -271,13 +318,11 @@
     ];
 
     let step=0, lock=false;
-
     function setProgress(){
       stepEl.textContent = (step+1);
-      const left = 6 + (step/(QUIZ.length-1||1))*88; // 6% → 94%
+      const left = 6 + (step/(QUIZ.length-1||1))*88;
       cursor.style.left = left + '%';
     }
-
     function render(){
       const item = QUIZ[step];
       qEl.textContent = item.q;
@@ -286,13 +331,11 @@
         const b = document.createElement('button');
         b.type='button'; b.className='bh2025-ans'; b.textContent=opt.t;
         b.addEventListener('click', ()=>{
-          if(lock) return;
-          lock=true;
+          if(lock) return; lock=true;
           const good = opt.ok;
           b.classList.add(good?'correct':'wrong');
           const note = document.createElement('div');
-          note.className='bh2025-muted';
-          note.style.marginTop='6px';
+          note.className='bh2025-muted'; note.style.marginTop='6px';
           note.textContent = good ? item.hintOk : item.hintBad;
           b.after(note);
           if(navigator.vibrate) try{ navigator.vibrate(good?80:160); }catch(_){}
@@ -303,27 +346,160 @@
       setProgress();
       nextBtn.textContent = step===QUIZ.length-1 ? "Zakończ" : "Dalej";
     }
-
-    function open(){
-      modal.setAttribute('aria-hidden','false');
-      document.body.style.overflow='hidden';
-      step=0; render();
-    }
-    function close(){
-      modal.setAttribute('aria-hidden','true');
-      document.body.style.overflow='';
-    }
-
+    function open(){ modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; step=0; render(); }
+    function close(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
     openBtn.addEventListener('click', open);
     closeBtn.addEventListener('click', close);
     modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
     restart.addEventListener('click', ()=>{ step=0; render(); });
-    nextBtn.addEventListener('click', ()=>{
-      if(step<QUIZ.length-1){ step++; render(); }
-      else { close(); }
-    });
-
+    nextBtn.addEventListener('click', ()=>{ if(step<QUIZ.length-1){ step++; render(); } else { close(); } });
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') close(); });
+  })();
+  </script>
+
+  <!-- Logika PORAD (modal z obrazkami + krokami + filmem) -->
+  <script>
+  (function(){
+    const poradaModal  = document.getElementById('bh2025Porada');
+    const poradaClose  = document.getElementById('bh2025PoradaClose');
+    const poradaTitle  = document.getElementById('bh2025PoradaTitle');
+    const poradaChip   = document.getElementById('bh2025PoradaChip');
+    const svgWrap      = document.getElementById('bh2025PoradaSvg');
+    const stepsOl      = document.getElementById('bh2025PoradaSteps');
+    const videoWrap    = document.getElementById('bh2025VideoWrap');
+    const videoPh      = document.getElementById('bh2025VideoPh');
+
+    if(!poradaModal) return;
+
+    // Proste obrazki (inline SVG) — czytelne piktogramy, zero zewnętrznych plików
+    const SVG = {
+      zadlawienie: `
+        <svg width="100%" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1">
+              <stop offset="0" stop-color="#5eead4" stop-opacity=".5"/>
+              <stop offset="1" stop-color="#a46bff" stop-opacity=".4"/>
+            </linearGradient>
+          </defs>
+          <rect x="8" y="8" width="384" height="204" rx="14" fill="url(#g1)" opacity=".18" stroke="rgba(255,255,255,.25)"/>
+          <circle cx="95" cy="85" r="36" fill="none" stroke="#cfe2ff" stroke-width="3"/>
+          <rect x="70" y="118" width="50" height="60" rx="8" fill="none" stroke="#cfe2ff" stroke-width="3"/>
+          <path d="M250 75 q20 10 0 20 q20 10 0 20" fill="none" stroke="#ff6ec7" stroke-width="6" stroke-linecap="round"/>
+          <rect x="230" y="120" width="70" height="28" rx="6" fill="none" stroke="#5eead4" stroke-width="4"/>
+          <text x="265" y="140" text-anchor="middle" fill="#eaf2ff" font-size="12" font-weight="700">5× plecy</text>
+        </svg>`,
+      reanimacja: `
+        <svg width="100%" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="384" height="204" rx="14" fill="rgba(94,234,212,.15)" stroke="rgba(255,255,255,.25)"/>
+          <rect x="40" y="150" width="320" height="14" rx="7" fill="#ff6b6b"/>
+          <rect x="180" y="70" width="40" height="80" rx="8" fill="#a46bff"/>
+          <rect x="165" y="60" width="70" height="12" rx="6" fill="#5eead4"/>
+          <text x="200" y="185" text-anchor="middle" fill="#eaf2ff" font-size="12" font-weight="800">Uciski 100–120/min</text>
+        </svg>`,
+      wypadek: `
+        <svg width="100%" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="384" height="204" rx="14" fill="rgba(255,184,108,.14)" stroke="rgba(255,255,255,.25)"/>
+          <polygon points="60,160 100,80 140,160" fill="#ffd16c" stroke="#ffb86c"/>
+          <rect x="220" y="120" width="120" height="18" rx="9" fill="#ff6b6b"/>
+          <text x="280" y="80" text-anchor="middle" fill="#eaf2ff" font-size="12" font-weight="800">Zabezpiecz miejsce</text>
+        </svg>`,
+      pierwszopomoc: `
+        <svg width="100%" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="384" height="204" rx="14" fill="rgba(164,107,255,.14)" stroke="rgba(255,255,255,.25)"/>
+          <rect x="60" y="70" width="80" height="80" rx="10" fill="#5eead4"/>
+          <rect x="260" y="70" width="80" height="80" rx="10" fill="#a46bff"/>
+          <text x="100" y="170" text-anchor="middle" fill="#eaf2ff" font-size="12" font-weight="800">ABC</text>
+          <text x="300" y="170" text-anchor="middle" fill="#eaf2ff" font-size="12" font-weight="800">112</text>
+        </svg>`
+    };
+
+    // Kroki — zwięźle i praktycznie
+    const STEPS = {
+      zadlawienie: [
+        "Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.",
+        "Brak skutecznego kaszlu: 5 uderzeń w plecy między łopatki.",
+        "Jeśli nieskuteczne: 5 uciśnięć nadbrzusza (ucisk Heimlicha).",
+        "Na zmianę: 5 plecy ↔ 5 nadbrzusze, aż do skutku.",
+        "Utrata przytomności: RKO 30:2, wezwij 112, użyj AED jeśli jest."
+      ],
+      reanimacja: [
+        "Sprawdź bezpieczeństwo, reakcję i oddech (max 10 s).",
+        "Brak oddechu: zadzwoń 112 (głośnomówiący).",
+        "Uciski klatki: tempo 100–120/min, głęb. ~5–6 cm, środek mostka.",
+        "Po 30 uciśnięciach 2 oddechy ratownicze (jeśli umiesz i chcesz).",
+        "Kontynuuj do przyjazdu służb lub powrotu oddechu."
+      ],
+      wypadek: [
+        "Zabezpiecz miejsce: światła awaryjne, trójkąt, kamizelka.",
+        "Oceń liczbę poszkodowanych i zagrożenia (ogień, ruch).",
+        "Wezwij pomoc — 112: podaj miejsce, liczbę poszkodowanych.",
+        "Priorytet: przytomność, oddech, krwotoki (ucisk bezpośredni).",
+        "Nie przestawiaj bez potrzeby; kontroluj oddech do przyjazdu."
+      ],
+      pierwszopomoc: [
+        "ABC: drożność dróg oddechowych, oddech, krążenie.",
+        "Pozycja bezpieczna u nieprzytomnego z oddechem.",
+        "Silny krwotok: ucisk bezpośredni, opatrunek uciskowy.",
+        "Oparzenia: chłodź czystą, chłodną wodą 20 min; nie przebijaj pęcherzy.",
+        "Zawsze wezwij pomoc, gdy masz wątpliwości lub są czerwone flagi."
+      ]
+    };
+
+    // Mapa wideo (opcjonalnie – podmień ścieżki na realne pliki)
+    const VIDEO = {
+      zadlawienie: null, // np. "assets/videos/zadlawienie.mp4"
+      reanimacja: null,  // np. "assets/videos/reanimacja.mp4"
+      wypadek: null,     // np. "assets/videos/wypadek.mp4"
+      pierwszopomoc: null
+    };
+
+    function openPorada(key, title){
+      poradaTitle.textContent = title || 'Porada';
+      poradaChip.textContent  = 'SOS • instrukcja';
+      svgWrap.innerHTML       = SVG[key] || '';
+      stepsOl.innerHTML       = '';
+      (STEPS[key]||[]).forEach(txt=>{
+        const li=document.createElement('li'); li.textContent=txt; stepsOl.appendChild(li);
+      });
+
+      // Wideo: jeśli jest plik w mapie — renderuj <video>, inaczej placeholder
+      videoWrap.innerHTML=''; // czyść
+      const src = VIDEO[key];
+      if(src){
+        const v = document.createElement('video');
+        v.setAttribute('controls','controls');
+        v.setAttribute('playsinline','');
+        v.setAttribute('style','width:100%;border-radius:12px;background:rgba(255,255,255,.04)');
+        const s = document.createElement('source'); s.src = src; s.type='video/mp4';
+        v.appendChild(s); videoWrap.appendChild(v);
+      } else {
+        videoWrap.appendChild(videoPh.cloneNode(true));
+      }
+
+      poradaModal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+    }
+    function closePorada(){
+      poradaModal.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+    }
+
+    poradaClose.addEventListener('click', closePorada);
+    poradaModal.addEventListener('click', (e)=>{ if(e.target===poradaModal) closePorada(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && poradaModal.getAttribute('aria-hidden')==='false') closePorada(); });
+
+    // Przechwyć kliknięcia pigułek (zostawiamy href jako fallback)
+    const nav = document.querySelector('nav.situations');
+    if(nav){
+      nav.addEventListener('click', (e)=>{
+        const a = e.target.closest('a[data-porada]');
+        if(!a) return;
+        e.preventDefault(); // pokaż modal zamiast przechodzić
+        const key = a.getAttribute('data-porada');
+        const title = a.textContent.trim();
+        openPorada(key, title);
+      });
+    }
   })();
   </script>
 </body>
