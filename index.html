@@ -68,7 +68,8 @@
     }
 
     /* === Translate switch === */
-    .header .tools .translate{display:flex;align-items:center;gap:8px;margin-left:10px}
+    .header .tools { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .header .tools .translate{display:flex;align-items:center;gap:8px;margin-left:10px;position:relative;z-index:4}
     .header .tools .translate select{
       appearance:none;background:rgba(255,255,255,.06);color:#eef2ff;
       border:1px solid rgba(164,107,255,.28);border-radius:10px;padding:8px 10px;
@@ -83,9 +84,7 @@
       transform:translateY(-1px);border-color:rgba(164,107,255,.55);
       box-shadow:0 10px 24px rgba(8,10,22,.45)
     }
-    @media (max-width:520px){
-      .header .tools .translate{margin-top:8px}
-    }
+    header.header{position:relative;z-index:5}
   </style>
 </head>
 
@@ -111,6 +110,7 @@
 
         <!-- 🌐 TRANSLATE -->
         <div class="translate" aria-label="Tłumaczenie strony">
+          <label class="sr-only" for="bhLangSelect">Wybierz język</label>
           <select id="bhLangSelect" aria-label="Wybierz język">
             <option value="" selected>PL</option>
             <option value="en">EN</option>
@@ -122,7 +122,7 @@
             <option value="fr">FR</option>
             <option value="ru">RU</option>
           </select>
-          <button id="bhLangGo" type="button" class="btn-translate" aria-label="Przetłumacz w nowej karcie">🌐 Tłumacz</button>
+          <button id="bhLangGo" type="button" class="btn-translate">🌐 Tłumacz</button>
         </div>
       </div>
     </header>
@@ -180,7 +180,7 @@
       if(!select || !goBtn) return;
       function openTranslated(){
         const tl = (select.value||'').trim();
-        if(!tl) return;
+        if(!tl) return; // PL -> nic nie rób
         const url = location.href;
         const translateUrl = `https://translate.google.com/translate?hl=${encodeURIComponent(tl)}&sl=auto&tl=${encodeURIComponent(tl)}&u=${encodeURIComponent(url)}`;
         window.open(translateUrl, '_blank', 'noopener,noreferrer');
