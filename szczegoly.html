@@ -21,11 +21,13 @@
       --c-myths:    rgba(164,107,255,.65);
       --c-faq:      rgba(94,234,212,.55);
       --c-dx:       rgba(164,107,255,.65);
+      --c-docs:     rgba(94,234,212,.65);
     }
     *{box-sizing:border-box} html,body{height:100%}
     body{margin:0; background:var(--bg); color:var(--text);
       font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+
     .bg-anim{position:fixed; inset:0; z-index:-3; pointer-events:none;
       background:
         radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.26), transparent 60%),
@@ -62,6 +64,14 @@
     .hero-note{ margin-top:10px; color:#b8c2e0; font-size:13px; }
     .legend{ color:#d6e4ff; font-weight:700; margin-top:6px; font-size:13px }
 
+    /* KROKI – asystent */
+    .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0 0}
+    .step{position:relative; padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05); font-weight:900; letter-spacing:.2px; color:#dfe6ff; text-align:center}
+    .step.active{border-color:rgba(94,234,212,.55); box-shadow:0 0 0 2px rgba(94,234,212,.35), 0 8px 18px rgba(8,10,22,.35)}
+    .step.done{opacity:.9}
+    .step small{display:block; font-weight:700; color:#9fb6ff}
+
     .tabs{ display:flex; flex-wrap:wrap; gap:8px; margin:16px 0 8px; }
     .tab{ padding:9px 13px; border-radius:10px; font-weight:800; letter-spacing:.2px; cursor:pointer; user-select:none;
       background: transparent; border:1px solid rgba(255,255,255,.16); color:#e9efff;
@@ -76,6 +86,7 @@
     .tab[data-variant="myths"]   { border-color: rgba(164,107,255,.28) }
     .tab[data-variant="faq"]     { border-color: rgba(94,234,212,.25) }
     .tab[data-variant="dx"]      { border-color: rgba(164,107,255,.45); position:relative }
+    .tab[data-variant="docs"]    { border-color: rgba(94,234,212,.45); position:relative }
 
     .tab[aria-selected="true"][data-variant="symptoms"]{ border-color: var(--c-symptoms); box-shadow:0 0 0 2px var(--c-symptoms), 0 8px 22px rgba(0,0,0,.25) }
     .tab[aria-selected="true"][data-variant="causes"]  { border-color: var(--c-causes);   box-shadow:0 0 0 2px var(--c-causes),   0 8px 22px rgba(0,0,0,.25) }
@@ -86,25 +97,20 @@
     .tab[aria-selected="true"][data-variant="myths"]   { border-color: var(--c-myths);    box-shadow:0 0 0 2px var(--c-myths),    0 8px 22px rgba(0,0,0,.25) }
     .tab[aria-selected="true"][data-variant="faq"]     { border-color: var(--c-faq);      box-shadow:0 0 0 2px var(--c-faq),      0 8px 22px rgba(0,0,0,.25) }
     .tab[aria-selected="true"][data-variant="dx"]      { border-color: var(--c-dx);       box-shadow:0 0 0 2px var(--c-dx),       0 8px 22px rgba(0,0,0,.25) }
+    .tab[aria-selected="true"][data-variant="docs"]    { border-color: var(--c-docs);     box-shadow:0 0 0 2px var(--c-docs),     0 8px 22px rgba(0,0,0,.25) }
 
-    /* Badge z liczbą dopasowań na zakładce „Choroby” */
-    .tab[data-variant="dx"][data-badge]:after{
+    .tab[data-badge]:after{
       content: attr(data-badge);
       position:absolute; top:-7px; right:-7px; font-size:11px; font-weight:900;
       background:rgba(94,234,212,.22); border:1px solid rgba(94,234,212,.55); color:#d9fffa;
       padding:2px 6px; border-radius:999px;
     }
-    /* Delikatny „ping” przy nowych dopasowaniach */
     .tab-attn{ box-shadow:0 0 0 2px rgba(164,107,255,.45), 0 0 18px rgba(164,107,255,.28); }
     .tab-attn::before{
       content:""; position:absolute; inset:-6px; border-radius:12px;
       box-shadow:0 0 0 0 rgba(164,107,255,.38); animation:ping 1.6s ease-out infinite;
     }
-    @keyframes ping{
-      0%{ box-shadow:0 0 0 0 rgba(164,107,255,.38) }
-      80%{ box-shadow:0 0 0 14px rgba(164,107,255,0) }
-      100%{ box-shadow:0 0 0 0 rgba(164,107,255,0) }
-    }
+    @keyframes ping{ 0%{box-shadow:0 0 0 0 rgba(164,107,255,.38)} 80%{box-shadow:0 0 0 14px rgba(164,107,255,0)} 100%{box-shadow:0 0 0 0 rgba(164,107,255,0)} }
 
     .cards{ margin-top:8px }
     .card{ display:none; background: var(--card); border:1px solid var(--stroke); border-radius:var(--radius);
@@ -126,6 +132,7 @@
     .card[data-type="myths"]   {border-color: rgba(164,107,255,.65)}
     .card[data-type="faq"]     {border-color: rgba(94,234,212,.55)}
     .card[data-type="dx"]      {border-color: rgba(164,107,255,.65)}
+    .card[data-type="docs"]    {border-color: rgba(94,234,212,.65)}
 
     ul.clean{ list-style:none; margin:0; padding:0 }
     ul.clean li{ position:relative; padding:10px 12px 10px 36px; border-radius:10px; margin-bottom:7px;
@@ -154,7 +161,6 @@
       background:#fff; transition:left .25s ease; }
     .riskbar.high .cursor{ animation:pulse 1s infinite }
     @keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(255,107,107,.45)} 70%{ box-shadow:0 0 0 14px rgba(255,107,107,0)} 100%{ box-shadow:0 0 0 0 rgba(255,107,107,0)} }
-
     .strip{ background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
       border: 1px solid rgba(255,255,255,.16); padding:.7rem 1rem; border-radius:.8rem; margin:.6rem 0; }
     .strip--warn{ background: linear-gradient(180deg, rgba(255,184,108,.18), rgba(255,255,255,.04)); border-color: rgba(255,184,108,.55); }
@@ -162,26 +168,35 @@
     .cta{ display:inline-block; padding:8px 12px; border-radius:10px; font-weight:900; background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.18); text-decoration:none; color:var(--text); }
 
-    /* HINT w Objawach po zaznaczeniu */
+    /* HINT w Objawach */
     .dx-hint{ display:none; margin-top:10px; border-radius:10px; padding:10px 12px;
       background:rgba(164,107,255,.12); border:1px solid rgba(164,107,255,.35); color:#e9e6ff; }
     .dx-hint.show{ display:block }
     .dx-hint button{ margin-left:8px; padding:8px 10px; border-radius:10px; font-weight:900; cursor:pointer;
       background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); color:#fff }
 
-    /* Choroby: pasek „pewności” */
+    /* Choroby – dopasowania */
     .dx-list li{ display:flex; gap:10px; align-items:flex-start; }
     .dx-ico{ width:22px; height:22px; display:grid; place-items:center; border-radius:6px;
       background:rgba(164,107,255,.18); border:1px solid rgba(164,107,255,.35) }
-    .dx-meta{ margin-left:auto; display:flex; flex-direction:column; align-items:flex-end; gap:6px; min-width:140px }
+    .dx-meta{ margin-left:auto; display:flex; flex-direction:column; align-items:flex-end; gap:6px; min-width:160px }
     .conf-wrap{ width:120px; height:8px; border-radius:999px; outline:1px solid rgba(255,255,255,.16); overflow:hidden;
       background:linear-gradient(90deg, rgba(94,234,212,.25), rgba(164,107,255,.25)); }
     .conf-bar{ height:100%; width:0%; background:linear-gradient(90deg, rgba(94,234,212,.65), rgba(164,107,255,.65)) }
     .dx-badge{ font-size:12px; padding:4px 8px; border-radius:999px; font-weight:900; letter-spacing:.2px; }
     .dx-badge.poz{ background:rgba(94,234,212,.18); border:1px solid rgba(94,234,212,.45); color:#d9fffa }
     .dx-badge.sor{ background:rgba(255,107,107,.20); border:1px solid rgba(255,107,107,.65); color:#ffe6e6 }
-
     .dx-note{ color:#cfe2ff; font-size:13px; margin:.15rem 0 .35rem }
+    .dx-match{ font-size:12px; color:#cfe2ff; margin-top:6px }
+
+    /* Lekarze */
+    .docs-note{ color:#cfe2ff; font-size:13px; margin:.15rem 0 .35rem }
+    .doc-badge{ font-size:12px; padding:4px 8px; border-radius:999px; font-weight:900; letter-spacing:.2px; }
+    .doc-badge.poz{ background:rgba(94,234,212,.18); border:1px solid rgba(94,234,212,.45); color:#d9fffa }
+    .doc-badge.sor{ background:rgba(255,107,107,.20); border:1px solid rgba(255,107,107,.65); color:#ffe6e6 }
+    .doc-cta{ margin-top:6px; display:inline-block; padding:8px 10px; border-radius:10px; font-weight:900;
+      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); color:#fff; text-decoration:none; }
+
     .sr-only{ position:absolute !important; left:-9999px !important; }
   </style>
 </head>
@@ -201,6 +216,14 @@
         <div class="label"><span id="label-icon" aria-hidden="true">●</span><span id="label-text"><b>—</b></span></div>
       </div>
 
+      <!-- KROKI -->
+      <div class="steps" aria-label="Asystent kroków">
+        <div class="step" id="step-1">1. Objawy<small>Zaznacz</small></div>
+        <div class="step" id="step-2">2. Choroby<small>Zobacz podpowiedzi</small></div>
+        <div class="step" id="step-3">3. Lekarze<small>Gdzie iść?</small></div>
+        <div class="step" id="step-4">4. Co dalej<small>112/SOR lub dom</small></div>
+      </div>
+
       <div class="tabs" role="tablist" aria-label="Sekcje treści">
         <button class="tab" data-variant="symptoms" role="tab" aria-selected="true"  data-target="#s-objawy">Objawy</button>
         <button class="tab" data-variant="causes"   role="tab" aria-selected="false" data-target="#s-przyczyny">Przyczyny</button>
@@ -211,10 +234,11 @@
         <button class="tab" data-variant="myths"    role="tab" aria-selected="false" data-target="#s-mity">Mity vs Fakty</button>
         <button class="tab" data-variant="faq"      role="tab" aria-selected="false" data-target="#s-faq">FAQ</button>
         <button class="tab" data-variant="dx"       role="tab" aria-selected="false" data-target="#s-dx">Choroby (beta)</button>
+        <button class="tab" data-variant="docs"     role="tab" aria-selected="false" data-target="#s-docs">Lekarze</button>
       </div>
 
       <p class="hero-note">Edukacyjnie, nie diagnostycznie. W nagłej, ciężkiej dolegliwości lub przy czerwonych flagach — skorzystaj z <b>112</b> lub SOR.</p>
-      <p class="legend">Zaznacz <strong>objawy</strong> i <strong>czerwone flagi</strong> w karcie „Objawy” — pasek <b>Ryzyko</b> zareaguje automatycznie.</p>
+      <p class="legend">Zaznacz <strong>objawy</strong> — pasek <b>Ryzyko</b> oraz karty <b>Choroby</b>/<b>Lekarze</b> dopasują się automatycznie.</p>
     </div>
   </header>
 
@@ -246,8 +270,9 @@
 
         <!-- HINT po zaznaczeniu objawów -->
         <div id="dx-hint" class="dx-hint" role="status" aria-live="polite">
-          Masz zaznaczone objawy. Zobacz edukacyjne podpowiedzi w zakładce <strong>Choroby</strong>.
-          <button type="button" id="dx-open">Otwórz „Choroby”</button>
+          Masz zaznaczone objawy. Zobacz edukacyjne podpowiedzi w <strong>Choroby</strong> lub przejdź do <strong>Lekarze</strong>.
+          <button type="button" id="dx-open">Choroby</button>
+          <button type="button" id="docs-open">Lekarze</button>
         </div>
       </article>
 
@@ -316,8 +341,15 @@
       <!-- CHOROBY -->
       <article class="card" data-type="dx" id="s-dx" role="tabpanel" aria-hidden="true">
         <h3 id="h-dx">Choroby (beta)</h3>
-        <p class="dx-note">Podpowiedzi edukacyjne wyliczane z zaznaczonych objawów. Nie zastępują konsultacji.</p>
+        <p class="dx-note">Podpowiedzi edukacyjne z zaznaczonych objawów. Nie zastępują konsultacji.</p>
         <ul class="clean dx-list" id="dx-list"></ul>
+      </article>
+
+      <!-- LEKARZE -->
+      <article class="card" data-type="docs" id="s-docs" role="tabpanel" aria-hidden="true">
+        <h3 id="h-docs">Lekarze</h3>
+        <p class="docs-note">Kolejność: <b>POZ</b> (lekarz rodzinny) → specjaliści powiązani z problemem. Czerwone flagi kierują do <b>SOR/112</b>.</p>
+        <ul class="clean" id="docs-list"></ul>
       </article>
     </section>
   </main>
@@ -326,8 +358,7 @@
     try{ if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; } }catch(e){}
     window.addEventListener('DOMContentLoaded', function(){
       window.scrollTo(0,0);
-      const b = document.getElementById('bhReturnTop');
-      b?.addEventListener('click', function(){
+      document.getElementById('bhReturnTop')?.addEventListener('click', function(){
         if (document.referrer && document.referrer.includes(location.host)) history.back();
         else window.location.href = 'index.html';
       });
@@ -353,6 +384,10 @@
       panels.forEach(p=>{ const active = ('#'+p.id)===targetSel; p.setAttribute('aria-hidden', active? 'false':'true'); });
       tabs.forEach(t=>{ const on = t.getAttribute('data-target')===targetSel; t.setAttribute('aria-selected', on?'true':'false'); if(on) t.focus({preventScroll:true}); });
       document.querySelector(targetSel)?.scrollIntoView({behavior:'smooth', block:'start'});
+      // kroki UI
+      if(targetSel==='#s-objawy') activateStep(1);
+      if(targetSel==='#s-dx')     activateStep(2);
+      if(targetSel==='#s-docs')   activateStep(3);
     }
     tabs.forEach(t=>{
       t.addEventListener('click', ()=> showPanel(t.getAttribute('data-target')));
@@ -368,6 +403,13 @@
       });
     })();
 
+    /* Kroki – lekkie sterowanie */
+    const stepEls = [null, document.getElementById('step-1'), document.getElementById('step-2'), document.getElementById('step-3'), document.getElementById('step-4')];
+    function activateStep(n){
+      stepEls.forEach((el,i)=>{ if(!el) return; el.classList.toggle('active', i===n); el.classList.toggle('done', i<n); });
+    }
+    activateStep(1);
+
     /* Bazy skrótów */
     const BASE = {
       rehabCommon:["Sen i regeneracja — 7–9 h","Nawodnienie — małe porcje","Lekka aktywność 20–30 min","Ergonomia — przerwy co 30–45 min","Oddech przeponowy — 5 min","Higiena cyfrowa — 20-20-20"],
@@ -377,7 +419,7 @@
       faqCommon:[{q:"Co w domu?",a:"Pierwsza pomoc + obserwacja czerwonych flag."},{q:"Kiedy do lekarza?",a:"Gdy silne/utrzymujące się 48–72h lub flagi."},{q:"Łączenie OTC?",a:"Nie duplikuj substancji czynnych."}]
     };
 
-    /* Treści (jak poprzednio – skrócone tu do najczęstszych) */
+    /* Treści (jak wcześniej), ryzyko start 0% */
     const CONTENT = {
       glowa:{label:"Głowa (ból)",risk:0, symptoms:["Ucisk obustronny","Pulsujący jednostronny","Nadwrażliwość na światło/dźwięk","Sztywność karku"],causes:["Napięcie/stres","Migrena","Nadużycie leków","Sen/ekrany"],firstaid:["Nawodnienie, odpoczynek","Masaż skroni","Chłodny/ciepły okład","Krótki spacer"],otc:[...BASE.otcPain],rx:["Tryptany","Profilaktyka migreny"],rehab:[...BASE.rehabCommon,"Dzienniczek bólu","Ćwiczenia karku"],urgent:["Nagły najgorszy ból","Gorączka + sztywność karku","Uraz głowy + zaburzenia",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
       nos:{label:"Nos",risk:0,symptoms:["Katar wodnisty/gęsty","Zatkanie, upośledzenie węchu","Kichanie/świąd (alergia)","Ból zatok","Krwawienie z nosa"],causes:["Przeziębienie","Alergia","Zapalenie zatok","Suche powietrze","Krzywa przegroda, polipy","Uraz"],firstaid:["Nawilżanie NaCl","Nawilż powietrze, wietrz","Krwawienie: pochyl, ucisk 10 min","Chłodny okład"],otc:["Aerozole z solą","Krople obkurczające (krótkotrwale)","P/histaminowe","Preparaty do zatok"],rx:["Donosowe GKS","Antybiotyk przy bakteryjnych"],rehab:[...BASE.rehabCommon,"Irygacje nosa","Unikanie dymu/zapachów"],urgent:["Krwawienie >20 min","Wysoka gorączka + silny ból zatok","Uraz/deformacja/wyciek płynu",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
@@ -392,14 +434,14 @@
       kaszel:{label:"Kaszel",risk:0,symptoms:["Suchy/mokry","Duszność, chrypka"],causes:["Infekcje","Alergie/drażnienie","Refluks"],firstaid:["Nawadnianie, nawilżanie","Unikaj dymu","Miód (≥1 r.ż.)"],otc:["Syropy (dobór z farmaceutą)","Inhalacje NaCl"],rx:["Leczenie przyczynowe"],rehab:[...BASE.rehabCommon,"Ćwiczenia oddechowe"],urgent:["Duszność spoczynkowa/sinica/krwioplucie",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
       goraczka:{label:"Gorączka",risk:0,symptoms:["Temp., dreszcze","Bóle mięśni/głowy"],causes:["Wirusy/bakterie","Zapalenia"],firstaid:["Nawodnienie, lekki ubiór","Letnie okłady/kąpiel (bez alkoholu)"],otc:[{t:"Paracetamol/ibuprofen wg ulotki",audience:"all"}],rx:["Celowane po diagnozie"],rehab:[...BASE.rehabCommon,"Odpoczynek"],urgent:[">39°C mimo leczenia","Sztywność karku, silny ból głowy",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
       zadlawienie:{label:"Zadławienie",risk:0,symptoms:["Nagła duszność","Chwytanie za szyję","Bez/skąpokaszlowy napad"],causes:["Kęs/małe przedmioty"],firstaid:["Skuteczny kaszel — zachęcaj","Dorosły: 5 uderzeń pleców → Heimlich","Dziecko >1 r.ż.: 5 pleców → 5 nadbrzusza","Niemowlę: 5 pleców → 5 uciśnięć klatki","Utrata przytomności: RKO 30:2, 112, AED"],otc:["—"],rx:["—"],rehab:[...BASE.rehabCommon,"Edukacja i profilaktyka"],urgent:["Każde ciężkie zadławienie — 112"],myths:[{m:"„Palcem w ciemno”",f:"Ryzyko wepchnięcia głębiej."}],faq:[...BASE.faqCommon]},
-      ciaza:{label:"Ciąża",risk:0,symptoms:["Nudności/wymioty","Zgaga/zaparcia","Ból krzyża/kurcze","Obrzęki","Zawroty"],causes:["Hormony","Zmiana postawy/ucisk","Niedobory"],firstaid:["Małe, częste posiłki","Nawodnienie; imbir (po konsultacji)","Ruszaj się łagodnie","Zgaga: unieś wezgłowie"],otc:["Witaminy wg zaleceń","Środki dozwolone w ciąży"],rx:["Tylko po ocenie lekarskiej"],rehab:[...BASE.rehabCommon,"Ćwiczenia w ciąży","Fizjo uroginekologiczna","Pozycje odciążające"],urgent:["Krwawienie, silny ból","Nagły obrzęk twarzy/ból głowy","Zmniejszone ruchy płodu","Silna duszność/ból w klatce",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]}
+      ciaza:{label:"Ciąża",risk:0,symptoms:["Nudności/wymioty","Zgaga/zaparcia","Ból krzyża/kurcze","Obrzęki","Zawroty"],causes:["Hormony","Zmiana postawy/ucisk","Niedobory"],firstaid:["Małe, częste posiłki","Nawodnienie; imbir (po konsultacji)","Ruszaj się łagodnie","Zgaga: unieś wezgłowie"],otc:["Witaminy wg zaleceń"],rx:["Tylko po ocenie lekarskiej"],rehab:[...BASE.rehabCommon,"Ćwiczenia w ciąży","Fizjo uroginekologiczna","Pozycje odciążające"],urgent:["Krwawienie, silny ból","Nagły obrzęk twarzy/ból głowy","Zmniejszone ruchy płodu","Silna duszność/ból w klatce",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]}
     };
 
     const FALLBACK = { label: LABEL || CZESC, risk: 0, ...CONTENT.glowa };
     const entry = CONTENT[CZESC] || FALLBACK;
     document.getElementById('label-text').innerHTML = '<b>'+ (entry.label||LABEL) + '</b> • ' + TYP;
 
-    /* Ryzyko – start od 0% */
+    /* Ryzyko – start 0% */
     const isChild = (TYP === 'dziecko');
     const allowItem = (item)=>{ if(typeof item==='string') return true; const aud=(item.audience||'all'); return isChild ? aud!=='adult' : aud!=='child'; };
     const textOf = (item)=> typeof item === 'string' ? item : item.t;
@@ -416,9 +458,39 @@
       return 0;
     }
 
+    /* Zapamiętywanie wyborów (per część ciała + typ) */
+    const MEMO_KEY = `bh:symptoms:${TYP}:${CZESC}`;
+    function saveSelections(){
+      try{
+        const selected = Array.from(document.querySelectorAll('#symp-common li.li-checked')).map(li=>li.textContent.trim());
+        const urgent   = Array.from(document.querySelectorAll('#urgent li.li-checked')).map(li=>li.textContent.trim());
+        localStorage.setItem(MEMO_KEY, JSON.stringify({selected, urgent}));
+      }catch(_){}
+    }
+    function restoreSelections(){
+      try{
+        const raw = localStorage.getItem(MEMO_KEY); if(!raw) return;
+        const data = JSON.parse(raw)||{};
+        const mark = (ulId, texts=[])=>{
+          const lis = Array.from(document.querySelectorAll(`#${ulId} li`));
+          lis.forEach(li=>{
+            const txt = li.textContent.trim();
+            if(texts.includes(txt)){
+              const cb = li.querySelector('.cb');
+              if(!cb.classList.contains('checked')) cb.click(); // używamy istniejącej logiki
+            }
+          });
+        };
+        // najpierw objawy widoczne, potem rozwinięte
+        mark('symp-common', data.selected||[]);
+        mark('urgent', data.urgent||[]);
+      }catch(_){}
+    }
+
     let selectedWeights=0, selectedCount=0;
+
     function updateRisk(){
-      const base=0; // <— początek skali
+      const base=0;
       const val =Math.max(0,Math.min(100,base+selectedWeights));
       const c=document.getElementById('risk-cursor-card');
       const bar=document.getElementById('riskbar');
@@ -431,15 +503,17 @@
         strip?.classList.toggle('alert',high); cta?.classList.toggle('cta-alert',high);
         if(high && navigator.vibrate){ try{ navigator.vibrate(120);}catch(_){} }
       }
-      // UI hint w Objawach + ping na zakładce Choroby
+      // badge na zakładkach
       const hint = document.getElementById('dx-hint');
       const dxTab = document.querySelector('.tab[data-variant="dx"]');
+      const docsTab = document.querySelector('.tab[data-variant="docs"]');
       const dxMatches = computeDx().filter(x=>x._score>0 || x.badge==='sor').length;
-      if(hint){ hint.classList.toggle('show', selectedCount>0); }
-      if(dxTab){
-        dxTab.classList.toggle('tab-attn', selectedCount>0);
-        dxTab.setAttribute('data-badge', selectedCount>0 ? String(dxMatches) : '');
-      }
+      const docsMatches = computeDocs().length;
+      hint?.classList.toggle('show', selectedCount>0);
+      if(dxTab){ dxTab.classList.toggle('tab-attn', selectedCount>0); dxTab.setAttribute('data-badge', selectedCount>0 ? String(dxMatches) : ''); }
+      if(docsTab){ docsTab.classList.toggle('tab-attn', selectedCount>0); docsTab.setAttribute('data-badge', selectedCount>0 ? String(docsMatches) : ''); }
+      // kroki – jeśli są zaznaczenia, krok 2 „zapalony”
+      activateStep(selectedCount>0 ? 2 : 1);
     }
 
     /* Renderery list */
@@ -464,6 +538,7 @@
           selectedWeights += (on? +w : -w);
           selectedCount  += (on? 1 : -1);
           updateRisk();
+          saveSelections();
           try{ document.dispatchEvent(new CustomEvent('bh:symptoms-changed')); }catch(_){}
         }
         li.addEventListener('click',e=>{ if(e.target!==cb) toggle(); });
@@ -534,27 +609,27 @@
 
     selectedWeights=0; selectedCount=0; updateRisk(); showPanel('#s-objawy');
 
-    /* ===== Choroby (beta) – scoring i sortowanie ===== */
+    /* ===== Choroby (beta) z podpowiedziami trafionych objawów ===== */
     const DX_RULES = {
       glowa: [
-        {name:"Ból napięciowy głowy", keys:["ucisk obustronny","stres","ekran"], advice:"POZ / samoobserwacja, higiena snu, ergonomia", badge:"poz"},
-        {name:"Migrena", keys:["pulsujący jednostronny","światło","dźwięk","nudności"], advice:"POZ; przy nawrotach rozważ neurolog", badge:"poz"},
-        {name:"Zapalenie opon – pilnie", keys:["sztywność karku","wysoka gorączka","najgorszy ból"], advice:"Objawy alarmowe — SOR/112", badge:"sor"}
+        {name:"Ból napięciowy głowy", keys:["ucisk obustronny","stres","ekran"], advice:"POZ / higiena snu, ergonomia", badge:"poz"},
+        {name:"Migrena", keys:["pulsujący jednostronny","światło","dźwięk","nudności"], advice:"POZ; przy nawrotach neurolog", badge:"poz"},
+        {name:"Zapalenie opon — pilnie", keys:["sztywność karku","wysoka gorączka","najgorszy ból"], advice:"Objawy alarmowe — SOR/112", badge:"sor"}
       ],
       nos: [
-        {name:"Nieżyt nosa (wirusowy)", keys:["katar","zatkanie","kichanie"], advice:"POZ / objawowo, nawadnianie, sól", badge:"poz"},
+        {name:"Nieżyt nosa (wirusowy)", keys:["katar","zatkanie","kichanie"], advice:"POZ / objawowo, sól", badge:"poz"},
         {name:"Zapalenie zatok", keys:["ból zatok","gorączka","wydzielina"], advice:"POZ; rozważ antybiotyk wg oceny", badge:"poz"}
       ],
       klatka: [
-        {name:"Refluks/zgaga", keys:["zgaga","pieczenie"], advice:"POZ; modyfikacja diety, PPI wg zaleceń", badge:"poz"},
+        {name:"Refluks/zgaga", keys:["zgaga","pieczenie"], advice:"POZ; dieta, PPI wg zaleceń", badge:"poz"},
         {name:"OZW/Zawał — pilnie", keys:["ucisk","zimny pot","duszność"], advice:"SOR/112", badge:"sor"}
       ],
       pluca: [
-        {name:"Infekcja dróg oddechowych", keys:["kaszel","gorączka"], advice:"POZ / obserwacja, nawodnienie", badge:"poz"},
+        {name:"Infekcja dróg oddechowych", keys:["kaszel","gorączka"], advice:"POZ / nawodnienie", badge:"poz"},
         {name:"Astma/POChP zaostrzenie", keys:["świsty","duszność"], advice:"POZ pilnie; ciężka duszność → SOR", badge:"poz"}
       ],
       brzuch: [
-        {name:"Niestrawność/IBS", keys:["wzdęcia","biegunka","zaparcie"], advice:"POZ; dieta FODMAP (ostrożnie), dzienniczek", badge:"poz"},
+        {name:"Niestrawność/IBS", keys:["wzdęcia","biegunka","zaparcie"], advice:"POZ; dieta, dzienniczek", badge:"poz"},
         {name:"Ostry brzuch — pilnie", keys:["twardy brzuch","silny ból"], advice:"SOR/112", badge:"sor"}
       ],
       serce: [
@@ -591,7 +666,7 @@
 
         const urgentHit = ["duszność","sinica","utrata przytomności","twardy brzuch","krwawienie","najgorszy ból"].some(k=>picked.some(p=>p.includes(k)));
         if(urgentHit){
-          hits.push({_score:999, name:"Objawy alarmowe", advice:"Zadzwoń 112 / SOR", badge:"sor", ico:"⚠️"});
+          hits.push({_score:999, name:"Objawy alarmowe", advice:"Zadzwoń 112 / SOR", badge:"sor", ico:"⚠️", _max:1, _match:[]});
         }
 
         rules.forEach(r=>{
@@ -599,19 +674,18 @@
           const matched = keys.filter(k=> picked.some(p=> p.includes(k)));
           const score = matched.length;
           if(score>0){
-            hits.push({_score:score, name:r.name, advice:r.advice, badge:r.badge, ico: r.badge==='sor'?'⚠️':'🩺', _max: keys.length});
+            hits.push({_score:score, name:r.name, advice:r.advice, badge:r.badge, ico: r.badge==='sor'?'⚠️':'🩺', _max: keys.length, _match: matched});
           }
         });
 
         if(!hits.length){
-          hits.push({_score:0, name:"Za mało danych", advice:"Zaznacz objawy w zakładce „Objawy”", badge:"poz", ico:"ℹ️", _max:1});
+          hits.push({_score:0, name:"Za mało danych", advice:"Zaznacz objawy w zakładce „Objawy”", badge:"poz", ico:"ℹ️", _max:1, _match:[]});
         }
 
-        // sort: czerwone flagi (999) > większe score > pozostałe
         hits.sort((a,b)=> b._score - a._score);
         return hits.slice(0,5);
       }catch(_){
-        return [{_score:0, name:"Chwilowy błąd", advice:"Odśwież stronę lub zaznacz objawy ponownie.", badge:"poz", ico:"ℹ️", _max:1}];
+        return [{_score:0, name:"Chwilowy błąd", advice:"Odśwież stronę lub zaznacz objawy ponownie.", badge:"poz", ico:"ℹ️", _max:1, _match:[]}];
       }
     }
 
@@ -625,34 +699,112 @@
         const ico=document.createElement('span'); ico.className='dx-ico'; ico.textContent = it.ico || '🩺';
 
         const text=document.createElement('div');
-        text.innerHTML = `<strong>${it.name}</strong><div style="color:#b8c2e0;margin-top:4px">${it.advice}</div>`;
+        const matchTxt = it._match && it._match.length ? ` (trafienia: ${it._match.length})` : '';
+        text.innerHTML = `<strong title="${(it._match||[]).join(', ')}">${it.name}${matchTxt}</strong><div style="color:#b8c2e0;margin-top:4px">${it.advice}</div>`;
 
         const meta=document.createElement('div'); meta.className='dx-meta';
         const confWrap=document.createElement('div'); confWrap.className='conf-wrap';
         const confBar=document.createElement('div'); confBar.className='conf-bar';
         const ratio = it._max ? Math.min(100, Math.round((it._score/it._max)*100)) : (it._score>=999?100:0);
         confBar.style.width = ratio + '%';
+        confBar.title = it._match && it._match.length ? `Pasujące objawy: ${it._match.join(', ')}` : 'Brak dopasowań';
         confWrap.appendChild(confBar);
 
         const badge=document.createElement('span'); badge.className='dx-badge '+(it.badge==='sor'?'sor':'poz'); badge.textContent = it.badge==='sor'?'pilnie SOR':'POZ';
+        const hint=document.createElement('div'); hint.className='dx-match'; hint.textContent = it._match && it._match.length ? `Pasuje: ${it._match.join(', ')}` : '';
+
         meta.appendChild(confWrap); meta.appendChild(badge);
 
         li.appendChild(cb); li.appendChild(ico); li.appendChild(text); li.appendChild(meta);
+        if(hint.textContent) li.appendChild(hint);
         ul.appendChild(li);
       });
+      // po odświeżeniu sekcji – krok 2 aktywny
+      activateStep(2);
     }
 
-    document.addEventListener('bh:symptoms-changed', ()=>{ renderDx(); updateRisk(); });
-    document.querySelector('[data-variant="dx"]')?.addEventListener('click', renderDx);
+    /* ===== Lekarze ===== */
+    function computeDocs(){
+      const {symp, urgent} = gatherSelectedTexts();
+      const picked = (symp.concat(urgent)).map(s=>s.toLowerCase());
+      const urgentHit = ["duszność","sinica","utrata przytomności","twardy brzuch","krwawienie","najgorszy ból"].some(k=>picked.some(p=>p.includes(k)));
 
-    // Przycisk w „Objawach” otwierający Choroby
+      const list = [];
+      if(urgentHit){ list.push({name:"SOR / 112", why:"Czerwone flagi — pilna pomoc", badge:"sor", ico:"🚑"}); }
+
+      list.push({name:"POZ — lekarz rodzinny", why:"Pierwszy kontakt, wstępna ocena, skierowania", badge:"poz", ico:"🩺"});
+
+      const specByPart = {
+        glowa:["Neurolog","Laryngolog (zatoki)","Okulista (gdy zaburzenia widzenia)"],
+        nos:["Laryngolog (otolaryngolog)","Alergolog"],
+        oczy:["Okulista"],
+        klatka:["Kardiolog","Pulmonolog","Gastroenterolog (refluks)"],
+        pluca:["Pulmonolog","Alergolog"],
+        serce:["Kardiolog"],
+        brzuch:["Gastroenterolog","Chirurg (ostry brzuch)"],
+        nerki:["Nefrolog","Urolog"],
+        plecy:["Ortopeda","Fizjoterapeuta"],
+        biodra:["Ortopeda","Fizjoterapeuta"],
+        kolano:["Ortopeda","Fizjoterapeuta"],
+        stopy:["Ortopeda","Fizjoterapeuta"],
+        skora:["Dermatolog"],
+        kaszel:["Pulmonolog","Alergolog"],
+        goraczka:["POZ (diagnostyka przyczyny)"],
+        zadlawienie:["POZ po incydencie / SOR przy objawach"],
+        ciaza:["POZ","Ginekolog/położna"]
+      };
+      (specByPart[CZESC]||[]).forEach(s=> list.push({name:s, why:"Specjalista adekwatny do problemu", badge:"poz", ico:"🏥"}));
+
+      return list;
+    }
+
+    function renderDocs(){
+      const ul = document.getElementById('docs-list'); if(!ul) return;
+      const items = computeDocs();
+      ul.innerHTML = '';
+      items.forEach(it=>{
+        const li = document.createElement('li');
+        const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
+        const title = document.createElement('div');
+        title.innerHTML = `<strong>${it.name}</strong><div style="color:#b8c2e0;margin-top:4px">${it.why}</div>`;
+        const badge=document.createElement('span'); badge.className='doc-badge '+(it.badge==='sor'?'sor':'poz'); badge.textContent = (it.badge==='sor'?'pilnie SOR':'POZ/specjalista');
+
+        // Mini-CTA: przygotowanie + mapy
+        const prep = document.createElement('a'); prep.href="#"; prep.className="doc-cta"; prep.textContent="Jak się przygotować na wizytę?";
+        prep.addEventListener('click', (e)=>{ e.preventDefault(); alert("Zbierz: listę objawów i czas trwania, leki, choroby przewlekłe, alergie, pomiary (temp./ciśnienie), wyniki badań."); });
+
+        const ctas = document.createElement('div'); ctas.style.marginTop='6px';
+        const sor = document.createElement('a'); sor.className='doc-cta'; sor.href='https://www.google.com/maps/search/SOR+blisko+mnie'; sor.target='_blank'; sor.rel='noopener'; sor.textContent='Znajdź SOR w pobliżu';
+        const apteka = document.createElement('a'); apteka.className='doc-cta'; apteka.href='https://www.google.com/maps/search/apteka+24h+blisko+mnie'; apteka.target='_blank'; apteka.rel='noopener'; apteka.textContent='Znajdź aptekę 24h';
+        ctas.appendChild(sor); ctas.appendChild(document.createTextNode(' ')); ctas.appendChild(apteka);
+
+        const right = document.createElement('div'); right.style.marginLeft='auto'; right.appendChild(badge);
+        li.appendChild(cb); li.appendChild(title); li.appendChild(right); li.appendChild(prep); li.appendChild(ctas);
+        ul.appendChild(li);
+      });
+      // krok 3 aktywny
+      activateStep(3);
+    }
+
+    /* Spięcie interakcji */
+    document.addEventListener('bh:symptoms-changed', ()=>{ renderDx(); renderDocs(); updateRisk(); });
+    document.querySelector('[data-variant="dx"]')?.addEventListener('click', renderDx);
+    document.querySelector('[data-variant="docs"]')?.addEventListener('click', renderDocs);
+
+    // przyciski skrótów w Objawach
     document.getElementById('dx-open')?.addEventListener('click', ()=>{
       renderDx(); showPanel('#s-dx');
-      const dxTab = document.querySelector('.tab[data-variant="dx"]');
-      dxTab?.classList.remove('tab-attn');
+      document.querySelector('.tab[data-variant="dx"]')?.classList.remove('tab-attn');
+    });
+    document.getElementById('docs-open')?.addEventListener('click', ()=>{
+      renderDocs(); showPanel('#s-docs');
+      document.querySelector('.tab[data-variant="docs"]')?.classList.remove('tab-attn');
     });
 
-    /* Particles (bez zmian logiki poza drobnym fixem granic) */
+    // Przywrócenie zapamiętanych objawów po wyrenderowaniu list
+    window.addEventListener('load', ()=>{ restoreSelections(); });
+
+    /* Particles */
     (function particles(){
       const c=document.getElementById('bh-particles'); if(!c) return;
       const prefersReduced=window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
