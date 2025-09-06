@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="pl">
 <head>
+  <!-- BoliHelp • Strona główna • SAFE build (quiz + porady + tłumacz) -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Strona główna</title>
@@ -15,11 +16,13 @@
       position:relative; background:#0e1230 !important; color:#eef2ff;
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
+    /* Wyłącz tła pseudo na home */
     body[data-page="home"]::before,
     body[data-page="home"]::after,
     body[data-page="home"] .container::before,
     body[data-page="home"] .container::after{content:none !important;display:none !important}
 
+    /* TAPETA */
     .bh-wallpaper,.bh-grid{position:fixed;inset:0;pointer-events:none}
     .bh-wallpaper{
       z-index:0;
@@ -41,6 +44,7 @@
     }
     .container{position:relative;z-index:3;background:transparent !important;max-width:1100px;margin:0 auto;padding:0 16px}
 
+    /* Kafle 3 kolumny (jak było) */
     @media (min-width:981px){ section.stack[style]{grid-template-columns:repeat(3,1fr) !important;} }
     @media (max-width:980px){ section.stack[style]{grid-template-columns:repeat(2,1fr) !important;} }
     @media (max-width:640px){ section.stack[style]{grid-template-columns:1fr !important;} }
@@ -51,6 +55,7 @@
     .card img{width:100%;height:100%;object-fit:contain;object-position:center;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))}
     .card .caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;border-top:1px solid rgba(164,107,255,.22);background:rgba(255,255,255,.04)}
 
+    /* Zielone pigułki SOS */
     :root{ --bhG:34,227,160; --bhG2:20,160,120; }
     .situations .pill.pill--green{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(var(--bhG2), .15);
@@ -59,21 +64,26 @@
       backdrop-filter:saturate(125%) blur(4px);
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
     }
-    .situations .pill.pill--green:hover{transform:translateY(-1px);border-color:rgba(var(--bhG), .85)}
+    .situations .pill.pill--green:hover,
+    .situations .pill.pill--green:focus-visible{transform:translateY(-1px);border-color:rgba(var(--bhG), .85);outline:none}
+    .situations .pill .ico{
+      display:inline-grid; place-items:center; width:22px; height:22px; margin-right:6px; border-radius:6px;
+      background: rgba(164,107,255,.18); box-shadow: inset 0 0 0 1px rgba(164,107,255,.25);
+    }
 
+    /* Styl obrazka w modalu porady */
     .bh2025-porada__svg img{
       max-width:100%; height:auto; display:block; border-radius:12px;
       border:1px solid rgba(255,255,255,.16);
       background:rgba(255,255,255,.04);
     }
 
-    /* === Translate switch === */
-    .header .tools { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    /* Translate switch — bez kolizji i bez overlayu */
+    .header .tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
     .header .tools .translate{display:flex;align-items:center;gap:8px;margin-left:10px;position:relative;z-index:4}
     .header .tools .translate select{
       appearance:none;background:rgba(255,255,255,.06);color:#eef2ff;
-      border:1px solid rgba(164,107,255,.28);border-radius:10px;padding:8px 10px;
-      font-weight:800; cursor:pointer
+      border:1px solid rgba(164,107,255,.28);border-radius:10px;padding:8px 10px;font-weight:800;cursor:pointer
     }
     .header .tools .translate .btn-translate{
       appearance:none;border:1px solid rgba(164,107,255,.28);
@@ -81,19 +91,20 @@
       color:#eef2ff;border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer
     }
     .header .tools .translate .btn-translate:hover{
-      transform:translateY(-1px);border-color:rgba(164,107,255,.55);
-      box-shadow:0 10px 24px rgba(8,10,22,.45)
+      transform:translateY(-1px);border-color:rgba(164,107,255,.55);box-shadow:0 10px 24px rgba(8,10,22,.45)
     }
     header.header{position:relative;z-index:5}
   </style>
 </head>
 
 <body data-page="home">
+  <!-- TŁO -->
   <div class="bh-wallpaper" aria-hidden="true"></div>
   <div class="bh-grid" aria-hidden="true"></div>
   <div class="bh-floor-fade" aria-hidden="true"></div>
 
   <div class="container">
+    <!-- NAGŁÓWEK -->
     <header class="header">
       <div class="brand">
         <h1>Boli Help</h1>
@@ -102,7 +113,7 @@
       <div class="tools">
         <div class="search" role="search">
           <input type="search" placeholder="Szukaj objawu, części ciała lub tematu…" aria-label="Szukaj" />
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
                   stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
           </svg>
@@ -126,11 +137,14 @@
         </div>
       </div>
     </header>
-    <div class="emergency-list">
+
+    <!-- TELEFONY -->
+    <div class="emergency-list" aria-label="Telefony alarmowe">
       <a href="tel:112">📞 112</a><a href="tel:999">🚑 999</a><a href="tel:998">🔥 998</a><a href="tel:997">👮 997</a>
     </div>
 
-    <nav class="situations">
+    <!-- PIGUŁKI SOS + GRY -->
+    <nav class="situations" aria-label="Sytuacje nagłe">
       <a class="pill pill--green" data-porada="zadlawienie" href="#"><span class="ico">🫁</span>Zadławienie</a>
       <a class="pill pill--green" data-porada="reanimacja" href="#"><span class="ico">🚑</span>Reanimacja</a>
       <a class="pill pill--green" data-porada="wypadek" href="#"><span class="ico">💥</span>Wypadek</a>
@@ -138,56 +152,472 @@
       <a class="pill pill--blue" href="gry.html"><span class="ico">🎮</span>Gry / Trening</a>
     </nav>
 
-    <!-- Quiz launcher -->
-    <div class="bh2025-quiz-launch">
-      <span class="dot"></span>
-      <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button">Sprawdź się: Pierwsza pomoc</button>
+    <!-- QUIZ launcher -->
+    <div class="bh2025-quiz-launch" aria-hidden="false" aria-label="Sekcja edukacyjna">
+      <span class="dot" aria-hidden="true"></span>
+      <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button" aria-haspopup="dialog" aria-controls="bh2025QuizModal">
+        Sprawdź się: Pierwsza pomoc
+      </button>
+    </div>
+
+    <!-- SZYBKIE AKCJE -->
+    <div class="actions" role="navigation" aria-label="Szybkie akcje">
+      <button id="btn-112" class="btn btn--red btn--call" type="button" aria-label="Zadzwoń na 112">📞 112</button>
+      <button id="btn-hosp" class="btn btn--hosp" type="button" aria-label="Szpitale i SOR">🏥 Szpitale / SOR</button>
+      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener"><span class="badge-round">apteka24</span></a>
+      <button id="btn-loc" class="btn" type="button">📍 Zlokalizuj mnie</button>
     </div>
 
     <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
-    <section class="stack" style="display:grid;gap:16px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
+
+    <!-- 3 KAFELKI -->
+    <section class="stack" aria-label="Wybór postaci"
+      style="display:grid;gap:16px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
       <article class="card">
         <a href="kobieta.html">
-          <img src="img/kobieta-model1.png" alt="Kobieta" />
-          <div class="caption"><h3>Kobieta</h3><span>→</span></div>
+          <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Kobieta</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
       <article class="card">
         <a href="mezczyzna.html">
-          <img src="img/mezczyzna-model1.png" alt="Mężczyzna" />
-          <div class="caption"><h3>Mężczyzna</h3><span>→</span></div>
+          <img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Mężczyzna</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
       <article class="card">
         <a href="dziecko.html">
-          <img src="img/dziecko-model1.png" alt="Dziecko" />
-          <div class="caption"><h3>Dziecko</h3><span>→</span></div>
+          <img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Dziecko</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
     </section>
   </div>
 
-  <!-- Modale (quiz, porady itd.) -->
-  <!-- … Twoje istniejące modale … -->
+  <!-- === MODAL QUIZU === -->
+  <div id="bh2025QuizModal" class="bh2025-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025QuizTitle">
+    <div class="bh2025-modal__panel">
+      <div class="bh2025-modal__head">
+        <div>
+          <div id="bh2025QuizTitle" class="bh2025-modal__title">Mini-quiz: czy wiesz co zrobić?</div>
+          <div class="bh2025-muted" id="bh2025QuizSubtitle">3 szybkie pytania: zadławienie, reanimacja, pozycja bezpieczna.</div>
+        </div>
+        <button class="bh2025-close" type="button" id="bh2025QuizClose" aria-label="Zamknij">✕</button>
+      </div>
+      <div class="bh2025-modal__body">
+        <div class="bh2025-progress" aria-label="Postęp">
+          <div class="bh2025-progress__bar"><span class="bh2025-progress__cursor" id="bh2025QuizCursor"></span></div>
+          <div class="bh2025-progress__label"><span id="bh2025QuizStep">1</span>/3</div>
+        </div>
+        <div class="bh2025-q" id="bh2025QuizQuestion">…</div>
+        <div class="bh2025-answers" id="bh2025QuizAnswers"></div>
+        <div class="bh2025-actions">
+          <button class="bh2025-ghost" type="button" id="bh2025QuizRestart">Zacznij od nowa</button>
+          <button class="bh2025-primary" type="button" id="bh2025QuizNext">Dalej</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- === MODAL PORADA (obrazek + kroki + wideo placeholder) === -->
+  <div id="bh2025Porada" class="bh2025-porada" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025PoradaTitle">
+    <div class="bh2025-porada__panel">
+      <div class="bh2025-porada__head">
+        <div class="bh2025-porada__title" id="bh2025PoradaTitle">Porada</div>
+        <div class="bh2025-chip" id="bh2025PoradaChip">SOS • instrukcja</div>
+        <button class="bh2025-close--porada" type="button" id="bh2025PoradaClose" aria-label="Zamknij">✕</button>
+      </div>
+
+      <div class="bh2025-porada__grid">
+        <div class="bh2025-porada__svg" id="bh2025PoradaSvg" aria-label="Instrukcja obrazkowa">
+          <!-- tutaj wstawiany jest IMG przez JS -->
+        </div>
+        <div class="bh2025-steps">
+          <ol id="bh2025PoradaSteps"></ol>
+        </div>
+      </div>
+
+      <div class="bh2025-video">
+        <div class="bh2025-muted" style="margin-bottom:8px;font-weight:800">Materiał wideo</div>
+        <div id="bh2025VideoWrap">
+          <div class="ph" id="bh2025VideoPh">
+            <span>🎬</span>
+            <span>Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę w JS.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- === SCRIPTS === -->
   <script src="assets/main.js?v=10"></script>
 
-  <!-- 🌐 Translate script -->
+  <!-- QUIZ (działający: punkty + konfetti) -->
   <script>
-    (function(){
-      const select = document.getElementById('bhLangSelect');
-      const goBtn  = document.getElementById('bhLangGo');
-      if(!select || !goBtn) return;
-      function openTranslated(){
-        const tl = (select.value||'').trim();
-        if(!tl) return; // PL -> nic nie rób
-        const url = location.href;
-        const translateUrl = `https://translate.google.com/translate?hl=${encodeURIComponent(tl)}&sl=auto&tl=${encodeURIComponent(tl)}&u=${encodeURIComponent(url)}`;
-        window.open(translateUrl, '_blank', 'noopener,noreferrer');
+  (function(){
+    const openBtn = document.getElementById('bh2025QuizOpen');
+    const modal   = document.getElementById('bh2025QuizModal');
+    const closeBtn= document.getElementById('bh2025QuizClose');
+    const restart = document.getElementById('bh2025QuizRestart');
+    const nextBtn = document.getElementById('bh2025QuizNext');
+
+    const qEl     = document.getElementById('bh2025QuizQuestion');
+    const aEl     = document.getElementById('bh2025QuizAnswers');
+    const stepEl  = document.getElementById('bh2025QuizStep');
+    const cursor  = document.getElementById('bh2025QuizCursor');
+
+    if(!openBtn || !modal) return;
+
+    const QUIZ = [
+      {
+        q: "Ktoś się dławi i nie może mówić. Co robisz najpierw?",
+        a: [
+          {t:"Zachęcam do kaszlu, jeśli nieskuteczny — 5 uderzeń między łopatki", ok:true},
+          {t:"Podaję wodę, żeby popchnąć kęs", ok:false},
+          {t:"Wkładam palec i „na ślepo” próbuję wyjąć", ok:false}
+        ],
+        hintOk:"Tak! Najpierw kaszel. Jeśli nieskuteczny → uderzenia w plecy.",
+        hintBad:"Uwaga — woda/„wymiatanie” palcem może pogorszyć sytuację."
+      },
+      {
+        q: "Brak oddechu. Co z RKO u dorosłego?",
+        a: [
+          {t:"Ucisk klatki 100–120/min, głębokość ~5–6 cm, centrum mostka", ok:true},
+          {t:"Ucisk delikatny 40/min, bez kontroli miejsca", ok:false},
+          {t:"Czekam na karetkę bez ucisków", ok:false}
+        ],
+        hintOk:"Super! Tempo 100–120/min i środek mostka są kluczowe.",
+        hintBad:"To zbyt wolno/bez ucisków — liczy się szybka, prawidłowa RKO."
+      },
+      {
+        q: "Poszkodowany oddycha, ale nie reaguje. Co dalej?",
+        a: [
+          {t:"Układam w pozycji bezpiecznej i kontroluję oddech", ok:true},
+          {t:"Podaję napój i zostawiam w pozycji siedzącej", ok:false},
+          {t:"Kładę na plecach bez kontroli drożności", ok:false}
+        ],
+        hintOk:"Tak — pozycja bezpieczna i stała kontrola oddechu.",
+        hintBad:"Płyny/siedząca pozycja/na plecach — to nie jest bezpieczne."
       }
-      goBtn.addEventListener('click', openTranslated);
-      select.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); openTranslated(); }});
-    })();
+    ];
+
+    let step=0, lock=false;
+    const chosen = new Array(QUIZ.length).fill(null);
+
+    function setProgress(){
+      stepEl.textContent = (step+1);
+      const left = 6 + (step/(QUIZ.length-1||1))*88;
+      cursor.style.left = left + '%';
+    }
+    function render(){
+      const item = QUIZ[step];
+      qEl.textContent = item.q;
+      aEl.innerHTML = '';
+      item.a.forEach((opt, idx)=>{
+        const b = document.createElement('button');
+        b.type='button'; b.className='bh2025-ans'; b.textContent=opt.t;
+        b.addEventListener('click', ()=>{
+          if(lock) return; lock=true;
+          const good = opt.ok;
+          chosen[step] = !!good;
+          b.classList.add(good?'correct':'wrong');
+          const note = document.createElement('div');
+          note.className='bh2025-muted'; note.style.marginTop='6px';
+          note.textContent = good ? item.hintOk : item.hintBad;
+          b.after(note);
+          if(navigator.vibrate) try{ navigator.vibrate(good?80:160); }catch(_){}
+          setTimeout(()=>{ lock=false; }, 320);
+        });
+        aEl.appendChild(b);
+      });
+      setProgress();
+      nextBtn.textContent = step===QUIZ.length-1 ? "Zakończ" : "Dalej";
+    }
+    function open(){ modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; step=0; chosen.fill(null); render(); }
+    function close(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+
+    // Nagroda: toast + konfetti
+    function award(score){
+      const toast=document.createElement('div');
+      toast.textContent = `Brawo! Wynik: ${score}/${QUIZ.length}`;
+      Object.assign(toast.style,{
+        position:'fixed',left:'50%',bottom:'26px',transform:'translateX(-50%)',
+        background:'rgba(60,32,100,.85)',color:'#eef2ff',padding:'10px 14px',
+        border:'1px solid rgba(164,107,255,.35)',borderRadius:'12px',
+        boxShadow:'0 10px 26px rgba(8,10,22,.45)',fontWeight:'800',zIndex:10000
+      });
+      document.body.appendChild(toast);
+      setTimeout(()=>{ toast.remove(); }, 2600);
+
+      const c=document.createElement('canvas'); c.width=innerWidth; c.height=innerHeight;
+      Object.assign(c.style,{position:'fixed',inset:'0',pointerEvents:'none',zIndex:9999});
+      document.body.appendChild(c);
+      const ctx=c.getContext('2d');
+      let parts=Array.from({length: score===QUIZ.length? 140:90},()=>({
+        x:Math.random()*c.width, y:-20,
+        vx:-1+Math.random()*2, vy:2+Math.random()*2.5,
+        size:3+Math.random()*4, rot:Math.random()*6, vr:-.2+Math.random()*.4,
+        color: score===QUIZ.length ? ['#5eead4','#a46bff','#ffd16c'][Math.floor(Math.random()*3)] : 'rgba(255,255,255,.8)',
+        life: 90
+      }));
+      (function tick(){
+        ctx.clearRect(0,0,c.width,c.height);
+        parts.forEach(p=>{
+          p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr; p.vy+=0.02; p.life--;
+          ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+          ctx.fillStyle=p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
+          ctx.restore();
+        });
+        parts=parts.filter(p=>p.life>0);
+        if(parts.length) requestAnimationFrame(tick); else c.remove();
+      })();
+    }
+
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
+    restart.addEventListener('click', ()=>{ step=0; chosen.fill(null); render(); });
+    nextBtn.addEventListener('click', ()=>{
+      if(step<QUIZ.length-1){ step++; render(); }
+      else {
+        const score = chosen.reduce((s,v)=> s + (v===true?1:0), 0);
+        award(score);
+        close();
+      }
+    });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') close(); });
+  })();
+  </script>
+
+  <!-- PORADY (zielone pigułki otwierają modal + obrazki) -->
+  <script>
+  (function(){
+    const poradaModal  = document.getElementById('bh2025Porada');
+    const poradaClose  = document.getElementById('bh2025PoradaClose');
+    const poradaTitle  = document.getElementById('bh2025PoradaTitle');
+    const poradaChip   = document.getElementById('bh2025PoradaChip');
+    const svgWrap      = document.getElementById('bh2025PoradaSvg');
+    const stepsOl      = document.getElementById('bh2025PoradaSteps');
+    const videoWrap    = document.getElementById('bh2025VideoWrap');
+    const videoPh      = document.getElementById('bh2025VideoPh');
+
+    if(!poradaModal) return;
+
+    // Obrazki: używamy plików w katalogu /img, które już wgrałaś
+    const IMG = {
+      zadlawienie: 'img/zadlawienie.png',
+      reanimacja:  'img/reanimacja.png',
+      wypadek:     'img/wypadek.png',
+      pierwszopomoc: null
+    };
+
+    const STEPS = {
+      zadlawienie: [
+        "Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.",
+        "Brak skutecznego kaszlu: 5 uderzeń w plecy między łopatki.",
+        "Jeśli nieskuteczne: 5 uciśnięć nadbrzusza (ucisk Heimlicha).",
+        "Na zmianę: 5 plecy ↔ 5 nadbrzusze, aż do skutku.",
+        "Utrata przytomności: RKO 30:2, 112, AED."
+      ],
+      reanimacja: [
+        "Sprawdź bezpieczeństwo, reakcję i oddech (max 10 s).",
+        "Brak oddechu: zadzwoń 112 (głośnomówiący).",
+        "Uciski: 100–120/min, 5–6 cm, środek mostka.",
+        "30 uciśnięć : 2 oddechy (jeśli umiesz i chcesz).",
+        "Kontynuuj do przyjazdu służb lub powrotu oddechu."
+      ],
+      wypadek: [
+        "Zabezpiecz miejsce: światła, trójkąt, kamizelka.",
+        "Oceń poszkodowanych i zagrożenia.",
+        "Wezwij pomoc — 112.",
+        "Priorytet: oddech, krwotoki.",
+        "Nie przestawiaj bez potrzeby; kontroluj oddech."
+      ],
+      pierwszopomoc: [
+        "ABC: drożność, oddech, krążenie.",
+        "Pozycja bezpieczna u nieprzytomnego z oddechem.",
+        "Krwotok: ucisk bezpośredni/uciskowy.",
+        "Oparzenia: chłodzenie wodą 20 min.",
+        "Wezwij pomoc przy wątpliwościach."
+      ]
+    };
+
+    const VIDEO = { zadlawienie:null, reanimacja:null, wypadek:null, pierwszopomoc:null };
+
+    function openPorada(key, title){
+      poradaTitle.textContent = title || 'Porada';
+      poradaChip.textContent  = 'SOS • instrukcja';
+
+      // obrazek
+      svgWrap.innerHTML = '';
+      const src = IMG[key];
+      if(src){
+        const img = document.createElement('img');
+        img.src = src; img.alt = title || key;
+        svgWrap.appendChild(img);
+      }
+
+      // kroki
+      stepsOl.innerHTML = '';
+      (STEPS[key]||[]).forEach(txt=>{
+        const li=document.createElement('li'); li.textContent=txt; stepsOl.appendChild(li);
+      });
+
+      // video
+      videoWrap.innerHTML='';
+      const vsrc = VIDEO[key];
+      if(vsrc){
+        const v = document.createElement('video');
+        v.setAttribute('controls','controls'); v.setAttribute('playsinline','');
+        v.setAttribute('style','width:100%;border-radius:12px;background:rgba(255,255,255,.04)');
+        const s = document.createElement('source'); s.src = vsrc; s.type='video/mp4';
+        v.appendChild(s); videoWrap.appendChild(v);
+      } else {
+        videoWrap.appendChild(videoPh.cloneNode(true));
+      }
+
+      poradaModal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+    }
+    function closePorada(){
+      poradaModal.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+    }
+
+    poradaClose.addEventListener('click', closePorada);
+    poradaModal.addEventListener('click', (e)=>{ if(e.target===poradaModal) closePorada(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && poradaModal.getAttribute('aria-hidden')==='false') closePorada(); });
+
+    // Klik na zielone pigułki
+    const nav = document.querySelector('nav.situations');
+    if(nav){
+      nav.addEventListener('click', (e)=>{
+        const a = e.target.closest('a[data-porada]');
+        if(!a) return;
+        e.preventDefault();
+        const key = a.getAttribute('data-porada');
+        const title = a.textContent.trim();
+        openPorada(key, title);
+      });
+    }
+  })();
+  </script>
+
+  <!-- WYSZUKIWARKA z podpowiedziami (zamyka panel, żeby nie blokował klików) -->
+  <script>
+  (function(){
+    const input = document.querySelector('.header .tools .search input[type="search"]');
+    if(!input) return;
+
+    const PARTS = [
+      {id:'oko',label:'Oko',alias:['oko','oczy','wzrok']},
+      {id:'nos',label:'Nos',alias:['nos','zatoki','katar']},
+      {id:'gardlo',label:'Gardło',alias:['gardlo','gardło','angina','chrypka']},
+      {id:'glowa',label:'Głowa',alias:['glowa','głowa','migrena','ból głowy']},
+      {id:'klatka',label:'Klatka piersiowa',alias:['klatka','pierś','serce ból','mostek']},
+      {id:'pluca',label:'Płuca',alias:['płuca','pluca','duszność','astma']},
+      {id:'brzuch',label:'Brzuch',alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
+      {id:'nerki',label:'Nerki',alias:['nerki','kolka','lędźwie','ledzwi']},
+      {id:'plecy',label:'Plecy',alias:['plecy','kręgosłup','kregoslup','rwa']},
+      {id:'biodra',label:'Biodra/Uda',alias:['biodro','biodra','udo','pachwina']},
+      {id:'kolano',label:'Kolano',alias:['kolano','rzepka','łąkotka','lakotka']},
+      {id:'stopy',label:'Stopy',alias:['stopa','stopy','pięta','pieta','rozcięgno']},
+      {id:'skora',label:'Skóra',alias:['skora','skóra','wysypka','świąd','alergia']},
+      {id:'serce',label:'Serce',alias:['serce','kołatania','kolatania','arytmia']},
+      {id:'kaszel',label:'Kaszel',alias:['kaszel','kaszle']},
+      {id:'goraczka',label:'Gorączka',alias:['gorączka','goraczka','temperatura']},
+      {id:'zadlawienie',label:'Zadławienie (SOS)',alias:['zadławienie','zadlawienie','zadławił','zadlawil'],sos:true},
+      {id:'reanimacja',label:'Reanimacja (RKO)',alias:['reanimacja','rko','resuscytacja'],sos:true},
+      {id:'wypadek',label:'Wypadek (pierwsze kroki)',alias:['wypadek','kolizja','potrącenie','potracenie'],sos:true},
+      {id:'pierwszopomoc',label:'Pierwsza pomoc',alias:['pierwsza pomoc','pierwszopomoc','abc'],sos:true}
+    ];
+    const GENDERS = [
+      {id:'kobieta',label:'Kobieta'},{id:'mezczyzna',label:'Mężczyzna'},{id:'dziecko',label:'Dziecko'}
+    ];
+
+    const panel = document.createElement('div');
+    panel.className = 'bh2025-suggest';
+    panel.setAttribute('role','listbox');
+    panel.setAttribute('aria-hidden','true');
+    panel.innerHTML = `<div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>`;
+    input.parentElement.appendChild(panel);
+    const list = panel.querySelector('#bh2025List');
+
+    let results = [], active = -1;
+
+    function buildUrls(hit){
+      if(hit.sos){
+        const url = `szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
+        return [{label: hit.label, url, sub:'SOS'}];
+      }
+      return GENDERS.map(g=>{
+        const url = `szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
+        return {label:`${hit.label} • ${g.label}`, url, sub:g.label};
+      });
+    }
+    function search(q){
+      const s = q.trim().toLowerCase(); if(!s) return [];
+      const hits = PARTS.filter(p =>
+        p.alias?.some(a => a.includes(s)) || p.id.includes(s) || p.label.toLowerCase().includes(s)
+      ).slice(0,6);
+      return hits.flatMap(buildUrls).slice(0,12);
+    }
+    function render(){
+      list.innerHTML = ''; active = -1;
+      results.forEach((r,idx)=>{
+        const li = document.createElement('li');
+        li.setAttribute('role','option'); li.className='bh2025-sg-item'; li.dataset.index = String(idx);
+        li.innerHTML = `<span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>`;
+        li.addEventListener('mouseenter', ()=>setActive(idx));
+        li.addEventListener('mouseleave', ()=>setActive(-1));
+        li.addEventListener('click', ()=>go(idx));
+        list.appendChild(li);
+      });
+      panel.setAttribute('aria-hidden', results.length ? 'false':'true');
+    }
+    function setActive(i){
+      active = i;
+      list.querySelectorAll('.bh2025-sg-item').forEach((el,idx)=>{
+        el.setAttribute('aria-selected', (idx===active)?'true':'false');
+      });
+    }
+    function go(idx){
+      const item = results[idx]; if(!item) return;
+      window.location.href = item.url;
+    }
+
+    input.addEventListener('input', ()=>{ results = search(input.value); render(); });
+    input.addEventListener('keydown', (e)=>{
+      const shown = panel.getAttribute('aria-hidden')==='false';
+      if(e.key==='ArrowDown'){ if(!shown){ results = search(input.value); render(); } setActive( (active+1+results.length)%results.length ); e.preventDefault(); }
+      else if(e.key==='ArrowUp'){ if(!shown){ results = search(input.value); render(); } setActive( (active-1+results.length)%results.length ); e.preventDefault(); }
+      else if(e.key==='Enter'){
+        if(shown && active>=0){ e.preventDefault(); go(active); }
+        else { if(!results.length){ results = search(input.value); } if(results[0]) go(0); }
+      } else if(e.key==='Escape'){ panel.setAttribute('aria-hidden','true'); active=-1; }
+    });
+    document.addEventListener('click', (e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); active=-1; } });
+
+    // awaryjnie: zamknij panel na starcie (żeby nic nie zasłaniało kliknięć)
+    panel.setAttribute('aria-hidden','true');
+  })();
+  </script>
+
+  <!-- 🌐 TRANSLATE SCRIPT (otwiera w nowej karcie) -->
+  <script>
+  (function(){
+    const select = document.getElementById('bhLangSelect');
+    const goBtn  = document.getElementById('bhLangGo');
+    if(!select || !goBtn) return;
+    function openTranslated(){
+      const tl = (select.value||'').trim();
+      if(!tl) return; // PL -> nic nie rób
+      const url = location.href;
+      const translateUrl = `https://translate.google.com/translate?hl=${encodeURIComponent(tl)}&sl=auto&tl=${encodeURIComponent(tl)}&u=${encodeURIComponent(url)}`;
+      window.open(translateUrl, '_blank', 'noopener,noreferrer');
+    }
+    goBtn.addEventListener('click', openTranslated);
+    select.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); openTranslated(); }});
+  })();
   </script>
 </body>
 </html>
