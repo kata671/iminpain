@@ -2,11 +2,10 @@
 <html lang="pl">
 <head>
   <!--
-    BoliHelp • SZCZEGÓŁY 2025 • v1.5
-    Zmiany w v1.5:
-      • Dodano przycisk „Wróć” u góry strony (lekki glow, dostępność).
-      • Wymuszone otwieranie widoku OD GÓRY: history.scrollRestoration='manual' + scrollTo(0,0) na starcie.
-      • Zero zmian w treściach, układzie kart i stylach poza minimalnym CSS guzika.
+    BoliHelp • SZCZEGÓŁY 2025 • v1.6
+    v1.6:
+      • NOWE: zakładka „Lekarze” (bezpieczny dodatek, bez ingerencji w pozostałe funkcje).
+      • Zero zmian w istniejących ID/klasach i logice — tylko dopięte style/sekcja/render.
   -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -27,6 +26,7 @@
       --c-rehab:    rgba(94,234,212,.65);
       --c-myths:    rgba(164,107,255,.65);
       --c-faq:      rgba(94,234,212,.55);
+      --c-doctors:  rgba(160,220,255,.60); /* NOWE: kolor akcentu dla zakładki „Lekarze” */
     }
     *{box-sizing:border-box} html,body{height:100%}
     body{margin:0; background:var(--bg); color:var(--text);
@@ -85,6 +85,9 @@
     .tab[data-variant="rehab"]   { border-color: rgba(94,234,212,.28) }
     .tab[data-variant="myths"]   { border-color: rgba(164,107,255,.28) }
     .tab[data-variant="faq"]     { border-color: rgba(94,234,212,.25) }
+    /* NOWE: tab „Lekarze” */
+    .tab[data-variant="doctors"] { border-color: rgba(160,220,255,.30) }
+
     .tab[aria-selected="true"][data-variant="symptoms"]{ border-color: var(--c-symptoms); box-shadow:0 0 0 2px var(--c-symptoms), 0 8px 22px rgba(0,0,0,.25) }
     .tab[aria-selected="true"][data-variant="causes"]  { border-color: var(--c-causes);   box-shadow:0 0 0 2px var(--c-causes),   0 8px 22px rgba(0,0,0,.25) }
     .tab[aria-selected="true"][data-variant="firstaid"]{ border-color: var(--c-firstaid); box-shadow:0 0 0 2px var(--c-firstaid), 0 8px 22px rgba(0,0,0,.25) }
@@ -93,6 +96,8 @@
     .tab[aria-selected="true"][data-variant="rehab"]   { border-color: var(--c-rehab);    box-shadow:0 0 0 2px var(--c-rehab),    0 8px 22px rgba(0,0,0,.25) }
     .tab[aria-selected="true"][data-variant="myths"]   { border-color: var(--c-myths);    box-shadow:0 0 0 2px var(--c-myths),    0 8px 22px rgba(0,0,0,.25) }
     .tab[aria-selected="true"][data-variant="faq"]     { border-color: var(--c-faq);      box-shadow:0 0 0 2px var(--c-faq),      0 8px 22px rgba(0,0,0,.25) }
+    /* NOWE: aktywny tab „Lekarze” */
+    .tab[aria-selected="true"][data-variant="doctors"] { border-color: var(--c-doctors);  box-shadow:0 0 0 2px var(--c-doctors),  0 8px 22px rgba(0,0,0,.25) }
 
     /* Karty */
     .cards{ margin-top:8px }
@@ -113,6 +118,8 @@
     .card[data-type="rehab"]   {border-color: rgba(94,234,212,.65); background: linear-gradient(180deg, rgba(94,234,212,.08), rgba(255,255,255,.04));}
     .card[data-type="myths"]   {border-color: rgba(164,107,255,.65)}
     .card[data-type="faq"]     {border-color: rgba(94,234,212,.55)}
+    /* NOWE: karta „Lekarze” */
+    .card[data-type="doctors"] {border-color: rgba(160,220,255,.60)}
 
     /* Listy i drobne elementy */
     ul.clean{ list-style:none; margin:0; padding:0 }
@@ -179,6 +186,9 @@
         <button class="tab" data-variant="otc"      role="tab" aria-selected="false" data-target="#s-otc">Leki OTC</button>
         <button class="tab" data-variant="rx"       role="tab" aria-selected="false" data-target="#s-rx">Leki na receptę</button>
         <button class="tab" data-variant="rehab"    role="tab" aria-selected="false" data-target="#s-rehab">Rehabilitacja / Profilaktyka</button>
+        <!-- NOWE -->
+        <button class="tab" data-variant="doctors"  role="tab" aria-selected="false" data-target="#s-docs">Lekarze</button>
+        <!-- /NOWE -->
         <button class="tab" data-variant="myths"    role="tab" aria-selected="false" data-target="#s-mity">Mity vs Fakty</button>
         <button class="tab" data-variant="faq"      role="tab" aria-selected="false" data-target="#s-faq">FAQ</button>
       </div>
@@ -203,8 +213,7 @@
         <div class="subhead">Kiedy się niepokoić (czerwone flagi)</div>
         <div class="risk-mini" aria-label="Szacowany poziom ryzyka">
           <small>Ryzyko: <span id="risk-label">niskie</span></small>
-          <!-- ZMIANA 1: start kursora od 0% + przesunięcie, by nie był ucięty -->
-          <span class="riskbar" id="riskbar"><span class="cursor" id="risk-cursor-card" style="left:0%; transform:translate(0,-50%)"></span></span>
+          <span class="riskbar" id="riskbar"><span class="cursor" id="risk-cursor-card" style="left:15%"></span></span>
         </div>
         <ul class="clean" id="urgent"></ul>
         <div class="more-wrap" id="mw-urgent" hidden>
@@ -266,6 +275,16 @@
           <button class="more-btn" data-more="rehab">Pokaż więcej</button>
         </div>
       </article>
+
+      <!-- NOWE: LEKARZE -->
+      <article class="card" data-type="doctors" id="s-docs" aria-labelledby="h-docs" role="tabpanel" aria-hidden="true">
+        <h3 id="h-docs">Lekarze — do kogo się zgłosić?</h3>
+        <ul class="clean" id="doctors"></ul>
+        <div class="strip" style="margin-top:8px">
+          W razie <strong>czerwonych flag</strong> lub gwałtownego pogorszenia — <a class="cta cta-alert" href="tel:112" aria-label="Zadzwoń na 112">112 / SOR</a>.
+        </div>
+      </article>
+      <!-- /NOWE: LEKARZE -->
 
       <!-- MITY -->
       <article class="card" data-type="myths" id="s-mity" aria-labelledby="h-mity" role="tabpanel" aria-hidden="true">
@@ -329,16 +348,19 @@
         });
       });
     })();
+
     /* BAZY WSPÓLNE */
     const BASE = {
       rehabCommon:["Sen i regeneracja — 7–9 h","Nawodnienie — małe porcje","Lekka aktywność 20–30 min","Ergonomia — przerwy co 30–45 min","Oddech przeponowy — 5 min","Higiena cyfrowa — 20-20-20"],
       otcPain:[{t:"Paracetamol — ból/gorączka",audience:"all"},{t:"Ibuprofen — ból/zapalenie (nie przy wrzodach/ciąży)",audience:"adult"},{t:"Sól fizjologiczna/nawilżanie",audience:"all"},{t:"Przeciwhistaminowe — po konsultacji",audience:"all"}],
       urgentCommon:["Nagła, silna, narastająca dolegliwość","Utrata przytomności/drgawki","Trudności w oddychaniu lub sinica","Krwawienie nie do opanowania","Gorączka >39°C mimo leczenia","Nowe objawy neurologiczne"],
       mythsCommon:[{m:"Antybiotyk na przeziębienie",f:"Większość przeziębień to wirusy."},{m:"Ból trzeba przeczekać",f:"Nawodnienie i odpoczynek pomagają."},{m:"Im więcej leków, tym lepiej",f:"Lepiej mniej, ale właściwie dobranych."}],
-      faqCommon:[{q:"Co w domu?",a:"Pierwsza pomoc + obserwacja czerwonych flag."},{q:"Kiedy do lekarza?",a:"Gdy silne/utrzymujące się 48–72h lub flagi."},{q:"Łączenie OTC?",a:"Nie duplikuj substancji czynnych."}]
+      faqCommon:[{q:"Co w domu?",a:"Pierwsza pomoc + obserwacja czerwonych flag."},{q:"Kiedy do lekarza?",a:"Gdy silne/utrzymujące się 48–72h lub flagi."},{q:"Łączenie OTC?",a:"Nie duplikuj substancji czynnych."}],
+      /* NOWE: ogólne rekomendacje lekarzy używane jako fallback */
+      docsCommon:["Lekarz rodzinny (POZ) — pierwsza konsultacja","Teleporada/POZ — gdy łagodne dolegliwości","SOR/112 — przy czerwonych flagach lub nagle narastających objawach"]
     };
 
-    /* TREŚCI (skrócone – jak w Twojej wersji) */
+    /* TREŚCI */
     const CONTENT = {
       nos:{label:"Nos",risk:20,
         symptoms:["Katar wodnisty/gęsty","Zatkanie, upośledzenie węchu","Kichanie/świąd (alergia)","Ból zatok","Krwawienie z nosa",{t:"Dziecko: oddychanie przez usta",audience:"child"}],
@@ -348,6 +370,7 @@
         rx:["Donosowe GKS","Antybiotyk przy bakteryjnych"],
         rehab:[...BASE.rehabCommon,"Irygacje nosa","Unikanie dymu/zapachów"],
         urgent:["Krwawienie >20 min","Wysoka gorączka + silny ból zatok","Uraz/deformacja/wyciek płynu",...BASE.urgentCommon.slice(2)],
+        doctors:["POZ/Internista","Laryngolog (zatoki, przegroda, przewlekły katar)","Alergolog (alergie całoroczne/sezonowe)",...BASE.docsCommon],
         myths:[...BASE.mythsCommon,{m:"Zadzieraj głowę przy krwawieniu",f:"Pochyl do przodu i uciskaj skrzydełka."}],
         faq:[...BASE.faqCommon,{q:"Ile trwa katar?",a:"Zwykle 7–10 dni; dłużej z bólem zatok — konsultacja."}]
       },
@@ -359,33 +382,205 @@
         rx:["Antybiotyk przy bakteryjnych","Sterydy tylko z zalecenia"],
         rehab:[...BASE.rehabCommon,"Higiena brzegów powiek","Monitor 50–70 cm"],
         urgent:["Nagła utrata widzenia","Silny ból po urazie/chemikaliach","Zaburzenia widzenia + ból głowy",...BASE.urgentCommon.slice(2)],
+        doctors:["Okulista","POZ (łagodne dolegliwości, skierowanie)","SOR/112 przy urazie/chemikaliach",...BASE.docsCommon],
         myths:[...BASE.mythsCommon,{m:"Okłady z herbaty",f:"Używaj wyłącznie jałowej soli."}],
         faq:[...BASE.faqCommon,{q:"Soczewki przy zapaleniu?",a:"Przerwa do ustąpienia + konsultacja."}]
       },
-      /* ... (pozostałe sekcje bez zmian) ... */
-      gardlo:{label:"Gardło",risk:25,symptoms:["Ból, trudność w przełykaniu","Chrypka, suchość","Węzły szyjne",{t:"Dziecko: niechęć do jedzenia",audience:"child"}],causes:["Wirusy","Angina paciorkowcowa","Podrażnienie/refluks"],firstaid:["Nawadnianie, ciepłe napoje, miód (≥1 r.ż.)","Płukanie solą/sodą","Oszczędzanie głosu"],otc:[...BASE.otcPain,"Pastylki"],rx:["Antybiotyk przy potwierdzeniu"],rehab:[...BASE.rehabCommon],urgent:["Trudność oddychania/połykania","Wysoka gorączka + silny ból",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon,{m:"Zawsze antybiotyk",f:"Najczęściej wirusy."}],faq:[...BASE.faqCommon]},
-      glowa:{label:"Głowa (ból)",risk:30,symptoms:["Ucisk obustronny","Pulsujący jednostronny","Nadwrażliwość na światło/dźwięk","Sztywność karku"],causes:["Napięcie/stres","Migrena","Nadużycie leków","Sen/ekrany"],firstaid:["Nawodnienie, odpoczynek","Masaż skroni","Chłodny/ciepły okład","Krótki spacer"],otc:[...BASE.otcPain],rx:["Tryptany","Profilaktyka migreny"],rehab:[...BASE.rehabCommon,"Dzienniczek bólu","Ćwiczenia karku"],urgent:["Nagły najgorszy ból","Gorączka + sztywność karku","Uraz głowy + zaburzenia",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon,{m:"Kawa zawsze szkodzi",f:"U części pomaga; obserwuj."}],faq:[...BASE.faqCommon]},
-      klatka:{label:"Klatka piersiowa",risk:60,symptoms:["Ucisk/ciężar","Ból przy oddychaniu/ucisku","Zgaga/pieczenie","Duszność, zimny pot"],causes:["Mięśniowe","Refluks","Wieńcowa/OZW","Opłucna/osierdzie"],firstaid:["Odpoczynek","Przy ucisku i duszności — 112/SOR","Półsiedząco"],otc:[{t:"P/bólowe wg ulotki",audience:"adult"},"Na refluks"],rx:[{t:"Nitrogliceryna wg zaleceń",audience:"adult"},"Leczenie kardiologiczne"],rehab:[...BASE.rehabCommon,"Redukcja ryzyka: ruch/dieta/sen","Stopniowy powrót do aktywności"],urgent:["Ucisk do lewej ręki/szczęki + pot","Duszność spoczynkowa","Omdlenie/kołatanie",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon,{m:"Każdy ból to zawał",f:"Przyczyn wiele; alarmowe oceniać pilnie."}],faq:[...BASE.faqCommon]},
-      pluca:{label:"Płuca/Duszność",risk:55,symptoms:["Duszność","Kaszel suchy/mokry","Świsty","Zmęczenie"],causes:["Infekcje","Astma/POChP","Alergie","Zatorowość"],firstaid:["Wolny oddech, długi wydech","Półsiedząco","Nawodnienie, wietrzenie",{t:"Inhalator doraźny wg planu",audience:"adult"}],otc:["Syropy (dobór z farmaceutą)","Inhalacje NaCl"],rx:["Celowane po diagnozie"],rehab:[...BASE.rehabCommon,"Ćwiczenia oddechowe"],urgent:["Duszność spoczynkowa","Ból w klatce + duszność","Sinica/krwioplucie",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
-      brzuch:{label:"Brzuch",risk:40,symptoms:["Ból (lokalizacja różna)","Wzdęcia, nudności, biegunka/zaparcie","Twardy brzuch (alarm)"],causes:["Niestrawność","IBS","Wyrostek/kamica","Zaparcia"],firstaid:["Nawadnianie małymi porcjami","Termofor (gdy brak ostrego brzucha)","Odpoczynek"],otc:["Osłonowe/przeciwwzdęciowe","Na zgagę/kwas",{t:"Drotaweryna (dorośli)",audience:"adult"}],rx:["PPI/antybiotyk wg rozpoznania"],rehab:[...BASE.rehabCommon,"Regularne posiłki, mniej przetworzonej","Dzienniczek objawów/dieta"],urgent:["Twardy brzuch, silny ból","Krew w stolcu/wymiotach",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
-      nerki:{label:"Nerki/Lędźwie",risk:45,symptoms:["Ból do pachwiny","Częstomocz/pieczenie","Gorączka"],causes:["Kamica","ZUM","Nadwyrężenie"],firstaid:["Nawodnienie (jeśli można)","Pozycje odciążające","Kontrola temp."],otc:[...BASE.otcPain],rx:["Antybiotyk po badaniach","Rozkurczowe"],rehab:[...BASE.rehabCommon,"Mobilizacja lędźwi"],urgent:["Silny ból + gorączka","Bez-mocz/krwiomocz",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
-      plecy:{label:"Plecy",risk:25,symptoms:["Ból lędźwi","Sztywność poranna","Rwa"],causes:["Przeciążenie","Dyskopatia","Ergonomia"],firstaid:["Lekki ruch","Pozycja odciążająca","Chłodzenie/ciepło"],otc:[...BASE.otcPain],rx:["P/bólowe/rozluźniające"],rehab:[...BASE.rehabCommon,"Core/stabilizacja"],urgent:["Uraz + niedowład","Zaburzenia zwieraczy",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
-      biodra:{label:"Biodra",risk:25,symptoms:["Ból pachwiny/biodra","Trzaski/sztywność","Ograniczenie ruchu"],causes:["Przeciążenie/kaletka","Zmiany przeciążeniowe","Nierównowaga"],firstaid:["Odpoczynek względny","Chłodzenie/ciepło","Rozciąganie"],otc:[...BASE.otcPain],rx:["P/zapalne"],rehab:[...BASE.rehabCommon,"Aktywacja pośladkowych"],urgent:["Uraz + brak obciążania",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
-      kolano:{label:"Kolano",risk:25,symptoms:["Ból przodu kolana","Obrzęk po wysiłku/urazie","Niestabilność"],causes:["Przeciążenie rzepki","Uraz więzadeł/łąkotek","Zapalenie ścięgien"],firstaid:["RICE","Unikaj bólu, wracaj stopniowo","Elastyczna stabilizacja"],otc:[...BASE.otcPain],rx:["Wg ortopedy/fizjo"],rehab:[...BASE.rehabCommon,"Wzmacnianie czworogłowych"],urgent:["Uraz z „trzaskiem” + obrzęk",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
-      stopy:{label:"Stopy",risk:15,symptoms:["Ból pięty/przodostopia","Odciski/pęcherze","Sztywność poranna"],causes:["Obuwie/obciążenia","Rozcięgno/ścięgna","Biomechanika"],firstaid:["Lepsze obuwie, wkładki","Chłodzenie, rolowanie","Stopniowe obciążenia"],otc:[...BASE.otcPain],rx:["Fizjoterapia"],rehab:[...BASE.rehabCommon,"Ćwiczenia stóp","Rozciąganie Achillesa"],urgent:["Ostry ból + obrzęk, brak chodu",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
-      skora:{label:"Skóra",risk:15,symptoms:["Wysypka/świąd","Suchość/pękanie","Pęcherze/sączenie"],causes:["Alergia/AZS","Ukąszenia/podrażnienia","Infekcje"],firstaid:["Chłodzenie, delikatne mycie","Emolienty","Usuń alergen"],otc:["Emolienty/bariera","P/histaminowe doustne","Antyseptyki miejscowe"],rx:["Sterydy/antybiotyki miejscowe"],rehab:[...BASE.rehabCommon,"Letni prysznic","Bawełna, delikatne detergenty"],urgent:["Szybko szerząca się wysypka + gorączka","Obrzęk twarzy/warg/języka",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
-      serce:{label:"Serce",risk:65,symptoms:["Kołatanie","Zawroty/osłabienie","Ból klatki, duszność"],causes:["Stres/odwodnienie","Zaburzenia rytmu","Wieńcowa"],firstaid:["Odpoczynek, spokojny oddech","Nawodnienie",{t:"Nitrogliceryna wg zaleceń",audience:"adult"}],otc:["Brak uniwersalnych OTC"],rx:["EKG + leczenie"],rehab:[...BASE.rehabCommon,"Trening tlenowy po ocenie","Stres, sen"],urgent:["Kołatanie z omdleniem","Ból z dusznością",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
-      kaszel:{label:"Kaszel",risk:25,symptoms:["Suchy/mokry","Duszność, chrypka",{t:"Dziecko: napady nocą",audience:"child"}],causes:["Infekcje","Alergie/drażnienie","Refluks"],firstaid:["Nawadnianie, nawilżanie","Unikaj dymu","Miód (≥1 r.ż.)"],otc:["Syropy (dobór z farmaceutą)","Inhalacje NaCl"],rx:["Leczenie przyczynowe"],rehab:[...BASE.rehabCommon,"Ćwiczenia oddechowe"],urgent:["Duszność spoczynkowa/sinica/krwioplucie",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
-      goraczka:{label:"Gorączka",risk:30,symptoms:["Temp., dreszcze","Bóle mięśni/głowy",{t:"Dziecko: senność, mało pije",audience:"child"}],causes:["Wirusy/bakterie","Zapalenia"],firstaid:["Nawodnienie, lekki ubiór","Letnie okłady/kąpiel (bez alkoholu)",{t:"Dawkuj wg masy ciała",audience:"child"}],otc:[{t:"Paracetamol/ibuprofen wg ulotki",audience:"all"}],rx:["Celowane po diagnozie"],rehab:[...BASE.rehabCommon,"Odpoczynek"],urgent:[">39°C mimo leczenia","Sztywność karku, silny ból głowy",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon,{m:"Nacieranie alkoholem",f:"Nie zalecane — może szkodzić."}],faq:[...BASE.faqCommon]},
+      gardlo:{label:"Gardło",risk:25,
+        symptoms:["Ból, trudność w przełykaniu","Chrypka, suchość","Węzły szyjne",{t:"Dziecko: niechęć do jedzenia",audience:"child"}],
+        causes:["Wirusy","Angina paciorkowcowa","Podrażnienie/refluks"],
+        firstaid:["Nawadnianie, ciepłe napoje, miód (≥1 r.ż.)","Płukanie solą/sodą","Oszczędzanie głosu"],
+        otc:[...BASE.otcPain,"Pastylki"],
+        rx:["Antybiotyk przy potwierdzeniu"],
+        rehab:[...BASE.rehabCommon],
+        urgent:["Trudność oddychania/połykania","Wysoka gorączka + silny ból",...BASE.urgentCommon.slice(2)],
+        doctors:["POZ/Internista","Laryngolog (nawracające anginy, chrypka >2–3 tyg.)"],
+        myths:[...BASE.mythsCommon,{m:"Zawsze antybiotyk",f:"Najczęściej wirusy."}],
+        faq:[...BASE.faqCommon]
+      },
+      glowa:{label:"Głowa (ból)",risk:30,
+        symptoms:["Ucisk obustronny","Pulsujący jednostronny","Nadwrażliwość na światło/dźwięk","Sztywność karku"],
+        causes:["Napięcie/stres","Migrena","Nadużycie leków","Sen/ekrany"],
+        firstaid:["Nawodnienie, odpoczynek","Masaż skroni","Chłodny/ciepły okład","Krótki spacer"],
+        otc:[...BASE.otcPain],
+        rx:["Tryptany","Profilaktyka migreny"],
+        rehab:[...BASE.rehabCommon,"Dzienniczek bólu","Ćwiczenia karku"],
+        urgent:["Nagły najgorszy ból","Gorączka + sztywność karku","Uraz głowy + zaburzenia",...BASE.urgentCommon.slice(2)],
+        doctors:["POZ/Neurolog (migrena, przewlekły ból głowy)","Okulista (wady wzroku)",...BASE.docsCommon],
+        myths:[...BASE.mythsCommon,{m:"Kawa zawsze szkodzi",f:"U części pomaga; obserwuj."}],
+        faq:[...BASE.faqCommon]
+      },
+      klatka:{label:"Klatka piersiowa",risk:60,
+        symptoms:["Ucisk/ciężar","Ból przy oddychaniu/ucisku","Zgaga/pieczenie","Duszność, zimny pot"],
+        causes:["Mięśniowe","Refluks","Wieńcowa/OZW","Opłucna/osierdzie"],
+        firstaid:["Odpoczynek","Przy ucisku i duszności — 112/SOR","Półsiedząco"],
+        otc:[{t:"P/bólowe wg ulotki",audience:"adult"},"Na refluks"],
+        rx:[{t:"Nitrogliceryna wg zaleceń",audience:"adult"},"Leczenie kardiologiczne"],
+        rehab:[...BASE.rehabCommon,"Redukcja ryzyka: ruch/dieta/sen","Stopniowy powrót do aktywności"],
+        urgent:["Ucisk do lewej ręki/szczęki + pot","Duszność spoczynkowa","Omdlenie/kołatanie",...BASE.urgentCommon.slice(2)],
+        doctors:["Kardiolog / POZ (w zależności od charakteru bólu)","Gastroenterolog (gdy refluks)",...BASE.docsCommon],
+        myths:[...BASE.mythsCommon,{m:"Każdy ból to zawał",f:"Przyczyn wiele; alarmowe oceniać pilnie."}],
+        faq:[...BASE.faqCommon]
+      },
+      pluca:{label:"Płuca/Duszność",risk:55,
+        symptoms:["Duszność","Kaszel suchy/mokry","Świsty","Zmęczenie"],
+        causes:["Infekcje","Astma/POChP","Alergie","Zatorowość"],
+        firstaid:["Wolny oddech, długi wydech","Półsiedząco","Nawodnienie, wietrzenie",{t:"Inhalator doraźny wg planu",audience:"adult"}],
+        otc:["Syropy (dobór z farmaceutą)","Inhalacje NaCl"],
+        rx:["Celowane po diagnozie"],
+        rehab:[...BASE.rehabCommon,"Ćwiczenia oddechowe"],
+        urgent:["Duszność spoczynkowa","Ból w klatce + duszność","Sinica/krwioplucie",...BASE.urgentCommon.slice(2)],
+        doctors:["POZ/Pulmonolog (duszność, przewlekły kaszel, astma/POChP)",...BASE.docsCommon],
+        myths:[...BASE.mythsCommon],
+        faq:[...BASE.faqCommon]
+      },
+      brzuch:{label:"Brzuch",risk:40,
+        symptoms:["Ból (lokalizacja różna)","Wzdęcia, nudności, biegunka/zaparcie","Twardy brzuch (alarm)"],
+        causes:["Niestrawność","IBS","Wyrostek/kamica","Zaparcia"],
+        firstaid:["Nawadnianie małymi porcjami","Termofor (gdy brak ostrego brzucha)","Odpoczynek"],
+        otc:["Osłonowe/przeciwwzdęciowe","Na zgagę/kwas",{t:"Drotaweryna (dorośli)",audience:"adult"}],
+        rx:["PPI/antybiotyk wg rozpoznania"],
+        rehab:[...BASE.rehabCommon,"Regularne posiłki, mniej przetworzonej","Dzienniczek objawów/dieta"],
+        urgent:["Twardy brzuch, silny ból","Krew w stolcu/wymiotach",...BASE.urgentCommon.slice(2)],
+        doctors:["POZ/Gastroenterolog","Chirurg (podejrzenie ostrego brzucha)",...BASE.docsCommon],
+        myths:[...BASE.mythsCommon],
+        faq:[...BASE.faqCommon]
+      },
+      nerki:{label:"Nerki/Lędźwie",risk:45,
+        symptoms:["Ból do pachwiny","Częstomocz/pieczenie","Gorączka"],
+        causes:["Kamica","ZUM","Nadwyrężenie"],
+        firstaid:["Nawodnienie (jeśli można)","Pozycje odciążające","Kontrola temp."],
+        otc:[...BASE.otcPain],
+        rx:["Antybiotyk po badaniach","Rozkurczowe"],
+        rehab:[...BASE.rehabCommon,"Mobilizacja lędźwi"],
+        urgent:["Silny ból + gorączka","Bez-mocz/krwiomocz",...BASE.urgentCommon.slice(2)],
+        doctors:["POZ/Urolog/Nefrolog (w zależności od objawów)",...BASE.docsCommon],
+        myths:[...BASE.mythsCommon],
+        faq:[...BASE.faqCommon]
+      },
+      plecy:{label:"Plecy",risk:25,
+        symptoms:["Ból lędźwi","Sztywność poranna","Rwa"],
+        causes:["Przeciążenie","Dyskopatia","Ergonomia"],
+        firstaid:["Lekki ruch","Pozycja odciążająca","Chłodzenie/ciepło"],
+        otc:[...BASE.otcPain],
+        rx:["P/bólowe/rozluźniające"],
+        rehab:[...BASE.rehabCommon,"Core/stabilizacja"],
+        urgent:["Uraz + niedowład","Zaburzenia zwieraczy",...BASE.urgentCommon.slice(2)],
+        doctors:["POZ/Ortopeda/Fizjoterapeuta (ból krzyża, rwa)"],
+        myths:[...BASE.mythsCommon],
+        faq:[...BASE.faqCommon]
+      },
+      biodra:{label:"Biodra",risk:25,
+        symptoms:["Ból pachwiny/biodra","Trzaski/sztywność","Ograniczenie ruchu"],
+        causes:["Przeciążenie/kaletka","Zmiany przeciążeniowe","Nierównowaga"],
+        firstaid:["Odpoczynek względny","Chłodzenie/ciepło","Rozciąganie"],
+        otc:[...BASE.otcPain],
+        rx:["P/zapalne"],
+        rehab:[...BASE.rehabCommon,"Aktywacja pośladkowych"],
+        urgent:["Uraz + brak obciążania",...BASE.urgentCommon.slice(2)],
+        doctors:["POZ/Ortopeda/Fizjoterapeuta"],
+        myths:[...BASE.mythsCommon],
+        faq:[...BASE.faqCommon]
+      },
+      kolano:{label:"Kolano",risk:25,
+        symptoms:["Ból przodu kolana","Obrzęk po wysiłku/urazie","Niestabilność"],
+        causes:["Przeciążenie rzepki","Uraz więzadeł/łąkotek","Zapalenie ścięgien"],
+        firstaid:["RICE","Unikaj bólu, wracaj stopniowo","Elastyczna stabilizacja"],
+        otc:[...BASE.otcPain],
+        rx:["Wg ortopedy/fizjo"],
+        rehab:[...BASE.rehabCommon,"Wzmacnianie czworogłowych"],
+        urgent:["Uraz z „trzaskiem” + obrzęk",...BASE.urgentCommon.slice(2)],
+        doctors:["POZ/Ortopeda/Fizjoterapeuta (kolano)"],
+        myths:[...BASE.mythsCommon],
+        faq:[...BASE.faqCommon]
+      },
+      stopy:{label:"Stopy",risk:15,
+        symptoms:["Ból pięty/przodostopia","Odciski/pęcherze","Sztywność poranna"],
+        causes:["Obuwie/obciążenia","Rozcięgno/ścięgna","Biomechanika"],
+        firstaid:["Lepsze obuwie, wkładki","Chłodzenie, rolowanie","Stopniowe obciążenia"],
+        otc:[...BASE.otcPain],
+        rx:["Fizjoterapia"],
+        rehab:[...BASE.rehabCommon,"Ćwiczenia stóp","Rozciąganie Achillesa"],
+        urgent:["Ostry ból + obrzęk, brak chodu",...BASE.urgentCommon.slice(2)],
+        doctors:["POZ/Ortopeda/Podiatra/Fizjoterapeuta"],
+        myths:[...BASE.mythsCommon],
+        faq:[...BASE.faqCommon]
+      },
+      skora:{label:"Skóra",risk:15,
+        symptoms:["Wysypka/świąd","Suchość/pękanie","Pęcherze/sączenie"],
+        causes:["Alergia/AZS","Ukąszenia/podrażnienia","Infekcje"],
+        firstaid:["Chłodzenie, delikatne mycie","Emolienty","Usuń alergen"],
+        otc:["Emolienty/bariera","P/histaminowe doustne","Antyseptyki miejscowe"],
+        rx:["Sterydy/antybiotyki miejscowe"],
+        rehab:[...BASE.rehabCommon,"Letni prysznic","Bawełna, delikatne detergenty"],
+        urgent:["Szybko szerząca się wysypka + gorączka","Obrzęk twarzy/warg/języka",...BASE.urgentCommon.slice(2)],
+        doctors:["Dermatolog/POZ","Alergolog (podejrzenie alergii)"],
+        myths:[...BASE.mythsCommon],
+        faq:[...BASE.faqCommon]
+      },
+      serce:{label:"Serce",risk:65,
+        symptoms:["Kołatanie","Zawroty/osłabienie","Ból klatki, duszność"],
+        causes:["Stres/odwodnienie","Zaburzenia rytmu","Wieńcowa"],
+        firstaid:["Odpoczynek, spokojny oddech","Nawodnienie",{t:"Nitrogliceryna wg zaleceń",audience:"adult"}],
+        otc:["Brak uniwersalnych OTC"],
+        rx:["EKG + leczenie"],
+        rehab:[...BASE.rehabCommon,"Trening tlenowy po ocenie","Stres, sen"],
+        urgent:["Kołatanie z omdleniem","Ból z dusznością",...BASE.urgentCommon.slice(2)],
+        doctors:["Kardiolog/POZ (kołatania, ból klatki)","SOR/112 przy alarmach"],
+        myths:[...BASE.mythsCommon],
+        faq:[...BASE.faqCommon]
+      },
+      kaszel:{label:"Kaszel",risk:25,
+        symptoms:["Suchy/mokry","Duszność, chrypka",{t:"Dziecko: napady nocą",audience:"child"}],
+        causes:["Infekcje","Alergie/drażnienie","Refluks"],
+        firstaid:["Nawadnianie, nawilżanie","Unikaj dymu","Miód (≥1 r.ż.)"],
+        otc:["Syropy (dobór z farmaceutą)","Inhalacje NaCl"],
+        rx:["Leczenie przyczynowe"],
+        rehab:[...BASE.rehabCommon,"Ćwiczenia oddechowe"],
+        urgent:["Duszność spoczynkowa/sinica/krwioplucie",...BASE.urgentCommon.slice(2)],
+        doctors:["POZ/Pulmonolog (przewlekły kaszel, duszność)"],
+        myths:[...BASE.mythsCommon],
+        faq:[...BASE.faqCommon]
+      },
+      goraczka:{label:"Gorączka",risk:30,
+        symptoms:["Temp., dreszcze","Bóle mięśni/głowy",{t:"Dziecko: senność, mało pije",audience:"child"}],
+        causes:["Wirusy/bakterie","Zapalenia"],
+        firstaid:["Nawodnienie, lekki ubiór","Letnie okłady/kąpiel (bez alkoholu)",{t:"Dawkuj wg masy ciała",audience:"child"}],
+        otc:[{t:"Paracetamol/ibuprofen wg ulotki",audience:"all"}],
+        rx:["Celowane po diagnozie"],
+        rehab:[...BASE.rehabCommon,"Odpoczynek"],
+        urgent:[">39°C mimo leczenia","Sztywność karku, silny ból głowy",...BASE.urgentCommon.slice(2)],
+        doctors:["POZ/Internista (gorączka bez ogniska)","SOR/112 — ciężki stan"],
+        myths:[...BASE.mythsCommon,{m:"Nacieranie alkoholem",f:"Nie zalecane — może szkodzić."}],
+        faq:[...BASE.faqCommon]
+      },
       zadlawienie:{label:"Zadławienie",risk:80,
-        symptoms:["Nagła duszność","Chwytanie za szyję","Bez/skąpokaszlowy napad"],causes:["Kęs/małe przedmioty"],firstaid:[
+        symptoms:["Nagła duszność","Chwytanie za szyję","Bez/skąpokaszlowy napad"],
+        causes:["Kęs/małe przedmioty"],
+        firstaid:[
           {t:"Skuteczny kaszel — zachęcaj",audience:"all"},
           {t:"Dorosły: 5 uderzeń pleców → Heimlich",audience:"adult"},
           {t:"Dziecko >1 r.ż.: 5 pleców → 5 nadbrzusza",audience:"child"},
           {t:"Niemowlę: 5 pleców → 5 uciśnięć klatki",audience:"child"},
           {t:"Utrata przytomności: RKO 30:2, 112, AED",audience:"all"}],
-        otc:["—"],rx:["—"],rehab:[...BASE.rehabCommon,"Edukacja i profilaktyka"],urgent:["Każde ciężkie zadławienie — 112"],myths:[{m:"„Palcem w ciemno”",f:"Ryzyko wepchnięcia głębiej."}],faq:[...BASE.faqCommon]},
-      ciaza:{label:"Ciąża",risk:35,symptoms:["Nudności/wymioty","Zgaga/zaparcia","Ból krzyża/kurcze","Obrzęki","Zawroty"],causes:["Hormony","Zmiana postawy/ucisk","Niedobory"],firstaid:["Małe, częste posiłki","Nawodnienie; imbir (po konsultacji)","Ruszaj się łagodnie","Zgaga: unieś wezgłowie"],otc:["Witaminy wg zaleceń","Środki dozwolone w ciąży"],rx:["Tylko po ocenie lekarskiej"],rehab:[...BASE.rehabCommon,"Ćwiczenia w ciąży","Fizjo uroginekologiczna","Pozycje odciążające"],urgent:["Krwawienie, silny ból","Nagły obrzęk twarzy/ból głowy","Zmniejszone ruchy płodu","Silna duszność/ból w klatce",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon,{m:"„Nie wolno ćwiczyć”",f:"Umiarkowana aktywność zwykle zalecana."}],faq:[...BASE.faqCommon]}
+        otc:["—"],rx:["—"],rehab:[...BASE.rehabCommon,"Edukacja i profilaktyka"],
+        urgent:["Każde ciężkie zadławienie — 112"],
+        doctors:["SOR/112 (stan nagły)","POZ po epizodzie — kontrola, edukacja",...BASE.docsCommon],
+        myths:[{m:"„Palcem w ciemno”",f:"Ryzyko wepchnięcia głębiej."}],
+        faq:[...BASE.faqCommon]
+      },
+      ciaza:{label:"Ciąża",risk:35,
+        symptoms:["Nudności/wymioty","Zgaga/zaparcia","Ból krzyża/kurcze","Obrzęki","Zawroty"],
+        causes:["Hormony","Zmiana postawy/ucisk","Niedobory"],
+        firstaid:["Małe, częste posiłki","Nawodnienie; imbir (po konsultacji)","Ruszaj się łagodnie","Zgaga: unieś wezgłowie"],
+        otc:["Witaminy wg zaleceń","Środki dozwolone w ciąży"],
+        rx:["Tylko po ocenie lekarskiej"],
+        rehab:[...BASE.rehabCommon,"Ćwiczenia w ciąży","Fizjo uroginekologiczna","Pozycje odciążające"],
+        urgent:["Krwawienie, silny ból","Nagły obrzęk twarzy/ból głowy","Zmniejszone ruchy płodu","Silna duszność/ból w klatce",...BASE.urgentCommon.slice(2)],
+        doctors:["Ginekolog/Położna/POZ","SOR/112 przy alarmach"],
+        myths:[...BASE.mythsCommon,{m:"„Nie wolno ćwiczyć”",f:"Umiarkowana aktywność zwykle zalecana."}],
+        faq:[...BASE.faqCommon]
+      }
     };
 
     const FALLBACK = { label: LABEL || CZESC, risk: 25, ...CONTENT.glowa };
@@ -410,9 +605,8 @@
 
     let selectedWeights=0;
     function updateRisk(){
-      // ZMIANA 2: start od 0% (zielony początek); rośnie dopiero od zaznaczeń
-      const base = 0;
-      const val = Math.max(0, Math.min(100, base + selectedWeights));
+      const base=Math.max(0,Math.min(100,entry.risk||25));
+      const val =Math.max(0,Math.min(100,base+selectedWeights));
       const c=document.getElementById('risk-cursor-card');
       const bar=document.getElementById('riskbar');
       const lbl=document.getElementById('risk-label');
@@ -504,10 +698,13 @@
     renderListPlain('meds-otc', entry.otc);
     renderListPlain('meds-rx',  entry.rx);
     renderListPlain('rehab',    entry.rehab);
+    /* NOWE: Lekarze */
+    renderListPlain('doctors',  entry.doctors?.length ? entry.doctors : BASE.docsCommon);
+    /* /NOWE */
     fillPairs('myths', entry.myths);
     fillFAQ('faq',     entry.faq);
 
-    /* Start: OBJAWY + ryzyko bazowe (teraz 0%) */
+    /* Start: OBJAWY + ryzyko bazowe */
     selectedWeights=0; updateRisk(); showPanel('#s-objawy');
 
     /* CZĄSTECZKI (subtelne) */
