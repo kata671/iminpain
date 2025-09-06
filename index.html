@@ -54,7 +54,7 @@
     .card img{width:100%;height:100%;object-fit:contain;object-position:center;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))}
     .card .caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;border-top:1px solid rgba(164,107,255,.22);background:rgba(255,255,255,.04)}
 
-    /* Zielone pigułki */
+    /* PIGUŁKI */
     :root{ --bhG:34,227,160; --bhG2:20,160,120; }
     .situations .pill{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;text-decoration:none;font-weight:900;letter-spacing:.2px}
     .situations .pill .ico{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px}
@@ -70,7 +70,6 @@
     }
     .situations .pill.pill--green:hover{transform:translateY(-1px);border-color:rgba(var(--bhG), .85)}
 
-    /* Niebieska pigułka: Gry / Trening */
     .situations .pill.pill--blue{
       background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
       color:#e6f0ff; border:1px solid rgba(164,107,255,.55);
@@ -80,7 +79,7 @@
       background: rgba(164,107,255,.22); box-shadow: inset 0 0 0 1px rgba(164,107,255,.35);
     }
 
-    /* QUIZ – drobne poprawki czytelności + nowa odznaka + blokada wielokliku */
+    /* QUIZ – czytelność + odznaka + blokada wielokliku */
     .bh2025-answers .bh2025-ans{color:#eef2ff}
     .bh2025-answers .bh2025-ans[disabled]{opacity:.75; cursor:not-allowed; transform:none !important}
     .bh2025-quiz-badge{
@@ -91,15 +90,6 @@
       display:flex; align-items:center; gap:12px;
     }
     .bh2025-quiz-badge .emj{font-size:26px; line-height:1}
-
-    /* Apteka24 znaczek – zachowujemy zielone glow (działa jak wcześniej) */
-    #btn-apteka .badge-round{
-      background: rgba(var(--bhG), .18);
-      color: #eafff7;
-      border:1px solid rgba(var(--bhG), .55);
-      box-shadow: 0 6px 18px rgba(8,10,22,.35), inset 0 0 0 1px rgba(var(--bhG), .20), 0 0 14px rgba(var(--bhG), .30);
-      font-weight:800;
-    }
   </style>
 </head>
 
@@ -130,7 +120,6 @@
     </div>
 
     <nav class="situations" aria-label="Sytuacje nagłe">
-      <!-- zielone: kierują do szczegółów; nic nie przechwytujemy JS -->
       <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie"><span class="ico">🫁</span>Zadławienie</a>
       <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja"><span class="ico">🚑</span>Reanimacja</a>
       <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek"><span class="ico">💥</span>Wypadek</a>
@@ -179,8 +168,8 @@
     </section>
   </div>
 
-  <!-- Modal QUIZ -->
-  <div id="bh2025QuizModal" class="bh2025-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025QuizTitle">
+  <!-- Modal QUIZ (DOMYŚLNIE UKRYTY) -->
+  <div id="bh2025QuizModal" class="bh2025-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025QuizTitle" style="display:none">
     <div class="bh2025-modal__panel">
       <div class="bh2025-modal__head">
         <div>
@@ -206,7 +195,7 @@
   <!-- Twój skrypt bazowy strony -->
   <script src="assets/main.js?v=10"></script>
 
-  <!-- QUIZ (rozszerzony: 6 pytań, blokada wielokliku, wynik + odznaka) -->
+  <!-- QUIZ – izolowany, nie przechwytuje nawigacji -->
   <script>
   (function(){
     const modal   = document.getElementById('bh2025QuizModal');
@@ -218,99 +207,66 @@
     const aEl     = document.getElementById('bh2025QuizAnswers');
     const stepEl  = document.getElementById('bh2025QuizStep');
     const cursor  = document.getElementById('bh2025QuizCursor');
-    if(!modal || modal.dataset.bhBoundNew) return; modal.dataset.bhBoundNew='1';
+    if(!modal || modal.dataset.boundQuiz) return; modal.dataset.boundQuiz='1';
 
-    const QA = {
-      pl:[
-        {q:"Ktoś się dławi i nie może mówić. Co robisz najpierw?",
-         a:[{t:"Zachęcam do kaszlu; jeśli nieskuteczny — 5 uderzeń w plecy",ok:true},
-            {t:"Podaję wodę, żeby popchnąć kęs",ok:false},
-            {t:"„Na ślepo” palcem próbuję wyjąć",ok:false}],
-         hintOk:"Tak! Najpierw kaszel, potem plecy.", hintBad:"Woda/palec mogą pogorszyć."},
-        {q:"Brak oddechu. Co z RKO u dorosłego?",
-         a:[{t:"Ucisk 100–120/min, 5–6 cm, środek mostka",ok:true},
-            {t:"Delikatnie 40/min",ok:false},
-            {t:"Czekam na karetkę",ok:false}],
-         hintOk:"Tempo i miejsce są kluczowe.", hintBad:"Zaczynamy prawidłowe RKO."},
-        {q:"Oddycha, ale nie reaguje. Co dalej?",
-         a:[{t:"Pozycja bezpieczna + kontrola oddechu",ok:true},
-            {t:"Podaję napój i sadzam",ok:false},
-            {t:"Kładę na plecach bez kontroli",ok:false}],
-         hintOk:"Pozycja bezpieczna + nadzór.", hintBad:"To nie jest bezpieczne."},
-        {q:"Krwotok z przedramienia. Najlepszy pierwszy krok?",
-         a:[{t:"Bezpośredni ucisk jałowym opatrunkiem",ok:true},
-            {t:"Przepłukanie rany i czekanie",ok:false},
-            {t:"Natychmiast zakładam stazę",ok:false}],
-         hintOk:"Ucisk to podstawa.", hintBad:"Najpierw ucisk, staza nie zawsze."},
-        {q:"Oparzenie wrzątkiem (świeże, bez pęcherzy). Co robisz?",
-         a:[{t:"Chłodzę bieżącą wodą ~20 min",ok:true},
-            {t:"Smaruję tłustą maścią",ok:false},
-            {t:"Przykładam lód",ok:false}],
-         hintOk:"Chłodzenie wodą, nie lodem — bez maści.", hintBad:"Lód/maści — nie."},
-        {q:"Uraz szyi po kolizji. Poszkodowany przytomny. Co z pozycją?",
-         a:[{t:"Nie poruszam, stabilizuję głowę w osi",ok:true},
-            {t:"Sadzam, żeby wygodniej oddychał",ok:false},
-            {t:"Przenoszę na pobocze",ok:false}],
-         hintOk:"Stabilizacja i bezpieczeństwo miejsca.", hintBad:"Nie przemieszczaj bez potrzeby."}
-      ],
-      en:[
-        {q:"Someone is choking and can’t speak. What first?",
-         a:[{t:"Encourage cough; if ineffective — 5 back blows",ok:true},
-            {t:"Give water to push it down",ok:false},
-            {t:"Blind finger sweep",ok:false}],
-         hintOk:"Yes — cough, then back blows.", hintBad:"Water/finger sweep is risky."},
-        {q:"No breathing. Adult CPR?",
-         a:[{t:"100–120/min, 5–6 cm, center chest",ok:true},
-            {t:"40/min gently",ok:false},
-            {t:"Wait for EMS",ok:false}],
-         hintOk:"Rate and position are key.", hintBad:"Start proper CPR."},
-        {q:"Breathing but unresponsive. Next?",
-         a:[{t:"Recovery position + monitor",ok:true},
-            {t:"Give drink and leave sitting",ok:false},
-            {t:"Lay flat on back",ok:false}],
-         hintOk:"Recovery position.", hintBad:"Not safe now."},
-        {q:"Forearm bleeding. Best first step?",
-         a:[{t:"Direct pressure with dressing",ok:true},
-            {t:"Rinse and wait",ok:false},
-            {t:"Tourniquet immediately",ok:false}],
-         hintOk:"Direct pressure first.", hintBad:"Tourniquet not always first."},
-        {q:"Fresh scald burn, no blisters. You should…",
-         a:[{t:"Cool under running water ~20 min",ok:true},
-            {t:"Apply greasy ointment",ok:false},
-            {t:"Use ice directly",ok:false}],
-         hintOk:"Cool with water, not ice.", hintBad:"No ice/greasy creams."},
-        {q:"Neck injury in a crash, patient conscious. Position?",
-         a:[{t:"Don’t move; stabilize in-line",ok:true},
-            {t:"Sit them up for comfort",ok:false},
-            {t:"Carry to roadside",ok:false}],
-         hintOk:"Stabilize and keep safe.", hintBad:"Avoid unnecessary moves."}
-      ]
-    };
+    // domyślnie ukryty modal (podwójny bezpiecznik)
+    function hideModal(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
+    function showModal(){ modal.style.display='block'; modal.setAttribute('aria-hidden','false'); }
+    hideModal();
 
-    const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
-    const Q = ()=> QA[L()] || QA.pl;
+    const QA = [
+      {q:"Ktoś się dławi i nie może mówić. Co robisz najpierw?",
+       a:[{t:"Zachęcam do kaszlu; jeśli nieskuteczny — 5 uderzeń w plecy",ok:true},
+          {t:"Podaję wodę, żeby popchnąć kęs",ok:false},
+          {t:"„Na ślepo” palcem próbuję wyjąć",ok:false}],
+       hintOk:"Tak! Najpierw kaszel, potem plecy.", hintBad:"Woda/palec mogą pogorszyć."},
+      {q:"Brak oddechu. Co z RKO u dorosłego?",
+       a:[{t:"Ucisk 100–120/min, 5–6 cm, środek mostka",ok:true},
+          {t:"Delikatnie 40/min",ok:false},
+          {t:"Czekam na karetkę",ok:false}],
+       hintOk:"Tempo i miejsce są kluczowe.", hintBad:"Zaczynamy prawidłowe RKO."},
+      {q:"Oddycha, ale nie reaguje. Co dalej?",
+       a:[{t:"Pozycja bezpieczna + kontrola oddechu",ok:true},
+          {t:"Podaję napój i sadzam",ok:false},
+          {t:"Kładę na plecach bez kontroli",ok:false}],
+       hintOk:"Pozycja bezpieczna + nadzór.", hintBad:"To nie jest bezpieczne."},
+      {q:"Krwotok z przedramienia. Najlepszy pierwszy krok?",
+       a:[{t:"Bezpośredni ucisk jałowym opatrunkiem",ok:true},
+          {t:"Przepłukanie rany i czekanie",ok:false},
+          {t:"Natychmiast zakładam stazę",ok:false}],
+       hintOk:"Ucisk to podstawa.", hintBad:"Najpierw ucisk, staza nie zawsze."},
+      {q:"Oparzenie wrzątkiem (świeże, bez pęcherzy). Co robisz?",
+       a:[{t:"Chłodzę bieżącą wodą ~20 min",ok:true},
+          {t:"Smaruję tłustą maścią",ok:false},
+          {t:"Przykładam lód",ok:false}],
+       hintOk:"Chłodzenie wodą, nie lodem — bez maści.", hintBad:"Lód/maści — nie."},
+      {q:"Uraz szyi po kolizji. Poszkodowany przytomny. Co z pozycją?",
+       a:[{t:"Nie poruszam, stabilizuję głowę w osi",ok:true},
+          {t:"Sadzam, żeby wygodniej oddychał",ok:false},
+          {t:"Przenoszę na pobocze",ok:false}],
+       hintOk:"Stabilizacja i bezpieczeństwo miejsca.", hintBad:"Nie przemieszczaj bez potrzeby."}
+    ];
 
-    let step=0, chosen=[], answered=false;
+    let step=0, chosen=new Array(QA.length).fill(null), answered=false;
 
     function shuffle(arr){
       const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
       return a;
     }
-    function setProgress(total){ stepEl.textContent=(step+1); cursor.style.left=(6+(step/((total-1)||1))*88)+'%'; }
+    function setProgress(){ stepEl.textContent=(step+1); cursor.style.left=(6+(step/((QA.length-1)||1))*88)+'%'; }
 
     function render(){
-      const data=Q(), item=data[step]; answered=false;
-      qEl.textContent=item.q; aEl.innerHTML=''; setProgress(data.length);
+      const item=QA[step]; answered=false;
+      qEl.textContent=item.q; aEl.innerHTML=''; setProgress();
       const variants = shuffle(item.a);
       variants.forEach(opt=>{
         const b=document.createElement('button');
         b.type='button'; b.className='bh2025-ans'; b.textContent=opt.t;
         b.addEventListener('click', ()=>{
-          if(answered) return;
-          answered = true;
+          if(answered) return; answered = true;
           const ok=!!opt.ok; chosen[step]=ok;
 
-          // zablokuj wszystkie przyciski, pokaż poprawną
+          // zablokuj wszystkie, podświetl poprawną
           [...aEl.querySelectorAll('.bh2025-ans')].forEach(btn=>{
             btn.disabled = true;
             const v = variants.find(v=>v.t===btn.textContent);
@@ -318,37 +274,35 @@
           });
           b.classList.toggle('wrong', !ok);
 
-          // feedback
           const n=document.createElement('div');
           n.className='bh2025-muted'; n.style.marginTop='6px'; n.style.color='#eaf2ff';
           n.textContent = ok ? (item.hintOk||'✔') : (item.hintBad||'✖');
           b.after(n);
-
           try{ navigator.vibrate && navigator.vibrate(ok?80:160);}catch(_){}
-        });
+        }, {once:false});
         aEl.appendChild(b);
       });
-
-      nextBtn.textContent = (L()==='en') ? (step===Q().length-1?'Finish':'Next') : (step===Q().length-1?'Zakończ':'Dalej');
+      nextBtn.textContent = (step===QA.length-1?'Zakończ':'Dalej');
     }
 
     function open(){
-      const data=Q(); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
-      step=0; chosen=new Array(data.length).fill(null); render();
+      showModal(); document.body.style.overflow='hidden';
+      step=0; chosen=new Array(QA.length).fill(null); render();
     }
-    function close(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+    function close(){
+      hideModal(); document.body.style.overflow='';
+    }
 
     // konfetti
-    function confetti(score, total){
+    function confetti(score){
       const c=document.createElement('canvas'); c.width=innerWidth; c.height=innerHeight;
       Object.assign(c.style,{position:'fixed',inset:'0',pointerEvents:'none',zIndex:10001});
       document.body.appendChild(c);
       const ctx=c.getContext('2d');
-      let parts=Array.from({length: score===total? 160:110},()=>({
-        x:Math.random()*c.width, y:-20,
-        vx:-1+Math.random()*2, vy:2+Math.random()*2.5,
+      let parts=Array.from({length: score===QA.length? 160:110},()=>({
+        x:Math.random()*c.width, y:-20, vx:-1+Math.random()*2, vy:2+Math.random()*2.5,
         size:3+Math.random()*4, rot:Math.random()*6, vr:-.2+Math.random()*.4,
-        color: score===total ? ['#5eead4','#a46bff','#ffd16c'][Math.floor(Math.random()*3)] : 'rgba(255,255,255,.9)',
+        color: score===QA.length ? ['#5eead4','#a46bff','#ffd16c'][Math.floor(Math.random()*3)] : 'rgba(255,255,255,.9)',
         life: 120
       }));
       (function tick(){
@@ -364,41 +318,39 @@
       })();
     }
 
-    function showBadge(score,total){
-      const good = score>=Math.ceil(total*0.8); // 5/6+
+    function badge(score){
+      const good = score>=5;
       const box=document.createElement('div'); box.className='bh2025-quiz-badge';
-      const title = (L()==='en') ? (good?'Expert First Aid!':'Nice try!') : (good?'Ekspert pierwszej pomocy!':'Dobry wynik!');
-      box.innerHTML = `<span class="emj">${good?'🏅':'🎉'}</span><span>${title} — ${score}/${total}</span>`;
+      box.innerHTML = `<span class="emj">${good?'🏅':'🎉'}</span><span>${good?'Ekspert pierwszej pomocy!':'Dobry wynik!'} — ${score}/${QA.length}</span>`;
       document.body.appendChild(box);
       setTimeout(()=>box.remove(), 3200);
     }
 
     function finish(){
-      const data=Q(); const score=chosen.reduce((s,v)=>s+(v?1:0),0);
-      confetti(score,data.length);
-      showBadge(score,data.length);
-      close();
+      const score=chosen.reduce((s,v)=>s+(v?1:0),0);
+      confetti(score); badge(score); close();
     }
 
-    // otwieranie/zamykanie
-    if(openBtn && !openBtn.dataset.bhBound){
-      openBtn.dataset.bhBound='1';
-      openBtn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); open(); }, true);
+    // otwieranie/zamykanie — bez przechwytywania linków
+    if(openBtn && !openBtn.dataset.bound){
+      openBtn.dataset.bound='1';
+      openBtn.addEventListener('click', (e)=>{ e.preventDefault(); open(); });
     }
-    closeBtn.addEventListener('click', close);
+    closeBtn?.addEventListener('click', close);
     modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
-    restart.addEventListener('click', ()=>{ step=0; chosen=new Array(Q().length).fill(null); render(); });
+    restart?.addEventListener('click', ()=>{ step=0; chosen=new Array(QA.length).fill(null); render(); });
 
-    nextBtn.addEventListener('click', ()=>{
+    nextBtn?.addEventListener('click', ()=>{
       if(chosen[step]===null){
         try{navigator.vibrate&&navigator.vibrate([40,40,40]);}catch(_){}
-        const n=document.createElement('div');
-        n.className='bh2025-muted'; n.style.marginTop='6px'; n.style.color='#ffd16c';
-        n.textContent = (L()==='en')?'Choose an answer to continue…':'Wybierz odpowiedź, aby przejść dalej…';
-        if(!aEl.querySelector('.need-choose')){ n.classList.add('need-choose'); aEl.appendChild(n); }
+        if(!aEl.querySelector('.need-choose')){
+          const n=document.createElement('div'); n.className='bh2025-muted need-choose';
+          n.style.marginTop='6px'; n.style.color='#ffd16c';
+          n.textContent='Wybierz odpowiedź, aby przejść dalej…'; aEl.appendChild(n);
+        }
         return;
       }
-      if(step < Q().length-1){ step++; render(); }
+      if(step < QA.length-1){ step++; render(); }
       else { finish(); }
     });
 
@@ -422,7 +374,5 @@
   })();
   </script>
 
-  <!-- (opcjonalnie) Wyszukiwarka z podpowiedziami – jeśli używacie w main.js, ten blok można pominąć -->
-  <!-- <script> ... wasz istniejący skrypt suggest ... </script> -->
 </body>
 </html>
