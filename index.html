@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pl">
+<html lang="pl" data-lang="pl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -15,13 +15,11 @@
       position:relative; background:#0e1230 !important; color:#eef2ff;
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
-    /* wyłącz pseudo-tła tylko na home */
     body[data-page="home"]::before,
     body[data-page="home"]::after,
     body[data-page="home"] .container::before,
     body[data-page="home"] .container::after{content:none !important;display:none !important}
 
-    /* TAPETA */
     .bh-wallpaper,.bh-grid{position:fixed;inset:0;pointer-events:none}
     .bh-wallpaper{
       z-index:0;
@@ -37,59 +35,135 @@
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
       background-size:160px 138px; background-position:center;
     }
-    .bh-floor-fade{
-      position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
-      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));
-    }
+    .bh-floor-fade{ position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
+      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6)); }
     .container{position:relative;z-index:3;background:transparent !important;max-width:1100px;margin:0 auto;padding:0 16px}
 
-    /* 3 KAFELKI – sztywno */
+    /* Siatka kart */
     @media (min-width:981px){ section.stack[style]{grid-template-columns:repeat(3,1fr) !important;} }
     @media (max-width:980px){ section.stack[style]{grid-template-columns:repeat(2,1fr) !important;} }
     @media (max-width:640px){ section.stack[style]{grid-template-columns:1fr !important;} }
     section.stack[style] > *{grid-column:auto !important;min-width:0 !important}
 
-    .card{border-radius:18px;overflow:hidden;background:rgba(60,32,100,.32);border:1px solid rgba(164,107,255,.22);box-shadow:0 10px 22px rgba(255,110,199,.12), 0 0 0 1px rgba(164,107,255,.14) inset;min-height:240px}
+    .card{border-radius:18px;overflow:hidden;background:rgba(60,32,100,.32);border:1px solid rgba(164,107,255,.22);
+      box-shadow:0 10px 22px rgba(255,110,199,.12), 0 0 0 1px rgba(164,107,255,.14) inset;min-height:240px}
     .card a{display:grid;grid-template-rows:minmax(180px,240px) auto;height:100%;text-decoration:none;color:inherit}
-    .card img{width:100%;height:100%;object-fit:contain;object-position:center;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))}
-    .card .caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;border-top:1px solid rgba(164,107,255,.22);background:rgba(255,255,255,.04)}
+    .card img{width:100%;height:100%;object-fit:contain;object-position:center;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))}
+    .card .caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;
+      border-top:1px solid rgba(164,107,255,.22);background:rgba(255,255,255,.04)}
 
-    /* PIGUŁKI */
+    /* Pigułki */
     :root{ --bhG:34,227,160; --bhG2:20,160,120; }
-    .situations .pill{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;text-decoration:none;font-weight:900;letter-spacing:.2px}
-    .situations .pill .ico{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px}
+    .situations .pill{
+      display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:14px; text-decoration:none; font-weight:900;
+      border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#fff; transition:.2s ease;
+    }
+    .situations .pill .ico{
+      display:inline-grid; place-items:center; width:22px; height:22px; border-radius:6px;
+      background: rgba(164,107,255,.18); box-shadow: inset 0 0 0 1px rgba(164,107,255,.25);
+    }
     .situations .pill.pill--green{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(var(--bhG2), .15);
-      color:#eafff7; border:1px solid rgba(var(--bhG), .55);
+      color:#ffffff; border:1px solid rgba(var(--bhG), .55);
       box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhG), .25) inset, 0 0 18px rgba(var(--bhG), .18);
       backdrop-filter:saturate(125%) blur(4px);
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
     }
-    .situations .pill.pill--green .ico{
-      background: rgba(var(--bhG), .18); box-shadow: inset 0 0 0 1px rgba(var(--bhG), .25);
+    .situations .pill.pill--green:hover,
+    .situations .pill.pill--green:focus-visible{
+      transform:translateY(-1px); border-color:rgba(var(--bhG), .85);
+      box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(var(--bhG), .65), 0 0 26px rgba(var(--bhG), .45);
+      outline:none;
     }
-    .situations .pill.pill--green:hover{transform:translateY(-1px);border-color:rgba(var(--bhG), .85)}
-
+    /* Niebieska pigułka – Gry / Trening */
     .situations .pill.pill--blue{
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      color:#e6f0ff; border:1px solid rgba(164,107,255,.55);
-      box-shadow:0 8px 22px rgba(94,234,212,.2), 0 0 22px rgba(164,107,255,.28);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(96,165,250,.18);
+      border:1px solid rgba(59,130,246,.6);
+      box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(59,130,246,.35) inset, 0 0 18px rgba(96,165,250,.30);
+      color:#eaf2ff;
     }
-    .situations .pill.pill--blue .ico{
-      background: rgba(164,107,255,.22); box-shadow: inset 0 0 0 1px rgba(164,107,255,.35);
+    .situations .pill.pill--blue:hover,
+    .situations .pill.pill--blue:focus-visible{
+      transform:translateY(-1px); border-color:rgba(59,130,246,.9);
+      box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(96,165,250,.65), 0 0 26px rgba(96,165,250,.5);
+      outline:none;
     }
 
-    /* QUIZ – czytelność + odznaka + blokada wielokliku */
-    .bh2025-answers .bh2025-ans{color:#eef2ff}
-    .bh2025-answers .bh2025-ans[disabled]{opacity:.75; cursor:not-allowed; transform:none !important}
-    .bh2025-quiz-badge{
-      position:fixed; left:50%; top:22%; transform:translateX(-50%);
-      z-index:10002; background:rgba(60,32,100,.9); color:#fff;
-      border:1px solid rgba(164,107,255,.45); border-radius:14px;
-      padding:14px 18px; box-shadow:0 16px 36px rgba(8,10,22,.6); font-weight:900; letter-spacing:.2px;
-      display:flex; align-items:center; gap:12px;
+    /* apteka24 – świecący badge */
+    #btn-apteka .badge-round{
+      background: rgba(var(--bhG), .18);
+      color: #eafff7;
+      border:1px solid rgba(var(--bhG), .55);
+      box-shadow:0 6px 18px rgba(8,10,22,.35), inset 0 0 0 1px rgba(var(--bhG), .20), 0 0 14px rgba(var(--bhG), .30);
+      font-weight:800; letter-spacing:.2px; border-radius:999px; padding:6px 10px; text-transform:none;
+      animation: bh-green-pulse 2.4s ease-in-out infinite;
     }
-    .bh2025-quiz-badge .emj{font-size:26px; line-height:1}
+    @keyframes bh-green-pulse{
+      0%{ box-shadow:0 0 0 0 rgba(var(--bhG), .00), 0 0 12px rgba(var(--bhG), .18) }
+      50%{ box-shadow:0 0 0 6px rgba(var(--bhG), .12), 0 0 22px rgba(var(--bhG), .35) }
+      100%{ box-shadow:0 0 0 0 rgba(var(--bhG), .00), 0 0 12px rgba(var(--bhG), .18) }
+    }
+
+    /* Obrazek w PORADZIE (png) */
+    .bh2025-porada__svg img{
+      max-width:100%; height:auto; display:block; border-radius:12px;
+      border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.04);
+    }
+
+    /* Modale ukryte (twardo) */
+    .bh2025-modal[aria-hidden="true"],
+    .bh2025-porada[aria-hidden="true"]{ display:none }
+
+    /* QUIZ – poprawiona czytelność */
+    .bh2025-cta-quiz{appearance:none;border:1px solid rgba(164,107,255,.28);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      color:#eef2ff;border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer}
+    .bh2025-modal{position:fixed;inset:0;z-index:9999;background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.88), rgba(14,18,48,.92));backdrop-filter:saturate(120%) blur(6px)}
+    .bh2025-modal__panel{position:relative;max-width:720px;margin:6vh auto;background:rgba(60,32,100,.36);border:1px solid rgba(164,107,255,.25);border-radius:18px;padding:16px;color:#eef2ff}
+    .bh2025-q{color:#ffffff;font-weight:900;letter-spacing:.2px}
+    .bh2025-answers .bh2025-ans{display:block;width:100%;text-align:left;margin:8px 0;padding:10px 12px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);cursor:pointer;color:#ffffff}
+    .bh2025-answers .bh2025-ans:hover{box-shadow:0 10px 20px rgba(0,0,0,.25);transform:translateY(-1px)}
+    .bh2025-ans.correct{box-shadow:0 0 0 2px rgba(94,234,212,.65)}
+    .bh2025-ans.wrong{box-shadow:0 0 0 2px rgba(255,107,107,.7)}
+    .bh2025-progress{display:flex;align-items:center;gap:10px;margin:8px 0 12px}
+    .bh2025-progress__bar{flex:1;height:12px;border-radius:999px;outline:1px solid rgba(255,255,255,.14);background:linear-gradient(90deg,#5eead4,#ff6ec7);position:relative;overflow:hidden}
+    .bh2025-progress__cursor{position:absolute;top:50%;transform:translate(-50%,-50%);left:6%;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(94,234,212,.35)}
+
+    /* PORADA modal */
+    .bh2025-porada{position:fixed;inset:0;z-index:9998;background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95));backdrop-filter:saturate(120%) blur(6px)}
+    .bh2025-porada__panel{position:relative;max-width:980px;margin:5vh auto;background:rgba(60,32,100,.36);border:1px solid rgba(164,107,255,.25);border-radius:18px;padding:16px;color:#eef2ff}
+    .bh2025-porada__grid{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
+    @media (max-width:900px){ .bh2025-porada__grid{grid-template-columns:1fr} }
+    .bh2025-steps{border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);padding:12px}
+
+    /* Selektor języka */
+    .langpick{display:flex;gap:8px;align-items:center;margin-left:12px}
+    .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
+    .langpick select{
+      appearance:none;background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.24);
+      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px
+    }
+    .langpick option{ color:#0e1230; background:#ffffff }
+
+    /* Wyszukiwarka – panel podpowiedzi (izolowany) */
+    .bh2025-suggest{position:absolute;right:0;left:0;top:100%;margin-top:6px;z-index:50;
+      background:rgba(60,32,100,.96); border:1px solid rgba(164,107,255,.28); border-radius:12px;
+      box-shadow:0 16px 34px rgba(8,10,22,.52); overflow:hidden; display:none}
+    .bh2025-suggest[aria-hidden="false"]{display:block}
+    .bh2025-sg-head{padding:8px 12px; font-weight:800; letter-spacing:.2px; color:#cfe2ff;
+      border-bottom:1px solid rgba(164,107,255,.18); background:rgba(255,255,255,.03)}
+    .bh2025-sg-list{list-style:none;margin:0;padding:6px}
+    .bh2025-sg-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;
+      cursor:pointer; color:#eef2ff; text-decoration:none; border:1px solid transparent}
+    .bh2025-sg-item:hover,
+    .bh2025-sg-item[aria-selected="true"]{background:rgba(255,255,255,.06); border-color:rgba(164,107,255,.28);
+      box-shadow:inset 0 0 0 1px rgba(164,107,255,.16)}
+    .bh2025-sg-ico{width:18px;height:18px;display:inline-grid;place-items:center;border-radius:6px;
+      background:rgba(164,107,255,.18); font-size:12px}
+    .bh2025-sg-sub{margin-left:auto;font-size:12px;color:#b8c2e0}
+    .header .tools .search{position:relative}
   </style>
 </head>
 
@@ -101,16 +175,24 @@
   <div class="container">
     <header class="header">
       <div class="brand">
-        <h1>Boli Help</h1>
-        <small>Pomoc i pierwsza pomoc w nagłych sytuacjach</small>
+        <h1 data-i18n="brand_title">Boli Help</h1>
+        <small data-i18n="brand_sub">Pomoc i pierwsza pomoc w nagłych sytuacjach</small>
       </div>
-      <div class="tools">
+      <div class="tools" style="display:flex;align-items:center;gap:10px">
         <div class="search" role="search">
-          <input type="search" placeholder="Szukaj objawu, części ciała lub tematu…" aria-label="Szukaj" />
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <input id="bhSearch" type="search" placeholder="Szukaj objawu, części ciała lub tematu…" aria-label="Szukaj" />
+          <svg id="bhSearchIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="cursor:pointer">
             <path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
                   stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
           </svg>
+        </div>
+        <!-- Tłumacz -->
+        <div class="langpick" aria-label="Wybierz język">
+          <label for="bhLang" data-i18n="lang_label">Wybierz język</label>
+          <select id="bhLang" aria-label="Język">
+            <option value="pl" selected>PL</option>
+            <option value="en">EN</option>
+          </select>
         </div>
       </div>
     </header>
@@ -120,82 +202,150 @@
     </div>
 
     <nav class="situations" aria-label="Sytuacje nagłe">
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie"><span class="ico">🫁</span>Zadławienie</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja"><span class="ico">🚑</span>Reanimacja</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek"><span class="ico">💥</span>Wypadek</a>
-      <a class="pill pill--green" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span>Pierwsza pomoc</a>
-      <a class="pill pill--blue" href="gry.html"><span class="ico">🎮</span>Gry / Trening</a>
+      <!-- HREF zostaje dla fallbacku, klik przechwytujemy w capture -->
+      <a class="pill pill--green" data-porada="zadlawienie" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie">
+        <span class="ico">🫁</span><span data-i18n="pill_choke">Zadławienie</span>
+      </a>
+      <a class="pill pill--green" data-porada="reanimacja" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja">
+        <span class="ico">🚑</span><span data-i18n="pill_cpr">Reanimacja</span>
+      </a>
+      <a class="pill pill--green" data-porada="wypadek" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek">
+        <span class="ico">💥</span><span data-i18n="pill_accident">Wypadek</span>
+      </a>
+      <a class="pill pill--green" data-porada="pierwszopomoc" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc">
+        <span class="ico">❤️‍🩹</span><span data-i18n="pill_firstaid">Pierwsza pomoc</span>
+      </a>
+      <a class="pill pill--blue" href="gry.html"><span class="ico">🎮</span><span data-i18n="pill_games">Gry / Trening</span></a>
     </nav>
 
     <!-- Launcher mini-quizu -->
-    <div class="bh2025-quiz-launch" aria-hidden="false" aria-label="Sekcja edukacyjna">
-      <span class="dot" aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:#5eead4;box-shadow:0 0 12px #5eead4"></span>
-      <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button" aria-haspopup="dialog" aria-controls="bh2025QuizModal">
+    <div class="bh2025-quiz-launch" aria-hidden="false">
+      <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button"
+              aria-haspopup="dialog" aria-controls="bh2025QuizModal" data-i18n="quiz_open">
         Sprawdź się: Pierwsza pomoc
       </button>
     </div>
 
     <div class="actions" role="navigation" aria-label="Szybkie akcje">
-      <button id="btn-112" class="btn btn--red btn--call" type="button" aria-label="Zadzwoń na 112">📞 112</button>
-      <button id="btn-hosp" class="btn btn--hosp" type="button" aria-label="Szpitale i SOR">🏥 Szpitale / SOR</button>
+      <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
+      <button id="btn-hosp" class="btn btn--hosp" type="button" data-i18n="btn_hosp">🏥 Szpitale / SOR</button>
       <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener"><span class="badge-round">apteka24</span></a>
-      <button id="btn-loc" class="btn" type="button">📍 Zlokalizuj mnie</button>
+      <button id="btn-loc" class="btn" type="button" data-i18n="btn_loc">📍 Zlokalizuj mnie</button>
     </div>
 
-    <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
+    <div class="subheadline" data-i18n="subheadline">Boli mnie — wybierz obszar bólu</div>
 
-    <!-- 3 kafelki – sztywno -->
+    <!-- 3 kafelki -->
     <section class="stack" aria-label="Wybór postaci"
       style="display:grid;gap:16px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
       <article class="card">
         <a href="kobieta.html">
           <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3>Kobieta</h3><span class="arrow" aria-hidden="true">→</span></div>
+          <div class="caption"><h3 data-i18n="card_woman">Kobieta</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
       <article class="card">
         <a href="mezczyzna.html">
           <img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3>Mężczyzna</h3><span class="arrow" aria-hidden="true">→</span></div>
+          <div class="caption"><h3 data-i18n="card_man">Mężczyzna</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
       <article class="card">
         <a href="dziecko.html">
           <img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3>Dziecko</h3><span class="arrow" aria-hidden="true">→</span></div>
+          <div class="caption"><h3 data-i18n="card_child">Dziecko</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
     </section>
   </div>
 
-  <!-- Modal QUIZ (DOMYŚLNIE UKRYTY) -->
-  <div id="bh2025QuizModal" class="bh2025-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025QuizTitle" style="display:none">
+  <!-- Modal QUIZ -->
+  <div id="bh2025QuizModal" class="bh2025-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025QuizTitle">
     <div class="bh2025-modal__panel">
       <div class="bh2025-modal__head">
         <div>
-          <div id="bh2025QuizTitle" class="bh2025-modal__title">Mini-quiz: czy wiesz co zrobić?</div>
-          <div class="bh2025-muted" id="bh2025QuizSubtitle">6 szybkich pytań: zadławienie, RKO, krwotok, oparzenie, uraz szyi.</div>
+          <div id="bh2025QuizTitle" class="bh2025-modal__title" data-i18n="quiz_title">Mini-quiz: czy wiesz co zrobić?</div>
+          <div class="bh2025-muted" id="bh2025QuizSubtitle" data-i18n="quiz_sub">3 szybkie pytania: zadławienie, reanimacja, pozycja bezpieczna.</div>
         </div>
-        <button class="bh2025-close" type="button" id="bh2025QuizClose" aria-label="Zamknij">✕</button>
+        <button class="bh2025-close" type="button" id="bh2025QuizClose" aria-label="Zamknij" data-i18n="close_btn">✕</button>
       </div>
       <div class="bh2025-modal__body">
         <div class="bh2025-progress" aria-label="Postęp">
           <div class="bh2025-progress__bar"><span class="bh2025-progress__cursor" id="bh2025QuizCursor"></span></div>
-          <div class="bh2025-progress__label"><span id="bh2025QuizStep">1</span>/6</div>
+          <div class="bh2025-progress__label"><span id="bh2025QuizStep">1</span>/3</div>
         </div>
         <div class="bh2025-q" id="bh2025QuizQuestion">…</div>
         <div class="bh2025-answers" id="bh2025QuizAnswers"></div>
         <div class="bh2025-actions">
-          <button class="bh2025-ghost" type="button" id="bh2025QuizRestart">Zacznij od nowa</button>
-          <button class="bh2025-primary" type="button" id="bh2025QuizNext">Dalej</button>
+          <button class="bh2025-ghost" type="button" id="bh2025QuizRestart" data-i18n="quiz_restart">Zacznij od nowa</button>
+          <button class="bh2025-primary" type="button" id="bh2025QuizNext" data-i18n="quiz_next">Dalej</button>
         </div>
       </div>
     </div>
   </div>
-  <!-- Twój skrypt bazowy strony -->
+
+  <!-- Modal PORADA -->
+  <div id="bh2025Porada" class="bh2025-porada" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025PoradaTitle">
+    <div class="bh2025-porada__panel">
+      <div class="bh2025-porada__head">
+        <div class="bh2025-porada__title" id="bh2025PoradaTitle" data-i18n="advice_title">Porada</div>
+        <div class="bh2025-chip" id="bh2025PoradaChip" data-i18n="advice_chip">SOS • instrukcja</div>
+        <button class="bh2025-close--porada" type="button" id="bh2025PoradaClose" aria-label="Zamknij" data-i18n="close_btn">✕</button>
+      </div>
+      <div class="bh2025-porada__grid">
+        <div class="bh2025-porada__svg" id="bh2025PoradaSvg" aria-label="Instrukcja obrazkowa"></div>
+        <div class="bh2025-steps"><ol id="bh2025PoradaSteps"></ol></div>
+      </div>
+      <div class="bh2025-video">
+        <div class="bh2025-muted" style="margin-bottom:8px;font-weight:800" data-i18n="video_head">Materiał wideo</div>
+        <div id="bh2025VideoWrap"><div class="ph" id="bh2025VideoPh"><span>🎬</span><span data-i18n="video_hint">Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej.</span></div></div>
+      </div>
+    </div>
+  </div>
+  <!-- Skrypt bazowy strony -->
   <script src="assets/main.js?v=10"></script>
 
-  <!-- QUIZ – izolowany, nie przechwytuje nawigacji -->
+  <!-- I18N (lokalny) -->
+  <script>
+  (function(){
+    const I18N = {
+      pl:{brand_title:"Boli Help",brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",lang_label:"Wybierz język",
+          pill_choke:"Zadławienie",pill_cpr:"Reanimacja",pill_accident:"Wypadek",pill_firstaid:"Pierwsza pomoc",pill_games:"Gry / Trening",
+          quiz_open:"Sprawdź się: Pierwsza pomoc",quiz_title:"Mini-quiz: czy wiesz co zrobić?",quiz_sub:"3 szybkie pytania: zadławienie, reanimacja, pozycja bezpieczna.",
+          quiz_restart:"Zacznij od nowa",quiz_next:"Dalej",close_btn:"✕",
+          btn_hosp:"🏥 Szpitale / SOR",btn_loc:"📍 Zlokalizuj mnie",subheadline:"Boli mnie — wybierz obszar bólu",
+          card_woman:"Kobieta",card_man:"Mężczyzna",card_child:"Dziecko",
+          advice_title:"Porada",advice_chip:"SOS • instrukcja",video_head:"Materiał wideo",
+          video_hint:"Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej."},
+      en:{brand_title:"Boli Help",brand_sub:"Help & first aid in emergencies",lang_label:"Choose language",
+          pill_choke:"Choking",pill_cpr:"CPR",pill_accident:"Accident",pill_firstaid:"First aid",pill_games:"Games / Training",
+          quiz_open:"Check yourself: First aid",quiz_title:"Mini-quiz: do you know what to do?",quiz_sub:"3 quick questions: choking, CPR, recovery position.",
+          quiz_restart:"Restart",quiz_next:"Next",close_btn:"✕",
+          btn_hosp:"🏥 Hospitals / ER",btn_loc:"📍 Locate me",subheadline:"It hurts — choose the body area",
+          card_woman:"Woman",card_man:"Man",card_child:"Child",
+          advice_title:"Advice",advice_chip:"SOS • instruction",video_head:"Video material",
+          video_hint:"Add file: <code>assets/videos/&lt;name&gt;.mp4</code> and update the map below."}
+    };
+    function applyI18n(lang){
+      const dict = I18N[lang] || I18N.pl;
+      document.documentElement.setAttribute('lang', lang);
+      document.documentElement.setAttribute('data-lang', lang);
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        if(dict[key]!==undefined){ el.innerHTML = dict[key]; }
+      });
+    }
+    const sel = document.getElementById('bhLang');
+    if(sel && !sel.dataset.bhBound){
+      sel.dataset.bhBound = '1';
+      sel.addEventListener('change', ()=> applyI18n(sel.value));
+      applyI18n(sel.value || 'pl');
+    }
+    window.__getLang = ()=> document.documentElement.getAttribute('data-lang') || 'pl';
+  })();
+  </script>
+
+  <!-- QUIZ (z konfetti; izolowany) -->
   <script>
   (function(){
     const modal   = document.getElementById('bh2025QuizModal');
@@ -207,103 +357,88 @@
     const aEl     = document.getElementById('bh2025QuizAnswers');
     const stepEl  = document.getElementById('bh2025QuizStep');
     const cursor  = document.getElementById('bh2025QuizCursor');
-    if(!modal || modal.dataset.boundQuiz) return; modal.dataset.boundQuiz='1';
+    if(!modal || modal.dataset.bhBound) return; modal.dataset.bhBound='1';
 
-    // domyślnie ukryty modal (podwójny bezpiecznik)
-    function hideModal(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
-    function showModal(){ modal.style.display='block'; modal.setAttribute('aria-hidden','false'); }
-    hideModal();
+    const QA = {
+      pl:[
+        {q:"Ktoś się dławi i nie może mówić. Co robisz najpierw?",
+         a:[{t:"Zachęcam do kaszlu, jeśli nieskuteczny — 5 uderzeń między łopatki",ok:true},
+            {t:"Podaję wodę, żeby popchnąć kęs",ok:false},
+            {t:"Wkładam palec i „na ślepo” próbuję wyjąć",ok:false}],
+         hintOk:"Tak! Najpierw kaszel. Jeśli nieskuteczny → uderzenia w plecy.",
+         hintBad:"Woda/„wymiatanie” palcem może pogorszyć sytuację."},
+        {q:"Brak oddechu. Co z RKO u dorosłego?",
+         a:[{t:"Ucisk klatki 100–120/min, głębokość ~5–6 cm, centrum mostka",ok:true},
+            {t:"Ucisk delikatny 40/min, bez kontroli miejsca",ok:false},
+            {t:"Czekam na karetkę bez ucisków",ok:false}],
+         hintOk:"Tempo 100–120/min i środek mostka są kluczowe.",
+         hintBad:"Za wolno/bez ucisków — zaczynamy prawidłowe RKO."},
+        {q:"Poszkodowany oddycha, ale nie reaguje. Co dalej?",
+         a:[{t:"Układam w pozycji bezpiecznej i kontroluję oddech",ok:true},
+            {t:"Podaję napój i zostawiam w pozycji siedzącej",ok:false},
+            {t:"Kładę na plecach bez kontroli drożności",ok:false}],
+         hintOk:"Pozycja bezpieczna i stała kontrola oddechu.",
+         hintBad:"Płyny/siedząca/na plecach — to nie jest bezpieczne."}
+      ],
+      en:[
+        {q:"Someone is choking and can’t speak. What do you do first?",
+         a:[{t:"Encourage coughing; if ineffective — 5 back blows",ok:true},
+            {t:"Give water to push food down",ok:false},
+            {t:"Put a finger inside and sweep blindly",ok:false}],
+         hintOk:"Yes! First cough. If ineffective → back blows.",
+         hintBad:"Water/blind finger sweep can make it worse."},
+        {q:"No breathing. What about adult CPR?",
+         a:[{t:"Compressions 100–120/min, depth ~5–6 cm, center of chest",ok:true},
+            {t:"Gentle 40/min, no precise place",ok:false},
+            {t:"Wait for ambulance without compressions",ok:false}],
+         hintOk:"Rate 100–120/min and center chest are key.",
+         hintBad:"Too slow / no compressions — start proper CPR."},
+        {q:"Casualty breathes but is unresponsive. What next?",
+         a:[{t:"Place in recovery position and monitor breathing",ok:true},
+            {t:"Give a drink and leave sitting",ok:false},
+            {t:"Lay flat on back without airway control",ok:false}],
+         hintOk:"Recovery position + continuous monitoring.",
+         hintBad:"Drinks/sitting/on the back — not safe now."}
+      ]
+    };
+    const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
+    const Q = ()=> QA[L()] || QA.pl;
 
-    const QA = [
-      {q:"Ktoś się dławi i nie może mówić. Co robisz najpierw?",
-       a:[{t:"Zachęcam do kaszlu; jeśli nieskuteczny — 5 uderzeń w plecy",ok:true},
-          {t:"Podaję wodę, żeby popchnąć kęs",ok:false},
-          {t:"„Na ślepo” palcem próbuję wyjąć",ok:false}],
-       hintOk:"Tak! Najpierw kaszel, potem plecy.", hintBad:"Woda/palec mogą pogorszyć."},
-      {q:"Brak oddechu. Co z RKO u dorosłego?",
-       a:[{t:"Ucisk 100–120/min, 5–6 cm, środek mostka",ok:true},
-          {t:"Delikatnie 40/min",ok:false},
-          {t:"Czekam na karetkę",ok:false}],
-       hintOk:"Tempo i miejsce są kluczowe.", hintBad:"Zaczynamy prawidłowe RKO."},
-      {q:"Oddycha, ale nie reaguje. Co dalej?",
-       a:[{t:"Pozycja bezpieczna + kontrola oddechu",ok:true},
-          {t:"Podaję napój i sadzam",ok:false},
-          {t:"Kładę na plecach bez kontroli",ok:false}],
-       hintOk:"Pozycja bezpieczna + nadzór.", hintBad:"To nie jest bezpieczne."},
-      {q:"Krwotok z przedramienia. Najlepszy pierwszy krok?",
-       a:[{t:"Bezpośredni ucisk jałowym opatrunkiem",ok:true},
-          {t:"Przepłukanie rany i czekanie",ok:false},
-          {t:"Natychmiast zakładam stazę",ok:false}],
-       hintOk:"Ucisk to podstawa.", hintBad:"Najpierw ucisk, staza nie zawsze."},
-      {q:"Oparzenie wrzątkiem (świeże, bez pęcherzy). Co robisz?",
-       a:[{t:"Chłodzę bieżącą wodą ~20 min",ok:true},
-          {t:"Smaruję tłustą maścią",ok:false},
-          {t:"Przykładam lód",ok:false}],
-       hintOk:"Chłodzenie wodą, nie lodem — bez maści.", hintBad:"Lód/maści — nie."},
-      {q:"Uraz szyi po kolizji. Poszkodowany przytomny. Co z pozycją?",
-       a:[{t:"Nie poruszam, stabilizuję głowę w osi",ok:true},
-          {t:"Sadzam, żeby wygodniej oddychał",ok:false},
-          {t:"Przenoszę na pobocze",ok:false}],
-       hintOk:"Stabilizacja i bezpieczeństwo miejsca.", hintBad:"Nie przemieszczaj bez potrzeby."}
-    ];
-
-    let step=0, chosen=new Array(QA.length).fill(null), answered=false;
-
-    function shuffle(arr){
-      const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
-      return a;
-    }
-    function setProgress(){ stepEl.textContent=(step+1); cursor.style.left=(6+(step/((QA.length-1)||1))*88)+'%'; }
-
+    let step=0, lock=false, chosen=[];
+    function setProgress(total){ stepEl.textContent=(step+1); cursor.style.left=(6+(step/((total-1)||1))*88)+'%'; }
     function render(){
-      const item=QA[step]; answered=false;
-      qEl.textContent=item.q; aEl.innerHTML=''; setProgress();
-      const variants = shuffle(item.a);
-      variants.forEach(opt=>{
-        const b=document.createElement('button');
-        b.type='button'; b.className='bh2025-ans'; b.textContent=opt.t;
-        b.addEventListener('click', ()=>{
-          if(answered) return; answered = true;
+      const data=Q(), item=data[step];
+      qEl.textContent=item.q; aEl.innerHTML=''; setProgress(data.length);
+      item.a.forEach(opt=>{
+        const b=document.createElement('button'); b.type='button'; b.className='bh2025-ans'; b.textContent=opt.t;
+        b.addEventListener('click', ()=>{ if(lock) return; lock=true;
           const ok=!!opt.ok; chosen[step]=ok;
-
-          // zablokuj wszystkie, podświetl poprawną
-          [...aEl.querySelectorAll('.bh2025-ans')].forEach(btn=>{
-            btn.disabled = true;
-            const v = variants.find(v=>v.t===btn.textContent);
-            if(v && v.ok) btn.classList.add('correct');
-          });
-          b.classList.toggle('wrong', !ok);
-
-          const n=document.createElement('div');
-          n.className='bh2025-muted'; n.style.marginTop='6px'; n.style.color='#eaf2ff';
-          n.textContent = ok ? (item.hintOk||'✔') : (item.hintBad||'✖');
-          b.after(n);
+          b.classList.add(ok?'correct':'wrong');
+          const n=document.createElement('div'); n.className='bh2025-muted'; n.style.marginTop='6px'; n.style.color='#eaf2ff'; n.textContent= ok?item.hintOk:item.hintBad; b.after(n);
           try{ navigator.vibrate && navigator.vibrate(ok?80:160);}catch(_){}
-        }, {once:false});
+          setTimeout(()=>lock=false,280);
+        });
         aEl.appendChild(b);
       });
-      nextBtn.textContent = (step===QA.length-1?'Zakończ':'Dalej');
+      nextBtn.textContent = (L()==='en') ? (step===Q().length-1?'Finish':'Next') : (step===Q().length-1?'Zakończ':'Dalej');
     }
-
     function open(){
-      showModal(); document.body.style.overflow='hidden';
-      step=0; chosen=new Array(QA.length).fill(null); render();
+      const data=Q(); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+      step=0; chosen=new Array(data.length).fill(null); render();
     }
-    function close(){
-      hideModal(); document.body.style.overflow='';
-    }
+    function close(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
 
-    // konfetti
-    function confetti(score){
+    function confetti(score, total){
       const c=document.createElement('canvas'); c.width=innerWidth; c.height=innerHeight;
       Object.assign(c.style,{position:'fixed',inset:'0',pointerEvents:'none',zIndex:10001});
       document.body.appendChild(c);
       const ctx=c.getContext('2d');
-      let parts=Array.from({length: score===QA.length? 160:110},()=>({
-        x:Math.random()*c.width, y:-20, vx:-1+Math.random()*2, vy:2+Math.random()*2.5,
+      let parts=Array.from({length: score===total? 140:90},()=>({
+        x:Math.random()*c.width, y:-20,
+        vx:-1+Math.random()*2, vy:2+Math.random()*2.5,
         size:3+Math.random()*4, rot:Math.random()*6, vr:-.2+Math.random()*.4,
-        color: score===QA.length ? ['#5eead4','#a46bff','#ffd16c'][Math.floor(Math.random()*3)] : 'rgba(255,255,255,.9)',
-        life: 120
+        color: score===total ? ['#5eead4','#a46bff','#ffd16c'][Math.floor(Math.random()*3)] : 'rgba(255,255,255,.9)',
+        life: 100
       }));
       (function tick(){
         ctx.clearRect(0,0,c.width,c.height);
@@ -317,62 +452,186 @@
         if(parts.length) requestAnimationFrame(tick); else c.remove();
       })();
     }
-
-    function badge(score){
-      const good = score>=5;
-      const box=document.createElement('div'); box.className='bh2025-quiz-badge';
-      box.innerHTML = `<span class="emj">${good?'🏅':'🎉'}</span><span>${good?'Ekspert pierwszej pomocy!':'Dobry wynik!'} — ${score}/${QA.length}</span>`;
-      document.body.appendChild(box);
-      setTimeout(()=>box.remove(), 3200);
+    function award(score,total){
+      const msg = (L()==='en'?`Great! Score: ${score}/${total}`:`Brawo! Wynik: ${score}/${total}`);
+      const t=document.createElement('div');
+      Object.assign(t.style,{position:'fixed',left:'50%',bottom:'26px',transform:'translateX(-50%)',
+        background:'rgba(60,32,100,.88)',color:'#ffffff',padding:'10px 14px',border:'1px solid rgba(164,107,255,.45)',
+        borderRadius:'12px',boxShadow:'0 10px 26px rgba(8,10,22,.55)',fontWeight:'800',zIndex:10002});
+      t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2400);
+      confetti(score,total);
     }
 
-    function finish(){
-      const score=chosen.reduce((s,v)=>s+(v?1:0),0);
-      confetti(score); badge(score); close();
+    // Przechwyt kliknięcia w capture
+    if(openBtn && !openBtn.dataset.bhBound){
+      openBtn.dataset.bhBound='1';
+      openBtn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); open(); }, true);
     }
-
-    // otwieranie/zamykanie — bez przechwytywania linków
-    if(openBtn && !openBtn.dataset.bound){
-      openBtn.dataset.bound='1';
-      openBtn.addEventListener('click', (e)=>{ e.preventDefault(); open(); });
-    }
-    closeBtn?.addEventListener('click', close);
+    closeBtn.addEventListener('click', close);
     modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
-    restart?.addEventListener('click', ()=>{ step=0; chosen=new Array(QA.length).fill(null); render(); });
-
-    nextBtn?.addEventListener('click', ()=>{
-      if(chosen[step]===null){
-        try{navigator.vibrate&&navigator.vibrate([40,40,40]);}catch(_){}
-        if(!aEl.querySelector('.need-choose')){
-          const n=document.createElement('div'); n.className='bh2025-muted need-choose';
-          n.style.marginTop='6px'; n.style.color='#ffd16c';
-          n.textContent='Wybierz odpowiedź, aby przejść dalej…'; aEl.appendChild(n);
-        }
-        return;
-      }
-      if(step < QA.length-1){ step++; render(); }
-      else { finish(); }
+    restart.addEventListener('click', ()=>{ step=0; chosen=new Array(Q().length).fill(null); render(); });
+    nextBtn.addEventListener('click', ()=>{
+      const data=Q(); if(step<data.length-1){ step++; render(); }
+      else{ const score=chosen.reduce((s,v)=>s+(v?1:0),0); award(score,data.length); close(); }
     });
-
-    document.addEventListener('keydown', (e)=>{
-      if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') close();
-      if(modal.getAttribute('aria-hidden')==='false'){
-        const options=[...aEl.querySelectorAll('.bh2025-ans')];
-        if(e.key==='ArrowDown'||e.key==='ArrowUp'){
-          e.preventDefault();
-          const focusable=options.filter(b=>!b.disabled);
-          if(!focusable.length) return;
-          const idx=focusable.indexOf(document.activeElement);
-          const next=(e.key==='ArrowDown') ? (idx+1)%focusable.length : (idx-1+focusable.length)%focusable.length;
-          focusable[next].focus();
-        }
-        if(e.key==='Enter' && document.activeElement && document.activeElement.classList.contains('bh2025-ans')){
-          e.preventDefault(); document.activeElement.click();
-        }
-      }
-    });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') close(); });
   })();
   </script>
 
+  <!-- PORADY (klik pigułek przechwycony w capture) -->
+  <script>
+  (function(){
+    const poradaModal  = document.getElementById('bh2025Porada');
+    const poradaClose  = document.getElementById('bh2025PoradaClose');
+    const poradaTitle  = document.getElementById('bh2025PoradaTitle');
+    const svgWrap      = document.getElementById('bh2025PoradaSvg');
+    const stepsOl      = document.getElementById('bh2025PoradaSteps');
+    const videoWrap    = document.getElementById('bh2025VideoWrap');
+    const videoPh      = document.getElementById('bh2025VideoPh');
+    if(!poradaModal || poradaModal.dataset.bhBound) return; poradaModal.dataset.bhBound='1';
+
+    const IMG = { zadlawienie: 'img/zadlawienie.png', reanimacja: 'img/reanimacja.png', wypadek: 'img/wypadek.png', pierwszopomoc: null };
+    const STEPS = {
+      pl:{
+        zadlawienie:["Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.","Brak skutecznego kaszlu: 5 uderzeń w plecy między łopatki.","Jeśli nieskuteczne: 5 uciśnięć nadbrzusza.","Na zmianę: 5 plecy ↔ 5 nadbrzusze, aż do skutku.","Utrata przytomności: RKO 30:2, 112, AED."],
+        reanimacja:["Sprawdź bezpieczeństwo, reakcję i oddech (max 10 s).","Brak oddechu: zadzwoń 112.","Uciski: 100–120/min, głęb. 5–6 cm, środek mostka.","Po 30 uciśnięciach 2 oddechy (jeśli umiesz i chcesz).","Kontynuuj do przyjazdu służb lub powrotu oddechu."],
+        wypadek:["Zabezpiecz miejsce.","Oceń liczbę poszkodowanych i zagrożenia.","Wezwij 112.","Priorytet: oddech, krwotoki (ucisk).","Nie przestawiaj bez potrzeby."],
+        pierwszopomoc:["ABC: drożność, oddech, krążenie.","Pozycja bezpieczna przy oddechu.","Ucisk krwotoków.","Oparzenia: chłodzenie 20 min.","Wezwij pomoc, gdy masz wątpliwości."]
+      },
+      en:{
+        zadlawienie:["Encourage coughing — if effective, observe.","If not effective: 5 back blows.","Then 5 abdominal thrusts.","Alternate 5↔5 until success.","If unconscious: CPR 30:2, call 112/911, AED."],
+        reanimacja:["Check safety, response, breathing (≤10 s).","No breathing: call 112/911.","Compressions 100–120/min, depth 5–6 cm, center chest.","30 compressions + 2 breaths (if trained).","Continue until help arrives/returns breathing."],
+        wypadek:["Make scene safe.","Assess casualties/hazards.","Call 112/911.","Priority: breathing, bleeding (direct pressure).","Do not move unnecessarily."],
+        pierwszopomoc:["ABC: airway, breathing, circulation.","Recovery position if breathing.","Control bleeding.","Burns: cool 20 min.","When in doubt — call for help."]
+      }
+    };
+    const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
+
+    function openPorada(key, title){
+      poradaTitle.textContent = title || (L()==='en'?'Advice':'Porada');
+      svgWrap.innerHTML=''; const src=IMG[key];
+      if(src){ const img=new Image(); img.src=src; img.alt=title||key; svgWrap.appendChild(img); }
+      stepsOl.innerHTML=''; (STEPS[L()]?.[key]||[]).forEach(txt=>{ const li=document.createElement('li'); li.textContent=txt; stepsOl.appendChild(li); });
+      videoWrap.innerHTML=''; videoWrap.appendChild(videoPh.cloneNode(true));
+      poradaModal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+    }
+    function closePorada(){ poradaModal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+
+    // Przechwyt klików na pigułkach w capture (najwcześniej)
+    const nav = document.querySelector('nav.situations');
+    if(nav && !nav.dataset.bhPoradaBound){
+      nav.dataset.bhPoradaBound='1';
+      nav.addEventListener('click', function(e){
+        const a = e.target.closest('a.pill.pill--green[data-porada]');
+        if(!a) return;
+        e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+        const key   = a.getAttribute('data-porada');
+        const title = a.textContent.trim();
+        openPorada(key, title);
+      }, true); // capture
+    }
+
+    poradaClose.addEventListener('click', closePorada);
+    poradaModal.addEventListener('click', (e)=>{ if(e.target===poradaModal) closePorada(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && poradaModal.getAttribute('aria-hidden')==='false') closePorada(); });
+  })();
+  </script>
+
+  <!-- WYSZUKIWARKA (samowystarczalna, bez konfliktu z innymi skryptami) -->
+  <script>
+  (function(){
+    const input = document.getElementById('bhSearch');
+    const icon  = document.getElementById('bhSearchIcon');
+    if(!input || input.dataset.bhSearchBound) return; input.dataset.bhSearchBound='1';
+
+    const PARTS = [
+      {id:'oko',       label:'Oko',        alias:['oko','oczy','wzrok']},
+      {id:'nos',       label:'Nos',        alias:['nos','zatoki','katar']},
+      {id:'gardlo',    label:'Gardło',     alias:['gardlo','gardło','angina','chrypka']},
+      {id:'glowa',     label:'Głowa',      alias:['glowa','głowa','migrena','ból głowy']},
+      {id:'klatka',    label:'Klatka piersiowa', alias:['klatka','pierś','serce ból','mostek']},
+      {id:'pluca',     label:'Płuca',      alias:['płuca','pluca','duszność','astma']},
+      {id:'brzuch',    label:'Brzuch',     alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
+      {id:'nerki',     label:'Nerki',      alias:['nerki','kolka','lędźwie','ledzwi']},
+      {id:'plecy',     label:'Plecy',      alias:['plecy','kręgosłup','kregoslup','rwa']},
+      {id:'biodra',    label:'Biodra/Uda', alias:['biodro','biodra','udo','pachwina']},
+      {id:'kolano',    label:'Kolano',     alias:['kolano','rzepka','łąkotka','lakotka']},
+      {id:'stopy',     label:'Stopy',      alias:['stopa','stopy','pięta','pieta','rozcięgno']},
+      {id:'skora',     label:'Skóra',      alias:['skora','skóra','wysypka','świąd','alergia']},
+      {id:'serce',     label:'Serce',      alias:['serce','kołatania','kolatania','arytmia']},
+      {id:'kaszel',    label:'Kaszel',     alias:['kaszel','kaszle']},
+      {id:'goraczka',  label:'Gorączka',   alias:['gorączka','goraczka','temperatura']},
+      {id:'zadlawienie', label:'Zadławienie (SOS)', alias:['zadławienie','zadlawienie','zadławił','zadlawil'] , sos:true},
+      {id:'reanimacja',  label:'Reanimacja (RKO)',  alias:['reanimacja','rko','resuscytacja'] , sos:true},
+      {id:'wypadek',     label:'Wypadek (SOS)',     alias:['wypadek','kolizja','potrącenie','potracenie'] , sos:true},
+      {id:'pierwszopomoc',label:'Pierwsza pomoc',   alias:['pierwsza pomoc','pierwszopomoc','abc'] , sos:true}
+    ];
+    const GENDERS = [
+      {id:'kobieta',label:'Kobieta'},{id:'mezczyzna',label:'Mężczyzna'},{id:'dziecko',label:'Dziecko'}
+    ];
+
+    // Panel
+    const panel = document.createElement('div');
+    panel.className = 'bh2025-suggest'; panel.setAttribute('role','listbox'); panel.setAttribute('aria-hidden','true');
+    panel.innerHTML = `<div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>`;
+    input.parentElement.appendChild(panel);
+    const list = panel.querySelector('#bh2025List');
+    let results = [], active = -1;
+
+    function buildUrls(hit){
+      if(hit.sos){
+        const url = `szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
+        return [{label: hit.label, url, sub:'SOS'}];
+      }
+      return GENDERS.map(g=>{
+        const url = `szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
+        return {label:`${hit.label} • ${g.label}`, url, sub:g.label};
+      });
+    }
+    function search(q){
+      const s=q.trim().toLowerCase(); if(!s) return [];
+      const hits = PARTS.filter(p =>
+        p.alias?.some(a => a.includes(s)) || p.id.includes(s) || p.label.toLowerCase().includes(s)
+      ).slice(0,6);
+      return hits.flatMap(buildUrls).slice(0,12);
+    }
+    function render(){
+      list.innerHTML = ''; active = -1;
+      results.forEach((r,idx)=>{
+        const li = document.createElement('li');
+        li.setAttribute('role','option'); li.className='bh2025-sg-item'; li.dataset.index = String(idx);
+        li.innerHTML = `<span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>`;
+        li.addEventListener('mouseenter', ()=>setActive(idx));
+        li.addEventListener('mouseleave', ()=>setActive(-1));
+        li.addEventListener('click', ()=>go(idx));
+        list.appendChild(li);
+      });
+      panel.setAttribute('aria-hidden', results.length ? 'false':'true');
+    }
+    function setActive(i){
+      active = i;
+      list.querySelectorAll('.bh2025-sg-item').forEach((el,idx)=>{
+        el.setAttribute('aria-selected', (idx===active)?'true':'false');
+      });
+    }
+    function go(idx){
+      const item = results[idx]; if(!item) return;
+      window.location.href = item.url;
+    }
+
+    input.addEventListener('input', ()=>{ results = search(input.value); render(); });
+    input.addEventListener('keydown', (e)=>{
+      const shown = panel.getAttribute('aria-hidden')==='false';
+      if(e.key==='ArrowDown'){ if(!shown){ results = search(input.value); render(); } setActive( (active+1+results.length)%results.length ); e.preventDefault(); }
+      else if(e.key==='ArrowUp'){ if(!shown){ results = search(input.value); render(); } setActive( (active-1+results.length)%results.length ); e.preventDefault(); }
+      else if(e.key==='Enter'){
+        if(shown && active>=0){ e.preventDefault(); go(active); }
+        else { if(!results.length){ results = search(input.value); } if(results[0]) go(0); }
+      } else if(e.key==='Escape'){ panel.setAttribute('aria-hidden','true'); active=-1; }
+    });
+    document.addEventListener('click', (e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); active=-1; } });
+    if(icon){ icon.addEventListener('click', ()=>{ results = search(input.value); if(results.length){ panel.setAttribute('aria-hidden','false'); render(); } }); }
+  })();
+  </script>
 </body>
 </html>
