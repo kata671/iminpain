@@ -203,7 +203,8 @@
         <div class="subhead">Kiedy się niepokoić (czerwone flagi)</div>
         <div class="risk-mini" aria-label="Szacowany poziom ryzyka">
           <small>Ryzyko: <span id="risk-label">niskie</span></small>
-          <span class="riskbar" id="riskbar"><span class="cursor" id="risk-cursor-card" style="left:15%"></span></span>
+          <!-- ZMIANA 1: start kursora od 0% + przesunięcie, by nie był ucięty -->
+          <span class="riskbar" id="riskbar"><span class="cursor" id="risk-cursor-card" style="left:0%; transform:translate(0,-50%)"></span></span>
         </div>
         <ul class="clean" id="urgent"></ul>
         <div class="more-wrap" id="mw-urgent" hidden>
@@ -361,7 +362,7 @@
         myths:[...BASE.mythsCommon,{m:"Okłady z herbaty",f:"Używaj wyłącznie jałowej soli."}],
         faq:[...BASE.faqCommon,{q:"Soczewki przy zapaleniu?",a:"Przerwa do ustąpienia + konsultacja."}]
       },
-      /* ...pozostałe sekcje identycznie jak w Twojej wersji z v1.4... */
+      /* ... (pozostałe sekcje bez zmian) ... */
       gardlo:{label:"Gardło",risk:25,symptoms:["Ból, trudność w przełykaniu","Chrypka, suchość","Węzły szyjne",{t:"Dziecko: niechęć do jedzenia",audience:"child"}],causes:["Wirusy","Angina paciorkowcowa","Podrażnienie/refluks"],firstaid:["Nawadnianie, ciepłe napoje, miód (≥1 r.ż.)","Płukanie solą/sodą","Oszczędzanie głosu"],otc:[...BASE.otcPain,"Pastylki"],rx:["Antybiotyk przy potwierdzeniu"],rehab:[...BASE.rehabCommon],urgent:["Trudność oddychania/połykania","Wysoka gorączka + silny ból",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon,{m:"Zawsze antybiotyk",f:"Najczęściej wirusy."}],faq:[...BASE.faqCommon]},
       glowa:{label:"Głowa (ból)",risk:30,symptoms:["Ucisk obustronny","Pulsujący jednostronny","Nadwrażliwość na światło/dźwięk","Sztywność karku"],causes:["Napięcie/stres","Migrena","Nadużycie leków","Sen/ekrany"],firstaid:["Nawodnienie, odpoczynek","Masaż skroni","Chłodny/ciepły okład","Krótki spacer"],otc:[...BASE.otcPain],rx:["Tryptany","Profilaktyka migreny"],rehab:[...BASE.rehabCommon,"Dzienniczek bólu","Ćwiczenia karku"],urgent:["Nagły najgorszy ból","Gorączka + sztywność karku","Uraz głowy + zaburzenia",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon,{m:"Kawa zawsze szkodzi",f:"U części pomaga; obserwuj."}],faq:[...BASE.faqCommon]},
       klatka:{label:"Klatka piersiowa",risk:60,symptoms:["Ucisk/ciężar","Ból przy oddychaniu/ucisku","Zgaga/pieczenie","Duszność, zimny pot"],causes:["Mięśniowe","Refluks","Wieńcowa/OZW","Opłucna/osierdzie"],firstaid:["Odpoczynek","Przy ucisku i duszności — 112/SOR","Półsiedząco"],otc:[{t:"P/bólowe wg ulotki",audience:"adult"},"Na refluks"],rx:[{t:"Nitrogliceryna wg zaleceń",audience:"adult"},"Leczenie kardiologiczne"],rehab:[...BASE.rehabCommon,"Redukcja ryzyka: ruch/dieta/sen","Stopniowy powrót do aktywności"],urgent:["Ucisk do lewej ręki/szczęki + pot","Duszność spoczynkowa","Omdlenie/kołatanie",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon,{m:"Każdy ból to zawał",f:"Przyczyn wiele; alarmowe oceniać pilnie."}],faq:[...BASE.faqCommon]},
@@ -409,8 +410,9 @@
 
     let selectedWeights=0;
     function updateRisk(){
-      const base=Math.max(0,Math.min(100,entry.risk||25));
-      const val =Math.max(0,Math.min(100,base+selectedWeights));
+      // ZMIANA 2: start od 0% (zielony początek); rośnie dopiero od zaznaczeń
+      const base = 0;
+      const val = Math.max(0, Math.min(100, base + selectedWeights));
       const c=document.getElementById('risk-cursor-card');
       const bar=document.getElementById('riskbar');
       const lbl=document.getElementById('risk-label');
@@ -505,7 +507,7 @@
     fillPairs('myths', entry.myths);
     fillFAQ('faq',     entry.faq);
 
-    /* Start: OBJAWY + ryzyko bazowe */
+    /* Start: OBJAWY + ryzyko bazowe (teraz 0%) */
     selectedWeights=0; updateRisk(); showPanel('#s-objawy');
 
     /* CZĄSTECZKI (subtelne) */
