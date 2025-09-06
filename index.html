@@ -55,12 +55,19 @@
 
     /* Zielone pigułki SOS */
     :root{ --bhG:34,227,160; --bhG2:20,160,120; }
+    .situations .pill{
+      display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:14px; text-decoration:none; font-weight:900;
+      border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#fff; transition:.2s ease;
+    }
+    .situations .pill .ico{
+      display:inline-grid; place-items:center; width:22px; height:22px; border-radius:6px;
+      background: rgba(164,107,255,.18); box-shadow: inset 0 0 0 1px rgba(164,107,255,.25);
+    }
     .situations .pill.pill--green{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(var(--bhG2), .15);
       color:#ffffff; border:1px solid rgba(var(--bhG), .55);
       box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhG), .25) inset, 0 0 18px rgba(var(--bhG), .18);
       backdrop-filter:saturate(125%) blur(4px);
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
     }
     .situations .pill.pill--green:hover,
     .situations .pill.pill--green:focus-visible{
@@ -68,9 +75,18 @@
       box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(var(--bhG), .65), 0 0 26px rgba(var(--bhG), .45);
       outline:none;
     }
-    .situations .pill .ico{
-      display:inline-grid; place-items:center; width:22px; height:22px; margin-right:6px; border-radius:6px;
-      background: rgba(164,107,255,.18); box-shadow: inset 0 0 0 1px rgba(164,107,255,.25);
+    /* Niebieska pigułka – Gry / Trening */
+    .situations .pill.pill--blue{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(96,165,250,.18);
+      border:1px solid rgba(59,130,246,.6);
+      box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(59,130,246,.35) inset, 0 0 18px rgba(96,165,250,.30);
+      color:#eaf2ff;
+    }
+    .situations .pill.pill--blue:hover,
+    .situations .pill.pill--blue:focus-visible{
+      transform:translateY(-1px); border-color:rgba(59,130,246,.9);
+      box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(96,165,250,.65), 0 0 26px rgba(96,165,250,.5);
+      outline:none;
     }
 
     /* apteka24 – świecący badge */
@@ -94,7 +110,7 @@
       border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.04);
     }
 
-    /* Modale ukryte */
+    /* Modale ukryte (twardo) */
     .bh2025-modal[aria-hidden="true"],
     .bh2025-porada[aria-hidden="true"]{ display:none }
 
@@ -104,10 +120,10 @@
     .langpick select{
       appearance:none;background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.24);
-      color:#ffffff; /* wartość widoczna jako PL/EN */
+      color:#ffffff; /* PL/EN widoczne */
       border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px
     }
-    .langpick option{ color:#0e1230; background:#ffffff } /* kolory listy rozwijanej */
+    .langpick option{ color:#0e1230; background:#ffffff } /* lista rozwijana */
   </style>
 </head>
 
@@ -130,7 +146,7 @@
                   stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
-        <!-- Lokalny, bezpieczny tłumacz -->
+        <!-- Tłumacz lokalny -->
         <div class="langpick" aria-label="Wybierz język">
           <label for="bhLang" data-i18n="lang_label">Wybierz język</label>
           <select id="bhLang" aria-label="Język">
@@ -395,7 +411,8 @@
       t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2600);
     }
 
-    openBtn.addEventListener('click', open, true);      // capture, przed innymi
+    // capture = true, żeby uprzedzić inne listenery
+    openBtn.addEventListener('click', open, true);
     closeBtn.addEventListener('click', close);
     modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
     restart.addEventListener('click', ()=>{ step=0; chosen=new Array(Q().length).fill(null); render(); });
@@ -407,7 +424,7 @@
   })();
   </script>
 
-  <!-- PORADY (zielone pigułki) — twarde blokowanie nawigacji -->
+  <!-- PORADY (zielone pigułki) — twarde blokowanie nawigacji i wstrzyknięć -->
   <script>
   (function(){
     const poradaModal  = document.getElementById('bh2025Porada');
@@ -441,11 +458,13 @@
     const nav = document.querySelector('nav.situations');
     if(nav && !nav.dataset.bhBound){
       nav.dataset.bhBound='1';
-      // CAPTURE + twarde blokowanie innych handlerów
+      // CAPTURE + twarde blokowanie wszystkich dalszych handlerów
       nav.addEventListener('click', (e)=>{
         const a = e.target.closest('a[data-porada]');
         if(!a) return;
-        e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+        e.preventDefault();
+        e.stopPropagation();
+        if(e.stopImmediatePropagation) e.stopImmediatePropagation();
         const key = a.getAttribute('data-porada');
         const title = a.querySelector('[data-i18n]')?.textContent?.trim() || a.textContent.trim();
         openPorada(key, title);
