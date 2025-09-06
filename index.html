@@ -53,7 +53,7 @@
     .card .caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;
       border-top:1px solid rgba(164,107,255,.22);background:rgba(255,255,255,.04)}
 
-    /* Zielone pigułki SOS */
+    /* Pigułki */
     :root{ --bhG:34,227,160; --bhG2:20,160,120; }
     .situations .pill{
       display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:14px; text-decoration:none; font-weight:900;
@@ -114,16 +114,15 @@
     .bh2025-modal[aria-hidden="true"],
     .bh2025-porada[aria-hidden="true"]{ display:none }
 
-    /* Selektor języka – poprawiona czytelność */
+    /* Selektor języka – czytelność */
     .langpick{display:flex;gap:8px;align-items:center;margin-left:12px}
     .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
     .langpick select{
       appearance:none;background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.24);
-      color:#ffffff; /* PL/EN widoczne */
-      border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px
+      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px
     }
-    .langpick option{ color:#0e1230; background:#ffffff } /* lista rozwijana */
+    .langpick option{ color:#0e1230; background:#ffffff }
   </style>
 </head>
 
@@ -162,16 +161,30 @@
     </div>
 
     <nav class="situations" aria-label="Sytuacje nagłe">
-      <a class="pill pill--green" data-porada="zadlawienie" href="#"><span class="ico">🫁</span><span data-i18n="pill_choke">Zadławienie</span></a>
-      <a class="pill pill--green" data-porada="reanimacja" href="#"><span class="ico">🚑</span><span data-i18n="pill_cpr">Reanimacja</span></a>
-      <a class="pill pill--green" data-porada="wypadek" href="#"><span class="ico">💥</span><span data-i18n="pill_accident">Wypadek</span></a>
-      <a class="pill pill--green" data-porada="pierwszopomoc" href="#"><span class="ico">❤️‍🩹</span><span data-i18n="pill_firstaid">Pierwsza pomoc</span></a>
+      <a class="pill pill--green" data-porada="zadlawienie" href="#"
+         onclick="event.stopImmediatePropagation(); return window.__openPorada && window.__openPorada(this);">
+        <span class="ico">🫁</span><span data-i18n="pill_choke">Zadławienie</span>
+      </a>
+      <a class="pill pill--green" data-porada="reanimacja" href="#"
+         onclick="event.stopImmediatePropagation(); return window.__openPorada && window.__openPorada(this);">
+        <span class="ico">🚑</span><span data-i18n="pill_cpr">Reanimacja</span>
+      </a>
+      <a class="pill pill--green" data-porada="wypadek" href="#"
+         onclick="event.stopImmediatePropagation(); return window.__openPorada && window.__openPorada(this);">
+        <span class="ico">💥</span><span data-i18n="pill_accident">Wypadek</span>
+      </a>
+      <a class="pill pill--green" data-porada="pierwszopomoc" href="#"
+         onclick="event.stopImmediatePropagation(); return window.__openPorada && window.__openPorada(this);">
+        <span class="ico">❤️‍🩹</span><span data-i18n="pill_firstaid">Pierwsza pomoc</span>
+      </a>
       <a class="pill pill--blue" href="gry.html"><span class="ico">🎮</span><span data-i18n="pill_games">Gry / Trening</span></a>
     </nav>
 
-    <!-- Launcher mini-quizu -->
+    <!-- Launcher mini-quizu (twarde onclick) -->
     <div class="bh2025-quiz-launch" aria-hidden="false">
-      <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button" aria-haspopup="dialog" aria-controls="bh2025QuizModal" data-i18n="quiz_open">
+      <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button"
+              onclick="event.stopImmediatePropagation(); window.__openQuiz && window.__openQuiz();"
+              aria-haspopup="dialog" aria-controls="bh2025QuizModal" data-i18n="quiz_open">
         Sprawdź się: Pierwsza pomoc
       </button>
     </div>
@@ -264,7 +277,7 @@
   <!-- Skrypt bazowy strony -->
   <script src="assets/main.js?v=10"></script>
 
-  <!-- I18N (lokalny, bezpieczny) -->
+  <!-- I18N (lokalny) -->
   <script>
   (function(){
     const I18N = {
@@ -350,7 +363,6 @@
       });
     }
 
-    // Inicjalizacja i przełącznik
     const sel = document.getElementById('bhLang');
     if(sel && !sel.dataset.bhBound){
       sel.dataset.bhBound = '1';
@@ -360,10 +372,9 @@
   })();
   </script>
 
-  <!-- QUIZ (izolowany od innych skryptów) -->
+  <!-- QUIZ (wystawione API: window.__openQuiz) -->
   <script>
   (function(){
-    const openBtn = document.getElementById('bh2025QuizOpen');
     const modal   = document.getElementById('bh2025QuizModal');
     const closeBtn= document.getElementById('bh2025QuizClose');
     const restart = document.getElementById('bh2025QuizRestart');
@@ -372,11 +383,10 @@
     const aEl     = document.getElementById('bh2025QuizAnswers');
     const stepEl  = document.getElementById('bh2025QuizStep');
     const cursor  = document.getElementById('bh2025QuizCursor');
-    if(!openBtn || !modal || openBtn.dataset.bhBound) return;
-    openBtn.dataset.bhBound='1';
+    if(!modal || modal.dataset.bhBound) return; modal.dataset.bhBound='1';
 
-    function L(){ return document.documentElement.getAttribute('data-lang') || 'pl'; }
-    function Q(){ return (window.__QUIZ_I18N && window.__QUIZ_I18N[L()]) || window.__QUIZ_I18N.pl; }
+    const L = ()=> document.documentElement.getAttribute('data-lang') || 'pl';
+    const Q = ()=> (window.__QUIZ_I18N && window.__QUIZ_I18N[L()]) || window.__QUIZ_I18N.pl;
 
     let step=0, lock=false, chosen=[];
     function setProgress(total){ stepEl.textContent=(step+1); cursor.style.left=(6+(step/((total-1)||1))*88)+'%'; }
@@ -390,7 +400,7 @@
           b.classList.add(ok?'correct':'wrong');
           const n=document.createElement('div'); n.className='bh2025-muted'; n.style.marginTop='6px'; n.textContent= ok?item.hintOk:item.hintBad; b.after(n);
           try{ navigator.vibrate && navigator.vibrate(ok?80:160);}catch(_){}
-          setTimeout(()=>lock=false,300);
+          setTimeout(()=>lock=false,280);
         });
         aEl.appendChild(b);
       });
@@ -408,11 +418,12 @@
       Object.assign(t.style,{position:'fixed',left:'50%',bottom:'26px',transform:'translateX(-50%)',
         background:'rgba(60,32,100,.85)',color:'#eef2ff',padding:'10px 14px',border:'1px solid rgba(164,107,255,.35)',
         borderRadius:'12px',boxShadow:'0 10px 26px rgba(8,10,22,.45)',fontWeight:'800',zIndex:10000});
-      t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2600);
+      t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2400);
     }
 
-    // capture = true, żeby uprzedzić inne listenery
-    openBtn.addEventListener('click', open, true);
+    // Publiczne API do inline onclick
+    window.__openQuiz = function(){ open(); return false; };
+
     closeBtn.addEventListener('click', close);
     modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
     restart.addEventListener('click', ()=>{ step=0; chosen=new Array(Q().length).fill(null); render(); });
@@ -424,7 +435,7 @@
   })();
   </script>
 
-  <!-- PORADY (zielone pigułki) — twarde blokowanie nawigacji i wstrzyknięć -->
+  <!-- PORADY (wystawione API: window.__openPorada) -->
   <script>
   (function(){
     const poradaModal  = document.getElementById('bh2025Porada');
@@ -435,15 +446,15 @@
     const videoWrap    = document.getElementById('bh2025VideoWrap');
     const videoPh      = document.getElementById('bh2025VideoPh');
 
-    if(!poradaModal || poradaModal.dataset.bhBound) return;
-    poradaModal.dataset.bhBound='1';
+    if(!poradaModal || poradaModal.dataset.bhBound) return; poradaModal.dataset.bhBound='1';
 
     const IMG = { zadlawienie: 'img/zadlawienie.png', reanimacja: 'img/reanimacja.png', wypadek: 'img/wypadek.png', pierwszopomoc: null };
     const L=()=>document.documentElement.getAttribute('data-lang')||'pl';
 
     function openPorada(key, title){
       poradaTitle.textContent = title || (L()==='en'?'Advice':'Porada');
-      svgWrap.innerHTML=''; const src=IMG[key]; if(src){ const img=new Image(); img.src=src; img.alt=title||key; svgWrap.appendChild(img); }
+      svgWrap.innerHTML=''; const src=IMG[key];
+      if(src){ const img=new Image(); img.src=src; img.alt=title||key; svgWrap.appendChild(img); }
       stepsOl.innerHTML=''; const steps=(window.__STEPS_I18N?.[L()]?.[key])||[];
       steps.forEach(txt=>{ const li=document.createElement('li'); li.textContent=txt; stepsOl.appendChild(li); });
       videoWrap.innerHTML=''; videoWrap.appendChild(videoPh.cloneNode(true));
@@ -451,25 +462,17 @@
     }
     function closePorada(){ poradaModal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
 
+    // Publiczne API do inline onclick w linkach
+    window.__openPorada = function(anchor){
+      const key = anchor.getAttribute('data-porada');
+      const title = anchor.querySelector('[data-i18n]')?.textContent?.trim() || anchor.textContent.trim();
+      openPorada(key, title);
+      return false; // zablokuj nawigację
+    };
+
     poradaClose.addEventListener('click', closePorada);
     poradaModal.addEventListener('click', (e)=>{ if(e.target===poradaModal) closePorada(); });
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && poradaModal.getAttribute('aria-hidden')==='false') closePorada(); });
-
-    const nav = document.querySelector('nav.situations');
-    if(nav && !nav.dataset.bhBound){
-      nav.dataset.bhBound='1';
-      // CAPTURE + twarde blokowanie wszystkich dalszych handlerów
-      nav.addEventListener('click', (e)=>{
-        const a = e.target.closest('a[data-porada]');
-        if(!a) return;
-        e.preventDefault();
-        e.stopPropagation();
-        if(e.stopImmediatePropagation) e.stopImmediatePropagation();
-        const key = a.getAttribute('data-porada');
-        const title = a.querySelector('[data-i18n]')?.textContent?.trim() || a.textContent.trim();
-        openPorada(key, title);
-      }, true);
-    }
   })();
   </script>
 </body>
