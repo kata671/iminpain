@@ -35,10 +35,8 @@
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
       background-size:160px 138px; background-position:center;
     }
-    .bh-floor-fade{
-      position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
-      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));
-    }
+    .bh-floor-fade{ position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
+      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6)); }
     .container{position:relative;z-index:3;background:transparent !important;max-width:1100px;margin:0 auto;padding:0 16px}
 
     /* Siatka kart */
@@ -47,16 +45,19 @@
     @media (max-width:640px){ section.stack[style]{grid-template-columns:1fr !important;} }
     section.stack[style] > *{grid-column:auto !important;min-width:0 !important}
 
-    .card{border-radius:18px;overflow:hidden;background:rgba(60,32,100,.32);border:1px solid rgba(164,107,255,.22);box-shadow:0 10px 22px rgba(255,110,199,.12), 0 0 0 1px rgba(164,107,255,.14) inset;min-height:240px}
+    .card{border-radius:18px;overflow:hidden;background:rgba(60,32,100,.32);border:1px solid rgba(164,107,255,.22);
+      box-shadow:0 10px 22px rgba(255,110,199,.12), 0 0 0 1px rgba(164,107,255,.14) inset;min-height:240px}
     .card a{display:grid;grid-template-rows:minmax(180px,240px) auto;height:100%;text-decoration:none;color:inherit}
-    .card img{width:100%;height:100%;object-fit:contain;object-position:center;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))}
-    .card .caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;border-top:1px solid rgba(164,107,255,.22);background:rgba(255,255,255,.04)}
+    .card img{width:100%;height:100%;object-fit:contain;object-position:center;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))}
+    .card .caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;
+      border-top:1px solid rgba(164,107,255,.22);background:rgba(255,255,255,.04)}
 
     /* Zielone pigułki SOS */
     :root{ --bhG:34,227,160; --bhG2:20,160,120; }
     .situations .pill.pill--green{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(var(--bhG2), .15);
-      color:#eafff7; border:1px solid rgba(var(--bhG), .55);
+      color:#ffffff; border:1px solid rgba(var(--bhG), .55);
       box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhG), .25) inset, 0 0 18px rgba(var(--bhG), .18);
       backdrop-filter:saturate(125%) blur(4px);
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
@@ -97,13 +98,16 @@
     .bh2025-modal[aria-hidden="true"],
     .bh2025-porada[aria-hidden="true"]{ display:none }
 
-    /* Lekki styl dla selektora języka */
+    /* Selektor języka – poprawiona czytelność */
     .langpick{display:flex;gap:8px;align-items:center;margin-left:12px}
     .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
     .langpick select{
-      appearance:none;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);
-      color:#eef2ff;border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:800
+      appearance:none;background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.24);
+      color:#ffffff; /* wartość widoczna jako PL/EN */
+      border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px
     }
+    .langpick option{ color:#0e1230; background:#ffffff } /* kolory listy rozwijanej */
   </style>
 </head>
 
@@ -130,7 +134,7 @@
         <div class="langpick" aria-label="Wybierz język">
           <label for="bhLang" data-i18n="lang_label">Wybierz język</label>
           <select id="bhLang" aria-label="Język">
-            <option value="pl">PL</option>
+            <option value="pl" selected>PL</option>
             <option value="en">EN</option>
           </select>
         </div>
@@ -241,118 +245,83 @@
       </div>
     </div>
   </div>
-  <!-- Skrypt bazowy -->
+  <!-- Skrypt bazowy strony -->
   <script src="assets/main.js?v=10"></script>
 
-  <!-- I18N (bezpieczny, lokalny) -->
+  <!-- I18N (lokalny, bezpieczny) -->
   <script>
   (function(){
     const I18N = {
-      pl:{
-        brand_title:"Boli Help",
-        brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",
-        lang_label:"Wybierz język",
-        pill_choke:"Zadławienie",
-        pill_cpr:"Reanimacja",
-        pill_accident:"Wypadek",
-        pill_firstaid:"Pierwsza pomoc",
-        pill_games:"Gry / Trening",
-        quiz_open:"Sprawdź się: Pierwsza pomoc",
-        quiz_title:"Mini-quiz: czy wiesz co zrobić?",
-        quiz_sub:"3 szybkie pytania: zadławienie, reanimacja, pozycja bezpieczna.",
-        quiz_restart:"Zacznij od nowa",
-        quiz_next:"Dalej",
-        close_btn:"✕",
-        btn_hosp:"🏥 Szpitale / SOR",
-        btn_loc:"📍 Zlokalizuj mnie",
-        subheadline:"Boli mnie — wybierz obszar bólu",
-        card_woman:"Kobieta", card_man:"Mężczyzna", card_child:"Dziecko",
-        advice_title:"Porada", advice_chip:"SOS • instrukcja",
-        video_head:"Materiał wideo",
-        video_hint:"Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej."
-      },
-      en:{
-        brand_title:"Boli Help",
-        brand_sub:"Help & first aid in emergencies",
-        lang_label:"Choose language",
-        pill_choke:"Choking",
-        pill_cpr:"CPR",
-        pill_accident:"Accident",
-        pill_firstaid:"First aid",
-        pill_games:"Games / Training",
-        quiz_open:"Check yourself: First aid",
-        quiz_title:"Mini-quiz: do you know what to do?",
-        quiz_sub:"3 quick questions: choking, CPR, recovery position.",
-        quiz_restart:"Restart",
-        quiz_next:"Next",
-        close_btn:"✕",
-        btn_hosp:"🏥 Hospitals / ER",
-        btn_loc:"📍 Locate me",
-        subheadline:"It hurts — choose the body area",
-        card_woman:"Woman", card_man:"Man", card_child:"Child",
-        advice_title:"Advice", advice_chip:"SOS • instruction",
-        video_head:"Video material",
-        video_hint:"Add file: <code>assets/videos/&lt;name&gt;.mp4</code> and update the map below."
-      }
+      pl:{brand_title:"Boli Help",brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",lang_label:"Wybierz język",
+          pill_choke:"Zadławienie",pill_cpr:"Reanimacja",pill_accident:"Wypadek",pill_firstaid:"Pierwsza pomoc",pill_games:"Gry / Trening",
+          quiz_open:"Sprawdź się: Pierwsza pomoc",quiz_title:"Mini-quiz: czy wiesz co zrobić?",quiz_sub:"3 szybkie pytania: zadławienie, reanimacja, pozycja bezpieczna.",
+          quiz_restart:"Zacznij od nowa",quiz_next:"Dalej",close_btn:"✕",
+          btn_hosp:"🏥 Szpitale / SOR",btn_loc:"📍 Zlokalizuj mnie",subheadline:"Boli mnie — wybierz obszar bólu",
+          card_woman:"Kobieta",card_man:"Mężczyzna",card_child:"Dziecko",
+          advice_title:"Porada",advice_chip:"SOS • instrukcja",video_head:"Materiał wideo",
+          video_hint:"Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej."},
+      en:{brand_title:"Boli Help",brand_sub:"Help & first aid in emergencies",lang_label:"Choose language",
+          pill_choke:"Choking",pill_cpr:"CPR",pill_accident:"Accident",pill_firstaid:"First aid",pill_games:"Games / Training",
+          quiz_open:"Check yourself: First aid",quiz_title:"Mini-quiz: do you know what to do?",quiz_sub:"3 quick questions: choking, CPR, recovery position.",
+          quiz_restart:"Restart",quiz_next:"Next",close_btn:"✕",
+          btn_hosp:"🏥 Hospitals / ER",btn_loc:"📍 Locate me",subheadline:"It hurts — choose the body area",
+          card_woman:"Woman",card_man:"Man",card_child:"Child",
+          advice_title:"Advice",advice_chip:"SOS • instruction",video_head:"Video material",
+          video_hint:"Add file: <code>assets/videos/&lt;name&gt;.mp4</code> and update the map below."}
     };
 
-    // Quiz i Porady – treści w 2 językach (logika niezmieniona)
     window.__QUIZ_I18N = {
-      pl: [
-        { q:"Ktoś się dławi i nie może mówić. Co robisz najpierw?",
-          a:[{t:"Zachęcam do kaszlu, jeśli nieskuteczny — 5 uderzeń między łopatki",ok:true},
-             {t:"Podaję wodę, żeby popchnąć kęs",ok:false},
-             {t:"Wkładam palec i „na ślepo” próbuję wyjąć",ok:false}],
-          hintOk:"Tak! Najpierw kaszel. Jeśli nieskuteczny → uderzenia w plecy.",
-          hintBad:"Woda/„wymiatanie” palcem może pogorszyć sytuację."},
-        { q:"Brak oddechu. Co z RKO u dorosłego?",
-          a:[{t:"Ucisk klatki 100–120/min, głębokość ~5–6 cm, centrum mostka",ok:true},
-             {t:"Ucisk delikatny 40/min, bez kontroli miejsca",ok:false},
-             {t:"Czekam na karetkę bez ucisków",ok:false}],
-          hintOk:"Tempo 100–120/min i środek mostka są kluczowe.",
-          hintBad:"Za wolno/bez ucisków — liczy się szybka, prawidłowa RKO."},
-        { q:"Poszkodowany oddycha, ale nie reaguje. Co dalej?",
-          a:[{t:"Układam w pozycji bezpiecznej i kontroluję oddech",ok:true},
-             {t:"Podaję napój i zostawiam w pozycji siedzącej",ok:false},
-             {t:"Kładę na plecach bez kontroli drożności",ok:false}],
-          hintOk:"Pozycja bezpieczna i stała kontrola oddechu.",
-          hintBad:"Płyny/siedząca/na plecach — to nie jest bezpieczne."}
+      pl:[
+        {q:"Ktoś się dławi i nie może mówić. Co robisz najpierw?",
+         a:[{t:"Zachęcam do kaszlu, jeśli nieskuteczny — 5 uderzeń między łopatki",ok:true},
+            {t:"Podaję wodę, żeby popchnąć kęs",ok:false},
+            {t:"Wkładam palec i „na ślepo” próbuję wyjąć",ok:false}],
+         hintOk:"Tak! Najpierw kaszel. Jeśli nieskuteczny → uderzenia w plecy.",
+         hintBad:"Woda/„wymiatanie” palcem może pogorszyć sytuację."},
+        {q:"Brak oddechu. Co z RKO u dorosłego?",
+         a:[{t:"Ucisk klatki 100–120/min, głębokość ~5–6 cm, centrum mostka",ok:true},
+            {t:"Ucisk delikatny 40/min, bez kontroli miejsca",ok:false},
+            {t:"Czekam na karetkę bez ucisków",ok:false}],
+         hintOk:"Tempo 100–120/min i środek mostka są kluczowe.",
+         hintBad:"Za wolno/bez ucisków — liczy się szybka, prawidłowa RKO."},
+        {q:"Poszkodowany oddycha, ale nie reaguje. Co dalej?",
+         a:[{t:"Układam w pozycji bezpiecznej i kontroluję oddech",ok:true},
+            {t:"Podaję napój i zostawiam w pozycji siedzącej",ok:false},
+            {t:"Kładę na plecach bez kontroli drożności",ok:false}],
+         hintOk:"Pozycja bezpieczna i stała kontrola oddechu.",
+         hintBad:"Płyny/siedząca/na plecach — to nie jest bezpieczne."}
       ],
-      en: [
-        { q:"Someone is choking and can’t speak. What do you do first?",
-          a:[{t:"Encourage coughing; if ineffective — 5 back blows",ok:true},
-             {t:"Give water to push food down",ok:false},
-             {t:"Put a finger inside and sweep blindly",ok:false}],
-          hintOk:"Yes! First cough. If ineffective → back blows.",
-          hintBad:"Water/blind finger sweep can make it worse."},
-        { q:"No breathing. What about adult CPR?",
-          a:[{t:"Compressions 100–120/min, depth ~5–6 cm, center of chest",ok:true},
-             {t:"Gentle 40/min, no precise place",ok:false},
-             {t:"Wait for ambulance without compressions",ok:false}],
-          hintOk:"Rate 100–120/min and center of sternum are key.",
-          hintBad:"Too slow / no compressions — start proper CPR."},
-        { q:"Casualty breathes but is unresponsive. What next?",
-          a:[{t:"Place in recovery position and monitor breathing",ok:true},
-             {t:"Give a drink and leave sitting",ok:false},
-             {t:"Lay flat on back without airway control",ok:false}],
-          hintOk:"Recovery position + continuous monitoring.",
-          hintBad:"Drinks/sitting/on the back — not safe now."}
+      en:[
+        {q:"Someone is choking and can’t speak. What do you do first?",
+         a:[{t:"Encourage coughing; if ineffective — 5 back blows",ok:true},
+            {t:"Give water to push food down",ok:false},
+            {t:"Put a finger inside and sweep blindly",ok:false}],
+         hintOk:"Yes! First cough. If ineffective → back blows.",
+         hintBad:"Water/blind finger sweep can make it worse."},
+        {q:"No breathing. What about adult CPR?",
+         a:[{t:"Compressions 100–120/min, depth ~5–6 cm, center of chest",ok:true},
+            {t:"Gentle 40/min, no precise place",ok:false},
+            {t:"Wait for ambulance without compressions",ok:false}],
+         hintOk:"Rate 100–120/min and center of sternum are key.",
+         hintBad:"Too slow / no compressions — start proper CPR."},
+        {q:"Casualty breathes but is unresponsive. What next?",
+         a:[{t:"Place in recovery position and monitor breathing",ok:true},
+            {t:"Give a drink and leave sitting",ok:false},
+            {t:"Lay flat on back without airway control",ok:false}],
+         hintOk:"Recovery position + continuous monitoring.",
+         hintBad:"Drinks/sitting/on the back — not safe now."}
       ]
     };
 
     window.__STEPS_I18N = {
-      pl:{
-        zadlawienie:["Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.","Brak skutecznego kaszlu: 5 uderzeń w plecy między łopatki.","Jeśli nieskuteczne: 5 uciśnięć nadbrzusza.","Na zmianę: 5 plecy ↔ 5 nadbrzusze, aż do skutku.","Utrata przytomności: RKO 30:2, wezwij 112, AED."],
-        reanimacja:["Sprawdź bezpieczeństwo, reakcję i oddech (max 10 s).","Brak oddechu: zadzwoń 112.","Uciski: 100–120/min, głęb. 5–6 cm, środek mostka.","Po 30 uciśnięciach 2 oddechy (jeśli umiesz i chcesz).","Kontynuuj do przyjazdu służb lub powrotu oddechu."],
-        wypadek:["Zabezpiecz miejsce.","Oceń liczbę poszkodowanych i zagrożenia.","Wezwij 112.","Priorytet: oddech, krwotoki (ucisk).","Nie przestawiaj bez potrzeby."],
-        pierwszopomoc:["ABC: drożność, oddech, krążenie.","Pozycja bezpieczna przy oddechu.","Ucisk krwotoków.","Oparzenia: chłodzenie 20 min.","Wezwij pomoc, gdy masz wątpliwości."]
-      },
-      en:{
-        zadlawienie:["Encourage coughing — if effective, observe.","If not effective: 5 back blows between shoulder blades.","If still not: 5 abdominal thrusts.","Alternate: 5 back blows ↔ 5 thrusts until success.","If unconscious: CPR 30:2, call 112/911, use AED."],
-        reanimacja:["Check safety, response and breathing (max 10 s).","No breathing: call 112/911.","Compressions 100–120/min, depth 5–6 cm, center chest.","After 30 compressions give 2 rescue breaths (if trained).","Continue until help arrives or breathing returns."],
-        wypadek:["Make the scene safe.","Assess casualties and hazards.","Call 112/911.","Priorities: breathing, severe bleeding (direct pressure).","Do not move unnecessarily."],
-        pierwszopomoc:["ABC: airway, breathing, circulation.","Recovery position if breathing.","Control bleeding with direct pressure.","Burns: cool with water 20 min.","When in doubt — call for help."]
-      }
+      pl:{zadlawienie:["Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.","Brak skutecznego kaszlu: 5 uderzeń w plecy między łopatki.","Jeśli nieskuteczne: 5 uciśnięć nadbrzusza.","Na zmianę: 5 plecy ↔ 5 nadbrzusze, aż do skutku.","Utrata przytomności: RKO 30:2, wezwij 112, AED."],
+          reanimacja:["Sprawdź bezpieczeństwo, reakcję i oddech (max 10 s).","Brak oddechu: zadzwoń 112.","Uciski: 100–120/min, głęb. 5–6 cm, środek mostka.","Po 30 uciśnięciach 2 oddechy (jeśli umiesz i chcesz).","Kontynuuj do przyjazdu służb lub powrotu oddechu."],
+          wypadek:["Zabezpiecz miejsce.","Oceń liczbę poszkodowanych i zagrożenia.","Wezwij 112.","Priorytet: oddech, krwotoki (ucisk).","Nie przestawiaj bez potrzeby."],
+          pierwszopomoc:["ABC: drożność, oddech, krążenie.","Pozycja bezpieczna przy oddechu.","Ucisk krwotoków.","Oparzenia: chłodzenie 20 min.","Wezwij pomoc, gdy masz wątpliwości."]},
+      en:{zadlawienie:["Encourage coughing — if effective, observe.","If not effective: 5 back blows between shoulder blades.","If still not: 5 abdominal thrusts.","Alternate: 5 back blows ↔ 5 thrusts until success.","If unconscious: CPR 30:2, call 112/911, use AED."],
+          reanimacja:["Check safety, response and breathing (max 10 s).","No breathing: call 112/911.","Compressions 100–120/min, depth 5–6 cm, center chest.","After 30 compressions give 2 rescue breaths (if trained).","Continue until help arrives or breathing returns."],
+          wypadek:["Make the scene safe.","Assess casualties and hazards.","Call 112/911.","Priorities: breathing, severe bleeding (direct pressure).","Do not move unnecessarily."],
+          pierwszopomoc:["ABC: airway, breathing, circulation.","Recovery position if breathing.","Control bleeding with direct pressure.","Burns: cool with water 20 min.","When in doubt — call for help."]}
     };
 
     function applyI18n(lang){
@@ -367,17 +336,15 @@
 
     // Inicjalizacja i przełącznik
     const sel = document.getElementById('bhLang');
-    if(sel){
-      sel.addEventListener('change', ()=>{
-        const lang = sel.value;
-        applyI18n(lang);
-      });
+    if(sel && !sel.dataset.bhBound){
+      sel.dataset.bhBound = '1';
+      sel.addEventListener('change', ()=> applyI18n(sel.value));
       applyI18n(sel.value || 'pl');
     }
   })();
   </script>
 
-  <!-- QUIZ (korzysta z treści i18n) -->
+  <!-- QUIZ (izolowany od innych skryptów) -->
   <script>
   (function(){
     const openBtn = document.getElementById('bh2025QuizOpen');
@@ -385,86 +352,62 @@
     const closeBtn= document.getElementById('bh2025QuizClose');
     const restart = document.getElementById('bh2025QuizRestart');
     const nextBtn = document.getElementById('bh2025QuizNext');
-
     const qEl     = document.getElementById('bh2025QuizQuestion');
     const aEl     = document.getElementById('bh2025QuizAnswers');
     const stepEl  = document.getElementById('bh2025QuizStep');
     const cursor  = document.getElementById('bh2025QuizCursor');
+    if(!openBtn || !modal || openBtn.dataset.bhBound) return;
+    openBtn.dataset.bhBound='1';
 
-    if(!openBtn || !modal) return;
+    function L(){ return document.documentElement.getAttribute('data-lang') || 'pl'; }
+    function Q(){ return (window.__QUIZ_I18N && window.__QUIZ_I18N[L()]) || window.__QUIZ_I18N.pl; }
 
-    function currentLang(){ return document.documentElement.getAttribute('data-lang') || 'pl'; }
-    function getQuiz(){ const L=currentLang(); return (window.__QUIZ_I18N && window.__QUIZ_I18N[L]) || window.__QUIZ_I18N.pl; }
-
-    let step=0, lock=false;
-    let chosen=[]; // wypełniane przy open()
-
-    function setProgress(Q){
-      stepEl.textContent = (step+1);
-      const left = 6 + (step/((Q.length-1)||1))*88;
-      cursor.style.left = left + '%';
-    }
-    function render(Q){
-      const item = Q[step];
-      qEl.textContent = item.q;
-      aEl.innerHTML = '';
-      item.a.forEach((opt)=>{
-        const b = document.createElement('button');
-        b.type='button'; b.className='bh2025-ans'; b.textContent=opt.t;
-        b.addEventListener('click', ()=>{
-          if(lock) return; lock=true;
-          const good = opt.ok;
-          chosen[step] = !!good;
-          b.classList.add(good?'correct':'wrong');
-          const note = document.createElement('div');
-          note.className='bh2025-muted'; note.style.marginTop='6px';
-          note.textContent = good ? item.hintOk : item.hintBad;
-          b.after(note);
-          if(navigator.vibrate) try{ navigator.vibrate(good?80:160); }catch(_){}
-          setTimeout(()=>{ lock=false; }, 320);
+    let step=0, lock=false, chosen=[];
+    function setProgress(total){ stepEl.textContent=(step+1); cursor.style.left=(6+(step/((total-1)||1))*88)+'%'; }
+    function render(){
+      const data=Q(), item=data[step];
+      qEl.textContent=item.q; aEl.innerHTML=''; setProgress(data.length);
+      item.a.forEach(opt=>{
+        const b=document.createElement('button'); b.type='button'; b.className='bh2025-ans'; b.textContent=opt.t;
+        b.addEventListener('click', ()=>{ if(lock) return; lock=true;
+          const ok=!!opt.ok; chosen[step]=ok;
+          b.classList.add(ok?'correct':'wrong');
+          const n=document.createElement('div'); n.className='bh2025-muted'; n.style.marginTop='6px'; n.textContent= ok?item.hintOk:item.hintBad; b.after(n);
+          try{ navigator.vibrate && navigator.vibrate(ok?80:160);}catch(_){}
+          setTimeout(()=>lock=false,300);
         });
         aEl.appendChild(b);
       });
-      setProgress(Q);
-      const L=currentLang(); const NEXT = (L==='en'?'Next':'Dalej'); const END=(L==='en'?'Finish':'Zakończ');
-      nextBtn.textContent = step===Q.length-1 ? END : NEXT;
+      const tNext= (L()==='en'?'Next':'Dalej'), tEnd=(L()==='en'?'Finish':'Zakończ');
+      nextBtn.textContent = step===data.length-1 ? tEnd : tNext;
     }
     function open(){
-      const Q=getQuiz();
-      modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
-      step=0; chosen=new Array(Q.length).fill(null); render(Q);
+      const data=Q(); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+      step=0; chosen=new Array(data.length).fill(null); render();
     }
     function close(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-
     function award(score,total){
-      const L=currentLang();
-      const msg = L==='en' ? `Great! Score: ${score}/${total}` : `Brawo! Wynik: ${score}/${total}`;
-      const toast=document.createElement('div');
-      toast.textContent = msg;
-      Object.assign(toast.style,{
-        position:'fixed',left:'50%',bottom:'26px',transform:'translateX(-50%)',
-        background:'rgba(60,32,100,.85)',color:'#eef2ff',padding:'10px 14px',
-        border:'1px solid rgba(164,107,255,.35)',borderRadius:'12px',
-        boxShadow:'0 10px 26px rgba(8,10,22,.45)',fontWeight:'800',zIndex:10000
-      });
-      document.body.appendChild(toast);
-      setTimeout(()=>{ toast.remove(); }, 2600);
+      const msg = (L()==='en'?`Great! Score: ${score}/${total}`:`Brawo! Wynik: ${score}/${total}`);
+      const t=document.createElement('div');
+      Object.assign(t.style,{position:'fixed',left:'50%',bottom:'26px',transform:'translateX(-50%)',
+        background:'rgba(60,32,100,.85)',color:'#eef2ff',padding:'10px 14px',border:'1px solid rgba(164,107,255,.35)',
+        borderRadius:'12px',boxShadow:'0 10px 26px rgba(8,10,22,.45)',fontWeight:'800',zIndex:10000});
+      t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2600);
     }
 
-    openBtn.addEventListener('click', open);
+    openBtn.addEventListener('click', open, true);      // capture, przed innymi
     closeBtn.addEventListener('click', close);
     modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
-    restart.addEventListener('click', ()=>{ const Q=getQuiz(); step=0; chosen=new Array(Q.length).fill(null); render(Q); });
+    restart.addEventListener('click', ()=>{ step=0; chosen=new Array(Q().length).fill(null); render(); });
     nextBtn.addEventListener('click', ()=>{
-      const Q=getQuiz();
-      if(step<Q.length-1){ step++; render(Q); }
-      else{ const score = chosen.reduce((s,v)=> s + (v===true?1:0), 0); award(score,Q.length); close(); }
+      const data=Q(); if(step<data.length-1){ step++; render(); }
+      else{ const score=chosen.reduce((s,v)=>s+(v?1:0),0); award(score,data.length); close(); }
     });
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') close(); });
   })();
   </script>
 
-  <!-- PORADY (zielone pigułki) – korzystają z i18n kroków -->
+  <!-- PORADY (zielone pigułki) — twarde blokowanie nawigacji -->
   <script>
   (function(){
     const poradaModal  = document.getElementById('bh2025Porada');
@@ -475,24 +418,19 @@
     const videoWrap    = document.getElementById('bh2025VideoWrap');
     const videoPh      = document.getElementById('bh2025VideoPh');
 
-    if(!poradaModal) return;
+    if(!poradaModal || poradaModal.dataset.bhBound) return;
+    poradaModal.dataset.bhBound='1';
 
     const IMG = { zadlawienie: 'img/zadlawienie.png', reanimacja: 'img/reanimacja.png', wypadek: 'img/wypadek.png', pierwszopomoc: null };
-
-    function currentLang(){ return document.documentElement.getAttribute('data-lang') || 'pl'; }
+    const L=()=>document.documentElement.getAttribute('data-lang')||'pl';
 
     function openPorada(key, title){
-      poradaTitle.textContent = title || (currentLang()==='en'?'Advice':'Porada');
-      svgWrap.innerHTML = '';
-      const src = IMG[key];
-      if(src){ const img=new Image(); img.src=src; img.alt=title||key; svgWrap.appendChild(img); }
-      stepsOl.innerHTML = '';
-      const steps = (window.__STEPS_I18N?.[currentLang()]?.[key]) || [];
+      poradaTitle.textContent = title || (L()==='en'?'Advice':'Porada');
+      svgWrap.innerHTML=''; const src=IMG[key]; if(src){ const img=new Image(); img.src=src; img.alt=title||key; svgWrap.appendChild(img); }
+      stepsOl.innerHTML=''; const steps=(window.__STEPS_I18N?.[L()]?.[key])||[];
       steps.forEach(txt=>{ const li=document.createElement('li'); li.textContent=txt; stepsOl.appendChild(li); });
-
       videoWrap.innerHTML=''; videoWrap.appendChild(videoPh.cloneNode(true));
-      poradaModal.setAttribute('aria-hidden','false');
-      document.body.style.overflow='hidden';
+      poradaModal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
     }
     function closePorada(){ poradaModal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
 
@@ -501,116 +439,18 @@
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && poradaModal.getAttribute('aria-hidden')==='false') closePorada(); });
 
     const nav = document.querySelector('nav.situations');
-    if(nav){
+    if(nav && !nav.dataset.bhBound){
+      nav.dataset.bhBound='1';
+      // CAPTURE + twarde blokowanie innych handlerów
       nav.addEventListener('click', (e)=>{
         const a = e.target.closest('a[data-porada]');
         if(!a) return;
-        e.preventDefault();
+        e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();
         const key = a.getAttribute('data-porada');
         const title = a.querySelector('[data-i18n]')?.textContent?.trim() || a.textContent.trim();
         openPorada(key, title);
-      });
+      }, true);
     }
-  })();
-  </script>
-
-  <!-- Wyszukiwarka z podpowiedziami (bez zmian funkcjonalnych) -->
-  <script>
-  (function(){
-    const input = document.querySelector('.header .tools .search input[type="search"]');
-    if(!input) return;
-
-    const PARTS = [
-      {id:'oko',label:'Oko',alias:['oko','oczy','wzrok']},
-      {id:'nos',label:'Nos',alias:['nos','zatoki','katar']},
-      {id:'gardlo',label:'Gardło',alias:['gardlo','gardło','angina','chrypka']},
-      {id:'glowa',label:'Głowa',alias:['glowa','głowa','migrena','ból głowy']},
-      {id:'klatka',label:'Klatka piersiowa',alias:['klatka','pierś','serce ból','mostek']},
-      {id:'pluca',label:'Płuca',alias:['płuca','pluca','duszność','astma']},
-      {id:'brzuch',label:'Brzuch',alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
-      {id:'nerki',label:'Nerki',alias:['nerki','kolka','lędźwie','ledzwi']},
-      {id:'plecy',label:'Plecy',alias:['plecy','kręgosłup','kregoslup','rwa']},
-      {id:'biodra',label:'Biodra/Uda',alias:['biodro','biodra','udo','pachwina']},
-      {id:'kolano',label:'Kolano',alias:['kolano','rzepka','łąkotka','lakotka']},
-      {id:'stopy',label:'Stopy',alias:['stopa','stopy','pięta','pieta','rozcięgno']},
-      {id:'skora',label:'Skóra',alias:['skora','skóra','wysypka','świąd','alergia']},
-      {id:'serce',label:'Serce',alias:['serce','kołatania','kolatania','arytmia']},
-      {id:'kaszel',label:'Kaszel',alias:['kaszel','kaszle']},
-      {id:'goraczka',label:'Gorączka',alias:['gorączka','goraczka','temperatura']},
-      {id:'zadlawienie',label:'Zadławienie (SOS)',alias:['zadławienie','zadlawienie','zadławił','zadlawil'],sos:true},
-      {id:'reanimacja',label:'Reanimacja (RKO)',alias:['reanimacja','rko','resuscytacja'],sos:true},
-      {id:'wypadek',label:'Wypadek (pierwsze kroki)',alias:['wypadek','kolizja','potrącenie','potracenie'],sos:true},
-      {id:'pierwszopomoc',label:'Pierwsza pomoc',alias:['pierwsza pomoc','pierwszopomoc','abc'],sos:true}
-    ];
-    const GENDERS = [
-      {id:'kobieta',label:'Kobieta'},{id:'mezczyzna',label:'Mężczyzna'},{id:'dziecko',label:'Dziecko'}
-    ];
-
-    const panel = document.createElement('div');
-    panel.className = 'bh2025-suggest';
-    panel.setAttribute('role','listbox');
-    panel.setAttribute('aria-hidden','true');
-    panel.innerHTML = `<div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>`;
-    input.parentElement.appendChild(panel);
-    const list = panel.querySelector('#bh2025List');
-
-    let results = [], active = -1;
-
-    function buildUrls(hit){
-      if(hit.sos){
-        const url = `szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
-        return [{label: hit.label, url, sub:'SOS'}];
-      }
-      return GENDERS.map(g=>{
-        const url = `szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
-        return {label:`${hit.label} • ${g.label}`, url, sub:g.label};
-      });
-    }
-
-    function search(q){
-      const s = q.trim().toLowerCase(); if(!s) return [];
-      const hits = PARTS.filter(p =>
-        p.alias?.some(a => a.includes(s)) || p.id.includes(s) || p.label.toLowerCase().includes(s)
-      ).slice(0,6);
-      return hits.flatMap(buildUrls).slice(0,12);
-    }
-
-    function render(){
-      list.innerHTML = ''; active = -1;
-      results.forEach((r,idx)=>{
-        const li = document.createElement('li');
-        li.setAttribute('role','option'); li.className='bh2025-sg-item'; li.dataset.index = String(idx);
-        li.innerHTML = `<span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>`;
-        li.addEventListener('mouseenter', ()=>setActive(idx));
-        li.addEventListener('mouseleave', ()=>setActive(-1));
-        li.addEventListener('click', ()=>go(idx));
-        list.appendChild(li);
-      });
-      panel.setAttribute('aria-hidden', results.length ? 'false':'true');
-    }
-    function setActive(i){
-      active = i;
-      list.querySelectorAll('.bh2025-sg-item').forEach((el,idx)=>{
-        el.setAttribute('aria-selected', (idx===active)?'true':'false');
-      });
-    }
-    function go(idx){
-      const item = results[idx]; if(!item) return;
-      window.location.href = item.url;
-    }
-
-    input.addEventListener('input', ()=>{ results = search(input.value); render(); });
-    input.addEventListener('keydown', (e)=>{
-      const shown = panel.getAttribute('aria-hidden')==='false';
-      if(e.key==='ArrowDown'){ if(!shown){ results = search(input.value); render(); } setActive( (active+1+results.length)%results.length ); e.preventDefault(); }
-      else if(e.key==='ArrowUp'){ if(!shown){ results = search(input.value); render(); } setActive( (active-1+results.length)%results.length ); e.preventDefault(); }
-      else if(e.key==='Enter'){
-        if(shown && active>=0){ e.preventDefault(); go(active); }
-        else { if(!results.length){ results = search(input.value); } if(results[0]) go(0); }
-      } else if(e.key==='Escape'){ panel.setAttribute('aria-hidden','true'); active=-1; }
-    });
-    document.addEventListener('click', (e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); active=-1; } });
-    const svg = input.parentElement.querySelector('svg'); if(svg){ svg.style.cursor='pointer'; svg.addEventListener('click', ()=>{ results = search(input.value); if(results.length){ panel.setAttribute('aria-hidden','false'); render(); } }); }
   })();
   </script>
 </body>
