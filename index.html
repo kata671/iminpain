@@ -61,7 +61,6 @@
     }
     .situations .pill.pill--green:hover{transform:translateY(-1px);border-color:rgba(var(--bhG), .85)}
 
-    /* Styl obrazka w poradzie */
     .bh2025-porada__svg img{
       max-width:100%; height:auto; display:block; border-radius:12px;
       border:1px solid rgba(255,255,255,.16);
@@ -104,8 +103,15 @@
       <!-- poprawiony guzik -->
       <a class="pill pill--blue" href="gry.html"><span class="ico">🎮</span>Gry / Trening</a>
     </nav>
-    <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
+    <!-- Launcher mini-quizu -->
+    <div class="bh2025-quiz-launch">
+      <span class="dot"></span>
+      <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button">
+        Sprawdź się: Pierwsza pomoc
+      </button>
+    </div>
 
+    <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
     <section class="stack" style="display:grid;gap:16px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
       <article class="card">
         <a href="kobieta.html">
@@ -128,9 +134,7 @@
     </section>
   </div>
 
-  <!-- Modale (quiz, porady itd.) -->
-  <!-- … tutaj masz swoje istniejące modale i skrypty … -->
-
+  <!-- TU: modale quizu, porad i skrypty -->
   <script src="assets/main.js?v=10"></script>
 </body>
 </html>
