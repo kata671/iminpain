@@ -6,15 +6,14 @@
   <title>Boli Help — Strona główna</title>
   <meta name="theme-color" content="#0e1230" />
 
-  <!-- Ikony PWA -->
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="/icons/icon-512.png">
 
-  <!-- Manifest + CSS -->
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="assets/style.css?v=11" />
+  <!-- CSS (pozostawiam v=10 jak u Ciebie) -->
+  <link rel="stylesheet" href="assets/style.css?v=10" />
 
-  <!-- Tło i drobne poprawki layoutu strony głównej -->
   <style>
     html,body{height:100%}
     body[data-page="home"]{
@@ -78,9 +77,10 @@
     .situations .pill.pill--green:hover,
     .situations .pill.pill--green:focus-visible{
       transform:translateY(-1px); border-color:rgba(var(--bhG), .85);
-      box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(var(--bhG), .65), 0 0 26px rgba(var(--bhG), .5);
+      box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(var(--bhG), .65), 0 0 26px rgba(var(--bhG), .45);
       outline:none;
     }
+    /* Niebieska pigułka – Gry / Trening */
     .situations .pill.pill--blue{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(96,165,250,.18);
       border:1px solid rgba(59,130,246,.6);
@@ -119,7 +119,7 @@
     .bh2025-modal[aria-hidden="true"],
     .bh2025-porada[aria-hidden="true"]{ display:none }
 
-    /* QUIZ – przyciski */
+    /* QUIZ – poprawiona czytelność */
     .bh2025-cta-quiz{appearance:none;border:1px solid rgba(164,107,255,.28);
       background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       color:#eef2ff;border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer}
@@ -128,15 +128,47 @@
     .bh2025-q{color:#ffffff;font-weight:900;letter-spacing:.2px}
     .bh2025-answers .bh2025-ans{display:block;width:100%;text-align:left;margin:8px 0;padding:10px 12px;border-radius:12px;
       border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);cursor:pointer;color:#ffffff}
-    .bh2025-answers .bh2025-ans[disabled]{opacity:.6;cursor:not-allowed}
+    .bh2025-answers .bh2025-ans:hover{box-shadow:0 10px 20px rgba(0,0,0,.25);transform:translateY(-1px)}
     .bh2025-ans.correct{box-shadow:0 0 0 2px rgba(94,234,212,.65)}
     .bh2025-ans.wrong{box-shadow:0 0 0 2px rgba(255,107,107,.7)}
     .bh2025-progress{display:flex;align-items:center;gap:10px;margin:8px 0 12px}
     .bh2025-progress__bar{flex:1;height:12px;border-radius:999px;outline:1px solid rgba(255,255,255,.14);background:linear-gradient(90deg,#5eead4,#ff6ec7);position:relative;overflow:hidden}
     .bh2025-progress__cursor{position:absolute;top:50%;transform:translate(-50%,-50%);left:6%;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(94,234,212,.35)}
-    .bh2025-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
-    .bh2025-ghost{appearance:none;border:1px solid rgba(255,255,255,.24);background:transparent;color:#fff;border-radius:12px;padding:8px 12px;font-weight:800;cursor:pointer}
-    .bh2025-primary{appearance:none;border:1px solid rgba(164,107,255,.45);background:rgba(255,255,255,.08);color:#fff;border-radius:12px;padding:8px 12px;font-weight:800;cursor:pointer}
+
+    /* PORADA modal */
+    .bh2025-porada{position:fixed;inset:0;z-index:9998;background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95));backdrop-filter:saturate(120%) blur(6px)}
+    .bh2025-porada__panel{position:relative;max-width:980px;margin:5vh auto;background:rgba(60,32,100,.36);border:1px solid rgba(164,107,255,.25);border-radius:18px;padding:16px;color:#eef2ff}
+    .bh2025-porada__grid{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
+    @media (max-width:900px){ .bh2025-porada__grid{grid-template-columns:1fr} }
+    .bh2025-steps{border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);padding:12px}
+
+    /* Selektor języka */
+    .langpick{display:flex;gap:8px;align-items:center;margin-left:12px}
+    .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
+    .langpick select{
+      appearance:none;background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.24);
+      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px
+    }
+    .langpick option{ color:#0e1230; background:#ffffff }
+
+    /* Wyszukiwarka – panel podpowiedzi (izolowany) */
+    .bh2025-suggest{position:absolute;right:0;left:0;top:100%;margin-top:6px;z-index:50;
+      background:rgba(60,32,100,.96); border:1px solid rgba(164,107,255,.28); border-radius:12px;
+      box-shadow:0 16px 34px rgba(8,10,22,.52); overflow:hidden; display:none}
+    .bh2025-suggest[aria-hidden="false"]{display:block}
+    .bh2025-sg-head{padding:8px 12px; font-weight:800; letter-spacing:.2px; color:#cfe2ff;
+      border-bottom:1px solid rgba(164,107,255,.18); background:rgba(255,255,255,.03)}
+    .bh2025-sg-list{list-style:none;margin:0;padding:6px}
+    .bh2025-sg-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;
+      cursor:pointer; color:#eef2ff; text-decoration:none; border:1px solid transparent}
+    .bh2025-sg-item:hover,
+    .bh2025-sg-item[aria-selected="true"]{background:rgba(255,255,255,.06); border-color:rgba(164,107,255,.28);
+      box-shadow:inset 0 0 0 1px rgba(164,107,255,.16)}
+    .bh2025-sg-ico{width:18px;height:18px;display:inline-grid;place-items:center;border-radius:6px;
+      background:rgba(164,107,255,.18); font-size:12px}
+    .bh2025-sg-sub{margin-left:auto;font-size:12px;color:#b8c2e0}
+    .header .tools .search{position:relative}
   </style>
 </head>
 
@@ -230,6 +262,7 @@
       </article>
     </section>
   </div>
+
   <!-- Modal QUIZ -->
   <div id="bh2025QuizModal" class="bh2025-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025QuizTitle">
     <div class="bh2025-modal__panel">
@@ -249,7 +282,7 @@
         <div class="bh2025-answers" id="bh2025QuizAnswers"></div>
         <div class="bh2025-actions">
           <button class="bh2025-ghost" type="button" id="bh2025QuizRestart" data-i18n="quiz_restart">Zacznij od nowa</button>
-          <button class="bh2025-primary" type="button" id="bh2025QuizNext" data-i18n="quiz_next" disabled>Dalej</button>
+          <button class="bh2025-primary" type="button" id="bh2025QuizNext" data-i18n="quiz_next">Dalej</button>
         </div>
       </div>
     </div>
@@ -317,7 +350,7 @@
   })();
   </script>
 
-  <!-- QUIZ v2 (NAPRAWIONY: brak duplikatów, jeden wybór, „Dalej” aktywne po wyborze) -->
+  <!-- QUIZ (z konfetti; izolowany) -->
   <script>
   (function(){
     const modal   = document.getElementById('bh2025QuizModal');
@@ -329,9 +362,7 @@
     const aEl     = document.getElementById('bh2025QuizAnswers');
     const stepEl  = document.getElementById('bh2025QuizStep');
     const cursor  = document.getElementById('bh2025QuizCursor');
-
-    if(!modal || modal.dataset.bhBound) return; 
-    modal.dataset.bhBound='1'; // zapobiegamy wielokrotnej inicjalizacji
+    if(!modal || modal.dataset.bhBound) return; modal.dataset.bhBound='1';
 
     const QA = {
       pl:[
@@ -378,73 +409,29 @@
     const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
     const Q = ()=> QA[L()] || QA.pl;
 
-    let step=0, chosen=null;
-
-    function setProgress(total){ 
-      stepEl.textContent=(step+1); 
-      cursor.style.left=(6+(step/((total-1)||1))*88)+'%'; 
-    }
-
-    function enableNext(enable){
-      nextBtn.disabled = !enable;
-      nextBtn.style.opacity = enable ? '1' : '.7';
-    }
-
+    let step=0, lock=false, chosen=[];
+    function setProgress(total){ stepEl.textContent=(step+1); cursor.style.left=(6+(step/((total-1)||1))*88)+'%'; }
     function render(){
-      const data = Q();
-      const item = data[step];
-      chosen = null;                  // nic nie wybrane na starcie pytania
-      enableNext(false);              // „Dalej” aktywne dopiero po wyborze
-
-      qEl.textContent = item.q;
-      aEl.innerHTML = '';             // czyścimy odpowiedzi = brak duplikatów
-      setProgress(data.length);
-
-      // tworzymy 3 przyciski; po wyborze blokujemy wszystkie, aby nie klikać wielokrotnie
-      item.a.forEach((opt)=>{
-        const b=document.createElement('button');
-        b.type='button'; b.className='bh2025-ans';
-        b.textContent=opt.t;
-
-        const onPick = () => {
-          if(chosen!==null) return;   // tylko jeden wybór
-          chosen = !!opt.ok;
-          // blokujemy wszystkie przyciski w bieżącym pytaniu
-          aEl.querySelectorAll('.bh2025-ans').forEach(btn=>btn.disabled = true);
-
-          b.classList.add(opt.ok?'correct':'wrong');
-
-          const tip=document.createElement('div');
-          tip.className='bh2025-muted';
-          tip.style.marginTop='6px'; tip.style.color='#eaf2ff';
-          tip.textContent = opt.ok ? item.hintOk : item.hintBad;
-          b.after(tip);
-
-          try{ navigator.vibrate && navigator.vibrate(opt.ok?80:160);}catch(_){}
-          enableNext(true);
-        };
-
-        // obsługa klik + tap
-        b.addEventListener('click', onPick, {once:false});
-        b.addEventListener('touchend', (e)=>{ e.preventDefault(); onPick(); }, {passive:false});
-
+      const data=Q(), item=data[step];
+      qEl.textContent=item.q; aEl.innerHTML=''; setProgress(data.length);
+      item.a.forEach(opt=>{
+        const b=document.createElement('button'); b.type='button'; b.className='bh2025-ans'; b.textContent=opt.t;
+        b.addEventListener('click', ()=>{ if(lock) return; lock=true;
+          const ok=!!opt.ok; chosen[step]=ok;
+          b.classList.add(ok?'correct':'wrong');
+          const n=document.createElement('div'); n.className='bh2025-muted'; n.style.marginTop='6px'; n.style.color='#eaf2ff'; n.textContent= ok?item.hintOk:item.hintBad; b.after(n);
+          try{ navigator.vibrate && navigator.vibrate(ok?80:160);}catch(_){}
+          setTimeout(()=>lock=false,280);
+        });
         aEl.appendChild(b);
       });
-
-      // podpis przycisku
-      nextBtn.textContent = (L()==='en') ? (step===data.length-1?'Finish':'Next') : (step===data.length-1?'Zakończ':'Dalej');
+      nextBtn.textContent = (L()==='en') ? (step===Q().length-1?'Finish':'Next') : (step===Q().length-1?'Zakończ':'Dalej');
     }
-
     function open(){
-      const data=Q(); 
-      modal.setAttribute('aria-hidden','false'); 
-      document.body.style.overflow='hidden';
-      step=0; render();
+      const data=Q(); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+      step=0; chosen=new Array(data.length).fill(null); render();
     }
-    function close(){ 
-      modal.setAttribute('aria-hidden','true'); 
-      document.body.style.overflow=''; 
-    }
+    function close(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
 
     function confetti(score, total){
       const c=document.createElement('canvas'); c.width=innerWidth; c.height=innerHeight;
@@ -452,7 +439,8 @@
       document.body.appendChild(c);
       const ctx=c.getContext('2d');
       let parts=Array.from({length: score===total? 140:90},()=>({
-        x:Math.random()*c.width, y:-20, vx:-1+Math.random()*2, vy:2+Math.random()*2.5,
+        x:Math.random()*c.width, y:-20,
+        vx:-1+Math.random()*2, vy:2+Math.random()*2.5,
         size:3+Math.random()*4, rot:Math.random()*6, vr:-.2+Math.random()*.4,
         color: score===total ? ['#5eead4','#a46bff','#ffd16c'][Math.floor(Math.random()*3)] : 'rgba(255,255,255,.9)',
         life: 100
@@ -469,7 +457,6 @@
         if(parts.length) requestAnimationFrame(tick); else c.remove();
       })();
     }
-
     function award(score,total){
       const msg = (L()==='en'?`Great! Score: ${score}/${total}`:`Brawo! Wynik: ${score}/${total}`);
       const t=document.createElement('div');
@@ -480,38 +467,22 @@
       confetti(score,total);
     }
 
-    // Otwarcie (w capture, by nie dziedziczyć innych listenerów)
     if(openBtn && !openBtn.dataset.bhBound){
       openBtn.dataset.bhBound='1';
       openBtn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); open(); }, true);
     }
     closeBtn.addEventListener('click', close);
     modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
-    restart.addEventListener('click', ()=>{ step=0; render(); });
-
-    // Dalej / Zakończ
+    restart.addEventListener('click', ()=>{ step=0; chosen=new Array(Q().length).fill(null); render(); });
     nextBtn.addEventListener('click', ()=>{
-      if(nextBtn.disabled) return; // zabezpieczenie
-      const data=Q(); 
-      // zapamiętujemy wynik bieżącego pytania
-      data[step]._picked = (chosen===true);
-
-      if(step < data.length-1){
-        step++; render();
-      } else {
-        const score = data.reduce((s,it)=> s + (it._picked?1:0), 0);
-        award(score, data.length); 
-        // czyścimy „śmieci” w obiektach
-        data.forEach(it=>{ delete it._picked; });
-        close();
-      }
+      const data=Q(); if(step<data.length-1){ step++; render(); }
+      else{ const score=chosen.reduce((s,v)=>s+(v?1:0),0); award(score,data.length); close(); }
     });
-
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') close(); });
   })();
   </script>
 
-  <!-- PORADY (pigułki) -->
+  <!-- PORADY (klik pigułek przechwycony w capture) -->
   <script>
   (function(){
     const poradaModal  = document.getElementById('bh2025Porada');
@@ -550,7 +521,6 @@
     }
     function closePorada(){ poradaModal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
 
-    // przechwyt klików na pigułkach w capture
     const nav = document.querySelector('nav.situations');
     if(nav && !nav.dataset.bhPoradaBound){
       nav.dataset.bhPoradaBound='1';
@@ -578,26 +548,26 @@
     if(!input || input.dataset.bhSearchBound) return; input.dataset.bhSearchBound='1';
 
     const PARTS = [
-      {id:'oko',label:'Oko',alias:['oko','oczy','wzrok']},
-      {id:'nos',label:'Nos',alias:['nos','zatoki','katar']},
-      {id:'gardlo',label:'Gardło',alias:['gardlo','gardło','angina','chrypka']},
-      {id:'glowa',label:'Głowa',alias:['glowa','głowa','migrena','ból głowy']},
-      {id:'klatka',label:'Klatka piersiowa',alias:['klatka','pierś','serce ból','mostek']},
-      {id:'pluca',label:'Płuca',alias:['płuca','pluca','duszność','astma']},
-      {id:'brzuch',label:'Brzuch',alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
-      {id:'nerki',label:'Nerki',alias:['nerki','kolka','lędźwie','ledzwi']},
-      {id:'plecy',label:'Plecy',alias:['plecy','kręgosłup','kregoslup','rwa']},
-      {id:'biodra',label:'Biodra/Uda',alias:['biodro','biodra','udo','pachwina']},
-      {id:'kolano',label:'Kolano',alias:['kolano','rzepka','łąkotka','lakotka']},
-      {id:'stopy',label:'Stopy',alias:['stopa','stopy','pięta','pieta','rozcięgno']},
-      {id:'skora',label:'Skóra',alias:['skora','skóra','wysypka','świąd','alergia']},
-      {id:'serce',label:'Serce',alias:['serce','kołatania','kolatania','arytmia']},
-      {id:'kaszel',label:'Kaszel',alias:['kaszel','kaszle']},
-      {id:'goraczka',label:'Gorączka',alias:['gorączka','goraczka','temperatura']},
-      {id:'zadlawienie',label:'Zadławienie (SOS)',alias:['zadławienie','zadlawienie','zadławił','zadlawil'],sos:true},
-      {id:'reanimacja',label:'Reanimacja (RKO)',alias:['reanimacja','rko','resuscytacja'],sos:true},
-      {id:'wypadek',label:'Wypadek (SOS)',alias:['wypadek','kolizja','potrącenie','potracenie'],sos:true},
-      {id:'pierwszopomoc',label:'Pierwsza pomoc',alias:['pierwsza pomoc','pierwszopomoc','abc'],sos:true}
+      {id:'oko',       label:'Oko',        alias:['oko','oczy','wzrok']},
+      {id:'nos',       label:'Nos',        alias:['nos','zatoki','katar']},
+      {id:'gardlo',    label:'Gardło',     alias:['gardlo','gardło','angina','chrypka']},
+      {id:'glowa',     label:'Głowa',      alias:['glowa','głowa','migrena','ból głowy']},
+      {id:'klatka',    label:'Klatka piersiowa', alias:['klatka','pierś','serce ból','mostek']},
+      {id:'pluca',     label:'Płuca',      alias:['płuca','pluca','duszność','astma']},
+      {id:'brzuch',    label:'Brzuch',     alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
+      {id:'nerki',     label:'Nerki',      alias:['nerki','kolka','lędźwie','ledzwi']},
+      {id:'plecy',     label:'Plecy',      alias:['plecy','kręgosłup','kregoslup','rwa']},
+      {id:'biodra',    label:'Biodra/Uda', alias:['biodro','biodra','udo','pachwina']},
+      {id:'kolano',    label:'Kolano',     alias:['kolano','rzepka','łąkotka','lakotka']},
+      {id:'stopy',     label:'Stopy',      alias:['stopa','stopy','pięta','pieta','rozcięgno']},
+      {id:'skora',     label:'Skóra',      alias:['skora','skóra','wysypka','świąd','alergia']},
+      {id:'serce',     label:'Serce',      alias:['serce','kołatania','kolatania','arytmia']},
+      {id:'kaszel',    label:'Kaszel',     alias:['kaszel','kaszle']},
+      {id:'goraczka',  label:'Gorączka',   alias:['gorączka','goraczka','temperatura']},
+      {id:'zadlawienie', label:'Zadławienie (SOS)', alias:['zadławienie','zadlawienie','zadławił','zadlawil'] , sos:true},
+      {id:'reanimacja',  label:'Reanimacja (RKO)',  alias:['reanimacja','rko','resuscytacja'] , sos:true},
+      {id:'wypadek',     label:'Wypadek (SOS)',     alias:['wypadek','kolizja','potrącenie','potracenie'] , sos:true},
+      {id:'pierwszopomoc',label:'Pierwsza pomoc',   alias:['pierwsza pomoc','pierwszopomoc','abc'] , sos:true}
     ];
     const GENDERS = [
       {id:'kobieta',label:'Kobieta'},{id:'mezczyzna',label:'Mężczyzna'},{id:'dziecko',label:'Dziecko'}
