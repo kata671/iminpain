@@ -43,22 +43,27 @@
     el.addEventListener('keyup', e=>{ if(e.key==='Enter') el.click(); });
   });
 })();
-// ===== PWA: rejestracja service workera =====
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/service-worker.js', { scope: '/' })
-      .then(reg => {
-        console.log('SW zarejestrowany:', reg.scope);
 
-        // auto-reload strony, gdy SW się zaktualizuje
-        let refreshing = false;
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-          if (refreshing) return;
-          refreshing = true;
-          window.location.reload();
-        });
-      })
-      .catch(err => console.error('SW błąd rejestracji:', err));
+/* ====== Instalacja PWA – własny przycisk ====== */
+(function(){
+  let deferredPrompt = null;
+  const btn = document.getElementById('btnInstall');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (btn) btn.hidden = false;
   });
-}
+
+  btn?.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    btn.disabled = true;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    btn.hidden = true;
+    btn.disabled = false;
+  });
+
+  window.addEventListener('appinstalled', () => { if (btn) btn.hidden = true; });
+})();
