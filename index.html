@@ -219,10 +219,16 @@
       <a class="pill pill--green" data-porada="pierwszopomoc" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc">
         <span class="ico">❤️‍🩹</span><span data-i18n="pill_firstaid">Pierwsza pomoc</span>
       </a>
-      <a class="pill pill--blue" href="gry.html"><span class="ico">🎮</span><span data-i18n="pill_games">Gry / Trening</span></a>
+      <a class="pill pill--blue" href="gry.html">
+        <span class="ico">🎮</span><span data-i18n="pill_games">Gry / Trening</span>
+      </a>
+      <!-- NOWY GUZIK: Quizy -->
+      <a class="pill pill--blue" href="quizzes.html" id="btn-quizzes">
+        <span class="ico">🧠</span><span data-i18n="pill_quizzes">Quizy</span>
+      </a>
     </nav>
 
-    <!-- Launcher mini-quizu -->
+    <!-- Launcher mini-quizu (zostaje – stary modal do czasu przenosin) -->
     <div class="bh2025-quiz-launch" aria-hidden="false">
       <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button"
               aria-haspopup="dialog" aria-controls="bh2025QuizModal" data-i18n="quiz_open">
@@ -233,7 +239,8 @@
     <div class="actions" role="navigation" aria-label="Szybkie akcje">
       <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
       <button id="btn-hosp" class="btn btn--hosp" type="button" data-i18n="btn_hosp">🏥 Szpitale / SOR</button>
-      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener"><span class="badge-round">apteka24</span></a>
+      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener">
+        <span class="badge-round">apteka24</span></a>
       <button id="btn-loc" class="btn" type="button" data-i18n="btn_loc">📍 Zlokalizuj mnie</button>
     </div>
 
@@ -309,13 +316,13 @@
 
   <!-- Skrypt bazowy strony -->
   <script src="assets/main.js?v=10"></script>
-
   <!-- I18N (lokalny) -->
   <script>
   (function(){
     const I18N = {
       pl:{brand_title:"Boli Help",brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",lang_label:"Wybierz język",
-          pill_choke:"Zadławienie",pill_cpr:"Reanimacja",pill_accident:"Wypadek",pill_firstaid:"Pierwsza pomoc",pill_games:"Gry / Trening",
+          pill_choke:"Zadławienie",pill_cpr:"Reanimacja",pill_accident:"Wypadek",pill_firstaid:"Pierwsza pomoc",
+          pill_games:"Gry / Trening", pill_quizzes:"Quizy",
           quiz_open:"Sprawdź się: Pierwsza pomoc",quiz_title:"Mini-quiz: czy wiesz co zrobić?",quiz_sub:"3 szybkie pytania: zadławienie, reanimacja, pozycja bezpieczna.",
           quiz_restart:"Zacznij od nowa",quiz_next:"Dalej",close_btn:"✕",
           btn_hosp:"🏥 Szpitale / SOR",btn_loc:"📍 Zlokalizuj mnie",subheadline:"Boli mnie — wybierz obszar bólu",
@@ -323,7 +330,8 @@
           advice_title:"Porada",advice_chip:"SOS • instrukcja",video_head:"Materiał wideo",
           video_hint:"Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej."},
       en:{brand_title:"Boli Help",brand_sub:"Help & first aid in emergencies",lang_label:"Choose language",
-          pill_choke:"Choking",pill_cpr:"CPR",pill_accident:"Accident",pill_firstaid:"First aid",pill_games:"Games / Training",
+          pill_choke:"Choking",pill_cpr:"CPR",pill_accident:"Accident",pill_firstaid:"First aid",
+          pill_games:"Games / Training", pill_quizzes:"Quizzes",
           quiz_open:"Check yourself: First aid",quiz_title:"Mini-quiz: do you know what to do?",quiz_sub:"3 quick questions: choking, CPR, recovery position.",
           quiz_restart:"Restart",quiz_next:"Next",close_btn:"✕",
           btn_hosp:"🏥 Hospitals / ER",btn_loc:"📍 Locate me",subheadline:"It hurts — choose the body area",
@@ -644,6 +652,8 @@
         .catch(err => console.error('SW błąd:', err));
     }
   </script>
-<script src="assets/a2hs.js?v=1"></script>
+
+  <!-- Add to Home Screen (iOS/Android) -->
+  <script src="assets/a2hs.js?v=1"></script>
 </body>
 </html>
