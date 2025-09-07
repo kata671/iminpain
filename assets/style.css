@@ -154,3 +154,95 @@ html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Inter",
   border-radius: 12px;
 }
 a,button{ -webkit-tap-highlight-color: transparent }
+/* === Boli Help • Glow cards on details page === */
+:root{
+  --bh-bg: #0e1230;
+  --bh-tx: #eef2ff;
+  --bh-brd: rgba(164,107,255,.28);
+  --bh-glow-green:  94,234,212; /* Pierwsza pomoc */
+  --bh-glow-blue:   96,165,250; /* Objawy */
+  --bh-glow-amber:  251,191,36; /* Przyczyny */
+  --bh-glow-purple: 168,85,247; /* Leki */
+  --bh-glow-red:    239,68,68;  /* Uwaga / Ostrzeżenie */
+}
+
+.bh-card{
+  position: relative;
+  border-radius: 16px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.16);
+  color: var(--bh-tx);
+  box-shadow:
+    0 8px 22px rgba(8,10,22,.28),
+    inset 0 0 0 1px rgba(255,255,255,.08);
+  transition:
+    box-shadow .25s ease,
+    border-color .25s ease,
+    transform .18s ease,
+    background-color .25s ease;
+}
+
+/* delikatny stały glow (bez hovera) */
+.bh-card--blue     { border-color: rgba(var(--bh-glow-blue),  .40);  box-shadow: 0 10px 24px rgba(8,10,22,.30), 0 0 0 1px rgba(var(--bh-glow-blue),  .22) inset; }
+.bh-card--amber    { border-color: rgba(var(--bh-glow-amber), .40);  box-shadow: 0 10px 24px rgba(8,10,22,.30), 0 0 0 1px rgba(var(--bh-glow-amber), .22) inset; }
+.bh-card--green    { border-color: rgba(var(--bh-glow-green), .45);  box-shadow: 0 10px 24px rgba(8,10,22,.30), 0 0 0 1px rgba(var(--bh-glow-green), .24) inset; }
+.bh-card--purple   { border-color: rgba(var(--bh-glow-purple),.42);  box-shadow: 0 10px 24px rgba(8,10,22,.30), 0 0 0 1px rgba(var(--bh-glow-purple),.24) inset; }
+.bh-card--red      { border-color: rgba(var(--bh-glow-red),   .45);  box-shadow: 0 10px 24px rgba(8,10,22,.30), 0 0 0 1px rgba(var(--bh-glow-red),   .26) inset; }
+
+/* mocniejszy glow na :hover i :focus-visible */
+.bh-card:hover,
+.bh-card:focus-visible{
+  transform: translateY(-1px);
+}
+
+.bh-card--blue:hover,
+.bh-card--blue:focus-visible{
+  box-shadow:
+    0 16px 36px rgba(8,10,22,.40),
+    0 0 0 2px rgba(var(--bh-glow-blue), .55),
+    0 0 26px rgba(var(--bh-glow-blue), .40);
+}
+.bh-card--amber:hover,
+.bh-card--amber:focus-visible{
+  box-shadow:
+    0 16px 36px rgba(8,10,22,.40),
+    0 0 0 2px rgba(var(--bh-glow-amber), .55),
+    0 0 26px rgba(var(--bh-glow-amber), .45);
+}
+.bh-card--green:hover,
+.bh-card--green:focus-visible{
+  box-shadow:
+    0 16px 36px rgba(8,10,22,.40),
+    0 0 0 2px rgba(var(--bh-glow-green), .65),
+    0 0 28px rgba(var(--bh-glow-green), .45);
+}
+.bh-card--purple:hover,
+.bh-card--purple:focus-visible{
+  box-shadow:
+    0 16px 36px rgba(8,10,22,.40),
+    0 0 0 2px rgba(var(--bh-glow-purple), .60),
+    0 0 28px rgba(var(--bh-glow-purple), .45);
+}
+.bh-card--red:hover,
+.bh-card--red:focus-visible{
+  box-shadow:
+    0 16px 36px rgba(8,10,22,.40),
+    0 0 0 2px rgba(var(--bh-glow-red), .70),
+    0 0 30px rgba(var(--bh-glow-red), .50);
+}
+
+/* nagłówek w ramach */
+.bh-card .bh-head{
+  display:flex;align-items:center;gap:10px;margin:0 0 8px;
+  font-weight:900; letter-spacing:.2px;
+}
+.bh-card .bh-sub{ color:#cfe2ff; opacity:.9; font-weight:700; }
+
+/* lepsza dostępność: wyraźny focus bez migania */
+.bh-card:focus-visible{ outline: none; }
+
+/* preferencje użytkownika – mniej ruchu */
+@media (prefers-reduced-motion: reduce){
+  .bh-card{ transition:none }
+}
