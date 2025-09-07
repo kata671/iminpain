@@ -113,16 +113,22 @@
     @keyframes ping{ 0%{box-shadow:0 0 0 0 rgba(164,107,255,.38)} 80%{box-shadow:0 0 0 14px rgba(164,107,255,0)} 100%{box-shadow:0 0 0 0 rgba(164,107,255,0)} }
 
     .cards{ margin-top:8px }
-    .card{ display:none; background: var(--card); border:1px solid var(--stroke); border-radius:var(--radius);
-      padding:16px 16px 14px; backdrop-filter: blur(10px) saturate(125%); box-shadow: 0 14px 34px rgba(8,10,22,.42);
-      transition: transform var(--speed), box-shadow var(--speed), border-color var(--speed); color:var(--text); }
+    .card{
+      display:none; background: var(--card); border:1px solid var(--stroke); border-radius:var(--radius);
+      padding:16px 16px 14px; backdrop-filter: blur(10px) saturate(125%);
+      transition: transform var(--speed), box-shadow var(--speed), border-color var(--speed); color:var(--text);
+      /* delikatny, neutralny cień bazowy, zawsze */
+      box-shadow: 0 14px 34px rgba(8,10,22,.42), 0 0 18px rgba(164,107,255,.10);
+    }
     .card[aria-hidden="false"]{ display:block; animation:fadeIn .28s ease both }
     @keyframes fadeIn{ from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none} }
-    .card:hover{ transform: translateY(-2px); box-shadow: 0 18px 48px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18) }
+    .card:hover,
+    .card:focus-within{ transform: translateY(-2px) }
     .card h3{ position:relative; margin:.15rem 0 .85rem; font-size:16px; font-weight:900; letter-spacing:.3px; color:#e6f0ff }
     .card h3::after{ content:""; display:block; height:1px; margin-top:.55rem;
       background:linear-gradient(90deg, rgba(207,226,255,.55), rgba(255,255,255,.08) 45%, transparent); }
 
+    /* Kolor ramek (border) – jak było */
     .card[data-type="symptoms"]{border-color: rgba(94,234,212,.55)}
     .card[data-type="causes"]  {border-color: rgba(164,107,255,.55)}
     .card[data-type="firstaid"]{border-color: rgba(112,225,177,.55)}
@@ -133,6 +139,47 @@
     .card[data-type="faq"]     {border-color: rgba(94,234,212,.55)}
     .card[data-type="dx"]      {border-color: rgba(164,107,255,.65)}
     .card[data-type="docs"]    {border-color: rgba(94,234,212,.65)}
+
+    /* ★ NOWE: delikatny glow zawsze + mocniejszy glow na hover/focus – per typ */
+    .card[data-type="symptoms"]{ box-shadow: 0 14px 34px rgba(8,10,22,.42), 0 0 20px rgba(94,234,212,.14) }
+    .card[data-type="symptoms"]:hover,
+    .card[data-type="symptoms"]:focus-within{ box-shadow: 0 20px 46px rgba(8,10,22,.55), 0 0 0 2px rgba(94,234,212,.55), 0 0 34px rgba(94,234,212,.38) }
+
+    .card[data-type="causes"]{ box-shadow: 0 14px 34px rgba(8,10,22,.42), 0 0 20px rgba(164,107,255,.14) }
+    .card[data-type="causes"]:hover,
+    .card[data-type="causes"]:focus-within{ box-shadow: 0 20px 46px rgba(8,10,22,.55), 0 0 0 2px rgba(164,107,255,.55), 0 0 34px rgba(164,107,255,.42) }
+
+    .card[data-type="firstaid"]{ box-shadow: 0 14px 34px rgba(8,10,22,.42), 0 0 20px rgba(112,225,177,.14) }
+    .card[data-type="firstaid"]:hover,
+    .card[data-type="firstaid"]:focus-within{ box-shadow: 0 20px 46px rgba(8,10,22,.55), 0 0 0 2px rgba(112,225,177,.55), 0 0 34px rgba(112,225,177,.38) }
+
+    .card[data-type="otc"]{ box-shadow: 0 14px 34px rgba(8,10,22,.42), 0 0 20px rgba(255,184,108,.16) }
+    .card[data-type="otc"]:hover,
+    .card[data-type="otc"]:focus-within{ box-shadow: 0 20px 46px rgba(8,10,22,.55), 0 0 0 2px rgba(255,184,108,.65), 0 0 34px rgba(255,184,108,.45) }
+
+    .card[data-type="rx"]{ box-shadow: 0 14px 34px rgba(8,10,22,.42), 0 0 20px rgba(255,107,107,.16) }
+    .card[data-type="rx"]:hover,
+    .card[data-type="rx"]:focus-within{ box-shadow: 0 20px 46px rgba(8,10,22,.55), 0 0 0 2px rgba(255,107,107,.70), 0 0 34px rgba(255,107,107,.45) }
+
+    .card[data-type="rehab"]{ box-shadow: 0 14px 34px rgba(8,10,22,.42), 0 0 20px rgba(94,234,212,.16) }
+    .card[data-type="rehab"]:hover,
+    .card[data-type="rehab"]:focus-within{ box-shadow: 0 20px 46px rgba(8,10,22,.55), 0 0 0 2px rgba(94,234,212,.65), 0 0 34px rgba(94,234,212,.45) }
+
+    .card[data-type="myths"]{ box-shadow: 0 14px 34px rgba(8,10,22,.42), 0 0 20px rgba(164,107,255,.16) }
+    .card[data-type="myths"]:hover,
+    .card[data-type="myths"]:focus-within{ box-shadow: 0 20px 46px rgba(8,10,22,.55), 0 0 0 2px rgba(164,107,255,.65), 0 0 34px rgba(164,107,255,.45) }
+
+    .card[data-type="faq"]{ box-shadow: 0 14px 34px rgba(8,10,22,.42), 0 0 20px rgba(94,234,212,.14) }
+    .card[data-type="faq"]:hover,
+    .card[data-type="faq"]:focus-within{ box-shadow: 0 20px 46px rgba(8,10,22,.55), 0 0 0 2px rgba(94,234,212,.55), 0 0 34px rgba(94,234,212,.38) }
+
+    .card[data-type="dx"]{ box-shadow: 0 14px 34px rgba(8,10,22,.42), 0 0 20px rgba(164,107,255,.16) }
+    .card[data-type="dx"]:hover,
+    .card[data-type="dx"]:focus-within{ box-shadow: 0 20px 46px rgba(8,10,22,.55), 0 0 0 2px rgba(164,107,255,.65), 0 0 34px rgba(164,107,255,.45) }
+
+    .card[data-type="docs"]{ box-shadow: 0 14px 34px rgba(8,10,22,.42), 0 0 20px rgba(94,234,212,.16) }
+    .card[data-type="docs"]:hover,
+    .card[data-type="docs"]:focus-within{ box-shadow: 0 20px 46px rgba(8,10,22,.55), 0 0 0 2px rgba(94,234,212,.65), 0 0 34px rgba(94,234,212,.45) }
 
     ul.clean{ list-style:none; margin:0; padding:0 }
     ul.clean li{ position:relative; padding:10px 12px 10px 36px; border-radius:10px; margin-bottom:7px;
@@ -164,7 +211,7 @@
     .strip{ background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
       border: 1px solid rgba(255,255,255,.16); padding:.7rem 1rem; border-radius:.8rem; margin:.6rem 0; }
     .strip--warn{ background: linear-gradient(180deg, rgba(255,184,108,.18), rgba(255,255,255,.04)); border-color: rgba(255,184,108,.55); }
-    .strip--warn.alert{ box-shadow:0 0 0 2px rgba(255,107,107,.35), 0 10px 28px rgba(255,20,20,.18); border-color: rgba(255,107,107,.8) }
+    .strip--warn.alert{ box-shadow:0 0 0 2px rgba(255,107,107,.35), 0 10px 28px rgba(255,20,20,.18); border-color: rgba(255,107,107,.😎 }
     .cta{ display:inline-block; padding:8px 12px; border-radius:10px; font-weight:900; background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.18); text-decoration:none; color:var(--text); }
 
@@ -241,118 +288,6 @@
       <p class="legend">Zaznacz <strong>objawy</strong> — pasek <b>Ryzyko</b> oraz karty <b>Choroby</b>/<b>Lekarze</b> dopasują się automatycznie.</p>
     </div>
   </header>
-
-  <main>
-    <section class="cards" aria-label="Karty z informacjami szczegółowymi">
-      <!-- OBJAWY -->
-      <article class="card" data-type="symptoms" id="s-objawy" aria-labelledby="h-obj" role="tabpanel" aria-hidden="false">
-        <h3 id="h-obj">Objawy</h3>
-        <ul class="clean" id="symp-common"></ul>
-        <div class="more-wrap" id="mw-symp-common" hidden>
-          <div class="more-content" id="mc-symp-common"></div>
-          <button class="more-btn" data-more="symp-common">Pokaż więcej</button>
-        </div>
-
-        <div class="subhead">Kiedy się niepokoić (czerwone flagi)</div>
-        <div class="risk-mini" aria-label="Szacowany poziom ryzyka">
-          <small>Ryzyko: <span id="risk-label">niskie</span></small>
-          <span class="riskbar" id="riskbar"><span class="cursor" id="risk-cursor-card" style="left:0%"></span></span>
-        </div>
-        <ul class="clean" id="urgent"></ul>
-        <div class="more-wrap" id="mw-urgent" hidden>
-          <div class="more-content" id="mc-urgent"></div>
-          <button class="more-btn" data-more="urgent">Pokaż więcej</button>
-        </div>
-        <div class="strip strip--warn" id="urgent-strip">
-          Masz objawy alarmowe? <strong>Nie zwlekaj.</strong>
-          <a class="cta" id="cta-112" href="tel:112" aria-label="Zadzwoń na numer alarmowy 112">Zadzwoń 112</a>
-        </div>
-
-        <!-- HINT po zaznaczeniu objawów -->
-        <div id="dx-hint" class="dx-hint" role="status" aria-live="polite">
-          Masz zaznaczone objawy. Zobacz edukacyjne podpowiedzi w <strong>Choroby</strong> lub przejdź do <strong>Lekarze</strong>.
-          <button type="button" id="dx-open">Choroby</button>
-          <button type="button" id="docs-open">Lekarze</button>
-        </div>
-      </article>
-
-      <!-- PRZYCZYNY -->
-      <article class="card" data-type="causes" id="s-przyczyny" role="tabpanel" aria-hidden="true">
-        <h3 id="h-cause">Przyczyny</h3>
-        <ul class="clean" id="causes"></ul>
-        <div class="more-wrap" id="mw-causes" hidden>
-          <div class="more-content" id="mc-causes"></div>
-          <button class="more-btn" data-more="causes">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- PIERWSZA POMOC -->
-      <article class="card" data-type="firstaid" id="s-aid" role="tabpanel" aria-hidden="true">
-        <h3 id="h-aid">Pierwsza pomoc</h3>
-        <ul class="clean" id="firstaid"></ul>
-        <div class="more-wrap" id="mw-firstaid" hidden>
-          <div class="more-content" id="mc-firstaid"></div>
-          <button class="more-btn" data-more="firstaid">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- OTC -->
-      <article class="card" data-type="otc" id="s-otc" role="tabpanel" aria-hidden="true">
-        <h3 id="h-otc">Leki bez recepty (OTC)</h3>
-        <ul class="clean" id="meds-otc"></ul>
-        <div class="more-wrap" id="mw-meds-otc" hidden>
-          <div class="more-content" id="mc-meds-otc"></div>
-          <button class="more-btn" data-more="meds-otc">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- RX -->
-      <article class="card" data-type="rx" id="s-rx" role="tabpanel" aria-hidden="true">
-        <h3 id="h-rx">Leki na receptę (informacyjnie)</h3>
-        <ul class="clean" id="meds-rx"></ul>
-        <div class="more-wrap" id="mw-meds-rx" hidden>
-          <div class="more-content" id="mc-meds-rx"></div>
-          <button class="more-btn" data-more="meds-rx">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- REHAB -->
-      <article class="card" data-type="rehab" id="s-rehab" role="tabpanel" aria-hidden="true">
-        <h3 id="h-rehab">Rehabilitacja / Profilaktyka</h3>
-        <ul class="clean" id="rehab"></ul>
-        <div class="more-wrap" id="mw-rehab" hidden>
-          <div class="more-content" id="mc-rehab"></div>
-          <button class="more-btn" data-more="rehab">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- MITY -->
-      <article class="card" data-type="myths" id="s-mity" role="tabpanel" aria-hidden="true">
-        <h3 id="h-mity">Mity vs Fakty</h3>
-        <ul class="clean" id="myths"></ul>
-      </article>
-
-      <!-- FAQ -->
-      <article class="card" data-type="faq" id="s-faq" role="tabpanel" aria-hidden="true">
-        <h3 id="h-faq">FAQ</h3>
-        <ul class="clean" id="faq"></ul>
-      </article>
-
-      <!-- CHOROBY -->
-      <article class="card" data-type="dx" id="s-dx" role="tabpanel" aria-hidden="true">
-        <h3 id="h-dx">Choroby (beta)</h3>
-        <p class="dx-note">Podpowiedzi edukacyjne z zaznaczonych objawów. Nie zastępują konsultacji.</p>
-        <ul class="clean dx-list" id="dx-list"></ul>
-      </article>
-
-      <!-- LEKARZE -->
-      <article class="card" data-type="docs" id="s-docs" role="tabpanel" aria-hidden="true">
-        <h3 id="h-docs">Lekarze</h3>
-        <p class="docs-note">Kolejność: <b>POZ</b> (lekarz rodzinny) → specjaliści powiązani z problemem. Czerwone flagi kierują do <b>SOR/112</b>.</p>
-        <ul class="clean" id="docs-list"></ul>
-      </article>
-    </section>
-  </main>
   <script>
     /* Wróć + start od góry */
     try{ if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; } }catch(e){}
@@ -459,7 +394,7 @@
     }
 
     /* Zapamiętywanie wyborów (per część ciała + typ) */
-    const MEMO_KEY = `bh:symptoms:${TYP}:${CZESC}`;
+    const MEMO_KEY = bh:symptoms:${TYP}:${CZESC};
     function saveSelections(){
       try{
         const selected = Array.from(document.querySelectorAll('#symp-common li.li-checked')).map(li=>li.textContent.trim());
@@ -472,7 +407,7 @@
         const raw = localStorage.getItem(MEMO_KEY); if(!raw) return;
         const data = JSON.parse(raw)||{};
         const mark = (ulId, texts=[])=>{
-          const lis = Array.from(document.querySelectorAll(`#${ulId} li`));
+          const lis = Array.from(document.querySelectorAll(#${ulId} li));
           lis.forEach(li=>{
             const txt = li.textContent.trim();
             if(texts.includes(txt)){
@@ -699,19 +634,19 @@
         const ico=document.createElement('span'); ico.className='dx-ico'; ico.textContent = it.ico || '🩺';
 
         const text=document.createElement('div');
-        const matchTxt = it._match && it._match.length ? ` (trafienia: ${it._match.length})` : '';
-        text.innerHTML = `<strong title="${(it._match||[]).join(', ')}">${it.name}${matchTxt}</strong><div style="color:#b8c2e0;margin-top:4px">${it.advice}</div>`;
+        const matchTxt = it._match && it._match.length ?  (trafienia: ${it._match.length}) : '';
+        text.innerHTML = <strong title="${(it._match||[]).join(', ')}">${it.name}${matchTxt}</strong><div style="color:#b8c2e0;margin-top:4px">${it.advice}</div>;
 
         const meta=document.createElement('div'); meta.className='dx-meta';
         const confWrap=document.createElement('div'); confWrap.className='conf-wrap';
         const confBar=document.createElement('div'); confBar.className='conf-bar';
         const ratio = it._max ? Math.min(100, Math.round((it._score/it._max)*100)) : (it._score>=999?100:0);
         confBar.style.width = ratio + '%';
-        confBar.title = it._match && it._match.length ? `Pasujące objawy: ${it._match.join(', ')}` : 'Brak dopasowań';
+        confBar.title = it._match && it._match.length ? Pasujące objawy: ${it._match.join(', ')} : 'Brak dopasowań';
         confWrap.appendChild(confBar);
 
         const badge=document.createElement('span'); badge.className='dx-badge '+(it.badge==='sor'?'sor':'poz'); badge.textContent = it.badge==='sor'?'pilnie SOR':'POZ';
-        const hint=document.createElement('div'); hint.className='dx-match'; hint.textContent = it._match && it._match.length ? `Pasuje: ${it._match.join(', ')}` : '';
+        const hint=document.createElement('div'); hint.className='dx-match'; hint.textContent = it._match && it._match.length ? Pasuje: ${it._match.join(', ')} : '';
 
         meta.appendChild(confWrap); meta.appendChild(badge);
 
@@ -766,7 +701,7 @@
         const li = document.createElement('li');
         const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
         const title = document.createElement('div');
-        title.innerHTML = `<strong>${it.name}</strong><div style="color:#b8c2e0;margin-top:4px">${it.why}</div>`;
+        title.innerHTML = <strong>${it.name}</strong><div style="color:#b8c2e0;margin-top:4px">${it.why}</div>;
         const badge=document.createElement('span'); badge.className='doc-badge '+(it.badge==='sor'?'sor':'poz'); badge.textContent = (it.badge==='sor'?'pilnie SOR':'POZ/specjalista');
 
         // Mini-CTA: przygotowanie + mapy
