@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#0e1230" />
 
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="assets/style.css?v=10" />
+  <link rel="stylesheet" href="assets/style.css?v=11" />
 
   <style>
     html,body{height:100%}
@@ -556,13 +556,15 @@
   })();
   </script>
 
-  <!-- Rejestracja Service Workera -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(reg => console.log('SW zarejestrowany:', reg.scope))
-        .catch(err => console.error('SW błąd:', err));
-    }
-  </script>
+ </script>
+
+<!-- Rejestracja Service Workera -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js?v=11')
+      .then(reg => console.log('SW zarejestrowany:', reg.scope))
+      .catch(err => console.error('SW błąd:', err));
+  }
+</script>
 </body>
 </html>
