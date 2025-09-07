@@ -1,76 +1,89 @@
 <!doctype html>
-<html lang="pl">
+<html lang="pl" data-lang="pl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Offline</title>
   <meta name="theme-color" content="#0e1230" />
-  <link rel="stylesheet" href="assets/style.css?v=10">
+  <link rel="stylesheet" href="assets/style.css?v=10" />
 
   <style>
-    html,body {
-      height:100%; margin:0;
-      background:#0e1230; color:#eef2ff;
-      font-family: system-ui, Arial, sans-serif;
-      display:flex; align-items:center; justify-content:center;
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0e1230;
+      color: #eef2ff;
+      margin: 0; padding: 0;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      height: 100vh; text-align: center;
     }
-    .bh-wallpaper,.bh-grid{position:fixed;inset:0;pointer-events:none}
-    .bh-wallpaper{
-      z-index:0;
-      background:
-        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
-        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
-        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-      filter: blur(10px) saturate(118%);
+    h1 { font-size: 1.8rem; margin-bottom: 0.5em; }
+    p { margin: 0.5em 0; }
+    .langpick {
+      margin-top: 1em;
+      display:flex; gap:8px; align-items:center;
     }
-    .bh-grid{
-      z-index:1; opacity:.22;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
-      background-size:160px 138px; background-position:center;
+    select {
+      appearance:none;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.24);
+      color:#ffffff; border-radius:10px;
+      padding:6px 10px; cursor:pointer;
+      font-weight:900; letter-spacing:.3px;
     }
-
-    .offline-box {
-      position:relative; z-index:3;
-      background:rgba(60,32,100,.36);
-      border:1px solid rgba(164,107,255,.25);
-      border-radius:18px;
-      padding:24px;
-      text-align:center;
-      max-width:420px;
-      box-shadow:0 12px 28px rgba(8,10,22,.6);
-      backdrop-filter:saturate(120%) blur(6px);
-    }
-    h1 {
-      font-size:24px;
-      margin:0 0 12px;
-      color:#5eead4;
-      text-shadow:0 0 12px rgba(94,234,212,.55);
-    }
-    p {font-size:16px; line-height:1.5; margin:0 0 16px}
-    .btn-retry {
-      display:inline-block;
-      padding:10px 18px;
+    option { color:#0e1230; background:#ffffff }
+    .retry {
+      margin-top: 1.5em;
+      padding:10px 16px;
       border-radius:12px;
-      background:linear-gradient(180deg,#5eead4,#3ba9a0);
-      color:#0e1230; font-weight:800;
-      text-decoration:none;
-      box-shadow:0 0 14px rgba(94,234,212,.55);
+      background:rgba(96,165,250,.2);
+      border:1px solid rgba(59,130,246,.6);
+      color:#eaf2ff; font-weight:800;
+      cursor:pointer;
     }
-    .btn-retry:hover {box-shadow:0 0 20px rgba(94,234,212,.8)}
+    .retry:hover { background:rgba(96,165,250,.3); }
   </style>
 </head>
-
 <body>
-  <div class="bh-wallpaper"></div>
-  <div class="bh-grid"></div>
+  <h1 id="offlineTitle">Jesteś offline</h1>
+  <p id="offlineMsg">Brak połączenia z Internetem. Możesz korzystać z części treści, a po powrocie sieci spróbuj ponownie.</p>
 
-  <div class="offline-box">
-    <h1>Jesteś offline</h1>
-    <p>Nie masz połączenia z internetem.<br>
-       Możesz korzystać z podstawowych treści,<br>
-       a gdy wrócisz online — wszystko odświeży się automatycznie.</p>
-    <a href="index.html" class="btn-retry">🔄 Spróbuj ponownie</a>
+  <div class="langpick">
+    <label for="bhLang">Język / Language:</label>
+    <select id="bhLang">
+      <option value="pl" selected>PL</option>
+      <option value="en">EN</option>
+    </select>
   </div>
+
+  <button class="retry" onclick="location.reload()">🔄 Spróbuj ponownie</button>
+
+  <script>
+    const I18N = {
+      pl: {
+        offlineTitle: "Jesteś offline",
+        offlineMsg: "Brak połączenia z Internetem. Możesz korzystać z części treści, a po powrocie sieci spróbuj ponownie.",
+        retry: "🔄 Spróbuj ponownie"
+      },
+      en: {
+        offlineTitle: "You are offline",
+        offlineMsg: "No Internet connection. You can use some cached content and retry when back online.",
+        retry: "🔄 Retry"
+      }
+    };
+
+    function applyI18n(lang){
+      const dict = I18N[lang] || I18N.pl;
+      document.getElementById("offlineTitle").textContent = dict.offlineTitle;
+      document.getElementById("offlineMsg").textContent = dict.offlineMsg;
+      document.querySelector(".retry").textContent = dict.retry;
+      document.documentElement.setAttribute("lang", lang);
+      document.documentElement.setAttribute("data-lang", lang);
+    }
+
+    const sel = document.getElementById("bhLang");
+    sel.addEventListener("change", ()=> applyI18n(sel.value));
+    applyI18n(sel.value);
+  </script>
 </body>
 </html>
