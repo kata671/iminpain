@@ -1,4 +1,4 @@
-// assets/quizzes.js
+// assets/quizzes.js (v2 – shuffle + last-step auto-finish + smooth FX)
 (function(){
   const STORE_PROGRESS = 'bh.quizProgress.v1';
   const STORE_BADGES   = 'bh.badges.v1';
@@ -78,9 +78,13 @@
     }
   ];
 
-  /** =====================  STAN / PAMIĘĆ  ===================== **/
+  /** =====================  UTIL  ===================== **/
+  const shuffle = (arr)=>{ const a=[...arr]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
   const load = (k, d)=>{ try{ return JSON.parse(localStorage.getItem(k)) ?? d; }catch(_){ return d; } };
   const save = (k, v)=> localStorage.setItem(k, JSON.stringify(v));
+  const vibrate = (ms)=>{ try{ navigator.vibrate && navigator.vibrate(ms); }catch(_){ } };
+
+  /** =====================  STAN / PAMIĘĆ  ===================== **/
   const progress = load(STORE_PROGRESS, {}); // { quizId: true/false }
   const badges   = load(STORE_BADGES, {});
 
@@ -88,17 +92,18 @@
   const listEl = document.getElementById('quizList');
   const badgeBox = document.getElementById('badgeBox');
   const allPassed = ()=> QUIZZES.every(q=> !!progress[q.id]);
+
   function updateBadge(){
     if(allPassed()){
       badges.ratownik = true;
       save(STORE_BADGES, badges);
       badgeBox.style.display = 'inline-flex';
-      // proste konfetti
       try{ confettiLight(); }catch(_){}
     }else{
       badgeBox.style.display = badges.ratownik ? 'inline-flex':'none';
     }
   }
+
   function renderList(){
     listEl.innerHTML = '';
     QUIZZES.forEach(q=>{
@@ -133,6 +138,7 @@
   let active = null;   // obiekt quizu
   let step = 0;        // indeks pytania
   let correct = [];    // tablica true/false
+  let shuffledQ = [];  // (opcjonalnie) pytania potasowane – na razie zostawiamy kolejność
 
   function setProgressBar(){
     const total = active.q.length || 1;
@@ -142,83 +148,116 @@
   }
 
   function renderQuestion(){
-    const item = active.q[step];
+    const item = shuffledQ[step];
     qEl.textContent = item.q;
     aEl.innerHTML = '';
+    aEl.dataset.lock = '';
     winEl.setAttribute('aria-hidden','true');
 
-    item.a.forEach(([text, ok])=>{
+    const shuffledA = shuffle(item.a); // <= TASUJEMY ODPOWIEDZI
+    shuffledA.forEach(([text, ok])=>{
       const b = document.createElement('button');
       b.type = 'button';
       b.textContent = text;
       b.addEventListener('click', ()=>{
-        // pojedynczy wybór – blokujemy zmianę odpowiedzi po wyborze
         if(aEl.dataset.lock) return;
         aEl.dataset.lock = '1';
-        if(ok){ b.classList.add('ok'); correct[step] = true; vibrate(60); }
-        else { b.classList.add('bad'); correct[step] = false; vibrate(140); }
-        // pokaż, które były OK
+
+        if(ok){
+          b.classList.add('ok','pulse-ok');
+          correct[step] = true;
+          vibrate(60);
+        }else{
+          b.classList.add('bad','shake-bad');
+          correct[step] = false;
+          vibrate(140);
+        }
+
+        // Odsłoń które były OK
         Array.from(aEl.children).forEach(btn=>{
-          if(btn !== b && btn.textContent){
-            const pair = item.a.find(([t])=>t===btn.textContent);
-            if(pair && pair[1]) btn.classList.add('ok');
-          }
+          if(btn === b) return;
+          const t = btn.textContent;
+          const pair = shuffledA.find(([tt])=>tt===t);
+          if(pair && pair[1]) btn.classList.add('ok','soft-ok');
         });
+
+        // Jeżeli to ostatnie pytanie — kończymy bez „Dalej”
+        const last = (step >= shuffledQ.length - 1);
+        if(last){
+          btnNext.style.display = 'none';
+          setTimeout(finishQuiz, 600);
+        }else{
+          btnNext.style.display = '';
+        }
       });
       aEl.appendChild(b);
     });
+
+    // Ustaw podpis przycisku „Dalej” / „Zakończ” + widoczność
+    const last = (step >= shuffledQ.length - 1);
+    btnNext.textContent = last ? 'Zakończ' : 'Dalej';
+    btnNext.style.display = last ? 'none' : ''; // ukryj na ostatnim pytaniu
     setProgressBar();
   }
 
   function openQuiz(id){
     active = QUIZZES.find(x=>x.id===id);
-    step = 0; correct = new Array(active.q.length).fill(false);
+    // Kolejność pytań zostawiamy stałą (jeśli chcesz, podmień na shuffle(active.q))
+    shuffledQ = [...active.q];
+    step = 0; correct = new Array(shuffledQ.length).fill(false);
     titleEl.textContent = active.title;
     modal.setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
-    aEl.dataset.lock = '';
     renderQuestion();
   }
+
   function closeQuiz(){
     modal.setAttribute('aria-hidden','true');
     document.body.style.overflow = '';
   }
-  function vibrate(ms){ try{ navigator.vibrate && navigator.vibrate(ms); }catch(_){ } }
+
+  function finishQuiz(){
+    const passed = correct.every(Boolean);
+    winEl.setAttribute('aria-hidden', passed ? 'false':'true');
+    if(passed){
+      progress[active.id] = true;
+      save(STORE_PROGRESS, progress);
+      renderList();
+      updateBadge();
+      try{ confettiLight(); }catch(_){}
+    }
+  }
 
   btnClose.addEventListener('click', closeQuiz);
   modal.addEventListener('click', (e)=>{ if(e.target === modal) closeQuiz(); });
-  btnRestart.addEventListener('click', ()=>{ step=0; correct.fill(false); aEl.dataset.lock=''; renderQuestion(); });
+  btnRestart.addEventListener('click', ()=>{
+    step=0; correct = new Array(shuffledQ.length).fill(false);
+    renderQuestion();
+  });
 
   btnNext.addEventListener('click', ()=>{
     if(!aEl.dataset.lock){
-      // nic nie wybrano -> „kliknięcie” nie przechodzi
+      // nic nie wybrano -> subtelny sygnał
       vibrate(60);
       return;
     }
-    if(step < active.q.length - 1){
-      step++; aEl.dataset.lock=''; renderQuestion();
+    if(step < shuffledQ.length - 1){
+      step++;
+      renderQuestion();
     }else{
-      // KONIEC QUIZU
-      const passed = correct.every(Boolean);
-      winEl.setAttribute('aria-hidden', passed ? 'false':'true');
-      if(passed){
-        progress[active.id] = true;
-        save(STORE_PROGRESS, progress);
-        renderList();
-        updateBadge();
-        try{ confettiLight(); }catch(_){}
-      }
+      // teoretycznie ukryte, ale zostawiamy bezpiecznik
+      finishQuiz();
     }
   });
 
-  // Akcje na kartach
+  // Akcje na kartach listy
   listEl.addEventListener('click', (e)=>{
     const btn = e.target.closest('button[data-id]');
     if(!btn) return;
     openQuiz(btn.getAttribute('data-id'));
   });
 
-  // prosty „konfetti”
+  // lekkie „konfetti”
   function confettiLight(){
     const c = document.createElement('canvas'); c.width=innerWidth; c.height=innerHeight;
     Object.assign(c.style,{position:'fixed',inset:'0',pointerEvents:'none',zIndex:10001});
