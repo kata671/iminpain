@@ -3,65 +3,41 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Jesteś offline — Boli Help</title>
-  <meta name="theme-color" content="#0e1230" />
+  <title>Boli Help — Jesteś offline</title>
+  <meta name="theme-color" content="#0d1326" />
   <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="/icons/icon-512.png">
-  <link rel="stylesheet" href="assets/style.css?v=10" />
   <style>
-    body{background:#0e1230;color:#eaf2ff;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:20px}
-    .wrap{max-width:780px;margin:0 auto}
-    .panel{
-      background:rgba(60,32,100,.36); border:1px solid rgba(164,107,255,.28);
-      border-radius:18px; padding:18px; box-shadow:0 18px 46px rgba(8,10,22,.55)
-    }
-    h1{margin:0 0 8px;font-weight:900;letter-spacing:.3px}
-    .row{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
-    .btn{
-      display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.06));
-      font-weight:800;color:#fff;text-decoration:none
-    }
-    .btn--red{background:linear-gradient(135deg,#a46bff,#ff6ec7);color:#0b0b13;border-color:transparent}
-    ol{margin:10px 0 0 18px}
-    .muted{color:#b9b9d2}
+    :root{--bg:#0e1230;--panel:rgba(60,32,100,.36);--b:#a46bff;--txt:#eaf2ff}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;display:grid;place-items:center;background:var(--bg);color:var(--txt);
+         font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial}
+    .wrap{max-width:760px;width:100%;padding:20px}
+    .panel{background:var(--panel);border:1px solid rgba(164,107,255,.25);border-radius:18px;padding:20px}
+    h1{margin:0 0 6px;font-size:28px}
+    p{margin:6px 0 14px;opacity:.9}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-top:12px}
+    a.btn,button.btn{display:flex;align-items:center;justify-content:center;gap:10px;
+      text-decoration:none;color:#fff;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+      border:1px solid rgba(164,107,255,.35);border-radius:14px;padding:12px 14px;font-weight:800;letter-spacing:.2px}
+    .hint{font-size:13px;opacity:.8;margin-top:10px}
+    .small{font-size:12px;opacity:.65;margin-top:6px}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="panel">
       <h1>Jesteś offline</h1>
-      <p class="muted">Nie masz połączenia z internetem. Najważniejsze rzeczy masz poniżej:</p>
-
-      <div class="row">
-        <a class="btn btn--red" href="tel:112">📞 Zadzwoń 112</a>
-        <a class="btn" href="sms:?&body=To%20moja%20lokalizacja:%20https://maps.google.com/?q="
-           >✉️ Wyślij SMS z lokalizacją</a>
-        <a class="btn" href="maps://maps.apple.com/?q=szpital%20SOR">🗺️ Apple Maps (iOS)</a>
-        <a class="btn" href="https://www.google.com/maps/search/SOR+szpital+blisko+mnie">🗺️ Google Maps</a>
+      <p>Nie ma połączenia z internetem. Najważniejsze akcje nadal działają poniżej.</p>
+      <div class="grid">
+        <a class="btn" href="tel:112">📞 Zadzwoń 112</a>
+        <a class="btn" href="https://www.google.com/maps/search/SOR+szpital+blisko+mn" target="_blank" rel="noopener">🏥 Szpitale / SOR</a>
+        <a class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener">💊 apteka24</a>
+        <a class="btn" href="/index.html">🏠 Spróbuj otworzyć stronę główną</a>
       </div>
-
-      <h2 style="margin:12px 0 6px">Zadławienie — skrót</h2>
-      <ol>
-        <li>Zachęć do kaszlu. Jeśli nieskuteczny →</li>
-        <li>5 uderzeń w plecy między łopatki →</li>
-        <li>5 uciśnięć nadbrzusza. Powtarzaj 5↔5.</li>
-        <li>Utrata przytomności: RKO 30:2 + 112 + AED.</li>
-      </ol>
-
-      <h2 style="margin:14px 0 6px">RKO — skrót</h2>
-      <ol>
-        <li>Brak oddechu: zadzwoń 112.</li>
-        <li>Uciskaj środek mostka 100–120/min, głęb. 5–6 cm.</li>
-        <li>30 uciśnięć + 2 oddechy (jeśli potrafisz i chcesz).</li>
-      </ol>
-
-      <p class="muted" style="margin-top:14px">Po powrocie internetu strona sama się odświeży.</p>
+      <div class="hint">Gdy internet wróci, odśwież stronę (Ctrl/Cmd + R).</div>
+      <div class="small">Boli Help • tryb offline</div>
     </div>
   </div>
-  <script>
-    // Prosty „auto-retry”: gdy wróci sieć — przejdź na stronę główną
-    window.addEventListener('online', ()=> location.href = '/index.html');
-  </script>
 </body>
 </html>
