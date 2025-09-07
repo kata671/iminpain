@@ -633,5 +633,12 @@
     if(icon){ icon.addEventListener('click', ()=>{ results = search(input.value); if(results.length){ panel.setAttribute('aria-hidden','false'); render(); } }); }
   })();
   </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('SW zarejestrowany:', reg.scope))
+      .catch(err => console.error('SW błąd:', err));
+  }
+</script>
 </body>
 </html>
