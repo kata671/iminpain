@@ -1,9 +1,9 @@
-/* Boli Help – Service Worker (offline fallback) */
-const CACHE_NAME = 'bolihelp-v12';
+/* Boli Help — finalny Service Worker (offline fallback + cache) */
+const CACHE_NAME = 'bolihelp-v13';
 
-/* Zasoby do pre-cache – wpisuj dokładnie takie ścieżki, jakie masz w repo */
+/* Zasoby do pre-cache — wpisz dokładnie takie ścieżki, jakie masz w repo */
 const ASSETS = [
-  '/',                 // root (dla GitHub Pages może być przekierowanie, ale zostawiamy)
+  '/',                   // root (dla GitHub Pages może być redirect, ale zostawiamy)
   '/index.html',
   '/offline.html',
   '/manifest.json',
@@ -14,10 +14,10 @@ const ASSETS = [
   '/img/mezczyzna-model1.png',
   '/img/dziecko-model1.png',
   '/icons/icon-192.png',
-  '/icons/icon-512.png'
+  '/icons/icon-512.png',
 ];
 
-/* Instalacja – pre-cache */
+/* Instalacja — pre-cache */
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -26,18 +26,21 @@ self.addEventListener('install', (event) => {
   );
 });
 
-/* Aktywacja – sprzątanie starych cache */
+/* Aktywacja — sprzątanie starych cache */
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+      Promise.all(keys
+        .filter((k) => k !== CACHE_NAME)
+        .map((k) => caches.delete(k))
+      )
     ).then(() => self.clients.claim())
   );
 });
 
-/* Fetch:
-   - dla nawigacji/HTML → network-first, a jak się nie uda → cache → offline.html
-   - dla reszty → cache-first z dogrywką do cache (stale-while-revalidate)
+/* Strategia:
+   - dla nawigacji (HTML): network-first z fallbackiem do cache/offline.html
+   - dla reszty (CSS/JS/IMG itp.): cache-first + dogrywanie do cache
 */
 self.addEventListener('fetch', (event) => {
   const req = event.request;
@@ -55,7 +58,7 @@ self.addEventListener('fetch', (event) => {
           return res;
         })
         .catch(async () => {
-          // Najpierw strona z cache (jeśli mamy), a jak nie – offline.html
+          // Najpierw strona z cache (jeśli mamy), a jak nie — offline.html
           const cached = await caches.match(req);
           return cached || caches.match('/offline.html');
         })
@@ -63,13 +66,13 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 2) Inne zasoby (CSS/JS/img) – cache-first
+  // 2) Inne zasoby (CSS/JS/img) — cache-first
   event.respondWith(
     caches.match(req).then((hit) => {
       if (hit) return hit;
       return fetch(req)
         .then((res) => {
-          // tylko GET i 200 – zapisz do cache
+          // tylko GET i 200 — zapisz do cache
           if (req.method === 'GET' && res.status === 200) {
             const clone = res.clone();
             caches.open(CACHE_NAME).then((c) => c.put(req, clone));
@@ -83,4 +86,9 @@ self.addEventListener('fetch', (event) => {
         });
     })
   );
+});
+
+// Opcjonalnie: natychmiastowe przejęcie po SKIP_WAITING z klienta
+self.addEventListener('message', (event) => {
+  if (event.data === 'SKIP_WAITING') self.skipWaiting();
 });
