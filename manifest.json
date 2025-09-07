@@ -1,13 +1,23 @@
 {
-  "name": "Boli-mnie — pierwsza pomoc i lokalizacja",
-  "short_name": "Boli-mnie",
-  "start_url": "index.html",
-  "scope": "./",
+  "name": "Boli Help — pierwsza pomoc i lokalizacja",
+  "short_name": "Boli Help",
+  "description": "Nowoczesna aplikacja pierwszej pomocy: objawy, przyczyny, lekarze, choroby, quizy i szybka lokalizacja pomocy (SOR, apteki).",
+  "start_url": "/index.html",
+  "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#0d1326",
   "theme_color": "#7a4dff",
   "icons": [
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
