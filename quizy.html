@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pl" data-lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Boli Help — Quizy i Trening</title>
+  <meta name="theme-color" content="#0e1230" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/icons/icon-512.png">
+  <link rel="stylesheet" href="assets/style.css?v=10" />
+
+  <style>
+    :root{
+      --bg:#0e1230; --panel:rgba(60,32,100,.36); --line:rgba(164,107,255,.25);
+      --text:#eaf2ff; --muted:#b8c2e0;
+      --ok:#5eead4; --bad:#ff6b6b; --brand:#a46bff;
+    }
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+    .wrap{max-width:1100px;margin:0 auto;padding:16px}
+    .brandbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 16px}
+    .brandbar h1{margin:0;font-size:28px;letter-spacing:.2px}
+    .brandbar a.home{display:inline-flex;gap:8px;align-items:center;text-decoration:none;color:var(--text);
+      padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.04)}
+    .panels{display:grid;gap:16px;grid-template-columns:1.2fr .8fr}
+    @media (max-width:900px){ .panels{grid-template-columns:1fr} }
+
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px}
+    .h{font-weight:900;letter-spacing:.2px;margin:0 0 8px}
+    .muted{color:var(--muted)}
+    .list{display:grid;gap:10px}
+    .quiz-row{display:flex;align-items:center;gap:12px;justify-content:space-between;border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);padding:10px 12px;border-radius:12px}
+    .quiz-row .meta{display:flex;flex-direction:column;gap:2px}
+    .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);padding:6px 10px;border-radius:999px;font-weight:800}
+    .btn{appearance:none;cursor:pointer;padding:10px 14px;border-radius:12px;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));color:var(--text);font-weight:800}
+    .btn[disabled]{opacity:.5;cursor:not-allowed}
+
+    /* widok quizu */
+    .q-wrap{display:none}
+    .q-wrap[aria-hidden="false"]{display:block}
+    .q-title{font-size:18px;font-weight:900;margin:10px 0}
+    .answers{display:grid;gap:8px;margin:8px 0}
+    .ans{display:block;text-align:left;border:1px solid rgba(255,255,255,.22);border-radius:12px;background:rgba(255,255,255,.08);
+      padding:10px 12px;cursor:pointer}
+    .ans:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.25)}
+    .ans.ok{box-shadow:0 0 0 2px rgba(94,234,212,.65)}
+    .ans.bad{box-shadow:0 0 0 2px rgba(255,107,107,.7)}
+    .progress{display:flex;align-items:center;gap:10px;margin:8px 0}
+    .bar{flex:1;height:10px;border-radius:999px;outline:1px solid rgba(255,255,255,.14);
+      background:linear-gradient(90deg,var(--ok),#ff6ec7);position:relative;overflow:hidden}
+    .cursor{position:absolute;top:50%;transform:translate(-50%,-50%);left:6%;width:14px;height:14px;border-radius:50%;
+      background:#fff;box-shadow:0 0 0 2px rgba(94,234,212,.35)}
+    .q-actions{display:flex;gap:8px;align-items:center}
+    .table{width:100%;border-collapse:separate;border-spacing:0 8px}
+    .table th{font-weight:900;text-align:left;color:var(--muted);padding:2px 6px}
+    .table td{padding:10px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12)}
+    .table td:first-child{border-radius:12px 0 0 12px}
+    .table td:last-child{border-radius:0 12px 12px 0}
+    .okmark{color:var(--ok);font-weight:900}
+    .badmark{color:var(--bad);font-weight:900}
+    .badge{display:none;margin-top:10px;padding:12px;border-radius:14px;border:1px solid rgba(94,234,212,.55);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(34,227,160,.12);font-weight:900}
+    .badge[aria-hidden="false"]{display:block}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brandbar">
+      <h1>Quizy i Trening</h1>
+      <a class="home" href="index.html">← Wróć na stronę główną</a>
+    </div>
+
+    <div class="panels">
+      <!-- Lista i postęp -->
+      <section class="card">
+        <h2 class="h">Ścieżka „Ratownik”</h2>
+        <p class="muted" id="desc">Ukończ wszystkie quizy z wynikiem 100%, aby zdobyć odznakę <strong>Ratownika</strong>.</p>
+
+        <table class="table" id="table">
+          <thead>
+            <tr><th>Quiz</th><th>Pytania</th><th>Wynik</th><th>Akcja</th></tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+
+        <div id="badge" class="badge" aria-hidden="true">🏅 Gratulacje! Zdobyto odznakę <strong>RATOWNIK</strong>. Świetna robota!</div>
+      </section>
+
+      <!-- Prawy panel: aktywny quiz -->
+      <section class="card">
+        <h2 class="h">Aktywny quiz</h2>
+        <div id="qwrap" class="q-wrap" aria-hidden="true">
+          <div class="progress"><div class="bar"><span class="cursor" id="cursor"></span></div><div><span id="step">1</span>/<span id="total">1</span></div></div>
+          <div class="q-title" id="qtitle">…</div>
+          <div class="answers" id="answers"></div>
+          <div class="q-actions">
+            <button class="btn" id="prev">Wstecz</button>
+            <button class="btn" id="next">Dalej</button>
+            <button class="btn" id="finish" style="margin-left:auto">Zakończ</button>
+          </div>
+          <div class="muted" id="hint" style="margin-top:6px"></div>
+        </div>
+
+        <div id="idle">
+          <p class="muted">Wybierz quiz z listy po lewej, aby rozpocząć. Postęp i wyniki zapisujemy lokalnie w Twojej przeglądarce.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="assets/quiz.js?v=1"></script>
+</body>
+</html>
