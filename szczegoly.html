@@ -351,58 +351,72 @@
         <p class="docs-note">Kolejność: <b>POZ</b> (lekarz rodzinny) → specjaliści powiązani z problemem. Czerwone flagi kierują do <b>SOR/112</b>.</p>
         <ul class="clean" id="docs-list"></ul>
       </article>
-    </section>
-  
+    
+<div class="card fade-in" id="statystyki">
+  <h3>📊 Statystyki i ciekawostki medyczne</h3>
+  <ul class="checklist">
+    <li>✅ Ponad 70% przypadków bólu brzucha ma podłoże funkcjonalne, nie chorobowe.</li>
+    <li>✅ Mężczyźni zgłaszają objawy o 40% rzadziej niż kobiety – mimo podobnych dolegliwości.</li>
+    <li>✅ Stres odpowiada nawet za 60% zgłoszeń bólowych bez uszkodzeń fizycznych.</li>
+    <li>✅ Aż 90% pacjentów szuka objawów w internecie przed wizytą u lekarza.</li>
+    <li>✅ Tylko 1 na 10 przypadków bólu klatki piersiowej to faktyczny zawał serca.</li>
+    <li>✅ Objawy psychiczne (lęk, panika) mogą dawać silne objawy somatyczne: ból serca, duszności.</li>
+    <li>✅ Ból lewej ręki to tylko jeden z wielu objawów zawału – ważny jest kontekst!</li>
+    <li>✅ Większość dzieci z bólem brzucha nie wymaga interwencji – to stres lub dieta.</li>
+  </ul>
+</div>
+
 <style>
-  .stat-card {
-    background: rgba(20, 30, 60, 0.9);
+  .fade-in {
+    animation: fadeInUp 1s ease-in-out;
+  }
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .card#statystyki {
+    background: rgba(20, 30, 60, 0.95);
+    border: 1px solid rgba(255,255,255,0.08);
     border-radius: 16px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: #ffffff;
-    box-shadow: 0 0 12px rgba(0,0,0,0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 1.8rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 16px rgba(48,213,200,0.4);
   }
-  .stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 18px rgba(48,213,200,0.7);
-  }
-  .stat-card h3 {
-    font-size: 1.4rem;
-    margin-bottom: 0.75rem;
+  .card#statystyki h3 {
     color: #30d5c8;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
   }
-  .stat-card ul {
+  .card#statystyki ul.checklist {
     list-style: none;
     padding: 0;
     margin: 0;
+  }
+  .card#statystyki ul.checklist li {
+    margin-bottom: 0.75rem;
     font-size: 1.05rem;
-  }
-  .stat-card li {
-    margin-bottom: 0.6rem;
+    line-height: 1.5;
     position: relative;
-    padding-left: 1.5rem;
+    padding-left: 1.6rem;
+    color: #ffffff;
   }
-  .stat-card li::before {
-    content: '✓';
+  .card#statystyki ul.checklist li::before {
+    content: '✔';
     position: absolute;
     left: 0;
     color: #7fffd4;
+    font-weight: bold;
   }
 </style>
 
-<section class="stat-card">
-  <h3>📊 Statystyki i ciekawostki medyczne</h3>
-  <ul>
-    <li>Ponad 70% przypadków bólu brzucha ma przyczynę funkcjonalną, nie chorobową.</li>
-    <li>Mężczyźni zgłaszają objawy o 40% rzadziej niż kobiety.</li>
-    <li>Ból lewej ręki może, ale nie musi oznaczać zawału — liczy się kontekst.</li>
-    <li>90% pacjentów googluje objawy przed wizytą u lekarza.</li>
-    <li>Stres i napięcie mięśniowe to częste przyczyny bólu bez uszkodzeń fizycznych.</li>
-  </ul>
 </section>
-
-</main>
+  </main>
   <script>
     /* Wróć + start od góry */
     try{ if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; } }catch(e){}
