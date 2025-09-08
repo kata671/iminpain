@@ -259,6 +259,41 @@
   color: white;
 }
 
+
+/* RESPONSYWNOŚĆ */
+@media screen and (max-width: 768px) {
+  .card {
+    padding: 1em;
+    margin: 1em 0;
+  }
+  section h2 {
+    font-size: 1.25rem;
+  }
+}
+
+/* FADE-IN animacje */
+.card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Rozwijane FAQ (jeśli będzie) */
+.faq-list li {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.faq-list li:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
 </style>
 </head>
 <body>
@@ -304,116 +339,134 @@
   </header>
 
   <main>
-    <section class="cards" aria-label="Karty z informacjami szczegółowymi">
-      <!-- OBJAWY -->
-      <article class="card" data-type="symptoms" id="s-objawy" aria-labelledby="h-obj" role="tabpanel" aria-hidden="false">
-        <h3 id="h-obj">Objawy</h3>
-        <ul class="clean" id="symp-common"></ul>
-        <div class="more-wrap" id="mw-symp-common" hidden>
-          <div class="more-content" id="mc-symp-common"></div>
-          <button class="more-btn" data-more="symp-common">Pokaż więcej</button>
-        </div>
-
-        <div class="subhead">Kiedy się niepokoić (czerwone flagi)</div>
-        <div class="risk-mini" aria-label="Szacowany poziom ryzyka">
-          <small>Ryzyko: <span id="risk-label">niskie</span></small>
-          <span class="riskbar" id="riskbar"><span class="cursor" id="risk-cursor-card" style="left:0%"></span></span>
-        </div>
-        <ul class="clean" id="urgent"></ul>
-        <div class="more-wrap" id="mw-urgent" hidden>
-          <div class="more-content" id="mc-urgent"></div>
-          <button class="more-btn" data-more="urgent">Pokaż więcej</button>
-        </div>
-        <div class="strip strip--warn" id="urgent-strip">
+<section aria-label="Karty z informacjami szczegółowymi" class="cards">
+<!-- OBJAWY -->
+<article aria-hidden="false" aria-labelledby="h-obj" class="card" data-type="symptoms" id="s-objawy" role="tabpanel">
+<h3 id="h-obj">Objawy</h3>
+<ul class="clean" id="symp-common"></ul>
+<div class="more-wrap" hidden="" id="mw-symp-common">
+<div class="more-content" id="mc-symp-common"></div>
+<button class="more-btn" data-more="symp-common">Pokaż więcej</button>
+</div>
+<div class="subhead">Kiedy się niepokoić (czerwone flagi)</div>
+<div aria-label="Szacowany poziom ryzyka" class="risk-mini">
+<small>Ryzyko: <span id="risk-label">niskie</span></small>
+<span class="riskbar" id="riskbar"><span class="cursor" id="risk-cursor-card" style="left:0%"></span></span>
+</div>
+<ul class="clean" id="urgent"></ul>
+<div class="more-wrap" hidden="" id="mw-urgent">
+<div class="more-content" id="mc-urgent"></div>
+<button class="more-btn" data-more="urgent">Pokaż więcej</button>
+</div>
+<div class="strip strip--warn" id="urgent-strip">
           Masz objawy alarmowe? <strong>Nie zwlekaj.</strong>
-          <a class="cta" id="cta-112" href="tel:112" aria-label="Zadzwoń na numer alarmowy 112">Zadzwoń 112</a>
-        </div>
-
-        <!-- HINT po zaznaczeniu objawów -->
-        <div id="dx-hint" class="dx-hint" role="status" aria-live="polite">
+<a aria-label="Zadzwoń na numer alarmowy 112" class="cta" href="tel:112" id="cta-112">Zadzwoń 112</a>
+</div>
+<!-- HINT po zaznaczeniu objawów -->
+<div aria-live="polite" class="dx-hint" id="dx-hint" role="status">
           Masz zaznaczone objawy. Zobacz edukacyjne podpowiedzi w <strong>Choroby</strong> lub przejdź do <strong>Lekarze</strong>.
-          <button type="button" id="dx-open">Choroby</button>
-          <button type="button" id="docs-open">Lekarze</button>
-        </div>
-      </article>
-
-      <!-- PRZYCZYNY -->
-      <article class="card" data-type="causes" id="s-przyczyny" role="tabpanel" aria-hidden="true">
-        <h3 id="h-cause">Przyczyny</h3>
-        <ul class="clean" id="causes"></ul>
-        <div class="more-wrap" id="mw-causes" hidden>
-          <div class="more-content" id="mc-causes"></div>
-          <button class="more-btn" data-more="causes">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- PIERWSZA POMOC -->
-      <article class="card" data-type="firstaid" id="s-aid" role="tabpanel" aria-hidden="true">
-        <h3 id="h-aid">Pierwsza pomoc</h3>
-        <ul class="clean" id="firstaid"></ul>
-        <div class="more-wrap" id="mw-firstaid" hidden>
-          <div class="more-content" id="mc-firstaid"></div>
-          <button class="more-btn" data-more="firstaid">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- OTC -->
-      <article class="card" data-type="otc" id="s-otc" role="tabpanel" aria-hidden="true">
-        <h3 id="h-otc">Leki bez recepty (OTC)</h3>
-        <ul class="clean" id="meds-otc"></ul>
-        <div class="more-wrap" id="mw-meds-otc" hidden>
-          <div class="more-content" id="mc-meds-otc"></div>
-          <button class="more-btn" data-more="meds-otc">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- RX -->
-      <article class="card" data-type="rx" id="s-rx" role="tabpanel" aria-hidden="true">
-        <h3 id="h-rx">Leki na receptę (informacyjnie)</h3>
-        <ul class="clean" id="meds-rx"></ul>
-        <div class="more-wrap" id="mw-meds-rx" hidden>
-          <div class="more-content" id="mc-meds-rx"></div>
-          <button class="more-btn" data-more="meds-rx">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- REHAB -->
-      <article class="card" data-type="rehab" id="s-rehab" role="tabpanel" aria-hidden="true">
-        <h3 id="h-rehab">Rehabilitacja / Profilaktyka</h3>
-        <ul class="clean" id="rehab"></ul>
-        <div class="more-wrap" id="mw-rehab" hidden>
-          <div class="more-content" id="mc-rehab"></div>
-          <button class="more-btn" data-more="rehab">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- MITY -->
-      <article class="card" data-type="myths" id="s-mity" role="tabpanel" aria-hidden="true">
-        <h3 id="h-mity">Mity vs Fakty</h3>
-        <ul class="clean" id="myths"></ul>
-      </article>
-
-      <!-- FAQ -->
-      <article class="card" data-type="faq" id="s-faq" role="tabpanel" aria-hidden="true">
-        <h3 id="h-faq">FAQ</h3>
-        <ul class="clean" id="faq"></ul>
-      </article>
-
-      <!-- CHOROBY -->
-      <article class="card" data-type="dx" id="s-dx" role="tabpanel" aria-hidden="true">
-        <h3 id="h-dx">Choroby (beta)</h3>
-        <p class="dx-note">Podpowiedzi edukacyjne z zaznaczonych objawów. Nie zastępują konsultacji.</p>
-        <ul class="clean dx-list" id="dx-list"></ul>
-      </article>
-
-      <!-- LEKARZE -->
-      <article class="card" data-type="docs" id="s-docs" role="tabpanel" aria-hidden="true">
-        <h3 id="h-docs">Lekarze</h3>
-        <p class="docs-note">Kolejność: <b>POZ</b> (lekarz rodzinny) → specjaliści powiązani z problemem. Czerwone flagi kierują do <b>SOR/112</b>.</p>
-        <ul class="clean" id="docs-list"></ul>
-      </article>
-    </section>
-  </main>
+          <button id="dx-open" type="button">Choroby</button>
+<button id="docs-open" type="button">Lekarze</button>
+</div>
+</article>
+<!-- PRZYCZYNY -->
+<article aria-hidden="true" class="card" data-type="causes" id="s-przyczyny" role="tabpanel">
+<h3 id="h-cause">Przyczyny</h3>
+<ul class="clean" id="causes"></ul>
+<div class="more-wrap" hidden="" id="mw-causes">
+<div class="more-content" id="mc-causes"></div>
+<button class="more-btn" data-more="causes">Pokaż więcej</button>
+</div>
+</article>
+<!-- PIERWSZA POMOC -->
+<article aria-hidden="true" class="card" data-type="firstaid" id="s-aid" role="tabpanel">
+<h3 id="h-aid">Pierwsza pomoc</h3>
+<ul class="clean" id="firstaid"></ul>
+<div class="more-wrap" hidden="" id="mw-firstaid">
+<div class="more-content" id="mc-firstaid"></div>
+<button class="more-btn" data-more="firstaid">Pokaż więcej</button>
+</div>
+</article>
+<!-- OTC -->
+<article aria-hidden="true" class="card" data-type="otc" id="s-otc" role="tabpanel">
+<h3 id="h-otc">Leki bez recepty (OTC)</h3>
+<ul class="clean" id="meds-otc"></ul>
+<div class="more-wrap" hidden="" id="mw-meds-otc">
+<div class="more-content" id="mc-meds-otc"></div>
+<button class="more-btn" data-more="meds-otc">Pokaż więcej</button>
+</div>
+</article>
+<!-- RX -->
+<article aria-hidden="true" class="card" data-type="rx" id="s-rx" role="tabpanel">
+<h3 id="h-rx">Leki na receptę (informacyjnie)</h3>
+<ul class="clean" id="meds-rx"></ul>
+<div class="more-wrap" hidden="" id="mw-meds-rx">
+<div class="more-content" id="mc-meds-rx"></div>
+<button class="more-btn" data-more="meds-rx">Pokaż więcej</button>
+</div>
+</article>
+<!-- REHAB -->
+<article aria-hidden="true" class="card" data-type="rehab" id="s-rehab" role="tabpanel">
+<h3 id="h-rehab">Rehabilitacja / Profilaktyka</h3>
+<ul class="clean" id="rehab"></ul>
+<div class="more-wrap" hidden="" id="mw-rehab">
+<div class="more-content" id="mc-rehab"></div>
+<button class="more-btn" data-more="rehab">Pokaż więcej</button>
+</div>
+</article>
+<!-- MITY -->
+<article aria-hidden="true" class="card" data-type="myths" id="s-mity" role="tabpanel">
+<h3 id="h-mity">Mity vs Fakty</h3>
+<ul class="clean" id="myths"></ul>
+</article>
+<!-- FAQ -->
+<article aria-hidden="true" class="card" data-type="faq" id="s-faq" role="tabpanel">
+<h3 id="h-faq">FAQ</h3>
+<ul class="clean" id="faq"></ul>
+</article>
+<!-- CHOROBY -->
+<article aria-hidden="true" class="card" data-type="dx" id="s-dx" role="tabpanel">
+<h3 id="h-dx">Choroby (beta)</h3>
+<p class="dx-note">Podpowiedzi edukacyjne z zaznaczonych objawów. Nie zastępują konsultacji.</p>
+<ul class="clean dx-list" id="dx-list"></ul>
+</article>
+<!-- LEKARZE -->
+<article aria-hidden="true" class="card" data-type="docs" id="s-docs" role="tabpanel">
+<h3 id="h-docs">Lekarze</h3>
+<p class="docs-note">Kolejność: <b>POZ</b> (lekarz rodzinny) → specjaliści powiązani z problemem. Czerwone flagi kierują do <b>SOR/112</b>.</p>
+<ul class="clean" id="docs-list"></ul>
+</article>
+</section>
+<section class="card" id="czerwone_flagi">
+<h2>🔺 Kiedy natychmiast zadzwonić po pomoc</h2>
+<ul>
+<li>Utrata przytomności</li>
+<li>Silny ból głowy o nagłym początku</li>
+<li>Drętwienie twarzy, ramienia lub nogi</li>
+<li>Problemy z mówieniem lub widzeniem</li>
+<li>Drgawki</li>
+<li>Problemy z oddychaniem</li>
+<li>Silne zawroty głowy z wymiotami</li>
+</ul>
+</section><section class="card" id="samopomoc">
+<h2>🧘 Samopomoc i profilaktyka</h2>
+<ul>
+<li>Codzienne spacery (minimum 15 minut)</li>
+<li>Unikanie nadmiaru ekranów</li>
+<li>Techniki oddechowe (4-7-8)</li>
+<li>Ćwiczenia rozciągające szyję i barki</li>
+<li>Odpowiednia ilość snu (7-8h)</li>
+<li>Dbanie o nawodnienie</li>
+</ul>
+</section><section class="card" id="statystyki">
+<h2>📊 Ciekawostki i statystyki</h2>
+<ul>
+<li>🧠 40% bólów głowy to napięcie mięśni karku i szyi</li>
+<li>💧 75% Polaków pije za mało wody — odwodnienie nasila objawy</li>
+<li>🛌 Sen krótszy niż 6h zwiększa ryzyko migren o 30%</li>
+<li>💊 Nadużywanie leków OTC może prowadzić do tzw. bólu z odbicia</li>
+</ul>
+</section></main>
   <script>
     /* Wróć + start od góry */
     try{ if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; } }catch(e){}
