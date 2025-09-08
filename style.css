@@ -1,9 +1,52 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at center, #12002e 0%, #050012 100%);
-  color: #fff;
+
+body.dark-theme {
+    background: linear-gradient(to bottom right, #1e0a3c, #002d40);
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
 }
-main {
-  padding: 20px;
+.container {
+    padding: 20px;
+}
+header h1 {
+    font-size: 1.8em;
+    color: #ffffff;
+}
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.tab {
+    background: #3e1d68;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.quiz-answer {
+    display: block;
+    margin: 8px 0;
+    padding: 10px;
+    background-color: #4a1c63;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.quiz-answer:hover {
+    background-color: #5e2a7a;
+}
+footer {
+    margin-top: 20px;
+    font-size: 0.9em;
 }

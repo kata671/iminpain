@@ -1,16 +1,54 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Boli Help – Szczegóły</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="app.js"></script>
-  <script defer src="quiz.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Szczegóły dolegliwości</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
 </head>
-<body>
-  <main id="app">
-    <!-- Interfejs główny wczytywany dynamicznie -->
-  </main>
+<body class="dark-theme">
+    <div class="container">
+        <header>
+            <h1>BoliHelp / Szczegóły</h1>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab">Objawy</button>
+            <button class="tab">Choroby</button>
+            <button class="tab">Leki</button>
+            <button class="tab">Lekarze</button>
+            <button class="tab">FAQ</button>
+        </nav>
+
+        <section class="card objawy">
+            <h2>Objawy</h2>
+            <ul>
+                <li><input type="checkbox"/> Ból głowy</li>
+                <li><input type="checkbox"/> Nudności</li>
+                <li><input type="checkbox"/> Zawroty głowy</li>
+            </ul>
+        </section>
+
+        <section class="card statystyki">
+            <h2>📊 Statystyki i ciekawostki</h2>
+            <p>Najczęstsze objawy to ból głowy (55%) i nudności (40%).</p>
+            <p>🧠 Ciekawostka: Migrena dotyczy częściej kobiet niż mężczyzn.</p>
+        </section>
+
+        <section class="card quiz">
+            <h2>🧠 Trening reagowania: Co zrobisz?</h2>
+            <p>Osoba obok ciebie nagle traci przytomność i nie reaguje na wołanie. Co robisz jako pierwsze?</p>
+            <button class="quiz-answer">✅ Sprawdzam puls i oddech</button>
+            <button class="quiz-answer">📞 Wzywam pomoc i sprawdzam oddech</button>
+            <button class="quiz-answer">💧 Podaję wodę i wachluję</button>
+            <button class="quiz-answer">💊 Szukam leków w torbie</button>
+        </section>
+
+        <footer>
+            <p>Masz objawy alarmowe? <strong>Nie zwlekaj.</strong> <button>Zadzwoń 112</button></p>
+        </footer>
+    </div>
 </body>
 </html>
