@@ -1,5 +1,39 @@
 <!doctype html>
 <html lang="pl" data-lang="pl">
+<script>
+/* Blokuj ładowanie starego Google Translate (translate_a/element.js) */
+(function () {
+  const OrigCreate = document.createElement;
+  document.createElement = function(tag){
+    const el = OrigCreate.call(document, tag);
+    if (tag.toLowerCase() === 'script') {
+      const d = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src');
+      Object.defineProperty(el, 'src', {
+        get(){ return d.get ? d.get.call(this) : this.getAttribute('src'); },
+        set(v){
+          if (v && v.includes('translate_a/element.js')) {
+            console.warn('Blocked old Google Translate loader:', v);
+            return; /* nie ustawiaj src -> nie załaduje się */
+          }
+          d.set ? d.set.call(this, v) : this.setAttribute('src', v);
+        }
+      });
+    }
+    return el;
+  };
+
+  const origAppend = Node.prototype.appendChild;
+  Node.prototype.appendChild = function(node){
+    try {
+      if (node && node.tagName === 'SCRIPT' && node.src && node.src.includes('translate_a/element.js')) {
+        console.warn('Removed old Google Translate script node.');
+        return node; /* ignoruj dodanie */
+      }
+    } catch(e){}
+    return origAppend.call(this, node);
+  };
+})();
+</script>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -679,70 +713,74 @@
   function removeAll(){
     KILL.forEach(sel => document.querySelectorAll(sel).forEach(n => n.remove()));
   }
-<!-- NUCLEAR CLEAN: stary tłumacz + "Sprawdź się" -->
+
+<!-- NUCLEAR CLEAN: stary translator + "Sprawdź się" + wstawienie nowego -->
 <script>
 (function(){
-  // 0) Pomocnicze
-  const txt = el => (el.textContent||"").replace(/\s+/g," ").trim().toLowerCase();
-  const isQuiz = el => /^sprawdź się/.test(txt(el));
-  const isLangPill = el => /^(pl|en|de|uk|ru|fr|es|it|cs|sk|lt|lv|ro|nl|pt)$/.test(txt(el)) &&
-                           /lang|translate|pill|język|language/i.test(el.className||"");
+  // Pomocnicze: tekst bez polskich znaków i nadmiarowych spacji
+  const norm = s => (s||'')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')   // zdejmij diakrytyki
+    .replace(/\s+/g,' ').trim();
 
-  // 1) TWARDY CSS – chowa wszystkie klasy Google + znane wrappery
-  const css = document.createElement("style");
+  const isQuiz = el => /^sprawdz sie/.test(norm(el.textContent));
+  const isLangPill = el => {
+    const t = norm(el.textContent);
+    const cls = el.className||'';
+    return /^(pl|en|de|uk|ru|fr|es|it|cs|sk|lt|lv|ro|nl|pt)$/.test(t)
+           && /lang|translate|pill|jezyk|language/i.test(cls);
+  };
+
+  // 1) CSS – schowaj wszystko od starego Google + typowe wrappery
+  const css = document.createElement('style');
   css.textContent = `
-    .goog-te-banner-frame.skiptranslate { display:none!important }
-    body { top:0!important }
-    #google_translate_element, [id*="google_translate_element"],
-    .goog-te-gadget, .goog-te-gadget-simple, .goog-te-combo,
-    .skiptranslate, iframe[id^="goog-gt-"],
-    .language-switcher, .lang-switch, #lang-switch { display:none!important }
+    .goog-te-banner-frame.skiptranslate{display:none!important}
+    body{top:0!important}
+    #google_translate_element,[id*="google_translate_element"],
+    .goog-te-gadget,.goog-te-gadget-simple,.goog-te-combo,
+    .skiptranslate,iframe[id^="goog-gt-"],
+    .language-switcher,.lang-switch,#lang-switch{display:none!important}
   `;
   document.head.appendChild(css);
 
-  // 2) Usuń stare skrypty i callback
+  // 2) Usuń stare skrypty i callback, jeśli gdzieś w kodzie pozostały
   document.querySelectorAll('script[src*="translate_a/element.js"]').forEach(s=>s.remove());
   try { window.googleTranslateElementInit = undefined; } catch(e){}
 
-  // 3) Funkcja czyszcząca — wycina starego tłumacza i „Sprawdź się” (globalnie i przy wyszukiwarce)
-  function clean() {
-    // a) znane selektory Google / stare przełączniki
+  // 3) Funkcja czyszcząca – działa globalnie oraz przy pasku wyszukiwarki
+  function clean(){
     const killSel = [
-      '#google_translate_element', '[id*="google_translate_element"]',
-      '.goog-te-gadget', '.goog-te-gadget-simple', '.goog-te-combo',
-      '.goog-te-banner-frame', 'iframe[id^="goog-gt-"]', '.skiptranslate',
-      '.language-switcher', '.lang-switch', '#lang-switch', '[data-old-translator]', '.old-translator'
+      '#google_translate_element','[id*="google_translate_element"]',
+      '.goog-te-gadget','.goog-te-gadget-simple','.goog-te-combo',
+      '.goog-te-banner-frame','iframe[id^="goog-gt-"]','.skiptranslate',
+      '.language-switcher','.lang-switch','#lang-switch',
+      '[data-old-translator]','.old-translator'
     ];
-    killSel.forEach(sel => document.querySelectorAll(sel).forEach(n => n.remove()));
+    killSel.forEach(sel => document.querySelectorAll(sel).forEach(n=>n.remove()));
 
-    // b) elementy obok wyszukiwarki
-    const searchRoot = document.querySelector('[role="search"], .search, .searchbar, .search-bar, header, nav') || document;
-    // select Google w obrębie headera/nav/search
-    searchRoot.querySelectorAll('select.goog-te-combo').forEach(sel => sel.closest('*')?.remove());
-    // pigułki PL/EN obok wyszukiwarki
-    searchRoot.querySelectorAll('a,button,div,span').forEach(el => { if (isLangPill(el)) el.remove(); });
+    // obszar nagłówka / wyszukiwarki
+    const headOrSearch = document.querySelector('header, nav, [role="search"], .search, .searchbar, .search-bar') || document;
+    headOrSearch.querySelectorAll('select.goog-te-combo').forEach(sel => sel.closest('*')?.remove());
+    headOrSearch.querySelectorAll('a,button,div,span').forEach(el => { if (isLangPill(el)) el.remove(); });
 
-    // c) dowolne „Sprawdź się” (link lub przycisk) w całym dokumencie
+    // każde „Sprawdź się”
     document.querySelectorAll('a,button').forEach(el => { if (isQuiz(el)) el.remove(); });
 
-    // d) fallback: węzły zawierające select.goog-te-combo gdziekolwiek
+    // fallback: cokolwiek zawiera select.goog-te-combo
     document.querySelectorAll('select.goog-te-combo').forEach(sel => sel.closest('*')?.remove());
   }
 
-  // 4) Uruchom teraz…
+  // start + pilnowanie
   clean();
-  // …i przez 15s pilnuj DOM (gdy inne skrypty próbują to dodać ponownie)
   let ticks = 0;
   const iv = setInterval(()=>{ clean(); if(++ticks>150) clearInterval(iv); }, 100);
-
-  // dodatkowo: natychmiastowa reakcja na nowe wstawki
   const mo = new MutationObserver(clean);
   mo.observe(document.documentElement, { childList:true, subtree:true });
   setTimeout(()=>mo.disconnect(), 15000);
 })();
 </script>
 
-<!-- JEDEN, NOWY tłumacz (multi-lang, prawy górny róg) -->
-<script src="/assets/js/translator-unified.js?v=6" defer></script>
+<!-- NOWY, spójny translator (multi-lang, prawy górny róg) -->
+<script src="/assets/js/translator-unified.js?v=10" defer></script>
 </body>
 </html>
