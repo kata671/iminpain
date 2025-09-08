@@ -1,1 +1,1 @@
-// JavaScript for interactive quizzes and AI feedback
+// Quiz interaktywny

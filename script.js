@@ -1,1 +1,1 @@
-// Enhanced JS logic for dynamic interactions
+// Główny plik JS
