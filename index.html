@@ -665,37 +665,52 @@
   function removeAll(sel){ document.querySelectorAll(sel).forEach(n=> n.remove()); }
 
   document.addEventListener('DOMContentLoaded', () => {
-    // 1) Usuń stare kontenery/ikonki tłumacza (dopasowane szeroko, nic złego się nie stanie jeśli ich nie ma)
-    [
-      '#google_translate_element',        // stary kontener Google
-      '.goog-te-gadget', '.goog-te-banner-frame', '.goog-te-gadget-simple',
-      '#lang-switch', '.lang-switch', '.language-switcher',
-      '[data-old-translator]', '.old-translator'
-    ].forEach(sel => removeAll(sel));
+   <!-- 1) HARD CLEANUP starego tłumacza -->
+<script>
+(function(){
+  // Selektory wszystkiego, co mógł dodać stary widget / Twoje stare pigułki
+  const KILL = [
+    '#google_translate_element', '.goog-te-gadget', '.goog-te-gadget-simple',
+    '.goog-te-banner-frame', 'iframe[id^="goog-gt-"]', '.skiptranslate',
+    '#lang-switch', '.lang-switch', '.language-switcher', '[data-old-translator]',
+    '.old-translator'
+  ];
 
-    // 2) Usuń stare skrypty Google Translate (żeby nie dublować loadera)
-    document.querySelectorAll('script[src*="translate_a/element.js"]').forEach(s => s.remove());
+  function removeAll(){
+    KILL.forEach(sel => document.querySelectorAll(sel).forEach(n => n.remove()));
+  }
 
-    // 3) Schowaj przycisk/odnośnik „Sprawdź się”
-    //    Szukamy w <a> i <button> po tekście (ignorując wielkość liter i spacje)
-    const killByText = (needle) => {
-      const n = needle.toLowerCase();
-      document.querySelectorAll('a,button').forEach(el => {
-        const t = (el.textContent || '').replace(/\s+/g,' ').trim().toLowerCase();
-        if (t.startsWith(n)) el.remove();
-      });
-    };
-    killByText('sprawdź się');
+  // 1) Usuń skrypty starego Google Translate (żeby nie dublował się loader)
+  document.querySelectorAll('script[src*="translate_a/element.js"]').forEach(s => s.remove());
 
-    // 4) Awaryjne CSS (gdyby JS z jakiegoś powodu nie zdążył)
-    const css = document.createElement('style');
-    css.textContent = `
-      #google_translate_element, .goog-te-gadget, .goog-te-banner-frame,
-      #lang-switch, .lang-switch, .language-switcher, [data-old-translator]{ display:none !important; }
-    `;
-    document.head.appendChild(css);
-  });
+  // 2) „Zeruj” ewentualny stary callback (nasz nowy plik i tak zdefiniuje go ponownie)
+  try { window.googleTranslateElementInit = undefined; } catch(e){}
+
+  // 3) CSS: ukryj top-bar Google i cofnięcie body top
+  const css = document.createElement('style');
+  css.textContent = `
+    .goog-te-banner-frame.skiptranslate{display:none!important}
+    body{top:0!important}
+  `;
+  document.head.appendChild(css);
+
+  // 4) Wywal istniejące elementy teraz…
+  removeAll();
+
+  // …i przez chwilę „pilnuj”, bo stary skrypt lubi się dodać z opóźnieniem
+  let ticks = 0;
+  const iv = setInterval(() => { removeAll(); if (++ticks > 50) clearInterval(iv); }, 100);
+
+  // 5) Dodatkowo: MutationObserver usuwa każdy świeżo wstrzyknięty element starego tłumacza
+  const mo = new MutationObserver(removeAll);
+  mo.observe(document.documentElement, { childList: true, subtree: true });
+  setTimeout(() => mo.disconnect(), 10000); // po 10 s odłącz strażnika
 })();
+</script>
+
+<!-- 2) NOWY, spójny tłumacz (multi-lang, prawy górny róg) -->
+<script src="/assets/js/translator-unified.js?v=2" defer></script>
+
 </script>
 </body>
 </html>
