@@ -198,9 +198,51 @@
       background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); color:#fff; text-decoration:none; }
 
     .sr-only{ position:absolute !important; left:-9999px !important; }
-  </style>
+  
+/* pro-polish • karty, taby, przycisk Wróć — bez zmian ID/JS */
+:root{ --pro-gap:18px; --pro-r:16px; --pro-shadow:0 18px 48px rgba(8,10,22,.45), 0 0 18px rgba(164,107,255,.18); }
+.cards{ gap:var(--pro-gap); }
+.card{
+  border-radius:var(--pro-r);
+  padding:18px 20px 16px;
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border:1px solid rgba(164,107,255,.18);
+  box-shadow:var(--pro-shadow);
+  backdrop-filter:blur(10px) saturate(120%); -webkit-backdrop-filter:blur(10px) saturate(120%);
+}
+.card h3{ font-size:17px; margin:.2rem 0 .9rem; letter-spacing:.3px; color:#e6f0ff; }
+.card ul.clean li{ margin:.48rem 0; border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.03); border-radius:12px; }
+.tabs{ gap:10px; margin:18px 0 10px; }
+.tab{
+  border-radius:12px; padding:10px 14px; font-weight:850;
+  border:1px solid rgba(255,255,255,.16);
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+}
+.tab[aria-selected="true"]{
+  background:linear-gradient(180deg, rgba(94,234,212,.10), rgba(164,107,255,.10));
+  border-color:rgba(164,107,255,.45);
+  box-shadow:0 0 0 2px rgba(94,234,212,.35), 0 10px 22px rgba(8,10,22,.35);
+}
+.bh-backbar{max-width:1100px; margin:8px auto 0; padding:0 16px;}
+#bhReturnTop{
+  appearance:none; border:1px solid rgba(164,107,255,.28); background:rgba(60,32,100,.28);
+  color:#eef2ff; font-weight:800; letter-spacing:.2px; padding:10px 14px; border-radius:12px; cursor:pointer;
+  box-shadow:0 6px 16px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.12), 0 0 8px rgba(164,107,255,.45);
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+#bhReturnTop:hover{ transform:translateY(-1px); border-color:rgba(164,107,255,.55); box-shadow:0 10px 20px rgba(8,10,22,.45), 0 0 14px rgba(164,107,255,.65), inset 0 0 0 1px rgba(164,107,255,.18) }
+#bhReturnTop:focus-visible{ outline:2px solid #5eead4; outline-offset:2px }
+:where(a,button,.tab,.more-btn,.cta):focus-visible{ outline:2px solid #5eead4; outline-offset:3px; border-radius:12px; }
+@media (prefers-reduced-motion: reduce){ .card[aria-hidden="false"]{ animation:none } }
+
+</style>
 </head>
 <body>
+
+<nav class="bh-backbar" aria-label="Główna nawigacja podręczna">
+  <button id="bhReturnTop" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
+</nav>
+
   <div class="bg-anim" aria-hidden="true"></div>
   <div class="grid-bg" aria-hidden="true"></div>
   <canvas id="bh-particles" aria-hidden="true"></canvas>
