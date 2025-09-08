@@ -679,38 +679,98 @@
   function removeAll(){
     KILL.forEach(sel => document.querySelectorAll(sel).forEach(n => n.remove()));
   }
-
-  // 1) Usuń skrypty starego Google Translate (żeby nie dublował się loader)
-  document.querySelectorAll('script[src*="translate_a/element.js"]').forEach(s => s.remove());
-
-  // 2) „Zeruj” ewentualny stary callback (nasz nowy plik i tak zdefiniuje go ponownie)
-  try { window.googleTranslateElementInit = undefined; } catch(e){}
-
-  // 3) CSS: ukryj top-bar Google i cofnięcie body top
+<!-- HARD CLEAN + NOWY UNIFIED TRANSLATOR -->
+<script>
+(function(){
+  // ===== 0) CSS na wszelki wypadek (ukryj wszystko od starego Google Translate) =====
   const css = document.createElement('style');
   css.textContent = `
     .goog-te-banner-frame.skiptranslate{display:none!important}
     body{top:0!important}
+    #google_translate_element,
+    [id*="google_translate_element"],
+    .goog-te-gadget, .goog-te-gadget-simple, .goog-te-combo,
+    .skiptranslate, iframe[id^="goog-gt-"],
+    [class*="goog-te-"] { display:none!important }
   `;
   document.head.appendChild(css);
 
-  // 4) Wywal istniejące elementy teraz…
+  // ===== 1) Kill list (kontenery, iframy, stare pigułki PL/EN) =====
+  const KILL = [
+    '#google_translate_element', '[id*="google_translate_element"]',
+    '.goog-te-gadget', '.goog-te-gadget-simple', '.goog-te-combo',
+    '.goog-te-banner-frame', 'iframe[id^="goog-gt-"]', '.skiptranslate',
+    '#lang-switch', '.lang-switch', '.language-switcher', '[data-old-translator]', '.old-translator'
+  ];
+
+  function text(el){ return (el.textContent||'').replace(/\s+/g,' ').trim().toLowerCase(); }
+
+  function nearSearchCleanup(){
+    // znajdź pasek wyszukiwarki
+    const searchRoot = document.querySelector('[role="search"], .search, .searchbar, .search-bar, [id*="search"], [class*="search"]');
+    if (!searchRoot) return;
+
+    // usuń elementy obok/sąsiadujące z wyszukiwarką, które wyglądają jak stary tłumacz
+    const cand = [];
+    // select Google
+    cand.push(...searchRoot.querySelectorAll('select.goog-te-combo'));
+    // kapsułki PL/EN obok wyszukiwarki
+    cand.push(...searchRoot.querySelectorAll('a,button,div,span'));
+    cand.forEach(n=>{
+      const t = text(n);
+      if (
+        n.matches('select.goog-te-combo') ||
+        /wybierz język|choose language|translate/i.test(n.getAttribute('aria-label')||'') ||
+        /\b(pl|en|de|uk|ru)\b/.test(t) && (t.length<=10 || /wybierz język/.test(t))
+      ) {
+        n.remove();
+      }
+    });
+
+    // usuń też sąsiada wyszukiwarki, jeśli zawiera select.goog-te-combo
+    const s = searchRoot.querySelector('select.goog-te-combo');
+    if (s && s.parentElement) s.parentElement.remove();
+  }
+
+  function removeAll(){
+    // usuń znane selektory
+    KILL.forEach(sel => document.querySelectorAll(sel).forEach(n => n.remove()));
+
+    // wytnij każdy węzeł zawierający select.goog-te-combo
+    document.querySelectorAll('select.goog-te-combo').forEach(sel=>{
+      const host = sel.closest('*'); if (host) host.remove();
+    });
+
+    // wytnij elementy z tekstem „Wybierz język”, „PL”, „EN” będące starym pickerem
+    document.querySelectorAll('a,button,div,span').forEach(el=>{
+      const t = text(el);
+      if (/^wybierz język$/.test(t)) el.remove();
+      // małe kapsułki PL/EN obok searcha
+      if ((t==='pl' || t==='en') && (el.className||'').match(/pill|lang|translate/i)) el.remove();
+    });
+
+    nearSearchCleanup();
+  }
+
+  // 2) usuń stare skrypty Google i callback
+  document.querySelectorAll('script[src*="translate_a/element.js"]').forEach(s=>s.remove());
+  try { window.googleTranslateElementInit = undefined; } catch(e){}
+
+  // 3) od razu usuń to co już jest…
   removeAll();
 
-  // …i przez chwilę „pilnuj”, bo stary skrypt lubi się dodać z opóźnieniem
+  // …i pilnuj przez chwilę (stare skrypty często wstrzykują się z opóźnieniem)
   let ticks = 0;
-  const iv = setInterval(() => { removeAll(); if (++ticks > 50) clearInterval(iv); }, 100);
+  const iv = setInterval(()=>{ removeAll(); if(++ticks>80) clearInterval(iv); }, 100);
 
-  // 5) Dodatkowo: MutationObserver usuwa każdy świeżo wstrzyknięty element starego tłumacza
+  // dodatkowo obserwuj DOM i kasuj natychmiast świeże wstawki
   const mo = new MutationObserver(removeAll);
-  mo.observe(document.documentElement, { childList: true, subtree: true });
-  setTimeout(() => mo.disconnect(), 10000); // po 10 s odłącz strażnika
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+  setTimeout(()=>mo.disconnect(), 12000); // po 12s odłącz strażnika
 })();
 </script>
 
-<!-- 2) NOWY, spójny tłumacz (multi-lang, prawy górny róg) -->
-<script src="/assets/js/translator-unified.js?v=2" defer></script>
-
-</script>
+<!-- NOWY, spójny translator (multi-lang, prawy górny róg) -->
+<script src="/assets/js/translator-unified.js?v=4" defer></script>
 </body>
 </html>
