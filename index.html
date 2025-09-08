@@ -656,5 +656,46 @@
   <!-- Add to Home Screen (iOS/Android) -->
   <script src="assets/a2hs.js?v=1"></script>
 <script src="/assets/js/translator-unified.js?v=1" defer></script>
+<!-- Nowy, spójny tłumacz na całej stronie -->
+<script src="/assets/js/translator-unified.js?v=1" defer></script>
+
+<!-- Sprzątanie starego tłumacza + ukrycie "Sprawdź się" -->
+<script>
+(function(){
+  function removeAll(sel){ document.querySelectorAll(sel).forEach(n=> n.remove()); }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1) Usuń stare kontenery/ikonki tłumacza (dopasowane szeroko, nic złego się nie stanie jeśli ich nie ma)
+    [
+      '#google_translate_element',        // stary kontener Google
+      '.goog-te-gadget', '.goog-te-banner-frame', '.goog-te-gadget-simple',
+      '#lang-switch', '.lang-switch', '.language-switcher',
+      '[data-old-translator]', '.old-translator'
+    ].forEach(sel => removeAll(sel));
+
+    // 2) Usuń stare skrypty Google Translate (żeby nie dublować loadera)
+    document.querySelectorAll('script[src*="translate_a/element.js"]').forEach(s => s.remove());
+
+    // 3) Schowaj przycisk/odnośnik „Sprawdź się”
+    //    Szukamy w <a> i <button> po tekście (ignorując wielkość liter i spacje)
+    const killByText = (needle) => {
+      const n = needle.toLowerCase();
+      document.querySelectorAll('a,button').forEach(el => {
+        const t = (el.textContent || '').replace(/\s+/g,' ').trim().toLowerCase();
+        if (t.startsWith(n)) el.remove();
+      });
+    };
+    killByText('sprawdź się');
+
+    // 4) Awaryjne CSS (gdyby JS z jakiegoś powodu nie zdążył)
+    const css = document.createElement('style');
+    css.textContent = `
+      #google_translate_element, .goog-te-gadget, .goog-te-banner-frame,
+      #lang-switch, .lang-switch, .language-switcher, [data-old-translator]{ display:none !important; }
+    `;
+    document.head.appendChild(css);
+  });
+})();
+</script>
 </body>
 </html>
