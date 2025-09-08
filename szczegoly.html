@@ -830,6 +830,427 @@
       }
       addEventListener('resize',resize,{passive:true}); resize(); step();
     })();
-  </script>
+  /* === EXPAND_CONTENT v1 — bogatsze treści bez zmiany logiki/ID/ramek ===
+   - Nie rusza struktur, klas, ID, ryzyka ani istniejących danych.
+   - TYLKO dopisuje brakujące pozycje (unikając duplikatów) i prze-renderowuje listy.
+*/
+(function expandContentV1(){
+  function hasItem(arr, it){
+    if(typeof it==='string'){
+      const key = it.trim().toLowerCase();
+      return arr.some(x => typeof x==='string' && x.trim().toLowerCase()===key);
+    }
+    if(it && typeof it==='object'){
+      return arr.some(x => typeof x==='object'
+        && (x.t||'').trim().toLowerCase()===(it.t||'').trim().toLowerCase()
+        && (x.audience||'all')===(it.audience||'all'));
+    }
+    return false;
+  }
+  function appendUnique(arr, items){
+    if(!Array.isArray(arr) || !Array.isArray(items)) return;
+    items.forEach(it => { if(!hasItem(arr, it)) arr.push(it); });
+  }
+
+  const EXT = {
+    glowa: {
+      symptoms: [
+        "Nadwrażliwość na światło (fotofobia)",
+        "Nadwrażliwość na dźwięk (fonofobia)",
+        "Aura wzrokowa (mroczki, zygzaki)",
+        "Nudności lub wymioty z bólem głowy",
+        "Ból nasilany kaszlem, schylaniem lub wysiłkiem",
+        "Sztywność karku",
+        "Zawroty głowy / uczucie kołysania",
+        "Ból po urazie głowy",
+        "Zaburzenia widzenia lub mowy",
+        "Ból po nieprzespanej nocy / pominięciu posiłku"
+      ],
+      causes: [
+        "Odwodnienie lub pomijanie posiłków",
+        "Napięcie mięśni karku i barków",
+        "Bruksizm (zaciskanie zębów)",
+        "Zmęczenie oczu / wady wzroku",
+        "Nadużywanie leków p/bólowych (ból z odbicia)",
+        "Zaburzenia snu i stres",
+        "Zapalenie zatok",
+        "Nadciśnienie (zwłaszcza potylica)"
+      ],
+      firstaid: [
+        "Cichy, zaciemniony pokój i odpoczynek",
+        "Nawodnienie małymi porcjami",
+        "Delikatne rozciąganie karku, ciepły/zimny okład",
+        "Przerwy ekranowe 20–20–20",
+        "Krótka relaksacja oddechowa (wydłużony wydech)"
+      ],
+      otc: [
+        {t:"Paracetamol — zgodnie z ulotką", audience:"all"},
+        {t:"Ibuprofen/naproksen (jeśli brak przeciwwskazań)", audience:"adult"},
+        "Kofeina w małych dawkach (u dorosłych — migrena)",
+        "Sztuczne łzy przy suchości oczu"
+      ],
+      rx: [
+        "Tryptany w migrenie (wg zaleceń lekarza)",
+        "Profilaktyka migreny (neurolog — wg wskazań)"
+      ],
+      rehab: [
+        "Dzienniczek bólu i wyzwalaczy",
+        "Ergonomia: wysokość ekranu, podparcie odcinka szyjnego",
+        "Ćwiczenia rozciągające kark i klatkę piersiową",
+        "Higiena snu: stałe pory, ekspozycja na światło dzienne"
+      ],
+      urgent: [
+        "„Najgorszy w życiu” ból głowy (thunderclap)",
+        "Ból + gorączka i sztywność karku",
+        "Ból po urazie + utrata przytomności",
+        "Nowe zaburzenia mowy/widzenia/osłabienie",
+        "Nowy silny ból po 50. r.ż."
+      ],
+      myths: [
+        {m:"Silny ból głowy zawsze oznacza guz.", f:"Najczęściej to napięciowy lub migrena. Czerwone flagi wymagają pilnej oceny."},
+        {m:"Antybiotyk pomaga na bóle zatok i głowy.", f:"Skuteczny tylko przy bakteryjnym zapaleniu zatok; większość to wirusy/obrzęk."}
+      ],
+      faq: [
+        {q:"Jak odróżnić napięciowy od migreny?", a:"Migrena bywa jednostronna, pulsująca, z fotofobią/nudnościami. Napięciowy — uciskowy, obustronny, nasila się w stresie."},
+        {q:"Czy kawa pomaga czy szkodzi?", a:"U części dorosłych niewielka dawka pomaga, u innych nasila dolegliwości — obserwuj to w dzienniczku."}
+      ]
+    },
+    nos: {
+      symptoms: [
+        "Wodnista lub gęsta wydzielina z nosa",
+        "Zatkanie nosa i upośledzenie węchu",
+        "Ból/ucisk twarzy nasilany przy pochylaniu",
+        "Kichanie seriami, świąd nosa",
+        "Krwawienie z nosa epizodyczne"
+      ],
+      causes: [
+        "Nieżyt alergiczny",
+        "Wirusowe zapalenie błony śluzowej",
+        "Bakteryjne zapalenie zatok",
+        "Polipy/krzywa przegroda nosa",
+        "Suche powietrze, dym, drażniące aerozole",
+        "Nadużycie kropli obkurczających (rhinitis medicamentosa)",
+        "Ciało obce (często u dzieci)"
+      ],
+      firstaid: [
+        "Irygacje NaCl (izotoniczny/hipertoniczny), nawilżanie powietrza",
+        "Po krwawieniu: uciśnij skrzydełka 10 min, głowa lekko w dół",
+        "Unikaj silnego wydmuchiwania",
+        "Nawadnianie i wietrzenie"
+      ],
+      otc: [
+        "Aerozole NaCl (izotoniczne/hipertoniczne)",
+        {t:"Ksylometazolina/oksymetazolina — max 3–5 dni", audience:"adult"},
+        "Doustne p/histaminowe (alergia — wg ulotki)"
+      ],
+      rx: [
+        "Donosowe GKS przy alergii/przewlekłym zapaleniu (wg lekarza)",
+        "Antybiotyk w bakteryjnym zapaleniu zatok — wg oceny"
+      ],
+      urgent: [
+        "Krwawienie z nosa >20 min mimo ucisku",
+        "Ból twarzy + obrzęk oczodołu/wytrzeszcz",
+        "Przezroczysty wyciek po urazie głowy — pilnie"
+      ],
+      myths: [
+        {m:"Przy krwawieniu odchyl głowę do tyłu.", f:"Pochyl się lekko do przodu i uciskaj skrzydełka nosa."},
+        {m:"Krople obkurczające można stosować bez ograniczeń.", f:"Max kilka dni — ryzyko obrzęku z odbicia i uszkodzenia śluzówki."}
+      ],
+      faq: [
+        {q:"Kiedy irygacje są pomocne?", a:"Przy katarze, zatkaniu i po ekspozycji na alergeny — 1–2× dziennie."},
+        {q:"Czy aerozole uzależniają?", a:"Nie NaCl, ale obkurczające TAK — ogranicz do 3–5 dni."}
+      ]
+    },
+    klatka: {
+      symptoms: [
+        "Ucisk/ciężar promieniujący do lewej ręki/szczęki",
+        "Duszność spoczynkowa lub wysiłkowa",
+        "Kłujący ból nasilany wdechem/uciskiem",
+        "Zgaga/pieczenie za mostkiem",
+        "Kołatanie, zimny pot, osłabienie"
+      ],
+      causes: [
+        "Dławica piersiowa / OZW",
+        "Zapalenie osierdzia/opłucnej",
+        "Ból mięśniowo-szkieletowy",
+        "Refluks żołądkowo-przełykowy",
+        "Atak paniki/lęk",
+        "Półpasiec (ból zanim pojawi się wysypka)"
+      ],
+      firstaid: [
+        "Przerwij wysiłek, usiądź w pozycji półsiedzącej",
+        "Jeśli podejrzenie zawału — 112",
+        "Zgaga: unieś tułów, unikaj posiłku przed snem"
+      ],
+      otc: [
+        "Leki na zgagę (alginiany/antacida wg ulotki)",
+        "Paracetamol przeciwbólowo (mięśniowo-szkieletowy)"
+      ],
+      rx: [
+        "Nitrogliceryna wg zaleceń przy dławicy",
+        "Dalsze leczenie kardiologiczne wg rozpoznania"
+      ],
+      urgent: [
+        "Ból w klatce >10 min nieustępujący",
+        "Ból + duszność/omdlenie/zimny pot",
+        "Krwioplucie + ból/ucisk — pilnie"
+      ],
+      myths: [
+        {m:"Młodzi nie mają zawałów.", f:"Ryzyko mniejsze, ale realne — czerwone flagi wymagają pilnej pomocy."},
+        {m:"Zgaga zawsze oznacza serce.", f:"Często to refluks — ale objawy sercowe trzeba wykluczyć lekarsko."}
+      ],
+      faq: [
+        {q:"Jak odróżnić refluks od kardiologicznego?", a:"Refluks częściej pali po posiłku i w pozycji leżącej; objawy sercowe nasilają się przy wysiłku i z towarzyszącą dusznością/potami."}
+      ]
+    },
+    pluca: {
+      symptoms: [
+        "Duszność spoczynkowa/wysiłkowa",
+        "Kaszel suchy lub mokry",
+        "Świsty, ściszony oddech",
+        "Gorączka, dreszcze",
+        "Ból w klatce przy oddychaniu",
+        "Szybki, płytki oddech"
+      ],
+      causes: [
+        "Infekcje (wirusowe/bakteryjne)",
+        "Astma lub POChP",
+        "Alergie wziewne",
+        "Zatorowość płucna",
+        "Niewydolność serca (przekrwienie płuc)"
+      ],
+      firstaid: [
+        "Pozycja półsiedząca, spokojny wydłużony wydech",
+        "Nawilżanie i wietrzenie",
+        "Inhalacje NaCl (nebulizacja) — wg ulotki"
+      ],
+      otc: [
+        "Syropy na kaszel (muko- vs p/kaszlowe — nie łącz jednocześnie)",
+        "Pastylki nawilżające gardło"
+      ],
+      rx: [
+        "Leki rozszerzające oskrzela i wziewne sterydy (wg lekarza)",
+        "Antybiotyk przy bakteryjnej infekcji — wg oceny"
+      ],
+      urgent: [
+        "Duszność spoczynkowa/sinica",
+        "Krwioplucie",
+        "Nagły ból w klatce + duszność po locie/urazie (podejrzenie zatorowości)"
+      ],
+      myths: [
+        {m:"Kaszel trzeba „przytłumić” zawsze.", f:"Kaszel bywa mechanizmem oczyszczania — dobór leczenia zależy od rodzaju kaszlu."}
+      ],
+      faq: [
+        {q:"Czy inhalacje solą pomagają?", a:"Mogą łagodzić objawy i ułatwiać odkrztuszanie — zgodnie z ulotką i zaleceniem."}
+      ]
+    },
+    brzuch: {
+      symptoms: [
+        "Ból zlokalizowany lub rozlany",
+        "Wzdęcia, nudności, wymioty",
+        "Biegunka lub zaparcie",
+        "Tkliwość/pogorszenie po posiłkach",
+        "Twardy brzuch (objaw alarmowy)"
+      ],
+      causes: [
+        "Niestrawność/IBS",
+        "Wrzody/GERD",
+        "Wyrostek/kamica",
+        "Infekcje pokarmowe",
+        "Nietolerancje pokarmowe",
+        "Zaparcia funkcjonalne"
+      ],
+      firstaid: [
+        "Nawadnianie małymi porcjami, lekka dieta",
+        "Termofor przy skurczach (bez cech „ostrego brzucha”)",
+        "Odpoczynek, obserwacja czerwonych flag"
+      ],
+      otc: [
+        "Leki osłonowe/przeciwwzdęciowe",
+        "Preparaty na zgagę/kwas",
+        {t:"Drotaweryna (dorośli) — skurczowy ból brzucha", audience:"adult"}
+      ],
+      rx: [
+        "Inhibitory pompy protonowej (wg rozpoznania)",
+        "Antybiotykoterapia przy zakażeniach — wg lekarza"
+      ],
+      urgent: [
+        "Twardy brzuch + silny ból",
+        "Krew w stolcu lub wymiotach",
+        "Utrzymujące się wymioty/odwodnienie"
+      ],
+      myths: [
+        {m:"Przy bólu brzucha nie wolno pić.", f:"Zwykle małe porcje płynów są wskazane, chyba że lekarz zaleci inaczej."}
+      ],
+      faq: [
+        {q:"Co jeść przy niestrawności?", a:"Lekkostrawnie, małe porcje; unikaj tłustych i bardzo pikantnych potraw."}
+      ]
+    },
+    serce: {
+      symptoms: [
+        "Kołatanie/niemiarowa praca serca",
+        "Zawroty/omdlenie",
+        "Ból w klatce i duszność"
+      ],
+      causes: [
+        "Stres/odwodnienie",
+        "Zaburzenia rytmu",
+        "Choroba wieńcowa"
+      ],
+      firstaid: [
+        "Odpoczynek, kontrola oddechu",
+        "Nawodnienie (jeśli brak przeciwwskazań)"
+      ],
+      otc: [
+        "Brak uniwersalnych OTC — dobór indywidualny z lekarzem/farmaceutą"
+      ],
+      rx: [
+        "EKG, badania i leczenie celowane (kardiolog)"
+      ],
+      urgent: [
+        "Kołatanie + omdlenie",
+        "Ból z dusznością/zimny pot"
+      ],
+      myths: [
+        {m:"Młody wiek wyklucza chorobę serca.", f:"Ryzyko mniejsze, ale objawy alarmowe wymagają oceny."}
+      ],
+      faq: [
+        {q:"Czy smartwatch diagnozuje arytmię?", a:"Może wykryć nieprawidłowości rytmu, ale nie zastępuje badania lekarskiego."}
+      ]
+    },
+    biodra: {
+      symptoms: ["Ból pachwiny/biodra","Trzaski/sztywność","Ograniczenie ruchu","Ból przy wstawaniu"],
+      causes: ["Przeciążenie/kaletka","Zmiany przeciążeniowe","Nierównowaga mięśniowa","Długie siedzenie"],
+      firstaid: ["Odpoczynek względny","Chłodzenie po przeciążeniu","Delikatne rozciąganie zginaczy biodra"],
+      otc: [],
+      rx: ["P/zapalne wg zaleceń lekarza"],
+      rehab: ["Aktywacja pośladkowych","Roller/rozluźnianie powięzi","Stopniowe zwiększanie obciążenia"],
+      urgent: ["Uraz + brak możliwości obciążenia kończyny"],
+      myths: [{m:"Im więcej rozciągania, tym lepiej.", f:"Potrzebna równowaga: siła + mobilność."}],
+      faq: [{q:"Czy siedzenie szkodzi?", a:"Długie siedzenie zwiększa napięcia — rób przerwy co 30–45 min."}]
+    },
+    kolano: {
+      symptoms: ["Ból przodu kolana","Obrzęk po wysiłku/urazie","Niestabilność","Trzaski przy schodzeniu"],
+      causes: ["Zespół bólu rzepki","Uraz więzadeł/łąkotek","Tendinopatie","Nadmierne obciążenie/technika"],
+      firstaid: ["RICE (odpoczynek, chłodzenie, ucisk, uniesienie)","Unikaj bólu; wracaj stopniowo","Elastyczna stabilizacja przy aktywności"],
+      otc: [],
+      rx: ["Wg ortopedy/fizjo"],
+      rehab: ["Wzmacnianie czworogłowych i pośladków","Mobilizacja skokowego/biodra","Edukacja obciążenia"],
+      urgent: ["Uraz z „trzaskiem” + szybki obrzęk"],
+      myths: [{m:"Przysiady są złe na kolana.", f:"Prawidłowa technika i progresja są bezpieczne."}],
+      faq: [{q:"Czy bandaż elastyczny pomaga?", a:"Może zmniejszać dolegliwości — nie zastępuje rehabilitacji."}]
+    },
+    stopy: {
+      symptoms: ["Ból pięty/przodostopia","Odciski/pęcherze","Sztywność poranna","Drętwienie palców"],
+      causes: ["Rozcięgno podeszwowe","Zapalenie ścięgien","Nieodpowiednie obuwie","Biomechanika chodu"],
+      firstaid: ["Zmiana/analiza obuwia","Chłodzenie po wysiłku","Rolowanie piłeczką"],
+      otc: [],
+      rx: ["Fizjoterapia / wkładki indywidualne"],
+      rehab: ["Ćwiczenia wzmacniające stopy","Rozciąganie łydek/Achilessa","Progresywne obciążanie"],
+      urgent: ["Ostry ból + obrzęk z brakiem chodu"],
+      myths: [{m:"Twarda podeszwa = lepiej.", f:"Dobór zależy od problemu; czasem miękka amortyzacja pomaga."}],
+      faq: [{q:"Czy wkładki z marketu wystarczą?", a:"Bywają pomocne, ale przy przewlekłych dolegliwościach warto ocenić u specjalisty."}]
+    },
+    skora: {
+      symptoms: ["Wysypka/świąd","Suchość/pękanie","Pęcherze/sączenie","Rumień/obrączki"],
+      causes: ["AZS/alergia","Podrażnienia/kontaktowe","Infekcje bakteryjne/grzybicze","Ukąszenia"],
+      firstaid: ["Chłodzenie, delikatne mycie","Emolienty i bariera skórna","Usunięcie alergenu"],
+      otc: ["Emolienty","Doustne p/histaminowe","Antyseptyki miejscowe"],
+      rx: ["Miejscowe sterydy/antybiotyki (wg lekarza)"],
+      rehab: ["Letni prysznic, bawełna, łagodne detergenty","Higiena paznokci (nie drap)"],
+      urgent: ["Szybko szerząca się wysypka + gorączka","Obrzęk twarzy/warg/języka"],
+      myths: [{m:"Im mocniejszy steryd, tym lepiej.", f:"Dobór mocy i czasu stosowania ustala lekarz."}],
+      faq: [{q:"Czy „naturalne” znaczy bezpieczne?", a:"Nie zawsze — testuj punktowo i obserwuj reakcję."}]
+    },
+    kaszel: {
+      symptoms: ["Kaszel suchy/mokry","Chrypka","Duszność towarzysząca","Gorączka"],
+      causes: ["Infekcje","Alergie/drażnienie","Refluks","Astma"],
+      firstaid: ["Nawodnienie i nawilżanie","Unikanie dymu/zimnego powietrza","Miód (≥1 r.ż.)"],
+      otc: ["Mukolityki (kaszel mokry)","P/kaszlowe (kaszel suchy) — nie łącz jednocześnie"],
+      rx: ["Leczenie przyczynowe (np. astma, refluks)"],
+      rehab: ["Ćwiczenia oddechowe i postawa"],
+      urgent: ["Duszność spoczynkowa/sinica/krwioplucie"],
+      myths: [{m:"Zawsze hamuj kaszel.", f:"Czasem kaszel oczyszcza — dobór leczenia zależy od rodzaju."}],
+      faq: [{q:"Jak długo może trwać?", a:"Po infekcji nawet kilka tygodni — jeśli narasta lub z flagami, skonsultuj."}]
+    },
+    goraczka: {
+      symptoms: ["Gorączka, dreszcze","Bóle mięśni/głowy","Osłabienie"],
+      causes: ["Wirusy/bakterie","Stany zapalne"],
+      firstaid: ["Nawodnienie, lekkie ubranie","Letnie okłady/kąpiel (bez alkoholu)"],
+      otc: [{t:"Paracetamol/ibuprofen wg ulotki", audience:"all"}],
+      rx: ["Leczenie celowane po diagnozie"],
+      rehab: ["Odpoczynek i sen"],
+      urgent: [">39°C mimo leczenia","Sztywność karku, silny ból głowy"],
+      myths: [{m:"Gorączkę zawsze trzeba zbijać do normy.", f:"Celem jest komfort — nie zawsze 36,6°C."}],
+      faq: [{q:"Kiedy do lekarza?", a:"Jeśli utrzymuje się >48–72 h, nasila się lub z czerwonymi flagami."}]
+    },
+    zadlawienie: {
+      symptoms: ["Nagła duszność","Niemożność mówienia/kaszlu","Chwytanie za szyję"],
+      causes: ["Kęs pokarmu/małe przedmioty"],
+      firstaid: [
+        "Zachęcaj do skutecznego kaszlu",
+        "Dorosły: 5 uderzeń w plecy → 5 uciśnięć nadbrzusza",
+        "Dziecko >1 r.ż.: 5 pleców → 5 nadbrzusza",
+        "Niemowlę: 5 pleców → 5 uciśnięć klatki piersiowej",
+        "Utrata przytomności: RKO 30:2, 112, AED"
+      ],
+      otc: ["—"],
+      rx: ["—"],
+      rehab: ["Edukacja i profilaktyka przy posiłkach"],
+      urgent: ["Każde ciężkie zadławienie — 112"],
+      myths: [{m:"„Palcem na ślepo” usuniesz ciało obce.", f:"Ryzyko wepchnięcia głębiej i urazu."}],
+      faq: [{q:"Czy można podawać wodę?", a:"Nie przy częściowej/pełnej niedrożności — ryzyko aspiracji."}]
+    },
+    ciaza: {
+      symptoms: ["Nudności/wymioty","Zgaga/zaparcia","Ból krzyża/kurcze","Obrzęki","Zawroty głowy"],
+      causes: ["Hormony","Zmiana postawy/ucisk","Niedobory"],
+      firstaid: ["Małe, częste posiłki","Imbir (po konsultacji)","Ruch łagodny","Uniesienie wezgłowia przy zgadze"],
+      otc: ["Witaminy/minerały wg zaleceń"],
+      rx: ["Tylko po ocenie lekarskiej"],
+      rehab: ["Ćwiczenia w ciąży, fizjoterapia uroginekologiczna","Pozycje odciążające, sen"],
+      urgent: ["Krwawienie, silny ból","Nagły obrzęk twarzy/ból głowy","Zmniejszone ruchy płodu","Silna duszność/ból w klatce"],
+      myths: [{m:"W ciąży nie wolno ćwiczyć.", f:"Bezpieczna aktywność jest zalecana — po konsultacji."}],
+      faq: [{q:"Co z lekami OTC?", a:"Zawsze konsultuj — bezpieczeństwo zależy od trymestru i dawki."}]
+    }
+  };
+
+  // Rozszerz CONTENT we wszystkich sekcjach
+  if (typeof CONTENT === 'object'){
+    for(const part in EXT){
+      if(!CONTENT[part]) continue;
+      const ext = EXT[part];
+      for(const key in ext){
+        if(Array.isArray(CONTENT[part][key])){
+          appendUnique(CONTENT[part][key], ext[key]);
+        }
+      }
+    }
+  }
+
+  // Dodatkowo rozszerz bieżący „entry” i odśwież widoki
+  try{
+    if(typeof entry === 'object'){
+      const cur = EXT[CZESC];
+      if(cur){
+        for(const k in cur){
+          if(Array.isArray(entry[k])) appendUnique(entry[k], cur[k]);
+        }
+      }
+    }
+    if (typeof renderListInteractive==='function'){
+      renderListInteractive('symp-common', entry.symptoms, 'symptoms');
+      renderListInteractive('urgent',      entry.urgent||[],   'urgent', 6);
+      renderListPlain('causes',   entry.causes||[]);
+      renderListPlain('firstaid', entry.firstaid||[]);
+      renderListPlain('meds-otc', entry.otc||[]);
+      renderListPlain('meds-rx',  entry.rx||[]);
+      renderListPlain('rehab',    entry.rehab||[]);
+      fillPairs('myths', entry.myths||[]);
+      fillFAQ('faq',     entry.faq||[]);
+      selectedWeights=0; selectedCount=0; updateRisk();
+    }
+  }catch(_){}
+})();
+</script>
 </body>
 </html>
