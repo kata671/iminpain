@@ -831,5 +831,48 @@
       addEventListener('resize',resize,{passive:true}); resize(); step();
     })();
   </script>
+
+<!-- 🔢 Sekcja statystyk i ciekawostek -->
+<section id="statystyki" style="padding: 2rem; background: linear-gradient(to right, #0e1230, #1b2a4e); color: white; border-radius: 16px; margin: 2rem 0; box-shadow: 0 0 10px rgba(0,0,0,0.4);">
+  <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">📊 Statystyki i ciekawostki</h2>
+  <ul style="list-style: none; padding: 0; font-size: 1.1rem;">
+    <li>✅ Ponad 70% przypadków bólu brzucha ma przyczynę funkcjonalną, nie chorobową.</li>
+    <li>✅ Statystycznie mężczyźni zgłaszają objawy o 40% rzadziej niż kobiety.</li>
+    <li>✅ Ból lewej ręki może, ale nie musi oznaczać zawału — <b>ważne są objawy towarzyszące!</b></li>
+    <li>✅ 90% pacjentów googluje objawy przed wizytą u lekarza.</li>
+  </ul>
+</section>
+
+<!-- 🧠 Quiz interaktywny -->
+<section id="quiz" style="padding: 2rem; background: #11162d; color: white; border-radius: 16px; margin: 2rem 0; box-shadow: 0 0 10px rgba(0,0,0,0.4);">
+  <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">🧠 Trening reagowania – Quiz</h2>
+  <p style="margin-bottom: 1rem;">Co powinieneś zrobić, gdy ktoś nagle upada i nie reaguje?</p>
+  <form onsubmit="return checkAnswer();">
+    <label><input type="radio" name="q1" value="a"> Zostawić i zadzwonić do znajomego</label><br>
+    <label><input type="radio" name="q1" value="b"> Sprawdzić oddech, przytomność i wezwać pomoc</label><br>
+    <label><input type="radio" name="q1" value="c"> Dać mu cukierka</label><br><br>
+    <button type="submit" style="padding: 0.5rem 1rem; border: none; background: #30d5c8; color: #000; border-radius: 8px; font-weight: bold;">Sprawdź odpowiedź</button>
+  </form>
+  <p id="quiz-result" style="margin-top: 1rem; font-weight: bold;"></p>
+</section>
+
+<script>
+function checkAnswer() {
+  const answer = document.querySelector('input[name="q1"]:checked');
+  const result = document.getElementById("quiz-result");
+  if (!answer) {
+    result.textContent = "❗ Zaznacz odpowiedź.";
+    result.style.color = "orange";
+  } else if (answer.value === "b") {
+    result.textContent = "✅ Dobrze! Prawidłowa reakcja ratuje życie.";
+    result.style.color = "lightgreen";
+  } else {
+    result.textContent = "❌ Niepoprawna odpowiedź.";
+    result.style.color = "red";
+  }
+  return false;
+}
+</script>
+
 </body>
 </html>
