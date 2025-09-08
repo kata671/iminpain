@@ -1,11 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Boli Help — Szczegóły</title>
-  <meta name="theme-color" content="#0e1230" />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Boli Help — Szczegóły</title>
+<meta content="#0e1230" name="theme-color"/>
+<style>
     :root{
       --bg:#0e1230; --text:#eef2ff; --muted:#b8c2e0;
       --card: rgba(60,32,100,.30); --stroke: rgba(164,107,255,.18);
@@ -201,159 +202,142 @@
   </style>
 </head>
 <body>
-  <div class="bg-anim" aria-hidden="true"></div>
-  <div class="grid-bg" aria-hidden="true"></div>
-  <canvas id="bh-particles" aria-hidden="true"></canvas>
-
-  <div class="bh-backbar">
-    <button id="bhReturnTop" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
-  </div>
-
-  <header class="app" aria-label="Nawigacja lokalna">
-    <div class="hero" role="region" aria-label="Nagłówek szczegółów">
-      <div class="hero-top">
-        <div class="crumbs" id="crumbs">Boli Help / <span id="crumb-typ">—</span> / <span id="crumb-label">Szczegóły</span></div>
-        <div class="label"><span id="label-icon" aria-hidden="true">●</span><span id="label-text"><b>—</b></span></div>
-      </div>
-
-      <!-- KROKI -->
-      <div class="steps" aria-label="Asystent kroków">
-        <div class="step" id="step-1">1. Objawy<small>Zaznacz</small></div>
-        <div class="step" id="step-2">2. Choroby<small>Zobacz podpowiedzi</small></div>
-        <div class="step" id="step-3">3. Lekarze<small>Gdzie iść?</small></div>
-        <div class="step" id="step-4">4. Co dalej<small>112/SOR lub dom</small></div>
-      </div>
-
-      <div class="tabs" role="tablist" aria-label="Sekcje treści">
-        <button class="tab" data-variant="symptoms" role="tab" aria-selected="true"  data-target="#s-objawy">Objawy</button>
-        <button class="tab" data-variant="causes"   role="tab" aria-selected="false" data-target="#s-przyczyny">Przyczyny</button>
-        <button class="tab" data-variant="firstaid" role="tab" aria-selected="false" data-target="#s-aid">Pierwsza pomoc</button>
-        <button class="tab" data-variant="otc"      role="tab" aria-selected="false" data-target="#s-otc">Leki OTC</button>
-        <button class="tab" data-variant="rx"       role="tab" aria-selected="false" data-target="#s-rx">Leki na receptę</button>
-        <button class="tab" data-variant="rehab"    role="tab" aria-selected="false" data-target="#s-rehab">Rehabilitacja / Profilaktyka</button>
-        <button class="tab" data-variant="myths"    role="tab" aria-selected="false" data-target="#s-mity">Mity vs Fakty</button>
-        <button class="tab" data-variant="faq"      role="tab" aria-selected="false" data-target="#s-faq">FAQ</button>
-        <button class="tab" data-variant="dx"       role="tab" aria-selected="false" data-target="#s-dx">Choroby (beta)</button>
-        <button class="tab" data-variant="docs"     role="tab" aria-selected="false" data-target="#s-docs">Lekarze</button>
-      </div>
-
-      <p class="hero-note">Edukacyjnie, nie diagnostycznie. W nagłej, ciężkiej dolegliwości lub przy czerwonych flagach — skorzystaj z <b>112</b> lub SOR.</p>
-      <p class="legend">Zaznacz <strong>objawy</strong> — pasek <b>Ryzyko</b> oraz karty <b>Choroby</b>/<b>Lekarze</b> dopasują się automatycznie.</p>
-    </div>
-  </header>
-
-  <main>
-    <section class="cards" aria-label="Karty z informacjami szczegółowymi">
-      <!-- OBJAWY -->
-      <article class="card" data-type="symptoms" id="s-objawy" aria-labelledby="h-obj" role="tabpanel" aria-hidden="false">
-        <h3 id="h-obj">Objawy</h3>
-        <ul class="clean" id="symp-common"></ul>
-        <div class="more-wrap" id="mw-symp-common" hidden>
-          <div class="more-content" id="mc-symp-common"></div>
-          <button class="more-btn" data-more="symp-common">Pokaż więcej</button>
-        </div>
-
-        <div class="subhead">Kiedy się niepokoić (czerwone flagi)</div>
-        <div class="risk-mini" aria-label="Szacowany poziom ryzyka">
-          <small>Ryzyko: <span id="risk-label">niskie</span></small>
-          <span class="riskbar" id="riskbar"><span class="cursor" id="risk-cursor-card" style="left:0%"></span></span>
-        </div>
-        <ul class="clean" id="urgent"></ul>
-        <div class="more-wrap" id="mw-urgent" hidden>
-          <div class="more-content" id="mc-urgent"></div>
-          <button class="more-btn" data-more="urgent">Pokaż więcej</button>
-        </div>
-        <div class="strip strip--warn" id="urgent-strip">
+<div aria-hidden="true" class="bg-anim"></div>
+<div aria-hidden="true" class="grid-bg"></div>
+<canvas aria-hidden="true" id="bh-particles"></canvas>
+<div class="bh-backbar">
+<button aria-label="Wróć do poprzedniej strony" id="bhReturnTop" type="button">← Wróć</button>
+</div>
+<header aria-label="Nawigacja lokalna" class="app">
+<div aria-label="Nagłówek szczegółów" class="hero" role="region">
+<div class="hero-top">
+<div class="crumbs" id="crumbs">Boli Help / <span id="crumb-typ">—</span> / <span id="crumb-label">Szczegóły</span></div>
+<div class="label"><span aria-hidden="true" id="label-icon">●</span><span id="label-text"><b>—</b></span></div>
+</div>
+<!-- KROKI -->
+<div aria-label="Asystent kroków" class="steps">
+<div class="step" id="step-1">1. Objawy<small>Zaznacz</small></div>
+<div class="step" id="step-2">2. Choroby<small>Zobacz podpowiedzi</small></div>
+<div class="step" id="step-3">3. Lekarze<small>Gdzie iść?</small></div>
+<div class="step" id="step-4">4. Co dalej<small>112/SOR lub dom</small></div>
+</div>
+<div aria-label="Sekcje treści" class="tabs" role="tablist">
+<button aria-selected="true" class="tab" data-target="#s-objawy" data-variant="symptoms" role="tab">Objawy</button>
+<button aria-selected="false" class="tab" data-target="#s-przyczyny" data-variant="causes" role="tab">Przyczyny</button>
+<button aria-selected="false" class="tab" data-target="#s-aid" data-variant="firstaid" role="tab">Pierwsza pomoc</button>
+<button aria-selected="false" class="tab" data-target="#s-otc" data-variant="otc" role="tab">Leki OTC</button>
+<button aria-selected="false" class="tab" data-target="#s-rx" data-variant="rx" role="tab">Leki na receptę</button>
+<button aria-selected="false" class="tab" data-target="#s-rehab" data-variant="rehab" role="tab">Rehabilitacja / Profilaktyka</button>
+<button aria-selected="false" class="tab" data-target="#s-mity" data-variant="myths" role="tab">Mity vs Fakty</button>
+<button aria-selected="false" class="tab" data-target="#s-faq" data-variant="faq" role="tab">FAQ</button>
+<button aria-selected="false" class="tab" data-target="#s-dx" data-variant="dx" role="tab">Choroby (beta)</button>
+<button aria-selected="false" class="tab" data-target="#s-docs" data-variant="docs" role="tab">Lekarze</button>
+</div>
+<p class="hero-note">Edukacyjnie, nie diagnostycznie. W nagłej, ciężkiej dolegliwości lub przy czerwonych flagach — skorzystaj z <b>112</b> lub SOR.</p>
+<p class="legend">Zaznacz <strong>objawy</strong> — pasek <b>Ryzyko</b> oraz karty <b>Choroby</b>/<b>Lekarze</b> dopasują się automatycznie.</p>
+</div>
+</header>
+<main>
+<section aria-label="Karty z informacjami szczegółowymi" class="cards">
+<!-- OBJAWY -->
+<article aria-hidden="false" aria-labelledby="h-obj" class="card" data-type="symptoms" id="s-objawy" role="tabpanel">
+<h3 id="h-obj">Objawy</h3>
+<ul class="clean" id="symp-common"></ul>
+<div class="more-wrap" hidden="" id="mw-symp-common">
+<div class="more-content" id="mc-symp-common"></div>
+<button class="more-btn" data-more="symp-common">Pokaż więcej</button>
+</div>
+<div class="subhead">Kiedy się niepokoić (czerwone flagi)</div>
+<div aria-label="Szacowany poziom ryzyka" class="risk-mini">
+<small>Ryzyko: <span id="risk-label">niskie</span></small>
+<span class="riskbar" id="riskbar"><span class="cursor" id="risk-cursor-card" style="left:0%"></span></span>
+</div>
+<ul class="clean" id="urgent"></ul>
+<div class="more-wrap" hidden="" id="mw-urgent">
+<div class="more-content" id="mc-urgent"></div>
+<button class="more-btn" data-more="urgent">Pokaż więcej</button>
+</div>
+<div class="strip strip--warn" id="urgent-strip">
           Masz objawy alarmowe? <strong>Nie zwlekaj.</strong>
-          <a class="cta" id="cta-112" href="tel:112" aria-label="Zadzwoń na numer alarmowy 112">Zadzwoń 112</a>
-        </div>
-
-        <!-- HINT po zaznaczeniu objawów -->
-        <div id="dx-hint" class="dx-hint" role="status" aria-live="polite">
+<a aria-label="Zadzwoń na numer alarmowy 112" class="cta" href="tel:112" id="cta-112">Zadzwoń 112</a>
+</div>
+<!-- HINT po zaznaczeniu objawów -->
+<div aria-live="polite" class="dx-hint" id="dx-hint" role="status">
           Masz zaznaczone objawy. Zobacz edukacyjne podpowiedzi w <strong>Choroby</strong> lub przejdź do <strong>Lekarze</strong>.
-          <button type="button" id="dx-open">Choroby</button>
-          <button type="button" id="docs-open">Lekarze</button>
-        </div>
-      </article>
-
-      <!-- PRZYCZYNY -->
-      <article class="card" data-type="causes" id="s-przyczyny" role="tabpanel" aria-hidden="true">
-        <h3 id="h-cause">Przyczyny</h3>
-        <ul class="clean" id="causes"></ul>
-        <div class="more-wrap" id="mw-causes" hidden>
-          <div class="more-content" id="mc-causes"></div>
-          <button class="more-btn" data-more="causes">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- PIERWSZA POMOC -->
-      <article class="card" data-type="firstaid" id="s-aid" role="tabpanel" aria-hidden="true">
-        <h3 id="h-aid">Pierwsza pomoc</h3>
-        <ul class="clean" id="firstaid"></ul>
-        <div class="more-wrap" id="mw-firstaid" hidden>
-          <div class="more-content" id="mc-firstaid"></div>
-          <button class="more-btn" data-more="firstaid">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- OTC -->
-      <article class="card" data-type="otc" id="s-otc" role="tabpanel" aria-hidden="true">
-        <h3 id="h-otc">Leki bez recepty (OTC)</h3>
-        <ul class="clean" id="meds-otc"></ul>
-        <div class="more-wrap" id="mw-meds-otc" hidden>
-          <div class="more-content" id="mc-meds-otc"></div>
-          <button class="more-btn" data-more="meds-otc">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- RX -->
-      <article class="card" data-type="rx" id="s-rx" role="tabpanel" aria-hidden="true">
-        <h3 id="h-rx">Leki na receptę (informacyjnie)</h3>
-        <ul class="clean" id="meds-rx"></ul>
-        <div class="more-wrap" id="mw-meds-rx" hidden>
-          <div class="more-content" id="mc-meds-rx"></div>
-          <button class="more-btn" data-more="meds-rx">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- REHAB -->
-      <article class="card" data-type="rehab" id="s-rehab" role="tabpanel" aria-hidden="true">
-        <h3 id="h-rehab">Rehabilitacja / Profilaktyka</h3>
-        <ul class="clean" id="rehab"></ul>
-        <div class="more-wrap" id="mw-rehab" hidden>
-          <div class="more-content" id="mc-rehab"></div>
-          <button class="more-btn" data-more="rehab">Pokaż więcej</button>
-        </div>
-      </article>
-
-      <!-- MITY -->
-      <article class="card" data-type="myths" id="s-mity" role="tabpanel" aria-hidden="true">
-        <h3 id="h-mity">Mity vs Fakty</h3>
-        <ul class="clean" id="myths"></ul>
-      </article>
-
-      <!-- FAQ -->
-      <article class="card" data-type="faq" id="s-faq" role="tabpanel" aria-hidden="true">
-        <h3 id="h-faq">FAQ</h3>
-        <ul class="clean" id="faq"></ul>
-      </article>
-
-      <!-- CHOROBY -->
-      <article class="card" data-type="dx" id="s-dx" role="tabpanel" aria-hidden="true">
-        <h3 id="h-dx">Choroby (beta)</h3>
-        <p class="dx-note">Podpowiedzi edukacyjne z zaznaczonych objawów. Nie zastępują konsultacji.</p>
-        <ul class="clean dx-list" id="dx-list"></ul>
-      </article>
-
-      <!-- LEKARZE -->
-      <article class="card" data-type="docs" id="s-docs" role="tabpanel" aria-hidden="true">
-        <h3 id="h-docs">Lekarze</h3>
-        <p class="docs-note">Kolejność: <b>POZ</b> (lekarz rodzinny) → specjaliści powiązani z problemem. Czerwone flagi kierują do <b>SOR/112</b>.</p>
-        <ul class="clean" id="docs-list"></ul>
-      </article>
-    </section>
-  </main>
-  <script>
+          <button id="dx-open" type="button">Choroby</button>
+<button id="docs-open" type="button">Lekarze</button>
+</div>
+</article>
+<!-- PRZYCZYNY -->
+<article aria-hidden="true" class="card" data-type="causes" id="s-przyczyny" role="tabpanel">
+<h3 id="h-cause">Przyczyny</h3>
+<ul class="clean" id="causes"></ul>
+<div class="more-wrap" hidden="" id="mw-causes">
+<div class="more-content" id="mc-causes"></div>
+<button class="more-btn" data-more="causes">Pokaż więcej</button>
+</div>
+</article>
+<!-- PIERWSZA POMOC -->
+<article aria-hidden="true" class="card" data-type="firstaid" id="s-aid" role="tabpanel">
+<h3 id="h-aid">Pierwsza pomoc</h3>
+<ul class="clean" id="firstaid"></ul>
+<div class="more-wrap" hidden="" id="mw-firstaid">
+<div class="more-content" id="mc-firstaid"></div>
+<button class="more-btn" data-more="firstaid">Pokaż więcej</button>
+</div>
+</article>
+<!-- OTC -->
+<article aria-hidden="true" class="card" data-type="otc" id="s-otc" role="tabpanel">
+<h3 id="h-otc">Leki bez recepty (OTC)</h3>
+<ul class="clean" id="meds-otc"></ul>
+<div class="more-wrap" hidden="" id="mw-meds-otc">
+<div class="more-content" id="mc-meds-otc"></div>
+<button class="more-btn" data-more="meds-otc">Pokaż więcej</button>
+</div>
+</article>
+<!-- RX -->
+<article aria-hidden="true" class="card" data-type="rx" id="s-rx" role="tabpanel">
+<h3 id="h-rx">Leki na receptę (informacyjnie)</h3>
+<ul class="clean" id="meds-rx"></ul>
+<div class="more-wrap" hidden="" id="mw-meds-rx">
+<div class="more-content" id="mc-meds-rx"></div>
+<button class="more-btn" data-more="meds-rx">Pokaż więcej</button>
+</div>
+</article>
+<!-- REHAB -->
+<article aria-hidden="true" class="card" data-type="rehab" id="s-rehab" role="tabpanel">
+<h3 id="h-rehab">Rehabilitacja / Profilaktyka</h3>
+<ul class="clean" id="rehab"></ul>
+<div class="more-wrap" hidden="" id="mw-rehab">
+<div class="more-content" id="mc-rehab"></div>
+<button class="more-btn" data-more="rehab">Pokaż więcej</button>
+</div>
+</article>
+<!-- MITY -->
+<article aria-hidden="true" class="card" data-type="myths" id="s-mity" role="tabpanel">
+<h3 id="h-mity">Mity vs Fakty</h3>
+<ul class="clean" id="myths"></ul>
+</article>
+<!-- FAQ -->
+<article aria-hidden="true" class="card" data-type="faq" id="s-faq" role="tabpanel">
+<h3 id="h-faq">FAQ</h3>
+<ul class="clean" id="faq"></ul>
+</article>
+<!-- CHOROBY -->
+<article aria-hidden="true" class="card" data-type="dx" id="s-dx" role="tabpanel">
+<h3 id="h-dx">Choroby (beta)</h3>
+<p class="dx-note">Podpowiedzi edukacyjne z zaznaczonych objawów. Nie zastępują konsultacji.</p>
+<ul class="clean dx-list" id="dx-list"></ul>
+</article>
+<!-- LEKARZE -->
+<article aria-hidden="true" class="card" data-type="docs" id="s-docs" role="tabpanel">
+<h3 id="h-docs">Lekarze</h3>
+<p class="docs-note">Kolejność: <b>POZ</b> (lekarz rodzinny) → specjaliści powiązani z problemem. Czerwone flagi kierują do <b>SOR/112</b>.</p>
+<ul class="clean" id="docs-list"></ul>
+</article>
+</section>
+</main>
+<script>
     /* Wróć + start od góry */
     try{ if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; } }catch(e){}
     window.addEventListener('DOMContentLoaded', function(){
@@ -832,43 +816,145 @@
     })();
   </script>
 
-<section id="statystyki" class="statystyki-section">
-  <h2>📊 Statystyki i ciekawostki</h2>
-  <div class="stat-box">
-    <p><strong>🔹 Ból głowy</strong> jest jednym z najczęstszych objawów — szacuje się, że ponad 50% osób dorosłych doświadcza go przynajmniej raz w miesiącu.</p>
-    <p><strong>🔸 Objawy neurologiczne</strong> (np. sztywność karku, światłowstręt) wymagają czujności – mogą dotyczyć 1–5% przypadków z poważnym tłem medycznym.</p>
-    <p><strong>🔹 Najczęstsze przyczyny</strong> bólu głowy to stres, odwodnienie, zmęczenie oraz napięcie mięśniowe.</p>
-    <p><strong>🔸 Uwaga:</strong> U dzieci i młodzieży ból głowy może mieć inne przyczyny niż u dorosłych – np. problemy ze wzrokiem lub nadwrażliwość sensoryczna.</p>
-  </div>
+<section class="mylone-section" id="mylone-objawy">
+<h2>🔀 To nie zawsze to...</h2>
+<div class="mylone-grid">
+<div class="mylone-card"><strong>❌ Zawał serca</strong><br/>✅ Nerwoból międzyżebrowy</div>
+<div class="mylone-card"><strong>❌ Udar mózgu</strong><br/>✅ Atak paniki</div>
+<div class="mylone-card"><strong>❌ Wyrostek robaczkowy</strong><br/>✅ Zespół jelita drażliwego</div>
+<div class="mylone-card"><strong>❌ Zapalenie spojówek</strong><br/>✅ Przemęczenie oczu</div>
+</div>
+<h3>🧪 Rozpoznaj sam</h3>
+<div class="autotest-box">
+<p><strong>Masz ból głowy?</strong> Zaznacz objawy towarzyszące:</p>
+<ul>
+<li>✅ Światłowstręt</li>
+<li>✅ Nudności</li>
+<li>✅ Sztywność karku</li>
+</ul>
+<p><em>Jeśli masz te objawy, może to być <strong>migrena</strong> lub <strong>zapalanie opon mózgowych</strong>. Skontaktuj się z lekarzem.</em></p>
+</div>
+<blockquote class="ai-hint">
+    💬 <strong>Sztuczna inteligencja radzi:</strong> Jeśli ból trwa ponad 3 dni i nie masz gorączki – najczęstsze przyczyny to stres, napięcie mięśni lub przemęczenie.
+  </blockquote>
 </section>
-
 <style>
-  .statystyki-section {
-    background: radial-gradient(circle at top left, rgba(0,255,255,0.1), rgba(255,0,255,0.05));
-    border-radius: 16px;
-    padding: 20px;
-    margin: 40px auto;
-    max-width: 900px;
-    color: #e6e6f0;
-    box-shadow: 0 0 20px rgba(0,255,255,0.05);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255,255,255,0.08);
-  }
-  .statystyki-section h2 {
-    font-size: 1.6rem;
-    margin-bottom: 1rem;
-    color: #ffffff;
-    text-align: center;
-  }
-  .stat-box p {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin: 10px 0;
-    background: rgba(255,255,255,0.03);
-    padding: 12px;
-    border-radius: 10px;
-  }
+.mylone-section {
+  margin: 50px auto;
+  max-width: 1000px;
+  padding: 30px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+  color: #eee;
+}
+.mylone-section h2, .mylone-section h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fff;
+}
+.mylone-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.mylone-card {
+  background: rgba(0,255,255,0.05);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+  font-size: 1rem;
+}
+.autotest-box {
+  background: rgba(255,255,255,0.03);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+.ai-hint {
+  background: rgba(255,255,255,0.04);
+  padding: 16px;
+  border-left: 4px solid #7fffd4;
+  border-radius: 10px;
+  font-style: italic;
+}
 </style>
 
+<section class="quiz-section" id="quiz-react">
+<h2>🎮 Trening reagowania: Co zrobisz?</h2>
+<div class="quiz-box">
+<p><strong>Osoba obok ciebie nagle traci przytomność i nie reaguje na wołanie. Co robisz jako pierwsze?</strong></p>
+<ul class="quiz-options">
+<li onclick="checkAnswer(this, false)">✅ Sprawdzam puls i oddech</li>
+<li onclick="checkAnswer(this, true)">📞 Wzywam pomoc i sprawdzam oddech</li>
+<li onclick="checkAnswer(this, false)">💦 Podaję wodę i wachluję</li>
+<li onclick="checkAnswer(this, false)">💊 Szukam leków w torbie</li>
+</ul>
+<p id="quiz-feedback"></p>
+</div>
+</section>
+<script>
+  function checkAnswer(element, correct) {
+    const feedback = document.getElementById('quiz-feedback');
+    const allOptions = document.querySelectorAll('.quiz-options li');
+    allOptions.forEach(opt => opt.classList.remove('correct', 'wrong'));
+    if (correct) {
+      element.classList.add('correct');
+      feedback.textContent = "✅ Dobrze! Najpierw wezwij pomoc, potem sprawdź oddech.";
+    } else {
+      element.classList.add('wrong');
+      feedback.textContent = "❌ To nieprawidłowa kolejność. Najpierw wezwij pomoc, a potem działaj.";
+    }
+  }
+</script>
+<style>
+.quiz-section {
+  margin: 50px auto;
+  max-width: 900px;
+  background: rgba(255,255,255,0.02);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.07);
+  backdrop-filter: blur(6px);
+  color: #fff;
+}
+.quiz-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.quiz-box {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.quiz-options {
+  list-style: none;
+  padding: 0;
+}
+.quiz-options li {
+  margin: 10px 0;
+  padding: 12px;
+  background: rgba(0,255,255,0.06);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.quiz-options li:hover {
+  background: rgba(0,255,255,0.1);
+}
+.quiz-options li.correct {
+  background: rgba(0,255,127,0.2);
+}
+.quiz-options li.wrong {
+  background: rgba(255,0,0,0.2);
+}
+#quiz-feedback {
+  margin-top: 20px;
+  font-weight: bold;
+}
+</style>
 </body>
 </html>
