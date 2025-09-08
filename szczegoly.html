@@ -418,7 +418,7 @@
       mythsCommon:[{m:"Antybiotyk na przeziębienie",f:"Większość przeziębień to wirusy."},{m:"Ból trzeba przeczekać",f:"Nawodnienie i odpoczynek pomagają."},{m:"Im więcej leków, tym lepiej",f:"Lepiej mniej, ale właściwie dobranych."}],
       faqCommon:[{q:"Co w domu?",a:"Pierwsza pomoc + obserwacja czerwonych flag."},{q:"Kiedy do lekarza?",a:"Gdy silne/utrzymujące się 48–72h lub flagi."},{q:"Łączenie OTC?",a:"Nie duplikuj substancji czynnych."}]
     };
-
+/* === START CONTENT ===*/
     /* Treści (jak wcześniej), ryzyko start 0% */
     const CONTENT = {
       glowa:{label:"Głowa (ból)",risk:0, symptoms:["Ucisk obustronny","Pulsujący jednostronny","Nadwrażliwość na światło/dźwięk","Sztywność karku"],causes:["Napięcie/stres","Migrena","Nadużycie leków","Sen/ekrany"],firstaid:["Nawodnienie, odpoczynek","Masaż skroni","Chłodny/ciepły okład","Krótki spacer"],otc:[...BASE.otcPain],rx:["Tryptany","Profilaktyka migreny"],rehab:[...BASE.rehabCommon,"Dzienniczek bólu","Ćwiczenia karku"],urgent:["Nagły najgorszy ból","Gorączka + sztywność karku","Uraz głowy + zaburzenia",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]},
@@ -436,7 +436,7 @@
       zadlawienie:{label:"Zadławienie",risk:0,symptoms:["Nagła duszność","Chwytanie za szyję","Bez/skąpokaszlowy napad"],causes:["Kęs/małe przedmioty"],firstaid:["Skuteczny kaszel — zachęcaj","Dorosły: 5 uderzeń pleców → Heimlich","Dziecko >1 r.ż.: 5 pleców → 5 nadbrzusza","Niemowlę: 5 pleców → 5 uciśnięć klatki","Utrata przytomności: RKO 30:2, 112, AED"],otc:["—"],rx:["—"],rehab:[...BASE.rehabCommon,"Edukacja i profilaktyka"],urgent:["Każde ciężkie zadławienie — 112"],myths:[{m:"„Palcem w ciemno”",f:"Ryzyko wepchnięcia głębiej."}],faq:[...BASE.faqCommon]},
       ciaza:{label:"Ciąża",risk:0,symptoms:["Nudności/wymioty","Zgaga/zaparcia","Ból krzyża/kurcze","Obrzęki","Zawroty"],causes:["Hormony","Zmiana postawy/ucisk","Niedobory"],firstaid:["Małe, częste posiłki","Nawodnienie; imbir (po konsultacji)","Ruszaj się łagodnie","Zgaga: unieś wezgłowie"],otc:["Witaminy wg zaleceń"],rx:["Tylko po ocenie lekarskiej"],rehab:[...BASE.rehabCommon,"Ćwiczenia w ciąży","Fizjo uroginekologiczna","Pozycje odciążające"],urgent:["Krwawienie, silny ból","Nagły obrzęk twarzy/ból głowy","Zmniejszone ruchy płodu","Silna duszność/ból w klatce",...BASE.urgentCommon.slice(2)],myths:[...BASE.mythsCommon],faq:[...BASE.faqCommon]}
     };
-
+/* === END CONTENT ===*/
     const FALLBACK = { label: LABEL || CZESC, risk: 0, ...CONTENT.glowa };
     const entry = CONTENT[CZESC] || FALLBACK;
     document.getElementById('label-text').innerHTML = '<b>'+ (entry.label||LABEL) + '</b> • ' + TYP;
