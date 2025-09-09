@@ -407,3 +407,29 @@ section.stack{
 @media (max-width: 420px){
   body[data-page="home"] .container{ width: 88vw !important; padding-left:12px!important; padding-right:12px!important; }
 }
+/* === FIX 1: panel podpowiedzi nie jest drugą "wyszukiwarką" === */
+.bh2025-suggest[aria-hidden="true"]{ display:none !important; } /* ukryj gdy brak wyników */
+.bh2025-suggest{ top: calc(100% + 6px); } /* ma być pod polem */
+
+/* === FIX 2: siatka kart (na laptopie 3 w rzędzie) === */
+section.stack{ display:grid; gap:16px !important; grid-template-columns: 1fr !important; }
+@media (min-width: 760px){  section.stack{ grid-template-columns: repeat(2,1fr) !important; } }
+@media (min-width: 1024px){ section.stack{ grid-template-columns: repeat(3,1fr) !important; } }
+/* karty niech NIE zajmują całego wiersza */
+section.stack .card{ grid-column: auto !important; }
+
+/* === FIX 3: zdjęcia w kartach – kontrola rozmiaru === */
+.card__imgwrap{ width:100%; aspect-ratio: 3 / 2; overflow:hidden; }
+.card__imgwrap img, .card > a > img{
+  width:100%; height:100%; object-fit: cover; object-position: center;
+  display:block;
+}
+/* jeśli nie masz .card__imgwrap w HTML */
+.card > a > img{ aspect-ratio: 3 / 2; }
+
+@media (min-width: 1024px){
+  .card__imgwrap{ max-height: 260px; }
+}
+@media (max-width: 1023.98px){
+  .card__imgwrap{ max-height: 220px; }
+}
