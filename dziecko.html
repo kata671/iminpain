@@ -221,5 +221,108 @@
   });
 })();
 </script>
+<script id="bh-translator-final">
+(function(){
+  const PAGE_LANG=(document.documentElement.getAttribute('lang')||'pl').toLowerCase();
+  const INCLUDED='pl,en,de,fr,it,es,uk,cs,sk,lt,lv,ro,ru,nl,pt';
+
+  // A) Przywróć „czyste” document.createElement, jeśli ktoś je wcześniej podmienił
+  try{
+    const suspicious = Function.prototype.toString.call(document.createElement).includes('translate_a/element.js');
+    if(suspicious){
+      const f=document.createElement('iframe'); f.style.display='none';
+      document.documentElement.appendChild(f);
+      const pristine=f.contentWindow.document.createElement;
+      document.createElement=function(tag){ return pristine.call(document, tag); };
+      f.remove();
+      console.info('[BH] createElement restored');
+    }
+  }catch(e){}
+
+  // B) Schowaj baner i ewentualne resztki
+  (function css(){
+    if(document.getElementById('bh-gt-css')) return;
+    const s=document.createElement('style'); s.id='bh-gt-css';
+    s.textContent=`
+      .goog-te-banner-frame.skiptranslate,.goog-te-banner-frame{display:none!important}
+      body{top:0!important}
+      #google_translate_element{display:none!important}
+      .skiptranslate,.goog-logo-link,.goog-te-gadget .goog-te-combo{display:none!important}
+    `;
+    document.head.appendChild(s);
+  })();
+  const kill = sel => document.querySelectorAll(sel).forEach(n=>n.remove());
+  kill('iframe[id^="goog-gt-"], .skiptranslate, [id*="google_translate_element"]:not(#google_translate_element)');
+
+  // C) Zapewnij kontener wymagany przez Google
+  function ensureContainer(){
+    if(!document.getElementById('google_translate_element')){
+      const el=document.createElement('div'); el.id='google_translate_element'; el.style.display='none';
+      document.body.appendChild(el);
+    }
+  }
+
+  // D) Ładowanie Google tylko raz (nasz callback __bhGTinit)
+  let ready;
+  function loadGT(){
+    if(ready) return ready;
+    ready=new Promise(res=>{
+      window.__bhGTinit=function(){
+        try{
+          new google.translate.TranslateElement(
+            {pageLanguage:PAGE_LANG, includedLanguages:INCLUDED, autoDisplay:false},
+            'google_translate_element'
+          );
+        }catch(e){}
+        res();
+      };
+      const sc=document.createElement('script');
+      sc.src='https://translate.google.com/translate_a/element.js?cb=__bhGTinit';
+      sc.async=true; document.head.appendChild(sc);
+    });
+    return ready;
+  }
+
+  // E) Ustaw i zastosuj język natychmiast (bez odświeżania)
+  function setGoogTrans(code){
+    const v=`/auto/${code}`;
+    const exp=new Date(Date.now()+31536e6).toUTCString();
+    try{
+      document.cookie=`googtrans=${v};path=/;expires=${exp}`;
+      localStorage.setItem('googtrans', v);
+      localStorage.setItem('googtrans-override', v);
+    }catch(e){}
+  }
+  async function applyLang(code){
+    ensureContainer(); await loadGT(); setGoogTrans(code);
+    const tryApply=()=>{
+      const sel=document.querySelector('.goog-te-combo');
+      if(!sel) return false;
+      if(sel.value!==code) sel.value=code;
+      sel.dispatchEvent(new Event('change',{bubbles:true}));
+      return true;
+    };
+    if(tryApply()) return;
+    let n=0; const iv=setInterval(()=>{ if(tryApply()||++n>80) clearInterval(iv); },100); // do 8s
+  }
+
+  // F) Publiczne API + auto-start zapisanym językiem
+  window.BH_setLanguage=code=>{ if(code && code!=='auto') applyLang(code); };
+  document.addEventListener('DOMContentLoaded',()=>{
+    ensureContainer();
+    const saved=(localStorage.getItem('googtrans')||'').split('/').pop();
+    if(saved && saved!==PAGE_LANG) applyLang(saved);
+  });
+
+  // G) Automatyczne podpięcie do Twojego UI (dropdown lub przyciski)
+  document.addEventListener('change',e=>{
+    const t=e.target;
+    if(t && (t.id==='bhLang' || t.closest('.langpick'))) BH_setLanguage(t.value);
+  });
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('[data-lang]'); if(b) BH_setLanguage(b.getAttribute('data-lang'));
+  });
+})();
+</script>
 </body>
 </html>
