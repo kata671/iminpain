@@ -298,5 +298,173 @@
 })();
 </script>
 <!-- === /Boli Help • Uni-lang === -->
+<!-- === Boli Help • I18N STABILIZER (wklej przed </body>) === -->
+<style id="bh-i18n-styles">
+  /* chowamy UI Google */
+  .goog-te-banner-frame.skiptranslate,
+  .goog-te-banner-frame, .goog-te-balloon-frame,
+  .goog-tooltip, .goog-te-spinner-pos { display:none !important; }
+  body { top:0 !important; }
+  #google_translate_element, .goog-te-gadget, .goog-te-combo { display:none !important; }
+
+  /* guzik: taki sam jak na stronie głównej */
+  #bh-i18n-btn{
+    position:fixed; top:12px; right:12px; z-index:9999;
+    display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 12px;
+    border-radius:18px; background:rgba(22,28,64,.65);
+    border:1px solid rgba(164,107,255,.35);
+    box-shadow:0 10px 22px rgba(8,10,22,.35), inset 0 0 0 1px rgba(255,255,255,.06);
+    color:#eaf2ff; font:800 12px/1 system-ui,Segoe UI,Roboto,Arial,sans-serif; letter-spacing:.4px;
+    cursor:pointer; user-select:none;
+  }
+  #bh-i18n-dot{width:8px;height:8px;border-radius:999px;background:#5eead4;box-shadow:0 0 0 2px rgba(94,234,212,.28)}
+  #bh-i18n-code{font-weight:900}
+  #bh-i18n-list{
+    position:fixed; top:56px; right:12px; z-index:10000; display:none;
+    min-width:240px; max-height:70vh; overflow:auto; padding:10px; border-radius:14px;
+    background:rgba(14,18,48,.96); border:1px solid rgba(164,107,255,.28);
+    box-shadow:0 18px 36px rgba(8,10,22,.55);
+  }
+  #bh-i18n-list[aria-hidden="false"]{display:block}
+  #bh-i18n-search{
+    width:100%; margin-bottom:8px; padding:10px 12px; border-radius:12px;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16); color:#fff; font-weight:800; outline:0;
+  }
+  #bh-i18n-ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+  #bh-i18n-ul li{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:10px 12px; border-radius:12px; cursor:pointer;
+    color:#eef2ff; font-weight:800; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.10);
+  }
+  #bh-i18n-ul li:hover{background:rgba(255,255,255,.07); border-color:rgba(164,107,255,.28)}
+</style>
+
+<!-- niewidoczny kontener wymagany przez Google -->
+<div id="google_translate_element" aria-hidden="true" style="display:none"></div>
+
+<!-- guzik + panel (utworzą się tylko, jeśli jeszcze ich nie ma) -->
+<div id="bh-i18n-mount"></div>
+
+<script>
+(function(){
+  if(window.__bhI18nOnce) return; window.__bhI18nOnce = true;
+
+  /* 0) Wyłącz banner Chrome na przyszłość – meta notranslate (runtime) */
+  (function(){
+    if(!document.querySelector('meta[name="google"][content="notranslate"]')){
+      const m = document.createElement('meta');
+      m.setAttribute('name','google'); m.setAttribute('content','notranslate');
+      document.head.appendChild(m);
+    }
+  })();
+
+  /* 1) Dedup – jeśli jakiś tłumacz już jest, nie tworzymy drugiego */
+  if(!document.getElementById('bh-i18n-btn')){
+    const host = document.getElementById('bh-i18n-mount') || document.body;
+    host.insertAdjacentHTML('beforeend', `
+      <button id="bh-i18n-btn" type="button" aria-haspopup="true" aria-expanded="false" title="Wybierz język">
+        <span id="bh-i18n-dot"></span><span id="bh-i18n-code">PL</span>
+      </button>
+      <div id="bh-i18n-list" aria-hidden="true">
+        <input id="bh-i18n-search" type="search" placeholder="Szukaj języka…">
+        <ul id="bh-i18n-ul"></ul>
+      </div>
+    `);
+  }
+
+  const LANGS = [
+    ["pl","Polski"],["en","English"],["de","Deutsch"],["fr","Français"],["es","Español"],
+    ["it","Italiano"],["ro","Română"],["uk","Українська"],["ru","Русский"],
+    ["cs","Čeština"],["sk","Slovenčina"],["lt","Lietuvių"],["lv","Latviešu"],
+    ["pt","Português"],["nl","Nederlands"],["da","Dansk"],["sv","Svenska"]
+  ];
+
+  function setCookie(name, value, days, domain){
+    const d = new Date(); d.setTime(d.getTime() + (days*24*60*60*1000));
+    const base = `${name}=${value};expires=${d.toUTCString()};path=/`;
+    document.cookie = base;
+    if(domain){
+      document.cookie = `${base};domain=${domain}`;
+      if(!domain.startsWith(".")) document.cookie = `${base};domain=.${domain}`;
+    }
+  }
+  function getCookie(name){
+    return document.cookie.split(";").map(c=>c.trim()).find(c=>c.startsWith(name+"="))?.split("=")[1] || "";
+  }
+  function rootDomain(){
+    const p = location.hostname.split(".");
+    return p.length>=2 ? p.slice(-2).join(".") : location.hostname;
+  }
+  function getLang(){
+    const ls = localStorage.getItem("bh_lang");
+    if(ls) return ls;
+    const c = decodeURIComponent(getCookie("googtrans") || getCookie("GOOGTRANS"));
+    if(c && c.includes("/")) return c.split("/").pop();
+    return (document.documentElement.getAttribute("lang")||"pl").slice(0,2).toLowerCase();
+  }
+  function applyLang(lang){
+    const from = (document.documentElement.getAttribute("lang")||"pl").slice(0,2);
+    const val = `/${from}/${lang}`;
+    const dom = rootDomain();
+    setCookie("googtrans", val, 365);
+    setCookie("googtrans", val, 365, dom);
+    setCookie("googtrans", val, 365, location.hostname);
+    localStorage.setItem("bh_lang", lang);
+    location.reload();
+  }
+
+  const btn   = document.getElementById("bh-i18n-btn");
+  const code  = document.getElementById("bh-i18n-code");
+  const panel = document.getElementById("bh-i18n-list");
+  const ul    = document.getElementById("bh-i18n-ul");
+  const search= document.getElementById("bh-i18n-search");
+
+  code.textContent = getLang().toUpperCase();
+
+  function renderList(q=""){
+    const s = q.trim().toLowerCase();
+    ul.innerHTML = "";
+    LANGS.filter(([k,v])=>!s || k.includes(s) || v.toLowerCase().includes(s))
+      .forEach(([k,v])=>{
+        const li = document.createElement("li");
+        li.innerHTML = `<span>${v}</span><strong>${k.toUpperCase()}</strong>`;
+        li.onclick = ()=>{ if(k!==getLang()) applyLang(k); panel.setAttribute("aria-hidden","true"); btn.setAttribute("aria-expanded","false"); };
+        ul.appendChild(li);
+      });
+  }
+  renderList();
+  search.oninput = ()=>renderList(search.value);
+
+  btn.onclick = ()=>{
+    const open = panel.getAttribute("aria-hidden") !== "false";
+    panel.setAttribute("aria-hidden", open ? "false" : "true");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  };
+  document.addEventListener("click", (e)=>{
+    if(!panel.contains(e.target) && e.target!==btn){
+      panel.setAttribute("aria-hidden","true");
+      btn.setAttribute("aria-expanded","false");
+    }
+  });
+
+  /* 2) Cichy init Google (bez UI) – potrzebne, by cookies zadziałały */
+  window.googleTranslateElementInit = function(){
+    try{
+      new window.google.translate.TranslateElement({
+        pageLanguage: (document.documentElement.getAttribute("lang")||"pl").slice(0,2),
+        autoDisplay: false,
+        layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }catch(e){}
+  };
+  (function addGt(){
+    if(window.google && window.google.translate) return;
+    const s = document.createElement('script');
+    s.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    s.defer = true; document.head.appendChild(s);
+  })();
+})();
+</script>
+<!-- === /I18N STABILIZER === -->
 </body>
 </html>
