@@ -1391,5 +1391,142 @@ body{top:0!important}`;
 })();
 </script>
 <!-- END bh-patch:translator-final-combo -->
+<!-- BEGIN bh-patch:translator-panic-safe-pl -->
+<script>
+(function(){
+  if (window.__bhPatchTranslatorPanicSafePL__) return;
+  window.__bhPatchTranslatorPanicSafePL__ = 1;
+
+  /* 0) Twarde ustawienia PL + wyciszenie innych tłumaczy/banderów */
+  try {
+    localStorage.setItem('bh-safe','1');
+    localStorage.setItem('bh-lang','pl');
+    sessionStorage.setItem('bh-safe','1');
+    localStorage.removeItem('googtrans'); sessionStorage.removeItem('googtrans');
+  } catch(_) {}
+  // Meta notranslate
+  if (!document.querySelector('meta[name="google"][content*="notranslate"]')) {
+    var m=document.createElement('meta'); m.name='google'; m.content='notranslate'; document.head.appendChild(m);
+  }
+  // CSS: ukryj wszelkie nasze/obce widżety tłumacza
+  var css = document.createElement('style');
+  css.textContent = `
+#bh-translator,.bh-translator-wrap,.goog-te-banner-frame,.goog-te-gadget,#google_translate_element,
+.VIpgJd-ZVi9od-ORHb,.VIpgJd-ZVi9od-l4eHX-hSRGPd,.VIpgJd-ZVi9od-ORHb-OEVmcd { display:none !important; visibility:hidden !important; }
+body { top:0 !important; }`;
+  document.head.appendChild(css);
+  // Zneutralizuj ewentualny init Google
+  window.googleTranslateElementInit = function(){};
+
+  /* 1) Słownik EN -> PL (rdzeń + często widoczne słowa z Twoich ekranów) */
+  var MAP_EN_PL = {
+    // FRAZY
+    "first aid":"pierwsza pomoc","emergency phone":"telefon alarmowy","when to worry":"kiedy się niepokoić","red flags":"czerwone flagi",
+    "low risk":"ryzyko niskie","show more":"pokaż więcej","select":"zaznacz","see suggestions":"zobacz podpowiedzi",
+    "recommendations / prevention":"rekomendacje / profilaktyka","otc medications":"leki otc","prescription medications":"leki na receptę",
+    "symptoms and causes":"objawy i przyczyny","treatment and medications":"leczenie i leki",
+    "red-flag symptoms? do not wait":"masz objawy alarmowe? nie zwlekaj","call 112":"zadzwoń 112",
+    "woman — choose body part":"kobieta — wybierz część ciała","man — choose body part":"mężczyzna — wybierz część ciała","child — choose body part":"dziecko — wybierz część ciała",
+    // SŁOWA
+    "search":"szukaj","symptoms":"objawy","causes":"przyczyny","medications":"leki","doctor":"lekarz",
+    "pharmacy":"apteka","hospital":"szpital","contact":"kontakt","information":"informacje",
+    "head":"głowa","neck":"szyja","throat":"gardło","eye":"oko","ear":"ucho","nose":"nos","mouth":"usta",
+    "back":"plecy","shoulder":"bark","chest":"klatka","arm":"ramię","forearm":"przedramię","hand":"dłoń",
+    "stomach":"brzuch","hip":"biodro","thigh":"udo","knee":"kolano","calf":"łydka","foot":"stopa",
+    "man":"mężczyzna","woman":"kobieta","child":"dziecko",
+    "pain":"ból","fever":"gorączka","cough":"kaszel","shortness of breath":"duszność","choking":"zadławienie"
+  };
+
+  /* 2) Utilsy */
+  function diac(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+  function norm(s){return diac(String(s||'').toLowerCase()).replace(/[^\p{L}\p{N}\s\-]/gu,'').replace(/\s+/g,' ').trim();}
+  function caseKeep(t,s){ if(!s) return t;
+    if (s===s.toUpperCase()) return t.toUpperCase();
+    if (s[0]===s[0].toUpperCase()) return t.charAt(0).toUpperCase()+t.slice(1);
+    return t;
+  }
+  // Zbuduj słownik fraz/słów EN->PL
+  var D = (function(){
+    var phr={}, tok={};
+    Object.keys(MAP_EN_PL).forEach(function(en){
+      var pl = MAP_EN_PL[en], k = norm(en);
+      if (!k) return;
+      (k.indexOf(' ')>0 ? phr : tok)[k] = pl;
+    });
+    return {phr:phr, tok:tok};
+  })();
+
+  /* 3) Funkcja podmiany w stringu: najpierw frazy (dłuższe), potem słowa */
+  function replaceEN2PL(str){
+    var out = String(str||'');
+    // Frazy — sortuj malejąco po długości
+    Object.keys(D.phr).sort(function(a,b){return b.length-a.length;}).forEach(function(k){
+      var re = new RegExp('\\b'+k.split(' ').map(function(w){return diac(w).replace(/[.*+?^${}()|[\\]\\\\]/g,'\\$&');}).join('\\s+')+'\\b','ig');
+      out = out.replace(re, function(m){ return caseKeep(D.phr[k], m); });
+    });
+    // Słowa
+    out = out.replace(/\b([A-Za-zÀ-ž\-]+)\b/g, function(m){
+      var t = D.tok[norm(m)];
+      return t ? caseKeep(t, m) : m;
+    });
+    return out;
+  }
+
+  /* 4) Czyściutkie tłumaczenie całego DOM na PL + atrybutów */
+  function shouldSkipText(tn){
+    if (!tn || tn.nodeType!==3) return true;
+    var p = tn.parentElement; if (!p) return true;
+    if (p.closest('#bh-translator,[data-bh-no-translate]')) return true;
+    if (['SCRIPT','STYLE','CODE','PRE','TEXTAREA','NOSCRIPT','SVG'].includes(p.tagName)) return true;
+    return false;
+  }
+  function translateEverythingToPL(){
+    // Teksty
+    var tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    var nodes = []; while (tw.nextNode()) nodes.push(tw.currentNode);
+    nodes.forEach(function(tn){
+      if (shouldSkipText(tn)) return;
+      var nv = replaceEN2PL(tn.nodeValue);
+      if (nv !== tn.nodeValue) tn.nodeValue = nv;
+    });
+    // Atrybuty
+    document.querySelectorAll('[placeholder],[title],[aria-label]').forEach(function(el){
+      if (el.closest('#bh-translator,[data-bh-no-translate]')) return;
+      ['placeholder','title','aria-label'].forEach(function(a){
+        var v = el.getAttribute(a); if (v==null) return;
+        var nv = replaceEN2PL(v);
+        if (nv !== v) el.setAttribute(a, nv);
+      });
+    });
+  }
+
+  /* 5) Watchdog — utrzymuj PL zawsze (dynamiczne DOM) */
+  var mo;
+  function startWatchdog(){
+    if (mo) mo.disconnect();
+    mo = new MutationObserver(function(){ translateEverythingToPL(); });
+    mo.observe(document.body, { childList:true, subtree:true, characterData:true });
+  }
+
+  /* 6) Start natychmiast (także bez czekania na DOMContentLoaded, bo „została minuta”) */
+  function boot(){
+    translateEverythingToPL(); // pierwsze przejście
+    // Kilka krótkich przebiegów „doganiania”, gdyby coś doładowało się asynchronicznie
+    var bursts = 0;
+    var id = setInterval(function(){
+      translateEverythingToPL();
+      if (++bursts >= 10) { clearInterval(id); startWatchdog(); }
+    }, 120);
+  }
+  if (document.readyState === 'loading') {
+    // uruchom od razu i jeszcze raz po DOMContentLoaded
+    boot();
+    document.addEventListener('DOMContentLoaded', boot, { once:true });
+  } else {
+    boot();
+  }
+})();
+</script>
+<!-- END bh-patch:translator-panic-safe-pl -->
 </body>
 </html>
