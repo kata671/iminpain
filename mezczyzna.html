@@ -1,6 +1,18 @@
 <!doctype html>
 <html lang="pl">
-<head>
+<head><meta name="google" content="notranslate">
+<style id="bh-kill-gt">
+  .goog-te-banner-frame.skiptranslate,
+  .goog-te-banner-frame,
+  .goog-te-balloon-frame,
+  .goog-tooltip,
+  .goog-te-spinner-pos { display:none !important; }
+  body { top:0 !important; }
+  #google_translate_element,
+  .goog-logo-link,
+  .goog-te-gadget .goog-te-combo { display:none !important; }
+</style>
+
   <meta charset="utf-8" /><head>
   <meta charset="utf-8" />
   <style id="bh-gt-nobanner">
@@ -456,6 +468,133 @@
     ensureSwitcher();
     const saved = norm(localStorage.getItem('bh-lang')||'pl');
     setLang(saved);
+  });
+})();
+</script>
+<script>
+/* Boli Help — ATOMIC I18N (PL/EN/ES/RO), no-Google, instant */
+(function(){
+  // 🔒 wyczyść resztki Google w STRONIE (gdyby przeglądarka coś wstrzyknęła)
+  const kill = () => {
+    document.querySelectorAll('.goog-te-banner-frame,.goog-te-balloon-frame,.goog-tooltip,iframe[id^="goog-gt-"]').forEach(n=>n.remove());
+    document.querySelectorAll('.skiptranslate').forEach(n=>{ if(n!==document.documentElement && n!==document.body) n.remove(); });
+    if(document.body) document.body.style.top='0';
+  };
+  kill(); let t=0, iv=setInterval(()=>{ kill(); if(++t>120) clearInterval(iv); },100);
+  new MutationObserver(kill).observe(document.documentElement,{childList:true,subtree:true});
+
+  // 🌍 słowniki – wspólne + najważniejsze strony/etykiety
+  const I18N = {
+    pl: {
+      brand_title:"Boli Help",
+      brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",
+      pill_choke:"Zadławienie", pill_cpr:"Reanimacja", pill_accident:"Wypadek", pill_firstaid:"Pierwsza pomoc",
+      pill_games:"Gry / Trening", pill_quizzes:"Quizy",
+      btn_112:"📞 112", btn_hosp:"🏥 Szpitale / SOR", btn_loc:"📍 Zlokalizuj mnie",
+      badge_apteka:"apteka24",
+      subheadline:"Boli mnie — wybierz obszar bólu",
+      card_woman:"Kobieta", card_man:"Mężczyzna", card_child:"Dziecko",
+      search_ph:"Szukaj objawu, części ciała lub tematu…",
+      // kobieta / mężczyzna / dziecko – najczęstsze kafelki
+      part_eye:"Oko", part_head:"Głowa", part_neck:"Gardło", part_chest:"Klatka", part_arm:"Ramię",
+      part_hand:"Dłoń", part_belly:"Brzuch", part_leg:"Udo", part_knee:"Kolano", part_foot:"Stopa", part_back:"Plecy"
+    },
+    en: {
+      brand_title:"Boli Help",
+      brand_sub:"Help & first aid in emergencies",
+      pill_choke:"Choking", pill_cpr:"CPR", pill_accident:"Accident", pill_firstaid:"First aid",
+      pill_games:"Games / Training", pill_quizzes:"Quizzes",
+      btn_112:"📞 112", btn_hosp:"🏥 Hospitals / ER", btn_loc:"📍 Locate me",
+      badge_apteka:"pharmacy24",
+      subheadline:"It hurts — choose the body area",
+      card_woman:"Woman", card_man:"Man", card_child:"Child",
+      search_ph:"Search a symptom, body area or topic…",
+      part_eye:"Eye", part_head:"Head", part_neck:"Throat", part_chest:"Chest", part_arm:"Arm",
+      part_hand:"Hand", part_belly:"Belly", part_leg:"Thigh", part_knee:"Knee", part_foot:"Foot", part_back:"Back"
+    },
+    es: {
+      brand_title:"Boli Help",
+      brand_sub:"Ayuda y primeros auxilios en emergencias",
+      pill_choke:"Atragantamiento", pill_cpr:"RCP", pill_accident:"Accidente", pill_firstaid:"Primeros auxilios",
+      pill_games:"Juegos / Entrenamiento", pill_quizzes:"Cuestionarios",
+      btn_112:"📞 112", btn_hosp:"🏥 Hospital / Urgencias", btn_loc:"📍 Localízame",
+      badge_apteka:"farmacia24",
+      subheadline:"Me duele — elige el área del cuerpo",
+      card_woman:"Mujer", card_man:"Hombre", card_child:"Niño",
+      search_ph:"Busca un síntoma, zona del cuerpo o tema…",
+      part_eye:"Ojo", part_head:"Cabeza", part_neck:"Garganta", part_chest:"Pecho", part_arm:"Brazo",
+      part_hand:"Mano", part_belly:"Abdomen", part_leg:"Muslo", part_knee:"Rodilla", part_foot:"Pie", part_back:"Espalda"
+    },
+    ro: {
+      brand_title:"Boli Help",
+      brand_sub:"Ajutor și prim ajutor în urgențe",
+      pill_choke:"Înecare", pill_cpr:"RCP", pill_accident:"Accident", pill_firstaid:"Prim ajutor",
+      pill_games:"Jocuri / Antrenament", pill_quizzes:"Teste",
+      btn_112:"📞 112", btn_hosp:"🏥 Spitale / UPU", btn_loc:"📍 Localizează-mă",
+      badge_apteka:"farmacie24",
+      subheadline:"Mă doare — alege zona corpului",
+      card_woman:"Femeie", card_man:"Bărbat", card_child:"Copil",
+      search_ph:"Caută simptom, zonă sau subiect…",
+      part_eye:"Ochi", part_head:"Cap", part_neck:"Gât", part_chest:"Torace", part_arm:"Braț",
+      part_hand:"Mână", part_belly:"Abdomen", part_leg:"Coapsă", part_knee:"Genunchi", part_foot:"Picior", part_back:"Spate"
+    }
+  };
+
+  // 🧠 helper
+  const getLang = () => (localStorage.getItem('bh-lang') || (document.documentElement.getAttribute('lang')||'pl')).toLowerCase().slice(0,2);
+  const setLang = (l) => { l=(l||'pl').toLowerCase().slice(0,2); localStorage.setItem('bh-lang', l); document.documentElement.setAttribute('lang', l); apply(l); };
+
+  // 🔁 natychmiastowa podmiana tekstów
+  function apply(lang){
+    const dict = I18N[lang] || I18N.pl;
+    // elementy z data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    // placeholder wyszukiwarki
+    const search = document.getElementById('bhSearch');
+    if (search && dict.search_ph) search.placeholder = dict.search_ph;
+    // fallback: typowe labelki bez data-i18n (jeśli masz inne – dopisz data-i18n i masz spokój)
+    document.querySelectorAll('[data-part="eye"]').forEach(e=>e.textContent=dict.part_eye||e.textContent);
+    document.querySelectorAll('[data-part="head"]').forEach(e=>e.textContent=dict.part_head||e.textContent);
+    document.querySelectorAll('[data-part="neck"]').forEach(e=>e.textContent=dict.part_neck||e.textContent);
+    document.querySelectorAll('[data-part="belly"]').forEach(e=>e.textContent=dict.part_belly||e.textContent);
+    document.querySelectorAll('[data-part="leg"]').forEach(e=>e.textContent=dict.part_leg||e.textContent);
+    document.querySelectorAll('[data-part="knee"]').forEach(e=>e.textContent=dict.part_knee||e.textContent);
+    document.querySelectorAll('[data-part="foot"]').forEach(e=>e.textContent=dict.part_foot||e.textContent);
+    document.querySelectorAll('[data-part="back"]').forEach(e=>e.textContent=dict.part_back||e.textContent);
+  }
+
+  // 🎛️ jeżeli nie masz przełącznika na stronie – wstawiam mały w prawym górnym rogu
+  function ensureSwitcher(){
+    if (document.getElementById('bhLang') || document.querySelector('[data-lang]')) return;
+    const box = document.createElement('div');
+    box.id='bhLangMini';
+    box.style.cssText='position:fixed;top:12px;right:12px;z-index:2147483647;display:flex;gap:8px';
+    box.innerHTML = `
+      <button data-lang="pl" style="padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-weight:800;cursor:pointer">PL</button>
+      <button data-lang="en" style="padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-weight:800;cursor:pointer">EN</button>
+      <button data-lang="es" style="padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-weight:800;cursor:pointer">ES</button>
+      <button data-lang="ro" style="padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-weight:800;cursor:pointer">RO</button>
+    `;
+    document.body.appendChild(box);
+  }
+
+  // 🎧 podłącz do Twoich elementów jeśli istnieją
+  document.addEventListener('change',(e)=>{
+    const t=e.target;
+    if(t && (t.id==='bhLang' || t.closest('.langpick'))) setLang(t.value);
+  });
+  document.addEventListener('click',(e)=>{
+    const b=e.target.closest('[data-lang]');
+    if(b) setLang(b.getAttribute('data-lang'));
+  });
+
+  // 🚀 start
+  document.addEventListener('DOMContentLoaded', ()=>{
+    ensureSwitcher();
+    setLang(getLang());
   });
 })();
 </script>
