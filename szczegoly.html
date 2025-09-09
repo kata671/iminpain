@@ -1194,5 +1194,240 @@ body { top: 0 !important; }
 })();
 </script>
 <!-- END bh-patch:translator-hotfix -->
+<!-- BEGIN bh-patch:translator-fix-v2 -->
+<script>
+(function(){
+  if (window.__bhPatchTranslatorFixV2__) return;
+  window.__bhPatchTranslatorFixV2__ = 1;
+
+  // ========== USTAWIENIA ==========
+  var BH_STORE_KEY = 'bh-lang';
+  var BH_SUPPORTED = [
+    { code: 'pl', label: 'Polski' },
+    { code: 'en', label: 'English' },
+    { code: 'de', label: 'Deutsch' },
+    { code: 'uk', label: 'Українська' }
+  ];
+
+  // Minimalne słowniki wbudowane (możesz rozbudować później plikami assets/i18n/*.json)
+  var BH_EMBED = {
+    en: {
+      "szukaj":"Search","telefon alarmowy":"Emergency phone","pierwsza pomoc":"First Aid","apteka":"Pharmacy","szpital":"Hospital",
+      "objawy":"Symptoms","przyczyny":"Causes","leki":"Medications","na receptę":"Prescription","bez recepty":"Over-the-counter",
+      "kiedy się niepokoić":"When to worry","czerwone flagi":"Red flags","lekarz":"Doctor","kontakt":"Contact","informacje":"Information"
+    },
+    de: {
+      "szukaj":"Suche","telefon alarmowy":"Notruf","pierwsza pomoc":"Erste Hilfe","apteka":"Apotheke","szpital":"Krankenhaus",
+      "objawy":"Symptome","przyczyny":"Ursachen","leki":"Medikamente","na receptę":"Verschreibungspflichtig","bez recepty":"Rezeptfrei",
+      "kiedy się niepokoić":"Wann Sorgen machen","czerwone flagi":"Rote Flaggen","lekarz":"Arzt","kontakt":"Kontakt","informacje":"Informationen"
+    },
+    uk: {
+      "szukaj":"Пошук","telefon alarmowy":"Екстрений номер","pierwsza pomoc":"Перша допомога","apteka":"Аптека","szpital":"Лікарня",
+      "objawy":"Симптоми","przyczyny":"Причини","leki":"Ліки","na receptę":"За рецептом","bez recepty":"Без рецепту",
+      "kiedy się niepokoić":"Коли варто хвилюватися","czerwone flagi":"Тривожні ознаки","lekarz":"Лікар","kontakt":"Контакт","informacje":"Інформація"
+    }
+  };
+
+  var BH_DEFAULT = 'pl';
+  var savedLang = localStorage.getItem(BH_STORE_KEY);
+  var browserLang = (navigator.language||'pl').slice(0,2).toLowerCase();
+  var BH_INITIAL = (savedLang && BH_SUPPORTED.some(l=>l.code===savedLang)) ? savedLang :
+                   (BH_SUPPORTED.some(l=>l.code===browserLang) ? browserLang : BH_DEFAULT);
+
+  // ========== POMOCNICZE ==========
+  function bhNorm(str){
+    return String(str||'').toLowerCase()
+      .replace(/\s+/g,' ')
+      .replace(/[.,;:!?()[\]{}"„”‚’'`/\\|<>~^%€$#@*+=\-–—]/g,'')
+      .trim();
+  }
+  function bhTextOnly(el){
+    // tłumaczymy tylko proste treści (bez HTML dzieci), aby nie niszczyć złożonych bloków
+    return el && el.childElementCount === 0;
+  }
+
+  // ========== ZAŁĄCZENIE / UTWORZENIE UI (jeśli brak) ==========
+  function ensureUI(){
+    if (document.getElementById('bh-translator')) return;
+    // Lekki styl (jeśli poprzedni blok go nie wstrzyknął)
+    if (!document.querySelector('style[data-bh-style="translator-core"]')){
+      var css = `
+:root{--bh-accent:#6c5ce7;--bh-bg:rgba(255,255,255,.75);--bh-shadow:0 8px 20px rgba(0,0,0,.12);--bh-radius:16px;--bh-blur:saturate(1.2) blur(6px);--bh-z:9999;--bh-font:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Liberation Sans","Helvetica Neue",sans-serif}
+.bh-translator-wrap{position:fixed;top:12px;right:12px;z-index:var(--bh-z);font-family:var(--bh-font)}
+.bh-translator-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bh-bg);backdrop-filter:var(--bh-blur);border:1px solid rgba(108,92,231,.25);border-radius:var(--bh-radius);box-shadow:var(--bh-shadow);cursor:pointer;color:#1f2937;user-select:none;-webkit-tap-highlight-color:transparent;transition:transform .12s ease,background .2s ease,border-color .2s ease}
+.bh-translator-btn:hover{transform:translateY(-1px)}.bh-translator-btn:active{transform:translateY(0)}
+.bh-translator-btn .bh-icn{width:18px;height:18px;flex:0 0 auto;color:var(--bh-accent)}
+.bh-translator-label{font-size:14px;line-height:1;font-weight:600}
+.bh-translator-dd{position:absolute;right:0;margin-top:8px;background:var(--bh-bg);backdrop-filter:var(--bh-blur);border:1px solid rgba(108,92,231,.25);border-radius:14px;box-shadow:var(--bh-shadow);min-width:200px;padding:8px;display:none}
+.bh-translator-wrap[aria-expanded="true"] .bh-translator-dd{display:block}
+.bh-dd-item{display:flex;align-items:center;justify-content:space-between;width:100%;padding:10px 12px;border-radius:10px;background:transparent;border:0;cursor:pointer;color:#111827;font-size:14px;font-weight:600}
+.bh-dd-item:hover{background:rgba(108,92,231,.08)}.bh-dd-item small{color:#6b7280;font-weight:500}
+@media(max-width:480px){.bh-translator-btn{padding:8px 12px;gap:8px}.bh-translator-label{font-size:13px}.bh-translator-dd{min-width:180px}}
+      `;
+      var st = document.createElement('style');
+      st.setAttribute('data-bh-style','translator-core');
+      st.appendChild(document.createTextNode(css));
+      document.head.appendChild(st);
+    }
+
+    var wrap=document.createElement('div'); wrap.id='bh-translator'; wrap.className='bh-translator-wrap'; wrap.setAttribute('aria-expanded','false');
+    var btn=document.createElement('button'); btn.type='button'; btn.className='bh-translator-btn'; btn.setAttribute('aria-label','Language switcher');
+    btn.innerHTML = `
+      <svg class="bh-icn" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9Z" stroke="currentColor" stroke-width="1.6"></path>
+        <path d="M3 12h18M12 3c3 3.5 3 14 0 18M6 6c3.5 2 8.5 2 12 0M6 18c3.5-2 8.5-2 12 0" stroke="currentColor" stroke-width="1.2"></path>
+      </svg>
+      <span class="bh-translator-label" data-bh-no-translate>Lang: ${(BH_INITIAL||'pl').toUpperCase()}</span>
+    `;
+    var dd=document.createElement('div'); dd.className='bh-translator-dd'; dd.setAttribute('role','menu');
+    BH_SUPPORTED.forEach(function(l){
+      var b=document.createElement('button'); b.type='button'; b.className='bh-dd-item'; b.setAttribute('data-lang',l.code);
+      b.innerHTML = `<span>${l.label}</span><small>${l.code.toUpperCase()}</small>`;
+      dd.appendChild(b);
+    });
+    wrap.appendChild(btn); wrap.appendChild(dd); document.body.appendChild(wrap);
+
+    btn.addEventListener('click', function(){
+      wrap.setAttribute('aria-expanded', wrap.getAttribute('aria-expanded')==='true'?'false':'true');
+    });
+    document.addEventListener('click', function(e){ if (!wrap.contains(e.target)) wrap.setAttribute('aria-expanded','false'); });
+
+    // Delegacja na elementy listy (klik, pointer, Enter)
+    dd.addEventListener('click', bhPickLang, {passive:true});
+    dd.addEventListener('pointerup', bhPickLang, {passive:true});
+    dd.addEventListener('keyup', function(e){ if(e.key==='Enter') bhPickLang(e); }, {passive:true});
+    function bhPickLang(e){
+      var b=e.target.closest('.bh-dd-item'); if(!b) return;
+      wrap.setAttribute('aria-expanded','false');
+      var code=b.getAttribute('data-lang'); if (!code) return;
+      window.bhSetLanguage(code); // globalny, natychmiastowy
+    }
+  }
+
+  // ========== ZAŁADOWANIE SŁOWNIKA (z pliku + wbudowany) ==========
+  function bhLoadDict(lang){
+    return new Promise(function(resolve){
+      if (lang==='pl') return resolve({});
+      fetch('assets/i18n/'+lang+'.json',{cache:'no-store'}).then(function(r){
+        if (!r.ok) throw 0; return r.json();
+      }).then(function(json){
+        // scal: wbudowany (lowercase keys) + plik (preferuj plik)
+        var base = BH_EMBED[lang]||{};
+        var lcBase = {}; Object.keys(base).forEach(function(k){ lcBase[bhNorm(k)] = base[k]; });
+        var lcFile = {}; Object.keys(json||{}).forEach(function(k){ lcFile[bhNorm(k)] = json[k]; });
+        resolve(Object.assign({}, lcBase, lcFile));
+      }).catch(function(){
+        var base = BH_EMBED[lang]||{};
+        var lc = {}; Object.keys(base).forEach(function(k){ lc[bhNorm(k)] = base[k]; });
+        resolve(lc);
+      });
+    });
+  }
+
+  // ========== TŁUMACZENIE ==========
+  var bhActive = BH_DEFAULT;
+  var bhDict = {};
+
+  function bhTranslateTree(root){
+    // 1) Dokładne klucze: data-i18n
+    root.querySelectorAll && root.querySelectorAll('[data-i18n]').forEach(function(el){
+      if (el.closest('#bh-translator')) return;
+      var key = el.getAttribute('data-i18n');
+      var t = bhDict[bhNorm(key)];
+      if (t) el.textContent = t;
+    });
+
+    // 2) Atrybuty
+    root.querySelectorAll && root.querySelectorAll('[data-i18n-attr]').forEach(function(el){
+      if (el.closest('#bh-translator')) return;
+      (el.getAttribute('data-i18n-attr')||'').split(',').map(function(s){return s.trim();}).forEach(function(pair){
+        var sp = pair.split('|'); var attr=(sp[0]||'').trim(); var key=(sp[1]||'').trim();
+        if(!attr || !key) return;
+        var t = bhDict[bhNorm(key)];
+        if (t) el.setAttribute(attr, t);
+      });
+    });
+
+    // 3) Proste elementy tekstowe (bez dzieci) – ostrożnie, aby nie mieszać zdań
+    var candidates = root.querySelectorAll ? root.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,button,a,th,td,span,label,small,strong,em,figcaption,legend,summary,dd,dt,caption') : [];
+    candidates.forEach(function(el){
+      if (el.closest('#bh-translator')) return;
+      if (!bhTextOnly(el)) return;
+      var k = bhNorm(el.textContent);
+      if (!k) return;
+      var t = bhDict[k];
+      if (t && t !== el.textContent) el.textContent = t;
+    });
+  }
+
+  var bhObserverInstalled = false;
+  function bhInstallObserver(){
+    if (bhObserverInstalled) return;
+    bhObserverInstalled = true;
+    var mo = new MutationObserver(function(muts){
+      if (bhActive==='pl') return;
+      muts.forEach(function(m){
+        if (m.type==='childList'){
+          m.addedNodes.forEach(function(n){ if (n.nodeType===1) bhTranslateTree(n); });
+        }
+      });
+    });
+    mo.observe(document.documentElement, { childList:true, subtree:true });
+  }
+
+  // ========== API GLOBALNE ==========
+  window.bhSetLanguage = function(lang){
+    if (!BH_SUPPORTED.some(function(l){return l.code===lang;})) return;
+    bhActive = lang;
+    localStorage.setItem(BH_STORE_KEY, lang);
+    var label = document.querySelector('#bh-translator .bh-translator-label');
+    if (label) label.textContent = 'Lang: ' + lang.toUpperCase();
+
+    if (lang === 'pl'){
+      // powrót do oryginalnego PL – najpewniej przez reload (bez banerów, bo już zablokowane)
+      location.reload();
+      return;
+    }
+    // Załaduj słownik i przetłumacz cały dokument
+    bhLoadDict(lang).then(function(dict){
+      bhDict = dict || {};
+      bhTranslateTree(document);
+      bhInstallObserver();
+    });
+  };
+
+  // ========== START ==========
+  function bhInit(){
+    ensureUI(); // jeśli już jest – tylko podłączy zdarzenia
+    // Jeśli wcześniej zapisano język, zastosuj bez klikania
+    if (BH_INITIAL !== 'pl') {
+      window.bhSetLanguage(BH_INITIAL);
+    } else {
+      // zsynchronizuj label, gdy ktoś wcześniej zmienił
+      var saved = localStorage.getItem(BH_STORE_KEY);
+      var lbl = document.querySelector('#bh-translator .bh-translator-label');
+      if (lbl && saved) lbl.textContent = 'Lang: ' + saved.toUpperCase();
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bhInit); else bhInit();
+
+  // ========== DODATKOWO: brak tooltipów/bannerów (gdyby przeglądarka coś próbowała) ==========
+  (function hardenNoGoogle(){
+    var meta = document.querySelector('meta[name="google"][content*="notranslate"]');
+    if (!meta) {
+      var m = document.createElement('meta'); m.name='google'; m.content='notranslate'; document.head.appendChild(m);
+    }
+    var s = document.createElement('style'); s.setAttribute('data-bh-style','anti-google-translate'); s.textContent = `
+.goog-te-banner-frame,.goog-te-gadget,.goog-tooltip,.goog-te-balloon-frame,#google_translate_element,
+.VIpgJd-ZVi9od-ORHb,.VIpgJd-ZVi9od-l4eHX-hSRGPd,.VIpgJd-ZVi9od-ORHb-OEVmcd{display:none !important;visibility:hidden !important}
+body{top:0 !important}
+`; document.head.appendChild(s);
+    try { localStorage.removeItem('googtrans'); sessionStorage.removeItem('googtrans'); } catch(_){}
+    window.googleTranslateElementInit = function(){};
+  })();
+
+})();
+</script>
+<!-- END bh-patch:translator-fix-v2 -->
 </body>
 </html>
