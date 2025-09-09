@@ -296,3 +296,36 @@ a,button{ -webkit-tap-highlight-color: transparent }
     padding-right: 12px !important;
   }
 }
+/* === PATCH: home desktop/mobile (tapeta, karty, search) === */
+
+/* 1) TAPETA + HEX GRID (przywrócenie) */
+.bh-wallpaper,.bh-grid{position:fixed; inset:0; pointer-events:none}
+.bh-wallpaper{
+  z-index:0;
+  background:
+    radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
+    radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
+    radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+  filter: blur(10px) saturate(118%);
+}
+.bh-grid{
+  z-index:1; opacity:.22;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:160px 138px; background-position:center;
+}
+.bh-floor-fade{ position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
+  background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6)); }
+.container{ position:relative; z-index:3; background:transparent !important; }
+
+/* 2) KARTY – ogranicz wysokość obrazka, aby nie “puchły” */
+.card__imgwrap{ max-height: 320px; overflow: hidden; }
+.card__imgwrap img{ width:100%; height:100%; object-fit: contain; }
+@media (max-width: 1024px){ .card__imgwrap{ max-height: 260px; } }
+@media (max-width: 640px){  .card__imgwrap{ max-height: 200px; } }
+
+/* 3) WYSZUKIWARKA – stabilna szerokość + podpowiedzi nad treścią */
+.header .tools .search{ width: clamp(260px, 42vw, 420px); }
+.header .tools{ align-items:center; gap:10px; }
+.header .tools .search{ position:relative; z-index: 30; }         /* input nad innymi */
+.bh2025-suggest{ z-index: 40; }                                   /* panel podpowiedzi nad kartami */
