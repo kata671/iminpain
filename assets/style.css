@@ -463,3 +463,31 @@ section.stack .card > a > img[src*="dziecko-model1"]  { object-position: 50% 35%
 /* === FIX 4: ukrywanie PORADY gdy zamknięta === */
 #bh2025Porada[aria-hidden="true"]{ display:none !important; visibility:hidden !important; }
 #bh2025Porada[aria-hidden="false"]{ display:block; }
+/* --- FINE-TUNE portretów w kartach (bez zmiany rozmiaru kart) --- */
+section.stack .card > a > img{
+  object-fit: cover;          /* dalej wypełnia kartę */
+  object-position: 50% 30%;   /* domyślnie trochę niżej */
+  transition: transform .2s ease;
+}
+
+/* Indywidualne dopasowanie (mniej „zbliżenia”): */
+section.stack .card > a > img[src*="kobieta-model1"]{
+  object-position: 50% 35%;   /* pokaż więcej góry */
+  transform: scale(.92);      /* delikatnie oddal */
+  transform-origin: center 30%;
+}
+section.stack .card > a > img[src*="mezczyzna-model1"]{
+  object-position: 50% 38%;
+  transform: scale(.96);
+  transform-origin: center 35%;
+}
+section.stack .card > a > img[src*="dziecko-model1"]{
+  object-position: 50% 42%;   /* więcej czoła/włosy w kadrze */
+  transform: scale(.94);
+  transform-origin: center 40%;
+}
+
+/* Na mniejszych ekranach troszkę „mniej szeroki” kadr, bez zmiany kart */
+@media (max-width: 1024px){
+  section.stack .card > a > img{ aspect-ratio: 16 / 11; }
+}
