@@ -1749,5 +1749,277 @@ body{top:0 !important}
 })();
 </script>
 <!-- END bh-patch:translator-fix-v3 -->
+<!-- BEGIN bh-patch:translator-fix-v4 -->
+<script>
+(function(){
+  if (window.__bhPatchTranslatorFixV4__) return;
+  window.__bhPatchTranslatorFixV4__ = 1;
+
+  // ---------- KONFIG ----------
+  var BH_SUPPORTED = [
+    { code:'pl', label:'Polski' },
+    { code:'en', label:'English' },
+    { code:'de', label:'Deutsch' },
+    { code:'uk', label:'Українська' }
+  ];
+  var STORE = 'bh-lang';
+  var SESSION_LOCK = 'bh-lang-session-lock'; // aby nie nadpisywać wyboru w obrębie sesji
+  var DEFAULT = 'pl';
+
+  // ---------- WYŁĄCZ GOOGLE TRANSLATE UI ----------
+  (function antiGT(){
+    if (!document.querySelector('meta[name="google"][content*="notranslate"]')) {
+      var m=document.createElement('meta'); m.name='google'; m.content='notranslate'; document.head.appendChild(m);
+    }
+    var s=document.createElement('style'); s.textContent = `
+.goog-te-banner-frame,.goog-te-gadget,.goog-tooltip,.goog-te-balloon-frame,#google_translate_element,
+.VIpgJd-ZVi9od-ORHb,.VIpgJd-ZVi9od-l4eHX-hSRGPd,.VIpgJd-ZVi9od-ORHb-OEVmcd{display:none!important;visibility:hidden!important}
+body{top:0!important}`;
+    s.setAttribute('data-bh-style','anti-google-translate'); document.head.appendChild(s);
+    try{ localStorage.removeItem('googtrans'); sessionStorage.removeItem('googtrans'); }catch(_){}
+    window.googleTranslateElementInit = function(){};
+  })();
+
+  // ---------- DICTIONARIES (rdzeń UI + medyczne podstawy; rozszerz plikami assets/i18n/{lang}.json) ----------
+  function stripDiacritics(s){ return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+  function keyNorm(s){ return stripDiacritics(String(s||'').toLowerCase()).replace(/[^\p{L}\p{N}\s\-]/gu,'').replace(/\s+/g,' ').trim(); }
+  function caseOf(sample){ if(!sample) return 'lower'; if(sample===sample.toUpperCase()) return 'upper'; if(sample[0]===sample[0].toUpperCase()) return 'cap'; return 'lower'; }
+  function applyCase(t,s){ var k=caseOf(s); if(k==='upper') return t.toUpperCase(); if(k==='cap') return t.charAt(0).toUpperCase()+t.slice(1); return t; }
+
+  var EMBED = {
+    en: {
+      // FRAZY (n-gramy)
+      "pierwsza pomoc": "first aid",
+      "telefon alarmowy": "emergency phone",
+      "kiedy sie niepokoic": "when to worry",
+      "czerwone flagi": "red flags",
+      "na recepte": "prescription",
+      "bez recepty": "over-the-counter",
+      "objawy i przyczyny": "symptoms and causes",
+      "leczenie i leki": "treatment and medications",
+      "masz objawy alarmowe nie zwlekaj": "red-flag symptoms? do not wait",
+      "zadzwon 112": "call 112",
+      "ryzyko niskie": "low risk",
+      "pokaz wiecej": "show more",
+      "zaznacz": "select",
+      "zobacz podpowiedzi": "see suggestions",
+      "rekomendacje profilaktyka": "recommendations / prevention",
+      "rekomendacje / profilaktyka": "recommendations / prevention",
+      "leki otc": "otc medications",
+      "leki na recepte": "prescription medications",
+      // SŁOWA
+      "szukaj":"search","objawy":"symptoms","przyczyny":"causes","leki":"medications","lekarz":"doctor",
+      "apteka":"pharmacy","szpital":"hospital","kontakt":"contact","informacje":"information",
+      "glowa":"head","szyja":"neck","gardlo":"throat","oko":"eye","ucho":"ear","nos":"nose","usta":"mouth",
+      "plecy":"back","ramie":"arm","przedramie":"forearm","dlon":"hand","bark":"shoulder","klatka":"chest",
+      "brzuch":"stomach","biodro":"hip","udo":"thigh","kolano":"knee","lydka":"calf","stopa":"foot",
+      "mezczyzna":"man","kobieta":"woman","dziecko":"child",
+      "bor": "pain","bol": "pain","goraczka":"fever","kaszel":"cough","duszność":"shortness of breath","zadlawienie":"choking"
+    },
+    de: {
+      "pierwsza pomoc":"erste hilfe","telefon alarmowy":"notruf","kiedy sie niepokoic":"wann sorgen machen","czerwone flagi":"rote flaggen",
+      "na recepte":"verschreibungspflichtig","bez recepty":"rezeptfrei","objawy i przyczyny":"symptome und ursachen","leczenie i leki":"behandlung und medikamente",
+      "masz objawy alarmowe nie zwlekaj":"alarm-symptome? nicht warten","zadzwon 112":"ruf 112","ryzyko niskie":"geringes risiko","pokaz wiecej":"mehr anzeigen",
+      "zaznacz":"auswählen","zobacz podpowiedzi":"vorschläge ansehen","rekomendacje / profilaktyka":"empfehlungen / prävention",
+      "szukaj":"suche","objawy":"symptome","przyczyny":"ursachen","leki":"medikamente","lekarz":"arzt",
+      "apteka":"apotheke","szpital":"krankenhaus","kontakt":"kontakt","informacje":"informationen",
+      "glowa":"kopf","szyja":"hals","gardlo":"rachen","oko":"auge","ucho":"ohr","nos":"nase","usta":"mund",
+      "plecy":"rücken","ramie":"arm","przedramie":"unterarm","dlon":"hand","bark":"schulter","klatka":"brust",
+      "brzuch":"magen","biodro":"hüfte","udo":"oberschenkel","kolano":"knie","lydka":"wade","stopa":"fuß",
+      "mezczyzna":"mann","kobieta":"frau","dziecko":"kind","bol":"schmerz","goraczka":"fieber","kaszel":"husten","duszność":"atemnot","zadlawienie":"erstickung"
+    },
+    uk: {
+      "pierwsza pomoc":"перша допомога","telefon alarmowy":"екстрений номер","kiedy sie niepokoic":"коли варто хвилюватися","czerwone flagi":"тривожні ознаки",
+      "na recepte":"за рецептом","bez recepty":"без рецепту","objawy i przyczyny":"симптоми та причини","leczenie i leki":"лікування та ліки",
+      "masz objawy alarmowe nie zwlekaj":"тривожні симптоми? не зволікай","zadzwon 112":"зателефонуй 112","ryzyko niskie":"низький ризик","pokaz wiecej":"показати більше",
+      "zaznacz":"познач","zobacz podpowiedzi":"переглянути підказки","rekomendacje / profilaktyka":"рекомендації / профілактика",
+      "szukaj":"пошук","objawy":"симптоми","przyczyny":"причини","leki":"ліки","lekarz":"лікар",
+      "apteka":"аптека","szpital":"лікарня","kontakt":"контакт","informacje":"інформація",
+      "glowa":"голова","szyja":"шия","gardlo":"горло","oko":"око","ucho":"вухо","nos":"ніс","usta":"рот",
+      "plecy":"спина","ramie":"рука","przedramie":"передпліччя","dlon":"кисть","bark":"плече","klatka":"груди",
+      "brzuch":"живіт","biodro":"стегно","udo":"стегно","kolano":"коліно","lydka":"литка","stopa":"ступня",
+      "mezczyzna":"чоловік","kobieta":"жінка","dziecko":"дитина","bol":"біль","goraczka":"гарячка","kaszel":"кашель","duszność":"задишка","zadlawienie":"удушення"
+    }
+  };
+
+  function buildDict(lang, fileJson){
+    var merged = Object.assign({}, EMBED[lang]||{}, fileJson||{});
+    var phr={}, tok={};
+    Object.keys(merged).forEach(function(pl){
+      var k=keyNorm(pl); if(!k) return;
+      if (k.indexOf(' ')>0) phr[k]=merged[pl]; else tok[k]=merged[pl];
+    });
+    return {phr:phr, tok:tok};
+  }
+
+  function loadDict(lang){
+    return new Promise(function(resolve){
+      if (lang==='pl') return resolve({phr:{},tok:{}});
+      fetch('assets/i18n/'+lang+'.json', {cache:'no-store'})
+       .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+       .then(function(j){ resolve(buildDict(lang, j)); })
+       .catch(function(){ resolve(buildDict(lang, {})); });
+    });
+  }
+
+  // ---------- UI (jeśli brak) ----------
+  function ensureUI(){
+    if (document.getElementById('bh-translator')) return;
+    var st=document.createElement('style'); st.textContent=`
+:root{--bh-accent:#6c5ce7;--bh-bg:rgba(255,255,255,.75);--bh-shadow:0 8px 20px rgba(0,0,0,.12);--bh-radius:16px;--bh-blur:saturate(1.2) blur(6px);--bh-z:9999;--bh-font:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans","Liberation Sans","Helvetica Neue",sans-serif}
+.bh-translator-wrap{position:fixed;top:12px;right:12px;z-index:var(--bh-z);font-family:var(--bh-font)}
+.bh-translator-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bh-bg);backdrop-filter:var(--bh-blur);border:1px solid rgba(108,92,231,.25);border-radius:16px;box-shadow:var(--bh-shadow);cursor:pointer;color:#1f2937}
+.bh-translator-btn:hover{transform:translateY(-1px)}
+.bh-translator-label{font-size:14px;font-weight:600}
+.bh-translator-dd{position:absolute;right:0;margin-top:8px;background:var(--bh-bg);backdrop-filter:var(--bh-blur);border:1px solid rgba(108,92,231,.25);border-radius:14px;box-shadow:var(--bh-shadow);min-width:200px;padding:8px;display:none}
+.bh-translator-wrap[aria-expanded="true"] .bh-translator-dd{display:block}
+.bh-dd-item{display:flex;align-items:center;justify-content:space-between;width:100%;padding:10px 12px;border-radius:10px;background:transparent;border:0;cursor:pointer;color:#111827;font-size:14px;font-weight:600}
+.bh-dd-item:hover{background:rgba(108,92,231,.08)}`; st.setAttribute('data-bh-style','translator-core'); document.head.appendChild(st);
+
+    var wrap=document.createElement('div'); wrap.id='bh-translator'; wrap.className='bh-translator-wrap'; wrap.setAttribute('aria-expanded','false');
+    var btn=document.createElement('button'); btn.type='button'; btn.className='bh-translator-btn'; btn.setAttribute('aria-label','Language switcher');
+    btn.innerHTML = '<span class="bh-translator-label" data-bh-no-translate>Lang: PL</span>';
+    var dd=document.createElement('div'); dd.className='bh-translator-dd'; dd.setAttribute('role','menu');
+    BH_SUPPORTED.forEach(function(l){ var b=document.createElement('button'); b.type='button'; b.className='bh-dd-item'; b.setAttribute('data-lang',l.code); b.innerHTML='<span>'+l.label+'</span><small>'+l.code.toUpperCase()+'</small>'; dd.appendChild(b); });
+    wrap.appendChild(btn); wrap.appendChild(dd); document.body.appendChild(wrap);
+
+    btn.addEventListener('click', function(){ wrap.setAttribute('aria-expanded', wrap.getAttribute('aria-expanded')==='true'?'false':'true'); });
+    document.addEventListener('click', function(e){ if(!wrap.contains(e.target)) wrap.setAttribute('aria-expanded','false'); });
+    dd.addEventListener('click', function(e){ var b=e.target.closest('.bh-dd-item'); if(!b) return; wrap.setAttribute('aria-expanded','false'); window.bhSetLanguage(b.getAttribute('data-lang')); }, {passive:true});
+    dd.addEventListener('pointerup', function(e){ var b=e.target.closest('.bh-dd-item'); if(!b) return; wrap.setAttribute('aria-expanded','false'); window.bhSetLanguage(b.getAttribute('data-lang')); }, {passive:true});
+  }
+
+  // ---------- MECHANIKA TŁUMACZEŃ ----------
+  var originalText = new WeakMap(); // textNode -> baseline PL
+  var currentLang = 'pl';
+  var dictActive = {phr:{}, tok:{}};
+
+  function translateStringPL(src, dict){
+    var s = String(src||'');
+    var norm = keyNorm(s);
+    if (!norm) return s;
+
+    // pełne frazy
+    if (dict.phr[norm]) return applyCase(dict.phr[norm], s);
+
+    // n-gramy 5..2
+    var words = norm.split(' ');
+    var out = s;
+    var maxN = Math.min(5, words.length);
+    for (var n=maxN; n>=2; n--){
+      for (var i=0; i<=words.length-n; i++){
+        var slice = words.slice(i, i+n).join(' ');
+        if (dict.phr[slice]){
+          var re = new RegExp('\\b' + words.slice(i, i+n).map(function(w){ return stripDiacritics(w).replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }).join('\\s+') + '\\b','i');
+          out = out.replace(re, function(m){ return applyCase(dict.phr[slice], m); });
+        }
+      }
+    }
+    // słowa
+    out = out.replace(/\b([A-Za-zÀ-žĄąĆćĘęŁłŃńÓóŚśŹźŻż\-]+)\b/g, function(m){
+      var k=keyNorm(m); var t=dict.tok[k]; return t?applyCase(t,m):m;
+    });
+    return out;
+  }
+
+  function shouldSkipTextNode(node){
+    if (!node || node.nodeType!==3) return true;
+    var p=node.parentElement; if(!p) return true;
+    if (p.closest('#bh-translator,[data-bh-no-translate]')) return true;
+    if (['SCRIPT','STYLE','CODE','PRE','TEXTAREA','NOSCRIPT','SVG'].includes(p.tagName)) return true;
+    return false;
+  }
+
+  function applyTranslation(){
+    var tw=document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    var nodes=[]; while(tw.nextNode()) nodes.push(tw.currentNode);
+
+    nodes.forEach(function(tn){
+      if (shouldSkipTextNode(tn)) return;
+
+      // baseline PL zapisujemy tylko, gdy nie istnieje
+      if (!originalText.has(tn)) originalText.set(tn, tn.nodeValue);
+
+      var baseline = originalText.get(tn);
+      if (currentLang==='pl') {
+        if (tn.nodeValue!==baseline) tn.nodeValue = baseline;
+      } else {
+        var tr = translateStringPL(baseline, dictActive);
+        if (tr && tr!==tn.nodeValue) tn.nodeValue = tr;
+      }
+    });
+
+    // atrybuty
+    document.querySelectorAll('[placeholder],[title],[aria-label]').forEach(function(el){
+      if (el.closest('#bh-translator,[data-bh-no-translate]')) return;
+      ['placeholder','title','aria-label'].forEach(function(attr){
+        var v = el.getAttribute(attr); if (v==null) return;
+        var key = 'data-bh-orig-'+attr;
+        if (!el.hasAttribute(key)) el.setAttribute(key, v);
+        var base = el.getAttribute(key);
+        if (currentLang==='pl') el.setAttribute(attr, base);
+        else el.setAttribute(attr, translateStringPL(base, dictActive));
+      });
+    });
+  }
+
+  function installObserver(){
+    var mo=new MutationObserver(function(muts){
+      if (currentLang==='pl') return;
+      var changed=false;
+      for (var i=0;i<muts.length;i++){
+        if (muts[i].type==='childList' && muts[i].addedNodes.length){ changed=true; break; }
+      }
+      if (changed) applyTranslation();
+    });
+    mo.observe(document.body, {childList:true, subtree:true});
+  }
+
+  // ---------- API ----------
+  window.bhSetLanguage = function(lang){
+    if (!BH_SUPPORTED.some(function(l){return l.code===lang;})) return;
+    currentLang = lang;
+    localStorage.setItem(STORE, lang);
+    sessionStorage.setItem(SESSION_LOCK, '1'); // użytkownik dokonał wyboru w tej sesji
+    var label=document.querySelector('#bh-translator .bh-translator-label'); if (label) label.textContent='Lang: '+lang.toUpperCase();
+
+    if (lang==='pl'){ applyTranslation(); return; }
+    loadDict(lang).then(function(d){ dictActive=d; applyTranslation(); });
+  };
+
+  // ---------- START (WYMUSZENIE PL NA WEJŚCIU) ----------
+  function getQueryLang(){
+    var m=location.search.match(/[?&]lang=([a-z]{2})/i);
+    return m ? m[1].toLowerCase() : null;
+  }
+
+  function init(){
+    ensureUI();
+
+    // Jeśli przychodzimy „z zewnątrz” i nie ma blokady sesji – start w PL (reset starego wyboru).
+    var qLang = getQueryLang();
+    var sessionLocked = sessionStorage.getItem(SESSION_LOCK)==='1';
+    if (!sessionLocked && !qLang) {
+      try{ localStorage.setItem(STORE, 'pl'); }catch(_){}
+      currentLang = 'pl';
+    } else {
+      currentLang = (qLang || localStorage.getItem(STORE) || 'pl');
+    }
+
+    // Ustaw label
+    var lbl=document.querySelector('#bh-translator .bh-translator-label');
+    if (lbl) lbl.textContent='Lang: '+(currentLang||'pl').toUpperCase();
+
+    if (currentLang==='pl'){ applyTranslation(); } 
+    else { loadDict(currentLang).then(function(d){ dictActive=d; applyTranslation(); }); }
+
+    installObserver();
+  }
+
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
+
+})();
+</script>
+<!-- END bh-patch:translator-fix-v4 -->
 </body>
 </html>
