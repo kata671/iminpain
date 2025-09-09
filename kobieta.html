@@ -105,21 +105,40 @@
       outline-offset:2px;
     }
 
-    /* ===== WYGLĄD SELEKTORA JĘZYKA (jak na stronie głównej) ===== */
+    /* ===== WYGLĄD SELEKTORA JĘZYKA (naprawa mobile jak na index) ===== */
     .langpick{
-      position:fixed; top:12px; right:12px; z-index:10000;
+      position:fixed;
+      top:clamp(8px, env(safe-area-inset-top, 8px), 20px);
+      right:12px;
+      z-index:10000;
       display:flex; gap:8px; align-items:center;
       background:rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.24);
-      border-radius:12px; padding:6px 10px; backdrop-filter:saturate(120%) blur(4px)
+      border-radius:12px; padding:6px 10px; backdrop-filter:saturate(120%) blur(4px);
+      max-width:100%;
+      white-space:nowrap;
+      contain:layout;
     }
     .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
     .langpick select{
       appearance:none;background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.24);
-      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px
+      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px;
+      max-width:52vw; /* nie rozpycha na mobile */
     }
     .langpick option{ color:#0e1230; background:#ffffff }
+
+    /* Mobile: zwężenie, wyśrodkowanie u góry i odsunięcie treści pod notch */
+    @media (max-width:560px){
+      body{ padding-top: calc(48px + env(safe-area-inset-top, 0px)); }
+      .langpick{
+        left:50%; right:auto; transform:translateX(-50%);
+        gap:6px; padding:5px 8px;
+      }
+      .langpick label{ display:none; } /* więcej miejsca na iPhone/małe ekrany */
+      .langpick select{ font-size:12px; padding:5px 9px; }
+      .container header.header{ margin-top:8px; }
+    }
 
     /* Ukryj ewentualne resztki starego GT */
     .goog-te-banner-frame.skiptranslate{display:none!important}
@@ -132,7 +151,7 @@
   <div class="bh-grid" aria-hidden="true"></div>
   <div class="bh-floor-fade" aria-hidden="true"></div>
 
-  <!-- SELEKTOR JĘZYKA (wygląd jak na stronie głównej) -->
+  <!-- SELEKTOR JĘZYKA (naprawiony: góra, nie rozpycha, działa na mobile) -->
   <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
     <label for="bhLangSelect">Język</label>
     <select id="bhLangSelect">
