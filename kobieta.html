@@ -104,6 +104,26 @@
       outline:2px solid rgba(164,107,255,.75);
       outline-offset:2px;
     }
+
+    /* ===== WYGLĄD SELEKTORA JĘZYKA (jak na stronie głównej) ===== */
+    .langpick{
+      position:fixed; top:12px; right:12px; z-index:10000;
+      display:flex; gap:8px; align-items:center;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.24);
+      border-radius:12px; padding:6px 10px; backdrop-filter:saturate(120%) blur(4px)
+    }
+    .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
+    .langpick select{
+      appearance:none;background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.24);
+      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px
+    }
+    .langpick option{ color:#0e1230; background:#ffffff }
+
+    /* Ukryj ewentualne resztki starego GT */
+    .goog-te-banner-frame.skiptranslate{display:none!important}
+    .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
   </style>
 </head>
 <body data-page="kobieta">
@@ -112,13 +132,22 @@
   <div class="bh-grid" aria-hidden="true"></div>
   <div class="bh-floor-fade" aria-hidden="true"></div>
 
+  <!-- SELEKTOR JĘZYKA (wygląd jak na stronie głównej) -->
+  <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
+    <label for="bhLangSelect">Język</label>
+    <select id="bhLangSelect">
+      <option value="pl">PL</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
+
   <div class="container">
     <!-- GUZIK WRÓĆ -->
     <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
 
-    <header class="header"><h1>Kobieta — wybierz część ciała</h1></header>
+    <header class="header"><h1 id="bhPageTitle">Kobieta — wybierz część ciała</h1></header>
 
-    <section class="grid-thumbs" aria-label="Miniatury — kobieta">
+    <section class="grid-thumbs" aria-label="Miniatury — kobieta" id="bhThumbs">
       <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=oko&label=Oko"><img src="img/kobieta-oko.png" alt="Oko"><span>Oko</span></a>
       <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=nos&label=Nos"><img src="img/kobieta-nos.png" alt="Nos"><span>Nos</span></a>
       <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=gardlo&label=Gard%C5%82o"><img src="img/kobieta-gardlo.png" alt="Gardło"><span>Gardło</span></a>
@@ -152,6 +181,97 @@
       });
     })();
   </script>
-<script src="/assets/js/translator-unified.js?v=1" defer></script>
+
+  <!-- LEKKI TŁUMACZ: współdzieli stan ze stroną główną (localStorage 'bh.lang') -->
+  <script>
+    (function(){
+      if(window.__bhKobietaI18n) return; window.__bhKobietaI18n = true;
+
+      var LS_KEY='bh.lang';
+      var root=document.documentElement;
+      var lang=(localStorage.getItem(LS_KEY)||root.getAttribute('lang')||'pl').toLowerCase();
+      var sel=document.getElementById('bhLangSelect');
+      var lab=document.querySelector('#bhLangPick label');
+
+      var dict = {
+        en: {
+          title: 'Woman — choose a body part',
+          back: '← Back',
+          back_aria: 'Go back to previous page',
+          section_aria: 'Thumbnails — woman',
+          parts: {
+            oko:'Eye', nos:'Nose', gardlo:'Throat', glowa:'Head',
+            klatka:'Chest', brzuch:'Abdomen', plecy:'Back', biodra:'Hips/Thighs',
+            udo:'Thigh', stopy:'Feet', serce:'Heart', pluca:'Lungs',
+            watroba:'Liver', zoladek:'Stomach', nerki:'Kidneys', ciaza:'Pregnancy'
+          }
+        },
+        pl: {
+          title: 'Kobieta — wybierz część ciała',
+          back: '← Wróć',
+          back_aria: 'Wróć do poprzedniej strony',
+          section_aria: 'Miniatury — kobieta',
+          parts: {
+            oko:'Oko', nos:'Nos', gardlo:'Gardło', glowa:'Głowa',
+            klatka:'Klatka', brzuch:'Brzuch', plecy:'Plecy', biodra:'Biodra',
+            udo:'Udo', stopy:'Stopy', serce:'Serce', pluca:'Płuca',
+            watroba:'Wątroba', zoladek:'Żołądek', nerki:'Nerki', ciaza:'Ciąża'
+          }
+        }
+      };
+
+      function apply(){
+        var d = dict[lang] || dict.pl;
+
+        // <html lang=...>
+        root.setAttribute('lang', lang);
+
+        // Tytuł sekcji/strony
+        var h1 = document.getElementById('bhPageTitle'); if(h1){ h1.textContent = d.title; }
+
+        // Przycisk "Wróć"
+        var back = document.getElementById('bhBackMini');
+        if(back){ back.textContent = d.back; back.setAttribute('aria-label', d.back_aria); }
+
+        // Aria label sekcji miniaturek
+        var grid = document.getElementById('bhThumbs');
+        if(grid){ grid.setAttribute('aria-label', d.section_aria); }
+
+        // Podpisy na kafelkach – po id w parametrze "czesc"
+        document.querySelectorAll('.grid-thumbs a.thumb').forEach(function(a){
+          try{
+            var u = new URL(a.getAttribute('href'), location.href);
+            var part = u.searchParams.get('czesc'); // np. "oko"
+            var span = a.querySelector('span');
+            if(part && d.parts[part] && span){ span.textContent = d.parts[part]; }
+          }catch(e){}
+        });
+
+        // Etykieta przy selektorze
+        if(lab){ lab.textContent = (lang==='en' ? 'Language' : 'Język'); }
+
+        // Ustaw wybraną opcję w selektorze
+        if(sel){ sel.value = lang; }
+      }
+
+      function setLang(l){
+        if(!dict[l]) return;
+        lang = l;
+        localStorage.setItem(LS_KEY, lang); // klucz współdzielony ze stroną główną
+        apply();
+      }
+
+      // Inicjalizacja selektora
+      if(sel){
+        sel.addEventListener('change', function(){ setLang(sel.value); });
+      }
+
+      // Pierwsze zastosowanie (pobiera stan ustawiony na stronie głównej)
+      apply();
+    })();
+  </script>
+
+  <!-- USUNIĘTO stary tłumacz -->
+  <!-- <script src="/assets/js/translator-unified.js?v=1" defer></script> -->
 </body>
 </html>
