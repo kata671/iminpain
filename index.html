@@ -526,5 +526,157 @@
   }
   body { top:0 !important; }
 </style>
+<!-- === Boli Help • Translator widget (elegant, no banner) === -->
+<div id="bh-gt-widget" aria-label="Language switcher"></div>
+<div id="google_translate_element" style="position:absolute;left:-9999px;top:-9999px"></div>
+
+<style>
+  /* Ukryj UI Google */
+  .goog-te-banner-frame.skiptranslate,
+  .goog-te-balloon-frame,
+  .goog-te-gadget,
+  .goog-te-combo,
+  .goog-logo-link,
+  .goog-te-spinner-pos { display:none !important; }
+  body { top:0 !important; }
+
+  /* Nasz elegancki przycisk */
+  #bh-gt-btn{
+    position:fixed; top:12px; right:12px; z-index:9999;
+    display:inline-flex; align-items:center; gap:8px;
+    padding:8px 12px; border-radius:14px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);
+    backdrop-filter:saturate(130%) blur(4px);
+    color:#eaf2ff; font:800 12px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    cursor:pointer; user-select:none;
+  }
+  #bh-gt-dot{width:8px;height:8px;border-radius:50%;background:#5eead4;box-shadow:0 0 0 2px rgba(94,234,212,.25)}
+  #bh-gt-code{letter-spacing:.4px}
+
+  /* Dropdown */
+  #bh-gt-list{
+    position:fixed; top:48px; right:12px; z-index:10000;
+    display:none; min-width:160px; padding:6px;
+    border-radius:12px; list-style:none; margin:0;
+    background:rgba(14,18,48,.95);
+    border:1px solid rgba(164,107,255,.28);
+    box-shadow:0 14px 30px rgba(8,10,22,.55);
+  }
+  #bh-gt-list[aria-hidden="false"]{display:block}
+  #bh-gt-list li{
+    margin:0; padding:8px 10px; border-radius:10px;
+    color:#eef2ff; font-weight:800; cursor:pointer;
+  }
+  #bh-gt-list li:hover{background:rgba(255,255,255,.06)}
+</style>
+
+<script>
+(function(){
+  // ——— Konfiguracja
+  const LANGS = [
+    ["pl","Polski"],["en","English"],["de","Deutsch"],["fr","Français"],
+    ["es","Español"],["it","Italiano"],["ro","Română"],["uk","Українська"],["ru","Русский"]
+  ];
+  const PAGE_LANG = "pl"; // jezyk źródłowy
+  const COOKIE_NAME = "googtrans";
+
+  // ——— UI
+  const wrap = document.getElementById('bh-gt-widget');
+  wrap.innerHTML = `
+    <button id="bh-gt-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+      <span id="bh-gt-dot"></span><span id="bh-gt-code">PL</span>
+    </button>
+    <ul id="bh-gt-list" role="listbox" aria-hidden="true"></ul>
+  `;
+  const btn  = document.getElementById('bh-gt-btn');
+  const code = document.getElementById('bh-gt-code');
+  const list = document.getElementById('bh-gt-list');
+  list.innerHTML = LANGS.map(([c,n])=>`<li role="option" data-code="${c}">${n}</li>`).join('');
+
+  // ——— cookie helpers (ustawiamy na domenę i ścieżkę '/')
+  function setCookie(name, value, days){
+    const d = new Date(); d.setTime(d.getTime()+(days*24*60*60*1000));
+    const exp = ";expires="+d.toUTCString();
+    document.cookie = `${name}=${value}${exp};path=/`;
+    // spróbuj także na domenę wyższego poziomu (jeśli możliwe)
+    try{
+      const host = location.hostname.replace(/^www\./,'');
+      document.cookie = `${name}=${value}${exp};path=/;domain=.${host}`;
+    }catch(_){}
+  }
+  function getCookie(name){
+    return (document.cookie.match(new RegExp('(^|; )'+name.replace(/([.$?*|{}()[\]\\/+^])/g,'\\$1')+'=([^;]*)'))||[])[2] || "";
+  }
+
+  // ——— stan wybrany
+  function currentLang(){
+    return (localStorage.getItem("bh-lang") || PAGE_LANG);
+  }
+  function setLang(lang){
+    localStorage.setItem("bh-lang", lang);
+    code.textContent = lang.toUpperCase();
+  }
+
+  // ——— Ładowanie Google + inicjalizacja gadżetu (niewidocznego)
+  window.googleTranslateElementInit = function(){
+    new google.translate.TranslateElement({
+      pageLanguage: PAGE_LANG, includedLanguages: LANGS.map(x=>x[0]).join(','), autoDisplay:false
+    }, 'google_translate_element');
+
+    // jeśli w cookie jest cel — przetłumacz natychmiast
+    const sel = document.querySelector('select.goog-te-combo');
+    const target = (getCookie(COOKIE_NAME).split('/')[2] || PAGE_LANG);
+    if(sel && target && target !== PAGE_LANG){
+      sel.value = target;
+      sel.dispatchEvent(new Event('change'));
+    }
+  };
+  (function addGScript(){
+    if(document.querySelector('script[src*="translate_a/element.js"]')) return;
+    const s = document.createElement('script');
+    s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    document.head.appendChild(s);
+  })();
+
+  // ——— Interakcje UI
+  btn.addEventListener('click', ()=>{
+    const open = list.getAttribute('aria-hidden') === 'false';
+    list.setAttribute('aria-hidden', open ? 'true' : 'false');
+    btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+  });
+  list.addEventListener('click', (e)=>{
+    const li = e.target.closest('li[data-code]'); if(!li) return;
+    const lang = li.dataset.code;
+    setLang(lang);
+    // ustaw cookie dla Google Translate (działa natychmiast po change)
+    setCookie(COOKIE_NAME, `/${PAGE_LANG}/${lang}`, 365);
+
+    // jeżeli select już istnieje — change bez przeładowania
+    const sel = document.querySelector('select.goog-te-combo');
+    if(sel){
+      sel.value = lang;
+      sel.dispatchEvent(new Event('change'));
+    }else{
+      // jeśli jeszcze nie ma selecta (skrypt się ładuje) – soft reload po 100ms
+      setTimeout(()=>location.reload(), 100);
+    }
+    list.setAttribute('aria-hidden','true');
+    btn.setAttribute('aria-expanded','false');
+  });
+
+  // ——— ustaw kod na przycisku wg pamięci
+  setLang(currentLang());
+
+  // ——— zamknij dropdown po kliknięciu poza
+  document.addEventListener('click', (e)=>{
+    if(!wrap.contains(e.target)){
+      list.setAttribute('aria-hidden','true');
+      btn.setAttribute('aria-expanded','false');
+    }
+  });
+})();
+</script>
+<!-- === /Boli Help • Translator widget === -->
 <body>
 </html>
