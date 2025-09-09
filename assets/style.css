@@ -491,3 +491,43 @@ section.stack .card > a > img[src*="dziecko-model1"]{
 @media (max-width: 1024px){
   section.stack .card > a > img{ aspect-ratio: 16 / 11; }
 }
+/* --- POPRAWKA KAFELKÓW + ZDJĘĆ --- */
+
+/* Większe kafelki i trochę niżej na stronie */
+section.stack {
+  margin-top: 20px;              /* odstęp od góry */
+  gap: 20px;                     /* większy dystans między kafelkami */
+}
+section.stack .card {
+  min-height: 280px;             /* większa wysokość */
+}
+
+/* Obrazki — kadrowanie + powiększenie */
+section.stack .card > a > img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  transition: transform .25s ease, object-position .25s ease;
+}
+
+/* Indywidualne dopasowanie */
+section.stack .card > a > img[src*="kobieta-model1"] {
+  object-position: 50% 32%;   /* twarz trochę wyżej */
+  transform: scale(1.06);     /* lekki zoom */
+}
+section.stack .card > a > img[src*="mezczyzna-model1"] {
+  object-position: 50% 35%;
+  transform: scale(1.05);
+}
+section.stack .card > a > img[src*="dziecko-model1"] {
+  object-position: 50% 28%;   /* twarz niżej w ramce */
+  transform: scale(1.08);
+}
+
+/* Responsywność — na telefonie minimalnie mniejsze */
+@media (max-width: 768px) {
+  section.stack .card {
+    min-height: 240px;
+  }
+}
