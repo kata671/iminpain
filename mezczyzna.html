@@ -119,5 +119,117 @@
     })();
   </script>
 <script src="/assets/js/translator-unified.js?v=1" defer></script>
+<script>
+/* Boli Help – Translator ONE-PASTE
+   - tłumaczy OD RAZU po wyborze (bez odświeżania)
+   - chowa pasek Google
+   - zapamiętuje język między podstronami
+   - blokuje stary loader translate_a/element.js
+   - działa z dowolnym UI: <select id="bhLang"> lub przyciski z [data-lang="en"]
+*/
+(function () {
+  const PAGE_LANG = (document.documentElement.getAttribute('lang')||'pl').toLowerCase();
+  const INCLUDED  = 'pl,en,de,fr,it,es,uk,cs,sk,lt,lv,ro,ru,nl,pt';
+
+  // 0) Blokuj stary loader, gdyby gdzieś się jeszcze wstrzykiwał
+  (function intercept(){
+    const _create = document.createElement;
+    document.createElement = function(tag){
+      const el = _create.call(document, tag);
+      if (tag.toLowerCase()==='script') {
+        const d = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype,'src');
+        Object.defineProperty(el,'src',{get(){return d.get?d.get.call(this):this.getAttribute('src')},
+          set(v){ if(v && v.includes('translate_a/element.js')) { console.warn('[BH] blocked old element.js'); return; }
+                  d.set?d.set.call(this,v):this.setAttribute('src',v);} });
+      }
+      return el;
+    };
+  })();
+
+  // 1) Schowaj baner, przygotuj kontener
+  (function css(){
+    if (document.getElementById('bh-gt-css')) return;
+    const s=document.createElement('style'); s.id='bh-gt-css';
+    s.textContent = `
+      .goog-te-banner-frame.skiptranslate, .goog-te-banner-frame{display:none!important}
+      body{top:0!important}
+      #google_translate_element{display:none!important}
+      .goog-logo-link,.goog-te-gadget .goog-te-combo{display:none!important}
+    `;
+    document.head.appendChild(s);
+  })();
+  function ensureContainer(){
+    if(!document.getElementById('google_translate_element')){
+      const el=document.createElement('div');
+      el.id='google_translate_element'; el.style.display='none';
+      document.body.appendChild(el);
+    }
+  }
+
+  // 2) Ładuj Google raz
+  let ready;
+  function loadGT(){
+    if (ready) return ready;
+    ready = new Promise(res=>{
+      window.__bhGTinit = function(){
+        try{
+          new google.translate.TranslateElement(
+            {pageLanguage:PAGE_LANG, includedLanguages:INCLUDED, autoDisplay:false},
+            'google_translate_element'
+          );
+        }catch(e){}
+        res();
+      };
+      const sc=document.createElement('script');
+      sc.src='https://translate.google.com/translate_a/element.js?cb=__bhGTinit';
+      sc.async=true; document.head.appendChild(sc);
+    });
+    return ready;
+  }
+
+  // 3) Ustaw i zastosuj język natychmiast
+  function setGoogTrans(code){
+    const v=`/auto/${code}`;
+    const exp=new Date(Date.now()+31536e6).toUTCString();
+    try{
+      document.cookie = `googtrans=${v};path=/;expires=${exp}`;
+      localStorage.setItem('googtrans', v);
+      localStorage.setItem('googtrans-override', v);
+    }catch(e){}
+  }
+  async function applyLang(code){
+    ensureContainer(); await loadGT();
+    setGoogTrans(code);
+    const tryApply=()=>{
+      const sel=document.querySelector('.goog-te-combo');
+      if(!sel) return false;
+      if(sel.value!==code) sel.value=code;
+      sel.dispatchEvent(new Event('change',{bubbles:true}));
+      return true;
+    };
+    if (tryApply()) return;
+    let n=0; const iv=setInterval(()=>{ if(tryApply()||++n>40) clearInterval(iv); },100);
+  }
+
+  // 4) API i auto-start (jeśli zapisany język różni się od pageLanguage)
+  window.BH_setLanguage = (code)=>{ if(code && code!=='auto') applyLang(code); };
+  document.addEventListener('DOMContentLoaded',()=>{
+    ensureContainer();
+    const saved=(localStorage.getItem('googtrans')||'').split('/').pop();
+    if(saved && saved!==PAGE_LANG) applyLang(saved);
+  });
+
+  // 5) Auto-podpięcie do Twojego UI:
+  //    - <select id="bhLang"> lub każdy <select> w .langpick
+  //    - dowolny element z atrybutem [data-lang="xx"]
+  document.addEventListener('change',(e)=>{
+    const t=e.target;
+    if (t && (t.id==='bhLang' || t.closest('.langpick'))) { BH_setLanguage(t.value); }
+  });
+  document.addEventListener('click',(e)=>{
+    const btn=e.target.closest('[data-lang]'); if(btn) BH_setLanguage(btn.getAttribute('data-lang'));
+  });
+})();
+</script>
 </body>
 </html>
