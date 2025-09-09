@@ -1,1 +1,286 @@
-<!doctype html><html><body><h1>Boli Help Index Patch</h1></body></html>
+
+<!doctype html>
+<html lang="pl" data-lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Boli Help — Strona główna</title>
+  <meta name="theme-color" content="#0e1230" />
+
+  <!-- Ikony/PWA (opcjonalne) -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/icons/icon-512.png">
+
+  <!-- Style bazowe (jeśli masz plik) -->
+  <link rel="stylesheet" href="assets/style.css?v=10" />
+
+  <!-- === PATCH CSS: siatka/zdjęcia/search + glow/pulse + modal visibility === -->
+  <style>
+    /* tapeta/hex grid */
+    .bh-wallpaper,.bh-grid{position:fixed; inset:0; pointer-events:none}
+    .bh-wallpaper{
+      z-index:0;
+      background:
+        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
+        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
+        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+      filter: blur(10px) saturate(118%);
+    }
+    .bh-grid{
+      z-index:1; opacity:.22;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
+      background-size:160px 138px; background-position:center;
+    }
+    .bh-floor-fade{ position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
+      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6)); }
+    .container{ position:relative; z-index:3; max-width:1100px; margin:0 auto; padding:0 16px; color:#eef2ff; }
+
+    /* nagłówek + search */
+    .header{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 0 8px }
+    .brand h1{ margin:0; font-weight:800; letter-spacing:.3px }
+    .brand small{ display:block; color:#cfe2ff }
+    .tools .search{ position:relative; display:flex; align-items:center; gap:10px; background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:8px 12px; width: clamp(260px, 40vw, 420px); z-index:30 }
+    .tools .search input{ width:100%; background:transparent; border:0; outline:none; color:#eef2ff; font-weight:700; letter-spacing:.2px }
+    .tools .search svg{ width:18px; height:18px }
+
+    /* chips/pills */
+    .situations{ display:flex; flex-wrap:wrap; gap:10px; margin:10px 0 16px }
+    .pill{ display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; font-weight:800;
+      background: rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.10); color:#fff; text-decoration:none }
+    .pill .ico{ display:inline-grid; place-items:center; width:18px; height:18px }
+    :root{ --glow-green:34,227,160; --glow-red:255,107,107; --glow-amber:255,184,108 }
+    .pill.pill--green{
+      border-color: rgba(var(--glow-green), .55) !important;
+      box-shadow: 0 10px 22px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-green), .35) inset, 0 0 18px rgba(var(--glow-green), .25);
+      backdrop-filter:saturate(125%) blur(4px);
+    }
+    .pill.pill--blue{ border-color: rgba(96,165,250,.6); box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(96,165,250,.35) inset, 0 0 18px rgba(96,165,250,.30) }
+
+    /* actions (112, Szpitale, apteka, lokalizacja) */
+    .actions{ display:flex; flex-wrap:wrap; gap:12px; margin:8px 0 22px }
+    .btn{ display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:14px; border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)); font-weight:900; letter-spacing:.3px; color:#fff; text-decoration:none }
+    #btn-hosp{ border-color: rgba(var(--glow-red), .8)!important;
+      box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-red), .5) inset, 0 0 18px rgba(var(--glow-red), .35);
+      animation: redPulse 2.2s ease-in-out infinite }
+    #btn-apteka{ border-color: rgba(var(--glow-green), .7)!important;
+      box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-green), .45) inset, 0 0 18px rgba(var(--glow-green), .35);
+      animation: greenPulse 2.4s ease-in-out infinite }
+    #btn-apteka .badge-round{ border:1px solid rgba(var(--glow-green), .7); padding:6px 10px; border-radius:999px; font-weight:900 }
+    #btn-loc{ border-color: rgba(var(--glow-amber), .75)!important;
+      box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-amber), .45) inset, 0 0 18px rgba(var(--glow-amber), .35);
+      animation: amberBreath 2.8s ease-in-out infinite }
+    @keyframes redPulse{0%{box-shadow:0 0 0 0 rgba(var(--glow-red),.12),0 0 18px rgba(var(--glow-red),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-red),.10),0 0 26px rgba(var(--glow-red),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-red),.12),0 0 18px rgba(var(--glow-red),.35)}}
+    @keyframes greenPulse{0%{box-shadow:0 0 0 0 rgba(var(--glow-green),.12),0 0 18px rgba(var(--glow-green),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-green),.10),0 0 26px rgba(var(--glow-green),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-green),.12),0 0 18px rgba(var(--glow-green),.35)}}
+    @keyframes amberBreath{0%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.10),0 0 18px rgba(var(--glow-amber),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-amber),.08),0 0 26px rgba(var(--glow-amber),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.10),0 0 18px rgba(var(--glow-amber),.35)}}
+
+    /* subhead */
+    .subheadline{ margin:12px 0 10px; color:#cfe2ff; font-weight:800 }
+
+    /* karty 1/2/3 w rzędzie + kadr 3:2 */
+    section.stack{ display:grid; gap:16px!important; grid-template-columns:1fr!important }
+    @media (min-width:760px){  section.stack{ grid-template-columns:repeat(2,1fr)!important } }
+    @media (min-width:1024px){ section.stack{ grid-template-columns:repeat(3,1fr)!important } }
+    .card{ border-radius:20px; overflow:hidden; background:rgba(60,32,100,.32); border:1px solid rgba(164,107,255,.22) }
+    .card a{ display:block; text-decoration:none; color:inherit }
+    .card a img{ width:100%; height:100%; aspect-ratio:3/2; object-fit:cover; object-position:50% 25%; display:block }
+    .card a img[src*="kobieta-model1"]{ object-position:50% 22% }
+    .card a img[src*="mezczyzna-model1"]{ object-position:50% 28% }
+    .card a img[src*="dziecko-model1"]{ object-position:50% 35% }
+    .caption{ position:absolute; inset:auto 0 0 0; padding:12px 14px; display:flex; justify-content:space-between;
+      background:linear-gradient(180deg,rgba(20,23,51,0),rgba(20,23,51,.92)); color:#fff }
+    .arrow{ opacity:.9 }
+
+    /* wyszukiwarka – panel podpowiedzi */
+    .bh2025-suggest[aria-hidden="true"]{ display:none!important }
+    .bh2025-suggest{ position:absolute; left:0; right:0; top:calc(100% + 6px); z-index:40;
+      background:rgba(20,23,51,.96); border:1px solid rgba(164,107,255,.28); border-radius:12px; box-shadow:0 16px 34px rgba(8,10,22,.52);
+      overflow:auto; max-height:60vh }
+    .bh2025-sg-head{ padding:8px 12px; font-weight:800; color:#cfe2ff; border-bottom:1px solid rgba(164,107,255,.18) }
+    .bh2025-sg-list{ list-style:none; margin:0; padding:6px }
+    .bh2025-sg-item{ display:flex; gap:10px; align-items:center; padding:8px 10px; border-radius:10px; cursor:pointer; color:#eef2ff; text-decoration:none; border:1px solid transparent }
+    .bh2025-sg-item:hover,.bh2025-sg-item[aria-selected="true"]{ background:rgba(255,255,255,.06); border-color:rgba(164,107,255,.28) }
+    .bh2025-sg-sub{ margin-left:auto; font-size:12px; color:#b8c2e0 }
+
+    /* modal porada: ukryj gdy zamknięty */
+    #bh2025Porada[aria-hidden="true"]{ display:none!important; visibility:hidden!important }
+    #bh2025Porada[aria-hidden="false"]{ display:block }
+    .bh2025-porada{ position:fixed; inset:0; z-index:9998; background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95)); backdrop-filter:saturate(120%) blur(6px) }
+    .bh2025-porada__panel{ position:relative; max-width:980px; margin:5vh auto; background:rgba(60,32,100,.36); border:1px solid rgba(164,107,255,.25); border-radius:18px; padding:16px; color:#eef2ff }
+    .bh2025-porada__grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:14px }
+    @media (max-width:900px){ .bh2025-porada__grid{ grid-template-columns:1fr } }
+    .bh2025-steps{ border-radius:14px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); padding:12px }
+  </style>
+</head>
+
+<body data-page="home">
+  <div class="bh-wallpaper" aria-hidden="true"></div>
+  <div class="bh-grid" aria-hidden="true"></div>
+  <div class="bh-floor-fade" aria-hidden="true"></div>
+
+  <div class="container">
+    <header class="header">
+      <div class="brand">
+        <h1>Boli Help</h1>
+        <small>Pomoc i pierwsza pomoc w nagłych sytuacjach</small>
+      </div>
+      <div class="tools" style="display:flex;align-items:center;gap:10px">
+        <div class="search" role="search">
+          <input id="bhSearch" type="search" placeholder="Szukaj objawu, części ciała lub tematu…" aria-label="Szukaj" />
+          <svg id="bhSearchIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="cursor:pointer">
+            <path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
+                  stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <nav class="situations" aria-label="Sytuacje nagłe">
+      <a class="pill pill--green" data-porada="zadlawienie" href="#"><span class="ico">🫁</span><span>Zadławienie</span></a>
+      <a class="pill pill--green" data-porada="reanimacja" href="#"><span class="ico">🚑</span><span>Reanimacja</span></a>
+      <a class="pill pill--green" data-porada="wypadek" href="#"><span class="ico">💥</span><span>Wypadek</span></a>
+      <a class="pill pill--green" data-porada="pierwszopomoc" href="#"><span class="ico">❤️‍🩹</span><span>Pierwsza pomoc</span></a>
+      <a class="pill pill--blue" href="gry.html"><span class="ico">🎮</span><span>Gry / Trening</span></a>
+      <a class="pill pill--blue" href="quizzes.html" id="btn-quizzes"><span class="ico">🧠</span><span>Quizy</span></a>
+    </nav>
+
+    <div class="actions" role="navigation" aria-label="Szybkie akcje">
+      <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
+      <button id="btn-hosp" class="btn btn--hosp" type="button">🏥 Szpitale / SOR</button>
+      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener">
+        <span class="badge-round">apteka24</span></a>
+      <button id="btn-loc" class="btn" type="button">📍 Zlokalizuj mnie</button>
+    </div>
+
+    <div class="subheadline">Boli mnie — wybierz obszar bólu</div>
+
+    <section class="stack" aria-label="Wybór postaci">
+      <article class="card">
+        <a href="kobieta.html" class="card__link">
+          <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Kobieta</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+      <article class="card">
+        <a href="mezczyzna.html" class="card__link">
+          <img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Mężczyzna</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+      <article class="card">
+        <a href="dziecko.html" class="card__link">
+          <img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+          <div class="caption"><h3>Dziecko</h3><span class="arrow" aria-hidden="true">→</span></div>
+        </a>
+      </article>
+    </section>
+  </div>
+
+  <!-- Modal PORADA -->
+  <div id="bh2025Porada" class="bh2025-porada" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025PoradaTitle">
+    <div class="bh2025-porada__panel">
+      <div class="bh2025-porada__head">
+        <div class="bh2025-porada__title" id="bh2025PoradaTitle">Porada</div>
+        <button class="bh2025-close--porada" type="button" id="bh2025PoradaClose" aria-label="Zamknij">✕</button>
+      </div>
+      <div class="bh2025-porada__grid">
+        <div class="bh2025-porada__svg" id="bh2025PoradaSvg" aria-label="Instrukcja obrazkowa"></div>
+        <div class="bh2025-steps"><ol id="bh2025PoradaSteps"></ol></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- === JS: i18n minimal, search suggestions, porada modal, hide panel on start === -->
+  <script>
+  // mini i18n (PL)
+  (function(){ document.documentElement.setAttribute('lang','pl'); document.documentElement.setAttribute('data-lang','pl'); })();
+  </script>
+
+  <script>
+  // WYSZUKIWARKA — proste podpowiedzi (działają lokalnie)
+  (function(){
+    const input = document.getElementById('bhSearch'); if(!input) return;
+    const panel = document.createElement('div');
+    panel.className = 'bh2025-suggest'; panel.setAttribute('role','listbox'); panel.setAttribute('aria-hidden','true');
+    panel.innerHTML = '<div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bhList"></ul>';
+    input.parentElement.appendChild(panel);
+    const list = panel.querySelector('#bhList');
+
+    const PARTS = [
+      {id:'oko',label:'Oko',alias:['oko','oczy','wzrok']},
+      {id:'glowa',label:'Głowa',alias:['glowa','głowa','migrena']},
+      {id:'brzuch',label:'Brzuch',alias:['brzuch','żołądek','zoladek']},
+      {id:'zadlawienie',label:'Zadławienie (SOS)',sos:true,alias:['zadławienie','zadlawienie']},
+      {id:'reanimacja',label:'Reanimacja (RKO)',sos:true,alias:['reanimacja','rko']},
+      {id:'wypadek',label:'Wypadek (SOS)',sos:true,alias:['wypadek','kolizja']}
+    ];
+    const GENDERS = [{id:'kobieta',label:'Kobieta'},{id:'mezczyzna',label:'Mężczyzna'},{id:'dziecko',label:'Dziecko'}];
+
+    const build = (hit)=> hit.sos
+      ? [{label: hit.label, url:`szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`, sub:'SOS'}]
+      : GENDERS.map(g=>({label:`${hit.label} • ${g.label}`, url:`szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`, sub:g.label}));
+
+    function search(q){
+      const s=q.trim().toLowerCase(); if(!s) return [];
+      return PARTS.filter(p=>(p.alias||[]).some(a=>a.includes(s))||p.id.includes(s)||p.label.toLowerCase().includes(s))
+                  .slice(0,6).flatMap(build).slice(0,12);
+    }
+    function render(results){
+      list.innerHTML='';
+      results.forEach((r,idx)=>{
+        const li=document.createElement('li'); li.className='bh2025-sg-item'; li.dataset.index=idx;
+        li.innerHTML=`<span>🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>`;
+        li.addEventListener('click',()=>location.href=r.url);
+        list.appendChild(li);
+      });
+      panel.setAttribute('aria-hidden', results.length ? 'false' : 'true');
+    }
+    input.addEventListener('input', ()=> render(search(input.value)));
+    document.addEventListener('click', (e)=>{ if(!panel.contains(e.target) && e.target!==input) panel.setAttribute('aria-hidden','true'); });
+  })();
+  </script>
+
+  <script>
+  // PORADA modal – otwieranie z zielonych pigułek
+  (function(){
+    const modal  = document.getElementById('bh2025Porada');
+    const title  = document.getElementById('bh2025PoradaTitle');
+    const svgWrap= document.getElementById('bh2025PoradaSvg');
+    const stepsOl= document.getElementById('bh2025PoradaSteps');
+    const close  = document.getElementById('bh2025PoradaClose');
+
+    const IMG = { zadlawienie:'img/zadlawienie.png', reanimacja:'img/reanimacja.png', wypadek:'img/wypadek.png', pierwszopomoc:null };
+    const STEPS = {
+      zadlawienie:["Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.","Brak skutecznego kaszlu: 5 uderzeń w plecy.","Jeśli nieskuteczne: 5 uciśnięć nadbrzusza.","Na zmianę 5↔5 do skutku.","Utrata przytomności: RKO 30:2, 112, AED."],
+      reanimacja:["Bezpieczeństwo, reakcja, oddech ≤10 s.","Brak oddechu: 112.","Ucisk 100–120/min, 5–6 cm, mostek.","30 uciśnięć + 2 oddechy (jeśli potrafisz).","Kontynuuj do przyjazdu służb/oddechu."],
+      wypadek:["Zabezpiecz miejsce.","Oceń zagrożenia.","Wezwij 112.","Priorytet: oddech, krwotok (ucisk).","Nie przestawiaj bez potrzeby."],
+      pierwszopomoc:["ABC: drożność, oddech, krążenie.","Pozycja bezpieczna przy oddechu.","Ucisk krwotoków.","Oparzenia: chłodzenie 20 min.","W razie wątpliwości — dzwoń po pomoc."]
+    };
+
+    function openPorada(key,label){
+      title.textContent = label || 'Porada';
+      svgWrap.innerHTML='';
+      const src=IMG[key]; if(src){ const img=new Image(); img.src=src; img.alt=label||key; svgWrap.appendChild(img); }
+      stepsOl.innerHTML=''; (STEPS[key]||[]).forEach(t=>{ const li=document.createElement('li'); li.textContent=t; stepsOl.appendChild(li); });
+      modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+    }
+    function closePorada(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+
+    document.addEventListener('click', (e)=>{
+      const a=e.target.closest('a.pill.pill--green[data-porada]'); if(!a) return;
+      e.preventDefault(); openPorada(a.getAttribute('data-porada'), a.textContent.trim());
+    }, true);
+
+    close.addEventListener('click', closePorada);
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) closePorada(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') closePorada(); });
+
+    // na wszelki wypadek schowaj modal na starcie
+    modal.setAttribute('aria-hidden','true');
+  })();
+  </script>
+</body>
+</html>
