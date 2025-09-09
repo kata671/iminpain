@@ -1,613 +1,476 @@
 <!doctype html>
-<html lang="pl" data-lang="pl">
+<html lang="pl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Boli Help — Strona główna</title>
+  <title>Boli Help — Szczegóły</title>
   <meta name="theme-color" content="#0e1230" />
-
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
-  <link rel="apple-touch-icon" href="/icons/icon-512.png">
-
-  <!-- CSS (pozostawiam v=10 jak u Ciebie) -->
-  <link rel="stylesheet" href="assets/style.css?v=10" />
-
   <style>
-    html,body{height:100%}
-    body[data-page="home"]{
-      position:relative; background:#0e1230 !important; color:#eef2ff;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    :root{
+      --bg:#0e1230; --text:#eef2ff; --muted:#b8c2e0;
+      --card: rgba(60,32,100,.30); --stroke: rgba(164,107,255,.18);
+      --accent:#a46bff; --pink:#ff6ec7; --teal:#5eead4;
+      --ok:#70e1b1; --warn:#ffd16c; --danger:#ff6b6b;
+      --radius:16px; --gap:14px; --speed:.24s;
+      --c-symptoms: rgba(94,234,212,.55);
+      --c-causes:   rgba(164,107,255,.55);
+      --c-firstaid: rgba(112,225,177,.55);
+      --c-otc:      rgba(255,184,108,.65);
+      --c-rx:       rgba(255,107,107,.70);
+      --c-rehab:    rgba(94,234,212,.65);
+      --c-myths:    rgba(164,107,255,.65);
+      --c-faq:      rgba(94,234,212,.55);
+      --c-dx:       rgba(164,107,255,.65);
+      --c-docs:     rgba(94,234,212,.65);
     }
-    body[data-page="home"]::before,
-    body[data-page="home"]::after,
-    body[data-page="home"] .container::before,
-    body[data-page="home"] .container::after{content:none !important;display:none !important}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0; background:var(--bg); color:var(--text);
+      font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
 
-    .bh-wallpaper,.bh-grid{position:fixed;inset:0;pointer-events:none}
-    .bh-wallpaper{
-      z-index:0;
+    .bg-anim{position:fixed; inset:0; z-index:-3; pointer-events:none;
       background:
-        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
+        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.26), transparent 60%),
         radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
         radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
         linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
       filter: blur(10px) saturate(118%);
     }
-    .bh-grid{
-      z-index:1; opacity:.22;
+    .grid-bg{position:fixed; inset:0; z-index:-2; pointer-events:none; opacity:.22;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
-      background-size:160px 138px; background-position:center;
-    }
-    .bh-floor-fade{ position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
-      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6)); }
-    .container{position:relative;z-index:3;background:transparent !important;max-width:1100px;margin:0 auto;padding:0 16px}
+      background-size:160px 138px; background-position:center;}
+    #bh-particles{ position:fixed; inset:0; z-index:-1; opacity:.85; pointer-events:none }
 
-    /* Siatka kart */
-    @media (min-width:981px){ section.stack[style]{grid-template-columns:repeat(3,1fr) !important;} }
-    @media (max-width:980px){ section.stack[style]{grid-template-columns:repeat(2,1fr) !important;} }
-    @media (max-width:640px){ section.stack[style]{grid-template-columns:1fr !important;} }
-    section.stack[style] > *{grid-column:auto !important;min-width:0 !important}
+    header.app{ max-width:1100px; margin:16px auto 0; padding:16px 16px 8px; }
+    main{ max-width:1100px; margin:0 auto 72px; padding:0 16px 24px; }
 
-    .card{border-radius:18px;overflow:hidden;background:rgba(60,32,100,.32);border:1px solid rgba(164,107,255,.22);
-      box-shadow:0 10px 22px rgba(255,110,199,.12), 0 0 0 1px rgba(164,107,255,.14) inset;min-height:240px}
-    .card a{display:grid;grid-template-rows:minmax(180px,240px) auto;height:100%;text-decoration:none;color:inherit}
-    .card img{width:100%;height:100%;object-fit:contain;object-position:center;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))}
-    .card .caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;
-      border-top:1px solid rgba(164,107,255,.22);background:rgba(255,255,255,.04)}
+    .bh-backbar{max-width:1100px; margin:8px auto 0; padding:0 16px;}
+    #bhReturnTop{
+      appearance:none; border:1px solid rgba(164,107,255,.28); background:rgba(60,32,100,.28);
+      color:#eef2ff; font-weight:800; letter-spacing:.2px; padding:10px 14px; border-radius:12px; cursor:pointer;
+      box-shadow:0 6px 16px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.12), 0 0 8px rgba(164,107,255,.45);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    #bhReturnTop:hover{ transform:translateY(-1px); border-color:rgba(164,107,255,.55); box-shadow:0 10px 20px rgba(8,10,22,.45), 0 0 14px rgba(164,107,255,.65), inset 0 0 0 1px rgba(164,107,255,.18) }
+    #bhReturnTop:focus-visible{ outline:2px solid rgba(164,107,255,.75); outline-offset:2px }
 
-    /* Pigułki */
-    :root{ --bhG:34,227,160; --bhG2:20,160,120; }
-    .situations .pill{
-      display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:14px; text-decoration:none; font-weight:900;
-      border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#fff; transition:.2s ease;
-    }
-    .situations .pill .ico{
-      display:inline-grid; place-items:center; width:22px; height:22px; border-radius:6px;
-      background: rgba(164,107,255,.18); box-shadow: inset 0 0 0 1px rgba(164,107,255,.25);
-    }
-    .situations .pill.pill--green{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(var(--bhG2), .15);
-      color:#ffffff; border:1px solid rgba(var(--bhG), .55);
-      box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhG), .25) inset, 0 0 18px rgba(var(--bhG), .18);
-      backdrop-filter:saturate(125%) blur(4px);
-    }
-    .situations .pill.pill--green:hover,
-    .situations .pill.pill--green:focus-visible{
-      transform:translateY(-1px); border-color:rgba(var(--bhG), .85);
-      box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(var(--bhG), .65), 0 0 26px rgba(var(--bhG), .45);
-      outline:none;
-    }
-    /* Niebieska pigułka – Gry / Trening */
-    .situations .pill.pill--blue{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(96,165,250,.18);
-      border:1px solid rgba(59,130,246,.6);
-      box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(59,130,246,.35) inset, 0 0 18px rgba(96,165,250,.30);
-      color:#eaf2ff;
-    }
-    .situations .pill.pill--blue:hover,
-    .situations .pill.pill--blue:focus-visible{
-      transform:translateY(-1px); border-color:rgba(59,130,246,.9);
-      box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(96,165,250,.65), 0 0 26px rgba(96,165,250,.5);
-      outline:none;
-    }
+    .hero{ background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--stroke); border-radius:var(--radius); padding:16px;
+      backdrop-filter: blur(6px) saturate(120%); box-shadow: 0 18px 48px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18);}
+    .hero-top{ display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;}
+    .crumbs{font-weight:800; letter-spacing:.2px; color:#cfe2ff}
+    .label{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+      background: rgba(164,107,255,.18); border:1px solid var(--stroke); font-weight:800; letter-spacing:.3px; }
+    .hero-note{ margin-top:10px; color:#b8c2e0; font-size:13px; }
+    .legend{ color:#d6e4ff; font-weight:700; margin-top:6px; font-size:13px }
 
-    /* apteka24 – świecący badge */
-    #btn-apteka .badge-round{
-      background: rgba(var(--bhG), .18);
-      color: #eafff7;
-      border:1px solid rgba(var(--bhG), .55);
-      box-shadow:0 6px 18px rgba(8,10,22,.35), inset 0 0 0 1px rgba(var(--bhG), .20), 0 0 14px rgba(var(--bhG), .30);
-      font-weight:800; letter-spacing:.2px; border-radius:999px; padding:6px 10px; text-transform:none;
-      animation: bh-green-pulse 2.4s ease-in-out infinite;
+    /* KROKI – asystent */
+    .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0 0}
+    .step{position:relative; padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05); font-weight:900; letter-spacing:.2px; color:#dfe6ff; text-align:center}
+    .step.active{border-color:rgba(94,234,212,.55); box-shadow:0 0 0 2px rgba(94,234,212,.35), 0 8px 18px rgba(8,10,22,.35)}
+    .step.done{opacity:.9}
+    .step small{display:block; font-weight:700; color:#9fb6ff}
+
+    .tabs{ display:flex; flex-wrap:wrap; gap:8px; margin:16px 0 8px; }
+    .tab{ padding:9px 13px; border-radius:10px; font-weight:800; letter-spacing:.2px; cursor:pointer; user-select:none;
+      background: transparent; border:1px solid rgba(255,255,255,.16); color:#e9efff;
+      transition: box-shadow var(--speed), transform var(--speed), border-color var(--speed), background var(--speed);}
+    .tab:hover{ transform: translateY(-1px); }
+    .tab[data-variant="symptoms"]{ border-color: rgba(94,234,212,.25) }
+    .tab[data-variant="causes"]  { border-color: rgba(164,107,255,.25) }
+    .tab[data-variant="firstaid"]{ border-color: rgba(112,225,177,.25) }
+    .tab[data-variant="otc"]     { border-color: rgba(255,184,108,.28) }
+    .tab[data-variant="rx"]      { border-color: rgba(255,107,107,.35) }
+    .tab[data-variant="rehab"]   { border-color: rgba(94,234,212,.28) }
+    .tab[data-variant="myths"]   { border-color: rgba(164,107,255,.28) }
+    .tab[data-variant="faq"]     { border-color: rgba(94,234,212,.25) }
+    .tab[data-variant="dx"]      { border-color: rgba(164,107,255,.45); position:relative }
+    .tab[data-variant="docs"]    { border-color: rgba(94,234,212,.45); position:relative }
+
+    .tab[aria-selected="true"][data-variant="symptoms"]{ border-color: var(--c-symptoms); box-shadow:0 0 0 2px var(--c-symptoms), 0 8px 22px rgba(0,0,0,.25) }
+    .tab[aria-selected="true"][data-variant="causes"]  { border-color: var(--c-causes);   box-shadow:0 0 0 2px var(--c-causes),   0 8px 22px rgba(0,0,0,.25) }
+    .tab[aria-selected="true"][data-variant="firstaid"]{ border-color: var(--c-firstaid); box-shadow:0 0 0 2px var(--c-firstaid), 0 8px 22px rgba(0,0,0,.25) }
+    .tab[aria-selected="true"][data-variant="otc"]     { border-color: var(--c-otc);      box-shadow:0 0 0 2px var(--c-otc),      0 8px 22px rgba(0,0,0,.25) }
+    .tab[aria-selected="true"][data-variant="rx"]      { border-color: var(--c-rx);       box-shadow:0 0 0 2px var(--c-rx),       0 8px 22px rgba(0,0,0,.25) }
+    .tab[aria-selected="true"][data-variant="rehab"]   { border-color: var(--c-rehab);    box-shadow:0 0 0 2px var(--c-rehab),    0 8px 22px rgba(0,0,0,.25) }
+    .tab[aria-selected="true"][data-variant="myths"]   { border-color: var(--c-myths);    box-shadow:0 0 0 2px var(--c-myths),    0 8px 22px rgba(0,0,0,.25) }
+    .tab[aria-selected="true"][data-variant="faq"]     { border-color: var(--c-faq);      box-shadow:0 0 0 2px var(--c-faq),      0 8px 22px rgba(0,0,0,.25) }
+    .tab[aria-selected="true"][data-variant="dx"]      { border-color: var(--c-dx);       box-shadow:0 0 0 2px var(--c-dx),       0 8px 22px rgba(0,0,0,.25) }
+    .tab[aria-selected="true"][data-variant="docs"]    { border-color: var(--c-docs);     box-shadow:0 0 0 2px var(--c-docs),     0 8px 22px rgba(0,0,0,.25) }
+
+    .tab[data-badge]:after{
+      content: attr(data-badge);
+      position:absolute; top:-7px; right:-7px; font-size:11px; font-weight:900;
+      background:rgba(94,234,212,.22); border:1px solid rgba(94,234,212,.55); color:#d9fffa;
+      padding:2px 6px; border-radius:999px;
     }
-    @keyframes bh-green-pulse{
-      0%{ box-shadow:0 0 0 0 rgba(var(--bhG), .00), 0 0 12px rgba(var(--bhG), .18) }
-      50%{ box-shadow:0 0 0 6px rgba(var(--bhG), .12), 0 0 22px rgba(var(--bhG), .35) }
-      100%{ box-shadow:0 0 0 0 rgba(var(--bhG), .00), 0 0 12px rgba(var(--bhG), .18) }
+    .tab-attn{ box-shadow:0 0 0 2px rgba(164,107,255,.45), 0 0 18px rgba(164,107,255,.28); }
+    .tab-attn::before{
+      content:""; position:absolute; inset:-6px; border-radius:12px;
+      box-shadow:0 0 0 0 rgba(164,107,255,.38); animation:ping 1.6s ease-out infinite;
     }
+    @keyframes ping{ 0%{box-shadow:0 0 0 0 rgba(164,107,255,.38)} 80%{box-shadow:0 0 0 14px rgba(164,107,255,0)} 100%{box-shadow:0 0 0 0 rgba(164,107,255,0)} }
 
-    /* Obrazek w PORADZIE (png) */
-    .bh2025-porada__svg img{
-      max-width:100%; height:auto; display:block; border-radius:12px;
-      border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.04);
+    .cards{ margin-top:8px }
+    .card{ display:none; background: var(--card); border:1px solid var(--stroke); border-radius:var(--radius);
+      padding:16px 16px 14px; backdrop-filter: blur(10px) saturate(125%); box-shadow: 0 14px 34px rgba(8,10,22,.42);
+      transition: transform var(--speed), box-shadow var(--speed), border-color var(--speed); color:var(--text); }
+    .card[aria-hidden="false"]{ display:block; animation:fadeIn .28s ease both }
+    @keyframes fadeIn{ from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none} }
+    .card:hover{ transform: translateY(-2px); box-shadow: 0 18px 48px rgba(8,10,22,.55), 0 0 22px rgba(164,107,255,.18) }
+    .card h3{ position:relative; margin:.15rem 0 .85rem; font-size:16px; font-weight:900; letter-spacing:.3px; color:#e6f0ff }
+    .card h3::after{ content:""; display:block; height:1px; margin-top:.55rem;
+      background:linear-gradient(90deg, rgba(207,226,255,.55), rgba(255,255,255,.08) 45%, transparent); }
+
+    .card[data-type="symptoms"]{border-color: rgba(94,234,212,.55)}
+    .card[data-type="causes"]  {border-color: rgba(164,107,255,.55)}
+    .card[data-type="firstaid"]{border-color: rgba(112,225,177,.55)}
+    .card[data-type="otc"]     {border-color: rgba(255,184,108,.65)}
+    .card[data-type="rx"]      {border-color: rgba(255,107,107,.70)}
+    .card[data-type="rehab"]   {border-color: rgba(94,234,212,.65); background: linear-gradient(180deg, rgba(94,234,212,.08), rgba(255,255,255,.04));}
+    .card[data-type="myths"]   {border-color: rgba(164,107,255,.65)}
+    .card[data-type="faq"]     {border-color: rgba(94,234,212,.55)}
+    .card[data-type="dx"]      {border-color: rgba(164,107,255,.65)}
+    .card[data-type="docs"]    {border-color: rgba(94,234,212,.65)}
+
+    ul.clean{ list-style:none; margin:0; padding:0 }
+    ul.clean li{ position:relative; padding:10px 12px 10px 36px; border-radius:10px; margin-bottom:7px;
+      border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.03); color:#f6f8ff; }
+    .cb{ position:absolute; left:10px; top:50%; transform:translateY(-50%); width:18px; height:18px; border-radius:4px;
+      border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.05); display:inline-block }
+    .cb.checked{ background:#fff; box-shadow:0 0 0 2px rgba(164,107,255,.25) inset }
+    .li-checked{ outline:1px solid rgba(164,107,255,.45); background: rgba(164,107,255,.10) }
+
+    .more-wrap{ margin-top:10px }
+    .more-btn{ display:inline-block; margin-top:8px; padding:10px 14px; border-radius:10px; font-weight:800;
+      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); cursor:pointer; color:#e9efff;
+      transition: box-shadow var(--speed);}
+    .more-btn:hover{ box-shadow:0 0 0 2px rgba(255,110,199,.32), 0 0 14px rgba(255,110,199,.18) }
+    .more-content{ overflow:hidden; max-height:0; transition:max-height .3s ease; }
+    .more-content.open{ max-height:1200px }
+
+    .subhead{ margin:.9rem 0 .5rem; font-weight:900; color:#e6f0ff; }
+
+    .risk-mini{ display:flex; align-items:center; gap:10px; margin:.15rem 0 .35rem }
+    .risk-mini small{ color:#d6e4ff; font-weight:800 }
+    .riskbar{ position:relative; width:200px; height:12px; border-radius:999px; overflow:hidden;
+      outline:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(90deg, var(--ok), var(--warn), var(--danger)); }
+    .cursor{ position:absolute; top:50%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%;
+      background:#fff; transition:left .25s ease; }
+    .riskbar.high .cursor{ animation:pulse 1s infinite }
+    @keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(255,107,107,.45)} 70%{ box-shadow:0 0 0 14px rgba(255,107,107,0)} 100%{ box-shadow:0 0 0 0 rgba(255,107,107,0)} }
+    .strip{ background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.16); padding:.7rem 1rem; border-radius:.8rem; margin:.6rem 0; }
+    .strip--warn{ background: linear-gradient(180deg, rgba(255,184,108,.18), rgba(255,255,255,.04)); border-color: rgba(255,184,108,.55); }
+    .strip--warn.alert{ box-shadow:0 0 0 2px rgba(255,107,107,.35), 0 10px 28px rgba(255,20,20,.18); border-color: rgba(255,107,107,.8) }
+    .cta{ display:inline-block; padding:8px 12px; border-radius:10px; font-weight:900; background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.18); text-decoration:none; color:var(--text); }
+
+    /* HINT w Objawach */
+    .dx-hint{ display:none; margin-top:10px; border-radius:10px; padding:10px 12px;
+      background:rgba(164,107,255,.12); border:1px solid rgba(164,107,255,.35); color:#e9e6ff; }
+    .dx-hint.show{ display:block }
+    .dx-hint button{ margin-left:8px; padding:8px 10px; border-radius:10px; font-weight:900; cursor:pointer;
+      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); color:#fff }
+
+    /* Choroby – dopasowania */
+    .dx-list li{ display:flex; gap:10px; align-items:flex-start; }
+    .dx-ico{ width:22px; height:22px; display:grid; place-items:center; border-radius:6px;
+      background:rgba(164,107,255,.18); border:1px solid rgba(164,107,255,.35) }
+    .dx-meta{ margin-left:auto; display:flex; flex-direction:column; align-items:flex-end; gap:6px; min-width:160px }
+    .conf-wrap{ width:120px; height:8px; border-radius:999px; outline:1px solid rgba(255,255,255,.16); overflow:hidden;
+      background:linear-gradient(90deg, rgba(94,234,212,.25), rgba(164,107,255,.25)); }
+    .conf-bar{ height:100%; width:0%; background:linear-gradient(90deg, rgba(94,234,212,.65), rgba(164,107,255,.65)) }
+    .dx-badge{ font-size:12px; padding:4px 8px; border-radius:999px; font-weight:900; letter-spacing:.2px; }
+    .dx-badge.poz{ background:rgba(94,234,212,.18); border:1px solid rgba(94,234,212,.45); color:#d9fffa }
+    .dx-badge.sor{ background:rgba(255,107,107,.20); border:1px solid rgba(255,107,107,.65); color:#ffe6e6 }
+    .dx-note{ color:#cfe2ff; font-size:13px; margin:.15rem 0 .35rem }
+    .dx-match{ font-size:12px; color:#cfe2ff; margin-top:6px }
+
+    /* Lekarze */
+    .docs-note{ color:#cfe2ff; font-size:13px; margin:.15rem 0 .35rem }
+    .doc-badge{ font-size:12px; padding:4px 8px; border-radius:999px; font-weight:900; letter-spacing:.2px; }
+    .doc-badge.poz{ background:rgba(94,234,212,.18); border:1px solid rgba(94,234,212,.45); color:#d9fffa }
+    .doc-badge.sor{ background:rgba(255,107,107,.20); border:1px solid rgba(255,107,107,.65); color:#ffe6e6 }
+    .doc-cta{ margin-top:6px; display:inline-block; padding:8px 10px; border-radius:10px; font-weight:900;
+      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); color:#fff; text-decoration:none; }
+
+    .sr-only{ position:absolute !important; left:-9999px !important; }
+
+    /* ===== SELEKTOR JĘZYKA (naprawa mobile) ===== */
+    .langpick{
+      position:fixed;
+      top:clamp(8px, env(safe-area-inset-top, 8px), 20px);
+      right:12px;
+      z-index:10000;
+      display:flex; gap:8px; align-items:center;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.24);
+      border-radius:12px; padding:6px 10px;
+      backdrop-filter:saturate(120%) blur(4px);
+      max-width:100%;
+      white-space:nowrap;
+      contain:layout;
     }
-
-    /* Modale ukryte (twardo) */
-    .bh2025-modal[aria-hidden="true"],
-    .bh2025-porada[aria-hidden="true"]{ display:none }
-
-    /* QUIZ – poprawiona czytelność */
-    .bh2025-cta-quiz{appearance:none;border:1px solid rgba(164,107,255,.28);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      color:#eef2ff;border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer}
-    .bh2025-modal{position:fixed;inset:0;z-index:9999;background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.88), rgba(14,18,48,.92));backdrop-filter:saturate(120%) blur(6px)}
-    .bh2025-modal__panel{position:relative;max-width:720px;margin:6vh auto;background:rgba(60,32,100,.36);border:1px solid rgba(164,107,255,.25);border-radius:18px;padding:16px;color:#eef2ff}
-    .bh2025-q{color:#ffffff;font-weight:900;letter-spacing:.2px}
-    .bh2025-answers .bh2025-ans{display:block;width:100%;text-align:left;margin:8px 0;padding:10px 12px;border-radius:12px;
-      border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);cursor:pointer;color:#ffffff}
-    .bh2025-answers .bh2025-ans:hover{box-shadow:0 10px 20px rgba(0,0,0,.25);transform:translateY(-1px)}
-    .bh2025-ans.correct{box-shadow:0 0 0 2px rgba(94,234,212,.65)}
-    .bh2025-ans.wrong{box-shadow:0 0 0 2px rgba(255,107,107,.7)}
-    .bh2025-progress{display:flex;align-items:center;gap:10px;margin:8px 0 12px}
-    .bh2025-progress__bar{flex:1;height:12px;border-radius:999px;outline:1px solid rgba(255,255,255,.14);background:linear-gradient(90deg,#5eead4,#ff6ec7);position:relative;overflow:hidden}
-    .bh2025-progress__cursor{position:absolute;top:50%;transform:translate(-50%,-50%);left:6%;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(94,234,212,.35)}
-
-    /* PORADA modal */
-    .bh2025-porada{position:fixed;inset:0;z-index:9998;background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95));backdrop-filter:saturate(120%) blur(6px)}
-    .bh2025-porada__panel{position:relative;max-width:980px;margin:5vh auto;background:rgba(60,32,100,.36);border:1px solid rgba(164,107,255,.25);border-radius:18px;padding:16px;color:#eef2ff}
-    .bh2025-porada__grid{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
-    @media (max-width:900px){ .bh2025-porada__grid{grid-template-columns:1fr} }
-    .bh2025-steps{border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);padding:12px}
-
-    /* Selektor języka */
-    .langpick{display:flex;gap:8px;align-items:center;margin-left:12px}
     .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
     .langpick select{
       appearance:none;background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.24);
-      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px
+      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px;
+      max-width:52vw; /* nie rozpycha na mobile */
     }
     .langpick option{ color:#0e1230; background:#ffffff }
 
-    /* Wyszukiwarka – panel podpowiedzi (izolowany) */
-    .bh2025-suggest{position:absolute;right:0;left:0;top:100%;margin-top:6px;z-index:50;
-      background:rgba(60,32,100,.96); border:1px solid rgba(164,107,255,.28); border-radius:12px;
-      box-shadow:0 16px 34px rgba(8,10,22,.52); overflow:hidden; display:none}
-    .bh2025-suggest[aria-hidden="false"]{display:block}
-    .bh2025-sg-head{padding:8px 12px; font-weight:800; letter-spacing:.2px; color:#cfe2ff;
-      border-bottom:1px solid rgba(164,107,255,.18); background:rgba(255,255,255,.03)}
-    .bh2025-sg-list{list-style:none;margin:0;padding:6px}
-    .bh2025-sg-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;
-      cursor:pointer; color:#eef2ff; text-decoration:none; border:1px solid transparent}
-    .bh2025-sg-item:hover,
-    .bh2025-sg-item[aria-selected="true"]{background:rgba(255,255,255,.06); border-color:rgba(164,107,255,.28);
-      box-shadow:inset 0 0 0 1px rgba(164,107,255,.16)}
-    .bh2025-sg-ico{width:18px;height:18px;display:inline-grid;place-items:center;border-radius:6px;
-      background:rgba(164,107,255,.18); font-size:12px}
-    .bh2025-sg-sub{margin-left:auto;font-size:12px;color:#b8c2e0}
-    .header .tools .search{position:relative}
-  </style>
-</head>
-
-<body data-page="home">
-  <div class="bh-wallpaper" aria-hidden="true"></div>
-  <div class="bh-grid" aria-hidden="true"></div>
-  <div class="bh-floor-fade" aria-hidden="true"></div>
-
-  <div class="container">
-    <header class="header">
-      <div class="brand">
-        <h1 data-i18n="brand_title">Boli Help</h1>
-        <small data-i18n="brand_sub">Pomoc i pierwsza pomoc w nagłych sytuacjach</small>
-      </div>
-      <div class="tools" style="display:flex;align-items:center;gap:10px">
-        <div class="search" role="search">
-          <input id="bhSearch" type="search" placeholder="Szukaj objawu, części ciała lub tematu…" aria-label="Szukaj" />
-          <svg id="bhSearchIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="cursor:pointer">
-            <path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
-                  stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-
-        <!-- ▼▼ NOWY: Tłumacz (PL/EN) – lekki, bez Google banneru ▼▼ -->
-        <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
-          <label for="bhLangSelect">Język</label>
-          <select id="bhLangSelect">
-            <option value="pl">PL</option>
-            <option value="en">EN</option>
-          </select>
-        </div>
-        <!-- ▲▲ KONIEC: Tłumacz ▲▲ -->
-      </div>
-    </header>
-
-    <div class="emergency-list" aria-label="Telefony alarmowe">
-      <a href="tel:112">📞 112</a><a href="tel:999">🚑 999</a><a href="tel:998">🔥 998</a><a href="tel:997">👮 997</a>
-    </div>
-
-    <nav class="situations" aria-label="Sytuacje nagłe">
-      <a class="pill pill--green" data-porada="zadlawienie" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie">
-        <span class="ico">🫁</span><span data-i18n="pill_choke">Zadławienie</span>
-      </a>
-      <a class="pill pill--green" data-porada="reanimacja" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja">
-        <span class="ico">🚑</span><span data-i18n="pill_cpr">Reanimacja</span>
-      </a>
-      <a class="pill pill--green" data-porada="wypadek" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek">
-        <span class="ico">💥</span><span data-i18n="pill_accident">Wypadek</span>
-      </a>
-      <a class="pill pill--green" data-porada="pierwszopomoc" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc">
-        <span class="ico">❤️‍🩹</span><span data-i18n="pill_firstaid">Pierwsza pomoc</span>
-      </a>
-      <a class="pill pill--blue" href="gry.html">
-        <span class="ico">🎮</span><span data-i18n="pill_games">Gry / Trening</span>
-      </a>
-      <!-- NOWY GUZIK: Quizy -->
-      <a class="pill pill--blue" href="quizzes.html" id="btn-quizzes">
-        <span class="ico">🧠</span><span data-i18n="pill_quizzes">Quizy</span>
-      </a>
-    </nav>
-
-    <!-- Launcher mini-quizu (USUNIĘTY) -->
-
-    <div class="actions" role="navigation" aria-label="Szybkie akcje">
-      <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
-      <button id="btn-hosp" class="btn btn--hosp" type="button" data-i18n="btn_hosp">🏥 Szpitale / SOR</button>
-      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener">
-        <span class="badge-round">apteka24</span></a>
-      <button id="btn-loc" class="btn" type="button" data-i18n="btn_loc">📍 Zlokalizuj mnie</button>
-    </div>
-
-    <div class="subheadline" data-i18n="subheadline">Boli mnie — wybierz obszar bólu</div>
-
-    <!-- 3 kafelki -->
-    <section class="stack" aria-label="Wybór postaci"
-      style="display:grid;gap:16px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
-      <article class="card">
-        <a href="kobieta.html">
-          <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3 data-i18n="card_woman">Kobieta</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
-      <article class="card">
-        <a href="mezczyzna.html">
-          <img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3 data-i18n="card_man">Mężczyzna</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
-      <article class="card">
-        <a href="dziecko.html">
-          <img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3 data-i18n="card_child">Dziecko</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
-    </section>
-  </div>
-
-  <!-- Modal QUIZ (USUNIĘTY) -->
-
-  <!-- Modal PORADA -->
-  <div id="bh2025Porada" class="bh2025-porada" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025PoradaTitle">
-    <div class="bh2025-porada__panel">
-      <div class="bh2025-porada__head">
-        <div class="bh2025-porada__title" id="bh2025PoradaTitle" data-i18n="advice_title">Porada</div>
-        <div class="bh2025-chip" id="bh2025PoradaChip" data-i18n="advice_chip">SOS • instrukcja</div>
-        <button class="bh2025-close--porada" type="button" id="bh2025PoradaClose" aria-label="Zamknij" data-i18n="close_btn">✕</button>
-      </div>
-      <div class="bh2025-porada__grid">
-        <div class="bh2025-porada__svg" id="bh2025PoradaSvg" aria-label="Instrukcja obrazkowa"></div>
-        <div class="bh2025-steps"><ol id="bh2025PoradaSteps"></ol></div>
-      </div>
-      <div class="bh2025-video">
-        <div class="bh2025-muted" style="margin-bottom:8px;font-weight:800" data-i18n="video_head">Materiał wideo</div>
-        <div id="bh2025VideoWrap"><div class="ph" id="bh2025VideoPh"><span>🎬</span><span data-i18n="video_hint">Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej.</span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Skrypt bazowy strony -->
-  <script src="assets/main.js?v=10"></script>
-
-  <!-- (USUNIĘTY) I18N translator -->
-  <!-- (USUNIĘTY) QUIZ skrypt -->
-
-  <!-- PORADY (klik pigułek przechwycony w capture) -->
-  <script>
-  (function(){
-    const poradaModal  = document.getElementById('bh2025Porada');
-    const poradaClose  = document.getElementById('bh2025PoradaClose');
-    const poradaTitle  = document.getElementById('bh2025PoradaTitle');
-    const svgWrap      = document.getElementById('bh2025PoradaSvg');
-    const stepsOl      = document.getElementById('bh2025PoradaSteps');
-    const videoWrap    = document.getElementById('bh2025VideoWrap');
-    const videoPh      = document.getElementById('bh2025VideoPh');
-    if(!poradaModal || poradaModal.dataset.bhBound) return; poradaModal.dataset.bhBound='1';
-
-    const IMG = { zadlawienie: 'img/zadlawienie.png', reanimacja: 'img/reanimacja.png', wypadek: 'img/wypadek.png', pierwszopomoc: null };
-    const STEPS = {
-      pl:{
-        zadlawienie:["Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.","Brak skutecznego kaszlu: 5 uderzeń w plecy między łopatki.","Jeśli nieskuteczne: 5 uciśnięć nadbrzusza.","Na zmianę: 5 plecy ↔ 5 nadbrzusze, aż do skutku.","Utrata przytomności: RKO 30:2, 112, AED."],
-        reanimacja:["Sprawdź bezpieczeństwo, reakcję i oddech (max 10 s).","Brak oddechu: zadzwoń 112.","Uciski: 100–120/min, głęb. 5–6 cm, środek mostka.","Po 30 uciśnięciach 2 oddechy (jeśli umiesz i chcesz).","Kontynuuj do przyjazdu służb lub powrotu oddechu."],
-        wypadek:["Zabezpiecz miejsce.","Oceń liczbę poszkodowanych i zagrożenia.","Wezwij 112.","Priorytet: oddech, krwotoki (ucisk).","Nie przestawiaj bez potrzeby."],
-        pierwszopomoc:["ABC: drożność, oddech, krążenie.","Pozycja bezpieczna przy oddechu.","Ucisk krwotoków.","Oparzenia: chłodzenie 20 min.","Wezwij pomoc, gdy masz wątpliwości."]
-      },
-      en:{
-        zadlawienie:["Encourage coughing — if effective, observe.","If not effective: 5 back blows.","Then 5 abdominal thrusts.","Alternate 5↔5 until success.","If unconscious: CPR 30:2, call 112/911, AED."],
-        reanimacja:["Check safety, response, breathing (≤10 s).","No breathing: call 112/911.","Compressions 100–120/min, depth 5–6 cm, center chest.","30 compressions + 2 breaths (if trained).","Continue until help arrives/returns breathing."],
-        wypadek:["Make scene safe.","Assess casualties/hazards.","Call 112/911.","Priority: breathing, bleeding (direct pressure).","Do not move unnecessarily."],
-        pierwszopomoc:["ABC: airway, breathing, circulation.","Recovery position if breathing.","Control bleeding.","Burns: cool 20 min.","When in doubt — call for help."]
+    /* Mobile: zwężenie, wyśrodkowanie u góry i odsunięcie treści pod notch */
+    @media (max-width:560px){
+      body{ padding-top: calc(48px + env(safe-area-inset-top, 0px)); }
+      .langpick{
+        left:50%; right:auto; transform:translateX(-50%);
+        gap:6px; padding:5px 8px;
       }
-    };
-    const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
-
-    function openPorada(key, title){
-      poradaTitle.textContent = title || (L()==='en'?'Advice':'Porada');
-      svgWrap.innerHTML=''; const src=IMG[key];
-      if(src){ const img=new Image(); img.src=src; img.alt=title||key; svgWrap.appendChild(img); }
-      stepsOl.innerHTML=''; (STEPS[L()]?.[key]||[]).forEach(txt=>{ const li=document.createElement('li'); li.textContent=txt; stepsOl.appendChild(li); });
-      videoWrap.innerHTML=''; videoWrap.appendChild(videoPh.cloneNode(true));
-      poradaModal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
-    }
-    function closePorada(){ poradaModal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-
-    const nav = document.querySelector('nav.situations');
-    if(nav && !nav.dataset.bhPoradaBound){
-      nav.dataset.bhPoradaBound='1';
-      nav.addEventListener('click', function(e){
-        const a = e.target.closest('a.pill.pill--green[data-porada]');
-        if(!a) return;
-        e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
-        const key   = a.getAttribute('data-porada');
-        const title = a.textContent.trim();
-        openPorada(key, title);
-      }, true);
+      .langpick label{ display:none; } /* więcej miejsca */
+      .langpick select{ font-size:12px; padding:5px 9px; }
+      header.app{ margin-top:8px; }
     }
 
-    poradaClose.addEventListener('click', closePorada);
-    poradaModal.addEventListener('click', (e)=>{ if(e.target===poradaModal) closePorada(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && poradaModal.getAttribute('aria-hidden')==='false') closePorada(); });
-  })();
-  </script>
-
-  <!-- WYSZUKIWARKA -->
-  <script>
-  (function(){
-    const input = document.getElementById('bhSearch');
-    const icon  = document.getElementById('bhSearchIcon');
-    if(!input || input.dataset.bhSearchBound) return; input.dataset.bhSearchBound='1';
-
-    const PARTS = [
-      {id:'oko',       label:'Oko',        alias:['oko','oczy','wzrok']},
-      {id:'nos',       label:'Nos',        alias:['nos','zatoki','katar']},
-      {id:'gardlo',    label:'Gardło',     alias:['gardlo','gardło','angina','chrypka']},
-      {id:'glowa',     label:'Głowa',      alias:['glowa','głowa','migrena','ból głowy']},
-      {id:'klatka',    label:'Klatka piersiowa', alias:['klatka','pierś','serce ból','mostek']},
-      {id:'pluca',     label:'Płuca',      alias:['płuca','pluca','duszność','astma']},
-      {id:'brzuch',    label:'Brzuch',     alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
-      {id:'nerki',     label:'Nerki',      alias:['nerki','kolka','lędźwie','ledzwi']},
-      {id:'plecy',     label:'Plecy',      alias:['plecy','kręgosłup','kregoslup','rwa']},
-      {id:'biodra',    label:'Biodra/Uda', alias:['biodro','biodra','udo','pachwina']},
-      {id:'kolano',    label:'Kolano',     alias:['kolano','rzepka','łąkotka','lakotka']},
-      {id:'stopy',     label:'Stopy',      alias:['stopa','stopy','pięta','pieta','rozcięgno']},
-      {id:'skora',     label:'Skóra',      alias:['skora','skóra','wysypka','świąd','alergia']},
-      {id:'serce',     label:'Serce',      alias:['serce','kołatania','kolatania','arytmia']},
-      {id:'kaszel',    label:'Kaszel',     alias:['kaszel','kaszle']},
-      {id:'goraczka',  label:'Gorączka',   alias:['gorączka','goraczka','temperatura']},
-      {id:'zadlawienie', label:'Zadławienie (SOS)', alias:['zadławienie','zadlawienie','zadławił','zadlawil'] , sos:true},
-      {id:'reanimacja',  label:'Reanimacja (RKO)',  alias:['reanimacja','rko','resuscytacja'] , sos:true},
-      {id:'wypadek',     label:'Wypadek (SOS)',     alias:['wypadek','kolizja','potrącenie','potracenie'] , sos:true},
-      {id:'pierwszopomoc',label:'Pierwsza pomoc',   alias:['pierwsza pomoc','pierwszopomoc','abc'] , sos:true}
-    ];
-    const GENDERS = [
-      {id:'kobieta',label:'Kobieta'},{id:'mezczyzna',label:'Mężczyzna'},{id:'dziecko',label:'Dziecko'}
-    ];
-
-    const panel = document.createElement('div');
-    panel.className = 'bh2025-suggest'; panel.setAttribute('role','listbox'); panel.setAttribute('aria-hidden','true');
-    panel.innerHTML = `<div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>`;
-    input.parentElement.appendChild(panel);
-    const list = panel.querySelector('#bh2025List');
-    let results = [], active = -1;
-
-    function buildUrls(hit){
-      if(hit.sos){
-        const url = `szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
-        return [{label: hit.label, url, sub:'SOS'}];
-      }
-      return GENDERS.map(g=>{
-        const url = `szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
-        return {label:`${hit.label} • ${g.label}`, url, sub:g.label};
-      });
-    }
-    function search(q){
-      const s=q.trim().toLowerCase(); if(!s) return [];
-      const hits = PARTS.filter(p =>
-        p.alias?.some(a => a.includes(s)) || p.id.includes(s) || p.label.toLowerCase().includes(s)
-      ).slice(0,6);
-      return hits.flatMap(buildUrls).slice(0,12);
-    }
-    function render(){
-      list.innerHTML = ''; active = -1;
-      results.forEach((r,idx)=>{
-        const li = document.createElement('li');
-        li.setAttribute('role','option'); li.className='bh2025-sg-item'; li.dataset.index = String(idx);
-        li.innerHTML = `<span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>`;
-        li.addEventListener('mouseenter', ()=>setActive(idx));
-        li.addEventListener('mouseleave', ()=>setActive(-1));
-        li.addEventListener('click', ()=>go(idx));
-        list.appendChild(li);
-      });
-      panel.setAttribute('aria-hidden', results.length ? 'false':'true');
-    }
-    function setActive(i){
-      active = i;
-      list.querySelectorAll('.bh2025-sg-item').forEach((el,idx)=>{
-        el.setAttribute('aria-selected', (idx===active)?'true':'false');
-      });
-    }
-    function go(idx){
-      const item = results[idx]; if(!item) return;
-      window.location.href = item.url;
-    }
-
-    input.addEventListener('input', ()=>{ results = search(input.value); render(); });
-    input.addEventListener('keydown', (e)=>{
-      const shown = panel.getAttribute('aria-hidden')==='false';
-      if(e.key==='ArrowDown'){ if(!shown){ results = search(input.value); render(); } setActive( (active+1+results.length)%results.length ); e.preventDefault(); }
-      else if(e.key==='ArrowUp'){ if(!shown){ results = search(input.value); render(); } setActive( (active-1+results.length)%results.length ); e.preventDefault(); }
-      else if(e.key==='Enter'){
-        if(shown && active>=0){ e.preventDefault(); go(active); }
-        else { if(!results.length){ results = search(input.value); } if(results[0]) go(0); }
-      } else if(e.key==='Escape'){ panel.setAttribute('aria-hidden','true'); active=-1; }
-    });
-    document.addEventListener('click', (e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); active=-1; } });
-    if(icon){ icon.addEventListener('click', ()=>{ results = search(input.value); if(results.length){ panel.setAttribute('aria-hidden','false'); render(); } }); }
-  })();
-  </script>
-
-  <!-- Rejestracja Service Workera -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(reg => console.log('SW zarejestrowany:', reg.scope))
-        .catch(err => console.error('SW błąd:', err));
-    }
-  </script>
-
-  <!-- Add to Home Screen (iOS/Android) -->
-  <script src="assets/a2hs.js?v=1"></script>
-
-  <!-- ▼▼ NOWY SKRYPT: LEKKI TŁUMACZ PL/EN (bez banera Google) ▼▼ -->
-  <script>
-    (function(){
-      if(window.__bhI18nBound) return; window.__bhI18nBound = true;
-
-      // Słowniki (rozszerzalne na kolejne języki/klucze)
-      const I18N = {
-        pl: {
-          brand_title:"Boli Help",
-          brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",
-          pill_choke:"Zadławienie",
-          pill_cpr:"Reanimacja",
-          pill_accident:"Wypadek",
-          pill_firstaid:"Pierwsza pomoc",
-          pill_games:"Gry / Trening",
-          pill_quizzes:"Quizy",
-          btn_hosp:"🏥 Szpitale / SOR",
-          btn_loc:"📍 Zlokalizuj mnie",
-          subheadline:"Boli mnie — wybierz obszar bólu",
-          advice_title:"Porada",
-          advice_chip:"SOS • instrukcja",
-          close_btn:"✕",
-          video_head:"Materiał wideo",
-          video_hint:"Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej.",
-          card_woman:"Kobieta",
-          card_man:"Mężczyzna",
-          card_child:"Dziecko",
-          search_ph:"Szukaj objawu, części ciała lub tematu…",
-          sg_head:"Podpowiedzi"
-        },
-        en: {
-          brand_title:"Boli Help",
-          brand_sub:"Help and first aid in emergencies",
-          pill_choke:"Choking",
-          pill_cpr:"CPR",
-          pill_accident:"Accident",
-          pill_firstaid:"First aid",
-          pill_games:"Games / Training",
-          pill_quizzes:"Quizzes",
-          btn_hosp:"🏥 Hospitals / ER",
-          btn_loc:"📍 Locate me",
-          subheadline:"It hurts — choose the area of pain",
-          advice_title:"Advice",
-          advice_chip:"SOS • instructions",
-          close_btn:"✕",
-          video_head:"Video",
-          video_hint:"Add file: <code>assets/videos/&lt;name&gt;.mp4</code> and update the map below.",
-          card_woman:"Woman",
-          card_man:"Man",
-          card_child:"Child",
-          search_ph:"Search symptom, body part or topic…",
-          sg_head:"Suggestions"
-        }
-      };
-
-      const root = document.documentElement;
-      const LS_KEY = 'bh.lang';
-      let lang = (localStorage.getItem(LS_KEY) || root.getAttribute('data-lang') || root.lang || 'pl').toLowerCase();
-      if(!I18N[lang]) lang = 'pl';
-
-      // API dla innych skryptów (używane przez PORADY)
-      window.__getLang = () => lang;
-      window.__t = (k) => (I18N[lang] && I18N[lang][k]) || (I18N['pl'] && I18N['pl'][k]) || k;
-
-      function applyTranslations(){
-        // a) proste data-i18n (innerText)
-        document.querySelectorAll('[data-i18n]').forEach(el=>{
-          const key = el.getAttribute('data-i18n');
-          const val = window.__t(key);
-          if(val!=null){
-            // zachowaj ewentualne ikony/emoji – gdy tekst zaczyna się ikoną
-            if(el.firstChild && el.firstChild.nodeType===3){ el.firstChild.nodeValue = val; }
-            else { el.innerHTML = val; }
-          }
-        });
-        // b) placeholder wyszukiwarki
-        const search = document.getElementById('bhSearch');
-        if(search){ search.placeholder = window.__t('search_ph'); search.setAttribute('aria-label', window.__t('search_ph')); }
-        // c) nagłówek listy podpowiedzi jeśli istnieje
-        document.querySelectorAll('.bh2025-sg-head').forEach(el=>{ el.textContent = window.__t('sg_head'); });
-
-        // d) atrybuty lang na <html>
-        root.setAttribute('lang', lang);
-        root.setAttribute('data-lang', lang);
-
-        // e) tekst labelki obok selektora
-        const lab = document.querySelector('#bhLangPick label');
-        if(lab){ lab.textContent = (lang==='en'?'Language':'Język'); }
-      }
-
-      function setLang(newLang){
-        if(!I18N[newLang]) return;
-        lang = newLang;
-        localStorage.setItem(LS_KEY, lang);
-        applyTranslations();
-      }
-
-      // Inicjalizacja selektora
-      const sel = document.getElementById('bhLangSelect');
-      if(sel){
-        sel.value = lang;
-        sel.addEventListener('change', ()=> setLang(sel.value));
-      }
-
-      // Pierwsze zastosowanie
-      applyTranslations();
-    })();
-  </script>
-  <!-- ▲▲ KONIEC SKRYPTU TŁUMACZA ▲▲ -->
-
-  <!-- OSTATECZNY PATCH: ukrycie starego GT + kadrowanie + glow -->
-  <style id="bh-final-patch">
-    /* Ukryj resztki starego Google Translate jeśli by się wstrzyknął */
+    /* Ukryj ewentualne resztki starego GT */
     .goog-te-banner-frame.skiptranslate{display:none!important}
     .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
-
-    /* Kadrowanie obrazków: twarz+szyja+ramiona */
-    section.stack .card > a > img{
-      width:100%; height:100%;
-      object-fit:cover !important;
-      object-position:50% 25% !important;
-    }
-    section.stack .card > a > img[src*="kobieta-model1"]{ object-position:50% 22% !important; transform:scale(0.95) }
-    section.stack .card > a > img[src*="mezczyzna-model1"]{ object-position:50% 24% !important; transform:scale(0.95) }
-    section.stack .card > a > img[src*="dziecko-model1"]{ object-position:50% 20% !important; transform:scale(0.92) }
-
-    /* Panel podpowiedzi – nie pokazuj gdy pusty */
-    .bh2025-suggest[aria-hidden="true"]{display:none!important}
-
-    /* Glow/puls dla akcji */
-    :root{ --glow-green:34,227,160; --glow-red:255,107,107; --glow-amber:255,184,108; }
-    #btn-hosp{
-      border-color: rgba(var(--glow-red), .8)!important;
-      box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-red), .5) inset, 0 0 18px rgba(var(--glow-red), .35);
-      animation: bhRedPulse 2.2s ease-in-out infinite;
-    }
-    #btn-apteka{
-      border-color: rgba(var(--glow-green), .7)!important;
-      box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-green), .45) inset, 0 0 18px rgba(var(--glow-green), .35);
-      animation: bhGreenPulse 2.4s ease-in-out infinite;
-    }
-    #btn-loc{
-      border-color: rgba(var(--glow-amber), .75)!important;
-      box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-amber), .45) inset, 0 0 18px rgba(var(--glow-amber), .35);
-      animation: bhAmberBreath 2.8s ease-in-out infinite;
-    }
-    @keyframes bhRedPulse{0%{box-shadow:0 0 0 0 rgba(var(--glow-red),.10),0 0 18px rgba(var(--glow-red),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-red),.08),0 0 26px rgba(var(--glow-red),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-red),.10),0 0 18px rgba(var(--glow-red),.35)}}
-    @keyframes bhGreenPulse{0%{box-shadow:0 0 0 0 rgba(var(--glow-green),.10),0 0 18px rgba(var(--glow-green),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-green),.08),0 0 26px rgba(var(--glow-green),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-green),.10),0 0 18px rgba(var(--glow-green),.35)}}
-    @keyframes bhAmberBreath{0%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.08),0 0 18px rgba(var(--glow-amber),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-amber),.06),0 0 26px rgba(var(--glow-amber),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.08),0 0 18px rgba(var(--glow-amber),.35)}}
   </style>
+</head>
+<body>
+  <div class="bg-anim" aria-hidden="true"></div>
+  <div class="grid-bg" aria-hidden="true"></div>
+  <canvas id="bh-particles" aria-hidden="true"></canvas>
+
+  <!-- SELEKTOR JĘZYKA (naprawiony: góra, nie rozpycha, działa na mobile) -->
+  <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
+    <label for="bhLangSelect">Język</label>
+    <select id="bhLangSelect">
+      <option value="pl">PL</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
+
+  <div class="bh-backbar">
+    <button id="bhReturnTop" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
+  </div>
+
+  <header class="app" aria-label="Nawigacja lokalna">
+    <div class="hero" role="region" aria-label="Nagłówek szczegółów">
+      <div class="hero-top">
+        <div class="crumbs" id="crumbs">Boli Help / <span id="crumb-typ">—</span> / <span id="crumb-label">Szczegóły</span></div>
+        <div class="label"><span id="label-icon" aria-hidden="true">●</span><span id="label-text"><b>—</b></span></div>
+      </div>
+
+      <!-- KROKI -->
+      <div class="steps" aria-label="Asystent kroków">
+        <div class="step" id="step-1">1. Objawy<small>Zaznacz</small></div>
+        <div class="step" id="step-2">2. Choroby<small>Zobacz podpowiedzi</small></div>
+        <div class="step" id="step-3">3. Lekarze<small>Gdzie iść?</small></div>
+        <div class="step" id="step-4">4. Co dalej<small>112/SOR lub dom</small></div>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Sekcje treści">
+        <button class="tab" data-variant="symptoms" role="tab" aria-selected="true"  data-target="#s-objawy">Objawy</button>
+        <button class="tab" data-variant="causes"   role="tab" aria-selected="false" data-target="#s-przyczyny">Przyczyny</button>
+        <button class="tab" data-variant="firstaid" role="tab" aria-selected="false" data-target="#s-aid">Pierwsza pomoc</button>
+        <button class="tab" data-variant="otc"      role="tab" aria-selected="false" data-target="#s-otc">Leki OTC</button>
+        <button class="tab" data-variant="rx"       role="tab" aria-selected="false" data-target="#s-rx">Leki na receptę</button>
+        <button class="tab" data-variant="rehab"    role="tab" aria-selected="false" data-target="#s-rehab">Rehabilitacja / Profilaktyka</button>
+        <button class="tab" data-variant="myths"    role="tab" aria-selected="false" data-target="#s-mity">Mity vs Fakty</button>
+        <button class="tab" data-variant="faq"      role="tab" aria-selected="false" data-target="#s-faq">FAQ</button>
+        <button class="tab" data-variant="dx"       role="tab" aria-selected="false" data-target="#s-dx">Choroby (beta)</button>
+        <button class="tab" data-variant="docs"     role="tab" aria-selected="false" data-target="#s-docs">Lekarze</button>
+      </div>
+
+      <p class="hero-note">Edukacyjnie, nie diagnostycznie. W nagłej, ciężkiej dolegliwości lub przy czerwonych flagach — skorzystaj z <b>112</b> lub SOR.</p>
+      <p class="legend">Zaznacz <strong>objawy</strong> — pasek <b>Ryzyko</b> oraz karty <b>Choroby</b>/<b>Lekarze</b> dopasują się automatycznie.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="cards" aria-label="Karty z informacjami szczegółowymi">
+      <!-- OBJAWY -->
+      <article class="card" data-type="symptoms" id="s-objawy" aria-labelledby="h-obj" role="tabpanel" aria-hidden="false">
+        <h3 id="h-obj">Objawy</h3>
+        <ul class="clean" id="symp-common"></ul>
+        <div class="more-wrap" id="mw-symp-common" hidden>
+          <div class="more-content" id="mc-symp-common"></div>
+          <button class="more-btn" data-more="symp-common">Pokaż więcej</button>
+        </div>
+
+        <div class="subhead">Kiedy się niepokoić (czerwone flagi)</div>
+        <div class="risk-mini" aria-label="Szacowany poziom ryzyka">
+          <small>Ryzyko: <span id="risk-label">niskie</span></small>
+          <span class="riskbar" id="riskbar"><span class="cursor" id="risk-cursor-card" style="left:0%"></span></span>
+        </div>
+        <ul class="clean" id="urgent"></ul>
+        <div class="more-wrap" id="mw-urgent" hidden>
+          <div class="more-content" id="mc-urgent"></div>
+          <button class="more-btn" data-more="urgent">Pokaż więcej</button>
+        </div>
+        <div class="strip strip--warn" id="urgent-strip">
+          Masz objawy alarmowe? <strong>Nie zwlekaj.</strong>
+          <a class="cta" id="cta-112" href="tel:112" aria-label="Zadzwoń na numer alarmowy 112">Zadzwoń 112</a>
+        </div>
+
+        <!-- HINT po zaznaczeniu objawów -->
+        <div id="dx-hint" class="dx-hint" role="status" aria-live="polite">
+          Masz zaznaczone objawy. Zobacz edukacyjne podpowiedzi w <strong>Choroby</strong> lub przejdź do <strong>Lekarze</strong>.
+          <button type="button" id="dx-open">Choroby</button>
+          <button type="button" id="docs-open">Lekarze</button>
+        </div>
+      </article>
+
+      <!-- PRZYCZYNY -->
+      <article class="card" data-type="causes" id="s-przyczyny" role="tabpanel" aria-hidden="true">
+        <h3 id="h-cause">Przyczyny</h3>
+        <ul class="clean" id="causes"></ul>
+        <div class="more-wrap" id="mw-causes" hidden>
+          <div class="more-content" id="mc-causes"></div>
+          <button class="more-btn" data-more="causes">Pokaż więcej</button>
+        </div>
+      </article>
+
+      <!-- PIERWSZA POMOC -->
+      <article class="card" data-type="firstaid" id="s-aid" role="tabpanel" aria-hidden="true">
+        <h3 id="h-aid">Pierwsza pomoc</h3>
+        <ul class="clean" id="firstaid"></ul>
+        <div class="more-wrap" id="mw-firstaid" hidden>
+          <div class="more-content" id="mc-firstaid"></div>
+          <button class="more-btn" data-more="firstaid">Pokaż więcej</button>
+        </div>
+      </article>
+
+      <!-- OTC -->
+      <article class="card" data-type="otc" id="s-otc" role="tabpanel" aria-hidden="true">
+        <h3 id="h-otc">Leki bez recepty (OTC)</h3>
+        <ul class="clean" id="meds-otc"></ul>
+        <div class="more-wrap" id="mw-meds-otc" hidden>
+          <div class="more-content" id="mc-meds-otc"></div>
+          <button class="more-btn" data-more="meds-otc">Pokaż więcej</button>
+        </div>
+      </article>
+
+      <!-- RX -->
+      <article class="card" data-type="rx" id="s-rx" role="tabpanel" aria-hidden="true">
+        <h3 id="h-rx">Leki na receptę (informacyjnie)</h3>
+        <ul class="clean" id="meds-rx"></ul>
+        <div class="more-wrap" id="mw-meds-rx" hidden>
+          <div class="more-content" id="mc-meds-rx"></div>
+          <button class="more-btn" data-more="meds-rx">Pokaż więcej</button>
+        </div>
+      </article>
+
+      <!-- REHAB -->
+      <article class="card" data-type="rehab" id="s-rehab" role="tabpanel" aria-hidden="true">
+        <h3 id="h-rehab">Rehabilitacja / Profilaktyka</h3>
+        <ul class="clean" id="rehab"></ul>
+        <div class="more-wrap" id="mw-rehab" hidden>
+          <div class="more-content" id="mc-rehab"></div>
+          <button class="more-btn" data-more="rehab">Pokaż więcej</button>
+        </div>
+      </article>
+
+      <!-- MITY -->
+      <article class="card" data-type="myths" id="s-mity" role="tabpanel" aria-hidden="true">
+        <h3 id="h-mity">Mity vs Fakty</h3>
+        <ul class="clean" id="myths"></ul>
+      </article>
+
+      <!-- FAQ -->
+      <article class="card" data-type="faq" id="s-faq" role="tabpanel" aria-hidden="true">
+        <h3 id="h-faq">FAQ</h3>
+        <ul class="clean" id="faq"></ul>
+      </article>
+
+      <!-- CHOROBY -->
+      <article class="card" data-type="dx" id="s-dx" role="tabpanel" aria-hidden="true">
+        <h3 id="h-dx">Choroby (beta)</h3>
+        <p class="dx-note">Podpowiedzi edukacyjne z zaznaczonych objawów. Nie zastępują konsultacji.</p>
+        <ul class="clean dx-list" id="dx-list"></ul>
+      </article>
+
+      <!-- LEKARZE -->
+      <article class="card" data-type="docs" id="s-docs" role="tabpanel" aria-hidden="true">
+        <h3 id="h-docs">Lekarze</h3>
+        <p class="docs-note">Kolejność: <b>POZ</b> (lekarz rodzinny) → specjaliści powiązani z problemem. Czerwone flagi kierują do <b>SOR/112</b>.</p>
+        <ul class="clean" id="docs-list"></ul>
+      </article>
+    
+      <div class="card fade-in" id="statystyki">
+        <h3>📊 Statystyki i ciekawostki medyczne</h3>
+        <ul class="checklist">
+          <li>✅ Ponad 70% przypadków bólu brzucha ma podłoże funkcjonalne, nie chorobowe.</li>
+          <li>✅ Mężczyźni zgłaszają objawy o 40% rzadziej niż kobiety – mimo podobnych dolegliwości.</li>
+          <li>✅ Stres odpowiada nawet za 60% zgłoszeń bólowych bez uszkodzeń fizycznych.</li>
+          <li>✅ Aż 90% pacjentów szuka objawów w internecie przed wizytą u lekarza.</li>
+          <li>✅ Tylko 1 na 10 przypadków bólu klatki piersiowej to faktyczny zawał serca.</li>
+          <li>✅ Objawy psychiczne (lęk, panika) mogą dawać silne objawy somatyczne: ból serca, duszności.</li>
+          <li>✅ Ból lewej ręki to tylko jeden z wielu objawów zawału – ważny jest kontekst!</li>
+          <li>✅ Większość dzieci z bólem brzucha nie wymaga interwencji – to stres lub dieta.</li>
+        </ul>
+      </div>
+
+      <style>
+        .fade-in { animation: fadeInUp 1s ease-in-out; }
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .card#statystyki {
+          background: rgba(20, 30, 60, 0.95);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 16px;
+          padding: 1.8rem;
+          margin-bottom: 2rem;
+          box-shadow: 0 0 16px rgba(48,213,200,0.4);
+        }
+        .card#statystyki h3 { color: #30d5c8; font-size: 1.5rem; margin-bottom: 1rem; }
+        .card#statystyki ul.checklist { list-style: none; padding: 0; margin: 0; }
+        .card#statystyki ul.checklist li {
+          margin-bottom: 0.75rem; font-size: 1.05rem; line-height: 1.5;
+          position: relative; padding-left: 1.6rem; color: #ffffff;
+        }
+        .card#statystyki ul.checklist li::before {
+          content: '✔'; position: absolute; left: 0; color: #7fffd4; font-weight: bold;
+        }
+      </style>
+
+    </section>
+  </main>
+
+  <!-- Minimalny JS: wybór języka + przycisk Wróć -->
+  <script>
+    (function(){
+      const KEY='bh.lang';
+      const get = ()=> localStorage.getItem(KEY) || 'pl';
+      const set = v => localStorage.setItem(KEY, v);
+
+      document.addEventListener('DOMContentLoaded', function(){
+        // Ustaw wartość selecta z pamięci
+        const sel = document.getElementById('bhLangSelect');
+        if(sel){
+          sel.value = get();
+          sel.addEventListener('change', function(){
+            set(sel.value || 'pl');
+            location.replace(location.href);
+          });
+        }
+
+        // Przycisk „Wróć”
+        const back = document.getElementById('bhReturnTop');
+        if(back){
+          back.addEventListener('click', function(){
+            if (document.referrer && document.referrer.includes(location.host)) history.back();
+            else window.location.href = 'index.html';
+          });
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
