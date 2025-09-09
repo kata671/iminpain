@@ -344,5 +344,120 @@
 })();
 </script>
 <script src="assets/js/translator.js" defer></script>
+<script>
+/* Boli Help — ATOM TRANSLATOR (PL/EN) — one-paste, no-Google, instant
+   Wstaw NA DOLE strony, TUŻ PRZED </body>. Nie dodawaj innych skryptów tłumacza.
+*/
+(function(){
+  // 0) ZABLOKUJ I POSPRZĄTAJ GOOGLE TRANSLATE (baner/iframy/tooltipy)
+  (function cleanGoogle(){
+    const css = document.createElement('style');
+    css.id='bh-nuke-gt';
+    css.textContent = `
+      .goog-te-banner-frame.skiptranslate, .goog-te-banner-frame,
+      .goog-te-balloon-frame, .goog-tooltip, .goog-te-spinner-pos { display:none!important; }
+      body { top:0!important; }
+      #google_translate_element, .goog-logo-link, .goog-te-gadget .goog-te-combo { display:none!important; }
+    `;
+    document.head && document.head.appendChild(css);
+    const kill = () => {
+      document.querySelectorAll('.goog-te-banner-frame,.goog-te-balloon-frame,.goog-tooltip,iframe[id^="goog-gt-"]').forEach(n=>n.remove());
+      document.querySelectorAll('.skiptranslate').forEach(n=>{ if(n!==document.documentElement && n!==document.body) n.remove(); });
+      if(document.body) document.body.style.top='0';
+    };
+    kill();
+    let t=0, iv=setInterval(()=>{ kill(); if(++t>120) clearInterval(iv); },100);
+    const mo = new MutationObserver(kill);
+    mo.observe(document.documentElement,{childList:true,subtree:true});
+    setTimeout(()=>mo.disconnect(),20000);
+  })();
+
+  // 1) DICTIONARIES (fallback dla stron bez Twojego I18N)
+  const FALLBACK = {
+    pl:{ brand_title:"Boli Help",brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",
+         pill_choke:"Zadławienie", pill_cpr:"Reanimacja", pill_accident:"Wypadek", pill_firstaid:"Pierwsza pomoc",
+         pill_games:"Gry / Trening", pill_quizzes:"Quizy",
+         btn_hosp:"🏥 Szpitale / SOR", btn_loc:"📍 Zlokalizuj mnie",
+         subheadline:"Boli mnie — wybierz obszar bólu",
+         card_woman:"Kobieta", card_man:"Mężczyzna", card_child:"Dziecko",
+         quiz_open:"Sprawdź się: Pierwsza pomoc",
+         lang_label:"Język", search_ph:"Szukaj objawu, części ciała lub tematu…",
+         advice_title:"Porada", advice_chip:"SOS • instrukcja", video_head:"Materiał wideo"
+    },
+    en:{ brand_title:"Boli Help",brand_sub:"Help & first aid in emergencies",
+         pill_choke:"Choking", pill_cpr:"CPR", pill_accident:"Accident", pill_firstaid:"First aid",
+         pill_games:"Games / Training", pill_quizzes:"Quizzes",
+         btn_hosp:"🏥 Hospitals / ER", btn_loc:"📍 Locate me",
+         subheadline:"It hurts — choose the body area",
+         card_woman:"Woman", card_man:"Man", card_child:"Child",
+         quiz_open:"Check yourself: First aid",
+         lang_label:"Language", search_ph:"Search a symptom, body area or topic…",
+         advice_title:"Advice", advice_chip:"SOS • instruction", video_head:"Video"
+    }
+  };
+
+  // 2) Wybór języka (PL/EN) — zapamiętaj
+  const norm = v => String(v||'').toLowerCase().slice(0,2);
+  function setLang(lang){
+    lang = (lang==='en') ? 'en' : 'pl';
+    try{ localStorage.setItem('bh-lang', lang); }catch(e){}
+    document.documentElement.setAttribute('lang', lang);
+    apply(lang);
+  }
+
+  // 3) Zastosuj tłumaczenie natychmiast
+  function apply(lang){
+    const I18N = (window.I18N && window.I18N[lang]) ? window.I18N : FALLBACK;
+    const dict = I18N[lang] || FALLBACK.pl;
+
+    // elementy z data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      if(dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+
+    // placeholder wyszukiwarki
+    const search = document.getElementById('bhSearch');
+    if(search && dict.search_ph) search.placeholder = dict.search_ph;
+
+    // label języka (jeśli istnieje)
+    const lab = document.querySelector('label[for="bhLang"]');
+    if(lab) lab.textContent = (lang==='en' ? (dict.lang_label||'Language') : (dict.lang_label||'Język'));
+  }
+
+  // 4) Jeśli brak przełącznika — dodaj mały PL/EN w prawym górnym rogu
+  function ensureSwitcher(){
+    const hasSelect = document.getElementById('bhLang') || document.querySelector('.langpick select');
+    const hasBtn = document.querySelector('[data-lang]');
+    if(hasSelect || hasBtn) return; // już jest
+
+    const box = document.createElement('div');
+    box.id='bhLangMini';
+    box.style.cssText='position:fixed;top:12px;right:12px;z-index:2147483647;display:flex;gap:8px';
+    box.innerHTML = `
+      <button data-lang="pl" style="padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-weight:800;cursor:pointer">PL</button>
+      <button data-lang="en" style="padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-weight:800;cursor:pointer">EN</button>
+    `;
+    document.body.appendChild(box);
+  }
+
+  // 5) Nasłuch na dowolny UI: #bhLang, .langpick select, [data-lang]
+  document.addEventListener('change',(e)=>{
+    const t=e.target;
+    if(t && (t.id==='bhLang' || t.closest('.langpick'))) setLang(norm(t.value));
+  });
+  document.addEventListener('click',(e)=>{
+    const b=e.target.closest('[data-lang]');
+    if(b) setLang(norm(b.getAttribute('data-lang')));
+  });
+
+  // 6) Start
+  document.addEventListener('DOMContentLoaded', ()=>{
+    ensureSwitcher();
+    const saved = norm(localStorage.getItem('bh-lang')||'pl');
+    setLang(saved);
+  });
+})();
+</script>
 </body>
 </html>
