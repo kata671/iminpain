@@ -14,7 +14,12 @@
 }
 
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+html,body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font:16px/1.6 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif
+}
 
 /* TŁO — lekkie animowane „molekuły” */
 .bg-anim{
@@ -39,7 +44,12 @@ html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Inter",
 .brand small{display:block;color:var(--muted);margin-top:4px}
 
 /* SEARCH */
-.search{position:relative; display:flex; align-items:center; gap:10px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:8px 12px; min-width:260px}
+.search{
+  position:relative; display:flex; align-items:center; gap:10px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px; padding:8px 12px; min-width:260px
+}
 .search input{
   width:100%; background:transparent; border:0; outline:none; color:var(--text);
   font: 600 14px/1.4 inherit; letter-spacing:.2px;
@@ -47,9 +57,7 @@ html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Inter",
 .search .ico{width:18px;height:18px;stroke:#fff;stroke-width:1.8;opacity:.7;fill:none}
 
 /* EMERGENCY chips */
-.emergency{
-  display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 10px;
-}
+.emergency{ display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 10px; }
 .chip{
   display:inline-flex; align-items:center; gap:10px;
   padding:10px 14px; border-radius:999px; font-weight:800; letter-spacing:.4px;
@@ -75,10 +83,12 @@ html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Inter",
   border:1px solid rgba(255,255,255,.10);
   transition:.2s ease;
 }
-.pill--green{ border-color: rgba(112,225,177,.35); background: linear-gradient(180deg, rgba(112,225,177,.16), rgba(255,255,255,.04)); }
+.pill--green{
+  border-color: rgba(112,225,177,.35);
+  background: linear-gradient(180deg, rgba(112,225,177,.16), rgba(255,255,255,.04));
+  box-shadow: 0 0 12px rgba(112,225,177,.5);
+}
 .pill:hover{ transform: translateY(-1px); box-shadow: var(--ring) }
-.pill__ico{ display:inline-flex; width:18px; height:18px }
-.pill__ico svg{ width:18px; height:18px; fill: currentColor; }
 
 /* ACTIONS BUTTONS */
 .actions{ display:flex; flex-wrap:wrap; gap:12px; margin:8px 0 22px }
@@ -90,33 +100,21 @@ html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Inter",
   transition:.22s ease; box-shadow: 0 10px 22px rgba(0,0,0,.20);
 }
 .btn:hover{ transform: translateY(-1px); box-shadow: 0 14px 28px rgba(0,0,0,.28) }
-.btn__ico{ display:inline-flex; width:18px; height:18px }
-.btn__ico svg{ width:18px; height:18px; fill: currentColor; }
 
-.btn--red{
-  --bg: linear-gradient(135deg, var(--accent), var(--accent2));
-  color:#0b0b13; border-color: transparent;
-}
-.btn--call{ animation: pulse 2s infinite; }
-@keyframes pulse{
-  0%{ box-shadow: 0 0 0 0 rgba(255,110,199,.55) }
-  70%{ box-shadow: 0 0 0 18px rgba(255,110,199,0) }
-  100%{ box-shadow: 0 0 0 0 rgba(255,110,199,0) }
-}
-.btn--hosp{ border-color: rgba(112,225,177,.35) }
-.badge-round{
-  display:inline-block; padding:6px 10px; border-radius:999px; font-size:12px; font-weight:900;
-  background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.18);
-}
+/* Pulsujące przyciski */
+#btn-hosp{ border:2px solid red; box-shadow:0 0 18px red; animation:pulseRed 2s infinite; }
+#btn-apteka{ border:2px solid lime; box-shadow:0 0 18px lime; animation:pulseGreen 2s infinite; }
+#btn-loc{ border:2px solid orange; box-shadow:0 0 18px orange; animation:pulseYellow 2s infinite; }
+
+@keyframes pulseRed{0%{box-shadow:0 0 5px red}50%{box-shadow:0 0 20px red}100%{box-shadow:0 0 5px red}}
+@keyframes pulseGreen{0%{box-shadow:0 0 5px lime}50%{box-shadow:0 0 20px lime}100%{box-shadow:0 0 5px lime}}
+@keyframes pulseYellow{0%{box-shadow:0 0 5px orange}50%{box-shadow:0 0 20px orange}100%{box-shadow:0 0 5px orange}}
 
 /* SUBHEADLINE */
 .subheadline{ margin:12px 0 10px; color:var(--muted); font-weight:700; letter-spacing:.3px }
 
 /* CARDS GRID */
-.stack{
-  display:grid; gap:16px;
-  grid-template-columns: repeat(12, 1fr);
-}
+.stack{ display:grid; gap:20px; grid-template-columns: repeat(12, 1fr); margin-top:20px; }
 .card{
   position:relative; grid-column: span 12;
   background: var(--card);
@@ -126,408 +124,34 @@ html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Inter",
   transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 .card:hover{ transform: translateY(-6px); border-color: rgba(164,107,255,.45); box-shadow: 0 24px 50px rgba(0,0,0,.35) }
-
 .card__link{ display:block; color:inherit; text-decoration:none }
-.card__imgwrap{ aspect-ratio: 1.35 / 1; display:grid; place-items:center; background: radial-gradient(60% 70% at 50% 40%, rgba(164,107,255,.12), transparent 60%) }
-.card img{ width:100%; height:100%; object-fit: contain; transform: translateZ(0); }
+.card__imgwrap{ aspect-ratio: 1 / 1.15; display:grid; place-items:center; background: radial-gradient(60% 70% at 50% 40%, rgba(164,107,255,.12), transparent 60%) }
 
-.caption{
-  position:absolute; inset:auto 0 0 0; display:flex; align-items:center; justify-content:space-between;
-  padding:14px 16px; background: linear-gradient(180deg, rgba(20,23,51,0), rgba(20,23,51,.92));
-}
-.caption h3{ margin:0; font-size:1.1rem; letter-spacing:.3px }
-.arrow{ display:inline-block; transform: translateX(0); transition: transform .2s ease; opacity:.9 }
-.card:hover .arrow{ transform: translateX(4px) }
-
-/* Responsive grid */
-@media (min-width: 760px){
-  .card{ grid-column: span 6 }
-}
-@media (min-width: 1024px){
-  .card{ grid-column: span 4 }
-}
-
-/* ACCESSIBILITY */
-:focus-visible{
-  outline: none;
-  box-shadow: var(--ring);
-  border-radius: 12px;
-}
-a,button{ -webkit-tap-highlight-color: transparent }
-/* === Boli Help • Glow cards on details page === */
-:root{
-  --bh-bg: #0e1230;
-  --bh-tx: #eef2ff;
-  --bh-brd: rgba(164,107,255,.28);
-  --bh-glow-green:  94,234,212; /* Pierwsza pomoc */
-  --bh-glow-blue:   96,165,250; /* Objawy */
-  --bh-glow-amber:  251,191,36; /* Przyczyny */
-  --bh-glow-purple: 168,85,247; /* Leki */
-  --bh-glow-red:    239,68,68;  /* Uwaga / Ostrzeżenie */
-}
-
-.bh-card{
-  position: relative;
-  border-radius: 16px;
-  padding: 12px 14px;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.16);
-  color: var(--bh-tx);
-  box-shadow:
-    0 8px 22px rgba(8,10,22,.28),
-    inset 0 0 0 1px rgba(255,255,255,.08);
-  transition:
-    box-shadow .25s ease,
-    border-color .25s ease,
-    transform .18s ease,
-    background-color .25s ease;
-}
-
-/* delikatny stały glow (bez hovera) */
-.bh-card--blue     { border-color: rgba(var(--bh-glow-blue),  .40);  box-shadow: 0 10px 24px rgba(8,10,22,.30), 0 0 0 1px rgba(var(--bh-glow-blue),  .22) inset; }
-.bh-card--amber    { border-color: rgba(var(--bh-glow-amber), .40);  box-shadow: 0 10px 24px rgba(8,10,22,.30), 0 0 0 1px rgba(var(--bh-glow-amber), .22) inset; }
-.bh-card--green    { border-color: rgba(var(--bh-glow-green), .45);  box-shadow: 0 10px 24px rgba(8,10,22,.30), 0 0 0 1px rgba(var(--bh-glow-green), .24) inset; }
-.bh-card--purple   { border-color: rgba(var(--bh-glow-purple),.42);  box-shadow: 0 10px 24px rgba(8,10,22,.30), 0 0 0 1px rgba(var(--bh-glow-purple),.24) inset; }
-.bh-card--red      { border-color: rgba(var(--bh-glow-red),   .45);  box-shadow: 0 10px 24px rgba(8,10,22,.30), 0 0 0 1px rgba(var(--bh-glow-red),   .26) inset; }
-
-/* mocniejszy glow na :hover i :focus-visible */
-.bh-card:hover,
-.bh-card:focus-visible{
-  transform: translateY(-1px);
-}
-
-.bh-card--blue:hover,
-.bh-card--blue:focus-visible{
-  box-shadow:
-    0 16px 36px rgba(8,10,22,.40),
-    0 0 0 2px rgba(var(--bh-glow-blue), .55),
-    0 0 26px rgba(var(--bh-glow-blue), .40);
-}
-.bh-card--amber:hover,
-.bh-card--amber:focus-visible{
-  box-shadow:
-    0 16px 36px rgba(8,10,22,.40),
-    0 0 0 2px rgba(var(--bh-glow-amber), .55),
-    0 0 26px rgba(var(--bh-glow-amber), .45);
-}
-.bh-card--green:hover,
-.bh-card--green:focus-visible{
-  box-shadow:
-    0 16px 36px rgba(8,10,22,.40),
-    0 0 0 2px rgba(var(--bh-glow-green), .65),
-    0 0 28px rgba(var(--bh-glow-green), .45);
-}
-.bh-card--purple:hover,
-.bh-card--purple:focus-visible{
-  box-shadow:
-    0 16px 36px rgba(8,10,22,.40),
-    0 0 0 2px rgba(var(--bh-glow-purple), .60),
-    0 0 28px rgba(var(--bh-glow-purple), .45);
-}
-.bh-card--red:hover,
-.bh-card--red:focus-visible{
-  box-shadow:
-    0 16px 36px rgba(8,10,22,.40),
-    0 0 0 2px rgba(var(--bh-glow-red), .70),
-    0 0 30px rgba(var(--bh-glow-red), .50);
-}
-
-/* nagłówek w ramach */
-.bh-card .bh-head{
-  display:flex;align-items:center;gap:10px;margin:0 0 8px;
-  font-weight:900; letter-spacing:.2px;
-}
-.bh-card .bh-sub{ color:#cfe2ff; opacity:.9; font-weight:700; }
-
-/* lepsza dostępność: wyraźny focus bez migania */
-.bh-card:focus-visible{ outline: none; }
-
-/* preferencje użytkownika – mniej ruchu */
-@media (prefers-reduced-motion: reduce){
-  .bh-card{ transition:none }
-}
-/* === Mobile view: trochę węższy i bardziej czytelny układ === */
-@media (max-width: 768px){
-  .container{
-    max-width: 92% !important;   /* zamiast pełnej szerokości, trochę węższy */
-    margin: 0 auto !important;
-    padding: 0 14px !important;  /* dodajemy oddech po bokach */
-  }
-
-  .header .tools{
-    flex-wrap: wrap;
-    gap: 12px !important;
-  }
-  .header .tools .search{
-    flex: 1 1 100%;
-    min-width: 0;
-  }
-}
-
-@media (max-width: 420px){
-  .container{
-    max-width: 88% !important;   /* na bardzo małych ekranach jeszcze wężej */
-    padding: 0 12px !important;
-  }
-}
-/* === MOBILE: węższa kolumna, więcej oddechu po bokach === */
-@media (max-width: 768px){
-  /* Zamiast pełnej szerokości ekranu użyjemy ~88–92% viewportu */
-  .container{
-    width: 92vw !important;      /* jeśli dalej wydaje się za szeroko, zmień na 88vw */
-    max-width: none !important;   /* wyłącz górny limit 1180px, żeby width:92vw zadziałało */
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-
-  /* Nagłówek niech składa się w 2 wiersze */
-  .header .tools{ flex-wrap: wrap; gap: 12px !important; }
-  .header .brand{ flex: 1 1 100%; }
-  .header .tools .search{ flex: 1 1 100%; min-width: 0; }
-}
-
-/* Bardzo małe ekrany – jeszcze węziej */
-@media (max-width: 420px){
-  .container{
-    width: 88vw !important;
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
-}
-/* === PATCH: home desktop/mobile (tapeta, karty, search) === */
-
-/* 1) TAPETA + HEX GRID (przywrócenie) */
-.bh-wallpaper,.bh-grid{position:fixed; inset:0; pointer-events:none}
-.bh-wallpaper{
-  z-index:0;
-  background:
-    radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
-    radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
-    radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-  filter: blur(10px) saturate(118%);
-}
-.bh-grid{
-  z-index:1; opacity:.22;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
-  background-size:160px 138px; background-position:center;
-}
-.bh-floor-fade{ position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
-  background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6)); }
-.container{ position:relative; z-index:3; background:transparent !important; }
-
-/* 2) KARTY – ogranicz wysokość obrazka, aby nie “puchły” */
-.card__imgwrap{ max-height: 320px; overflow: hidden; }
-.card__imgwrap img{ width:100%; height:100%; object-fit: contain; }
-@media (max-width: 1024px){ .card__imgwrap{ max-height: 260px; } }
-@media (max-width: 640px){  .card__imgwrap{ max-height: 200px; } }
-
-/* 3) WYSZUKIWARKA – stabilna szerokość + podpowiedzi nad treścią */
-.header .tools .search{ width: clamp(260px, 42vw, 420px); }
-.header .tools{ align-items:center; gap:10px; }
-.header .tools .search{ position:relative; z-index: 30; }         /* input nad innymi */
-.bh2025-suggest{ z-index: 40; }                                   /* panel podpowiedzi nad kartami */
-/* === FIX: karty, zdjęcia, siatka, tapeta, wyszukiwarka === */
-
-/* Tapeta/hex-grid z właściwymi warstwami */
-.bh-wallpaper,.bh-grid{position:fixed; inset:0; pointer-events:none}
-.bh-wallpaper{
-  z-index:0;
-  background:
-    radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
-    radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
-    radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-  filter: blur(10px) saturate(118%);
-}
-.bh-grid{
-  z-index:1; opacity:.22;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
-  background-size:160px 138px; background-position:center;
-}
-.bh-floor-fade{ position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
-  background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6)); }
-.container{ position:relative; z-index:3; background:transparent!important }
-
-/* Siatka kafelków — nadpisujemy inline style z HTML */
-section.stack{
-  display:grid; gap:16px !important;
-  grid-template-columns: 1fr !important;  /* mobile domyślnie 1 kolumna */
-}
-@media (min-width: 760px){
-  section.stack{ grid-template-columns: repeat(2, 1fr) !important; }
-}
-@media (min-width: 1024px){
-  section.stack{ grid-template-columns: repeat(3, 1fr) !important; }
-}
-
-/* Karta – stabilna wysokość części obrazkowej */
-.card{ overflow:hidden; border-radius:20px; }
-.card__imgwrap{ width:100%; aspect-ratio: 4 / 3; max-height:none; }
-.card__imgwrap img, .card > a > img{
+/* Obrazki w kafelkach */
+.card img{
   width:100%; height:100%;
-  object-fit: cover;        /* wypełnia bez rozciągania */
-  object-position: center;  /* środek kadru */
-  display:block;
-}
-/* Gdy nie masz .card__imgwrap w HTML – ten fallback ograniczy img w karcie */
-.card > a > img{ aspect-ratio: 4 / 3; }
-
-/* Napisy na kartach — pasek u dołu */
-.caption{
-  position:absolute; left:0; right:0; bottom:0;
-  background: linear-gradient(180deg, rgba(20,23,51,0), rgba(20,23,51,.92));
-  padding:14px 16px;
-}
-
-/* Wyszukiwarka — przewidywalna szerokość + panel nad treścią */
-.header .tools .search{ width: clamp(260px, 40vw, 420px); position:relative; z-index:30; }
-.bh2025-suggest{
-  position:absolute; left:0; right:0; top: calc(100% + 6px);
-  z-index: 40;
-  background: rgba(20,23,51,.96);
-  border:1px solid rgba(164,107,255,.28);
-  border-radius:12px; box-shadow:0 16px 34px rgba(8,10,22,.52);
-  overflow:auto; max-height: 60vh;
-}
-
-/* Mobile – węższy kontener tylko na HOME */
-@media (max-width: 768px){
-  body[data-page="home"] .container{
-    width: 92vw !important; margin:0 auto !important;
-    padding-left:14px !important; padding-right:14px !important;
-    max-width:none !important;
-  }
-  .header .tools{ flex-wrap:wrap; gap:12px !important; }
-  .header .brand{ flex:1 1 100%; }
-  .header .tools .search{ flex:1 1 100%; min-width:0; }
-}
-@media (max-width: 420px){
-  body[data-page="home"] .container{ width: 88vw !important; padding-left:12px!important; padding-right:12px!important; }
-}
-/* === FIX 1: panel podpowiedzi nie jest drugą "wyszukiwarką" === */
-.bh2025-suggest[aria-hidden="true"]{ display:none !important; } /* ukryj gdy brak wyników */
-.bh2025-suggest{ top: calc(100% + 6px); } /* ma być pod polem */
-
-/* === FIX 2: siatka kart (na laptopie 3 w rzędzie) === */
-section.stack{ display:grid; gap:16px !important; grid-template-columns: 1fr !important; }
-@media (min-width: 760px){  section.stack{ grid-template-columns: repeat(2,1fr) !important; } }
-@media (min-width: 1024px){ section.stack{ grid-template-columns: repeat(3,1fr) !important; } }
-/* karty niech NIE zajmują całego wiersza */
-section.stack .card{ grid-column: auto !important; }
-
-/* === FIX 3: zdjęcia w kartach – kontrola rozmiaru === */
-.card__imgwrap{ width:100%; aspect-ratio: 3 / 2; overflow:hidden; }
-.card__imgwrap img, .card > a > img{
-  width:100%; height:100%; object-fit: cover; object-position: center;
-  display:block;
-}
-/* jeśli nie masz .card__imgwrap w HTML */
-.card > a > img{ aspect-ratio: 3 / 2; }
-
-@media (min-width: 1024px){
-  .card__imgwrap{ max-height: 260px; }
-}
-@media (max-width: 1023.98px){
-  .card__imgwrap{ max-height: 220px; }
-}
-/* === FIX 1: panel podpowiedzi === */
-.bh2025-suggest[aria-hidden="true"]{ display:none !important; }
-.bh2025-suggest{ top: calc(100% + 6px); }
-
-/* === FIX 2: siatka kart (3 w rzędzie na laptopie) === */
-section.stack{ display:grid; gap:16px !important; grid-template-columns: 1fr !important; }
-@media (min-width: 760px){  section.stack{ grid-template-columns: repeat(2,1fr) !important; } }
-@media (min-width: 1024px){ section.stack{ grid-template-columns: repeat(3,1fr) !important; } }
-section.stack .card{ grid-column: auto !important; }
-
-/* === FIX 3: zdjęcia w kartach (ładny kadr twarzy) === */
-section.stack .card{ overflow:hidden; }
-section.stack .card > a > img{
-  width:100%; height:100%;
-  aspect-ratio: 3 / 2;
   object-fit: cover;
-  object-position: 50% 25%; /* ogólny kadr */
-  display:block;
-}
-section.stack .card > a > img[src*="kobieta-model1"]  { object-position: 50% 22%; }
-section.stack .card > a > img[src*="mezczyzna-model1"]{ object-position: 50% 28%; }
-section.stack .card > a > img[src*="dziecko-model1"]  { object-position: 50% 35%; }
-
-@media (max-width: 1024px){
-  section.stack .card > a > img{ aspect-ratio: 16 / 11; }
+  border-radius:20px 20px 0 0;
 }
 
-/* === FIX 4: ukrywanie PORADY gdy zamknięta === */
-#bh2025Porada[aria-hidden="true"]{ display:none !important; visibility:hidden !important; }
-#bh2025Porada[aria-hidden="false"]{ display:block; }
-/* --- FINE-TUNE portretów w kartach (bez zmiany rozmiaru kart) --- */
-section.stack .card > a > img{
-  object-fit: cover;          /* dalej wypełnia kartę */
-  object-position: 50% 30%;   /* domyślnie trochę niżej */
-  transition: transform .2s ease;
-}
-
-/* Indywidualne dopasowanie (mniej „zbliżenia”): */
+/* Kadrowanie — cała twarz + szyja + ramiona */
 section.stack .card > a > img[src*="kobieta-model1"]{
-  object-position: 50% 35%;   /* pokaż więcej góry */
-  transform: scale(.92);      /* delikatnie oddal */
-  transform-origin: center 30%;
+  object-position: 50% 20%;
+  transform: scale(0.95);
 }
 section.stack .card > a > img[src*="mezczyzna-model1"]{
-  object-position: 50% 38%;
-  transform: scale(.96);
-  transform-origin: center 35%;
+  object-position: 50% 22%;
+  transform: scale(0.95);
 }
 section.stack .card > a > img[src*="dziecko-model1"]{
-  object-position: 50% 42%;   /* więcej czoła/włosy w kadrze */
-  transform: scale(.94);
-  transform-origin: center 40%;
+  object-position: 50% 18%;
+  transform: scale(0.92);
 }
 
-/* Na mniejszych ekranach troszkę „mniej szeroki” kadr, bez zmiany kart */
-@media (max-width: 1024px){
-  section.stack .card > a > img{ aspect-ratio: 16 / 11; }
-}
-/* --- POPRAWKA KAFELKÓW + ZDJĘĆ --- */
+/* Responsive grid */
+@media (min-width: 760px){ .card{ grid-column: span 6 } }
+@media (min-width: 1024px){ .card{ grid-column: span 4 } }
 
-/* Większe kafelki i trochę niżej na stronie */
-section.stack {
-  margin-top: 20px;              /* odstęp od góry */
-  gap: 20px;                     /* większy dystans między kafelkami */
-}
-section.stack .card {
-  min-height: 280px;             /* większa wysokość */
-}
-
-/* Obrazki — kadrowanie + powiększenie */
-section.stack .card > a > img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  border-radius: 14px;
-  transition: transform .25s ease, object-position .25s ease;
-}
-
-/* Indywidualne dopasowanie */
-section.stack .card > a > img[src*="kobieta-model1"] {
-  object-position: 50% 32%;   /* twarz trochę wyżej */
-  transform: scale(1.06);     /* lekki zoom */
-}
-section.stack .card > a > img[src*="mezczyzna-model1"] {
-  object-position: 50% 35%;
-  transform: scale(1.05);
-}
-section.stack .card > a > img[src*="dziecko-model1"] {
-  object-position: 50% 28%;   /* twarz niżej w ramce */
-  transform: scale(1.08);
-}
-
-/* Responsywność — na telefonie minimalnie mniejsze */
-@media (max-width: 768px) {
-  section.stack .card {
-    min-height: 240px;
-  }
-}
+/* ACCESSIBILITY */
+:focus-visible{ outline: none; box-shadow: var(--ring); border-radius: 12px; }
+a,button{ -webkit-tap-highlight-color: transparent }
