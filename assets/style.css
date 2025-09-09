@@ -246,3 +246,27 @@ a,button{ -webkit-tap-highlight-color: transparent }
 @media (prefers-reduced-motion: reduce){
   .bh-card{ transition:none }
 }
+/* === Mobile view: trochę węższy i bardziej czytelny układ === */
+@media (max-width: 768px){
+  .container{
+    max-width: 92% !important;   /* zamiast pełnej szerokości, trochę węższy */
+    margin: 0 auto !important;
+    padding: 0 14px !important;  /* dodajemy oddech po bokach */
+  }
+
+  .header .tools{
+    flex-wrap: wrap;
+    gap: 12px !important;
+  }
+  .header .tools .search{
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 420px){
+  .container{
+    max-width: 88% !important;   /* na bardzo małych ekranach jeszcze wężej */
+    padding: 0 12px !important;
+  }
+}
