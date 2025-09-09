@@ -392,5 +392,30 @@
     setTimeout(()=>mo.disconnect(), 15000);
   })();
   </script>
+  ...
+  <!-- wszystkie Twoje inne skrypty -->
+  <script src="assets/main.js?v=10"></script>
+  <script src="/assets/js/translator-unified.js?v=20" defer></script>
+
+  <!-- 👇 Wklej ten kawałek tutaj -->
+  <script>
+  (function(){
+    const search = document.querySelector('.header .tools .search');
+    const panel  = document.querySelector('.bh2025-suggest');
+    if(!search) return;
+    function sync(){
+      const r = search.getBoundingClientRect();
+      if (panel){
+        panel.style.width = r.width + 'px';
+        panel.style.left  = '0px';
+      }
+    }
+    window.addEventListener('resize', sync);
+    window.addEventListener('orientationchange', sync);
+    setTimeout(sync, 0);
+  })();
+  </script>
+</body>
+</html>
 </body>
 </html>
