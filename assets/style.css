@@ -433,3 +433,33 @@ section.stack .card{ grid-column: auto !important; }
 @media (max-width: 1023.98px){
   .card__imgwrap{ max-height: 220px; }
 }
+/* === FIX 1: panel podpowiedzi === */
+.bh2025-suggest[aria-hidden="true"]{ display:none !important; }
+.bh2025-suggest{ top: calc(100% + 6px); }
+
+/* === FIX 2: siatka kart (3 w rzędzie na laptopie) === */
+section.stack{ display:grid; gap:16px !important; grid-template-columns: 1fr !important; }
+@media (min-width: 760px){  section.stack{ grid-template-columns: repeat(2,1fr) !important; } }
+@media (min-width: 1024px){ section.stack{ grid-template-columns: repeat(3,1fr) !important; } }
+section.stack .card{ grid-column: auto !important; }
+
+/* === FIX 3: zdjęcia w kartach (ładny kadr twarzy) === */
+section.stack .card{ overflow:hidden; }
+section.stack .card > a > img{
+  width:100%; height:100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: 50% 25%; /* ogólny kadr */
+  display:block;
+}
+section.stack .card > a > img[src*="kobieta-model1"]  { object-position: 50% 22%; }
+section.stack .card > a > img[src*="mezczyzna-model1"]{ object-position: 50% 28%; }
+section.stack .card > a > img[src*="dziecko-model1"]  { object-position: 50% 35%; }
+
+@media (max-width: 1024px){
+  section.stack .card > a > img{ aspect-ratio: 16 / 11; }
+}
+
+/* === FIX 4: ukrywanie PORADY gdy zamknięta === */
+#bh2025Porada[aria-hidden="true"]{ display:none !important; visibility:hidden !important; }
+#bh2025Porada[aria-hidden="false"]{ display:block; }
