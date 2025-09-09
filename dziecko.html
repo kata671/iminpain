@@ -1234,5 +1234,152 @@ body{top:0!important}`;
 })();
 </script>
 <!-- END bh-patch:translator-fix-v4 -->
+<!-- BEGIN bh-patch:translator-final-combo -->
+<script>
+(function(){
+  if (window.__bhPatchTranslatorFinalCombo__) return;
+  window.__bhPatchTranslatorFinalCombo__ = 1;
+
+  /* ===== ANTY GOOGLE ===== */
+  (function(){
+    if (!document.querySelector('meta[name="google"][content*="notranslate"]')) {
+      var m=document.createElement('meta'); m.name='google'; m.content='notranslate'; document.head.appendChild(m);
+    }
+    var s=document.createElement('style'); s.textContent=`
+.goog-te-banner-frame,.goog-te-gadget,.goog-tooltip,.goog-te-balloon-frame,#google_translate_element,
+.VIpgJd-ZVi9od-ORHb,.VIpgJd-ZVi9od-l4eHX-hSRGPd,.VIpgJd-ZVi9od-ORHb-OEVmcd{display:none!important;visibility:hidden!important}
+body{top:0!important}`;
+    s.setAttribute('data-bh-style','anti-google-translate'); document.head.appendChild(s);
+    try{localStorage.removeItem('googtrans');sessionStorage.removeItem('googtrans');}catch(_){}
+    window.googleTranslateElementInit=function(){};
+  })();
+
+  /* ===== KONFIG ===== */
+  var STORE_LANG='bh-lang', STORE_SAFE='bh-safe', DEFAULT='pl';
+  var SUPPORTED=['pl','en','de','uk'];
+
+  /* ===== HELPERY ===== */
+  function diac(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+  function norm(s){return diac(String(s||'').toLowerCase()).replace(/[^\p{L}\p{N}\s\-]/gu,'').replace(/\s+/g,' ').trim();}
+  function caseOf(x){if(!x)return'l'; if(x===x.toUpperCase())return'u'; if(x[0]===x[0].toUpperCase())return'c'; return'l';}
+  function keepCase(t,s){var k=caseOf(s); return k==='u'?t.toUpperCase():k==='c'?t.charAt(0).toUpperCase()+t.slice(1):t;}
+
+  /* ===== SŁOWNIK EN<->PL ===== */
+  var PAIRS_EN_PL={
+    "first aid":"pierwsza pomoc","emergency phone":"telefon alarmowy","when to worry":"kiedy się niepokoić","red flags":"czerwone flagi",
+    "low risk":"ryzyko niskie","show more":"pokaż więcej","select":"zaznacz","see suggestions":"zobacz podpowiedzi",
+    "recommendations / prevention":"rekomendacje / profilaktyka","otc medications":"leki otc","prescription medications":"leki na receptę",
+    "symptoms and causes":"objawy i przyczyny","treatment and medications":"leczenie i leki",
+    "red-flag symptoms? do not wait":"masz objawy alarmowe? nie zwlekaj","call 112":"zadzwoń 112",
+    "search":"szukaj","symptoms":"objawy","causes":"przyczyny","medications":"leki","doctor":"lekarz",
+    "pharmacy":"apteka","hospital":"szpital","contact":"kontakt","information":"informacje",
+    "head":"głowa","neck":"szyja","throat":"gardło","eye":"oko","ear":"ucho","nose":"nos","mouth":"usta",
+    "back":"plecy","shoulder":"bark","chest":"klatka","arm":"ramię","forearm":"przedramię","hand":"dłoń",
+    "stomach":"brzuch","hip":"biodro","thigh":"udo","knee":"kolano","calf":"łydka","foot":"stopa",
+    "man":"mężczyzna","woman":"kobieta","child":"dziecko",
+    "pain":"ból","fever":"gorączka","cough":"kaszel","shortness of breath":"duszność","choking":"zadławienie"
+  };
+  function buildBi(){
+    var en2pl_phr={},en2pl_tok={},pl2en_phr={},pl2en_tok={};
+    Object.keys(PAIRS_EN_PL).forEach(function(en){
+      var pl=PAIRS_EN_PL[en], ken=norm(en), kpl=norm(pl); if(!ken||!kpl)return;
+      (ken.indexOf(' ')>0?en2pl_phr:en2pl_tok)[ken]=pl;
+      (kpl.indexOf(' ')>0?pl2en_phr:pl2en_tok)[kpl]=en;
+    });
+    return {en2pl:{phr:en2pl_phr,tok:en2pl_tok},pl2en:{phr:pl2en_phr,tok:pl2en_tok}};
+  }
+  var BIDICT=buildBi();
+
+  /* ===== UI ===== */
+  function ensureUI(){
+    if (document.getElementById('bh-translator')) return;
+    if (isSafeMode()) return; // w safe ukrywamy
+    var css=document.createElement('style');
+    css.textContent=`
+.bh-translator-wrap{position:fixed;top:12px;right:12px;z-index:9999;font-family:ui-sans-serif,system-ui}
+.bh-translator-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.72);backdrop-filter:saturate(1.2) blur(6px);border:1px solid rgba(108,92,231,.25);border-radius:16px;box-shadow:0 8px 20px rgba(0,0,0,.12);cursor:pointer;color:#1f2937;font-weight:600}`;
+    document.head.appendChild(css);
+    var wrap=document.createElement('div'); wrap.id='bh-translator'; wrap.className='bh-translator-wrap';
+    var btn=document.createElement('button'); btn.type='button'; btn.className='bh-translator-btn'; btn.setAttribute('aria-label','Language switcher');
+    btn.innerHTML='<span class="bh-translator-label" data-bh-no-translate>Lang: PL</span>';
+    wrap.appendChild(btn); document.body.appendChild(wrap);
+    btn.addEventListener('click',function(){
+      var cur=(localStorage.getItem(STORE_LANG)||'pl'); var next=cur==='pl'?'en':'pl';
+      window.bhSetLanguage(next);
+    });
+  }
+
+  /* ===== TŁUMACZENIE ===== */
+  var baseline=new WeakMap();
+  function shouldSkip(tn){
+    if(!tn||tn.nodeType!==3)return true;
+    var p=tn.parentElement;if(!p)return true;
+    if(p.closest('#bh-translator,[data-bh-no-translate]'))return true;
+    if(['SCRIPT','STYLE','CODE','PRE','TEXTAREA','NOSCRIPT','SVG'].includes(p.tagName))return true;
+    return false;
+  }
+  function replaceByDict(str,dict){
+    var out=String(str||'');
+    Object.keys(dict.phr).sort((a,b)=>b.length-a.length).forEach(function(k){
+      var re=new RegExp('\\b'+k.split(' ').map(function(w){return diac(w).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}).join('\\s+')+'\\b','ig');
+      out=out.replace(re,function(m){return keepCase(dict.phr[k],m);});
+    });
+    out=out.replace(/\b([A-Za-zÀ-žĄąĆćĘęŁłŃńÓóŚśŹźŻż\-]+)\b/g,function(m){
+      var key=norm(m),t=dict.tok[key];return t?keepCase(t,m):m;
+    });
+    return out;
+  }
+  function translateAll(target){
+    var dict=target==='pl'?BIDICT.en2pl:BIDICT.pl2en;
+    var tw=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null);
+    var nodes=[];while(tw.nextNode())nodes.push(tw.currentNode);
+    nodes.forEach(function(tn){
+      if(shouldSkip(tn))return;
+      if(!baseline.has(tn))baseline.set(tn,tn.nodeValue);
+      var base=baseline.get(tn)||tn.nodeValue;
+      var val=(target==='pl')?replaceByDict(base,BIDICT.en2pl):replaceByDict(base,BIDICT.pl2en);
+      if(tn.nodeValue!==val)tn.nodeValue=val;
+    });
+    document.querySelectorAll('[placeholder],[title],[aria-label]').forEach(function(el){
+      if(el.closest('#bh-translator,[data-bh-no-translate]'))return;
+      ['placeholder','title','aria-label'].forEach(function(attr){
+        var v=el.getAttribute(attr);if(v==null)return;
+        var key='data-bh-orig-'+attr;if(!el.hasAttribute(key))el.setAttribute(key,v);
+        var base=el.getAttribute(key);
+        var newVal=(target==='pl')?replaceByDict(base,BIDICT.en2pl):replaceByDict(base,BIDICT.pl2en);
+        el.setAttribute(attr,newVal);
+      });
+    });
+  }
+
+  /* ===== API ===== */
+  window.bhSetLanguage=function(lang){
+    if(!SUPPORTED.includes(lang))lang='pl';
+    localStorage.setItem(STORE_LANG,lang);
+    var lbl=document.querySelector('.bh-translator-label');if(lbl)lbl.textContent='Lang: '+lang.toUpperCase();
+    translateAll(lang);
+  };
+
+  /* ===== TRYB SAFE ===== */
+  function isSafeMode(){
+    return /[?&]bh-safe=1/.test(location.search)||localStorage.getItem(STORE_SAFE)==='1';
+  }
+
+  /* ===== START ===== */
+  function init(){
+    localStorage.setItem(STORE_LANG,'pl'); // zawsze start w PL
+    ensureUI();
+    var lbl=document.querySelector('.bh-translator-label');if(lbl)lbl.textContent='Lang: PL';
+    translateAll('pl');
+    if(isSafeMode()){
+      var ex=document.getElementById('bh-translator');if(ex)ex.style.display='none';
+      var mo=new MutationObserver(function(){translateAll('pl');});
+      mo.observe(document.body,{childList:true,subtree:true,characterData:true});
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+<!-- END bh-patch:translator-final-combo -->
 </body>
 </html>
