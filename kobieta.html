@@ -1669,5 +1669,54 @@ body{top:0 !important}`;
 })();
 </script>
 <!-- END bh-patch:bh-master-lock-pl -->
+<!-- BEGIN bh-patch:bh-clean-reset-pl -->
+<meta name="google" content="notranslate">
+<style data-bh-style="bh-clean-reset">
+  /* Schowaj wszystkie typowe widżety tłumacza (Google/Weglot/GTranslate/ConveyThis/Lingvanex itp.) */
+  #google_translate_element,.goog-te-banner-frame,.goog-te-gadget,
+  .weglot-container,[class*="weglot"],[id*="weglot"],
+  .gtranslate_wrapper,[class*="gtranslate"],[id*="gtranslate"],
+  .conveythis-wrapper,[class*="conveythis"],[id*="conveythis"],
+  .lingvanex,[class*="lvx"],[id*="lvx"],
+  /* jakiekolwiek nasze stare widżety/btny */
+  #bh-translator,.bh-translator-wrap,[class*="bh-translator"] {
+    display: none !important; visibility: hidden !important; pointer-events: none !important;
+  }
+  .goog-tooltip,.goog-te-balloon-frame,
+  .VIpgJd-ZVi9od-ORHb,.VIpgJd-ZVi9od-l4eHX-hSRGPd,.VIpgJd-ZVi9od-ORHb-OEVmcd { display:none !important; visibility:hidden !important; }
+  body { top: 0 !important; }
+</style>
+<script>
+  if (!window.__bhPatchCleanResetPL__) {
+    window.__bhPatchCleanResetPL__ = 1;
+    (function(){
+      // 1) Wyłącz pamięci i automaty translatorów (idempotentnie)
+      try {
+        localStorage.removeItem('googtrans'); sessionStorage.removeItem('googtrans');
+        localStorage.removeItem('bh-lang');   sessionStorage.removeItem('bh-safe');
+        localStorage.removeItem('bh-safe');   localStorage.removeItem('bh-off');
+      } catch(_){}
+      // 2) Zneutralizuj ew. init Google
+      window.googleTranslateElementInit = function(){};
+
+      // 3) ODETNIJ doładowywanie skryptów translatorów (defensywnie, bez psucia reszty)
+      var _create = document.createElement;
+      document.createElement = function(tag){
+        var el = _create.call(document, tag);
+        if (String(tag).toLowerCase() === 'script') {
+          var _set = el.setAttribute;
+          el.setAttribute = function(name, value){
+            if (name === 'src' && /translate_a\/element\.js|weglot|gtranslate|conveythis|lingvanex/i.test(String(value||''))) {
+              return; // blokada ładowania
+            }
+            return _set.apply(el, arguments);
+          };
+        }
+        return el;
+      };
+    })();
+  }
+</script>
+<!-- END bh-patch:bh-clean-reset-pl -->
 </body>
 </html>
