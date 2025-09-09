@@ -9,20 +9,34 @@
   <link rel="stylesheet" href="assets/style.css?v=10" />
   <style>
     html,body{height:100%}
-    body[data-page="mezczyzna"]{ position:relative; background:#0e1230 !important; color:#eef2ff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    body[data-page="mezczyzna"]{
+      position:relative; background:#0e1230 !important; color:#eef2ff;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
     body[data-page="mezczyzna"]::before,
     body[data-page="mezczyzna"]::after,
     body[data-page="mezczyzna"] .container::before,
     body[data-page="mezczyzna"] .container::after{ content:none !important; display:none !important; }
 
     .bh-wallpaper,.bh-grid{position:fixed; inset:0; pointer-events:none}
-    .bh-wallpaper{ z-index:0; background:
-      radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
-      radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
-      radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
-      linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)); filter: blur(10px) saturate(118%); }
-    .bh-grid{ z-index:1; opacity:.22; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E"); background-size:160px 138px; background-position:center;}
-    .bh-floor-fade{ position:fixed;left:0;right:0;bottom:0;height:120px;z-index:2;pointer-events:none;background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6)); }
+    .bh-wallpaper{
+      z-index:0;
+      background:
+        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
+        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
+        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+      filter: blur(10px) saturate(118%);
+    }
+    .bh-grid{
+      z-index:1; opacity:.22;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
+      background-size:160px 138px; background-position:center;
+    }
+    .bh-floor-fade{
+      position:fixed;left:0;right:0;bottom:0;height:120px;z-index:2;pointer-events:none;
+      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));
+    }
     .container{ position:relative; z-index:3; background:transparent !important; max-width:1100px; margin:0 auto; padding:0 16px }
 
     .grid-thumbs{display:grid;gap:16px;}
@@ -73,21 +87,40 @@
       outline-offset:2px;
     }
 
-    /* ===== WYGLĄD SELEKTORA JĘZYKA (jak na stronie głównej) ===== */
+    /* ===== WYGLĄD SELEKTORA JĘZYKA (naprawa mobile jak na innych stronach) ===== */
     .langpick{
-      position:fixed; top:12px; right:12px; z-index:10000;
+      position:fixed;
+      top:clamp(8px, env(safe-area-inset-top, 8px), 20px);
+      right:12px;
+      z-index:10000;
       display:flex; gap:8px; align-items:center;
       background:rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.24);
-      border-radius:12px; padding:6px 10px; backdrop-filter:saturate(120%) blur(4px)
+      border-radius:12px; padding:6px 10px; backdrop-filter:saturate(120%) blur(4px);
+      max-width:100%;
+      white-space:nowrap;
+      contain:layout;
     }
     .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
     .langpick select{
       appearance:none;background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.24);
-      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px
+      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px;
+      max-width:52vw; /* nie rozpycha na mobile */
     }
     .langpick option{ color:#0e1230; background:#ffffff }
+
+    /* Mobile: zwężenie, wyśrodkowanie u góry i odsunięcie treści pod notch */
+    @media (max-width:560px){
+      body{ padding-top: calc(48px + env(safe-area-inset-top, 0px)); }
+      .langpick{
+        left:50%; right:auto; transform:translateX(-50%);
+        gap:6px; padding:5px 8px;
+      }
+      .langpick label{ display:none; } /* więcej miejsca na małych ekranach */
+      .langpick select{ font-size:12px; padding:5px 9px; }
+      .container header.header{ margin-top:8px; }
+    }
 
     /* Ukryj ewentualne resztki starego GT */
     .goog-te-banner-frame.skiptranslate{display:none!important}
@@ -99,7 +132,7 @@
   <div class="bh-grid" aria-hidden="true"></div>
   <div class="bh-floor-fade" aria-hidden="true"></div>
 
-  <!-- SELEKTOR JĘZYKA (wygląd jak na stronie głównej) -->
+  <!-- SELEKTOR JĘZYKA (naprawiony: góra, nie rozpycha, działa na mobile) -->
   <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
     <label for="bhLangSelect">Język</label>
     <select id="bhLangSelect">
@@ -207,7 +240,7 @@
         document.querySelectorAll('.grid-thumbs a.thumb').forEach(function(a){
           try{
             var u = new URL(a.getAttribute('href'), location.href);
-            var part = u.searchParams.get('czesc'); // np. "oko"
+            var part = u.searchParams.get('czesc');
             var span = a.querySelector('span');
             if(part && d.parts[part] && span){ span.textContent = d.parts[part]; }
           }catch(e){}
