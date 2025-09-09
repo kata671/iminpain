@@ -1,15 +1,15 @@
-/* Boli Help • translator.js (FINAL FAIL-SAFE)
-   - natychmiastowe tłumaczenie po wyborze
-   - pamięć między podstronami
-   - twarde ukrycie banera Google
-   - akceptuje kody typu "PL", "EN", "Polski", "English" itd.
+/* Boli Help • translator.js (FINAL+)
+   - natychmiastowa zmiana języka
+   - JEŚLI Google nie zastosuje tłumaczenia w 2.5 s → jednokrotny auto-reload
+   - pamięć między stronami
+   - baner Google zawsze ukryty (CSS już masz w <head>)
 */
 (function () {
   const PAGE_LANG = (document.documentElement.getAttribute('lang') || 'pl').toLowerCase();
   const INCLUDED  = 'pl,en,de,fr,it,es,uk,cs,sk,lt,lv,ro,ru,nl,pt';
-  const COOKIE_YEARS = 1;
+  const COOKIE_MS = 31536e6; // 1 rok
 
-  // --- helper: normalizacja wartości z UI ---
+  // --- pomocnicze: mapowanie nazw na kody ---
   const MAP = {
     polski:'pl', polish:'pl', pl:'pl', 'pl-pl':'pl',
     english:'en', angielski:'en', en:'en', 'en-us':'en', 'en-gb':'en',
@@ -27,39 +27,25 @@
     dutch:'nl', holenderski:'nl', nl:'nl',
     portuguese:'pt', portugalski:'pt', pt:'pt'
   };
-  function normLang(value){
-    if(!value) return '';
-    const v = String(value).toLowerCase().trim();
-    return MAP[v] || v.slice(0,2); // "PL" -> "pl", "English" -> "en"
-  }
+  const norm = v => (MAP[String(v||'').toLowerCase().trim()] || String(v||'').toLowerCase().slice(0,2));
 
-  // --- 1) schowaj baner ---
-  (function injectNoBannerCSS() {
-    if (document.getElementById('bh-gt-nobanner')) return;
-    const s = document.createElement('style');
-    s.id = 'bh-gt-nobanner';
-    s.textContent = `
-      .goog-te-banner-frame.skiptranslate, .goog-te-banner-frame { display:none!important; }
-      body { top:0!important; }
-      #google_translate_element, .goog-logo-link, .goog-te-gadget .goog-te-combo { display:none!important; }
-    `;
-    document.head.appendChild(s);
-  })();
-  (function keepKillingBanner(){
+  // --- killer banera na wszelki wypadek ---
+  (function keepBannerDead(){
     function kill(){
       document.querySelectorAll('.goog-te-banner-frame').forEach(n=>n.remove());
       document.querySelectorAll('.skiptranslate').forEach(n=>{
         if(n!==document.documentElement && n!==document.body) n.remove();
       });
-      if(document.body) document.body.style.top='0px';
+      if(document.body) document.body.style.top='0';
     }
-    kill(); let t=0, iv=setInterval(()=>{kill(); if(++t>80) clearInterval(iv);},100);
+    kill();
+    let t=0, iv=setInterval(()=>{kill(); if(++t>300) clearInterval(iv);},100); // ~30s
     const mo=new MutationObserver(kill);
     mo.observe(document.documentElement,{childList:true,subtree:true});
-    setTimeout(()=>mo.disconnect(),20000);
+    setTimeout(()=>mo.disconnect(),60000);
   })();
 
-  // --- 2) kontener + loader GT ---
+  // --- kontener + loader Google ---
   function ensureContainer(){
     if(!document.getElementById('google_translate_element')){
       const el=document.createElement('div'); el.id='google_translate_element'; el.style.display='none';
@@ -69,36 +55,42 @@
   let ready;
   function loadGT(){
     if(ready) return ready;
-    ready = new Promise(res=>{
-      window.__bhGTinit = function(){
+    ready=new Promise(res=>{
+      window.__bhGTinit=function(){
         try{
           new google.translate.TranslateElement(
-            { pageLanguage: PAGE_LANG, includedLanguages: INCLUDED, autoDisplay: false },
+            {pageLanguage:PAGE_LANG, includedLanguages:INCLUDED, autoDisplay:false},
             'google_translate_element'
           );
         }catch(e){}
         res();
       };
-      const sc=document.createElement('script');
-      sc.src='https://translate.google.com/translate_a/element.js?cb=__bhGTinit';
-      sc.async=true; document.head.appendChild(sc);
+      const s=document.createElement('script');
+      s.src='https://translate.google.com/translate_a/element.js?cb=__bhGTinit';
+      s.async=true; document.head.appendChild(s);
     });
     return ready;
   }
 
-  // --- 3) ustaw i zastosuj język ---
+  // --- zapis wyboru Google ---
   function setGoogTrans(code){
-    const v=`/auto/${code}`;
-    const expires=new Date(Date.now()+COOKIE_YEARS*31536e6).toUTCString();
+    const val=`/auto/${code}`;
+    const exp=new Date(Date.now()+COOKIE_MS).toUTCString();
     try{
-      document.cookie = `googtrans=${v};path=/;expires=${expires}`;
-      localStorage.setItem('googtrans', v);
-      localStorage.setItem('googtrans-override', v);
+      document.cookie=`googtrans=${val};path=/;expires=${exp}`;
+      localStorage.setItem('googtrans', val);
+      localStorage.setItem('googtrans-override', val);
     }catch{}
   }
-  async function applyLang(rawCode){
-    const code = normLang(rawCode);
+
+  // --- sprawdzanie czy tłumaczenie „weszło” (Google dodaje klasę translated-*) ---
+  const isTranslated = () => /\btranslated-(ltr|rtl)\b/.test(document.documentElement.className);
+
+  // --- zastosuj język; jeśli nie zadziała szybko → 1x auto-reload ---
+  async function applyLang(raw){
+    const code = norm(raw);
     if(!code || code==='auto') return;
+
     ensureContainer(); await loadGT(); setGoogTrans(code);
 
     const tryApply=()=>{
@@ -108,33 +100,47 @@
       sel.dispatchEvent(new Event('change',{bubbles:true}));
       return true;
     };
-    if(tryApply()) return;
-    let n=0; const iv=setInterval(()=>{ if(tryApply()||++n>80) clearInterval(iv); },100);
+
+    // 1) od razu
+    tryApply();
+
+    // 2) kilka szybkich prób
+    let n=0; const iv=setInterval(()=>{ if(isTranslated() || tryApply() || ++n>40) clearInterval(iv); },100);
+
+    // 3) twardy fallback: auto-reload tylko raz
+    if(!sessionStorage.getItem('bh_gt_reloaded')){
+      setTimeout(()=>{
+        if(!isTranslated()){
+          sessionStorage.setItem('bh_gt_reloaded','1');
+          location.reload(); // po odświeżeniu działa zawsze, baner jest ukryty
+        }
+      }, 2500);
+    }else{
+      // po pierwszym odświeżeniu – nie powtarzaj w tej sesji
+      setTimeout(()=>sessionStorage.removeItem('bh_gt_reloaded'), 2000);
+    }
   }
 
-  // --- 4) API + auto-start ---
-  window.BH_setLanguage = (code)=> applyLang(code);
+  // Publiczne API + auto-start
+  window.BH_setLanguage=(code)=>applyLang(code);
 
-  document.addEventListener('DOMContentLoaded',()=>{
-    ensureContainer();
+  function autoStart(){
+    const saved = norm((localStorage.getItem('googtrans')||'').split('/').pop());
+    if(saved && saved!==PAGE_LANG){ applyLang(saved); return; }
+    const ui = document.getElementById('bhLang') || document.querySelector('.langpick select');
+    const val = norm(ui?.value);
+    if(val && val!==PAGE_LANG) applyLang(val);
+  }
+  document.addEventListener('DOMContentLoaded', autoStart);
+  window.addEventListener('load', autoStart);
 
-    // priorytet 1: zapisany język
-    const saved = normLang((localStorage.getItem('googtrans')||'').split('/').pop());
-    if(saved && saved !== PAGE_LANG){ applyLang(saved); return; }
-
-    // priorytet 2: aktualna wartość Twojego selektu (jeśli istnieje i nie jest "pl")
-    const uiSelect = document.getElementById('bhLang') || document.querySelector('.langpick select');
-    const uiVal = normLang(uiSelect?.value);
-    if(uiVal && uiVal !== PAGE_LANG){ applyLang(uiVal); }
-  });
-
-  // --- 5) nasłuchiwanie na Twój UI (działa dla wartości PL/EN itd.) ---
+  // podpięcie do UI
   document.addEventListener('change',(e)=>{
     const t=e.target;
     if(t && (t.id==='bhLang' || t.closest('.langpick'))) applyLang(t.value);
   });
   document.addEventListener('click',(e)=>{
-    const btn=e.target.closest('[data-lang]');
-    if(btn) applyLang(btn.getAttribute('data-lang'));
+    const b=e.target.closest('[data-lang]');
+    if(b) applyLang(b.getAttribute('data-lang'));
   });
 })();
