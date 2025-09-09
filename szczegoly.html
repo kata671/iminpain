@@ -1061,5 +1061,138 @@
 })();
 </script>
 <!-- END bh-patch:translator-oneblock -->
+<!-- BEGIN bh-patch:translator-hotfix -->
+<script>
+(function(){
+  if (window.__bhPatchTranslatorHotfix__) return;
+  window.__bhPatchTranslatorHotfix__ = 1;
+
+  // ===== A) Anty-Google-Translate (baner/ramka/auto) =====
+  (function neutralizeGoogleTranslate(){
+    // 1) Meta "notranslate" – blokuje podpowiedzi i auto-tłumaczenie
+    var hasMeta = document.querySelector('meta[name="google"][content*="notranslate"]');
+    if (!hasMeta) {
+      var m = document.createElement('meta');
+      m.setAttribute('name','google'); m.setAttribute('content','notranslate');
+      document.head.appendChild(m);
+    }
+
+    // 2) CSS: ukryj UI Google Translate (baner/tooltipy), nawet jeśli już się wstrzyknął
+    var css = `
+.goog-te-banner-frame, .goog-te-gadget, .goog-tooltip, .goog-te-balloon-frame, #google_translate_element,
+.VIpgJd-ZVi9od-ORHb, .VIpgJd-ZVi9od-l4eHX-hSRGPd, .VIpgJd-ZVi9od-ORHb-OEVmcd { display:none !important; visibility:hidden !important; }
+body { top: 0 !important; }
+`;
+    var s = document.createElement('style');
+    s.setAttribute('data-bh-style','anti-google-translate');
+    s.appendChild(document.createTextNode(css));
+    document.head.appendChild(s);
+
+    // 3) Usuń już wstrzyknięte elementy/klasy
+    function purgeGT(){
+      ['iframe.goog-te-banner-frame','#google_translate_element','.VIpgJd-ZVi9od-ORHb','.goog-te-gadget'].forEach(function(sel){
+        document.querySelectorAll(sel).forEach(function(n){ try{ n.remove(); }catch(_){ n.style.display='none'; } });
+      });
+      document.documentElement.classList.remove('translated-ltr','translated-rtl');
+      document.body.style.top = null;
+      // Wyzeruj stan google translate jeśli istniał
+      try { localStorage.removeItem('googtrans'); } catch(_){}
+      try { sessionStorage.removeItem('googtrans'); } catch(_){}
+      // Zneutralizuj globalny init jeśli snippet google był dodany
+      window.googleTranslateElementInit = function(){};
+      // Zablokuj ewentualne przyszłe ładowanie element.js
+      var _createElement = document.createElement;
+      document.createElement = function(tag){
+        var el = _createElement.call(document, tag);
+        if (tag.toLowerCase()==='script') {
+          var _setAttr = el.setAttribute;
+          el.setAttribute = function(name, value){
+            if (name==='src' && /translate_a\/element\.js/i.test(String(value||''))) {
+              // zignoruj ładowanie skryptu google translate
+              return;
+            }
+            return _setAttr.apply(el, arguments);
+          };
+        }
+        return el;
+      };
+    }
+    purgeGT();
+    // Dodatkowo próbuj czyścić, jeśli coś doładuje się dynamicznie
+    var mo = new MutationObserver(function(){ purgeGT(); });
+    mo.observe(document.documentElement, { childList:true, subtree:true });
+  })();
+
+  // ===== B) Wzmocnienie naszego tłumacza (natychmiast po wyborze) =====
+  (function reinforceBHTranslator(){
+    // Jeżeli masz w projekcie poprzedni blok "translator-oneblock" / "bh-translator.js",
+    // poniższy kod zadba o natychmiastowe tłumaczenie i poprawne nasłuchiwanie kliknięć.
+
+    // 1) Gdy istnieje dropdown naszego tłumacza – dodaj także pointerup (mobile), plus focusem.
+    function bindFastActions(){
+      var dd = document.querySelector('#bh-translator .bh-translator-dd');
+      var wrap = document.getElementById('bh-translator');
+      if (!dd || !wrap) return;
+
+      function onPick(e){
+        var b = e.target.closest('.bh-dd-item'); if(!b) return;
+        var lang = b.getAttribute('data-lang');
+        wrap.setAttribute('aria-expanded','false');
+        // Jeśli mamy globalny setLanguage z naszego widgetu – użyj.
+        if (typeof window.setLanguage === 'function') {
+          try { window.setLanguage(lang); } catch(_){}
+          return;
+        }
+        // Jeśli nie – spróbuj odpalić standardową ścieżkę poprzedniego bloku.
+        try {
+          // Wersje wcześniejsze miały setLanguage w IIFE – nie w globalu,
+          // więc wymusimy ponowne tłumaczenie przez zapis języka i reload jeśli PL
+          localStorage.setItem('bh-lang', lang);
+          if (lang === 'pl') { location.reload(); return; }
+          // Spróbuj wywołać ponowny skan (fallback bardzo defensywny)
+          setTimeout(function(){
+            var ev = new Event('bh-translate-rescan'); document.dispatchEvent(ev);
+          }, 0);
+        } catch(_){}
+      }
+
+      ['click','pointerup','keyup'].forEach(function(type){
+        dd.addEventListener(type, function(e){
+          if (type==='keyup' && e.key !== 'Enter') return;
+          onPick(e);
+        }, { passive:true });
+      });
+    }
+
+    // 2) Uniwersalny "rescan" – podłącz do naszego wcześniejszego kodu jeśli słucha zdarzeń
+    document.addEventListener('bh-translate-rescan', function(){
+      try {
+        // Jeśli w poprzednim bloku jest funkcja walkAndTranslate dostępna przez closure – nie mamy do niej dostępu,
+        // ale jeśli aktywny jest MutationObserver, wystarczy prowokacja minimalnej mutacji:
+        var mark = document.createElement('span');
+        mark.setAttribute('data-bh-no-translate','');
+        document.body.appendChild(mark);
+        requestAnimationFrame(function(){ mark.remove(); });
+      } catch(_){}
+    });
+
+    // 3) Jeżeli UI tłumacza jeszcze nie istnieje (np. tylko "oneblock" z innej strony go doda),
+    // poczekaj na DOM i podłącz zdarzenia.
+    function whenReady(){
+      bindFastActions();
+      // Gwarantujemy, że label się odświeży przy wejściu między stronami
+      var saved = localStorage.getItem('bh-lang');
+      var label = document.querySelector('#bh-translator .bh-translator-label');
+      if (label && saved) label.textContent = 'Lang: ' + saved.toUpperCase();
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', whenReady);
+    } else {
+      whenReady();
+    }
+  })();
+})();
+</script>
+<!-- END bh-patch:translator-hotfix -->
 </body>
 </html>
