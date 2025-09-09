@@ -417,5 +417,29 @@
   </script>
 </body>
 </html>
+<script>
+(function(){
+  const input = document.getElementById('bhSearch');
+  const panel = document.querySelector('.bh2025-suggest');
+  if(!input || !panel) return;
+
+  const hide = () => panel.setAttribute('aria-hidden','true');
+  const show = () => panel.setAttribute('aria-hidden','false');
+
+  // gdy pole puste → chowaj
+  input.addEventListener('input', () => {
+    const has = (panel.querySelectorAll('.bh2025-sg-item').length > 0);
+    (input.value.trim() && has) ? show() : hide();
+  });
+
+  // klik poza panelem/polem → chowaj
+  document.addEventListener('click', (e)=>{
+    if (e.target !== input && !panel.contains(e.target)) hide();
+  });
+
+  // po załadowaniu strony na wszelki wypadek schowaj
+  hide();
+})();
+</script>
 </body>
 </html>
