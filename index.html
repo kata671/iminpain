@@ -1,42 +1,9 @@
+
 <!doctype html>
 <html lang="pl" data-lang="pl">
-<script>
-/* Blokuj ładowanie starego Google Translate (translate_a/element.js) */
-(function () {
-  const OrigCreate = document.createElement;
-  document.createElement = function(tag){
-    const el = OrigCreate.call(document, tag);
-    if (tag.toLowerCase() === 'script') {
-      const d = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src');
-      Object.defineProperty(el, 'src', {
-        get(){ return d.get ? d.get.call(this) : this.getAttribute('src'); },
-        set(v){
-          if (v && v.includes('translate_a/element.js')) {
-            console.warn('Blocked old Google Translate loader:', v);
-            return; /* nie ustawiaj src -> nie załaduje się */
-          }
-          d.set ? d.set.call(this, v) : this.setAttribute('src', v);
-        }
-      });
-    }
-    return el;
-  };
-
-  const origAppend = Node.prototype.appendChild;
-  Node.prototype.appendChild = function(node){
-    try {
-      if (node && node.tagName === 'SCRIPT' && node.src && node.src.includes('translate_a/element.js')) {
-        console.warn('Removed old Google Translate script node.');
-        return node; /* ignoruj dodanie */
-      }
-    } catch(e){}
-    return origAppend.call(this, node);
-  };
-})();
-</script>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Boli Help — Strona główna</title>
   <meta name="theme-color" content="#0e1230" />
 
@@ -45,168 +12,39 @@
   <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="/icons/icon-512.png">
 
-  <!-- CSS (pozostawiam v=10 jak u Ciebie) -->
+  <!-- CSS (Twoje style bazowe) -->
   <link rel="stylesheet" href="assets/style.css?v=10" />
 
   <style>
-    html,body{height:100%}
-    body[data-page="home"]{
-      position:relative; background:#0e1230 !important; color:#eef2ff;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    /* ===================== MOBILE: węższy, czytelniejszy widok tylko na stronie głównej ===================== */
+    @media (max-width: 768px){
+      body[data-page="home"] .container{
+        width: 92vw !important;    /* w razie potrzeby zmień na 90vw / 88vw */
+        max-width: none !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+      }
+      body[data-page="home"] .header .tools{
+        flex-wrap: wrap;
+        gap: 12px !important;
+      }
+      body[data-page="home"] .header .brand{ flex:1 1 100%; }
+      body[data-page="home"] .header .tools .search{ flex:1 1 100%; min-width:0; }
     }
-    body[data-page="home"]::before,
-    body[data-page="home"]::after,
-    body[data-page="home"] .container::before,
-    body[data-page="home"] .container::after{content:none !important;display:none !important}
-
-    .bh-wallpaper,.bh-grid{position:fixed;inset:0;pointer-events:none}
-    .bh-wallpaper{
-      z-index:0;
-      background:
-        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
-        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
-        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-      filter: blur(10px) saturate(118%);
+    @media (max-width: 420px){
+      body[data-page="home"] .container{
+        width: 88vw !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+      }
     }
-    .bh-grid{
-      z-index:1; opacity:.22;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
-      background-size:160px 138px; background-position:center;
-    }
-    .bh-floor-fade{ position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
-      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6)); }
-    .container{position:relative;z-index:3;background:transparent !important;max-width:1100px;margin:0 auto;padding:0 16px}
-
-    /* Siatka kart */
-    @media (min-width:981px){ section.stack[style]{grid-template-columns:repeat(3,1fr) !important;} }
-    @media (max-width:980px){ section.stack[style]{grid-template-columns:repeat(2,1fr) !important;} }
-    @media (max-width:640px){ section.stack[style]{grid-template-columns:1fr !important;} }
-    section.stack[style] > *{grid-column:auto !important;min-width:0 !important}
-
-    .card{border-radius:18px;overflow:hidden;background:rgba(60,32,100,.32);border:1px solid rgba(164,107,255,.22);
-      box-shadow:0 10px 22px rgba(255,110,199,.12), 0 0 0 1px rgba(164,107,255,.14) inset;min-height:240px}
-    .card a{display:grid;grid-template-rows:minmax(180px,240px) auto;height:100%;text-decoration:none;color:inherit}
-    .card img{width:100%;height:100%;object-fit:contain;object-position:center;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))}
-    .card .caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;
-      border-top:1px solid rgba(164,107,255,.22);background:rgba(255,255,255,.04)}
-
-    /* Pigułki */
-    :root{ --bhG:34,227,160; --bhG2:20,160,120; }
-    .situations .pill{
-      display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:14px; text-decoration:none; font-weight:900;
-      border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#fff; transition:.2s ease;
-    }
-    .situations .pill .ico{
-      display:inline-grid; place-items:center; width:22px; height:22px; border-radius:6px;
-      background: rgba(164,107,255,.18); box-shadow: inset 0 0 0 1px rgba(164,107,255,.25);
-    }
-    .situations .pill.pill--green{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(var(--bhG2), .15);
-      color:#ffffff; border:1px solid rgba(var(--bhG), .55);
-      box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--bhG), .25) inset, 0 0 18px rgba(var(--bhG), .18);
-      backdrop-filter:saturate(125%) blur(4px);
-    }
-    .situations .pill.pill--green:hover,
-    .situations .pill.pill--green:focus-visible{
-      transform:translateY(-1px); border-color:rgba(var(--bhG), .85);
-      box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(var(--bhG), .65), 0 0 26px rgba(var(--bhG), .45);
-      outline:none;
-    }
-    /* Niebieska pigułka – Gry / Trening */
-    .situations .pill.pill--blue{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(96,165,250,.18);
-      border:1px solid rgba(59,130,246,.6);
-      box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(59,130,246,.35) inset, 0 0 18px rgba(96,165,250,.30);
-      color:#eaf2ff;
-    }
-    .situations .pill.pill--blue:hover,
-    .situations .pill.pill--blue:focus-visible{
-      transform:translateY(-1px); border-color:rgba(59,130,246,.9);
-      box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(96,165,250,.65), 0 0 26px rgba(96,165,250,.5);
-      outline:none;
-    }
-
-    /* apteka24 – świecący badge */
-    #btn-apteka .badge-round{
-      background: rgba(var(--bhG), .18);
-      color: #eafff7;
-      border:1px solid rgba(var(--bhG), .55);
-      box-shadow:0 6px 18px rgba(8,10,22,.35), inset 0 0 0 1px rgba(var(--bhG), .20), 0 0 14px rgba(var(--bhG), .30);
-      font-weight:800; letter-spacing:.2px; border-radius:999px; padding:6px 10px; text-transform:none;
-      animation: bh-green-pulse 2.4s ease-in-out infinite;
-    }
-    @keyframes bh-green-pulse{
-      0%{ box-shadow:0 0 0 0 rgba(var(--bhG), .00), 0 0 12px rgba(var(--bhG), .18) }
-      50%{ box-shadow:0 0 0 6px rgba(var(--bhG), .12), 0 0 22px rgba(var(--bhG), .35) }
-      100%{ box-shadow:0 0 0 0 rgba(var(--bhG), .00), 0 0 12px rgba(var(--bhG), .18) }
-    }
-
-    /* Obrazek w PORADZIE (png) */
-    .bh2025-porada__svg img{
-      max-width:100%; height:auto; display:block; border-radius:12px;
-      border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.04);
-    }
-
-    /* Modale ukryte (twardo) */
-    .bh2025-modal[aria-hidden="true"],
-    .bh2025-porada[aria-hidden="true"]{ display:none }
-
-    /* QUIZ – poprawiona czytelność */
-    .bh2025-cta-quiz{appearance:none;border:1px solid rgba(164,107,255,.28);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      color:#eef2ff;border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer}
-    .bh2025-modal{position:fixed;inset:0;z-index:9999;background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.88), rgba(14,18,48,.92));backdrop-filter:saturate(120%) blur(6px)}
-    .bh2025-modal__panel{position:relative;max-width:720px;margin:6vh auto;background:rgba(60,32,100,.36);border:1px solid rgba(164,107,255,.25);border-radius:18px;padding:16px;color:#eef2ff}
-    .bh2025-q{color:#ffffff;font-weight:900;letter-spacing:.2px}
-    .bh2025-answers .bh2025-ans{display:block;width:100%;text-align:left;margin:8px 0;padding:10px 12px;border-radius:12px;
-      border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);cursor:pointer;color:#ffffff}
-    .bh2025-answers .bh2025-ans:hover{box-shadow:0 10px 20px rgba(0,0,0,.25);transform:translateY(-1px)}
-    .bh2025-ans.correct{box-shadow:0 0 0 2px rgba(94,234,212,.65)}
-    .bh2025-ans.wrong{box-shadow:0 0 0 2px rgba(255,107,107,.7)}
-    .bh2025-progress{display:flex;align-items:center;gap:10px;margin:8px 0 12px}
-    .bh2025-progress__bar{flex:1;height:12px;border-radius:999px;outline:1px solid rgba(255,255,255,.14);background:linear-gradient(90deg,#5eead4,#ff6ec7);position:relative;overflow:hidden}
-    .bh2025-progress__cursor{position:absolute;top:50%;transform:translate(-50%,-50%);left:6%;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(94,234,212,.35)}
-
-    /* PORADA modal */
-    .bh2025-porada{position:fixed;inset:0;z-index:9998;background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95));backdrop-filter:saturate(120%) blur(6px)}
-    .bh2025-porada__panel{position:relative;max-width:980px;margin:5vh auto;background:rgba(60,32,100,.36);border:1px solid rgba(164,107,255,.25);border-radius:18px;padding:16px;color:#eef2ff}
-    .bh2025-porada__grid{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
-    @media (max-width:900px){ .bh2025-porada__grid{grid-template-columns:1fr} }
-    .bh2025-steps{border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);padding:12px}
-
-    /* Selektor języka */
-    .langpick{display:flex;gap:8px;align-items:center;margin-left:12px}
-    .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
-    .langpick select{
-      appearance:none;background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.24);
-      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px
-    }
-    .langpick option{ color:#0e1230; background:#ffffff }
-
-    /* Wyszukiwarka – panel podpowiedzi (izolowany) */
-    .bh2025-suggest{position:absolute;right:0;left:0;top:100%;margin-top:6px;z-index:50;
-      background:rgba(60,32,100,.96); border:1px solid rgba(164,107,255,.28); border-radius:12px;
-      box-shadow:0 16px 34px rgba(8,10,22,.52); overflow:hidden; display:none}
-    .bh2025-suggest[aria-hidden="false"]{display:block}
-    .bh2025-sg-head{padding:8px 12px; font-weight:800; letter-spacing:.2px; color:#cfe2ff;
-      border-bottom:1px solid rgba(164,107,255,.18); background:rgba(255,255,255,.03)}
-    .bh2025-sg-list{list-style:none;margin:0;padding:6px}
-    .bh2025-sg-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;
-      cursor:pointer; color:#eef2ff; text-decoration:none; border:1px solid transparent}
-    .bh2025-sg-item:hover,
-    .bh2025-sg-item[aria-selected="true"]{background:rgba(255,255,255,.06); border-color:rgba(164,107,255,.28);
-      box-shadow:inset 0 0 0 1px rgba(164,107,255,.16)}
-    .bh2025-sg-ico{width:18px;height:18px;display:inline-grid;place-items:center;border-radius:6px;
-      background:rgba(164,107,255,.18); font-size:12px}
-    .bh2025-sg-sub{margin-left:auto;font-size:12px;color:#b8c2e0}
-    .header .tools .search{position:relative}
   </style>
 </head>
 
 <body data-page="home">
+  <!-- TŁO / SIATKA -->
   <div class="bh-wallpaper" aria-hidden="true"></div>
   <div class="bh-grid" aria-hidden="true"></div>
   <div class="bh-floor-fade" aria-hidden="true"></div>
@@ -225,14 +63,7 @@
                   stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
-        <!-- Tłumacz -->
-        <div class="langpick" aria-label="Wybierz język">
-          <label for="bhLang" data-i18n="lang_label">Wybierz język</label>
-          <select id="bhLang" aria-label="Język">
-            <option value="pl" selected>PL</option>
-            <option value="en">EN</option>
-          </select>
-        </div>
+        <!-- STARY TŁUMACZ USUNIĘTY (langpick) -->
       </div>
     </header>
 
@@ -256,19 +87,12 @@
       <a class="pill pill--blue" href="gry.html">
         <span class="ico">🎮</span><span data-i18n="pill_games">Gry / Trening</span>
       </a>
-      <!-- NOWY GUZIK: Quizy -->
       <a class="pill pill--blue" href="quizzes.html" id="btn-quizzes">
         <span class="ico">🧠</span><span data-i18n="pill_quizzes">Quizy</span>
       </a>
     </nav>
 
-    <!-- Launcher mini-quizu (zostaje – stary modal do czasu przenosin) -->
-    <div class="bh2025-quiz-launch" aria-hidden="false">
-      <button id="bh2025QuizOpen" class="bh2025-cta-quiz" type="button"
-              aria-haspopup="dialog" aria-controls="bh2025QuizModal" data-i18n="quiz_open">
-        Sprawdź się: Pierwsza pomoc
-      </button>
-    </div>
+    <!-- QUIZ LAUNCHER USUNIĘTY -->
 
     <div class="actions" role="navigation" aria-label="Szybkie akcje">
       <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
@@ -284,52 +108,29 @@
     <section class="stack" aria-label="Wybór postaci"
       style="display:grid;gap:16px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
       <article class="card">
-        <a href="kobieta.html">
-          <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+        <a href="kobieta.html" class="card__link">
+          <div class="card__imgwrap"><img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/></div>
           <div class="caption"><h3 data-i18n="card_woman">Kobieta</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
       <article class="card">
-        <a href="mezczyzna.html">
-          <img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+        <a href="mezczyzna.html" class="card__link">
+          <div class="card__imgwrap"><img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/></div>
           <div class="caption"><h3 data-i18n="card_man">Mężczyzna</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
       <article class="card">
-        <a href="dziecko.html">
-          <img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
+        <a href="dziecko.html" class="card__link">
+          <div class="card__imgwrap"><img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/></div>
           <div class="caption"><h3 data-i18n="card_child">Dziecko</h3><span class="arrow" aria-hidden="true">→</span></div>
         </a>
       </article>
     </section>
   </div>
 
-  <!-- Modal QUIZ -->
-  <div id="bh2025QuizModal" class="bh2025-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025QuizTitle">
-    <div class="bh2025-modal__panel">
-      <div class="bh2025-modal__head">
-        <div>
-          <div id="bh2025QuizTitle" class="bh2025-modal__title" data-i18n="quiz_title">Mini-quiz: czy wiesz co zrobić?</div>
-          <div class="bh2025-muted" id="bh2025QuizSubtitle" data-i18n="quiz_sub">3 szybkie pytania: zadławienie, reanimacja, pozycja bezpieczna.</div>
-        </div>
-        <button class="bh2025-close" type="button" id="bh2025QuizClose" aria-label="Zamknij" data-i18n="close_btn">✕</button>
-      </div>
-      <div class="bh2025-modal__body">
-        <div class="bh2025-progress" aria-label="Postęp">
-          <div class="bh2025-progress__bar"><span class="bh2025-progress__cursor" id="bh2025QuizCursor"></span></div>
-          <div class="bh2025-progress__label"><span id="bh2025QuizStep">1</span>/3</div>
-        </div>
-        <div class="bh2025-q" id="bh2025QuizQuestion">…</div>
-        <div class="bh2025-answers" id="bh2025QuizAnswers"></div>
-        <div class="bh2025-actions">
-          <button class="bh2025-ghost" type="button" id="bh2025QuizRestart" data-i18n="quiz_restart">Zacznij od nowa</button>
-          <button class="bh2025-primary" type="button" id="bh2025QuizNext" data-i18n="quiz_next">Dalej</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- QUIZ MODAL USUNIĘTY -->
 
-  <!-- Modal PORADA -->
+  <!-- Modal PORADA (zostaje) -->
   <div id="bh2025Porada" class="bh2025-porada" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025PoradaTitle">
     <div class="bh2025-porada__panel">
       <div class="bh2025-porada__head">
@@ -350,24 +151,21 @@
 
   <!-- Skrypt bazowy strony -->
   <script src="assets/main.js?v=10"></script>
-  <!-- I18N (lokalny) -->
+
+  <!-- I18N (lokalny) — pozostawiam, ale bez langpick w headerze -->
   <script>
   (function(){
     const I18N = {
-      pl:{brand_title:"Boli Help",brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",lang_label:"Wybierz język",
+      pl:{brand_title:"Boli Help",brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",
           pill_choke:"Zadławienie",pill_cpr:"Reanimacja",pill_accident:"Wypadek",pill_firstaid:"Pierwsza pomoc",
           pill_games:"Gry / Trening", pill_quizzes:"Quizy",
-          quiz_open:"Sprawdź się: Pierwsza pomoc",quiz_title:"Mini-quiz: czy wiesz co zrobić?",quiz_sub:"3 szybkie pytania: zadławienie, reanimacja, pozycja bezpieczna.",
-          quiz_restart:"Zacznij od nowa",quiz_next:"Dalej",close_btn:"✕",
           btn_hosp:"🏥 Szpitale / SOR",btn_loc:"📍 Zlokalizuj mnie",subheadline:"Boli mnie — wybierz obszar bólu",
           card_woman:"Kobieta",card_man:"Mężczyzna",card_child:"Dziecko",
           advice_title:"Porada",advice_chip:"SOS • instrukcja",video_head:"Materiał wideo",
           video_hint:"Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej."},
-      en:{brand_title:"Boli Help",brand_sub:"Help & first aid in emergencies",lang_label:"Choose language",
+      en:{brand_title:"Boli Help",brand_sub:"Help & first aid in emergencies",
           pill_choke:"Choking",pill_cpr:"CPR",pill_accident:"Accident",pill_firstaid:"First aid",
           pill_games:"Games / Training", pill_quizzes:"Quizzes",
-          quiz_open:"Check yourself: First aid",quiz_title:"Mini-quiz: do you know what to do?",quiz_sub:"3 quick questions: choking, CPR, recovery position.",
-          quiz_restart:"Restart",quiz_next:"Next",close_btn:"✕",
           btn_hosp:"🏥 Hospitals / ER",btn_loc:"📍 Locate me",subheadline:"It hurts — choose the body area",
           card_woman:"Woman",card_man:"Man",card_child:"Child",
           advice_title:"Advice",advice_chip:"SOS • instruction",video_head:"Video material",
@@ -382,149 +180,13 @@
         if(dict[key]!==undefined){ el.innerHTML = dict[key]; }
       });
     }
-    const sel = document.getElementById('bhLang');
-    if(sel && !sel.dataset.bhBound){
-      sel.dataset.bhBound = '1';
-      sel.addEventListener('change', ()=> applyI18n(sel.value));
-      applyI18n(sel.value || 'pl');
-    }
+    // domyślnie PL
+    applyI18n('pl');
     window.__getLang = ()=> document.documentElement.getAttribute('data-lang') || 'pl';
   })();
   </script>
 
-  <!-- QUIZ (z konfetti; izolowany) -->
-  <script>
-  (function(){
-    const modal   = document.getElementById('bh2025QuizModal');
-    const openBtn = document.getElementById('bh2025QuizOpen');
-    const closeBtn= document.getElementById('bh2025QuizClose');
-    const restart = document.getElementById('bh2025QuizRestart');
-    const nextBtn = document.getElementById('bh2025QuizNext');
-    const qEl     = document.getElementById('bh2025QuizQuestion');
-    const aEl     = document.getElementById('bh2025QuizAnswers');
-    const stepEl  = document.getElementById('bh2025QuizStep');
-    const cursor  = document.getElementById('bh2025QuizCursor');
-    if(!modal || modal.dataset.bhBound) return; modal.dataset.bhBound='1';
-
-    const QA = {
-      pl:[
-        {q:"Ktoś się dławi i nie może mówić. Co robisz najpierw?",
-         a:[{t:"Zachęcam do kaszlu, jeśli nieskuteczny — 5 uderzeń między łopatki",ok:true},
-            {t:"Podaję wodę, żeby popchnąć kęs",ok:false},
-            {t:"Wkładam palec i „na ślepo” próbuję wyjąć",ok:false}],
-         hintOk:"Tak! Najpierw kaszel. Jeśli nieskuteczny → uderzenia w plecy.",
-         hintBad:"Woda/„wymiatanie” palcem może pogorszyć sytuację."},
-        {q:"Brak oddechu. Co z RKO u dorosłego?",
-         a:[{t:"Ucisk klatki 100–120/min, głębokość ~5–6 cm, centrum mostka",ok:true},
-            {t:"Ucisk delikatny 40/min, bez kontroli miejsca",ok:false},
-            {t:"Czekam na karetkę bez ucisków",ok:false}],
-         hintOk:"Tempo 100–120/min i środek mostka są kluczowe.",
-         hintBad:"Za wolno/bez ucisków — zaczynamy prawidłowe RKO."},
-        {q:"Poszkodowany oddycha, ale nie reaguje. Co dalej?",
-         a:[{t:"Układam w pozycji bezpiecznej i kontroluję oddech",ok:true},
-            {t:"Podaję napój i zostawiam w pozycji siedzącej",ok:false},
-            {t:"Kładę na plecach bez kontroli drożności",ok:false}],
-         hintOk:"Pozycja bezpieczna i stała kontrola oddechu.",
-         hintBad:"Płyny/siedząca/na plecach — to nie jest bezpieczne."}
-      ],
-      en:[
-        {q:"Someone is choking and can’t speak. What do you do first?",
-         a:[{t:"Encourage coughing; if ineffective — 5 back blows",ok:true},
-            {t:"Give water to push food down",ok:false},
-            {t:"Put a finger inside and sweep blindly",ok:false}],
-         hintOk:"Yes! First cough. If ineffective → back blows.",
-         hintBad:"Water/blind finger sweep can make it worse."},
-        {q:"No breathing. What about adult CPR?",
-         a:[{t:"Compressions 100–120/min, depth ~5–6 cm, center of chest",ok:true},
-            {t:"Gentle 40/min, no precise place",ok:false},
-            {t:"Wait for ambulance without compressions",ok:false}],
-         hintOk:"Rate 100–120/min and center chest are key.",
-         hintBad:"Too slow / no compressions — start proper CPR."},
-        {q:"Casualty breathes but is unresponsive. What next?",
-         a:[{t:"Place in recovery position and monitor breathing",ok:true},
-            {t:"Give a drink and leave sitting",ok:false},
-            {t:"Lay flat on back without airway control",ok:false}],
-         hintOk:"Recovery position + continuous monitoring.",
-         hintBad:"Drinks/sitting/on the back — not safe now."}
-      ]
-    };
-    const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
-    const Q = ()=> QA[L()] || QA.pl;
-
-    let step=0, lock=false, chosen=[];
-    function setProgress(total){ stepEl.textContent=(step+1); cursor.style.left=(6+(step/((total-1)||1))*88)+'%'; }
-    function render(){
-      const data=Q(), item=data[step];
-      qEl.textContent=item.q; aEl.innerHTML=''; setProgress(data.length);
-      item.a.forEach(opt=>{
-        const b=document.createElement('button'); b.type='button'; b.className='bh2025-ans'; b.textContent=opt.t;
-        b.addEventListener('click', ()=>{ if(lock) return; lock=true;
-          const ok=!!opt.ok; chosen[step]=ok;
-          b.classList.add(ok?'correct':'wrong');
-          const n=document.createElement('div'); n.className='bh2025-muted'; n.style.marginTop='6px'; n.style.color='#eaf2ff'; n.textContent= ok?item.hintOk:item.hintBad; b.after(n);
-          try{ navigator.vibrate && navigator.vibrate(ok?80:160);}catch(_){}
-          setTimeout(()=>lock=false,280);
-        });
-        aEl.appendChild(b);
-      });
-      nextBtn.textContent = (L()==='en') ? (step===Q().length-1?'Finish':'Next') : (step===Q().length-1?'Zakończ':'Dalej');
-    }
-    function open(){
-      const data=Q(); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
-      step=0; chosen=new Array(data.length).fill(null); render();
-    }
-    function close(){ modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-
-    function confetti(score, total){
-      const c=document.createElement('canvas'); c.width=innerWidth; c.height=innerHeight;
-      Object.assign(c.style,{position:'fixed',inset:'0',pointerEvents:'none',zIndex:10001});
-      document.body.appendChild(c);
-      const ctx=c.getContext('2d');
-      let parts=Array.from({length: score===total? 140:90},()=>({
-        x:Math.random()*c.width, y:-20,
-        vx:-1+Math.random()*2, vy:2+Math.random()*2.5,
-        size:3+Math.random()*4, rot:Math.random()*6, vr:-.2+Math.random()*.4,
-        color: score===total ? ['#5eead4','#a46bff','#ffd16c'][Math.floor(Math.random()*3)] : 'rgba(255,255,255,.9)',
-        life: 100
-      }));
-      (function tick(){
-        ctx.clearRect(0,0,c.width,c.height);
-        parts.forEach(p=>{
-          p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr; p.vy+=0.02; p.life--;
-          ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
-          ctx.fillStyle=p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
-          ctx.restore();
-        });
-        parts=parts.filter(p=>p.life>0);
-        if(parts.length) requestAnimationFrame(tick); else c.remove();
-      })();
-    }
-    function award(score,total){
-      const msg = (L()==='en'?`Great! Score: ${score}/${total}`:`Brawo! Wynik: ${score}/${total}`);
-      const t=document.createElement('div');
-      Object.assign(t.style,{position:'fixed',left:'50%',bottom:'26px',transform:'translateX(-50%)',
-        background:'rgba(60,32,100,.88)',color:'#ffffff',padding:'10px 14px',border:'1px solid rgba(164,107,255,.45)',
-        borderRadius:'12px',boxShadow:'0 10px 26px rgba(8,10,22,.55)',fontWeight:'800',zIndex:10002});
-      t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2400);
-      confetti(score,total);
-    }
-
-    if(openBtn && !openBtn.dataset.bhBound){
-      openBtn.dataset.bhBound='1';
-      openBtn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); open(); }, true);
-    }
-    closeBtn.addEventListener('click', close);
-    modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
-    restart.addEventListener('click', ()=>{ step=0; chosen=new Array(Q().length).fill(null); render(); });
-    nextBtn.addEventListener('click', ()=>{
-      const data=Q(); if(step<data.length-1){ step++; render(); }
-      else{ const score=chosen.reduce((s,v)=>s+(v?1:0),0); award(score,data.length); close(); }
-    });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') close(); });
-  })();
-  </script>
-
-  <!-- PORADY (klik pigułek przechwycony w capture) -->
+  <!-- PORADY (jak było) -->
   <script>
   (function(){
     const poradaModal  = document.getElementById('bh2025Porada');
@@ -582,7 +244,7 @@
   })();
   </script>
 
-  <!-- WYSZUKIWARKA -->
+  <!-- WYSZUKIWARKA (zostaje) -->
   <script>
   (function(){
     const input = document.getElementById('bhSearch');
@@ -678,7 +340,7 @@
   })();
   </script>
 
-  <!-- Rejestracja Service Workera -->
+  <!-- Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js')
@@ -687,100 +349,48 @@
     }
   </script>
 
-  <!-- Add to Home Screen (iOS/Android) -->
+  <!-- Add to Home Screen -->
   <script src="assets/a2hs.js?v=1"></script>
-<script src="/assets/js/translator-unified.js?v=1" defer></script>
-<!-- Nowy, spójny tłumacz na całej stronie -->
-<script src="/assets/js/translator-unified.js?v=1" defer></script>
 
-<!-- Sprzątanie starego tłumacza + ukrycie "Sprawdź się" -->
-<script>
-(function(){
-  function removeAll(sel){ document.querySelectorAll(sel).forEach(n=> n.remove()); }
+  <!-- NOWY, spójny translator (multi-lang, prawy górny róg) -->
+  <script src="/assets/js/translator-unified.js?v=20" defer></script>
 
-  document.addEventListener('DOMContentLoaded', () => {
-   <!-- 1) HARD CLEANUP starego tłumacza -->
-<script>
-(function(){
-  // Selektory wszystkiego, co mógł dodać stary widget / Twoje stare pigułki
-  const KILL = [
-    '#google_translate_element', '.goog-te-gadget', '.goog-te-gadget-simple',
-    '.goog-te-banner-frame', 'iframe[id^="goog-gt-"]', '.skiptranslate',
-    '#lang-switch', '.lang-switch', '.language-switcher', '[data-old-translator]',
-    '.old-translator'
-  ];
+  <!-- HARD CLEAN: ostateczne usunięcie starego tłumacza + quizu (gdyby inne skrypty próbowały je dodać) -->
+  <script>
+  (function(){
+    if (document.body.getAttribute('data-page') !== 'home') return;
+    const css = document.createElement('style');
+    css.textContent = `
+      .goog-te-banner-frame.skiptranslate{display:none!important}
+      body{top:0!important}
+      #google_translate_element,[id*="google_translate_element"],
+      .goog-te-gadget,.goog-te-gadget-simple,.goog-te-combo,
+      .skiptranslate,iframe[id^="goog-gt-"],
+      .language-switcher,.lang-switch,#lang-switch,
+      .langpick,
+      .bh2025-quiz-launch,#bh2025QuizModal{display:none!important}
+    `;
+    document.head.appendChild(css);
 
-  function removeAll(){
-    KILL.forEach(sel => document.querySelectorAll(sel).forEach(n => n.remove()));
-  }
+    document.querySelectorAll('script[src*="translate_a/element.js"]').forEach(s=>s.remove());
+    try { window.googleTranslateElementInit = undefined; } catch(e){}
 
-<!-- NUCLEAR CLEAN: stary translator + "Sprawdź się" + wstawienie nowego -->
-<script>
-(function(){
-  // Pomocnicze: tekst bez polskich znaków i nadmiarowych spacji
-  const norm = s => (s||'')
-    .toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')   // zdejmij diakrytyki
-    .replace(/\s+/g,' ').trim();
-
-  const isQuiz = el => /^sprawdz sie/.test(norm(el.textContent));
-  const isLangPill = el => {
-    const t = norm(el.textContent);
-    const cls = el.className||'';
-    return /^(pl|en|de|uk|ru|fr|es|it|cs|sk|lt|lv|ro|nl|pt)$/.test(t)
-           && /lang|translate|pill|jezyk|language/i.test(cls);
-  };
-
-  // 1) CSS – schowaj wszystko od starego Google + typowe wrappery
-  const css = document.createElement('style');
-  css.textContent = `
-    .goog-te-banner-frame.skiptranslate{display:none!important}
-    body{top:0!important}
-    #google_translate_element,[id*="google_translate_element"],
-    .goog-te-gadget,.goog-te-gadget-simple,.goog-te-combo,
-    .skiptranslate,iframe[id^="goog-gt-"],
-    .language-switcher,.lang-switch,#lang-switch{display:none!important}
-  `;
-  document.head.appendChild(css);
-
-  // 2) Usuń stare skrypty i callback, jeśli gdzieś w kodzie pozostały
-  document.querySelectorAll('script[src*="translate_a/element.js"]').forEach(s=>s.remove());
-  try { window.googleTranslateElementInit = undefined; } catch(e){}
-
-  // 3) Funkcja czyszcząca – działa globalnie oraz przy pasku wyszukiwarki
-  function clean(){
-    const killSel = [
-      '#google_translate_element','[id*="google_translate_element"]',
-      '.goog-te-gadget','.goog-te-gadget-simple','.goog-te-combo',
-      '.goog-te-banner-frame','iframe[id^="goog-gt-"]','.skiptranslate',
-      '.language-switcher','.lang-switch','#lang-switch',
-      '[data-old-translator]','.old-translator'
-    ];
-    killSel.forEach(sel => document.querySelectorAll(sel).forEach(n=>n.remove()));
-
-    // obszar nagłówka / wyszukiwarki
-    const headOrSearch = document.querySelector('header, nav, [role="search"], .search, .searchbar, .search-bar') || document;
-    headOrSearch.querySelectorAll('select.goog-te-combo').forEach(sel => sel.closest('*')?.remove());
-    headOrSearch.querySelectorAll('a,button,div,span').forEach(el => { if (isLangPill(el)) el.remove(); });
-
-    // każde „Sprawdź się”
-    document.querySelectorAll('a,button').forEach(el => { if (isQuiz(el)) el.remove(); });
-
-    // fallback: cokolwiek zawiera select.goog-te-combo
-    document.querySelectorAll('select.goog-te-combo').forEach(sel => sel.closest('*')?.remove());
-  }
-
-  // start + pilnowanie
-  clean();
-  let ticks = 0;
-  const iv = setInterval(()=>{ clean(); if(++ticks>150) clearInterval(iv); }, 100);
-  const mo = new MutationObserver(clean);
-  mo.observe(document.documentElement, { childList:true, subtree:true });
-  setTimeout(()=>mo.disconnect(), 15000);
-})();
-</script>
-
-<!-- NOWY, spójny translator (multi-lang, prawy górny róg) -->
-<script src="/assets/js/translator-unified.js?v=10" defer></script>
+    const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim();
+    function clean(){
+      ['#google_translate_element','[id*="google_translate_element"]','.goog-te-gadget','.goog-te-gadget-simple','.goog-te-combo','.goog-te-banner-frame','iframe[id^="goog-gt-"]','.skiptranslate','.language-switcher','.lang-switch','#lang-switch','.langpick','.bh2025-quiz-launch','#bh2025QuizModal']
+        .forEach(sel=>document.querySelectorAll(sel).forEach(n=>n.remove()));
+      document.querySelectorAll('select.goog-te-combo').forEach(sel=> sel.closest('*')?.remove());
+      document.querySelectorAll('a,button').forEach(el=>{
+        const t = norm(el.textContent);
+        if (t.startsWith('sprawdz sie') || t.startsWith('sprawdź się')) el.remove();
+      });
+    }
+    clean();
+    let i=0; const iv=setInterval(()=>{ clean(); if(++i>150) clearInterval(iv); }, 100);
+    const mo = new MutationObserver(clean);
+    mo.observe(document.documentElement, { childList:true, subtree:true });
+    setTimeout(()=>mo.disconnect(), 15000);
+  })();
+  </script>
 </body>
 </html>
