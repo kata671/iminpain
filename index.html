@@ -678,5 +678,43 @@
 })();
 </script>
 <!-- === /Boli Help • Translator widget === -->
+<style id="bh-i18n-skin" nonce>
+  /* PILOT – ujednolicenie wyglądu do "okrągłego badge EN" z podstron */
+  #bh-i18n-btn{
+    position:fixed; top:12px; right:12px; z-index:9999;
+    display:inline-flex; align-items:center; gap:6px;
+    height:36px; padding:0 12px; border-radius:18px;
+    background:rgba(22,28,64,.65);
+    border:1px solid rgba(164,107,255,.35);
+    box-shadow:0 10px 22px rgba(8,10,22,.35), inset 0 0 0 1px rgba(255,255,255,.06);
+    color:#eaf2ff; font:800 12px/1 system-ui,Segoe UI,Roboto,Arial,sans-serif;
+    letter-spacing:.4px; cursor:pointer; user-select:none;
+  }
+  #bh-i18n-dot{width:8px;height:8px;border-radius:999px;background:#5eead4;box-shadow:0 0 0 2px rgba(94,234,212,.28)}
+  #bh-i18n-code{font-weight:900}
+
+  /* panel listy języków – jak na innych stronach (ciemny panel, zaokrąglenia) */
+  #bh-i18n-list{
+    position:fixed; top:56px; right:12px; z-index:10000;
+    display:none; min-width:240px; padding:10px; border-radius:14px;
+    background:rgba(14,18,48,.96);
+    border:1px solid rgba(164,107,255,.28);
+    box-shadow:0 18px 36px rgba(8,10,22,.55); max-height:70vh; overflow:auto;
+  }
+  #bh-i18n-list[aria-hidden="false"]{display:block}
+  #bh-i18n-search{
+    width:100%; margin-bottom:8px; padding:10px 12px; border-radius:12px;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16); color:#fff;
+    font-weight:800; outline:0;
+  }
+  #bh-i18n-ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+  #bh-i18n-ul li{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:10px 12px; border-radius:12px; cursor:pointer;
+    color:#eef2ff; font-weight:800;
+    background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.10);
+  }
+  #bh-i18n-ul li:hover{background:rgba(255,255,255,.07); border-color:rgba(164,107,255,.28)}
+</style>
 <body>
 </html>
