@@ -202,3 +202,35 @@ input, select, textarea { font-size: 16px; } /* zapobiega auto-zoom na iOS/Andro
 .situations, .actions { flex-wrap: wrap; }
 
 /* === /ONE-HOTFIX === */
+<style>
+  @media (max-width: 768px){
+    #google_translate_element,
+    #translator-fab{
+      position: fixed !important;
+      top: calc(10px + env(safe-area-inset-top)) !important;
+      right: calc(10px + env(safe-area-inset-right)) !important;
+      z-index: 2147483647 !important;
+      max-width: 56vw !important;
+      overflow: hidden !important;
+    }
+    #google_translate_element .goog-te-gadget,
+    #translator-fab .goog-te-gadget{
+      font-size: 0 !important;
+      line-height: 1 !important;
+      display: inline-flex !important;
+      gap: 6px !important;
+      white-space: nowrap !important;
+      align-items: center !important;
+    }
+    #google_translate_element .goog-te-combo,
+    #translator-fab .goog-te-combo{
+      font-size: 13px !important;
+      padding: 6px 8px !important;
+      max-width: 44vw !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+  }
+  .goog-te-banner-frame.skiptranslate{ display:none !important; }
+  body{ top:0 !important; }
+</style>
