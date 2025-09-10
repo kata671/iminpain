@@ -580,5 +580,32 @@
       addEventListener('resize',resize,{passive:true}); resize(); step();
     })();
  </script>
+<script>
+// === SAFE I18N PATCH (no content overwrite) ===
+(function(){
+  var getLang = (window.__getLang && window.__getLang()) || 'pl';
+  // 1) <html lang=...>
+  try { document.documentElement.setAttribute('lang', getLang); } catch(e){}
+
+  // 2) Etykieta selektora języka (bez dotykania niczego innego)
+  var lab = document.querySelector('.langpick label');
+  if (lab) lab.textContent = (getLang === 'en' ? 'Language' : 'Język');
+
+  // 3) Okruszki: tylko typ i „Szczegóły/Details” — nie ruszamy reszty
+  var qs = new URLSearchParams(location.search);
+  var typRaw = (qs.get('typ') || 'kobieta').toLowerCase();
+  var map = {
+    pl: { kobieta:'Kobieta', mezczyzna:'Mężczyzna', dziecko:'Dziecko', details:'Szczegóły' },
+    en: { kobieta:'Woman',   mezczyzna:'Man',       dziecko:'Child',   details:'Details'   }
+  };
+  var dict = map[getLang] || map.pl;
+
+  var crumbTyp = document.getElementById('crumb-typ');
+  if (crumbTyp) crumbTyp.textContent = dict[typRaw] || typRaw;
+
+  var crumbLbl = document.getElementById('crumb-label');
+  if (crumbLbl) crumbLbl.textContent = dict.details;
+})();
+</script>
 </body>
 </html>
