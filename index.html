@@ -11,7 +11,7 @@
   <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="/icons/icon-512.png">
 
-  <!-- CSS (pozostawiam v=10 jak u Ciebie) -->
+  <!-- CSS (jak u Ciebie) -->
   <link rel="stylesheet" href="assets/style.css?v=10" />
 
   <style>
@@ -192,7 +192,7 @@
           </svg>
         </div>
 
-        <!-- ▼▼ NOWY: Tłumacz (PL/EN) – lekki, bez Google banneru ▼▼ -->
+        <!-- Tłumacz (PL/EN) -->
         <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
           <label for="bhLangSelect">Język</label>
           <select id="bhLangSelect">
@@ -200,7 +200,6 @@
             <option value="en">EN</option>
           </select>
         </div>
-        <!-- ▲▲ KONIEC: Tłumacz ▲▲ -->
       </div>
     </header>
 
@@ -224,13 +223,10 @@
       <a class="pill pill--blue" href="gry.html">
         <span class="ico">🎮</span><span data-i18n="pill_games">Gry / Trening</span>
       </a>
-      <!-- NOWY GUZIK: Quizy -->
       <a class="pill pill--blue" href="quizzes.html" id="btn-quizzes">
         <span class="ico">🧠</span><span data-i18n="pill_quizzes">Quizy</span>
       </a>
     </nav>
-
-    <!-- Launcher mini-quizu (USUNIĘTY) -->
 
     <div class="actions" role="navigation" aria-label="Szybkie akcje">
       <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
@@ -266,8 +262,6 @@
     </section>
   </div>
 
-  <!-- Modal QUIZ (USUNIĘTY) -->
-
   <!-- Modal PORADA -->
   <div id="bh2025Porada" class="bh2025-porada" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025PoradaTitle">
     <div class="bh2025-porada__panel">
@@ -289,9 +283,6 @@
 
   <!-- Skrypt bazowy strony -->
   <script src="assets/main.js?v=10"></script>
-
-  <!-- (USUNIĘTY) I18N translator -->
-  <!-- (USUNIĘTY) QUIZ skrypt -->
 
   <!-- PORADY (klik pigułek przechwycony w capture) -->
   <script>
@@ -386,18 +377,18 @@
 
     const panel = document.createElement('div');
     panel.className = 'bh2025-suggest'; panel.setAttribute('role','listbox'); panel.setAttribute('aria-hidden','true');
-    panel.innerHTML = <div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>;
+    panel.innerHTML = '<div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>';
     input.parentElement.appendChild(panel);
     const list = panel.querySelector('#bh2025List');
     let results = [], active = -1;
 
     function buildUrls(hit){
       if(hit.sos){
-        const url = szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)};
+        const url = `szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
         return [{label: hit.label, url, sub:'SOS'}];
       }
       return GENDERS.map(g=>{
-        const url = szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)};
+        const url = `szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
         return {label:`${hit.label} • ${g.label}`, url, sub:g.label};
       });
     }
@@ -413,7 +404,7 @@
       results.forEach((r,idx)=>{
         const li = document.createElement('li');
         li.setAttribute('role','option'); li.className='bh2025-sg-item'; li.dataset.index = String(idx);
-        li.innerHTML = <span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>;
+        li.innerHTML = `<span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>`;
         li.addEventListener('mouseenter', ()=>setActive(idx));
         li.addEventListener('mouseleave', ()=>setActive(-1));
         li.addEventListener('click', ()=>go(idx));
@@ -459,12 +450,11 @@
   <!-- Add to Home Screen (iOS/Android) -->
   <script src="assets/a2hs.js?v=1"></script>
 
-  <!-- ▼▼ NOWY SKRYPT: LEKKI TŁUMACZ PL/EN (bez banera Google) ▼▼ -->
+  <!-- LEKKI TŁUMACZ PL/EN — JEDYNY (brak duplikatów) -->
   <script>
     (function(){
       if(window.__bhI18nBound) return; window.__bhI18nBound = true;
 
-      // Słowniki (rozszerzalne na kolejne języki/klucze)
       const I18N = {
         pl: {
           brand_title:"Boli Help",
@@ -519,32 +509,30 @@
       let lang = (localStorage.getItem(LS_KEY) || root.getAttribute('data-lang') || root.lang || 'pl').toLowerCase();
       if(!I18N[lang]) lang = 'pl';
 
-      // API dla innych skryptów (używane przez PORADY)
       window.__getLang = () => lang;
       window.__t = (k) => (I18N[lang] && I18N[lang][k]) || (I18N['pl'] && I18N['pl'][k]) || k;
 
       function applyTranslations(){
-        // a) proste data-i18n (innerText)
+        // a) data-i18n
         document.querySelectorAll('[data-i18n]').forEach(el=>{
           const key = el.getAttribute('data-i18n');
           const val = window.__t(key);
           if(val!=null){
-            // zachowaj ewentualne ikony/emoji – gdy tekst zaczyna się ikoną
-            if(el.firstChild && el.firstChild.nodeType===3){ el.firstChild.nodeValue = val; }
-            else { el.innerHTML = val; }
+            // prosty tekst/HTML — zachowujemy emoji jeśli są na początku
+            el.innerHTML = val;
           }
         });
         // b) placeholder wyszukiwarki
         const search = document.getElementById('bhSearch');
-        if(search){ search.placeholder = window.__t('search_ph'); search.setAttribute('aria-label', window.__t('search_ph')); }
-        // c) nagłówek listy podpowiedzi jeśli istnieje
+        if(search){ const ph = window.__t('search_ph'); search.placeholder = ph; search.setAttribute('aria-label', ph); }
+        // c) nagłówek listy podpowiedzi
         document.querySelectorAll('.bh2025-sg-head').forEach(el=>{ el.textContent = window.__t('sg_head'); });
 
-        // d) atrybuty lang na <html>
+        // d) <html lang>
         root.setAttribute('lang', lang);
         root.setAttribute('data-lang', lang);
 
-        // e) tekst labelki obok selektora
+        // e) etykieta selektora
         const lab = document.querySelector('#bhLangPick label');
         if(lab){ lab.textContent = (lang==='en'?'Language':'Język'); }
       }
@@ -556,7 +544,7 @@
         applyTranslations();
       }
 
-      // Inicjalizacja selektora
+      // Inicjalizacja selektora (bez przeładowania)
       const sel = document.getElementById('bhLangSelect');
       if(sel){
         sel.value = lang;
@@ -565,13 +553,14 @@
 
       // Pierwsze zastosowanie
       applyTranslations();
+
+      // Opcjonalne API
+      window.__setLang = setLang;
     })();
   </script>
-  <!-- ▲▲ KONIEC SKRYPTU TŁUMACZA ▲▲ -->
 
   <!-- OSTATECZNY PATCH: ukrycie starego GT + kadrowanie + glow -->
   <style id="bh-final-patch">
-    /* Ukryj resztki starego Google Translate jeśli by się wstrzyknął */
     .goog-te-banner-frame.skiptranslate{display:none!important}
     .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
 
@@ -588,10 +577,10 @@
     /* Panel podpowiedzi – nie pokazuj gdy pusty */
     .bh2025-suggest[aria-hidden="true"]{display:none!important}
 
-    /* Glow/puls dla akcji */
+    /* Glow/puls dla akcji — poprawione rgba i !important */
     :root{ --glow-green:34,227,160; --glow-red:255,107,107; --glow-amber:255,184,108; }
     #btn-hosp{
-      border-color: rgba(var(--glow-red), .😎!important;
+      border-color: rgba(var(--glow-red), .7) !important;
       box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-red), .5) inset, 0 0 18px rgba(var(--glow-red), .35);
       animation: bhRedPulse 2.2s ease-in-out infinite;
     }
@@ -609,42 +598,5 @@
     @keyframes bhGreenPulse{0%{box-shadow:0 0 0 0 rgba(var(--glow-green),.10),0 0 18px rgba(var(--glow-green),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-green),.08),0 0 26px rgba(var(--glow-green),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-green),.10),0 0 18px rgba(var(--glow-green),.35)}}
     @keyframes bhAmberBreath{0%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.08),0 0 18px rgba(var(--glow-amber),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-amber),.06),0 0 26px rgba(var(--glow-amber),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.08),0 0 18px rgba(var(--glow-amber),.35)}}
   </style>
-<!-- JĘZYK: domyślnie PL + współdzielony localStorage -->
-<script>
-(function(){
-  var LS_KEY = 'bh.lang';
-  var root   = document.documentElement;
-  var picker = document.getElementById('bhLangSelect');
-  var label  = document.querySelector('#bhLangPick label');
-
-  // 1) DOMYŚLNIE PL przy pierwszym wejściu
-  var lang = (localStorage.getItem(LS_KEY) || 'pl').toLowerCase();
-  localStorage.setItem(LS_KEY, lang);
-  root.setAttribute('lang', lang);
-
-  // 2) Ustaw wygląd selektora
-  if (picker) picker.value = lang;
-  if (label)  label.textContent = (lang === 'en' ? 'Language' : 'Język');
-
-  // 3) Zmiana języka — zapisz i powiadom resztę UI
-  function setLang(l){
-    if(!l || (l!=='pl' && l!=='en')) return;
-    localStorage.setItem(LS_KEY, l);
-    root.setAttribute('lang', l);
-    if (picker) picker.value = l;
-    if (label)  label.textContent = (l === 'en' ? 'Language' : 'Język');
-    // nie przeładowujemy strony; emitujemy event dla innych skryptów
-    try{ document.dispatchEvent(new CustomEvent('bh:lang-changed',{detail:{lang:l}})); }catch(e){}
-  }
-
-  if (picker) picker.addEventListener('change', function(){
-    setLang((picker.value || 'pl').toLowerCase());
-  });
-
-  // Eksport (opcjonalnie dla innych modułów)
-  window.__getLang = function(){ return (localStorage.getItem(LS_KEY) || 'pl').toLowerCase(); };
-  window.__setLang = setLang;
-})();
-</script>
 </body>
 </html>
