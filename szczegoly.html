@@ -579,58 +579,6 @@
       }
       addEventListener('resize',resize,{passive:true}); resize(); step();
     })();
- <script>
-// === I18N HOTFIX (SZCZEGÓŁY) ===
-// 1) ustaw prawidłowe <html lang=…>
-try { document.documentElement.setAttribute('lang', (window.__getLang&&__getLang()) || 'pl'); } catch(e){}
-
-// 2) mapowanie typu w okruszkach (Boli Help / typ / Szczegóły)
-(function fixCrumbsType(){
-  const lang = (window.__getLang&&__getLang()) || 'pl';
-  const qs = new URLSearchParams(location.search);
-  const typRaw = (qs.get('typ')||'kobieta').toLowerCase();
-  const map = {
-    pl: { kobieta:'Kobieta', mezczyzna:'Mężczyzna', dziecko:'Dziecko' },
-    en: { kobieta:'Woman',   mezczyzna:'Man',       dziecko:'Child'   }
-  };
-  const nice = (map[lang] && map[lang][typRaw]) || typRaw;
-  const el = document.getElementById('crumb-typ');
-  if (el) el.textContent = nice;
-})();
-
-// 3) brakujące teksty UI nad kartami „Choroby” i „Lekarze”
-(function fixNotes(){
-  const L = (window.__getLang&&__getLang()) || 'pl';
-  const text = {
-    pl: {
-      dx_note: 'Podpowiedzi edukacyjne z zaznaczonych objawów. Nie zastępują konsultacji.',
-      docs_note: 'Kolejność: POZ (lekarz rodzinny) → specjaliści powiązani z problemem. Czerwone flagi kierują do SOR/112.',
-      lang_label: 'Język',
-    },
-    en: {
-      dx_note: 'Educational suggestions from selected symptoms. Not a diagnosis.',
-      docs_note: 'Order: GP (family doctor) → relevant specialists. Red flags → ER/112.',
-      lang_label: 'Language',
-    }
-  }[L];
-
-  // label przy selektorze języka (na wypadek, gdyby nie złapało wcześniej)
-  const lab = document.querySelector('.langpick label');
-  if (lab) lab.textContent = text.lang_label;
-
-  // notka „Choroby (beta)”
-  const dn = document.querySelector('#s-dx .dx-note');
-  if (dn) dn.textContent = text.dx_note;
-
-  // notka „Lekarze”
-  const docn = document.querySelector('#s-docs .docs-note');
-  if (docn) docn.textContent = text.docs_note;
-
-  // „Szczegóły/Details” w okruszkach (gdyby zostało po polsku)
-  const crumbDetails = document.getElementById('crumb-label');
-  if (crumbDetails) crumbDetails.textContent = (L==='en' ? 'Details' : 'Szczegóły');
-})();
-</script>
  </script>
 </body>
 </html>
