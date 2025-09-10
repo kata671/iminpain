@@ -609,5 +609,42 @@
     @keyframes bhGreenPulse{0%{box-shadow:0 0 0 0 rgba(var(--glow-green),.10),0 0 18px rgba(var(--glow-green),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-green),.08),0 0 26px rgba(var(--glow-green),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-green),.10),0 0 18px rgba(var(--glow-green),.35)}}
     @keyframes bhAmberBreath{0%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.08),0 0 18px rgba(var(--glow-amber),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-amber),.06),0 0 26px rgba(var(--glow-amber),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.08),0 0 18px rgba(var(--glow-amber),.35)}}
   </style>
+<!-- JĘZYK: domyślnie PL + współdzielony localStorage -->
+<script>
+(function(){
+  var LS_KEY = 'bh.lang';
+  var root   = document.documentElement;
+  var picker = document.getElementById('bhLangSelect');
+  var label  = document.querySelector('#bhLangPick label');
+
+  // 1) DOMYŚLNIE PL przy pierwszym wejściu
+  var lang = (localStorage.getItem(LS_KEY) || 'pl').toLowerCase();
+  localStorage.setItem(LS_KEY, lang);
+  root.setAttribute('lang', lang);
+
+  // 2) Ustaw wygląd selektora
+  if (picker) picker.value = lang;
+  if (label)  label.textContent = (lang === 'en' ? 'Language' : 'Język');
+
+  // 3) Zmiana języka — zapisz i powiadom resztę UI
+  function setLang(l){
+    if(!l || (l!=='pl' && l!=='en')) return;
+    localStorage.setItem(LS_KEY, l);
+    root.setAttribute('lang', l);
+    if (picker) picker.value = l;
+    if (label)  label.textContent = (l === 'en' ? 'Language' : 'Język');
+    // nie przeładowujemy strony; emitujemy event dla innych skryptów
+    try{ document.dispatchEvent(new CustomEvent('bh:lang-changed',{detail:{lang:l}})); }catch(e){}
+  }
+
+  if (picker) picker.addEventListener('change', function(){
+    setLang((picker.value || 'pl').toLowerCase());
+  });
+
+  // Eksport (opcjonalnie dla innych modułów)
+  window.__getLang = function(){ return (localStorage.getItem(LS_KEY) || 'pl').toLowerCase(); };
+  window.__setLang = setLang;
+})();
+</script>
 </body>
 </html>
