@@ -284,13 +284,15 @@
         sel.value = get();
         sel.addEventListener('change', ()=>{ set(sel.value||'pl'); location.replace(location.href); });
       }
+      // <html lang=...>
+      try{ document.documentElement.setAttribute('lang', get()); }catch(e){}
     })();
     const L=()=> (window.__getLang && window.__getLang()) || 'pl';
 
     /* --- i18n (UI) --- */
     const I18N={pl:{lang_label:'Język',back:'← Wróć',hero_note:'Edukacyjnie, nie diagnostycznie. W nagłej, ciężkiej dolegliwości lub przy czerwonych flagach — skorzystaj z <b>112</b> lub SOR.',legend:'Zaznacz <strong>objawy</strong> — pasek <b>Ryzyko</b> oraz karty <b>Choroby</b>/<b>Lekarze</b> dopasują się automatycznie.',tabs:{symptoms:'Objawy',causes:'Przyczyny',firstaid:'Pierwsza pomoc',otc:'Leki OTC',rx:'Leki na receptę',rehab:'Rehabilitacja / Profilaktyka',myths:'Mity vs Fakty',faq:'FAQ',dx:'Choroby (beta)',docs:'Lekarze'},symptoms_head:'Objawy',urgent_head:'Kiedy się niepokoić (czerwone flagi)',risk:'Ryzyko:',risk_low:'niskie',risk_mid:'umiarkowane',risk_high:'wysokie',urgent_strip:'Masz objawy alarmowe? <strong>Nie zwlekaj.</strong>',call_112:'Zadzwoń 112',hint:'Masz zaznaczone objawy. Zobacz edukacyjne podpowiedzi w <strong>Choroby</strong> lub przejdź do <strong>Lekarze</strong>.',hint_btn_dx:'Choroby',hint_btn_docs:'Lekarze',badge_sor:'pilnie SOR',badge_poz:'POZ',badge_doc:'POZ/specjalista',crumbs_details:'Szczegóły'},en:{lang_label:'Language',back:'← Back',hero_note:'Educational, not diagnostic. If symptoms are severe or red flags — use <b>112</b> / ER.',legend:'Select <strong>symptoms</strong> — <b>Risk</b> and <b>Conditions/Doctors</b> auto-adjust.',tabs:{symptoms:'Symptoms',causes:'Causes',firstaid:'First aid',otc:'OTC',rx:'Prescription',rehab:'Rehab / Prevention',myths:'Myths vs Facts',faq:'FAQ',dx:'Conditions (beta)',docs:'Doctors'},symptoms_head:'Symptoms',urgent_head:'When to worry (red flags)',risk:'Risk:',risk_low:'low',risk_mid:'moderate',risk_high:'high',urgent_strip:'Alarm signs? <strong>Don’t wait.</strong>',call_112:'Call 112',hint:'You selected symptoms. See hints in <strong>Conditions</strong> or open <strong>Doctors</strong>.',hint_btn_dx:'Conditions',hint_btn_docs:'Doctors',badge_sor:'urgent ER',badge_poz:'GP',badge_doc:'GP/specialist',crumbs_details:'Details'}};
 
-    /* --- dane minimalne (wystarczą do działania) --- */
+    /* --- dane minimalne --- */
     const BASE={pl:{rehabCommon:["Sen 7–9 h","Nawodnienie","Lekka aktywność"],otcPain:[{t:"Paracetamol — ból/gorączka",audience:"all"},{t:"Ibuprofen — dorośli",audience:"adult"}],urgentCommon:["Utrata przytomności","Duszność","Krwawienie nie do opanowania"]},en:{rehabCommon:["Sleep 7–9 h","Hydration","Light activity"],otcPain:[{t:"Paracetamol — pain/fever",audience:"all"},{t:"Ibuprofen — adults",audience:"adult"}],urgentCommon:["Loss of consciousness","Dyspnea","Uncontrolled bleeding"]}};
 
     const CONTENT_PL={
@@ -375,7 +377,7 @@
       document.getElementById('urgent-strip').innerHTML=`${d.urgent_strip} <a class="cta" id="cta-112" href="tel:112" aria-label="${d.call_112}">${d.call_112}</a>`;
       document.querySelector('.risk-mini small').innerHTML=`${d.risk} <span id="risk-label">${d.risk_low}</span>`;
 
-      // hint (ważne: po innerHTML zawsze dowiązuję zdarzenia)
+      // hint (po innerHTML dowiążę zdarzenia niżej)
       const hint=document.getElementById('dx-hint');
       hint.innerHTML=`${d.hint} <button type="button" id="dx-open">${d.hint_btn_dx}</button> <button type="button" id="docs-open">${d.hint_btn_docs}</button>`;
     })();
@@ -483,7 +485,7 @@
     }
     tabs.forEach(t=>t.addEventListener('click',()=>showPanel(t.getAttribute('data-target'))));
 
-    /* --- Dx / Doctors --- */
+    /* --- Dx / Doctors (NAPRAWIONE guziki) --- */
     function gather(){ const from=(id)=>[...document.querySelectorAll('#'+id+' li.li-checked')].map(li=>li.textContent.toLowerCase()); return {symp:from('symp-common'),urgent:from('urgent')}; }
     function computeDx(){
       const {symp,urgent}=gather(); const picked=symp.concat(urgent);
@@ -503,7 +505,8 @@
       return hits.length?hits.sort((a,b)=>b._score-a._score).slice(0,5):[{_score:0,name:L()==='en'?'Too little data':'Za mało danych',advice:L()==='en'?'Select symptoms first.':'Najpierw zaznacz objawy.',badge:'poz',ico:'ℹ️',_max:1,_match:[]}];
     }
     function renderDx(){
-      const ul=document.getElementById('dx-list'); ul.innerHTML='';
+      const ul=document.getElementById('dx-list'); if(!ul) return;
+      ul.innerHTML='';
       computeDx().forEach(it=>{
         const li=document.createElement('li');
         const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
@@ -532,8 +535,9 @@
       return list;
     }
     function renderDocs(){
-      const ul=document.getElementById('docs-list'); ul.innerHTML='';
+      const ul=document.getElementById('docs-list'); if(!ul) return;
       const d=I18N[L()];
+      ul.innerHTML='';
       computeDocs().forEach(it=>{
         const li=document.createElement('li');
         const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
@@ -544,16 +548,19 @@
       });
     }
 
-    /* — spiecie — */
+    /* — spięcie interakcji — */
     document.addEventListener('bh:symptoms-changed',()=>{ renderDx(); renderDocs(); });
     document.querySelector('[data-variant="dx"]').addEventListener('click',()=>{ renderDx(); showPanel('#s-dx'); });
     document.querySelector('[data-variant="docs"]').addEventListener('click',()=>{ renderDocs(); showPanel('#s-docs'); });
-    const hintBind=()=>{ const a=document.getElementById('dx-open'), b=document.getElementById('docs-open'); if(a) a.onclick=()=>{ renderDx(); showPanel('#s-dx'); }; if(b) b.onclick=()=>{ renderDocs(); showPanel('#s-docs'); }; };
-    hintBind(); // po pierwszym renderze
 
-    // po zmianie języka hint jest rekreowany — dowiąż jeszcze raz
-    const mo=new MutationObserver(()=>hintBind());
-    mo.observe(document.getElementById('dx-hint'),{childList:true,subtree:true});
+    // Hint buttons – zawsze działają (po rekreacji HTML w i18n)
+    function bindHint(){
+      const a=document.getElementById('dx-open'), b=document.getElementById('docs-open');
+      if(a){ a.onclick=()=>{ renderDx(); showPanel('#s-dx'); document.querySelector('.tab[data-variant="dx"]')?.classList.remove('tab-attn'); }; }
+      if(b){ b.onclick=()=>{ renderDocs(); showPanel('#s-docs'); document.querySelector('.tab[data-variant="docs"]')?.classList.remove('tab-attn'); }; }
+    }
+    bindHint();
+    new MutationObserver(bindHint).observe(document.getElementById('dx-hint'),{childList:true,subtree:true});
 
     /* Particles — optional eye-candy */
     (function particles(){
@@ -579,216 +586,6 @@
       }
       addEventListener('resize',resize,{passive:true}); resize(); step();
     })();
- </script>
-<script>
-// === SAFE I18N PATCH (no content overwrite) ===
-(function(){
-  var getLang = (window.__getLang && window.__getLang()) || 'pl';
-  // 1) <html lang=...>
-  try { document.documentElement.setAttribute('lang', getLang); } catch(e){}
-
-  // 2) Etykieta selektora języka (bez dotykania niczego innego)
-  var lab = document.querySelector('.langpick label');
-  if (lab) lab.textContent = (getLang === 'en' ? 'Language' : 'Język');
-
-  // 3) Okruszki: tylko typ i „Szczegóły/Details” — nie ruszamy reszty
-  var qs = new URLSearchParams(location.search);
-  var typRaw = (qs.get('typ') || 'kobieta').toLowerCase();
-  var map = {
-    pl: { kobieta:'Kobieta', mezczyzna:'Mężczyzna', dziecko:'Dziecko', details:'Szczegóły' },
-    en: { kobieta:'Woman',   mezczyzna:'Man',       dziecko:'Child',   details:'Details'   }
-  };
-  var dict = map[getLang] || map.pl;
-
-  var crumbTyp = document.getElementById('crumb-typ');
-  if (crumbTyp) crumbTyp.textContent = dict[typRaw] || typRaw;
-
-  var crumbLbl = document.getElementById('crumb-label');
-  if (crumbLbl) crumbLbl.textContent = dict.details;
-})();
-</script>
-<script>
-/* === COMPLETE SAFE I18N APPLY (no lists touched) === */
-(function(){
-  var getLang = (window.__getLang && window.__getLang()) || 'pl';
-  var html = document.documentElement; try{ html.setAttribute('lang', getLang); }catch(e){}
-
-  var I18N = {
-    pl:{
-      lang_label:'Język', back:'← Wróć',
-      hero_note:'Edukacyjnie, nie diagnostycznie. W nagłej, ciężkiej dolegliwości lub przy czerwonych flagach — skorzystaj z <b>112</b> lub SOR.',
-      legend:'Zaznacz <strong>objawy</strong> — pasek <b>Ryzyko</b> oraz karty <b>Choroby</b>/<b>Lekarze</b> dopasują się automatycznie.',
-      steps:['1. Objawy','2. Choroby','3. Lekarze','4. Co dalej'],
-      stepsSub:['Zaznacz','Zobacz podpowiedzi','Gdzie iść?','112/SOR lub dom'],
-      tabs:{symptoms:'Objawy', causes:'Przyczyny', firstaid:'Pierwsza pomoc', otc:'Leki OTC', rx:'Leki na receptę', rehab:'Rehabilitacja / Profilaktyka', myths:'Mity vs Fakty', faq:'FAQ', dx:'Choroby (beta)', docs:'Lekarze'},
-      symptoms_head:'Objawy',
-      urgent_head:'Kiedy się niepokoić (czerwone flagi)',
-      risk:'Ryzyko:', risk_low:'niskie', risk_mid:'umiarkowane', risk_high:'wysokie',
-      show_more:'Pokaż więcej', show_less:'Pokaż mniej',
-      urgent_strip:'Masz objawy alarmowe? <strong>Nie zwlekaj.</strong>',
-      call_112:'Zadzwoń 112',
-      hint:'Masz zaznaczone objawy. Zobacz edukacyjne podpowiedzi w <strong>Choroby</strong> lub przejdź do <strong>Lekarze</strong>.',
-      hint_btn_dx:'Choroby', hint_btn_docs:'Lekarze',
-      h_cause:'Przyczyny', h_aid:'Pierwsza pomoc',
-      h_otc:'Leki bez recepty (OTC)', h_rx:'Leki na receptę (informacyjnie)',
-      h_rehab:'Rehabilitacja / Profilaktyka', h_myths:'Mity vs Fakty',
-      h_faq:'FAQ', h_dx:'Choroby (beta)', h_docs:'Lekarze',
-      crumbs_details:'Szczegóły',
-      stats_h:'📊 Statystyki i ciekawostki medyczne',
-      stats:[
-        '✅ Ponad 70% przypadków bólu brzucha ma podłoże funkcjonalne, nie chorobowe.',
-        '✅ Mężczyźni zgłaszają objawy o 40% rzadziej niż kobiety – mimo podobnych dolegliwości.',
-        '✅ Stres odpowiada nawet za 60% zgłoszeń bólowych bez uszkodzeń fizycznych.',
-        '✅ Aż 90% pacjentów szuka objawów w internecie przed wizytą u lekarza.',
-        '✅ Tylko 1 na 10 przypadków bólu klatki piersiowej to faktyczny zawał serca.',
-        '✅ Objawy psychiczne (lęk, panika) mogą dawać silne objawy somatyczne: ból serca, duszności.',
-        '✅ Ból lewej ręki to tylko jeden z wielu objawów zawału – ważny jest kontekst!',
-        '✅ Większość dzieci z bólem brzucha nie wymaga interwencji – to stres lub dieta.'
-      ],
-      prep_visit:'Jak się przygotować na wizytę?',
-      prep_alert:'Zbierz: listę objawów i czas trwania, leki, choroby przewlekłe, alergie, pomiary (temp./ciśnienie), wyniki badań.',
-      find_er:'Znajdź SOR w pobliżu', find_pharmacy:'Znajdź aptekę 24h',
-      badge_poz:'POZ', badge_sor:'pilnie SOR', badge_doc:'POZ/specjalista',
-      types:{kobieta:'Kobieta', mezczyzna:'Mężczyzna', dziecko:'Dziecko', details:'Szczegóły'}
-    },
-    en:{
-      lang_label:'Language', back:'← Back',
-      hero_note:'Educational, not diagnostic. If symptoms are severe or you see red flags — use <b>112</b> or the ER.',
-      legend:'Select <strong>symptoms</strong> — the <b>Risk</b> bar and <b>Conditions</b>/<b>Doctors</b> cards will auto-adjust.',
-      steps:['1. Symptoms','2. Conditions','3. Doctors','4. Next'],
-      stepsSub:['Select','See hints','Where to go?','112/ER or home'],
-      tabs:{symptoms:'Symptoms', causes:'Causes', firstaid:'First aid', otc:'OTC medicines', rx:'Prescription (info)', rehab:'Rehab / Prevention', myths:'Myths vs Facts', faq:'FAQ', dx:'Conditions (beta)', docs:'Doctors'},
-      symptoms_head:'Symptoms',
-      urgent_head:'When to worry (red flags)',
-      risk:'Risk:', risk_low:'low', risk_mid:'moderate', risk_high:'high',
-      show_more:'Show more', show_less:'Show less',
-      urgent_strip:'Alarm signs? <strong>Don’t wait.</strong>',
-      call_112:'Call 112',
-      hint:'You selected symptoms. See educational hints in <strong>Conditions</strong> or open <strong>Doctors</strong>.',
-      hint_btn_dx:'Conditions', hint_btn_docs:'Doctors',
-      h_cause:'Causes', h_aid:'First aid',
-      h_otc:'Over-the-counter (OTC)', h_rx:'Prescription medicines (info)',
-      h_rehab:'Rehab / Prevention', h_myths:'Myths vs Facts',
-      h_faq:'FAQ', h_dx:'Conditions (beta)', h_docs:'Doctors',
-      crumbs_details:'Details',
-      stats_h:'📊 Medical stats & curiosities',
-      stats:[
-        '✅ Over 70% of abdominal pain cases are functional rather than disease-based.',
-        '✅ Men report symptoms ~40% less often than women despite similar issues.',
-        '✅ Stress accounts for up to 60% of pain reports without tissue damage.',
-        '✅ About 90% of patients search symptoms online before seeing a doctor.',
-        '✅ Only ~1 in 10 chest-pain cases is an actual heart attack.',
-        '✅ Anxiety/panic can produce strong bodily symptoms: chest pain, shortness of breath.',
-        '✅ Left-arm pain is just one of many heart-attack signs — context matters!',
-        '✅ Most children with belly pain don’t need intervention — often stress or diet.'
-      ],
-      prep_visit:'How to prepare for a visit?',
-      prep_alert:'Bring: list of symptoms and duration, medications, chronic diseases, allergies, measurements (temp./BP), test results.',
-      find_er:'Find ER near me', find_pharmacy:'Find 24h pharmacy',
-      badge_poz:'GP/Primary care', badge_sor:'urgent ER', badge_doc:'GP/specialist',
-      types:{kobieta:'Woman', mezczyzna:'Man', dziecko:'Child', details:'Details'}
-    }
-  };
-  var d = I18N[getLang] || I18N.pl;
-
-  // 1) Language picker label
-  var lab = document.querySelector('.langpick label');
-  if (lab) lab.textContent = d.lang_label;
-
-  // 2) Back button
-  var back = document.getElementById('bhReturnTop');
-  if (back) back.textContent = d.back;
-
-  // 3) Breadcrumbs (only typed part + "Szczegóły/Details")
-  var qs = new URLSearchParams(location.search);
-  var typRaw = (qs.get('typ')||'kobieta').toLowerCase();
-  var crumbTyp = document.getElementById('crumb-typ');
-  if (crumbTyp) crumbTyp.textContent = (d.types[typRaw] || typRaw);
-  var crumbLbl = document.getElementById('crumb-label');
-  if (crumbLbl) crumbLbl.textContent = d.types.details;
-
-  // 4) Hero texts (safe to use innerHTML — zawierają <b>)
-  var note = document.querySelector('.hero .hero-note');
-  if (note) note.innerHTML = d.hero_note;
-  var leg = document.querySelector('.hero .legend');
-  if (leg) leg.innerHTML = d.legend;
-
-  // 5) Steps
-  var s1=document.getElementById('step-1'), s2=document.getElementById('step-2'), s3=document.getElementById('step-3'), s4=document.getElementById('step-4');
-  if(s1){ s1.childNodes[0].nodeValue = d.steps[0]; s1.querySelector('small').textContent = d.stepsSub[0]; }
-  if(s2){ s2.childNodes[0].nodeValue = d.steps[1]; s2.querySelector('small').textContent = d.stepsSub[1]; }
-  if(s3){ s3.childNodes[0].nodeValue = d.steps[2]; s3.querySelector('small').textContent = d.stepsSub[2]; }
-  if(s4){ s4.childNodes[0].nodeValue = d.steps[3]; s4.querySelector('small').textContent = d.stepsSub[3]; }
-
-  // 6) Tabs
-  function setTab(variant, txt){
-    var el = document.querySelector('.tab[data-variant="'+variant+'"]');
-    if (el) el.textContent = txt;
-  }
-  setTab('symptoms', d.tabs.symptoms);
-  setTab('causes', d.tabs.causes);
-  setTab('firstaid', d.tabs.firstaid);
-  setTab('otc', d.tabs.otc);
-  setTab('rx', d.tabs.rx);
-  setTab('rehab', d.tabs.rehab);
-  setTab('myths', d.tabs.myths);
-  setTab('faq', d.tabs.faq);
-  setTab('dx', d.tabs.dx);
-  setTab('docs', d.tabs.docs);
-
-  // 7) Headings (only titles, not lists)
-  function setTxt(sel, txt){ var el=document.querySelector(sel); if(el) el.textContent=txt; }
-  setTxt('#h-obj', d.symptoms_head);
-  setTxt('.subhead', d.urgent_head);
-  setTxt('#h-cause', d.h_cause);
-  setTxt('#h-aid', d.h_aid);
-  setTxt('#h-otc', d.h_otc);
-  setTxt('#h-rx', d.h_rx);
-  setTxt('#h-rehab', d.h_rehab);
-  setTxt('#h-mity', d.h_myths);
-  setTxt('#h-faq', d.h_faq);
-  setTxt('#h-dx', d.h_dx);
-  setTxt('#h-docs', d.h_docs);
-
-  // 8) Risk label caption
-  var riskWrap = document.querySelector('.risk-mini small');
-  if(riskWrap){
-    var lbl = document.getElementById('risk-label');
-    if (!lbl){ lbl = document.createElement('span'); lbl.id='risk-label'; lbl.textContent = d.risk_low; riskWrap.textContent = d.risk+' '; riskWrap.appendChild(lbl); }
-    else { riskWrap.firstChild.nodeValue = d.risk+' '; }
-  }
-  var riskbar = document.getElementById('riskbar');
-  if(riskbar){ riskbar.setAttribute('aria-label', getLang==='en'?'Estimated risk':'Szacowany poziom ryzyka'); }
-
-  // 9) Urgent strip (needs <a> inside -> innerHTML)
-  var strip = document.getElementById('urgent-strip');
-  if(strip){
-    strip.innerHTML = d.urgent_strip + ' <a class="cta" id="cta-112" href="tel:112" aria-label="'+d.call_112+'">'+d.call_112+'</a>';
-  }
-
-  // 10) Hint with buttons (recreate only the inner part, not lists)
-  var hint = document.getElementById('dx-hint');
-  if(hint){
-    hint.innerHTML = d.hint + ' <button type="button" id="dx-open">'+d.hint_btn_dx+'</button> <button type="button" id="docs-open">'+d.hint_btn_docs+'</button>';
-    // reattach handlers if główna logika już jest:
-    var dxBtn = document.getElementById('dx-open');
-    var dcBtn = document.getElementById('docs-open');
-    if (dxBtn && typeof renderDx==='function' && typeof showPanel==='function'){
-      dxBtn.addEventListener('click', function(){ try{ renderDx(); showPanel('#s-dx'); document.querySelector('.tab[data-variant="dx"]')?.classList.remove('tab-attn'); }catch(_){} });
-    }
-    if (dcBtn && typeof renderDocs==='function' && typeof showPanel==='function'){
-      dcBtn.addEventListener('click', function(){ try{ renderDocs(); showPanel('#s-docs'); document.querySelector('.tab[data-variant="docs"]')?.classList.remove('tab-attn'); }catch(_){} });
-    }
-  }
-
-  // 11) Stats card header + bullet points (do not create/remove items)
-  var statH = document.querySelector('#statystyki h3');
-  if(statH) statH.textContent = d.stats_h;
-  var statLis = document.querySelectorAll('#statystyki ul.checklist li');
-  if(statLis && statLis.length === d.stats.length){
-    d.stats.forEach(function(txt,i){ statLis[i].textContent = txt; });
-  }
-})();
-</script>
+  </script>
 </body>
 </html>
