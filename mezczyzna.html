@@ -3,11 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- JEDEN wspólny translator dla całej strony -->
   <script src="assets/lang.js?v=1"></script>
+  <script src="assets/js/translator-unified.js?v=10"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const langs = ['pl','en','de','fr','es','it','ro','uk','ru','cs','sk','lt','lv','et','hu','nl','sv','no','da','pt','el','tr','vi'];
+      if (window.bhTranslate && typeof bhTranslate.init === 'function') {
+        bhTranslate.init({ default: 'pl', available: langs });
+      }
+    });
+  </script>
+
   <title>Boli Help — Mężczyzna</title>
   <meta name="theme-color" content="#0e1230" />
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="assets/style.css?v=10" />
+
   <style>
     html,body{height:100%}
     body[data-page="mezczyzna"]{
@@ -88,42 +101,35 @@
       outline-offset:2px;
     }
 
-    /* ===== WYGLĄD SELEKTORA JĘZYKA (naprawa mobile jak na innych stronach) ===== */
+    /* ===== WYGLĄD SELEKTORA JĘZYKA ===== */
     .langpick{
       position:fixed;
       top:clamp(8px, env(safe-area-inset-top, 8px), 20px);
-      right:12px;
-      z-index:10000;
+      right:12px; z-index:10000;
       display:flex; gap:8px; align-items:center;
       background:rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.24);
       border-radius:12px; padding:6px 10px; backdrop-filter:saturate(120%) blur(4px);
-      max-width:100%;
-      white-space:nowrap;
-      contain:layout;
+      max-width:100%; white-space:nowrap; contain:layout;
     }
     .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
     .langpick select{
       appearance:none;background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.24);
       color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px;
-      max-width:52vw; /* nie rozpycha na mobile */
+      max-width:52vw;
     }
     .langpick option{ color:#0e1230; background:#ffffff }
 
-    /* Mobile: zwężenie, wyśrodkowanie u góry i odsunięcie treści pod notch */
     @media (max-width:560px){
       body{ padding-top: calc(48px + env(safe-area-inset-top, 0px)); }
-      .langpick{
-        left:50%; right:auto; transform:translateX(-50%);
-        gap:6px; padding:5px 8px;
-      }
-      .langpick label{ display:none; } /* więcej miejsca na małych ekranach */
+      .langpick{ left:50%; right:auto; transform:translateX(-50%); gap:6px; padding:5px 8px; }
+      .langpick label{ display:none; }
       .langpick select{ font-size:12px; padding:5px 9px; }
       .container header.header{ margin-top:8px; }
     }
 
-    /* Ukryj ewentualne resztki starego GT */
+    /* Ukryj resztki Google Translate */
     .goog-te-banner-frame.skiptranslate{display:none!important}
     .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
   </style>
@@ -133,7 +139,7 @@
   <div class="bh-grid" aria-hidden="true"></div>
   <div class="bh-floor-fade" aria-hidden="true"></div>
 
-  <!-- SELEKTOR JĘZYKA (naprawiony: góra, nie rozpycha, działa na mobile) -->
+  <!-- SELEKTOR JĘZYKA -->
   <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
     <label for="bhLangSelect">Język</label>
     <select id="bhLangSelect">
@@ -181,57 +187,5 @@
       });
     })();
   </script>
-
-  <!-- LEKKI TŁUMACZ: współdzieli stan ze stroną główną (localStorage 'bh.lang') -->
-  <script>
-    (function(){
-      if(window.__bhMezczyznaI18n) return; window.__bhMezczyznaI18n = true;
-
-      var LS_KEY='bh.lang';
-      var root=document.documentElement;
-      var lang=(localStorage.getItem(LS_KEY)||root.getAttribute('lang')||'pl').toLowerCase();
-      var sel=document.getElementById('bhLangSelect');
-      var lab=document.querySelector('#bhLangPick label');
-
-      var dict = {
-        en: {
-          title: 'Man — choose a body part',
-          back: '← Back',
-          back_aria: 'Go back to previous page',
-          section_aria: 'Thumbnails — man',
-          parts: {
-            oko:'Eye', nos:'Nose', gardlo:'Throat', glowa:'Head',
-            klatka:'Chest', brzuch:'Abdomen', plecy:'Back', biodra:'Hips/Thighs',
-            udo:'Thigh', stopy:'Feet', serce:'Heart', pluca:'Lungs',
-            watroba:'Liver', zoladek:'Stomach', nerki:'Kidneys'
-          }
-        },
-        pl: {
-          title: 'Mężczyzna — wybierz część ciała',
-          back: '← Wróć',
-          back_aria: 'Wróć do poprzedniej strony',
-          section_aria: 'Miniatury — mężczyzna',
-          parts: {
-            oko:'Oko', nos:'Nos', gardlo:'Gardło', glowa:'Głowa',
-            klatka:'Klatka', brzuch:'Brzuch', plecy:'Plecy', biodra:'Biodra',
-            udo:'Udo', stopy:'Stopy', serce:'Serce', pluca:'Płuca',
-            watroba:'Wątroba', zoladek:'Żołądek', nerki:'Nerki'
-          }
-        }
-      };
-<!-- Translator unified -->
-<script src="assets/lang.js?v=10"></script>
-<script src="assets/js/translator-unified.js?v=10"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-    const langs = ['pl','en','de','fr','es','it','ro','uk','ru','cs','sk','lt'];
-    if (window.bhTranslate && typeof bhTranslate.init === 'function') {
-        bhTranslate.init({ default: 'pl', available: langs });
-    }
-});
-</script>
-<!-- /Translator unified -->
-  <!-- USUNIĘTO stary tłumacz -->
-  <!-- <script src="/assets/js/translator-unified.js?v=1" defer></script> -->
 </body>
 </html>
