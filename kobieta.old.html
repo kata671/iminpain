@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kobieta — wybierz obszar bólu</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-med">
+  <nav class="quickbar">
+    <a href="index.html">🏠</a>
+    <a href="szczegoly.html?id=kobieta-glowa">Głowa</a>
+    <!-- ... inne linki ... -->
+  </nav>
+  <header class="site-header">
+    <h1>Kobieta</h1>
+    <p>Wybierz obszar bólu</p>
+  </header>
+
+  <main class="container">
+    <!-- To jest minus — zostawiam tekst, skrypt znajdzie i wyrzuci emoji -->
+    <section>
+      <h2> Wybierz obszar bólu </h2>
+      <div class="grid-4">
+        <a class="card" href="szczegoly.html?id=kobieta-oko"><img src="img/kobieta-oko.png"><span>Oko</span></a>
+        <a class="card" href="szczegoly.html?id=kobieta-nos"><img src="img/kobieta-nos.png"><span>Nos</span></a>
+        <a class="card" href="szczegoly.html?id=kobieta-usta"><img src="img/kobieta-usta.png"><span>Usta</span></a>
+        <a class="card" href="szczegoly.html?id=kobieta-ucho"><img src="img/kobieta-ucho.png"><span>Ucho</span></a>
+        <!-- i tak dalej dla innych obszarów -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>© 2025 • Boli-mnie.pl</small>
+  </footer>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const allHeadings = Array.from(document.querySelectorAll('h1,h2,h3'));
+    const targetH = allHeadings.find(h => /wybierz\s*obszar\s*bólu/i.test(h.textContent || ''));
+    if (!targetH) return;
+    const section = targetH.closest('section, .section, .container') || targetH.parentElement;
+    if (!section) return;
+    section.classList.add('areas');
+
+    const imgs = section.querySelectorAll('img');
+    imgs.forEach(img => {
+      const isCard = img.closest('a, .card, .grid-4');
+      if (isCard) img.classList.add('thumb');
+    });
+
+    const labels = section.querySelectorAll('.card span, .label');
+    const emojiRe = /[\p{Emoji_Presentation}\p{Extended_Pictographic}\uFE0F]/gu;
+    labels.forEach(el => {
+      const txt = (el.textContent || '').replace(emojiRe, '').replace(/\s{2,}/g,' ').trim();
+      el.textContent = txt;
+    });
+  });
+  </script>
+</body>
+</html>

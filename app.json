@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "b7e5191d-2632-455d-9158-a12b20d8a7f3"
+      }
+    },
+    "android": {
+      "package": "com.kata671.bolihelp"
+    }
+  }
+}

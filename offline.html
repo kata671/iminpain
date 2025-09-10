@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pl" data-lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Boli Help — Offline</title>
+  <meta name="theme-color" content="#0e1230" />
+  <link rel="stylesheet" href="assets/style.css?v=10" />
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0e1230;
+      color: #eef2ff;
+      margin: 0; padding: 0;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      height: 100vh; text-align: center;
+    }
+    h1 { font-size: 1.8rem; margin-bottom: 0.5em; }
+    p { margin: 0.5em 0; }
+    .langpick {
+      margin-top: 1em;
+      display:flex; gap:8px; align-items:center;
+    }
+    select {
+      appearance:none;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.24);
+      color:#ffffff; border-radius:10px;
+      padding:6px 10px; cursor:pointer;
+      font-weight:900; letter-spacing:.3px;
+    }
+    option { color:#0e1230; background:#ffffff }
+    .retry {
+      margin-top: 1.5em;
+      padding:10px 16px;
+      border-radius:12px;
+      background:rgba(96,165,250,.2);
+      border:1px solid rgba(59,130,246,.6);
+      color:#eaf2ff; font-weight:800;
+      cursor:pointer;
+    }
+    .retry:hover { background:rgba(96,165,250,.3); }
+  </style>
+</head>
+<body>
+  <h1 id="offlineTitle">Jesteś offline</h1>
+  <p id="offlineMsg">Brak połączenia z Internetem. Możesz korzystać z części treści, a po powrocie sieci spróbuj ponownie.</p>
+
+  <div class="langpick">
+    <label for="bhLang">Język / Language:</label>
+    <select id="bhLang">
+      <option value="pl" selected>PL</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
+
+  <button class="retry" onclick="location.reload()">🔄 Spróbuj ponownie</button>
+
+  <script>
+    const I18N = {
+      pl: {
+        offlineTitle: "Jesteś offline",
+        offlineMsg: "Brak połączenia z Internetem. Możesz korzystać z części treści, a po powrocie sieci spróbuj ponownie.",
+        retry: "🔄 Spróbuj ponownie"
+      },
+      en: {
+        offlineTitle: "You are offline",
+        offlineMsg: "No Internet connection. You can use some cached content and retry when back online.",
+        retry: "🔄 Retry"
+      }
+    };
+
+    function applyI18n(lang){
+      const dict = I18N[lang] || I18N.pl;
+      document.getElementById("offlineTitle").textContent = dict.offlineTitle;
+      document.getElementById("offlineMsg").textContent = dict.offlineMsg;
+      document.querySelector(".retry").textContent = dict.retry;
+      document.documentElement.setAttribute("lang", lang);
+      document.documentElement.setAttribute("data-lang", lang);
+    }
+
+    const sel = document.getElementById("bhLang");
+    sel.addEventListener("change", ()=> applyI18n(sel.value));
+    applyI18n(sel.value);
+  </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pierwsza pomoc — instrukcje</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#7a4dff" />
+  <meta name="description" content="Pierwsza pomoc: reanimacja (RKO), zadławienie, krwawienie, postępowanie przy wypadku." />
+</head>
+<body class="bg-med">
+  <nav class="quickbar">
+    <a href="tel:112">📞 112</a>
+    <a href="lokalizacja.html">📍 Lokalizacja</a>
+    <a href="pierwsza-pomoc.html">⛑️ Pierwsza pomoc</a>
+    <input id="search" type="search" placeholder="np. ból brzucha, kolano..." />
+    <button id="search-btn">🔎</button>
+    <button id="btn-voice" title="Szukaj głosem">🎤</button>
+    <button id="theme-toggle" class="theme-toggle" title="Jasny/Ciemny">☀️/🌙</button>
+  </nav>
+
+  <header class="site-header">
+    <a class="back" href="index.html">← Wróć</a>
+    <h1>⛑️ Pierwsza pomoc — najważniejsze instrukcje</h1>
+    <p class="subtitle">Postępuj według kroków. W zagrożeniu życia dzwoń <strong>112</strong>/<strong>999</strong>.</p>
+  </header>
+
+  <main class="container" id="content">
+    <!-- RKO -->
+    <article class="card" id="rko">
+      <h2>❤️ Reanimacja (RKO) — dorośli</h2>
+      <ul>
+        <li><strong>Bezpieczeństwo</strong> miejsca zdarzenia.</li>
+        <li>Sprawdź reakcję — wołaj i delikatnie potrząśnij.</li>
+        <li>Brak reakcji → <strong>odchyl głowę, udrożnij drogi oddechowe</strong>, sprawdź oddech do 10 s.</li>
+        <li><strong>Brak oddechu / oddech agonalny</strong> → zadzwoń <strong>112</strong> (tryb głośnomówiący) + poproś o <strong>AED</strong>.</li>
+        <li><strong>Uciśnięcia klatki</strong>: środek mostka, głębokość ok. 5–6 cm, rytm ~100–120/min.</li>
+        <li>Stosunek <strong>30:2</strong> (ucisk:oddech) jeśli potrafisz wykonywać oddechy; inaczej — same uciśnięcia.</li>
+        <li><strong>AED</strong>: włącz, naklej elektrody zgodnie z obrazkiem, <em>posłuchaj poleceń</em>.</li>
+        <li>Kontynuuj do przyjazdu służb lub powrotu prawidłowego oddechu.</li>
+      </ul>
+      <p class="note">U dzieci: 5 oddechów ratowniczych na start, uciśnięcia płycej (ok. 1/3 głębokości klatki) i szybciej. Jeśli jesteś sam/a — po 1 min RKO wezwij pomoc.</p>
+    </article>
+
+    <!-- Dławienie -->
+    <article class="card" id="dławienie">
+      <h2>🫁 Zadławienie — jak pomóc</h2>
+      <h3>Dorosły / dziecko przytomne</h3>
+      <ul>
+        <li>Zachęcaj do kaszlu, nie klep po plecach, gdy poszkodowany efektywnie kaszle.</li>
+        <li>Gdy kaszel nieskuteczny: <strong>5 mocnych uderzeń</strong> w plecy <em>między łopatki</em>.</li>
+        <li>Potem <strong>5 uciśnięć nadbrzusza</strong> (chwyt Heimlicha). U kobiet w ciąży i małych dzieci zamiast tego: <strong>5 uciśnięć klatki piersiowej</strong>.</li>
+        <li>Na zmianę 5+5 do czasu usunięcia ciała obcego lub utraty przytomności.</li>
+      </ul>
+      <h3>Niemowlę (do 1. r.ż.)</h3>
+      <ul>
+        <li>Ułóż na przedramieniu głową w dół, podtrzymuj żuchwę.</li>
+        <li><strong>5 uderzeń</strong> między łopatki, następnie <strong>5 uciśnięć klatki</strong> (na mostku).</li>
+      </ul>
+      <p class="note">Jeśli objawy nie ustępują lub doszło do utraty przytomności — <strong>112</strong> i rozpocznij RKO.</p>
+    </article>
+
+    <!-- Wypadek -->
+    <article class="card" id="wypadek">
+      <h2>🚧 Ofiara wypadku — pierwsze kroki</h2>
+      <ul>
+        <li><strong>Zabezpiecz miejsce</strong>: trójkąt, światła awaryjne, rękawiczki.</li>
+        <li><strong>Wezwij pomoc</strong>: 112 — podaj lokalizację i liczbę poszkodowanych.</li>
+        <li><strong>Ocena ABC</strong>: przytomność, oddech; jeśli brak — <a href="#rko">RKO</a>.</li>
+        <li><strong>Silny krwotok</strong> — ucisk bezpośredni, opatrunek uciskowy, możliwa opaska (wg wskazań).</li>
+        <li><strong>Uraz kręgosłupa</strong> — nie poruszaj szyją/tułowiem, stabilizuj w pozycji zastanej.</li>
+        <li><strong>Złamania</strong> — unieruchom <em>dwa sąsiednie stawy</em>, lód przez tkaninę, uniesienie.</li>
+        <li><strong>Oparzenia</strong> — chłodzenie <em>letnią</em> wodą 15–20 min; nie przebijaj pęcherzy.</li>
+      </ul>
+      <p><a href="lokalizacja.html" class="btn">📍 Znajdź najbliższą pomoc</a></p>
+    </article>
+
+    <!-- Urazy -->
+    <article class="card" id="urazy">
+      <h2>🦴 Złamania i urazy — skrót</h2>
+      <ul>
+        <li>RICE: <strong>R</strong>est odpoczynek, <strong>I</strong>ce lód (15–20 min), <strong>C</strong>ompression ucisk, <strong>E</strong>levation uniesienie.</li>
+        <li>Unieruchomienie przed transportem.</li>
+        <li>Silny ból/deformacja/utrata czucia — konsultacja pilna.</li>
+      </ul>
+    </article>
+
+    <!-- NOWE: Krwawienie -->
+    <article class="card" id="krwawienie">
+      <h2>🩸 Krwawienie — jak zatamować</h2>
+      <ul>
+        <li><strong>Ucisk bezpośredni</strong> rany jałowym gazikiem lub czystą tkaniną.</li>
+        <li>Jeśli krwawienie silne → <strong>opatrunek uciskowy</strong> (kilka warstw + bandaż).</li>
+        <li>Jeśli przesiąka → dołóż kolejne warstwy, nie zdejmuj poprzednich.</li>
+        <li><strong>Kończyna</strong> — unieś powyżej poziomu serca, jeśli to możliwe.</li>
+        <li>Jeśli krwawienie nie ustępuje → <strong>opaska uciskowa</strong> (tylko gdy bezpośredni ucisk nieskuteczny lub amputacja).</li>
+        <li><strong>Wezwij pomoc</strong>, jeśli krwawienie masywne, poszkodowany blady/zimny, traci przytomność.</li>
+      </ul>
+      <p class="note">Każde poważne krwawienie wymaga szybkiej konsultacji lekarskiej.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer"><small>© 2025 • Boli-mnie.pl</small></footer>
+  <script src="app.js"></script>
+</body>
+</html>

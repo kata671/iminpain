@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boli mnie… – Kobieta</title>
+<meta name="description" content="Wybierz obszar: głowa/szyja, klatka/brzuch/plecy, biodra/nogi/stopy.">
+<style>
+  :root{
+    --bg:#111; --panel:#1d1d1d; --text:#e9eef3; --muted:#b9c1c7;
+    --ring:#2f80ed; --ring2:rgba(47,128,237,.55);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+  header{padding:24px 16px;border-bottom:1px solid #262626;text-align:center}
+  header h1{margin:0 0 6px;font-size:clamp(22px,4vw,34px);font-weight:800}
+  header p{margin:0;color:var(--muted)}
+  main{max-width:1100px;margin:26px auto 56px;padding:0 16px}
+  .card{background:var(--panel);border:1px solid #2a2a2a;border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.35);padding:14px 14px 18px}
+  .title{margin:4px 6px 10px;font-size:18px;font-weight:700;color:#fff}
+  .frame{position:relative;border-radius:12px;overflow:hidden;background:#0e0e0e}
+  /* obraz większy */
+  .frame img{display:block;width:100%;height:auto;max-height:720px;object-fit:cover}
+  /* 3 klikalne plastry (lewa/środek/prawa tercja) */
+  .slice{position:absolute;top:0;bottom:0;transition:background .15s, outline-color .15s;outline:2px solid transparent;border-radius:10px}
+  .slice:hover{background:rgba(47,128,237,.16);outline-color:var(--ring2);cursor:pointer}
+  .left {left:0; right:66.667%;}
+  .mid  {left:33.333%; right:33.333%;}
+  .right{left:66.667%; right:0;}
+  /* etykiety przy hover */
+  .slice::after{
+    content:attr(aria-label);
+    position:absolute;left:50%;top:10px;transform:translateX(-50%);
+    background:rgba(0,0,0,.55);color:#fff;font-size:13px;font-weight:700;
+    padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);
+    opacity:0;transition:opacity .15s;white-space:nowrap;pointer-events:none
+  }
+  .slice:hover::after{opacity:1}
+  /* linki tekstowe (fallback) */
+  .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .links a{color:#a7c4ff;text-decoration:none;border:1px solid #2a2a2a;padding:6px 10px;border-radius:10px}
+  .links a:hover{border-color:var(--ring)}
+  footer{color:var(--muted);text-align:center;padding:20px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Boli mnie… – Kobieta</h1>
+  <p>Najedź i kliknij w odpowiednią część obrazu (3 sekcje).</p>
+</header>
+
+<main>
+  <div class="card">
+    <div class="title">Wybierz sekcję ciała</div>
+
+    <div class="frame" role="group" aria-label="Kobieta – 3 sekcje">
+      <!-- Obraz 3-panelowy kobiety -->
+      <img src="img/kobieta-3panels.png" alt="Kobieta – głowa/szyja, klatka/brzuch/plecy, biodra/nogi/stopy">
+
+      <!-- 3 strefy klikalne -->
+      <a class="slice left"  href="kobieta-glowa.html"       aria-label="Głowa · Szyja"></a>
+      <a class="slice mid"   href="kobieta-tulow.html"       aria-label="Klatka · Brzuch · Plecy"></a>
+      <a class="slice right" href="kobieta-nogi-stopy.html"  aria-label="Biodra · Nogi · Stopy"></a>
+    </div>
+
+    <!-- Fallback: linki tekstowe -->
+    <div class="links" aria-label="Szybkie linki">
+      <a href="kobieta-glowa.html">Głowa · Szyja</a>
+      <a href="kobieta-tulow.html">Klatka · Brzuch · Plecy</a>
+      <a href="kobieta-nogi-stopy.html">Biodra · Nogi · Stopy</a>
+      <a href="index.html">← Wróć do startu</a>
+    </div>
+  </div>
+</main>
+
+<footer>© <span id="y"></span> iminpain</footer>
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boli mnie… – Mężczyzna</title>
+<meta name="description" content="Wybierz obszar: głowa/szyja, klatka/brzuch/plecy, biodra/nogi/stopy.">
+<style>
+  :root{
+    --bg:#111; --panel:#1d1d1d; --text:#e9eef3; --muted:#b9c1c7;
+    --ring:#2f80ed; --ring2:rgba(47,128,237,.55);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+  header{padding:24px 16px;border-bottom:1px solid #262626;text-align:center}
+  header h1{margin:0 0 6px;font-size:clamp(22px,4vw,34px);font-weight:800}
+  header p{margin:0;color:var(--muted)}
+  main{max-width:1100px;margin:26px auto 56px;padding:0 16px}
+  .card{background:var(--panel);border:1px solid #2a2a2a;border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.35);padding:14px 14px 18px}
+  .title{margin:4px 6px 10px;font-size:18px;font-weight:700;color:#fff}
+  .frame{position:relative;border-radius:12px;overflow:hidden;background:#0e0e0e}
+  /* obraz większy */
+  .frame img{display:block;width:100%;height:auto;max-height:720px;object-fit:cover}
+  /* 3 klikalne plastry */
+  .slice{position:absolute;top:0;bottom:0;transition:background .15s, outline-color .15s;outline:2px solid transparent;border-radius:10px}
+  .slice:hover{background:rgba(47,128,237,.16);outline-color:var(--ring2);cursor:pointer}
+  .left {left:0; right:66.667%;}
+  .mid  {left:33.333%; right:33.333%;}
+  .right{left:66.667%; right:0;}
+  .slice::after{
+    content:attr(aria-label);
+    position:absolute;left:50%;top:10px;transform:translateX(-50%);
+    background:rgba(0,0,0,.55);color:#fff;font-size:13px;font-weight:700;
+    padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);
+    opacity:0;transition:opacity .15s;white-space:nowrap;pointer-events:none
+  }
+  .slice:hover::after{opacity:1}
+  .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .links a{color:#a7c4ff;text-decoration:none;border:1px solid #2a2a2a;padding:6px 10px;border-radius:10px}
+  .links a:hover{border-color:var(--ring)}
+  footer{color:var(--muted);text-align:center;padding:20px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Boli mnie… – Mężczyzna</h1>
+  <p>Najedź i kliknij w odpowiednią część obrazu (3 sekcje).</p>
+</header>
+
+<main>
+  <div class="card">
+    <div class="title">Wybierz sekcję ciała</div>
+
+    <div class="frame" role="group" aria-label="Mężczyzna – 3 sekcje">
+      <!-- Obraz 3-panelowy mężczyzny -->
+      <img src="img/mezczyzna-3panels.png" alt="Mężczyzna – głowa/szyja, klatka/brzuch/plecy, biodra/nogi/stopy">
+
+      <!-- 3 strefy klikalne -->
+      <a class="slice left"  href="mezczyzna-glowa.html"       aria-label="Głowa · Szyja"></a>
+      <a class="slice mid"   href="mezczyzna-tulow.html"       aria-label="Klatka · Brzuch · Plecy"></a>
+      <a class="slice right" href="mezczyzna-nogi-stopy.html"  aria-label="Biodra · Nogi · Stopy"></a>
+    </div>
+
+    <!-- Fallback: linki tekstowe -->
+    <div class="links" aria-label="Szybkie linki">
+      <a href="mezczyzna-glowa.html">Głowa · Szyja</a>
+      <a href="mezczyzna-tulow.html">Klatka · Brzuch · Plecy</a>
+      <a href="mezczyzna-nogi-stopy.html">Biodra · Nogi · Stopy</a>
+      <a href="index.html">← Wróć do startu</a>
+    </div>
+  </div>
+</main>
+
+<footer>© <span id="y"></span> iminpain</footer>
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>

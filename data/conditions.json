@@ -1,0 +1,112 @@
+{
+  "serce_k": {
+    "title": "Serce — kobieta",
+    "causes": ["Choroba wieńcowa", "Zawał serca", "Stres", "Nadciśnienie tętnicze"],
+    "symptoms": ["Ból w klatce piersiowej", "Duszność", "Promieniowanie do lewej ręki"],
+    "doctors": ["Kardiolog", "Lekarz rodzinny"],
+    "medications": ["Nitrogliceryna", "Beta-blokery"],
+    "first_aid": ["Wezwij pogotowie (112)", "Odpoczynek", "Uspokojenie"],
+    "emergency": ["Silny ból klatki piersiowej, zimne poty — natychmiast 112"],
+    "description": "Objawy sercowe wymagają pilnej konsultacji lekarskiej."
+  },
+
+  "pluca_k": {
+    "title": "Płuca — kobieta",
+    "causes": ["Zapalenie płuc", "Astma", "POChP"],
+    "symptoms": ["Kaszel", "Duszność", "Ból w klatce piersiowej przy oddychaniu"],
+    "doctors": ["Pulmonolog", "Lekarz rodzinny"],
+    "medications": ["Antybiotyki", "Sterydy wziewne"],
+    "first_aid": ["Odpoczynek", "Nawodnienie"],
+    "emergency": ["Ostra duszność, sinica — natychmiast wezwij pomoc"],
+    "description": "Choroby płuc mogą mieć poważny przebieg — konieczna konsultacja lekarska."
+  },
+
+  "klatka_piersiowa_k": {
+    "title": "Klatka piersiowa (ściana klp / mięśnie) — kobieta",
+    "causes": [
+      "Nadwyrężenie mięśni międzyżebrowych",
+      "Zapalenie chrząstek żebrowych (kostochondritis)",
+      "Ból mięśniowo-powięziowy po wysiłku lub kaszlu"
+    ],
+    "symptoms": [
+      "Ból nasila się przy ruchu, kaszlu lub głębokim wdechu",
+      "Tkliwość przy ucisku określonego miejsca",
+      "Brak duszności/omdleń (jeśli są → pilna konsultacja)"
+    ],
+    "doctors": ["Lekarz rodzinny (POZ)", "Ortopeda", "Fizjoterapeuta"],
+    "medications": [
+      "Paracetamol",
+      "Ibuprofen/Naproksen (jeśli brak przeciwwskazań)",
+      "Maści/żele przeciwzapalne"
+    ],
+    "first_aid": [
+      "Odpoczynek, unikanie dźwigania",
+      "Ciepłe okłady 10–15 min kilka razy dziennie",
+      "Delikatne ćwiczenia rozciągające po ustąpieniu ostrego bólu"
+    ],
+    "emergency": [
+      "Silny ból klatki z dusznością, nudnościami, zimnym potem lub promieniujący do lewej ręki/szczęki — natychmiast 112"
+    ],
+    "description": "Najczęstsze dolegliwości ściany klatki piersiowej mają podłoże mięśniowo-szkieletowe."
+  },
+
+  "brzuch_k": {
+    "title": "Brzuch — kobieta",
+    "causes": ["Niestrawność", "Zespół jelita drażliwego", "Zapalenie żołądka"],
+    "symptoms": ["Ból brzucha", "Wzdęcia", "Nudności"],
+    "doctors": ["Gastroenterolog", "Lekarz rodzinny"],
+    "medications": ["Leki rozkurczowe", "Probiotyki"],
+    "first_aid": ["Unikanie ciężkich posiłków", "Nawodnienie"],
+    "description": "Ból brzucha może mieć wiele przyczyn — wymaga obserwacji i konsultacji."
+  },
+
+  "plecy_k": {
+    "title": "Plecy — kobieta",
+    "causes": ["Przeciążenie mięśni", "Dyskopatia", "Wady postawy"],
+    "symptoms": ["Ból przy ruchu", "Sztywność", "Promieniowanie do nóg"],
+    "doctors": ["Ortopeda", "Neurolog"],
+    "medications": ["Leki przeciwbólowe", "Maści rozgrzewające"],
+    "first_aid": ["Odpoczynek", "Delikatne ćwiczenia rozciągające"],
+    "description": "Najczęstsze są bóle mięśniowo-szkieletowe wynikające z przeciążeń."
+  },
+
+  "uklad_krw_k": {
+    "title": "Układ krążenia — kobieta",
+    "causes": ["Nadciśnienie", "Miażdżyca", "Zaburzenia rytmu serca"],
+    "symptoms": ["Zawroty głowy", "Obrzęki nóg", "Duszność przy wysiłku"],
+    "doctors": ["Kardiolog"],
+    "medications": ["Leki na ciśnienie", "Leki przeciwzakrzepowe"],
+    "first_aid": ["Kontrola ciśnienia", "Unikanie stresu"],
+    "description": "Układ krążenia odpowiada za transport krwi i tlenu w organizmie."
+  },
+
+  "uklad_oddech_k": {
+    "title": "Układ oddechowy — kobieta",
+    "causes": ["Infekcje wirusowe", "Astma", "POChP"],
+    "symptoms": ["Kaszel", "Świszczący oddech", "Duszność"],
+    "doctors": ["Pulmonolog"],
+    "medications": ["Leki wziewne", "Antybiotyki (jeśli bakteryjne)"],
+    "first_aid": ["Spokój", "Nawodnienie"],
+    "description": "Układ oddechowy odpowiada za wymianę gazową w płucach."
+  },
+
+  "uklad_pokarm_k": {
+    "title": "Układ pokarmowy — kobieta",
+    "causes": ["Zatrucie pokarmowe", "Refluks żołądkowo-przełykowy", "Zespół jelita drażliwego"],
+    "symptoms": ["Ból brzucha", "Zgaga", "Biegunka"],
+    "doctors": ["Gastroenterolog"],
+    "medications": ["Leki rozkurczowe", "Leki osłonowe"],
+    "first_aid": ["Dieta lekkostrawna", "Nawodnienie"],
+    "description": "Układ pokarmowy odpowiada za trawienie i wchłanianie składników odżywczych."
+  },
+
+  "ciaza_k": {
+    "title": "Ciąża",
+    "causes": ["Naturalny proces fizjologiczny"],
+    "symptoms": ["Nudności", "Zawroty głowy", "Zmienność nastroju"],
+    "doctors": ["Ginekolog-położnik"],
+    "medications": ["Suplementacja kwasem foliowym"],
+    "first_aid": ["Regularne wizyty kontrolne", "Zdrowa dieta"],
+    "description": "Ciąża wymaga regularnych kontroli lekarskich."
+  }
+}
