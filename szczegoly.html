@@ -4,25 +4,27 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <script src="assets/lang.js?v=1"></script>
-  <title>Boli Help — Szczegóły</title>
+
+  <!-- Translator unified -->
+  <script src="assets/js/translator-unified.js?v=10"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const langs = ['pl','en','de','fr','es','it','ro','uk','ru','cs','sk','lt','lv','et','da','sv','no','nl','pt','el','tr','vi'];
+      if (window.bhTranslate && typeof bhTranslate.init === 'function') {
+        bhTranslate.init({ default: 'pl', available: langs });
+      }
+    });
+  </script>
+  <!-- /Translator unified -->
+
+  <title>Boli Help – Szczegóły</title>
   <meta name="theme-color" content="#0e1230" />
   <style>
-    :root{
-      --bg:#0e1230; --text:#eef2ff; --muted:#b8c2e0;
-      --card: rgba(60,32,100,.30); --stroke: rgba(164,107,255,.18);
-      --accent:#a46bff; --pink:#ff6ec7; --teal:#5eead4;
-      --ok:#70e1b1; --warn:#ffd16c; --danger:#ff6b6b;
-      --radius:16px; --gap:14px; --speed:.24s;
-      --c-symptoms: rgba(94,234,212,.55);
-      --c-causes:   rgba(164,107,255,.55);
-      --c-firstaid: rgba(112,225,177,.55);
-      --c-otc:      rgba(255,184,108,.65);
-      --c-rx:       rgba(255,107,107,.70);
-      --c-rehab:    rgba(94,234,212,.65);
-      --c-myths:    rgba(164,107,255,.65);
-      --c-faq:      rgba(94,234,212,.55);
-      --c-dx:       rgba(164,107,255,.65);
-      --c-docs:     rgba(94,234,212,.65);
+  :root{
+    --bg:#0e1230; --text:#eef2ff; --muted:#b8c2e0;
+    --card: rgba(60,32,100,.3); --stroke: rgba(164,107,255,.18);
+    --accent:#a46bff; --pink:#ff66c7; --teal:#5eead4;
+    --ok:#70e1b1; --warn:#ffd16c; --danger:#ff6b6b;
     }
     *{box-sizing:border-box} html,body{height:100%}
     body[data-page="szczegoly"]{margin:0; background:var(--bg); color:var(--text);
