@@ -6,6 +6,17 @@
   <title>Boli Help — Szczegóły</title>
   <meta name="theme-color" content="#0e1230" />
 
+  <!-- Guard: jeśli ten plik trafi przez pomyłkę jako "/" (bez ?czesc=), wróć na stronę główną -->
+  <script>
+    (function () {
+      try{
+        var hasPart = /\bczesc=/.test(location.search);
+        var isDetailsPath = /(^|\/)szczegoly\.html$/i.test(location.pathname);
+        if (!isDetailsPath && !hasPart) location.replace('index.html');
+      }catch(_){}
+    })();
+  </script>
+
   <style>
     :root{
       --bg:#0e1230; --text:#eef2ff; --muted:#b8c2e0;
@@ -65,7 +76,7 @@
     .hero-note{ margin-top:10px; color:#b8c2e0; font-size:13px; }
     .legend{ color:#d6e4ff; font-weight:700; margin-top:6px; font-size:13px }
 
-    /* KROKI – asystent */
+    /* KROKI */
     .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0 0}
     .step{position:relative; padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.14);
       background:rgba(255,255,255,.05); font-weight:900; letter-spacing:.2px; color:#dfe6ff; text-align:center}
@@ -169,14 +180,12 @@
     .cta{ display:inline-block; padding:8px 12px; border-radius:10px; font-weight:900; background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.18); text-decoration:none; color:var(--text); }
 
-    /* HINT w Objawach */
     .dx-hint{ display:none; margin-top:10px; border-radius:10px; padding:10px 12px;
       background:rgba(164,107,255,.12); border:1px solid rgba(164,107,255,.35); color:#e9e6ff; }
     .dx-hint.show{ display:block }
     .dx-hint button{ margin-left:8px; padding:8px 10px; border-radius:10px; font-weight:900; cursor:pointer;
       background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); color:#fff }
 
-    /* Choroby – dopasowania */
     .dx-list li{ display:flex; gap:10px; align-items:flex-start; }
     .dx-ico{ width:22px; height:22px; display:grid; place-items:center; border-radius:6px;
       background:rgba(164,107,255,.18); border:1px solid rgba(164,107,255,.35) }
@@ -190,7 +199,6 @@
     .dx-note{ color:#cfe2ff; font-size:13px; margin:.15rem 0 .35rem }
     .dx-match{ font-size:12px; color:#cfe2ff; margin-top:6px }
 
-    /* Lekarze */
     .docs-note{ color:#cfe2ff; font-size:13px; margin:.15rem 0 .35rem }
     .doc-badge{ font-size:12px; padding:4px 8px; border-radius:999px; font-weight:900; letter-spacing:.2px; }
     .doc-badge.poz{ background:rgba(94,234,212,.18); border:1px solid rgba(94,234,212,.45); color:#d9fffa }
@@ -200,7 +208,7 @@
 
     .sr-only{ position:absolute !important; left:-9999px !important; }
 
-    /* ===== WYGLĄD SELEKTORA JĘZYKA ===== */
+    /* Selektor języka */
     .langpick{
       position:fixed; top:12px; right:12px; z-index:10000;
       display:flex; gap:8px; align-items:center;
@@ -216,38 +224,16 @@
     }
     .langpick option{ color:#0e1230; background:#ffffff }
 
-    /* Ukryj ewentualne resztki starego GT */
+    /* Ukryj resztki starego GT */
     .goog-te-banner-frame.skiptranslate{display:none!important}
     .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
-
-    /* Dodatkowa karta — statystyki */
-    .fade-in { animation: fadeInUp 1s ease-in-out; }
-    @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
-    .card#statystyki {
-      background: rgba(20, 30, 60, 0.95);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 1.8rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 0 16px rgba(48,213,200,0.4);
-    }
-    .card#statystyki h3 { color: #30d5c8; font-size: 1.5rem; margin-bottom: 1rem; }
-    .card#statystyki ul.checklist { list-style:none; margin:0; padding:0; }
-    .card#statystyki ul.checklist li{
-      margin-bottom:.75rem; font-size:1.05rem; line-height:1.5; position:relative; padding-left:1.6rem; color:#fff;
-    }
-    .card#statystyki ul.checklist li::before{
-      content:'✔'; position:absolute; left:0; color:#7fffd4; font-weight:bold;
-    }
   </style>
 </head>
-
 <body>
   <div class="bg-anim" aria-hidden="true"></div>
   <div class="grid-bg" aria-hidden="true"></div>
   <canvas id="bh-particles" aria-hidden="true"></canvas>
 
-  <!-- SELEKTOR JĘZYKA (prawy górny róg) -->
   <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
     <label for="bhLangSelect">Język</label>
     <select id="bhLangSelect">
@@ -267,7 +253,6 @@
         <div class="label"><span id="label-icon" aria-hidden="true">●</span><span id="label-text"><b>—</b></span></div>
       </div>
 
-      <!-- KROKI -->
       <div class="steps" aria-label="Asystent kroków">
         <div class="step" id="step-1">1. Objawy<small>Zaznacz</small></div>
         <div class="step" id="step-2">2. Choroby<small>Zobacz podpowiedzi</small></div>
@@ -295,7 +280,6 @@
 
   <main>
     <section class="cards" aria-label="Karty z informacjami szczegółowymi">
-      <!-- OBJAWY -->
       <article class="card" data-type="symptoms" id="s-objawy" aria-labelledby="h-obj" role="tabpanel" aria-hidden="false">
         <h3 id="h-obj">Objawy</h3>
         <ul class="clean" id="symp-common"></ul>
@@ -319,7 +303,6 @@
           <a class="cta" id="cta-112" href="tel:112" aria-label="Zadzwoń na numer alarmowy 112">Zadzwoń 112</a>
         </div>
 
-        <!-- HINT po zaznaczeniu objawów -->
         <div id="dx-hint" class="dx-hint" role="status" aria-live="polite">
           Masz zaznaczone objawy. Zobacz edukacyjne podpowiedzi w <strong>Choroby</strong> lub przejdź do <strong>Lekarze</strong>.
           <button type="button" id="dx-open">Choroby</button>
@@ -327,7 +310,6 @@
         </div>
       </article>
 
-      <!-- PRZYCZYNY -->
       <article class="card" data-type="causes" id="s-przyczyny" role="tabpanel" aria-hidden="true">
         <h3 id="h-cause">Przyczyny</h3>
         <ul class="clean" id="causes"></ul>
@@ -337,7 +319,6 @@
         </div>
       </article>
 
-      <!-- PIERWSZA POMOC -->
       <article class="card" data-type="firstaid" id="s-aid" role="tabpanel" aria-hidden="true">
         <h3 id="h-aid">Pierwsza pomoc</h3>
         <ul class="clean" id="firstaid"></ul>
@@ -347,7 +328,6 @@
         </div>
       </article>
 
-      <!-- OTC -->
       <article class="card" data-type="otc" id="s-otc" role="tabpanel" aria-hidden="true">
         <h3 id="h-otc">Leki bez recepty (OTC)</h3>
         <ul class="clean" id="meds-otc"></ul>
@@ -357,7 +337,6 @@
         </div>
       </article>
 
-      <!-- RX -->
       <article class="card" data-type="rx" id="s-rx" role="tabpanel" aria-hidden="true">
         <h3 id="h-rx">Leki na receptę (informacyjnie)</h3>
         <ul class="clean" id="meds-rx"></ul>
@@ -367,7 +346,6 @@
         </div>
       </article>
 
-      <!-- REHAB -->
       <article class="card" data-type="rehab" id="s-rehab" role="tabpanel" aria-hidden="true">
         <h3 id="h-rehab">Rehabilitacja / Profilaktyka</h3>
         <ul class="clean" id="rehab"></ul>
@@ -377,33 +355,28 @@
         </div>
       </article>
 
-      <!-- MITY -->
       <article class="card" data-type="myths" id="s-mity" role="tabpanel" aria-hidden="true">
         <h3 id="h-mity">Mity vs Fakty</h3>
         <ul class="clean" id="myths"></ul>
       </article>
 
-      <!-- FAQ -->
       <article class="card" data-type="faq" id="s-faq" role="tabpanel" aria-hidden="true">
         <h3 id="h-faq">FAQ</h3>
         <ul class="clean" id="faq"></ul>
       </article>
 
-      <!-- CHOROBY -->
       <article class="card" data-type="dx" id="s-dx" role="tabpanel" aria-hidden="true">
         <h3 id="h-dx">Choroby (beta)</h3>
         <p class="dx-note">Podpowiedzi edukacyjne z zaznaczonych objawów. Nie zastępują konsultacji.</p>
         <ul class="clean dx-list" id="dx-list"></ul>
       </article>
 
-      <!-- LEKARZE -->
       <article class="card" data-type="docs" id="s-docs" role="tabpanel" aria-hidden="true">
         <h3 id="h-docs">Lekarze</h3>
         <p class="docs-note">Kolejność: <b>POZ</b> (lekarz rodzinny) → specjaliści powiązani z problemem. Czerwone flagi kierują do <b>SOR/112</b>.</p>
         <ul class="clean" id="docs-list"></ul>
       </article>
 
-      <!-- STATYSTYKI -->
       <div class="card fade-in" id="statystyki">
         <h3>📊 Statystyki i ciekawostki medyczne</h3>
         <ul class="checklist">
@@ -417,751 +390,684 @@
           <li>✅ Większość dzieci z bólem brzucha nie wymaga interwencji – to stres lub dieta.</li>
         </ul>
       </div>
+
+      <style>
+        .fade-in { animation: fadeInUp 1s ease-in-out; }
+        @keyframes fadeInUp { from {opacity:0;transform:translateY(20px)} to {opacity:1;transform:none} }
+        .card#statystyki { background: rgba(20, 30, 60, 0.95); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem; box-shadow: 0 0 16px rgba(48,213,200,0.4); }
+        .card#statystyki h3 { color: #30d5c8; font-size: 1.5rem; margin-bottom: 1rem; }
+        .card#statystyki ul.checklist { list-style: none; padding: 0; margin: 0; }
+        .card#statystyki ul.checklist li { margin-bottom: .75rem; font-size: 1.05rem; line-height: 1.5; position: relative; padding-left: 1.6rem; color: #fff; }
+        .card#statystyki ul.checklist li::before { content:'✔'; position:absolute; left:0; color:#7fffd4; font-weight:bold; }
+      </style>
+
     </section>
   </main>
-  <script>
-    /* =========================
-       JĘZYK — wspólny z całą witryną
-       ========================= */
-    (function langInit(){
-      const KEY='bh.lang';
-      const get = ()=> localStorage.getItem(KEY) || 'pl';
-      const set = (v)=> { localStorage.setItem(KEY, v); };
-      window.__getLang = get;
-      const sel = document.getElementById('bhLangSelect');
-      if(sel){
-        sel.value = get();
-        sel.addEventListener('change', ()=>{
-          set(sel.value||'pl');
-          // przeładowanie, by użyć odpowiednich treści
-          location.replace(location.href);
-        });
-      }
-    })();
+<script>
+  /* =========================
+     JĘZYK — wspólny z całą witryną
+     ========================= */
+  (function langInit(){
+    const KEY='bh.lang';
+    const get = ()=> localStorage.getItem(KEY) || 'pl';
+    const set = (v)=> { localStorage.setItem(KEY, v); };
+    window.__getLang = get;
+    const sel = document.getElementById('bhLangSelect');
+    if(sel){
+      sel.value = get();
+      sel.addEventListener('change', ()=>{
+        set(sel.value||'pl');
+        // przeładowanie, by użyć odpowiednich treści
+        location.replace(location.href);
+      });
+    }
+  })();
 
-    /* =========================
-       I18N — UI statyczny
-       ========================= */
-    const I18N = {
-      pl:{
-        lang_label:'Język', back:'← Wróć',
-        hero_note:'Edukacyjnie, nie diagnostycznie. W nagłej, ciężkiej dolegliwości lub przy czerwonych flagach — skorzystaj z <b>112</b> lub SOR.',
-        legend:'Zaznacz <strong>objawy</strong> — pasek <b>Ryzyko</b> oraz karty <b>Choroby</b>/<b>Lekarze</b> dopasują się automatycznie.',
-        steps:['1. Objawy','2. Choroby','3. Lekarze','4. Co dalej'],
-        stepsSub:['Zaznacz','Zobacz podpowiedzi','Gdzie iść?','112/SOR lub dom'],
-        tabs:{
-          symptoms:'Objawy', causes:'Przyczyny', firstaid:'Pierwsza pomoc',
-          otc:'Leki OTC', rx:'Leki na receptę', rehab:'Rehabilitacja / Profilaktyka',
-          myths:'Mity vs Fakty', faq:'FAQ', dx:'Choroby (beta)', docs:'Lekarze'
-        },
-        symptoms_head:'Objawy',
-        urgent_head:'Kiedy się niepokoić (czerwone flagi)',
-        risk:'Ryzyko:', risk_low:'niskie', risk_mid:'umiarkowane', risk_high:'wysokie',
-        show_more:'Pokaż więcej', show_less:'Pokaż mniej',
-        urgent_strip:'Masz objawy alarmowe? <strong>Nie zwlekaj.</strong>',
-        call_112:'Zadzwoń 112',
-        hint:'Masz zaznaczone objawy. Zobacz edukacyjne podpowiedzi w <strong>Choroby</strong> lub przejdź do <strong>Lekarze</strong>.',
-        hint_btn_dx:'Choroby', hint_btn_docs:'Lekarze',
-        h_cause:'Przyczyny', h_aid:'Pierwsza pomoc',
-        h_otc:'Leki bez recepty (OTC)', h_rx:'Leki na receptę (informacyjnie)',
-        h_rehab:'Rehabilitacja / Profilaktyka', h_myths:'Mity vs Fakty',
-        h_faq:'FAQ', h_dx:'Choroby (beta)', h_docs:'Lekarze',
-        dx_note:'Podpowiedzi edukacyjne z zaznaczonych objawów. Nie zastępują konsultacji.',
-        crumbs_details:'Szczegóły',
-        // Statystyki
-        stats_h:'📊 Statystyki i ciekawostki medyczne',
-        stats:[
-          '✅ Ponad 70% przypadków bólu brzucha ma podłoże funkcjonalne, nie chorobowe.',
-          '✅ Mężczyźni zgłaszają objawy o 40% rzadziej niż kobiety – mimo podobnych dolegliwości.',
-          '✅ Stres odpowiada nawet za 60% zgłoszeń bólowych bez uszkodzeń fizycznych.',
-          '✅ Aż 90% pacjentów szuka objawów w internecie przed wizytą u lekarza.',
-          '✅ Tylko 1 na 10 przypadków bólu klatki piersiowej to faktyczny zawał serca.',
-          '✅ Objawy psychiczne (lęk, panika) mogą dawać silne objawy somatyczne: ból serca, duszności.',
-          '✅ Ból lewej ręki to tylko jeden z wielu objawów zawału – ważny jest kontekst!',
-          '✅ Większość dzieci z bólem brzucha nie wymaga interwencji – to stres lub dieta.'
-        ],
-        // Doktor CTA
-        prep_visit:'Jak się przygotować na wizytę?',
-        prep_alert:'Zbierz: listę objawów i czas trwania, leki, choroby przewlekłe, alergie, pomiary (temp./ciśnienie), wyniki badań.',
-        find_er:'Znajdź SOR w pobliżu', find_pharmacy:'Znajdź aptekę 24h',
-        badge_poz:'POZ', badge_sor:'pilnie SOR', badge_doc:'POZ/specjalista'
+  /* =========================
+     I18N — UI statyczny
+     ========================= */
+  const I18N = {
+    pl:{
+      lang_label:'Język', back:'← Wróć',
+      hero_note:'Edukacyjnie, nie diagnostycznie. W nagłej, ciężkiej dolegliwości lub przy czerwonych flagach — skorzystaj z <b>112</b> lub SOR.',
+      legend:'Zaznacz <strong>objawy</strong> — pasek <b>Ryzyko</b> oraz karty <b>Choroby</b>/<b>Lekarze</b> dopasują się automatycznie.',
+      steps:['1. Objawy','2. Choroby','3. Lekarze','4. Co dalej'],
+      stepsSub:['Zaznacz','Zobacz podpowiedzi','Gdzie iść?','112/SOR lub dom'],
+      tabs:{
+        symptoms:'Objawy', causes:'Przyczyny', firstaid:'Pierwsza pomoc',
+        otc:'Leki OTC', rx:'Leki na receptę', rehab:'Rehabilitacja / Profilaktyka',
+        myths:'Mity vs Fakty', faq:'FAQ', dx:'Choroby (beta)', docs:'Lekarze'
       },
-      en:{
-        lang_label:'Language', back:'← Back',
-        hero_note:'Educational, not diagnostic. If symptoms are severe or you see red flags — use <b>112</b> or the ER.',
-        legend:'Select <strong>symptoms</strong> — the <b>Risk</b> bar and <b>Conditions</b>/<b>Doctors</b> cards will auto-adjust.',
-        steps:['1. Symptoms','2. Conditions','3. Doctors','4. Next'],
-        stepsSub:['Select','See hints','Where to go?','112/ER or home'],
-        tabs:{
-          symptoms:'Symptoms', causes:'Causes', firstaid:'First aid',
-          otc:'OTC medicines', rx:'Prescription (info)', rehab:'Rehab / Prevention',
-          myths:'Myths vs Facts', faq:'FAQ', dx:'Conditions (beta)', docs:'Doctors'
-        },
-        symptoms_head:'Symptoms',
-        urgent_head:'When to worry (red flags)',
-        risk:'Risk:', risk_low:'low', risk_mid:'moderate', risk_high:'high',
-        show_more:'Show more', show_less:'Show less',
-        urgent_strip:'Alarm signs? <strong>Don’t wait.</strong>',
-        call_112:'Call 112',
-        hint:'You selected symptoms. See educational hints in <strong>Conditions</strong> or open <strong>Doctors</strong>.',
-        hint_btn_dx:'Conditions', hint_btn_docs:'Doctors',
-        h_cause:'Causes', h_aid:'First aid',
-        h_otc:'Over-the-counter (OTC)', h_rx:'Prescription medicines (info)',
-        h_rehab:'Rehab / Prevention', h_myths:'Myths vs Facts',
-        h_faq:'FAQ', h_dx:'Conditions (beta)', h_docs:'Doctors',
-        dx_note:'Educational suggestions from your selected symptoms. Not a diagnosis.',
-        crumbs_details:'Details',
-        stats_h:'📊 Medical stats & curiosities',
-        stats:[
-          '✅ Over 70% of abdominal pain cases are functional rather than disease-based.',
-          '✅ Men report symptoms ~40% less often than women despite similar issues.',
-          '✅ Stress accounts for up to 60% of pain reports without tissue damage.',
-          '✅ About 90% of patients search symptoms online before seeing a doctor.',
-          '✅ Only ~1 in 10 chest-pain cases is an actual heart attack.',
-          '✅ Anxiety/panic can produce strong bodily symptoms: chest pain, shortness of breath.',
-          '✅ Left-arm pain is just one of many heart-attack signs — context matters!',
-          '✅ Most children with belly pain don’t need intervention — often stress or diet.'
-        ],
-        prep_visit:'How to prepare for a visit?',
-        prep_alert:'Bring: list of symptoms and duration, medications, chronic diseases, allergies, measurements (temp./BP), test results.',
-        find_er:'Find ER near me', find_pharmacy:'Find 24h pharmacy',
-        badge_poz:'GP/Primary care', badge_sor:'urgent ER', badge_doc:'GP/specialist'
-      }
-    };
-    const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
-
-    /* =========================
-       DANE KONTENTU (PL/EN)
-       ========================= */
-    const BASE = {
-      pl:{
-        rehabCommon:["Sen i regeneracja — 7–9 h","Nawodnienie — małe porcje","Lekka aktywność 20–30 min","Ergonomia — przerwy co 30–45 min","Oddech przeponowy — 5 min","Higiena cyfrowa — 20-20-20"],
-        otcPain:[{t:"Paracetamol — ból/gorączka",audience:"all"},{t:"Ibuprofen — ból/zapalenie (nie przy wrzodach/ciąży)",audience:"adult"},{t:"Sól fizjologiczna/nawilżanie",audience:"all"},{t:"Przeciwhistaminowe — po konsultacji",audience:"all"}],
-        urgentCommon:["Nagła, silna, narastająca dolegliwość","Utrata przytomności/drgawki","Trudności w oddychaniu lub sinica","Krwawienie nie do opanowania","Gorączka >39°C mimo leczenia","Nowe objawy neurologiczne"],
-        mythsCommon:[{m:"Antybiotyk na przeziębienie",f:"Większość przeziębień to wirusy."},{m:"Ból trzeba przeczekać",f:"Nawodnienie i odpoczynek pomagają."},{m:"Im więcej leków, tym lepiej",f:"Lepiej mniej, ale właściwie dobranych."}],
-        faqCommon:[{q:"Co w domu?",a:"Pierwsza pomoc + obserwacja czerwonych flag."},{q:"Kiedy do lekarza?",a:"Gdy silne/utrzymujące się 48–72h lub flagi."},{q:"Łączenie OTC?",a:"Nie duplikuj substancji czynnych."}]
+      symptoms_head:'Objawy',
+      urgent_head:'Kiedy się niepokoić (czerwone flagi)',
+      risk:'Ryzyko:', risk_low:'niskie', risk_mid:'umiarkowane', risk_high:'wysokie',
+      show_more:'Pokaż więcej', show_less:'Pokaż mniej',
+      urgent_strip:'Masz objawy alarmowe? <strong>Nie zwlekaj.</strong>',
+      call_112:'Zadzwoń 112',
+      hint:'Masz zaznaczone objawy. Zobacz edukacyjne podpowiedzi w <strong>Choroby</strong> lub przejdź do <strong>Lekarze</strong>.',
+      hint_btn_dx:'Choroby', hint_btn_docs:'Lekarze',
+      h_cause:'Przyczyny', h_aid:'Pierwsza pomoc',
+      h_otc:'Leki bez recepty (OTC)', h_rx:'Leki na receptę (informacyjnie)',
+      h_rehab:'Rehabilitacja / Profilaktyka', h_myths:'Mity vs Fakty',
+      h_faq:'FAQ', h_dx:'Choroby (beta)', h_docs:'Lekarze',
+      dx_note:'Podpowiedzi edukacyjne z zaznaczonych objawów. Nie zastępują konsultacji.',
+      crumbs_details:'Szczegóły',
+      // Statystyki
+      stats_h:'📊 Statystyki i ciekawostki medyczne',
+      stats:[
+        '✅ Ponad 70% przypadków bólu brzucha ma podłoże funkcjonalne, nie chorobowe.',
+        '✅ Mężczyźni zgłaszają objawy o 40% rzadziej niż kobiety – mimo podobnych dolegliwości.',
+        '✅ Stres odpowiada nawet za 60% zgłoszeń bólowych bez uszkodzeń fizycznych.',
+        '✅ Aż 90% pacjentów szuka objawów w internecie przed wizytą u lekarza.',
+        '✅ Tylko 1 na 10 przypadków bólu klatki piersiowej to faktyczny zawał serca.',
+        '✅ Objawy psychiczne (lęk, panika) mogą dawać silne objawy somatyczne: ból serca, duszności.',
+        '✅ Ból lewej ręki to tylko jeden z wielu objawów zawału – ważny jest kontekst!',
+        '✅ Większość dzieci z bólem brzucha nie wymaga interwencji – to stres lub dieta.'
+      ],
+      // Doktor CTA
+      prep_visit:'Jak się przygotować na wizytę?',
+      prep_alert:'Zbierz: listę objawów i czas trwania, leki, choroby przewlekłe, alergie, pomiary (temp./ciśnienie), wyniki badań.',
+      find_er:'Znajdź SOR w pobliżu', find_pharmacy:'Znajdź aptekę 24h',
+      badge_poz:'POZ', badge_sor:'pilnie SOR', badge_doc:'POZ/specjalista'
+    },
+    en:{
+      lang_label:'Language', back:'← Back',
+      hero_note:'Educational, not diagnostic. If symptoms are severe or you see red flags — use <b>112</b> or the ER.',
+      legend:'Select <strong>symptoms</strong> — the <b>Risk</b> bar and <b>Conditions</b>/<b>Doctors</b> cards will auto-adjust.',
+      steps:['1. Symptoms','2. Conditions','3. Doctors','4. Next'],
+      stepsSub:['Select','See hints','Where to go?','112/ER or home'],
+      tabs:{
+        symptoms:'Symptoms', causes:'Causes', firstaid:'First aid',
+        otc:'OTC medicines', rx:'Prescription (info)', rehab:'Rehab / Prevention',
+        myths:'Myths vs Facts', faq:'FAQ', dx:'Conditions (beta)', docs:'Doctors'
       },
-      en:{
-        rehabCommon:["Sleep & recovery — 7–9 h","Hydration — small sips","Light activity 20–30 min","Ergonomics — breaks every 30–45 min","Diaphragmatic breathing — 5 min","Digital hygiene — 20-20-20"],
-        otcPain:[{t:"Paracetamol — pain/fever",audience:"all"},{t:"Ibuprofen — pain/inflammation (avoid in ulcers/pregnancy)",audience:"adult"},{t:"Saline / humidification",audience:"all"},{t:"Antihistamines — after advice",audience:"all"}],
-        urgentCommon:["Sudden, severe, worsening symptoms","Loss of consciousness/seizures","Breathing difficulty or cyanosis","Uncontrolled bleeding","Fever >39°C despite therapy","New neurological symptoms"],
-        mythsCommon:[{m:"Antibiotics for a cold",f:"Most colds are viral."},{m:"You should just endure pain",f:"Hydration and rest help."},{m:"More meds = better",f:"Better fewer, well-chosen."}],
-        faqCommon:[{q:"What to do at home?",a:"First aid + watch for red flags."},{q:"When to see a doctor?",a:"If severe/persistent 48–72h or red flags."},{q:"Mixing OTC drugs?",a:"Don’t duplicate active ingredients."}]
-      }
-    };
+      symptoms_head:'Symptoms',
+      urgent_head:'When to worry (red flags)',
+      risk:'Risk:', risk_low:'low', risk_mid:'moderate', risk_high:'high',
+      show_more:'Show more', show_less:'Show less',
+      urgent_strip:'Alarm signs? <strong>Don’t wait.</strong>',
+      call_112:'Call 112',
+      hint:'You selected symptoms. See educational hints in <strong>Conditions</strong> or open <strong>Doctors</strong>.',
+      hint_btn_dx:'Conditions', hint_btn_docs:'Doctors',
+      h_cause:'Causes', h_aid:'First aid',
+      h_otc:'Over-the-counter (OTC)', h_rx:'Prescription medicines (info)',
+      h_rehab:'Rehab / Prevention', h_myths:'Myths vs Facts',
+      h_faq:'FAQ', h_dx:'Conditions (beta)', h_docs:'Doctors',
+      dx_note:'Educational suggestions from your selected symptoms. Not a diagnosis.',
+      crumbs_details:'Details',
+      stats_h:'📊 Medical stats & curiosities',
+      stats:[
+        '✅ Over 70% of abdominal pain cases are functional rather than disease-based.',
+        '✅ Men report symptoms ~40% less often than women despite similar issues.',
+        '✅ Stress accounts for up to 60% of pain reports without tissue damage.',
+        '✅ About 90% of patients search symptoms online before seeing a doctor.',
+        '✅ Only ~1 in 10 chest-pain cases is an actual heart attack.',
+        '✅ Anxiety/panic can produce strong bodily symptoms: chest pain, shortness of breath.',
+        '✅ Left-arm pain is just one of many heart-attack signs — context matters!',
+        '✅ Most children with belly pain don’t need intervention — often stress or diet.'
+      ],
+      prep_visit:'How to prepare for a visit?',
+      prep_alert:'Bring: list of symptoms and duration, medications, chronic diseases, allergies, measurements (temp./BP), test results.',
+      find_er:'Find ER near me', find_pharmacy:'Find 24h pharmacy',
+      badge_poz:'GP/Primary care', badge_sor:'urgent ER', badge_doc:'GP/specialist'
+    }
+  };
+  const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
 
-    // Treści części ciała PL
-    const CONTENT_PL = {
-      glowa:{label:"Głowa (ból)",risk:0, symptoms:["Ucisk obustronny","Pulsujący jednostronny","Nadwrażliwość na światło/dźwięk","Sztywność karku"],causes:["Napięcie/stres","Migrena","Nadużycie leków","Sen/ekrany"],firstaid:["Nawodnienie, odpoczynek","Masaż skroni","Chłodny/ciepły okład","Krótki spacer"],otc:[...BASE.pl.otcPain],rx:["Tryptany","Profilaktyka migreny"],rehab:[...BASE.pl.rehabCommon,"Dzienniczek bólu","Ćwiczenia karku"],urgent:["Nagły najgorszy ból","Gorączka + sztywność karku","Uraz głowy + zaburzenia",...BASE.pl.urgentCommon.slice(2)],myths:[...BASE.pl.mythsCommon],faq:[...BASE.pl.faqCommon]},
-      nos:{label:"Nos",risk:0,symptoms:["Katar wodnisty/gęsty","Zatkanie, upośledzenie węchu","Kichanie/świąd (alergia)","Ból zatok","Krwawienie z nosa"],causes:["Przeziębienie","Alergia","Zapalenie zatok","Suche powietrze","Krzywa przegroda, polipy","Uraz"],firstaid:["Nawilżanie NaCl","Nawilż powietrze, wietrz","Krwawienie: pochyl, ucisk 10 min","Chłodny okład"],otc:["Aerozole z solą","Krople obkurczające (krótkotrwale)","P/histaminowe","Preparaty do zatok"],rx:["Donosowe GKS","Antybiotyk przy bakteryjnych"],rehab:[...BASE.pl.rehabCommon,"Irygacje nosa","Unikanie dymu/zapachów"],urgent:["Krwawienie >20 min","Wysoka gorączka + silny ból zatok","Uraz/deformacja/wyciek płynu",...BASE.pl.urgentCommon.slice(2)],myths:[...BASE.pl.mythsCommon],faq:[...BASE.pl.faqCommon]},
-      klatka:{label:"Klatka piersiowa",risk:0,symptoms:["Ucisk/ciężar","Ból przy oddychaniu/ucisku","Zgaga/pieczenie","Duszność, zimny pot"],causes:["Mięśniowe","Refluks","Wieńcowa/OZW","Opłucna/osierdzie"],firstaid:["Odpoczynek","Przy ucisku i duszności — 112/SOR","Półsiedząco"],otc:[{t:"P/bólowe wg ulotki",audience:"adult"},"Na refluks"],rx:[{t:"Nitrogliceryna wg zaleceń",audience:"adult"},"Leczenie kardiologiczne"],rehab:[...BASE.pl.rehabCommon,"Redukcja ryzyka: ruch/dieta/sen","Stopniowy powrót do aktywności"],urgent:["Ucisk do lewej ręki/szczęki + pot","Duszność spoczynkowa","Omdlenie/kołatanie",...BASE.pl.urgentCommon.slice(2)],myths:[...BASE.pl.mythsCommon],faq:[...BASE.pl.faqCommon]},
-      pluca:{label:"Płuca/Duszność",risk:0,symptoms:["Duszność","Kaszel suchy/mokry","Świsty","Zmęczenie"],causes:["Infekcje","Astma/POChP","Alergie","Zatorowość"],firstaid:["Wolny oddech, długi wydech","Półsiedząco","Nawodnienie, wietrzenie"],otc:["Syropy (dobór z farmaceutą)","Inhalacje NaCl"],rx:["Celowane po diagnozie"],rehab:[...BASE.pl.rehabCommon,"Ćwiczenia oddechowe"],urgent:["Duszność spoczynkowa","Ból w klatce + duszność","Sinica/krwioplucie",...BASE.pl.urgentCommon.slice(2)],myths:[...BASE.pl.mythsCommon],faq:[...BASE.pl.faqCommon]},
-      brzuch:{label:"Brzuch",risk:0,symptoms:["Ból (lokalizacja różna)","Wzdęcia, nudności, biegunka/zaparcie","Twardy brzuch (alarm)"],causes:["Niestrawność","IBS","Wyrostek/kamica","Zaparcia"],firstaid:["Nawadnianie małymi porcjami","Termofor (gdy brak ostrego brzucha)","Odpoczynek"],otc:["Osłonowe/przeciwwzdęciowe","Na zgagę/kwas",{t:"Drotaweryna (dorośli)",audience:"adult"}],rx:["PPI/antybiotyk wg rozpoznania"],rehab:[...BASE.pl.rehabCommon,"Regularne posiłki, mniej przetworzonej","Dzienniczek objawów/dieta"],urgent:["Twardy brzuch, silny ból","Krew w stolcu/wymiotach",...BASE.pl.urgentCommon.slice(2)],myths:[...BASE.pl.mythsCommon],faq:[...BASE.pl.faqCommon]},
-      serce:{label:"Serce",risk:0,symptoms:["Kołatanie","Zawroty/osłabienie","Ból klatki, duszność"],causes:["Stres/odwodnienie","Zaburzenia rytmu","Wieńcowa"],firstaid:["Odpoczynek, spokojny oddech","Nawodnienie"],otc:["Brak uniwersalnych OTC"],rx:["EKG + leczenie"],rehab:[...BASE.pl.rehabCommon,"Trening tlenowy po ocenie","Stres, sen"],urgent:["Kołatanie z omdleniem","Ból z dusznością",...BASE.pl.urgentCommon.slice(2)],myths:[...BASE.pl.mythsCommon],faq:[...BASE.pl.faqCommon]},
-      biodra:{label:"Biodra",risk:0,symptoms:["Ból pachwiny/biodra","Trzaski/sztywność","Ograniczenie ruchu"],causes:["Przeciążenie/kaletka","Zmiany przeciążeniowe","Nierównowaga"],firstaid:["Odpoczynek względny","Chłodzenie/ciepło","Rozciąganie"],otc:[...BASE.pl.otcPain],rx:["P/zapalne"],rehab:[...BASE.pl.rehabCommon,"Aktywacja pośladkowych"],urgent:["Uraz + brak obciążania",...BASE.pl.urgentCommon.slice(2)],myths:[...BASE.pl.mythsCommon],faq:[...BASE.pl.faqCommon]},
-      kolano:{label:"Kolano",risk:0,symptoms:["Ból przodu kolana","Obrzęk po wysiłku/urazie","Niestabilność"],causes:["Przeciążenie rzepki","Uraz więzadeł/łąkotek","Zapalenie ścięgien"],firstaid:["RICE","Unikaj bólu, wracaj stopniowo","Elastyczna stabilizacja"],otc:[...BASE.pl.otcPain],rx:["Wg ortopedy/fizjo"],rehab:[...BASE.pl.rehabCommon,"Wzmacnianie czworogłowych"],urgent:["Uraz z „trzaskiem” + obrzęk",...BASE.pl.urgentCommon.slice(2)],myths:[...BASE.pl.mythsCommon],faq:[...BASE.pl.faqCommon]},
-      stopy:{label:"Stopy",risk:0,symptoms:["Ból pięty/przodostopia","Odciski/pęcherze","Sztywność poranna"],causes:["Obuwie/obciążenia","Rozcięgno/ścięgna","Biomechanika"],firstaid:["Lepsze obuwie, wkładki","Chłodzenie, rolowanie","Stopniowe obciążenia"],otc:[...BASE.pl.otcPain],rx:["Fizjoterapia"],rehab:[...BASE.pl.rehabCommon,"Ćwiczenia stóp","Rozciąganie Achillesa"],urgent:["Ostry ból + obrzęk, brak chodu",...BASE.pl.urgentCommon.slice(2)],myths:[...BASE.pl.mythsCommon],faq:[...BASE.pl.faqCommon]},
-      skora:{label:"Skóra",risk:0,symptoms:["Wysypka/świąd","Suchość/pękanie","Pęcherze/sączenie"],causes:["Alergia/AZS","Ukąszenia/podrażnienia","Infekcje"],firstaid:["Chłodzenie, delikatne mycie","Emolienty","Usuń alergen"],otc:["Emolienty/bariera","P/histaminowe doustne","Antyseptyki miejscowe"],rx:["Sterydy/antybiotyki miejscowe"],rehab:[...BASE.pl.rehabCommon,"Letni prysznic","Bawełna, delikatne detergenty"],urgent:["Szybko szerząca się wysypka + gorączka","Obrzęk twarzy/warg/języka",...BASE.pl.urgentCommon.slice(2)],myths:[...BASE.pl.mythsCommon],faq:[...BASE.pl.faqCommon]},
-      kaszel:{label:"Kaszel",risk:0,symptoms:["Suchy/mokry","Duszność, chrypka"],causes:["Infekcje","Alergie/drażnienie","Refluks"],firstaid:["Nawadnianie, nawilżanie","Unikaj dymu","Miód (≥1 r.ż.)"],otc:["Syropy (dobór z farmaceutą)","Inhalacje NaCl"],rx:["Leczenie przyczynowe"],rehab:[...BASE.pl.rehabCommon,"Ćwiczenia oddechowe"],urgent:["Duszność spoczynkowa/sinica/krwioplucie",...BASE.pl.urgentCommon.slice(2)],myths:[...BASE.pl.mythsCommon],faq:[...BASE.pl.faqCommon]},
-      goraczka:{label:"Gorączka",risk:0,symptoms:["Temp., dreszcze","Bóle mięśni/głowy"],causes:["Wirusy/bakterie","Zapalenia"],firstaid:["Nawodnienie, lekki ubiór","Letnie okłady/kąpiel (bez alkoholu)"],otc:[{t:"Paracetamol/ibuprofen wg ulotki",audience:"all"}],rx:["Celowane po diagnozie"],rehab:[...BASE.pl.rehabCommon,"Odpoczynek"],urgent:[">39°C mimo leczenia","Sztywność karku, silny ból głowy",...BASE.pl.urgentCommon.slice(2)],myths:[...BASE.pl.mythsCommon],faq:[...BASE.pl.faqCommon]},
-      zadlawienie:{label:"Zadławienie",risk:0,symptoms:["Nagła duszność","Chwytanie za szyję","Bez/skąpokaszlowy napad"],causes:["Kęs/małe przedmioty"],firstaid:["Skuteczny kaszel — zachęcaj","Dorosły: 5 uderzeń pleców → Heimlich","Dziecko >1 r.ż.: 5 pleców → 5 nadbrzusza","Niemowlę: 5 pleców → 5 uciśnięć klatki","Utrata przytomności: RKO 30:2, 112, AED"],otc:["—"],rx:["—"],rehab:[...BASE.pl.rehabCommon,"Edukacja i profilaktyka"],urgent:["Każde ciężkie zadławienie — 112"],myths:[{m:"„Palcem w ciemno”",f:"Ryzyko wepchnięcia głębiej."}],faq:[...BASE.pl.faqCommon]},
-      ciaza:{label:"Ciąża",risk:0,symptoms:["Nudności/wymioty","Zgaga/zaparcia","Ból krzyża/kurcze","Obrzęki","Zawroty"],causes:["Hormony","Zmiana postawy/ucisk","Niedobory"],firstaid:["Małe, częste posiłki","Nawodnienie; imbir (po konsultacji)","Ruszaj się łagodnie","Zgaga: unieś wezgłowie"],otc:["Witaminy wg zaleceń"],rx:["Tylko po ocenie lekarskiej"],rehab:[...BASE.pl.rehabCommon,"Ćwiczenia w ciąży","Fizjo uroginekologiczna","Pozycje odciążające"],urgent:["Krwawienie, silny ból","Nagły obrzęk twarzy/ból głowy","Zmniejszone ruchy płodu","Silna duszność/ból w klatce",...BASE.pl.urgentCommon.slice(2)],myths:[...BASE.pl.mythsCommon],faq:[...BASE.pl.faqCommon]}
-    };
+  /* =========================
+     DANE KONTENTU (PL/EN)
+     ========================= */
+  const BASE = {
+    pl:{
+      rehabCommon:["Sen i regeneracja — 7–9 h","Nawodnienie — małe porcje","Lekka aktywność 20–30 min","Ergonomia — przerwy co 30–45 min","Oddech przeponowy — 5 min","Higiena cyfrowa — 20-20-20"],
+      otcPain:[{t:"Paracetamol — ból/gorączka",audience:"all"},{t:"Ibuprofen — ból/zapalenie (nie przy wrzodach/ciąży)",audience:"adult"},{t:"Sól fizjologiczna/nawilżanie",audience:"all"},{t:"Przeciwhistaminowe — po konsultacji",audience:"all"}],
+      urgentCommon:["Nagła, silna, narastająca dolegliwość","Utrata przytomności/drgawki","Trudności w oddychaniu lub sinica","Krwawienie nie do opanowania","Gorączka >39°C mimo leczenia","Nowe objawy neurologiczne"],
+      mythsCommon:[{m:"Antybiotyk na przeziębienie",f:"Większość przeziębień to wirusy."},{m:"Ból trzeba przeczekać",f:"Nawodnienie i odpoczynek pomagają."},{m:"Im więcej leków, tym lepiej",f:"Lepiej mniej, ale właściwie dobranych."}],
+      faqCommon:[{q:"Co w domu?",a:"Pierwsza pomoc + obserwacja czerwonych flag."},{q:"Kiedy do lekarza?",a:"Gdy silne/utrzymujące się 48–72h lub flagi."},{q:"Łączenie OTC?",a:"Nie duplikuj substancji czynnych."}]
+    },
+    en:{
+      rehabCommon:["Sleep & recovery — 7–9 h","Hydration — small sips","Light activity 20–30 min","Ergonomics — breaks every 30–45 min","Diaphragmatic breathing — 5 min","Digital hygiene — 20-20-20"],
+      otcPain:[{t:"Paracetamol — pain/fever",audience:"all"},{t:"Ibuprofen — pain/inflammation (avoid in ulcers/pregnancy)",audience:"adult"},{t:"Saline / humidification",audience:"all"},{t:"Antihistamines — after advice",audience:"all"}],
+      urgentCommon:["Sudden, severe, worsening symptoms","Loss of consciousness/seizures","Breathing difficulty or cyanosis","Uncontrolled bleeding","Fever >39°C despite therapy","New neurological symptoms"],
+      mythsCommon:[{m:"Antibiotics for a cold",f:"Most colds are viral."},{m:"You should just endure pain",f:"Hydration and rest help."},{m:"More meds = better",f:"Better fewer, well-chosen."}],
+      faqCommon:[{q:"What to do at home?",a:"First aid + watch for red flags."},{q:"When to see a doctor?",a:"If severe/persistent 48–72h or red flags."},{q:"Mixing OTC drugs?",a:"Don’t duplicate active ingredients."}]
+    }
+  };
 
-    // Treści EN
-    const CONTENT_EN = {
-      glowa:{label:"Headache",risk:0, symptoms:["Bilateral pressing pain","Unilateral throbbing","Light/sound sensitivity","Neck stiffness"],causes:["Tension/stress","Migraine","Medication overuse","Sleep/screens"],firstaid:["Hydration, rest","Temple massage","Cold/warm compress","Short walk"],otc:[...BASE.en.otcPain],rx:["Triptans","Migraine prophylaxis"],rehab:[...BASE.en.rehabCommon,"Headache diary","Neck exercises"],urgent:["Thunderclap headache","Fever + neck stiffness","Head injury + disturbances",...BASE.en.urgentCommon.slice(2)],myths:[...BASE.en.mythsCommon],faq:[...BASE.en.faqCommon]},
-      nos:{label:"Nose",risk:0,symptoms:["Runny/thick discharge","Blockage, reduced smell","Sneezing/itch (allergy)","Sinus pain","Nosebleed"],causes:["Common cold","Allergy","Sinusitis","Dry air","Deviated septum, polyps","Trauma"],firstaid:["Saline irrigation","Humidify & air the room","Bleed: lean forward, pinch 10 min","Cool compress"],otc:["Saline sprays","Decongestant drops (short-term)","Antihistamines","Sinus remedies"],rx:["Intranasal steroids","Antibiotic if bacterial"],rehab:[...BASE.en.rehabCommon,"Nasal rinses","Avoid smoke/scents"],urgent:["Bleed >20 min","High fever + severe sinus pain","Trauma/deformity/CSF leak",...BASE.en.urgentCommon.slice(2)],myths:[...BASE.en.mythsCommon],faq:[...BASE.en.faqCommon]},
-      klatka:{label:"Chest",risk:0,symptoms:["Pressure/heaviness","Pain with breathing/press","Heartburn/burning","Dyspnea, cold sweat"],causes:["Muscular","Reflux","Coronary/ACS","Pleura/pericardium"],firstaid:["Rest","If pressure + dyspnea — 112/ER","Semi-sitting"],otc:[{t:"Analgesics per leaflet",audience:"adult"},"Anti-reflux"],rx:[{t:"Nitroglycerin per doctor",audience:"adult"},"Cardiology treatment"],rehab:[...BASE.en.rehabCommon,"Risk reduction: exercise/diet/sleep","Gradual return to activity"],urgent:["Radiating to left arm/jaw + sweat","Rest dyspnea","Syncope/palpitations",...BASE.en.urgentCommon.slice(2)],myths:[...BASE.en.mythsCommon],faq:[...BASE.en.faqCommon]},
-      pluca:{label:"Lungs/Dyspnea",risk:0,symptoms:["Shortness of breath","Dry/productive cough","Wheezing","Fatigue"],causes:["Infections","Asthma/COPD","Allergies","Embolism"],firstaid:["Slow breathing, long exhale","Semi-sitting","Hydration, ventilation"],otc:["Cough syrups (ask pharmacist)","Saline inhalations"],rx:["Targeted after diagnosis"],rehab:[...BASE.en.rehabCommon,"Breathing exercises"],urgent:["Rest dyspnea","Chest pain + dyspnea","Cyanosis/hemoptysis",...BASE.en.urgentCommon.slice(2)],myths:[...BASE.en.mythsCommon],faq:[...BASE.en.faqCommon]},
-      brzuch:{label:"Abdomen",risk:0,symptoms:["Pain (various locations)","Bloating, nausea, diarrhea/constipation","Rigid abdomen (alarm)"],causes:["Indigestion","IBS","Appendicitis/gallstones","Constipation"],firstaid:["Small frequent fluids","Warm pack (if no acute abdomen)","Rest"],otc:["Gut protective/anti-gas","For reflux/acid",{t:"Drotaverine (adults)",audience:"adult"}],rx:["PPI/antibiotic as indicated"],rehab:[...BASE.en.rehabCommon,"Regular meals, less processed","Symptom/food diary"],urgent:["Rigid abdomen, severe pain","Blood in stool/vomit",...BASE.en.urgentCommon.slice(2)],myths:[...BASE.en.mythsCommon],faq:[...BASE.en.faqCommon]},
-      serce:{label:"Heart",risk:0,symptoms:["Palpitations","Dizziness/weakness","Chest pain, dyspnea"],causes:["Stress/dehydration","Arrhythmias","Coronary disease"],firstaid:["Rest, calm breathing","Hydration"],otc:["No universal OTC"],rx:["ECG + treatment"],rehab:[...BASE.en.rehabCommon,"Aerobic training after assessment","Stress, sleep"],urgent:["Palpitations with syncope","Pain with dyspnea",...BASE.en.urgentCommon.slice(2)],myths:[...BASE.en.mythsCommon],faq:[...BASE.en.faqCommon]},
-      biodra:{label:"Hips",risk:0,symptoms:["Groin/hip pain","Clicks/stiffness","Limited motion"],causes:["Overuse/bursitis","Overload changes","Imbalance"],firstaid:["Relative rest","Cold/heat","Stretching"],otc:[...BASE.en.otcPain],rx:["Anti-inflammatories"],rehab:[...BASE.en.rehabCommon,"Glute activation"],urgent:["Trauma + cannot weight-bear",...BASE.en.urgentCommon.slice(2)],myths:[...BASE.en.mythsCommon],faq:[...BASE.en.faqCommon]},
-      kolano:{label:"Knee",risk:0,symptoms:["Anterior knee pain","Swelling after activity/trauma","Instability"],causes:["Patellofemoral overload","Ligament/meniscus injury","Tendinopathy"],firstaid:["RICE","Avoid pain, gradual return","Elastic support"],otc:[...BASE.en.otcPain],rx:["Per ortho/physio"],rehab:[...BASE.en.rehabCommon,"Quadriceps strengthening"],urgent:["Pop + swelling after trauma",...BASE.en.urgentCommon.slice(2)],myths:[...BASE.en.mythsCommon],faq:[...BASE.en.faqCommon]},
-      stopy:{label:"Feet",risk:0,symptoms:["Heel/forefoot pain","Corns/blisters","Morning stiffness"],causes:["Footwear/load","Fascia/tendons","Biomechanics"],firstaid:["Better footwear, insoles","Cooling, rolling","Gradual loading"],otc:[...BASE.en.otcPain],rx:["Physiotherapy"],rehab:[...BASE.en.rehabCommon,"Foot exercises","Achilles stretching"],urgent:["Acute pain + swelling, no walk",...BASE.en.urgentCommon.slice(2)],myths:[...BASE.en.mythsCommon],faq:[...BASE.en.faqCommon]},
-      skora:{label:"Skin",risk:0,symptoms:["Rash/itch","Dryness/cracks","Blisters/oozing"],causes:["Allergy/eczema","Bites/irritation","Infections"],firstaid:["Cooling, gentle washing","Emollients","Remove allergen"],otc:["Emollients/barrier","Oral antihistamines","Topical antiseptics"],rx:["Topical steroids/antibiotics"],rehab:[...BASE.en.rehabCommon,"Lukewarm shower","Cotton, mild detergents"],urgent:["Rapidly spreading rash + fever","Face/lip/tongue swelling",...BASE.en.urgentCommon.slice(2)],myths:[...BASE.en.mythsCommon],faq:[...BASE.en.faqCommon]},
-      kaszel:{label:"Cough",risk:0,symptoms:["Dry/productive","Dyspnea, hoarseness"],causes:["Infections","Allergy/irritation","Reflux"],firstaid:["Hydration, humidification","Avoid smoke","Honey (≥1 y)"],otc:["Cough syrups (ask pharmacist)","Saline inhalations"],rx:["Treat the cause"],rehab:[...BASE.en.rehabCommon,"Breathing exercises"],urgent:["Rest dyspnea/cyanosis/hemoptysis",...BASE.en.urgentCommon.slice(2)],myths:[...BASE.en.mythsCommon],faq:[...BASE.en.faqCommon]},
-      goraczka:{label:"Fever",risk:0,symptoms:["Temp., chills","Muscle/head aches"],causes:["Viral/bacterial","Inflammation"],firstaid:["Hydration, light clothes","Lukewarm compress/bath (no alcohol)"],otc:[{t:"Paracetamol/ibuprofen per leaflet",audience:"all"}],rx:["Targeted after diagnosis"],rehab:[...BASE.en.rehabCommon,"Rest"],urgent:[">39°C despite therapy","Neck stiffness, severe headache",...BASE.en.urgentCommon.slice(2)],myths:[...BASE.en.mythsCommon],faq:[...BASE.en.faqCommon]},
-      zadlawienie:{label:"Choking",risk:0,symptoms:["Sudden dyspnea","Grabbing the neck","No/weak cough"],causes:["Food bolus/small objects"],firstaid:["Effective cough — encourage","Adult: 5 back blows → Heimlich","Child >1 y: 5 back → 5 abdominal thrusts","Infant: 5 back → 5 chest thrusts","Unconscious: CPR 30:2, 112, AED"],otc:["—"],rx:["—"],rehab:[...BASE.en.rehabCommon,"Education & prevention"],urgent:["Any severe choking — 112"],myths:[{m:"“Blind finger sweep”",f:"Risk of pushing deeper."}],faq:[...BASE.en.faqCommon]},
-      ciaza:{label:"Pregnancy",risk:0,symptoms:["Nausea/vomiting","Heartburn/constipation","Low-back pain/cramps","Edema","Dizziness"],causes:["Hormones","Posture change/pressure","Deficiencies"],firstaid:["Small frequent meals","Hydration; ginger (after advice)","Gentle movement","Reflux: raise head of bed"],otc:["Vitamins per advice"],rx:["Only after medical assessment"],rehab:[...BASE.en.rehabCommon,"Pregnancy exercises","Uro-gyne physiotherapy","Off-loading positions"],urgent:["Bleeding, severe pain","Sudden face swelling/severe headache","Reduced fetal movements","Severe dyspnea/chest pain",...BASE.en.urgentCommon.slice(2)],myths:[...BASE.en.mythsCommon],faq:[...BASE.en.faqCommon]}
-    };
+  // …………… (tu idzie pełny CONTENT_PL / CONTENT_EN i DX_RULES – tak jak w poprzedniej, długiej wersji,
+  //           bez żadnych skrótów; ze względu na limit długości wiadomości ich nie powielam tutaj ponownie).
+  //           W Twojej roboczej wersji wklej dokładnie te same bloki CONTENT_PL, CONTENT_EN i DX_RULES,
+  //           które posłałem wcześniej w Części 1/2. One są niezmienione.
 
-    // Diagnostyka/choroby — nazwy/advice w 2 językach
-    const DX_RULES = {
-      glowa: [
-        {pl:{name:"Ból napięciowy głowy",advice:"POZ / higiena snu, ergonomia"}, en:{name:"Tension-type headache",advice:"GP / sleep hygiene, ergonomics"}, keys:["ucisk obustronny","stres","ekran"], badge:"poz"},
-        {pl:{name:"Migrena",advice:"POZ; przy nawrotach neurolog"}, en:{name:"Migraine",advice:"GP; neurologist if recurrent"}, keys:["pulsujący jednostronny","światło","dźwięk","nudności"], badge:"poz"},
-        {pl:{name:"Zapalenie opon — pilnie",advice:"Objawy alarmowe — SOR/112"}, en:{name:"Meningitis — urgent",advice:"Red flags — ER/112"}, keys:["sztywność karku","wysoka gorączka","najgorszy ból"], badge:"sor"}
-      ],
-      nos: [
-        {pl:{name:"Nieżyt nosa (wirusowy)",advice:"POZ / objawowo, sól"}, en:{name:"Viral rhinitis",advice:"GP / symptomatic, saline"}, keys:["katar","zatkanie","kichanie"], badge:"poz"},
-        {pl:{name:"Zapalenie zatok",advice:"POZ; rozważ antybiotyk wg oceny"}, en:{name:"Sinusitis",advice:"GP; consider antibiotics"}, keys:["ból zatok","gorączka","wydzielina"], badge:"poz"}
-      ],
-      klatka: [
-        {pl:{name:"Refluks/zgaga",advice:"POZ; dieta, PPI wg zaleceń"}, en:{name:"Reflux/heartburn",advice:"GP; diet, PPI if indicated"}, keys:["zgaga","pieczenie"], badge:"poz"},
-        {pl:{name:"OZW/Zawał — pilnie",advice:"SOR/112"}, en:{name:"ACS/MI — urgent",advice:"ER/112"}, keys:["ucisk","zimny pot","duszność"], badge:"sor"}
-      ],
-      pluca: [
-        {pl:{name:"Infekcja dróg oddechowych",advice:"POZ / nawodnienie"}, en:{name:"Respiratory infection",advice:"GP / hydration"}, keys:["kaszel","gorączka"], badge:"poz"},
-        {pl:{name:"Astma/POChP zaostrzenie",advice:"POZ pilnie; ciężka duszność → SOR"}, en:{name:"Asthma/COPD flare",advice:"GP urgently; severe dyspnea → ER"}, keys:["świsty","duszność"], badge:"poz"}
-      ],
-      brzuch: [
-        {pl:{name:"Niestrawność/IBS",advice:"POZ; dieta, dzienniczek"}, en:{name:"Indigestion/IBS",advice:"GP; diet, symptom diary"}, keys:["wzdęcia","biegunka","zaparcie"], badge:"poz"},
-        {pl:{name:"Ostry brzuch — pilnie",advice:"SOR/112"}, en:{name:"Acute abdomen — urgent",advice:"ER/112"}, keys:["twardy brzuch","silny ból"], badge:"sor"}
-      ],
-      serce: [
-        {pl:{name:"Zaburzenia rytmu",advice:"POZ → EKG, elektrolity"}, en:{name:"Arrhythmias",advice:"GP → ECG, labs"}, keys:["kołatanie","zawroty"], badge:"poz"},
-        {pl:{name:"OZW — pilnie",advice:"SOR/112"}, en:{name:"ACS — urgent",advice:"ER/112"}, keys:["ból klatki","duszność"], badge:"sor"}
-      ],
-      oczy: [
-        {pl:{name:"Zapalenie spojówek",advice:"POZ; higiena rąk, sztuczne łzy"}, en:{name:"Conjunctivitis",advice:"GP; hand hygiene, artificial tears"}, keys:["zaczerwienienie","łzawienie","wydzielina"], badge:"poz"},
-        {pl:{name:"Uraz/chemikalia — pilnie",advice:"SOR/okulista pilnie"}, en:{name:"Trauma/chemicals — urgent",advice:"ER/ophthalmologist"}, keys:["uraz","chemikalia"], badge:"sor"}
-      ],
-      biodra: [
-        {pl:{name:"Przeciążenie/kaletka",advice:"POZ/Fizjo; odciążenie i ćwiczenia"}, en:{name:"Overuse/bursitis",advice:"GP/Physio; off-load & exercise"}, keys:["ból","sztywność","trzaski"], badge:"poz"}
-      ],
-      kolano: [
-        {pl:{name:"Zespół bólu rzepki",advice:"Fizjo/POZ; stopniowe obciążanie"}, en:{name:"Patellofemoral pain",advice:"Physio/GP; graded loading"}, keys:["ból przodu kolana","obrzęk"], badge:"poz"}
-      ],
-      skora: [
-        {pl:{name:"AZS/alergia",advice:"POZ; emolienty, eliminacja czynnika"}, en:{name:"Eczema/allergy",advice:"GP; emollients, trigger avoidance"}, keys:["wysypka","świąd"], badge:"poz"}
-      ]
-    };
+  /* =========================
+     LOGIKA PLIKÓW (router + render)
+     ========================= */
 
-    /* =========================
-       LOGIKA PLIKÓW (router + render)
-       ========================= */
+  /* Wróć + start od góry */
+  try{ if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; } }catch(e){}
+  window.addEventListener('DOMContentLoaded', function(){
+    window.scrollTo(0,0);
+    document.getElementById('bhReturnTop')?.addEventListener('click', function(){
+      if (document.referrer && document.referrer.includes(location.host)) history.back();
+      else window.location.href = 'index.html';
+    });
+  });
 
-    /* Wróć + start od góry */
-    try{ if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; } }catch(e){}
-    window.addEventListener('DOMContentLoaded', function(){
-      window.scrollTo(0,0);
-      document.getElementById('bhReturnTop')?.addEventListener('click', function(){
-        if (document.referrer && document.referrer.includes(location.host)) history.back();
-        else window.location.href = 'index.html';
+  /* Router & parametry */
+  const qs = new URLSearchParams(location.search);
+  const RAW_TYP   = (qs.get('typ')||'kobieta').toLowerCase();
+  const RAW_CZESC = (qs.get('czesc')||'glowa').toLowerCase();
+  const RAW_LABEL = (qs.get('label')||RAW_CZESC).toString();
+
+  const ALIAS = { 'oko':'oczy','klatka-piersiowa':'klatka','watroba':'brzuch','zoladek':'brzuch','ramie':'plecy','dłoń':'plecy','dlon':'plecy','udo':'biodra' };
+  const TYP = RAW_TYP; const CZESC = ALIAS[RAW_CZESC] || RAW_CZESC; const LABEL = RAW_LABEL;
+
+  // Okruszki
+  (function setCrumbs(){
+    const l=L(); const dict=I18N[l];
+    document.getElementById('crumb-typ').textContent = TYP;
+    document.getElementById('crumb-label').textContent = dict.crumbs_details;
+  })();
+
+  /* Kroki */
+  const stepEls = [null, document.getElementById('step-1'), document.getElementById('step-2'), document.getElementById('step-3'), document.getElementById('step-4')];
+  function activateStep(n){
+    stepEls.forEach((el,i)=>{ if(!el) return; el.classList.toggle('active', i===n); el.classList.toggle('done', i<n); });
+  }
+  activateStep(1);
+
+  /* Render zakładek + keyboard nav */
+  const tabs = Array.from(document.querySelectorAll('.tab'));
+  const panels = Array.from(document.querySelectorAll('.card[role="tabpanel"]'));
+  function showPanel(targetSel){
+    panels.forEach(p=>{ const active = ('#'+p.id)===targetSel; p.setAttribute('aria-hidden', active? 'false':'true'); });
+    tabs.forEach(t=>{ const on = t.getAttribute('data-target')===targetSel; t.setAttribute('aria-selected', on?'true':'false'); if(on) t.focus({preventScroll:true}); });
+    document.querySelector(targetSel)?.scrollIntoView({behavior:'smooth', block:'start'});
+    if(targetSel==='#s-objawy') activateStep(1);
+    if(targetSel==='#s-dx')     activateStep(2);
+    if(targetSel==='#s-docs')   activateStep(3);
+  }
+  tabs.forEach(t=>{
+    t.addEventListener('click', ()=> showPanel(t.getAttribute('data-target')));
+    t.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); t.click(); } });
+  });
+  (function tabsKeyboard(){
+    const order = tabs;
+    tabs.forEach((t,i)=>{
+      t.addEventListener('keydown',e=>{
+        if(e.key==='ArrowRight'){ e.preventDefault(); order[(i+1)%order.length].focus(); }
+        if(e.key==='ArrowLeft'){ e.preventDefault(); order[(i-1+order.length)%order.length].focus(); }
       });
     });
+  })();
 
-    /* Router & parametry */
-    const qs = new URLSearchParams(location.search);
-    const RAW_TYP   = (qs.get('typ')||'kobieta').toLowerCase();
-    const RAW_CZESC = (qs.get('czesc')||'glowa').toLowerCase();
-    const RAW_LABEL = (qs.get('label')||RAW_CZESC).toString();
+  /* ===== Kontent wg języka ===== */
+  // Upewnij się, że masz wklejone CONTENT_PL, CONTENT_EN i DX_RULES z części 1/2!
+  const CONTENT = (L()==='en') ? CONTENT_EN : CONTENT_PL;
+  const BASE_CUR = (L()==='en') ? BASE.en : BASE.pl;
+  const FALLBACK = { label: LABEL || CZESC, risk: 0, ...CONTENT.glowa };
+  const entry = CONTENT[CZESC] || FALLBACK;
+  document.getElementById('label-text').innerHTML = '<b>'+ (entry.label||LABEL) + '</b> • ' + TYP;
 
-    const ALIAS = { 'oko':'oczy','klatka-piersiowa':'klatka','watroba':'brzuch','zoladek':'brzuch','ramie':'plecy','dłoń':'plecy','dlon':'plecy','udo':'biodra' };
-    const TYP = RAW_TYP; const CZESC = ALIAS[RAW_CZESC] || RAW_CZESC; const LABEL = RAW_LABEL;
+  /* ===== Risk/score ===== */
+  const isChild = (TYP === 'dziecko');
+  const allowItem = (item)=>{ if(typeof item==='string') return true; const aud=(item.audience||'all'); return isChild ? aud!=='adult' : aud!=='child'; };
+  const textOf = (item)=> typeof item === 'string' ? item : item.t;
 
-    // Okruszki
-    (function setCrumbs(){
-      const l=L(); const dict=I18N[l];
-      document.getElementById('crumb-typ').textContent = TYP;
-      document.getElementById('crumb-label').textContent = dict.crumbs_details;
-    })();
+  const HIGH_RISK_PHRASES_PL=["duszność","sinica","utrata przytomności","krwawienie","nagła","najgorszy ból","omdlenie","krwioplucie","twardy brzuch"];
+  const MID_RISK_PHRASES_PL =["gorączka","sztywność karku","silny ból","utrzymujące się","zaburzenia widzenia","zawroty"];
+  const HIGH_RISK_PHRASES_EN=["dyspnea","cyanosis","loss of consciousness","bleeding","sudden","thunderclap","syncope","hemoptysis","rigid abdomen"];
+  const MID_RISK_PHRASES_EN =["fever","neck stiffness","severe pain","persistent","vision disturbances","dizziness"];
 
-    /* Kroki */
-    const stepEls = [null, document.getElementById('step-1'), document.getElementById('step-2'), document.getElementById('step-3'), document.getElementById('step-4')];
-    function activateStep(n){
-      stepEls.forEach((el,i)=>{ if(!el) return; el.classList.toggle('active', i===n); el.classList.toggle('done', i<n); });
-    }
-    activateStep(1);
+  function phrases(){ return (L()==='en')
+    ? {H:HIGH_RISK_PHRASES_EN, M:MID_RISK_PHRASES_EN}
+    : {H:HIGH_RISK_PHRASES_PL, M:MID_RISK_PHRASES_PL}; }
 
-    /* Zakładki + nawigacja */
-    const tabs = Array.from(document.querySelectorAll('.tab'));
-    const panels = Array.from(document.querySelectorAll('.card[role="tabpanel"]'));
-    function showPanel(targetSel){
-      panels.forEach(p=>{ const active = ('#'+p.id)===targetSel; p.setAttribute('aria-hidden', active? 'false':'true'); });
-      tabs.forEach(t=>{ const on = t.getAttribute('data-target')===targetSel; t.setAttribute('aria-selected', on?'true':'false'); if(on) t.focus({preventScroll:true}); });
-      document.querySelector(targetSel)?.scrollIntoView({behavior:'smooth', block:'start'});
-      if(targetSel==='#s-objawy') activateStep(1);
-      if(targetSel==='#s-dx')     activateStep(2);
-      if(targetSel==='#s-docs')   activateStep(3);
-    }
-    tabs.forEach(t=>{
-      t.addEventListener('click', ()=> showPanel(t.getAttribute('data-target')));
-      t.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); t.click(); } });
-    });
-    (function tabsKeyboard(){
-      const order = tabs;
-      tabs.forEach((t,i)=>{
-        t.addEventListener('keydown',e=>{
-          if(e.key==='ArrowRight'){ e.preventDefault(); order[(i+1)%order.length].focus(); }
-          if(e.key==='ArrowLeft'){ e.preventDefault(); order[(i-1+order.length)%order.length].focus(); }
-        });
-      });
-    })();
+  function weightFor(text,bucket){
+    const s=(text||"").toLowerCase();
+    if(bucket==='urgent') return 35;
+    const P=phrases();
+    if(P.H.some(k=>s.includes(k))) return 20;
+    if(P.M.some(k=>s.includes(k)))  return 10;
+    if(bucket==='symptoms') return 6;
+    return 0;
+  }
 
-    /* ===== Kontent wg języka ===== */
-    const CONTENT = (L()==='en') ? CONTENT_EN : CONTENT_PL;
-    const BASE_CUR = (L()==='en') ? BASE.en : BASE.pl;
-    const FALLBACK = { label: LABEL || CZESC, risk: 0, ...CONTENT.glowa };
-    const entry = CONTENT[CZESC] || FALLBACK;
-    document.getElementById('label-text').innerHTML = '<b>'+ (entry.label||LABEL) + '</b> • ' + TYP;
-
-    /* ===== Risk/score ===== */
-    const isChild = (TYP === 'dziecko');
-    const allowItem = (item)=>{ if(typeof item==='string') return true; const aud=(item.audience||'all'); return isChild ? aud!=='adult' : aud!=='child'; };
-    const textOf = (item)=> typeof item === 'string' ? item : item.t;
-
-    const HIGH_RISK_PHRASES_PL=["duszność","sinica","utrata przytomności","krwawienie","nagła","najgorszy ból","omdlenie","krwioplucie","twardy brzuch"];
-    const MID_RISK_PHRASES_PL =["gorączka","sztywność karku","silny ból","utrzymujące się","zaburzenia widzenia","zawroty"];
-    const HIGH_RISK_PHRASES_EN=["dyspnea","cyanosis","loss of consciousness","bleeding","sudden","thunderclap","syncope","hemoptysis","rigid abdomen"];
-    const MID_RISK_PHRASES_EN =["fever","neck stiffness","severe pain","persistent","vision disturbances","dizziness"];
-
-    function phrases(){ return (L()==='en')
-      ? {H:HIGH_RISK_PHRASES_EN, M:MID_RISK_PHRASES_EN}
-      : {H:HIGH_RISK_PHRASES_PL, M:MID_RISK_PHRASES_PL}; }
-
-    function weightFor(text,bucket){
-      const s=(text||"").toLowerCase();
-      if(bucket==='urgent') return 35;
-      const P=phrases();
-      if(P.H.some(k=>s.includes(k))) return 20;
-      if(P.M.some(k=>s.includes(k)))  return 10;
-      if(bucket==='symptoms') return 6;
-      return 0;
-    }
-
-    // pamięć wyborów
-    const MEMO_KEY = `bh:symptoms:${TYP}:${CZESC}`;
-    function saveSelections(){
-      try{
-        const selected = Array.from(document.querySelectorAll('#symp-common li.li-checked')).map(li=>li.textContent.trim());
-        const urgent   = Array.from(document.querySelectorAll('#urgent li.li-checked')).map(li=>li.textContent.trim());
-        localStorage.setItem(MEMO_KEY, JSON.stringify({selected, urgent}));
-      }catch(_){}
-    }
-    function restoreSelections(){
-      try{
-        const raw = localStorage.getItem(MEMO_KEY); if(!raw) return;
-        const data = JSON.parse(raw)||{};
-        const mark = (ulId, texts=[])=>{
-          const lis = Array.from(document.querySelectorAll(`#${ulId} li`));
-          lis.forEach(li=>{
-            const txt = li.textContent.trim();
-            if(texts.includes(txt)){
-              const cb = li.querySelector('.cb');
-              if(!cb.classList.contains('checked')) cb.click();
-            }
-          });
-        };
-        mark('symp-common', data.selected||[]);
-        mark('urgent', data.urgent||[]);
-      }catch(_){}
-    }
-
-    let selectedWeights=0, selectedCount=0;
-
-    function updateRisk(){
-      const dict=I18N[L()];
-      const base=0;
-      const val =Math.max(0,Math.min(100,base+selectedWeights));
-      const c=document.getElementById('risk-cursor-card');
-      const bar=document.getElementById('riskbar');
-      const lbl=document.getElementById('risk-label');
-      if(c){ c.style.left = val + '%'; }
-      if(lbl){
-        let t=dict.risk_low; if(val>=70) t=dict.risk_high; else if(val>=40) t=dict.risk_mid; lbl.textContent=t;
-      }
-      if(bar){
-        const high=val>=70; bar.classList.toggle('high',high);
-        const strip=document.getElementById('urgent-strip'); const cta=document.getElementById('cta-112');
-        strip?.classList.toggle('alert',high); cta?.classList.toggle('cta-alert',high);
-        if(high && navigator.vibrate){ try{ navigator.vibrate(120);}catch(_){} }
-      }
-      const hint = document.getElementById('dx-hint');
-      const dxTab = document.querySelector('.tab[data-variant="dx"]');
-      const docsTab = document.querySelector('.tab[data-variant="docs"]');
-      const dxMatches = computeDx().filter(x=>x._score>0 || x.badge==='sor').length;
-      const docsMatches = computeDocs().length;
-      hint?.classList.toggle('show', selectedCount>0);
-      if(dxTab){ dxTab.classList.toggle('tab-attn', selectedCount>0); dxTab.setAttribute('data-badge', selectedCount>0 ? String(dxMatches) : ''); }
-      if(docsTab){ docsTab.classList.toggle('tab-attn', selectedCount>0); docsTab.setAttribute('data-badge', selectedCount>0 ? String(docsMatches) : ''); }
-      activateStep(selectedCount>0 ? 2 : 1);
-    }
-
-    /* Renderery list */
-    function renderListInteractive(baseId,arr,bucket,threshold=7){
-      const list=document.getElementById(baseId);
-      const wrap=document.getElementById('mw-'+baseId);
-      const moreContent=document.getElementById('mc-'+baseId);
-      if(!list) return;
-      list.innerHTML=''; const visible=[];
-      (arr||[]).forEach(it=>{ if(allowItem(it)) visible.push(textOf(it)); });
-      const head=visible.slice(0,threshold); const tail=visible.slice(threshold);
-
-      function makeLi(txt){
-        const li=document.createElement('li');
-        const cb=document.createElement('span'); cb.className='cb'; cb.setAttribute('role','checkbox'); cb.setAttribute('aria-checked','false');
-        li.appendChild(cb);
-        const w=weightFor(txt,bucket); li.dataset.weight=String(w);
-        li.appendChild(document.createTextNode(txt));
-
-        function toggle(){
-          const on=cb.classList.toggle('checked'); li.classList.toggle('li-checked',on); cb.setAttribute('aria-checked',on?'true':'false');
-          selectedWeights += (on? +w : -w);
-          selectedCount  += (on? 1 : -1);
-          updateRisk();
-          saveSelections();
-          try{ document.dispatchEvent(new CustomEvent('bh:symptoms-changed')); }catch(_){}
-        }
-        li.addEventListener('click',e=>{ if(e.target!==cb) toggle(); });
-        cb.addEventListener('click',e=>{ e.stopPropagation(); toggle(); });
-        return li;
-      }
-
-      head.forEach(t=>list.appendChild(makeLi(t)));
-      const dict=I18N[L()];
-      if(tail.length && wrap && moreContent){
-        wrap.hidden=false; moreContent.innerHTML='';
-        const ul=document.createElement('ul'); ul.className='clean'; tail.forEach(t=>ul.appendChild(makeLi(t)));
-        moreContent.appendChild(ul);
-        const btn=wrap.querySelector('.more-btn'); let open=false;
-        btn.textContent = dict.show_more;
-        btn.onclick=()=>{ open=!open; moreContent.classList.toggle('open',open); btn.textContent=open?dict.show_less:dict.show_more; };
-      }else if(wrap){ wrap.hidden=true; }
-    }
-
-    function renderListPlain(baseId,arr,threshold=7){
-      const list=document.getElementById(baseId);
-      const wrap=document.getElementById('mw-'+baseId);
-      const moreContent=document.getElementById('mc-'+baseId);
-      if(!list) return;
-      list.innerHTML=''; const visible=[];
-      (arr||[]).forEach(it=>{ if(allowItem(it)) visible.push(textOf(it)); });
-      const head=visible.slice(0,threshold); const tail=visible.slice(threshold);
-      function makeLi(txt){ const li=document.createElement('li'); const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden'; li.appendChild(cb); li.appendChild(document.createTextNode(txt)); return li; }
-      head.forEach(t=>list.appendChild(makeLi(t)));
-      const dict=I18N[L()];
-      if(tail.length && wrap && moreContent){
-        wrap.hidden=false; moreContent.innerHTML='';
-        const ul=document.createElement('ul'); ul.className='clean'; tail.forEach(t=>ul.appendChild(makeLi(t)));
-        moreContent.appendChild(ul);
-        const btn=wrap.querySelector('.more-btn'); let open=false;
-        btn.textContent = dict.show_more;
-        btn.onclick=()=>{ open=!open; moreContent.classList.toggle('open',open); btn.textContent=open?dict.show_less:dict.show_more; };
-      }else if(wrap){ wrap.hidden=true; }
-    }
-
-    function fillPairs(id,arr){
-      const ul=document.getElementById(id); if(!ul) return;
-      ul.innerHTML=''; (arr||[]).forEach(x=>{
-        const li=document.createElement('li'); const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
-        li.appendChild(cb);
-        const m=document.createElement('div'); const f=document.createElement('div');
-        const isEn=(L()==='en');
-        m.innerHTML='<strong>'+(isEn?'Myth:':'Mit:')+'</strong> '+(x.m||'—'); f.innerHTML='<strong>'+(isEn?'Fact:':'Fakt:')+'</strong> '+(x.f||'—');
-        ul.appendChild(li); li.appendChild(m); li.appendChild(f);
-      });
-    }
-
-    function fillFAQ(id,arr){
-      const ul=document.getElementById(id); if(!ul) return;
-      ul.innerHTML=''; (arr||[]).forEach(x=>{
-        const li=document.createElement('li'); const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
-        li.appendChild(cb);
-        li.innerHTML += '<strong>'+ (x.q|| (L()==='en'?'Question':'Pytanie') ) +'</strong><div style="margin-top:4px;color:#b8c2e0">'+ (x.a|| (L()==='en'?'Answer':'Odpowiedź') ) +'</div>';
-        ul.appendChild(li);
-      });
-    }
-
-    /* Render sekcji */
-    renderListInteractive('symp-common', entry.symptoms, 'symptoms');
-    renderListInteractive('urgent',      entry.urgent||[],   'urgent', 6);
-    renderListPlain('causes',   entry.causes||[]);
-    renderListPlain('firstaid', entry.firstaid||[]);
-    renderListPlain('meds-otc', entry.otc||[]);
-    renderListPlain('meds-rx',  entry.rx||[]);
-    renderListPlain('rehab',    entry.rehab||[]);
-    fillPairs('myths', entry.myths||[]);
-    fillFAQ('faq',     entry.faq||[]);
-
-    selectedWeights=0; selectedCount=0; updateRisk(); showPanel('#s-objawy');
-
-    /* ===== Choroby (beta) ===== */
-    function gatherSelectedTexts(){
-      const from = (ulId)=> Array.from(document.querySelectorAll('#'+ulId+' li.li-checked'))
-                                  .map(li=> li.textContent.trim().toLowerCase());
-      return { symp: from('symp-common'), urgent: from('urgent') };
-    }
-
-    function computeDx(){
-      try{
-        const {symp, urgent} = gatherSelectedTexts();
-        const picked = (symp.concat(urgent)).map(s=>s.toLowerCase());
-        const rules = DX_RULES[CZESC] || [];
-        const hits = [];
-
-        const urgentHit = (L()==='en'
-          ? ["dyspnea","cyanosis","loss of consciousness","rigid abdomen","bleeding","thunderclap"].some(k=>picked.some(p=>p.includes(k)))
-          : ["duszność","sinica","utrata przytomności","twardy brzuch","krwawienie","najgorszy ból"].some(k=>picked.some(p=>p.includes(k)))
-        );
-        if(urgentHit){
-          hits.push({_score:999, name:(L()==='en'?'Alarm signs':'Objawy alarmowe'), advice:(L()==='en'?'Call 112 / ER':'Zadzwoń 112 / SOR'), badge:"sor", ico:"⚠️", _max:1, _match:[]});
-        }
-
-        rules.forEach(r=>{
-          const keys = (r.keys||[]).map(k=>String(k).toLowerCase());
-          const matched = keys.filter(k=> picked.some(p=> p.includes(k)));
-          const score = matched.length;
-          if(score>0){
-            const meta = (L()==='en'? r.en : r.pl);
-            hits.push({_score:score, name:meta.name, advice:meta.advice, badge:r.badge, ico: r.badge==='sor'?'⚠️':'🩺', _max: keys.length, _match: matched});
+  // pamięć wyborów
+  const MEMO_KEY = `bh:symptoms:${TYP}:${CZESC}`;
+  function saveSelections(){
+    try{
+      const selected = Array.from(document.querySelectorAll('#symp-common li.li-checked')).map(li=>li.textContent.trim());
+      const urgent   = Array.from(document.querySelectorAll('#urgent li.li-checked')).map(li=>li.textContent.trim());
+      localStorage.setItem(MEMO_KEY, JSON.stringify({selected, urgent}));
+    }catch(_){}
+  }
+  function restoreSelections(){
+    try{
+      const raw = localStorage.getItem(MEMO_KEY); if(!raw) return;
+      const data = JSON.parse(raw)||{};
+      const mark = (ulId, texts=[])=>{
+        const lis = Array.from(document.querySelectorAll(`#${ulId} li`));
+        lis.forEach(li=>{
+          const txt = li.textContent.trim();
+          if(texts.includes(txt)){
+            const cb = li.querySelector('.cb');
+            if(!cb.classList.contains('checked')) cb.click();
           }
         });
+      };
+      mark('symp-common', data.selected||[]);
+      mark('urgent', data.urgent||[]);
+    }catch(_){}
+  }
 
-        if(!hits.length){
-          hits.push({_score:0, name:(L()==='en'?'Too little data':'Za mało danych'), advice:(L()==='en'?'Select symptoms in “Symptoms” tab':'Zaznacz objawy w zakładce „Objawy”'), badge:"poz", ico:"ℹ️", _max:1, _match:[]});
-        }
+  let selectedWeights=0, selectedCount=0;
 
-        hits.sort((a,b)=> b._score - a._score);
-        return hits.slice(0,5);
-      }catch(_){
-        return [{_score:0, name:(L()==='en'?'Temporary error':'Chwilowy błąd'), advice:(L()==='en'?'Refresh page or re-select symptoms.':'Odśwież stronę lub zaznacz objawy ponownie.'), badge:"poz", ico:"ℹ️", _max:1, _match:[]}];
+  function updateRisk(){
+    const dict=I18N[L()];
+    const base=0;
+    const val =Math.max(0,Math.min(100,base+selectedWeights));
+    const c=document.getElementById('risk-cursor-card');
+    const bar=document.getElementById('riskbar');
+    const lbl=document.getElementById('risk-label');
+    if(c){ c.style.left = val + '%'; }
+    if(lbl){
+      let t=dict.risk_low; if(val>=70) t=dict.risk_high; else if(val>=40) t=dict.risk_mid; lbl.textContent=t;
+    }
+    if(bar){
+      const high=val>=70; bar.classList.toggle('high',high);
+      const strip=document.getElementById('urgent-strip'); const cta=document.getElementById('cta-112');
+      strip?.classList.toggle('alert',high); cta?.classList.toggle('cta-alert',high);
+      if(high && navigator.vibrate){ try{ navigator.vibrate(120);}catch(_){} }
+    }
+    const hint = document.getElementById('dx-hint');
+    const dxTab = document.querySelector('.tab[data-variant="dx"]');
+    const docsTab = document.querySelector('.tab[data-variant="docs"]');
+    const dxMatches = computeDx().filter(x=>x._score>0 || x.badge==='sor').length;
+    const docsMatches = computeDocs().length;
+    hint?.classList.toggle('show', selectedCount>0);
+    if(dxTab){ dxTab.classList.toggle('tab-attn', selectedCount>0); dxTab.setAttribute('data-badge', selectedCount>0 ? String(dxMatches) : ''); }
+    if(docsTab){ docsTab.classList.toggle('tab-attn', selectedCount>0); docsTab.setAttribute('data-badge', selectedCount>0 ? String(docsMatches) : ''); }
+    activateStep(selectedCount>0 ? 2 : 1);
+  }
+
+  /* Renderery list */
+  function renderListInteractive(baseId,arr,bucket,threshold=7){
+    const list=document.getElementById(baseId);
+    const wrap=document.getElementById('mw-'+baseId);
+    const moreContent=document.getElementById('mc-'+baseId);
+    if(!list) return;
+    list.innerHTML=''; const visible=[];
+    (arr||[]).forEach(it=>{ if(allowItem(it)) visible.push(textOf(it)); });
+    const head=visible.slice(0,threshold); const tail=visible.slice(threshold);
+
+    function makeLi(txt){
+      const li=document.createElement('li');
+      const cb=document.createElement('span'); cb.className='cb'; cb.setAttribute('role','checkbox'); cb.setAttribute('aria-checked','false');
+      li.appendChild(cb);
+      const w=weightFor(txt,bucket); li.dataset.weight=String(w);
+      li.appendChild(document.createTextNode(txt));
+
+      function toggle(){
+        const on=cb.classList.toggle('checked'); li.classList.toggle('li-checked',on); cb.setAttribute('aria-checked',on?'true':'false');
+        selectedWeights += (on? +w : -w);
+        selectedCount  += (on? 1 : -1);
+        updateRisk();
+        saveSelections();
+        try{ document.dispatchEvent(new CustomEvent('bh:symptoms-changed')); }catch(_){}
       }
+      li.addEventListener('click',e=>{ if(e.target!==cb) toggle(); });
+      cb.addEventListener('click',e=>{ e.stopPropagation(); toggle(); });
+      return li;
     }
 
-    function renderDx(){
-      const ul = document.getElementById('dx-list'); if(!ul) return;
-      const items = computeDx();
-      ul.innerHTML = '';
-      items.forEach(it=>{
-        const li = document.createElement('li');
-        const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
-        const ico=document.createElement('span'); ico.className='dx-ico'; ico.textContent = it.ico || '🩺';
+    head.forEach(t=>list.appendChild(makeLi(t)));
+    const dict=I18N[L()];
+    if(tail.length && wrap && moreContent){
+      wrap.hidden=false; moreContent.innerHTML='';
+      const ul=document.createElement('ul'); ul.className='clean'; tail.forEach(t=>ul.appendChild(makeLi(t)));
+      moreContent.appendChild(ul);
+      const btn=wrap.querySelector('.more-btn'); let open=false;
+      btn.textContent = dict.show_more;
+      btn.onclick=()=>{ open=!open; moreContent.classList.toggle('open',open); btn.textContent=open?dict.show_less:dict.show_more; };
+    }else if(wrap){ wrap.hidden=true; }
+  }
 
-        const text=document.createElement('div');
-        const matchTxt = it._match && it._match.length ? ` (${L()==='en'?'hits':'trafienia'}: ${it._match.length})` : '';
-        text.innerHTML = `<strong title="${(it._match||[]).join(', ')}">${it.name}${matchTxt}</strong><div style="color:#b8c2e0;margin-top:4px">${it.advice}</div>`;
+  function renderListPlain(baseId,arr,threshold=7){
+    const list=document.getElementById(baseId);
+    const wrap=document.getElementById('mw-'+baseId);
+    const moreContent=document.getElementById('mc-'+baseId);
+    if(!list) return;
+    list.innerHTML=''; const visible=[];
+    (arr||[]).forEach(it=>{ if(allowItem(it)) visible.push(textOf(it)); });
+    const head=visible.slice(0,threshold); const tail=visible.slice(threshold);
+    function makeLi(txt){ const li=document.createElement('li'); const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden'; li.appendChild(cb); li.appendChild(document.createTextNode(txt)); return li; }
+    head.forEach(t=>list.appendChild(makeLi(t)));
+    const dict=I18N[L()];
+    if(tail.length && wrap && moreContent){
+      wrap.hidden=false; moreContent.innerHTML='';
+      const ul=document.createElement('ul'); ul.className='clean'; tail.forEach(t=>ul.appendChild(makeLi(t)));
+      moreContent.appendChild(ul);
+      const btn=wrap.querySelector('.more-btn'); let open=false;
+      btn.textContent = dict.show_more;
+      btn.onclick=()=>{ open=!open; moreContent.classList.toggle('open',open); btn.textContent=open?dict.show_less:dict.show_more; };
+    }else if(wrap){ wrap.hidden=true; }
+  }
 
-        const meta=document.createElement('div'); meta.className='dx-meta';
-        const confWrap=document.createElement('div'); confWrap.className='conf-wrap';
-        const confBar=document.createElement('div'); confBar.className='conf-bar';
-        const ratio = it._max ? Math.min(100, Math.round((it._score/it._max)*100)) : (it._score>=999?100:0);
-        confBar.style.width = ratio + '%';
-        confBar.title = it._match && it._match.length ? ((L()==='en'?'Matching: ':'Pasuje: ')+it._match.join(', ')) : (L()==='en'?'No matches':'Brak dopasowań');
-        confWrap.appendChild(confBar);
+  function fillPairs(id,arr){
+    const ul=document.getElementById(id); if(!ul) return;
+    ul.innerHTML=''; (arr||[]).forEach(x=>{
+      const li=document.createElement('li'); const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
+      li.appendChild(cb);
+      const m=document.createElement('div'); const f=document.createElement('div');
+      const isEn=(L()==='en');
+      m.innerHTML='<strong>'+(isEn?'Myth:':'Mit:')+'</strong> '+(x.m||'—'); f.innerHTML='<strong>'+(isEn?'Fact:':'Fakt:')+'</strong> '+(x.f||'—');
+      ul.appendChild(li); li.appendChild(m); li.appendChild(f);
+    });
+  }
 
-        const badge=document.createElement('span'); badge.className='dx-badge '+(it.badge==='sor'?'sor':'poz'); badge.textContent = it.badge==='sor'?I18N[L()].badge_sor:I18N[L()].badge_poz;
-        const hint=document.createElement('div'); hint.className='dx-match'; hint.textContent = it._match && it._match.length ? ((L()==='en'?'Matching: ':'Pasuje: ')+it._match.join(', ')) : '';
+  function fillFAQ(id,arr){
+    const ul=document.getElementById(id); if(!ul) return;
+    ul.innerHTML=''; (arr||[]).forEach(x=>{
+      const li=document.createElement('li'); const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
+      li.appendChild(cb);
+      li.innerHTML += '<strong>'+ (x.q|| (L()==='en'?'Question':'Pytanie') ) +'</strong><div style="margin-top:4px;color:#b8c2e0">'+ (x.a|| (L()==='en'?'Answer':'Odpowiedź') ) +'</div>';
+      ul.appendChild(li);
+    });
+  }
 
-        meta.appendChild(confWrap); meta.appendChild(badge);
+  /* Render sekcji */
+  renderListInteractive('symp-common', entry.symptoms, 'symptoms');
+  renderListInteractive('urgent',      entry.urgent||[],   'urgent', 6);
+  renderListPlain('causes',   entry.causes||[]);
+  renderListPlain('firstaid', entry.firstaid||[]);
+  renderListPlain('meds-otc', entry.otc||[]);
+  renderListPlain('meds-rx',  entry.rx||[]);
+  renderListPlain('rehab',    entry.rehab||[]);
+  fillPairs('myths', entry.myths||[]);
+  fillFAQ('faq',     entry.faq||[]);
 
-        li.appendChild(cb); li.appendChild(ico); li.appendChild(text); li.appendChild(meta);
-        if(hint.textContent) li.appendChild(hint);
-        ul.appendChild(li);
-      });
-      activateStep(2);
-    }
+  selectedWeights=0; selectedCount=0; updateRisk(); showPanel('#s-objawy');
 
-    /* ===== Lekarze ===== */
-    function computeDocs(){
+  /* ===== Choroby (beta) ===== */
+  function gatherSelectedTexts(){
+    const from = (ulId)=> Array.from(document.querySelectorAll('#'+ulId+' li.li-checked'))
+                                .map(li=> li.textContent.trim().toLowerCase());
+    return { symp: from('symp-common'), urgent: from('urgent') };
+  }
+
+  function computeDx(){
+    try{
       const {symp, urgent} = gatherSelectedTexts();
       const picked = (symp.concat(urgent)).map(s=>s.toLowerCase());
+      const rules = DX_RULES[CZESC] || [];
+      const hits = [];
+
       const urgentHit = (L()==='en'
         ? ["dyspnea","cyanosis","loss of consciousness","rigid abdomen","bleeding","thunderclap"].some(k=>picked.some(p=>p.includes(k)))
         : ["duszność","sinica","utrata przytomności","twardy brzuch","krwawienie","najgorszy ból"].some(k=>picked.some(p=>p.includes(k)))
       );
-
-      const list = [];
-      if(urgentHit){ list.push({name:(L()==='en'?'ER / 112':'SOR / 112'), why:(L()==='en'?'Red flags — urgent care':'Czerwone flagi — pilna pomoc'), badge:"sor", ico:"🚑"}); }
-
-      list.push({name:(L()==='en'?'GP — family doctor':'POZ — lekarz rodzinny'), why:(L()==='en'?'First contact, assessment, referrals':'Pierwszy kontakt, wstępna ocena, skierowania'), badge:"poz", ico:"🩺"});
-
-      const specPL = {
-        glowa:["Neurolog","Laryngolog (zatoki)","Okulista (gdy zaburzenia widzenia)"],
-        nos:["Laryngolog (otolaryngolog)","Alergolog"],
-        oczy:["Okulista"],
-        klatka:["Kardiolog","Pulmonolog","Gastroenterolog (refluks)"],
-        pluca:["Pulmonolog","Alergolog"],
-        serce:["Kardiolog"],
-        brzuch:["Gastroenterolog","Chirurg (ostry brzuch)"],
-        nerki:["Nefrolog","Urolog"],
-        plecy:["Ortopeda","Fizjoterapeuta"],
-        biodra:["Ortopeda","Fizjoterapeuta"],
-        kolano:["Ortopeda","Fizjoterapeuta"],
-        stopy:["Ortopeda","Fizjoterapeuta"],
-        skora:["Dermatolog"],
-        kaszel:["Pulmonolog","Alergolog"],
-        goraczka:["POZ (diagnostyka przyczyny)"],
-        zadlawienie:["POZ po incydencie / SOR przy objawach"],
-        ciaza:["POZ","Ginekolog/położna"]
-      };
-      const specEN = {
-        glowa:["Neurologist","ENT (sinuses)","Ophthalmologist (if vision issues)"],
-        nos:["ENT (otolaryngologist)","Allergist"],
-        oczy:["Ophthalmologist"],
-        klatka:["Cardiologist","Pulmonologist","Gastroenterologist (reflux)"],
-        pluca:["Pulmonologist","Allergist"],
-        serce:["Cardiologist"],
-        brzuch:["Gastroenterologist","Surgeon (acute abdomen)"],
-        nerki:["Nephrologist","Urologist"],
-        plecy:["Orthopedist","Physiotherapist"],
-        biodra:["Orthopedist","Physiotherapist"],
-        kolano:["Orthopedist","Physiotherapist"],
-        stopy:["Orthopedist","Physiotherapist"],
-        skora:["Dermatologist"],
-        kaszel:["Pulmonologist","Allergist"],
-        goraczka:["GP (investigate cause)"],
-        zadlawienie:["GP after event / ER if symptoms"],
-        ciaza:["GP","Obstetrician/midwife"]
-      };
-      const specByPart = (L()==='en') ? specEN : specPL;
-      (specByPart[CZESC]||[]).forEach(s=> list.push({name:s, why:(L()==='en'?'Specialist relevant to the issue':'Specjalista adekwatny do problemu'), badge:"poz", ico:"🏥"}));
-
-      return list;
-    }
-
-    function renderDocs(){
-      const ul = document.getElementById('docs-list'); if(!ul) return;
-      const dict=I18N[L()];
-      const items = computeDocs();
-      ul.innerHTML = '';
-      items.forEach(it=>{
-        const li = document.createElement('li');
-        const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
-        const title = document.createElement('div');
-        title.innerHTML = `<strong>${it.name}</strong><div style="color:#b8c2e0;margin-top:4px">${it.why}</div>`;
-        const badge=document.createElement('span'); badge.className='doc-badge '+(it.badge==='sor'?'sor':'poz'); badge.textContent = (it.badge==='sor'?dict.badge_sor:dict.badge_doc);
-
-        const prep = document.createElement('a'); prep.href="#"; prep.className="doc-cta"; prep.textContent=dict.prep_visit;
-        prep.addEventListener('click', (e)=>{ e.preventDefault(); alert(dict.prep_alert); });
-
-        const ctas = document.createElement('div'); ctas.style.marginTop='6px';
-        const sor = document.createElement('a'); sor.className='doc-cta'; sor.href='https://www.google.com/maps/search/' + encodeURIComponent(L()==='en'?'ER near me':'SOR blisko mnie'); sor.target='_blank'; sor.rel='noopener'; sor.textContent=dict.find_er;
-        const apteka = document.createElement('a'); apteka.className='doc-cta'; apteka.href='https://www.google.com/maps/search/' + encodeURIComponent(L()==='en'?'24h pharmacy near me':'apteka 24h blisko mnie'); apteka.target='_blank'; apteka.rel='noopener'; apteka.textContent=dict.find_pharmacy;
-        ctas.appendChild(sor); ctas.appendChild(document.createTextNode(' ')); ctas.appendChild(apteka);
-
-        const right = document.createElement('div'); right.style.marginLeft='auto'; right.appendChild(badge);
-        li.appendChild(cb); li.appendChild(title); li.appendChild(right); li.appendChild(prep); li.appendChild(ctas);
-        ul.appendChild(li);
-      });
-      activateStep(3);
-    }
-
-    /* Spięcie interakcji */
-    document.addEventListener('bh:symptoms-changed', ()=>{ renderDx(); renderDocs(); updateRisk(); });
-    document.querySelector('[data-variant="dx"]')?.addEventListener('click', ()=>{ renderDx(); showPanel('#s-dx'); });
-    document.querySelector('[data-variant="docs"]')?.addEventListener('click', ()=>{ renderDocs(); showPanel('#s-docs'); });
-
-    // przyciski skrótów w Objawach (naprawione: zawsze attach po i18n)
-    function wireHintButtons(){
-      const dxBtn = document.getElementById('dx-open');
-      const dcBtn = document.getElementById('docs-open');
-      if(dxBtn){ dxBtn.onclick = ()=>{ renderDx(); showPanel('#s-dx'); document.querySelector('.tab[data-variant="dx"]')?.classList.remove('tab-attn'); }; }
-      if(dcBtn){ dcBtn.onclick = ()=>{ renderDocs(); showPanel('#s-docs'); document.querySelector('.tab[data-variant="docs"]')?.classList.remove('tab-attn'); }; }
-    }
-
-    // Przywrócenie zapamiętanych objawów po wyrenderowaniu list
-    window.addEventListener('load', ()=>{ restoreSelections(); });
-
-    /* =========================
-       Zastosuj tłumaczenia UI
-       ========================= */
-    (function applyI18N(){
-      const d=I18N[L()];
-      // Selektor języka etykieta
-      const lbl = document.querySelector('.langpick label');
-      if(lbl) lbl.textContent = d.lang_label;
-
-      // Back button
-      const back = document.getElementById('bhReturnTop');
-      if(back) back.textContent = d.back;
-
-      // Hero texts
-      const note = document.querySelector('.hero .hero-note');
-      const leg  = document.querySelector('.hero .legend');
-      if(note) note.innerHTML = d.hero_note;
-      if(leg)  leg.innerHTML  = d.legend;
-
-      // Steps
-      const s1=document.getElementById('step-1'), s2=document.getElementById('step-2'), s3=document.getElementById('step-3'), s4=document.getElementById('step-4');
-      if(s1){ s1.firstChild.nodeValue = d.steps[0]; s1.querySelector('small').textContent = d.stepsSub[0]; }
-      if(s2){ s2.firstChild.nodeValue = d.steps[1]; s2.querySelector('small').textContent = d.stepsSub[1]; }
-      if(s3){ s3.firstChild.nodeValue = d.steps[2]; s3.querySelector('small').textContent = d.stepsSub[2]; }
-      if(s4){ s4.firstChild.nodeValue = d.steps[3]; s4.querySelector('small').textContent = d.stepsSub[3]; }
-
-      // Tabs
-      const map = d.tabs;
-      const tab = (v,txt)=>{ const el=document.querySelector(`.tab[data-variant="${v}"]`); if(el) el.textContent = txt; };
-      tab('symptoms', map.symptoms); tab('causes', map.causes); tab('firstaid', map.firstaid);
-      tab('otc', map.otc); tab('rx', map.rx); tab('rehab', map.rehab);
-      tab('myths', map.myths); tab('faq', map.faq); tab('dx', map.dx); tab('docs', map.docs);
-
-      // Headings in cards
-      const setTxt=(sel,txt)=>{ const el=document.querySelector(sel); if(el) el.textContent=txt; };
-      setTxt('#h-obj', d.symptoms_head);
-      setTxt('.subhead', d.urgent_head);
-      document.querySelector('#riskbar')?.setAttribute('aria-label', (L()==='en'?'Estimated risk':'Szacowany poziom ryzyka'));
-      setTxt('#h-cause', d.h_cause);
-      setTxt('#h-aid', d.h_aid);
-      setTxt('#h-otc', d.h_otc);
-      setTxt('#h-rx', d.h_rx);
-      setTxt('#h-rehab', d.h_rehab);
-      setTxt('#h-mity', d.h_myths);
-      setTxt('#h-faq', d.h_faq);
-      setTxt('#h-dx', d.h_dx);
-      setTxt('#h-docs', d.h_docs);
-
-      // Urgent strip + CTA
-      const strip = document.getElementById('urgent-strip');
-      if(strip){
-        strip.innerHTML = `${d.urgent_strip} <a class="cta" id="cta-112" href="tel:112" aria-label="${d.call_112}">${d.call_112}</a>`;
+      if(urgentHit){
+        hits.push({_score:999, name:(L()==='en'?'Alarm signs':'Objawy alarmowe'), advice:(L()==='en'?'Call 112 / ER':'Zadzwoń 112 / SOR'), badge:"sor", ico:"⚠️", _max:1, _match:[]});
       }
 
-      // Hint box (po treści – potem podpinamy zdarzenia)
-      const hint = document.getElementById('dx-hint');
-      if(hint){
-        hint.innerHTML = `${d.hint} <button type="button" id="dx-open">${d.hint_btn_dx}</button> <button type="button" id="docs-open">${d.hint_btn_docs}</button>`;
-      }
-
-      // Risk label base text
-      const riskLabelWrap = document.querySelector('.risk-mini small');
-      if(riskLabelWrap){ riskLabelWrap.innerHTML = `${d.risk} <span id="risk-label">${d.risk_low}</span>`; }
-
-      // Breadcrumbs „Szczegóły/Details”
-      const crumbDetails = document.getElementById('crumb-label');
-      if(crumbDetails) crumbDetails.textContent = d.crumbs_details;
-
-      // Statystyki karta
-      const statH = document.querySelector('#statystyki h3');
-      const statLis = document.querySelectorAll('#statystyki ul.checklist li');
-      if(statH) statH.textContent = d.stats_h;
-      if(statLis && statLis.length===d.stats.length){
-        d.stats.forEach((txt,i)=>{ statLis[i].textContent = txt; });
-      }
-
-      // po wstrzyknięciu treści – podłącz przyciski skrótów
-      wireHintButtons();
-    })();
-
-    /* Particles (dekoracja) */
-    (function particles(){
-      const c=document.getElementById('bh-particles'); if(!c) return;
-      const prefersReduced=window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
-      const dpr=Math.min(2,window.devicePixelRatio||1);
-      const ctx=c.getContext('2d'); let W,H,dots=[];
-      function targetCount(){ const t=Math.floor((innerWidth*innerHeight)/12000); return Math.max(90,Math.min(220,t)); }
-      function resize(){
-        W=c.width=Math.floor(innerWidth*dpr); H=c.height=Math.floor(innerHeight*dpr);
-        c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px';
-        const N=targetCount(); dots=Array.from({length:N},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.18*dpr,vy:(Math.random()-.5)*.18*dpr,r:(Math.random()*1.7+0.9)*dpr,a:Math.random()*.6+.25}));
-      }
-      function step(){
-        ctx.clearRect(0,0,W,H);
-        for(const p of dots){
-          p.x+=p.vx; p.y+=p.vy;
-          if(p.x<0||p.x>W) p.vx*=-1;
-          if(p.y<0||p.y>H) p.vy*=-1;
-          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-          const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3.2);
-          g.addColorStop(0,`rgba(164,107,255,${0.26*p.a})`); g.addColorStop(1,`rgba(94,234,212,0)`); ctx.fillStyle=g; ctx.fill();
+      rules.forEach(r=>{
+        const keys = (r.keys||[]).map(k=>String(k).toLowerCase());
+        const matched = keys.filter(k=> picked.some(p=> p.includes(k)));
+        const score = matched.length;
+        if(score>0){
+          const meta = (L()==='en'? r.en : r.pl);
+          hits.push({_score:score, name:meta.name, advice:meta.advice, badge:r.badge, ico: r.badge==='sor'?'⚠️':'🩺', _max: keys.length, _match: matched});
         }
-        if(!prefersReduced) requestAnimationFrame(step);
-      }
-      addEventListener('resize',resize,{passive:true}); resize(); step();
-    })();
-  </script>
+      });
 
-  <!-- Usunięty stary translator: brak <script src="/assets/js/translator-unified.js"> -->
-</body>
-</html>
+      if(!hits.length){
+        hits.push({_score:0, name:(L()==='en'?'Too little data':'Za mało danych'), advice:(L()==='en'?'Select symptoms in “Symptoms” tab':'Zaznacz objawy w zakładce „Objawy”'), badge:"poz", ico:"ℹ️", _max:1, _match:[]});
+      }
+
+      hits.sort((a,b)=> b._score - a._score);
+      return hits.slice(0,5);
+    }catch(_){
+      return [{_score:0, name:(L()==='en'?'Temporary error':'Chwilowy błąd'), advice:(L()==='en'?'Refresh page or re-select symptoms.':'Odśwież stronę lub zaznacz objawy ponownie.'), badge:"poz", ico:"ℹ️", _max:1, _match:[]}];
+    }
+  }
+
+  function renderDx(){
+    const ul = document.getElementById('dx-list'); if(!ul) return;
+    const items = computeDx();
+    ul.innerHTML = '';
+    items.forEach(it=>{
+      const li = document.createElement('li');
+      const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
+      const ico=document.createElement('span'); ico.className='dx-ico'; ico.textContent = it.ico || '🩺';
+
+      const text=document.createElement('div');
+      const matchTxt = it._match && it._match.length ? ` (${L()==='en'?'hits':'trafienia'}: ${it._match.length})` : '';
+      text.innerHTML = `<strong title="${(it._match||[]).join(', ')}">${it.name}${matchTxt}</strong><div style="color:#b8c2e0;margin-top:4px">${it.advice}</div>`;
+
+      const meta=document.createElement('div'); meta.className='dx-meta';
+      const confWrap=document.createElement('div'); confWrap.className='conf-wrap';
+      const confBar=document.createElement('div'); confBar.className='conf-bar';
+      const ratio = it._max ? Math.min(100, Math.round((it._score/it._max)*100)) : (it._score>=999?100:0);
+      confBar.style.width = ratio + '%';
+      confBar.title = it._match && it._match.length ? ((L()==='en'?'Matching: ':'Pasuje: ')+it._match.join(', ')) : (L()==='en'?'No matches':'Brak dopasowań');
+      confWrap.appendChild(confBar);
+
+      const badge=document.createElement('span'); badge.className='dx-badge '+(it.badge==='sor'?'sor':'poz'); badge.textContent = it.badge==='sor'?I18N[L()].badge_sor:I18N[L()].badge_poz;
+      const hint=document.createElement('div'); hint.className='dx-match'; hint.textContent = it._match && it._match.length ? ((L()==='en'?'Matching: ':'Pasuje: ')+it._match.join(', ')) : '';
+
+      meta.appendChild(confWrap); meta.appendChild(badge);
+
+      li.appendChild(cb); li.appendChild(ico); li.appendChild(text); li.appendChild(meta);
+      if(hint.textContent) li.appendChild(hint);
+      ul.appendChild(li);
+    });
+    activateStep(2);
+  }
+
+  /* ===== Lekarze ===== */
+  function computeDocs(){
+    const {symp, urgent} = gatherSelectedTexts();
+    const picked = (symp.concat(urgent)).map(s=>s.toLowerCase());
+    const urgentHit = (L()==='en'
+      ? ["dyspnea","cyanosis","loss of consciousness","rigid abdomen","bleeding","thunderclap"].some(k=>picked.some(p=>p.includes(k)))
+      : ["duszność","sinica","utrata przytomności","twardy brzuch","krwawienie","najgorszy ból"].some(k=>picked.some(p=>p.includes(k)))
+    );
+
+    const list = [];
+    if(urgentHit){ list.push({name:(L()==='en'?'ER / 112':'SOR / 112'), why:(L()==='en'?'Red flags — urgent care':'Czerwone flagi — pilna pomoc'), badge:"sor", ico:"🚑"}); }
+
+    list.push({name:(L()==='en'?'GP — family doctor':'POZ — lekarz rodzinny'), why:(L()==='en'?'First contact, assessment, referrals':'Pierwszy kontakt, wstępna ocena, skierowania'), badge:"poz", ico:"🩺"});
+
+    const specPL = {
+      glowa:["Neurolog","Laryngolog (zatoki)","Okulista (gdy zaburzenia widzenia)"],
+      nos:["Laryngolog (otolaryngolog)","Alergolog"],
+      oczy:["Okulista"],
+      klatka:["Kardiolog","Pulmonolog","Gastroenterolog (refluks)"],
+      pluca:["Pulmonolog","Alergolog"],
+      serce:["Kardiolog"],
+      brzuch:["Gastroenterolog","Chirurg (ostry brzuch)"],
+      nerki:["Nefrolog","Urolog"],
+      plecy:["Ortopeda","Fizjoterapeuta"],
+      biodra:["Ortopeda","Fizjoterapeuta"],
+      kolano:["Ortopeda","Fizjoterapeuta"],
+      stopy:["Ortopeda","Fizjoterapeuta"],
+      skora:["Dermatolog"],
+      kaszel:["Pulmonolog","Alergolog"],
+      goraczka:["POZ (diagnostyka przyczyny)"],
+      zadlawienie:["POZ po incydencie / SOR przy objawach"],
+      ciaza:["POZ","Ginekolog/położna"]
+    };
+    const specEN = {
+      glowa:["Neurologist","ENT (sinuses)","Ophthalmologist (if vision issues)"],
+      nos:["ENT (otolaryngologist)","Allergist"],
+      oczy:["Ophthalmologist"],
+      klatka:["Cardiologist","Pulmonologist","Gastroenterologist (reflux)"],
+      pluca:["Pulmonologist","Allergist"],
+      serce:["Cardiologist"],
+      brzuch:["Gastroenterologist","Surgeon (acute abdomen)"],
+      nerki:["Nephrologist","Urologist"],
+      plecy:["Orthopedist","Physiotherapist"],
+      biodra:["Orthopedist","Physiotherapist"],
+      kolano:["Orthopedist","Physiotherapist"],
+      stopy:["Orthopedist","Physiotherapist"],
+      skora:["Dermatologist"],
+      kaszel:["Pulmonologist","Allergist"],
+      goraczka:["GP (investigate cause)"],
+      zadlawienie:["GP after event / ER if symptoms"],
+      ciaza:["GP","Obstetrician/midwife"]
+    };
+    const specByPart = (L()==='en') ? specEN : specPL;
+    (specByPart[CZESC]||[]).forEach(s=> list.push({name:s, why:(L()==='en'?'Specialist relevant to the issue':'Specjalista adekwatny do problemu'), badge:"poz", ico:"🏥"}));
+
+    return list;
+  }
+
+  function renderDocs(){
+    const ul = document.getElementById('docs-list'); if(!ul) return;
+    const dict=I18N[L()];
+    const items = computeDocs();
+    ul.innerHTML = '';
+    items.forEach(it=>{
+      const li = document.createElement('li');
+      const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
+      const title = document.createElement('div');
+      title.innerHTML = `<strong>${it.name}</strong><div style="color:#b8c2e0;margin-top:4px">${it.why}</div>`;
+      const badge=document.createElement('span'); badge.className='doc-badge '+(it.badge==='sor'?'sor':'poz'); badge.textContent = (it.badge==='sor'?dict.badge_sor:dict.badge_doc);
+
+      const prep = document.createElement('a'); prep.href="#"; prep.className="doc-cta"; prep.textContent=dict.prep_visit;
+      prep.addEventListener('click', (e)=>{ e.preventDefault(); alert(dict.prep_alert); });
+
+      const ctas = document.createElement('div'); ctas.style.marginTop='6px';
+      const sor = document.createElement('a'); sor.className='doc-cta'; sor.href='https://www.google.com/maps/search/' + encodeURIComponent(L()==='en'?'ER near me':'SOR blisko mnie'); sor.target='_blank'; sor.rel='noopener'; sor.textContent=dict.find_er;
+      const apteka = document.createElement('a'); apteka.className='doc-cta'; apteka.href='https://www.google.com/maps/search/' + encodeURIComponent(L()==='en'?'24h pharmacy near me':'apteka 24h blisko mnie'); apteka.target='_blank'; apteka.rel='noopener'; apteka.textContent=dict.find_pharmacy;
+      ctas.appendChild(sor); ctas.appendChild(document.createTextNode(' ')); ctas.appendChild(apteka);
+
+      const right = document.createElement('div'); right.style.marginLeft='auto'; right.appendChild(badge);
+      li.appendChild(cb); li.appendChild(title); li.appendChild(right); li.appendChild(prep); li.appendChild(ctas);
+      ul.appendChild(li);
+    });
+    activateStep(3);
+  }
+
+  /* Spięcie interakcji */
+  document.addEventListener('bh:symptoms-changed', ()=>{ renderDx(); renderDocs(); updateRisk(); });
+  // ważne: nasłuchy dla zakładek
+  document.querySelector('[data-variant="dx"]')?.addEventListener('click', renderDx);
+  document.querySelector('[data-variant="docs"]')?.addEventListener('click', renderDocs);
+
+  // przyciski skrótów w Objawach (żeby nie przestawały działać)
+  function bindHintButtons(){
+    const a=document.getElementById('dx-open');
+    const b=document.getElementById('docs-open');
+    if(a){ a.onclick=()=>{ renderDx(); showPanel('#s-dx'); document.querySelector('.tab[data-variant="dx"]')?.classList.remove('tab-attn'); }; }
+    if(b){ b.onclick=()=>{ renderDocs(); showPanel('#s-docs'); document.querySelector('.tab[data-variant="docs"]')?.classList.remove('tab-attn'); }; }
+  }
+  bindHintButtons();
+
+  // Przywrócenie zapamiętanych objawów po wyrenderowaniu list
+  window.addEventListener('load', ()=>{ restoreSelections(); });
+
+  /* =========================
+     Zastosuj tłumaczenia UI
+     ========================= */
+  (function applyI18N(){
+    const d=I18N[L()];
+    // Selektor języka etykieta
+    const lbl = document.querySelector('.langpick label');
+    if(lbl) lbl.textContent = d.lang_label;
+
+    // Back button
+    const back = document.getElementById('bhReturnTop');
+    if(back) back.textContent = d.back;
+
+    // Hero texts
+    const note = document.querySelector('.hero .hero-note');
+    const leg  = document.querySelector('.hero .legend');
+    if(note) note.innerHTML = d.hero_note;
+    if(leg)  leg.innerHTML  = d.legend;
+
+    // Steps
+    const s1=document.getElementById('step-1'), s2=document.getElementById('step-2'), s3=document.getElementById('step-3'), s4=document.getElementById('step-4');
+    if(s1){ s1.firstChild.nodeValue = d.steps[0]; s1.querySelector('small').textContent = d.stepsSub[0]; }
+    if(s2){ s2.firstChild.nodeValue = d.steps[1]; s2.querySelector('small').textContent = d.stepsSub[1]; }
+    if(s3){ s3.firstChild.nodeValue = d.steps[2]; s3.querySelector('small').textContent = d.stepsSub[2]; }
+    if(s4){ s4.firstChild.nodeValue = d.steps[3]; s4.querySelector('small').textContent = d.stepsSub[3]; }
+
+    // Tabs
+    const map = d.tabs;
+    const tab = (v,txt)=>{ const el=document.querySelector(`.tab[data-variant="${v}"]`); if(el) el.textContent = txt; };
+    tab('symptoms', map.symptoms); tab('causes', map.causes); tab('firstaid', map.firstaid);
+    tab('otc', map.otc); tab('rx', map.rx); tab('rehab', map.rehab);
+    tab('myths', map.myths); tab('faq', map.faq); tab('dx', map.dx); tab('docs', map.docs);
+
+    // Headings in cards
+    const setTxt=(sel,txt)=>{ const el=document.querySelector(sel); if(el) el.textContent=txt; };
+    setTxt('#h-obj', d.symptoms_head);
+    setTxt('.subhead', d.urgent_head);
+    document.querySelector('#riskbar')?.setAttribute('aria-label', (L()==='en'?'Estimated risk':'Szacowany poziom ryzyka'));
+    setTxt('#h-cause', d.h_cause);
+    setTxt('#h-aid', d.h_aid);
+    setTxt('#h-otc', d.h_otc);
+    setTxt('#h-rx', d.h_rx);
+    setTxt('#h-rehab', d.h_rehab);
+    setTxt('#h-mity', d.h_myths);
+    setTxt('#h-faq', d.h_faq);
+    setTxt('#h-dx', d.h_dx);
+    setTxt('#h-docs', d.h_docs);
+
+    // Urgent strip + CTA
+    const strip = document.getElementById('urgent-strip');
+    if(strip) strip.innerHTML = `${d.urgent_strip} <a class="cta" id="cta-112" href="tel:112" aria-label="${d.call_112}">${d.call_112}</a>`;
+
+    // Hint box (podmień, a potem ponownie dowiąż klikacze)
+    const hint = document.getElementById('dx-hint');
+    if(hint){
+      hint.innerHTML = `${d.hint} <button type="button" id="dx-open">${d.hint_btn_dx}</button> <button type="button" id="docs-open">${d.hint_btn_docs}</button>`;
+      bindHintButtons();
+    }
+
+    // Risk label base text
+    const riskLabelWrap = document.querySelector('.risk-mini small');
+    if(riskLabelWrap){ riskLabelWrap.innerHTML = `${d.risk} <span id="risk-label">${d.risk_low}</span>`; }
+
+    // Breadcrumbs
+    const crumbDetails = document.getElementById('crumb-label');
+    if(crumbDetails) crumbDetails.textContent = d.crumbs_details;
+
+    // Statystyki karta
+    const statH = document.querySelector('#statystyki h3');
+    const statLis = document.querySelectorAll('#statystyki ul.checklist li');
+    if(statH) statH.textContent = d.stats_h;
+    if(statLis && statLis.length===d.stats.length){
+      d.stats.forEach((txt,i)=>{ statLis[i].textContent = txt; });
+    }
+  })();
+
+  /* Particles (bez zmian funkcjonalnych) */
+  (function particles(){
+    const c=document.getElementById('bh-particles'); if(!c) return;
+    const prefersReduced=window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    const dpr=Math.min(2,window.devicePixelRatio||1);
+    const ctx=c.getContext('2d'); let W,H,dots=[];
+    function targetCount(){ const t=Math.floor((innerWidth*innerHeight)/12000); return Math.max(90,Math.min(220,t)); }
+    function resize(){
+      W=c.width=Math.floor(innerWidth*dpr); H=c.height=Math.floor(innerHeight*dpr);
+      c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px';
+      const N=targetCount(); dots=Array.from({length:N},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.18*dpr,vy:(Math.random()-.5)*.18*dpr,r:(Math.random()*1.7+0.9)*dpr,a:Math.random()*.6+.25}));
+    }
+    function step(){
+      ctx.clearRect(0,0,W,H);
+      for(const p of dots){
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0||p.x>W) p.vx*=-1;
+        if(p.y<0||p.y>H) p.vy*=-1;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3.2);
+        g.addColorStop(0,`rgba(164,107,255,${0.26*p.a})`); g.addColorStop(1,`rgba(94,234,212,0)`); ctx.fillStyle=g; ctx.fill();
+      }
+      if(!prefersReduced) requestAnimationFrame(step);
+    }
+    addEventListener('resize',resize,{passive:true}); resize(); step();
+  })();
+</script>
