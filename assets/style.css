@@ -234,3 +234,45 @@ input, select, textarea { font-size: 16px; } /* zapobiega auto-zoom na iOS/Andro
   .goog-te-banner-frame.skiptranslate{ display:none !important; }
   body{ top:0 !important; }
 </style>
+/* === MOBILE TRANSLATE FIX — pin to top-right on phones === */
+@media (max-width: 768px){
+  /* przenieś cały widget w róg, niezależnie gdzie został wstrzyknięty */
+  #google_translate_element,
+  #translator-fab,
+  .goog-te-gadget,
+  .goog-te-gadget-simple {
+    position: fixed !important;
+    top: calc(10px + env(safe-area-inset-top)) !important;
+    right: calc(10px + env(safe-area-inset-right)) !important;
+    z-index: 2147483647 !important; /* ponad wszystkimi ikonami */
+    max-width: 56vw !important;
+    overflow: hidden !important;
+    background: transparent !important;
+  }
+
+  /* kompaktowy wygląd selektora języka */
+  #google_translate_element .goog-te-combo,
+  .goog-te-gadget .goog-te-combo {
+    font-size: 13px !important;
+    padding: 6px 8px !important;
+    max-width: 44vw !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* zbij rozmiary, żeby nic nie „puchło” */
+  #google_translate_element .goog-te-gadget,
+  .goog-te-gadget,
+  .goog-te-gadget-simple {
+    font-size: 0 !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    gap: 6px !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* schowaj baner google, który rozwala układ na mobile */
+.goog-te-banner-frame.skiptranslate { display: none !important; }
+body { top: 0 !important; }
