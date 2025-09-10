@@ -191,7 +191,16 @@
                   stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
-        <!-- Tłumacz (USUNIĘTY: langpick) -->
+
+        <!-- ▼▼ NOWY: Tłumacz (PL/EN) – lekki, bez Google banneru ▼▼ -->
+        <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
+          <label for="bhLangSelect">Język</label>
+          <select id="bhLangSelect">
+            <option value="pl">PL</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
+        <!-- ▲▲ KONIEC: Tłumacz ▲▲ -->
       </div>
     </header>
 
@@ -377,18 +386,18 @@
 
     const panel = document.createElement('div');
     panel.className = 'bh2025-suggest'; panel.setAttribute('role','listbox'); panel.setAttribute('aria-hidden','true');
-    panel.innerHTML = `<div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>`;
+    panel.innerHTML = <div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>;
     input.parentElement.appendChild(panel);
     const list = panel.querySelector('#bh2025List');
     let results = [], active = -1;
 
     function buildUrls(hit){
       if(hit.sos){
-        const url = `szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
+        const url = szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)};
         return [{label: hit.label, url, sub:'SOS'}];
       }
       return GENDERS.map(g=>{
-        const url = `szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
+        const url = szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)};
         return {label:`${hit.label} • ${g.label}`, url, sub:g.label};
       });
     }
@@ -404,7 +413,7 @@
       results.forEach((r,idx)=>{
         const li = document.createElement('li');
         li.setAttribute('role','option'); li.className='bh2025-sg-item'; li.dataset.index = String(idx);
-        li.innerHTML = `<span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>`;
+        li.innerHTML = <span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>;
         li.addEventListener('mouseenter', ()=>setActive(idx));
         li.addEventListener('mouseleave', ()=>setActive(-1));
         li.addEventListener('click', ()=>go(idx));
@@ -450,6 +459,116 @@
   <!-- Add to Home Screen (iOS/Android) -->
   <script src="assets/a2hs.js?v=1"></script>
 
+  <!-- ▼▼ NOWY SKRYPT: LEKKI TŁUMACZ PL/EN (bez banera Google) ▼▼ -->
+  <script>
+    (function(){
+      if(window.__bhI18nBound) return; window.__bhI18nBound = true;
+
+      // Słowniki (rozszerzalne na kolejne języki/klucze)
+      const I18N = {
+        pl: {
+          brand_title:"Boli Help",
+          brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",
+          pill_choke:"Zadławienie",
+          pill_cpr:"Reanimacja",
+          pill_accident:"Wypadek",
+          pill_firstaid:"Pierwsza pomoc",
+          pill_games:"Gry / Trening",
+          pill_quizzes:"Quizy",
+          btn_hosp:"🏥 Szpitale / SOR",
+          btn_loc:"📍 Zlokalizuj mnie",
+          subheadline:"Boli mnie — wybierz obszar bólu",
+          advice_title:"Porada",
+          advice_chip:"SOS • instrukcja",
+          close_btn:"✕",
+          video_head:"Materiał wideo",
+          video_hint:"Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej.",
+          card_woman:"Kobieta",
+          card_man:"Mężczyzna",
+          card_child:"Dziecko",
+          search_ph:"Szukaj objawu, części ciała lub tematu…",
+          sg_head:"Podpowiedzi"
+        },
+        en: {
+          brand_title:"Boli Help",
+          brand_sub:"Help and first aid in emergencies",
+          pill_choke:"Choking",
+          pill_cpr:"CPR",
+          pill_accident:"Accident",
+          pill_firstaid:"First aid",
+          pill_games:"Games / Training",
+          pill_quizzes:"Quizzes",
+          btn_hosp:"🏥 Hospitals / ER",
+          btn_loc:"📍 Locate me",
+          subheadline:"It hurts — choose the area of pain",
+          advice_title:"Advice",
+          advice_chip:"SOS • instructions",
+          close_btn:"✕",
+          video_head:"Video",
+          video_hint:"Add file: <code>assets/videos/&lt;name&gt;.mp4</code> and update the map below.",
+          card_woman:"Woman",
+          card_man:"Man",
+          card_child:"Child",
+          search_ph:"Search symptom, body part or topic…",
+          sg_head:"Suggestions"
+        }
+      };
+
+      const root = document.documentElement;
+      const LS_KEY = 'bh.lang';
+      let lang = (localStorage.getItem(LS_KEY) || root.getAttribute('data-lang') || root.lang || 'pl').toLowerCase();
+      if(!I18N[lang]) lang = 'pl';
+
+      // API dla innych skryptów (używane przez PORADY)
+      window.__getLang = () => lang;
+      window.__t = (k) => (I18N[lang] && I18N[lang][k]) || (I18N['pl'] && I18N['pl'][k]) || k;
+
+      function applyTranslations(){
+        // a) proste data-i18n (innerText)
+        document.querySelectorAll('[data-i18n]').forEach(el=>{
+          const key = el.getAttribute('data-i18n');
+          const val = window.__t(key);
+          if(val!=null){
+            // zachowaj ewentualne ikony/emoji – gdy tekst zaczyna się ikoną
+            if(el.firstChild && el.firstChild.nodeType===3){ el.firstChild.nodeValue = val; }
+            else { el.innerHTML = val; }
+          }
+        });
+        // b) placeholder wyszukiwarki
+        const search = document.getElementById('bhSearch');
+        if(search){ search.placeholder = window.__t('search_ph'); search.setAttribute('aria-label', window.__t('search_ph')); }
+        // c) nagłówek listy podpowiedzi jeśli istnieje
+        document.querySelectorAll('.bh2025-sg-head').forEach(el=>{ el.textContent = window.__t('sg_head'); });
+
+        // d) atrybuty lang na <html>
+        root.setAttribute('lang', lang);
+        root.setAttribute('data-lang', lang);
+
+        // e) tekst labelki obok selektora
+        const lab = document.querySelector('#bhLangPick label');
+        if(lab){ lab.textContent = (lang==='en'?'Language':'Język'); }
+      }
+
+      function setLang(newLang){
+        if(!I18N[newLang]) return;
+        lang = newLang;
+        localStorage.setItem(LS_KEY, lang);
+        applyTranslations();
+      }
+
+      // Inicjalizacja selektora
+      const sel = document.getElementById('bhLangSelect');
+      if(sel){
+        sel.value = lang;
+        sel.addEventListener('change', ()=> setLang(sel.value));
+      }
+
+      // Pierwsze zastosowanie
+      applyTranslations();
+    })();
+  </script>
+  <!-- ▲▲ KONIEC SKRYPTU TŁUMACZA ▲▲ -->
+
   <!-- OSTATECZNY PATCH: ukrycie starego GT + kadrowanie + glow -->
   <style id="bh-final-patch">
     /* Ukryj resztki starego Google Translate jeśli by się wstrzyknął */
@@ -472,7 +591,7 @@
     /* Glow/puls dla akcji */
     :root{ --glow-green:34,227,160; --glow-red:255,107,107; --glow-amber:255,184,108; }
     #btn-hosp{
-      border-color: rgba(var(--glow-red), .8)!important;
+      border-color: rgba(var(--glow-red), .😎!important;
       box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-red), .5) inset, 0 0 18px rgba(var(--glow-red), .35);
       animation: bhRedPulse 2.2s ease-in-out infinite;
     }
