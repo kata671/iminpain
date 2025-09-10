@@ -405,30 +405,25 @@
     });
     document.addEventListener('click', (e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); active=-1; } });
     if(icon){ icon.addEventListener('click', ()=>{ results = search(input.value); render(); if(results.length) panel.setAttribute('aria-hidden','false'); }); }
-
-    // I18N nagłówka podpowiedzi
-    document.addEventListener('bh:lang-changed', ()=>{
-      const head = panel.querySelector('.bh2025-sg-head');
-      const lang = (window.__getLang && window.__getLang()) || 'pl';
-      head.textContent = (lang==='en'?'Suggestions':'Podpowiedzi');
-    });
-  })();
   </script>
+<!-- === BH: Translator unified (jeden na wszystkich stronach) === -->
+<style>
+  /* anty-overflow, żeby nic nie „rozpychało” widoku na mobile */
+  html, body { overflow-x: hidden; }
+  [data-bh-no-wrap] { white-space: nowrap; } /* na wszelki wypadek dla długich etykiet */
+</style>
 
-  <!-- TWARDY KILL SERVICE WORKERA + cache-bust (tylko na tej stronie) -->
-  <script>
-    (function(){
-      // Wyrejestruj SW, który mógł trzymać stary index na telefonie
-      if('serviceWorker' in navigator){
-        navigator.serviceWorker.getRegistrations().then(function(regs){
-          regs.forEach(function(reg){ reg.unregister(); });
-        }).catch(function(){});
-      }
-      // Dodatkowo: jeśli stary SW trzymał cache, spróbujmy go wyczyścić
-      if('caches' in window){
-        caches.keys().then(function(keys){ keys.forEach(function(k){ caches.delete(k); }); }).catch(function(){});
-      }
-    })();
-  </script>
+<script src="assets/lang.js?v=10"></script>
+<script src="assets/js/translator-unified.js?v=10"></script>
+<script>
+  // uruchom tłumacza – ten sam zestaw języków, co na stronie głównej
+  document.addEventListener('DOMContentLoaded', function(){
+    const langs = ['pl','en','de','fr','es','it','ro','uk','ru','cs','sk','lt','lv','nl','sv','no','hu','tr','vi'];
+    if (window.bhTranslate && typeof bhTranslate.init === 'function') {
+      bhTranslate.init({ default: 'pl', available: langs });
+    }
+  });
+</script>
+<!-- === /BH: Translator unified === -->
 </body>
 </html>
