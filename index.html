@@ -5,23 +5,22 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Boli Help — Strona główna</title>
   <meta name="theme-color" content="#0e1230" />
-  <!-- TWARDY NO-CACHE dla telefonu -->
+  <!-- TWARDY NO-CACHE na mobile -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
-  <!-- 0) GLOBALNY JĘZYK — bardzo wysoko w <head> -->
+  <!-- 0) GLOBALNY JĘZYK – na samym początku HEAD -->
   <script>
     (function(){
       var LS='bh.lang';
       var lang=(localStorage.getItem(LS)||document.documentElement.getAttribute('data-lang')||'pl').toLowerCase();
-      if(lang!=='pl'&&lang!=='en') lang='pl';
+      if(!/^(pl|en)$/.test(lang)) lang='pl';
       localStorage.setItem(LS, lang);
       document.documentElement.setAttribute('lang', lang);
       document.documentElement.setAttribute('data-lang', lang);
-      // API dla innych stron
       window.__getLang=function(){ return (localStorage.getItem(LS)||'pl').toLowerCase(); };
-      window.__setLang=function(l){ if(l==='pl'||l==='en'){ localStorage.setItem(LS,l); document.dispatchEvent(new CustomEvent('bh:lang-changed',{detail:{lang:l}})); } };
+      window.__setLang=function(l){ if(/^(pl|en)$/.test(l)){ localStorage.setItem(LS,l); document.dispatchEvent(new CustomEvent('bh:lang-changed',{detail:{lang:l}})); } };
     })();
   </script>
 
@@ -29,13 +28,13 @@
   <link rel="stylesheet" href="assets/style.css?v=11" />
 
   <style>
-    html,body{height:100%; overflow-x:hidden}
+    html,body{height:100%}
     body[data-page="home"]{
       position:relative; background:#0e1230 !important; color:#eef2ff;
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-      margin:0;
-      font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
+      margin:0; font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
     }
+    /* Tapeta */
     .bh-wallpaper,.bh-grid{position:fixed;inset:0;pointer-events:none}
     .bh-wallpaper{
       z-index:0;
@@ -105,16 +104,18 @@
       outline:none;
     }
 
+    /* Modale ukryte */
     .bh2025-modal[aria-hidden="true"],
     .bh2025-porada[aria-hidden="true"]{ display:none }
 
-    /* Selektor języka */
-    .langpick{display:flex;gap:8px;align-items:center;margin-left:12px}
+    /* Selektor języka (ten sam wygląd na wszystkich stronach) */
+    .langpick{display:flex;gap:8px;align-items:center;margin-left:12px; flex-wrap:nowrap}
     .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
     .langpick select{
       appearance:none;background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.24);
-      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px
+      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px;
+      max-width:52vw;
     }
     .langpick option{ color:#0e1230; background:#ffffff }
 
@@ -135,20 +136,10 @@
       background:rgba(164,107,255,.18); font-size:12px}
     .bh2025-sg-sub{margin-left:auto;font-size:12px;color:#b8c2e0}
 
-    /* Ukryj resztki starego Google Translate, jeśli kiedyś się wstrzykną */
+    /* Anty-rozpychanie mobilne i kill Google Translate */
+    html, body { overflow-x: hidden; }
     .goog-te-banner-frame.skiptranslate{display:none!important}
     .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
-
-    /* MOBILE FIX: nie rozpychaj headera, język w rogu, padding na top */
-    @media (max-width:560px){
-      body{ padding-top: 56px; }               /* miejsce na selektor języka */
-      .header .tools{ flex-wrap: wrap; }
-      .header .tools .search input{ min-width:0 !important; width:100%; }
-      #bhLangPick{
-        position:fixed; top:10px; right:12px; left:auto;
-        transform:none; margin-left:0 !important; z-index:10000;
-      }
-    }
   </style>
 </head>
 
@@ -173,7 +164,7 @@
           </svg>
         </div>
 
-        <!-- Tłumacz PL/EN (wspólny dla całego serwisu) -->
+        <!-- Tłumacz PL/EN – identyczny na wszystkich stronach -->
         <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
           <label for="bhLangSelect">Język</label>
           <select id="bhLangSelect">
@@ -244,8 +235,60 @@
     </section>
   </div>
 
-  <!-- Skrypt bazowy strony -->
+  <!-- Skrypt bazowy -->
   <script src="assets/main.js?v=11" defer></script>
+
+  <!-- LEKKI I18N (HOME) – tylko PL/EN dla stałych etykiet -->
+  <script>
+  (function(){
+    if(window.__bhI18nBound) return; window.__bhI18nBound = true;
+
+    const I18N = {
+      pl:{brand_title:"Boli Help",brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",
+          pill_choke:"Zadławienie",pill_cpr:"Reanimacja",pill_accident:"Wypadek",pill_firstaid:"Pierwsza pomoc",
+          pill_games:"Gry / Trening",pill_quizzes:"Quizy",
+          subheadline:"Boli mnie — wybierz obszar bólu",
+          card_woman:"Kobieta",card_man:"Mężczyzna",card_child:"Dziecko",
+          search_ph:"Szukaj objawu, części ciała lub tematu…", sg_head:"Podpowiedzi"},
+      en:{brand_title:"Boli Help",brand_sub:"Help and first aid in emergencies",
+          pill_choke:"Choking",pill_cpr:"CPR",pill_accident:"Accident",pill_firstaid:"First aid",
+          pill_games:"Games / Training",pill_quizzes:"Quizzes",
+          subheadline:"It hurts — choose the area of pain",
+          card_woman:"Woman",card_man:"Man",card_child:"Child",
+          search_ph:"Search symptom, body part or topic…", sg_head:"Suggestions"}
+    };
+    const root=document.documentElement;
+    let lang=(window.__getLang && window.__getLang()) || (root.getAttribute('lang')||'pl');
+
+    function t(k){ return (I18N[lang]&&I18N[lang][k])||(I18N.pl&&I18N.pl[k])||k; }
+    function apply(){
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key=el.getAttribute('data-i18n'); const val=t(key);
+        if(val!=null){ el.innerHTML = val; }
+      });
+      const search=document.getElementById('bhSearch');
+      if(search){ search.placeholder=t('search_ph'); search.setAttribute('aria-label', t('search_ph')); }
+      const lab=document.querySelector('#bhLangPick label');
+      if(lab){ lab.textContent = (lang==='en'?'Language':'Język'); }
+      root.setAttribute('lang', lang); root.setAttribute('data-lang', lang);
+    }
+
+    const sel=document.getElementById('bhLangSelect');
+    if(sel){
+      sel.value=lang;
+      sel.addEventListener('change', function(){
+        lang = sel.value;
+        if(window.__setLang) window.__setLang(lang);
+        apply();
+        if (window.bhTranslate && typeof bhTranslate.setLang==='function') {
+          bhTranslate.setLang(lang);
+        }
+      });
+    }
+    apply();
+    document.addEventListener('bh:lang-changed', (e)=>{ lang=(e.detail&&e.detail.lang)||lang; apply(); });
+  })();
+  </script>
 
   <!-- WYSZUKIWARKA -->
   <script>
@@ -255,118 +298,91 @@
     if(!input || input.dataset.bhSearchBound) return; input.dataset.bhSearchBound='1';
 
     const PARTS = [
-      {id:'oko',       label:'Oko',        alias:['oko','oczy','wzrok']},
-      {id:'nos',       label:'Nos',        alias:['nos','zatoki','katar']},
-      {id:'gardlo',    label:'Gardło',     alias:['gardlo','gardło','angina','chrypka']},
-      {id:'glowa',     label:'Głowa',      alias:['glowa','głowa','migrena','ból głowy']},
-      {id:'klatka',    label:'Klatka piersiowa', alias:['klatka','pierś','serce ból','mostek']},
-      {id:'pluca',     label:'Płuca',      alias:['płuca','pluca','duszność','astma']},
-      {id:'brzuch',    label:'Brzuch',     alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
-      {id:'nerki',     label:'Nerki',      alias:['nerki','kolka','lędźwie','ledzwi']},
-      {id:'plecy',     label:'Plecy',      alias:['plecy','kręgosłup','kregoslup','rwa']},
-      {id:'biodra',    label:'Biodra/Uda', alias:['biodro','biodra','udo','pachwina']},
-      {id:'kolano',    label:'Kolano',     alias:['kolano','rzepka','łąkotka','lakotka']},
-      {id:'stopy',     label:'Stopy',      alias:['stopa','stopy','pięta','pieta','rozcięgno']},
-      {id:'skora',     label:'Skóra',      alias:['skora','skóra','wysypka','świąd','alergia']},
-      {id:'serce',     label:'Serce',      alias:['serce','kołatania','kolatania','arytmia']},
-      {id:'kaszel',    label:'Kaszel',     alias:['kaszel','kaszle']},
-      {id:'goraczka',  label:'Gorączka',   alias:['gorączka','goraczka','temperatura']},
-      {id:'zadlawienie', label:'Zadławienie (SOS)', alias:['zadławienie','zadlawienie','zadławił','zadlawil'], sos:true},
-      {id:'reanimacja',  label:'Reanimacja (RKO)',  alias:['reanimacja','rko','resuscytacja'], sos:true},
-      {id:'wypadek',     label:'Wypadek (SOS)',     alias:['wypadek','kolizja','potrącenie','potracenie'], sos:true},
-      {id:'pierwszopomoc',label:'Pierwsza pomoc',   alias:['pierwsza pomoc','pierwszopomoc','abc'], sos:true}
+      {id:'oko',label:'Oko',alias:['oko','oczy','wzrok']},
+      {id:'nos',label:'Nos',alias:['nos','zatoki','katar']},
+      {id:'gardlo',label:'Gardło',alias:['gardlo','gardło','angina','chrypka']},
+      {id:'glowa',label:'Głowa',alias:['glowa','głowa','migrena','ból głowy']},
+      {id:'klatka',label:'Klatka piersiowa',alias:['klatka','pierś','serce ból','mostek']},
+      {id:'pluca',label:'Płuca',alias:['płuca','pluca','duszność','astma']},
+      {id:'brzuch',label:'Brzuch',alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
+      {id:'nerki',label:'Nerki',alias:['nerki','kolka','lędźwie','ledzwi']},
+      {id:'plecy',label:'Plecy',alias:['plecy','kręgosłup','kregoslup','rwa']},
+      {id:'biodra',label:'Biodra/Uda',alias:['biodro','biodra','udo','pachwina']},
+      {id:'kolano',label:'Kolano',alias:['kolano','rzepka','łąkotka','lakotka']},
+      {id:'stopy',label:'Stopy',alias:['stopa','stopy','pięta','pieta','rozcięgno']},
+      {id:'skora',label:'Skóra',alias:['skora','skóra','wysypka','świąd','alergia']},
+      {id:'serce',label:'Serce',alias:['serce','kołatania','kolatania','arytmia']},
+      {id:'kaszel',label:'Kaszel',alias:['kaszel','kaszle']},
+      {id:'goraczka',label:'Gorączka',alias:['gorączka','goraczka','temperatura']},
+      {id:'zadlawienie',label:'Zadławienie (SOS)',alias:['zadławienie','zadlawienie','zadławił','zadlawil'],sos:true},
+      {id:'reanimacja',label:'Reanimacja (RKO)',alias:['reanimacja','rko','resuscytacja'],sos:true},
+      {id:'wypadek',label:'Wypadek (SOS)',alias:['wypadek','kolizja','potrącenie','potracenie'],sos:true},
+      {id:'pierwszopomoc',label:'Pierwsza pomoc',alias:['pierwsza pomoc','pierwszopomoc','abc'],sos:true}
     ];
-    const GENDERS = [
-      {id:'kobieta',label:'Kobieta'},{id:'mezczyzna',label:'Mężczyzna'},{id:'dziecko',label:'Dziecko'}
-    ];
+    const GENDERS=[{id:'kobieta',label:'Kobieta'},{id:'mezczyzna',label:'Mężczyzna'},{id:'dziecko',label:'Dziecko'}];
 
     const panel = document.createElement('div');
     panel.className = 'bh2025-suggest'; panel.setAttribute('role','listbox'); panel.setAttribute('aria-hidden','true');
-    panel.innerHTML = `
-      <div class="bh2025-sg-head">Podpowiedzi</div>
-      <ul class="bh2025-sg-list" id="bh2025List"></ul>
-    `;
+    panel.innerHTML = '<div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>';
     input.parentElement.appendChild(panel);
     const list = panel.querySelector('#bh2025List');
     let results = [], active = -1;
 
     function buildUrls(hit){
-      if(hit.sos){
-        const url = `szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}&v=11`;
-        return [{label: hit.label, url, sub:'SOS'}];
-      }
-      return GENDERS.map(g=>{
-        const url = `szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}&v=11`;
-        return {label:`${hit.label} • ${g.label}`, url, sub:g.label};
-      });
+      if(hit.sos){ const url=`szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}&v=11`; return [{label:hit.label,url,sub:'SOS'}]; }
+      return GENDERS.map(g=>({label:`${hit.label} • ${g.label}`,url:`szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}&v=11`,sub:g.label}));
     }
     function search(q){
       const s=q.trim().toLowerCase(); if(!s) return [];
-      const hits = PARTS.filter(p =>
-        (p.alias||[]).some(a => a.includes(s)) || p.id.includes(s) || p.label.toLowerCase().includes(s)
-      ).slice(0,6);
+      const hits = PARTS.filter(p => (p.alias||[]).some(a=>a.includes(s)) || p.id.includes(s) || p.label.toLowerCase().includes(s)).slice(0,6);
       return hits.flatMap(buildUrls).slice(0,12);
     }
     function render(){
-      list.innerHTML = ''; active = -1;
+      list.innerHTML=''; active=-1;
       results.forEach((r,idx)=>{
-        const li = document.createElement('li');
-        li.setAttribute('role','option'); li.className='bh2025-sg-item'; li.dataset.index = String(idx);
-        li.innerHTML = `<span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>`;
-        li.addEventListener('mouseenter', ()=>setActive(idx));
-        li.addEventListener('mouseleave', ()=>setActive(-1));
-        li.addEventListener('click', ()=>go(idx));
+        const li=document.createElement('li');
+        li.setAttribute('role','option'); li.className='bh2025-sg-item'; li.dataset.index=String(idx);
+        li.innerHTML=`<span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>`;
+        li.addEventListener('mouseenter',()=>setActive(idx));
+        li.addEventListener('mouseleave',()=>setActive(-1));
+        li.addEventListener('click',()=>go(idx));
         list.appendChild(li);
       });
       panel.setAttribute('aria-hidden', results.length ? 'false':'true');
     }
     function setActive(i){
-      active = i;
-      list.querySelectorAll('.bh2025-sg-item').forEach((el,idx)=>{
-        el.setAttribute('aria-selected', (idx===active)?'true':'false');
-      });
+      active=i;
+      list.querySelectorAll('.bh2025-sg-item').forEach((el,idx)=>el.setAttribute('aria-selected',(idx===active)?'true':'false'));
     }
-    function go(idx){
-      const item = results[idx]; if(!item) return;
-      location.href = item.url;
-    }
+    function go(idx){ const item=results[idx]; if(!item) return; location.href=item.url; }
 
-    input.addEventListener('input', ()=>{ results = search(input.value); render(); });
-    input.addEventListener('keydown', (e)=>{
-      const shown = panel.getAttribute('aria-hidden')==='false';
-      if(e.key==='ArrowDown'){ if(!shown){ results = search(input.value); render(); } setActive( (active+1+results.length)%results.length ); e.preventDefault(); }
-      else if(e.key==='ArrowUp'){ if(!shown){ results = search(input.value); render(); } setActive( (active-1+results.length)%results.length ); e.preventDefault(); }
-      else if(e.key==='Enter'){
-        if(shown && active>=0){ e.preventDefault(); go(active); }
-        else { if(!results.length){ results = search(input.value); } if(results[0]) go(0); }
-      } else if(e.key==='Escape'){ panel.setAttribute('aria-hidden','true'); active=-1; }
+    input.addEventListener('input', ()=>{ results=search(input.value); render(); });
+    input.addEventListener('keydown',(e)=>{
+      const shown=panel.getAttribute('aria-hidden')==='false';
+      if(e.key==='ArrowDown'){ if(!shown){ results=search(input.value); render(); } setActive((active+1+results.length)%results.length); e.preventDefault(); }
+      else if(e.key==='ArrowUp'){ if(!shown){ results=search(input.value); render(); } setActive((active-1+results.length)%results.length); e.preventDefault(); }
+      else if(e.key==='Enter'){ if(shown && active>=0){ e.preventDefault(); go(active); } else { if(!results.length){ results=search(input.value); } if(results[0]) go(0); } }
+      else if(e.key==='Escape'){ panel.setAttribute('aria-hidden','true'); active=-1; }
     });
-    document.addEventListener('click', (e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); active=-1; } });
-    if(icon){ icon.addEventListener('click', ()=>{ results = search(input.value); render(); if(results.length) panel.setAttribute('aria-hidden','false'); }); }
+    document.addEventListener('click',(e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); active=-1; } });
+    if(icon){ icon.addEventListener('click',()=>{ results=search(input.value); render(); if(results.length) panel.setAttribute('aria-hidden','false'); }); }
   })();
   </script>
 
-  <!-- === BH: Translator unified (jeden na wszystkich stronach) === -->
-  <style>
-    /* anty-overflow + no-wrap helper */
-    [data-bh-no-wrap] { white-space: nowrap; }
-  </style>
-
+  <!-- === Translator unified (jeden na wszystkie strony) === -->
   <script src="assets/lang.js?v=10"></script>
   <script src="assets/js/translator-unified.js?v=10"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function(){
-      const langs = ['pl','en','de','fr','es','it','ro','uk','ru','cs','sk','lt','lv','nl','sv','no','hu','tr','vi'];
-      if (window.bhTranslate && typeof bhTranslate.init === 'function') {
+      const langs=['pl','en','de','fr','es','it','ro','uk','ru','cs','sk','lt','lv','nl','sv','no','hu','tr','vi'];
+      if (window.bhTranslate && typeof bhTranslate.init==='function') {
         bhTranslate.init({ default: 'pl', available: langs });
+        // ustaw dropdown na aktualny
+        var sel=document.getElementById('bhLangSelect');
+        if(sel){ sel.value=(window.__getLang?__getLang():'pl'); }
       }
-      // ustaw selektor wg stanu
-      var sel = document.getElementById('bhLangSelect');
-      if (sel && typeof window.__getLang === 'function') sel.value = window.__getLang();
-      // zmiana z selektora
-      if (sel) sel.addEventListener('change', function(){ if(window.__setLang) window.__setLang(sel.value); });
     });
   </script>
-  <!-- === /BH: Translator unified === -->
+  <!-- === /Translator unified === -->
 </body>
 </html>
