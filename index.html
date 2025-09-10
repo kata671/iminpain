@@ -19,7 +19,7 @@
       localStorage.setItem(LS, lang);
       document.documentElement.setAttribute('lang', lang);
       document.documentElement.setAttribute('data-lang', lang);
-      // udostępnij API, by inne skrypty (i podstrony) mogły czytać
+      // API dla innych stron
       window.__getLang=function(){ return (localStorage.getItem(LS)||'pl').toLowerCase(); };
       window.__setLang=function(l){ if(l==='pl'||l==='en'){ localStorage.setItem(LS,l); document.dispatchEvent(new CustomEvent('bh:lang-changed',{detail:{lang:l}})); } };
     })();
@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="assets/style.css?v=11" />
 
   <style>
-    html,body{height:100%}
+    html,body{height:100%; overflow-x:hidden}
     body[data-page="home"]{
       position:relative; background:#0e1230 !important; color:#eef2ff;
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
@@ -138,6 +138,17 @@
     /* Ukryj resztki starego Google Translate, jeśli kiedyś się wstrzykną */
     .goog-te-banner-frame.skiptranslate{display:none!important}
     .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
+
+    /* MOBILE FIX: nie rozpychaj headera, język w rogu, padding na top */
+    @media (max-width:560px){
+      body{ padding-top: 56px; }               /* miejsce na selektor języka */
+      .header .tools{ flex-wrap: wrap; }
+      .header .tools .search input{ min-width:0 !important; width:100%; }
+      #bhLangPick{
+        position:fixed; top:10px; right:12px; left:auto;
+        transform:none; margin-left:0 !important; z-index:10000;
+      }
+    }
   </style>
 </head>
 
@@ -160,7 +171,6 @@
             <path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
                   stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
           </svg>
-          <!-- panel podpowiedzi dobudujemy w JS -->
         </div>
 
         <!-- Tłumacz PL/EN (wspólny dla całego serwisu) -->
@@ -237,79 +247,7 @@
   <!-- Skrypt bazowy strony -->
   <script src="assets/main.js?v=11" defer></script>
 
-  <!-- LEKKI I18N (dla HOME) — czyta/zapisuje ten sam localStorage 'bh.lang' -->
-  <script>
-  (function(){
-    if(window.__bhI18nBound) return; window.__bhI18nBound = true;
-
-    const I18N = {
-      pl: {
-        brand_title:"Boli Help",
-        brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",
-        pill_choke:"Zadławienie",
-        pill_cpr:"Reanimacja",
-        pill_accident:"Wypadek",
-        pill_firstaid:"Pierwsza pomoc",
-        pill_games:"Gry / Trening",
-        pill_quizzes:"Quizy",
-        subheadline:"Boli mnie — wybierz obszar bólu",
-        card_woman:"Kobieta", card_man:"Mężczyzna", card_child:"Dziecko",
-        search_ph:"Szukaj objawu, części ciała lub tematu…",
-        sg_head:"Podpowiedzi"
-      },
-      en: {
-        brand_title:"Boli Help",
-        brand_sub:"Help and first aid in emergencies",
-        pill_choke:"Choking",
-        pill_cpr:"CPR",
-        pill_accident:"Accident",
-        pill_firstaid:"First aid",
-        pill_games:"Games / Training",
-        pill_quizzes:"Quizzes",
-        subheadline:"It hurts — choose the area of pain",
-        card_woman:"Woman", card_man:"Man", card_child:"Child",
-        search_ph:"Search symptom, body part or topic…",
-        sg_head:"Suggestions"
-      }
-    };
-
-    const root=document.documentElement;
-    let lang=(window.__getLang && window.__getLang()) || (root.getAttribute('lang')||'pl');
-
-    function t(k){ return (I18N[lang]&&I18N[lang][k])||(I18N.pl&&I18N.pl[k])||k; }
-
-    function apply(){
-      document.querySelectorAll('[data-i18n]').forEach(el=>{
-        const key=el.getAttribute('data-i18n'); const val=t(key);
-        if(val!=null){ el.innerHTML = val; }
-      });
-      const search=document.getElementById('bhSearch');
-      if(search){ search.placeholder=t('search_ph'); search.setAttribute('aria-label', t('search_ph')); }
-      const lab=document.querySelector('#bhLangPick label');
-      if(lab){ lab.textContent = (lang==='en'?'Language':'Język'); }
-      root.setAttribute('lang', lang); root.setAttribute('data-lang', lang);
-    }
-
-    // inicjalizacja selektora języka (działa też na telefonie)
-    const sel=document.getElementById('bhLangSelect');
-    if(sel){
-      sel.value=lang;
-      sel.addEventListener('change', function(){
-        lang = sel.value;
-        if(window.__setLang) window.__setLang(lang);
-        // od razu zastosuj na tej stronie
-        apply();
-      });
-    }
-
-    apply();
-
-    // Jeżeli inny skrypt (lub podstrona) zmieniła język — zastosuj
-    document.addEventListener('bh:lang-changed', (e)=>{ lang=(e.detail&&e.detail.lang)||lang; apply(); });
-  })();
-  </script>
-
-  <!-- WYSZUKIWARKA (naprawione stringi/HTML) -->
+  <!-- WYSZUKIWARKA -->
   <script>
   (function(){
     const input = document.getElementById('bhSearch');
@@ -405,25 +343,30 @@
     });
     document.addEventListener('click', (e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); active=-1; } });
     if(icon){ icon.addEventListener('click', ()=>{ results = search(input.value); render(); if(results.length) panel.setAttribute('aria-hidden','false'); }); }
+  })();
   </script>
-<!-- === BH: Translator unified (jeden na wszystkich stronach) === -->
-<style>
-  /* anty-overflow, żeby nic nie „rozpychało” widoku na mobile */
-  html, body { overflow-x: hidden; }
-  [data-bh-no-wrap] { white-space: nowrap; } /* na wszelki wypadek dla długich etykiet */
-</style>
 
-<script src="assets/lang.js?v=10"></script>
-<script src="assets/js/translator-unified.js?v=10"></script>
-<script>
-  // uruchom tłumacza – ten sam zestaw języków, co na stronie głównej
-  document.addEventListener('DOMContentLoaded', function(){
-    const langs = ['pl','en','de','fr','es','it','ro','uk','ru','cs','sk','lt','lv','nl','sv','no','hu','tr','vi'];
-    if (window.bhTranslate && typeof bhTranslate.init === 'function') {
-      bhTranslate.init({ default: 'pl', available: langs });
-    }
-  });
-</script>
-<!-- === /BH: Translator unified === -->
+  <!-- === BH: Translator unified (jeden na wszystkich stronach) === -->
+  <style>
+    /* anty-overflow + no-wrap helper */
+    [data-bh-no-wrap] { white-space: nowrap; }
+  </style>
+
+  <script src="assets/lang.js?v=10"></script>
+  <script src="assets/js/translator-unified.js?v=10"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const langs = ['pl','en','de','fr','es','it','ro','uk','ru','cs','sk','lt','lv','nl','sv','no','hu','tr','vi'];
+      if (window.bhTranslate && typeof bhTranslate.init === 'function') {
+        bhTranslate.init({ default: 'pl', available: langs });
+      }
+      // ustaw selektor wg stanu
+      var sel = document.getElementById('bhLangSelect');
+      if (sel && typeof window.__getLang === 'function') sel.value = window.__getLang();
+      // zmiana z selektora
+      if (sel) sel.addEventListener('change', function(){ if(window.__setLang) window.__setLang(sel.value); });
+    });
+  </script>
+  <!-- === /BH: Translator unified === -->
 </body>
 </html>
