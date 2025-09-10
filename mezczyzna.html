@@ -219,58 +219,18 @@
           }
         }
       };
-
-      function apply(){
-        var d = dict[lang] || dict.pl;
-
-        // <html lang=...>
-        root.setAttribute('lang', lang);
-
-        // Tytuł
-        var h1 = document.getElementById('bhPageTitle'); if(h1){ h1.textContent = d.title; }
-
-        // Przycisk "Wróć"
-        var back = document.getElementById('bhBackMini');
-        if(back){ back.textContent = d.back; back.setAttribute('aria-label', d.back_aria); }
-
-        // Aria label sekcji miniaturek
-        var grid = document.getElementById('bhThumbs');
-        if(grid){ grid.setAttribute('aria-label', d.section_aria); }
-
-        // Podpisy na kafelkach – po id w parametrze "czesc"
-        document.querySelectorAll('.grid-thumbs a.thumb').forEach(function(a){
-          try{
-            var u = new URL(a.getAttribute('href'), location.href);
-            var part = u.searchParams.get('czesc');
-            var span = a.querySelector('span');
-            if(part && d.parts[part] && span){ span.textContent = d.parts[part]; }
-          }catch(e){}
-        });
-
-        // Etykieta przy selektorze
-        if(lab){ lab.textContent = (lang==='en' ? 'Language' : 'Język'); }
-
-        // Ustaw wybraną opcję w selektorze
-        if(sel){ sel.value = lang; }
-      }
-
-      function setLang(l){
-        if(!dict[l]) return;
-        lang = l;
-        localStorage.setItem(LS_KEY, lang); // klucz współdzielony ze stroną główną
-        apply();
-      }
-
-      // Inicjalizacja selektora
-      if(sel){
-        sel.addEventListener('change', function(){ setLang(sel.value); });
-      }
-
-      // Pierwsze zastosowanie (pobiera stan ustawiony na stronie głównej)
-      apply();
-    })();
-  </script>
-
+<!-- Translator unified -->
+<script src="assets/lang.js?v=10"></script>
+<script src="assets/js/translator-unified.js?v=10"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    const langs = ['pl','en','de','fr','es','it','ro','uk','ru','cs','sk','lt'];
+    if (window.bhTranslate && typeof bhTranslate.init === 'function') {
+        bhTranslate.init({ default: 'pl', available: langs });
+    }
+});
+</script>
+<!-- /Translator unified -->
   <!-- USUNIĘTO stary tłumacz -->
   <!-- <script src="/assets/js/translator-unified.js?v=1" defer></script> -->
 </body>
