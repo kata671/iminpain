@@ -3,7 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- JEDEN wspólny translator dla całej strony -->
   <script src="assets/lang.js?v=1"></script>
+  <script src="assets/js/translator-unified.js?v=10"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const langs = ['pl','en','de','fr','es','it','ro','uk','ru','cs','sk','lt','lv','et','hu','nl','sv','no','da','pt','el','tr','vi'];
+      if (window.bhTranslate && typeof bhTranslate.init === 'function') {
+        bhTranslate.init({ default: 'pl', available: langs });
+      }
+    });
+  </script>
+
   <title>Boli Help — Dziecko</title>
   <meta name="theme-color" content="#0e1230" />
   <link rel="manifest" href="manifest.json" />
@@ -74,7 +86,7 @@
     #bhBackMini:hover{ transform:translateY(-1px); border-color:rgba(164,107,255,.55); box-shadow:0 10px 20px rgba(8,10,22,.45), 0 0 14px rgba(164,107,255,.65), inset 0 0 0 1px rgba(164,107,255,.18) }
     #bhBackMini:focus-visible{ outline:2px solid rgba(164,107,255,.75); outline-offset:2px }
 
-    /* ===== WYGLĄD SELEKTORA JĘZYKA (naprawa mobile jak na innych stronach) ===== */
+    /* SELEKTOR JĘZYKA – jak na innych stronach */
     .langpick{
       position:fixed;
       top:clamp(8px, env(safe-area-inset-top, 8px), 20px);
@@ -93,23 +105,22 @@
       appearance:none;background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.24);
       color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px;
-      max-width:52vw; /* nie rozpycha na mobile */
+      max-width:52vw;
     }
     .langpick option{ color:#0e1230; background:#ffffff }
 
-    /* Mobile: zwężenie, wyśrodkowanie u góry i odsunięcie treści pod notch */
     @media (max-width:560px){
       body{ padding-top: calc(48px + env(safe-area-inset-top, 0px)); }
       .langpick{
         left:50%; right:auto; transform:translateX(-50%);
         gap:6px; padding:5px 8px;
       }
-      .langpick label{ display:none; } /* więcej miejsca na małych ekranach */
+      .langpick label{ display:none; }
       .langpick select{ font-size:12px; padding:5px 9px; }
       .container header.header{ margin-top:8px; }
     }
 
-    /* Ukryj ewentualne resztki starego GT */
+    /* Ukryj resztki Google Translate */
     .goog-te-banner-frame.skiptranslate{display:none!important}
     .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
   </style>
@@ -119,7 +130,7 @@
   <div class="bh-grid" aria-hidden="true"></div>
   <div class="bh-floor-fade" aria-hidden="true"></div>
 
-  <!-- SELEKTOR JĘZYKA (naprawiony: góra, nie rozpycha, działa na mobile) -->
+  <!-- SELEKTOR JĘZYKA -->
   <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
     <label for="bhLangSelect">Język</label>
     <select id="bhLangSelect">
@@ -167,22 +178,5 @@
       });
     })();
   </script>
-
-     <!-- Translator unified -->
-<script src="assets/lang.js?v=10"></script>
-<script src="assets/js/translator-unified.js?v=10"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-    const langs = ['pl','en','de','fr','es','it','ro','uk','ru','cs','sk','lt'];
-    if (window.bhTranslate && typeof bhTranslate.init === 'function') {
-        bhTranslate.init({ default: 'pl', available: langs });
-    }
-});
-</script>
-<!-- /Translator unified -->
-  </script>
-
-  <!-- USUNIĘTO stary tłumacz -->
-  <!-- <script src="/assets/js/translator-unified.js?v=1" defer></script> -->
 </body>
 </html>
