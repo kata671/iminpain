@@ -155,3 +155,25 @@ section.stack .card > a > img[src*="dziecko-model1"]{
 /* ACCESSIBILITY */
 :focus-visible{ outline: none; box-shadow: var(--ring); border-radius: 12px; }
 a,button{ -webkit-tap-highlight-color: transparent }
+/* === BH: FIX width + translator === */
+html, body { max-width:100%; overflow-x:hidden; }
+
+/* przycisk tłumacza jest fixed – nie wypycha layoutu */
+.bh-langfab{ position:fixed; top:14px; right:14px; z-index:9999; }
+@media (max-width:420px){
+  .bh-langfab{ top:10px; right:10px; }
+}
+
+/* panel języków – trzyma się w viewport, nie powoduje przewijania w bok */
+.bh-langfab, .bh-langfab *{ box-sizing:border-box; }
+.bh-langfab .bh-lang-panel{
+  width: 300px;                /* stała szerokość */
+  max-width: calc(100vw - 24px);
+  max-height: 70vh;            /* przewija się w pionie, nie w bok */
+  overflow-y: auto;
+  overflow-x: hidden;
+  right:0; left:auto;          /* dosunięty do prawej krawędzi ekranu */
+}
+
+/* żeby żaden cień/outline nie robił pseudo-szerokości */
+.bh-langfab .bh-lang-panel { outline: none; }
