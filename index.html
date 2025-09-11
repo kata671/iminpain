@@ -171,23 +171,38 @@
     .header .tools .search{position:relative}
   </style>
 </style>
-
-  <!-- FIX: stałe miejsce przełącznika języka na telefonach -->
-  <style>
-  @media (max-width:768px){
-    .lang{
-      position:fixed!important;
-      top:10px!important;
-      right:10px!important;
-      z-index:2000!important;
-      margin:0!important;
-      transform:none!important;
-    }
-    .lang .label,.lang b,.lang span:first-child{display:none!important}
-    body{padding-top:64px!important}
+<!-- FIX: stałe miejsce przełącznika języka na telefonach (obejmuje .lang i .langpick) -->
+<style>
+@media (max-width:768px){
+  /* przyklej przełącznik w prawym górnym rogu */
+  .lang, .langpick, #language, .language {
+    position: fixed !important;
+    top: 10px !important;
+    right: 10px !important;    /* zmień na left:10px, jeśli chcesz lewy róg */
+    left: auto !important;
+    z-index: 3000 !important;
+    margin: 0 !important;
+    transform: none !important;
   }
-  </style>
 
+  /* gdy rodzice mają transform/overflow – wyłącz, by nie tworzyli nowych kontekstów */
+  header, .header, .tools, .topbar {
+    transform: none !important;
+    overflow: visible !important;
+  }
+
+  /* ukryj sam napis "Język" (zostaw kapsułkę PL/EN lub select) */
+  .lang .label, .lang b, .lang span:first-child {
+    display: none !important;
+  }
+
+  /* zrób miejsce na przyklejony przełącznik */
+  body { padding-top: 64px !important; }
+
+  /* DIAGNOSTYKA (tymczasowo): pokaż ramkę, żeby zobaczyć co się przylepiło */
+  .lang, .langpick { outline: 2px solid red !important; }
+}
+</style>
 </head>
 <body data-page="home"></head>
 
