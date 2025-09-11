@@ -106,13 +106,26 @@ html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Inter",
 .caption h3{ margin:0; font-size:1.1rem; letter-spacing:.3px }
 .arrow{ display:inline-block; transform: translateX(0); transition: transform .2s ease; opacity:.9 }
 .card:hover .arrow{ transform: translateX(4px) }
-/* --- FIX: translator mobile position --- */
+/* --- FIX: translator mobile position (hard override) --- */
 @media (max-width: 768px) {
   .lang {
-    position: fixed;
-    top: 8px;
-    right: 8px;
-    z-index: 1000;
-    margin: 0;
+    position: fixed !important;   /* ignoruj wcześniejsze pozycjonowanie */
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 2000 !important;      /* ponad header/efekty/overlaye */
+    margin: 0 !important;
+    transform: none !important;    /* gdyby rodzice mieli transform */
+  }
+  /* schowaj napis "Język", zostaw samą pastylkę PL/EN */
+  .lang .label, .lang b, .lang span:first-child {
+    display: none !important;
+  }
+  /* wyzeruj niechciane marginesy wewnątrz */
+  .lang * {
+    margin: 0 !important;
+  }
+  /* zrób miejsce na przyklejony przełącznik, żeby nie nachodził na treść */
+  body {
+    padding-top: 64px !important;
   }
 }
