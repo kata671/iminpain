@@ -159,6 +159,35 @@
   body{ padding-top: 64px !important; }
 }
 </style>
+...
+</style>
+
+<!-- tylko dla SZCZEGÓŁY: pływający guzik języka -->
+<style>
+  @media (max-width: 768px){
+    #lang-fab{
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 4000;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.2);
+      font-weight: 600;
+      line-height: 1;
+    }
+    #lang-fab *{ margin:0; }
+    #lang-fab{ max-width: 96px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  }
+</style>
+
+</head>
+<body data-page="szczegoly">
 </head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
