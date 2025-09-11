@@ -180,17 +180,26 @@
   <div class="bg-anim" aria-hidden="true"></div>
   <div class="grid-bg" aria-hidden="true"></div>
   <canvas id="bh-particles" aria-hidden="true"></canvas>
-
-  <!-- SELEKTOR JĘZYKA (pływający) -->
-  <div id="lang-fab">
-    <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
-      <label for="bhLangSelect">Język</label>
-      <select id="bhLangSelect">
-        <option value="pl">PL</option>
-        <option value="en">EN</option>
-      </select>
-    </div>
+<!-- SELEKTOR JĘZYKA (pływający, wersja inline – przebija wszystko) -->
+<div id="lang-fab"
+     style="position:fixed;top:10px;right:10px;z-index:4000;
+            display:inline-flex;align-items:center;gap:6px;
+            padding:8px 10px;border-radius:12px;
+            background:rgba(255,255,255,.08);
+            border:1px solid rgba(255,255,255,.2);
+            backdrop-filter:blur(8px);
+            line-height:1;font-weight:600;
+            max-width:92px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+  <div class="langpick" id="bhLangPick" aria-label="Wybór języka" style="margin:0;">
+    <label for="bhLangSelect" style="display:none;">Język</label>
+    <select id="bhLangSelect" style="font-size:16px;">
+      <option value="pl">PL</option>
+      <option value="en">EN</option>
+    </select>
   </div>
+</div>
+
+  
 
   <div class="bh-backbar">
     <button id="bhReturnTop" type="button" aria-label="Wróć do poprzedniej strony">↑</button>
