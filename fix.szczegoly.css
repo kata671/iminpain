@@ -53,3 +53,4 @@ body[data-page="szczegoly"] #content .cards .card.emergency:hover {
     grid-template-columns: 1fr !important;
   }
 }
+body { outline: 3px solid lime !important; }
