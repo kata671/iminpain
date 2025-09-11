@@ -122,43 +122,7 @@
     .dx-badge.poz,.doc-badge.poz{ background:rgba(94,234,212,.18); border:1px solid rgba(94,234,212,.45); color:#d9fffa }
     .dx-badge.sor,.doc-badge.sor{ background:rgba(255,107,107,.20); border:1px solid rgba(255,107,107,.65); color:#ffe6e6 }
 
-    /* Selektor języka */
-    .langpick{
-      position:fixed; top:12px; right:12px; z-index:10000;
-      display:flex; gap:8px; align-items:center;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.24);
-      border-radius:12px; padding:6px 10px; backdrop-filter:saturate(120%) blur(4px)
-    }
-    .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
-    .langpick select{
-      appearance:none;background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.24);
-      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px
-    }
   </style>
-<!-- FIX: stałe miejsce przełącznika języka na telefonach (final) -->
-<style>
-@media (max-width:768px){
-  :where(.lang, .langpick, .language, #lang, #language, .header .tools .lang, .header .tools .langpick){
-    position: fixed !important;
-    top: 10px !important;
-    right: 10px !important;   /* jeśli wolisz lewy róg: left:10px!important; i usuń right */
-    z-index: 3000 !important;
-    margin: 0 !important;
-    transform: none !important;
-    display: inline-flex !important;
-    align-items: center;
-    gap: 8px;
-  }
-  /* schowaj sam napis "Język", zostaw kapsułkę PL/EN */
-  :where(.lang, .langpick, .language, #lang, #language) :where(.label, b, span:first-child){
-    display: none !important;
-  }
-  /* zrób miejsce na przyklejony przełącznik */
-  body{ padding-top: 64px !important; }
-}
-</style>
 ...
 </style>
 
