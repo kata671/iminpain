@@ -170,7 +170,26 @@
     .bh2025-sg-sub{margin-left:auto;font-size:12px;color:#b8c2e0}
     .header .tools .search{position:relative}
   </style>
+</style>
+
+  <!-- FIX: stałe miejsce przełącznika języka na telefonach -->
+  <style>
+  @media (max-width:768px){
+    .lang{
+      position:fixed!important;
+      top:10px!important;
+      right:10px!important;
+      z-index:2000!important;
+      margin:0!important;
+      transform:none!important;
+    }
+    .lang .label,.lang b,.lang span:first-child{display:none!important}
+    body{padding-top:64px!important}
+  }
+  </style>
+
 </head>
+<body data-page="home"></head>
 
 <body data-page="home">
   <div class="bh-wallpaper" aria-hidden="true"></div>
