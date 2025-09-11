@@ -438,3 +438,5 @@ body[data-page="szczegoly"] .cards > .card.spacer{
   min-height: 0 !important;
   padding: 0 !important;
 }
+
+body { outline: 3px solid lime !important; }
