@@ -276,3 +276,4 @@ input, select, textarea { font-size: 16px; } /* zapobiega auto-zoom na iOS/Andro
 /* schowaj baner google, który rozwala układ na mobile */
 .goog-te-banner-frame.skiptranslate { display: none !important; }
 body { top: 0 !important; }
+body { outline: 3px solid lime !important; }
