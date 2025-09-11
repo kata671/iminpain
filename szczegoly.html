@@ -149,7 +149,36 @@
       body{ padding-top:0!important; }
     }
   </style>
-</head>
+<style>
+  /* --- dopieszczenie układu kroków i ciasnych ekranów --- */
+
+  /* rozdziel 1. tytuł i podtytuł; niech podtytuł spada w nową linię */
+  .steps .step{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+  }
+  .steps .step small{
+    display:block;           /* wymuś nową linię */
+    margin-top:4px;
+    color:#b8c2e0;
+    font-weight:700;
+  }
+
+  /* kiedy jest węziej – 2 kolumny; bardzo wąsko – 1 kolumna */
+  @media (max-width: 600px){
+    .steps{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 380px){
+    .steps{ grid-template-columns: 1fr; }
+  }
+
+  /* minimalne odstępy, by nic nie nachodziło na górze w trybie poziomym */
+  @media (max-height: 420px) and (orientation: landscape){
+    header.app{ margin-top: 8px; }
+  }
+</style></head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
   <div class="grid-bg" aria-hidden="true"></div>
