@@ -185,26 +185,25 @@
     #lang-fab{ max-width: 96px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
   }
 </style>
-
-</head>
-<body data-page="szczegoly">
 </head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
   <div class="grid-bg" aria-hidden="true"></div>
   <canvas id="bh-particles" aria-hidden="true"></canvas>
 
-  <!-- SELEKTOR JĘZYKA -->
-  <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
-    <label for="bhLangSelect">Język</label>
-    <select id="bhLangSelect">
-      <option value="pl">PL</option>
-      <option value="en">EN</option>
-    </select>
+  <!-- SELEKTOR JĘZYKA (pływający) -->
+  <div id="lang-fab">
+    <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
+      <label for="bhLangSelect">Język</label>
+      <select id="bhLangSelect">
+        <option value="pl">PL</option>
+        <option value="en">EN</option>
+      </select>
+    </div>
   </div>
 
   <div class="bh-backbar">
-    <button id="bhReturnTop" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
+    <button id="bhReturnTop" type="button" aria-label="Wróć do poprzedniej strony">↑</button>
   </div>
 
   <header class="app" aria-label="Nawigacja lokalna">
