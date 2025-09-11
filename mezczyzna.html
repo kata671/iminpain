@@ -126,7 +126,28 @@
     .goog-te-banner-frame.skiptranslate{display:none!important}
     .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
   </style>
-</head>
+<!-- FIX: stałe miejsce przełącznika języka na telefonach (final) -->
+<style>
+@media (max-width:768px){
+  :where(.lang, .langpick, .language, #lang, #language, .header .tools .lang, .header .tools .langpick){
+    position: fixed !important;
+    top: 10px !important;
+    right: 10px !important;   /* jeśli wolisz lewy róg: left:10px!important; i usuń right */
+    z-index: 3000 !important;
+    margin: 0 !important;
+    transform: none !important;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+  }
+  /* schowaj sam napis "Język", zostaw kapsułkę PL/EN */
+  :where(.lang, .langpick, .language, #lang, #language) :where(.label, b, span:first-child){
+    display: none !important;
+  }
+  /* zrób miejsce na przyklejony przełącznik */
+  body{ padding-top: 64px !important; }
+}
+</style></head>
 <body data-page="mezczyzna">
   <div class="bh-wallpaper" aria-hidden="true"></div>
   <div class="bh-grid" aria-hidden="true"></div>
