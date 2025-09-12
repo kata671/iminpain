@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <!-- BoliHelp • Gry / Trening • v4.0 + Aim Pro -->
+  <!-- BoliHelp • Gry / Trening • v4.3 + Neuro N-Back Holo -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Gry / Trening</title>
@@ -116,18 +116,12 @@
     details.how summary{ cursor:pointer; font-weight:900 }
     details.how .hlp{ margin-top:6px }
 
-    /* 🎯 AIM PRO */
-    .aim-target{
-      position:absolute;
-      border-radius:50%;
-      background:radial-gradient(circle at 30% 30%, #5eead4, #0e1230 70%);
-      cursor:pointer;
-      box-shadow:0 0 12px rgba(94,234,212,.6), 0 0 24px rgba(164,107,255,.35) inset;
-      transition:transform .1s;
-    }
-    .aim-target:hover{
-      transform:scale(1.15);
-      box-shadow:0 0 18px rgba(94,234,212,.9), 0 0 28px rgba(164,107,255,.5) inset;
+    /* 🧠 Neuro N-Back glow */
+    #nbBoard::after{
+      content:"";
+      position:absolute; inset:0; pointer-events:none;
+      box-shadow: inset 0 0 80px rgba(164,107,255,.10), inset 0 0 140px rgba(94,234,212,.08);
+      border-radius:14px;
     }
   </style>
 </head>
@@ -159,17 +153,20 @@
     <!-- Siatka kart gier -->
     <section aria-label="Edukacja interaktywna — gry" style="margin-top:8px">
       <div class="bh-games-grid">
+        <!-- Tu są wszystkie Twoje dotychczasowe karty gier... -->
 
-        <!-- ... Twoje dotychczasowe karty gier ... -->
-
-        <!-- Aim Pro -->
+        <!-- 🧠 Neuro N-Back Holo -->
         <article class="bh-games-card">
-          <div class="bh-games-ico">🎯</div>
+          <div class="bh-games-ico">🧠</div>
           <div>
-            <div class="bh-games-title">Aim Pro</div>
-            <p class="bh-games-desc">Klikaj szybko pojawiające się cele. Trenuj refleks i precyzję.</p>
-            <div class="bh-games-actions"><button class="bh-games-btn" data-game-open="aimpro">Zagraj</button></div>
-            <details class="how"><summary>Jak grać</summary><div class="hlp">Na planszy losowo pojawiają się cele 🎯. Kliknij je zanim znikną. Punkty za trafienia, minus za pudła.</div></details>
+            <div class="bh-games-title">Neuro N-Back Holo</div>
+            <p class="bh-games-desc">Zapamiętaj pozycję sprzed N kroków i kliknij, gdy się powtórzy.</p>
+            <div class="bh-games-actions">
+              <button class="bh-games-btn" data-game-open="nback">Zagraj</button>
+            </div>
+            <details class="how"><summary>Jak grać</summary>
+              <div class="hlp">Na planszy świeci losowe pole. Jeśli powtarza się to samo pole sprzed <b>N</b> ruchów — kliknij „Match!”.</div>
+            </details>
           </div>
         </article>
 
@@ -184,24 +181,30 @@
 
   <!-- ===== MODALE ===== -->
 
-  <!-- Aim Pro -->
-  <div id="gAimpro" class="bh-games-modal" aria-hidden="true" role="dialog" aria-labelledby="aimTitle">
+  <!-- 🧠 Neuro N-Back Holo -->
+  <div id="gNback" class="bh-games-modal" aria-hidden="true" role="dialog" aria-labelledby="nbTitle">
     <div class="bh-games-panel">
       <div class="bh-games-head">
-        <div class="bh-games-title-xl" id="aimTitle">🎯 Aim Pro</div>
+        <div class="bh-games-title-xl" id="nbTitle">🧠 Neuro N-Back Holo</div>
         <button class="bh-games-close" type="button" data-game-close>✕</button>
       </div>
       <div class="bh-games-body">
-        <details class="how"><summary>Jak grać</summary><div class="hlp">Na planszy pojawiają się cele 🎯. Kliknij je jak najszybciej. Trafienia = punkty, pudła = minus.</div></details>
-        <div class="bh-games-stats" style="margin:8px 0 12px">
-          <div class="bh-games-stat"><span>Czas</span><span id="aimTime">30s</span></div>
-          <div class="bh-games-stat"><span>Wynik</span><span id="aimScore">0</span></div>
-          <div class="bh-games-stat"><span>Najlepszy</span><span id="aimBest">—</span></div>
-        </div>
-        <div id="aimBoard" style="position:relative;height:320px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);overflow:hidden;margin-bottom:10px"></div>
-        <div class="bh-games-actions">
-          <button class="bh-games-btn" id="aimStart">Start</button>
-          <button class="bh-games-btn" id="aimReset">Reset</button>
+        <details class="how"><summary>Jak grać</summary>
+          <div class="hlp">Zapamiętaj świecące pole. Kliknij <b>Match!</b>, gdy aktualne pole zgadza się z tym sprzed <b>N</b> ruchów.</div>
+        </details>
+        <div class="bh-games-stats" style="margin:8px 0 12px; display:grid; grid-template-columns:1fr 1fr; gap:12px">
+          <div>
+            <div class="bh-games-stat"><span>N</span><span id="nbLevel">2</span></div>
+            <div class="bh-games-stat"><span>Czas</span><span id="nbTime">60s</span></div>
+            <div class="bh-games-stat"><span>Wynik</span><span id="nbScore">0</span></div>
+            <div class="bh-games-stat"><span>Najlepszy</span><span id="nbBest">—</span></div>
+            <div class="bh-games-actions" style="margin-top:10px">
+              <button class="bh-games-btn" id="nbStart">Start</button>
+              <button class="bh-games-btn" id="nbReset">Reset</button>
+              <button class="bh-games-btn" id="nbMatch">Match!</button>
+            </div>
+          </div>
+          <div id="nbBoard" style="position:relative; display:grid; grid-template-columns:repeat(3,1fr); gap:6px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.16); padding:8px; min-height:240px"></div>
         </div>
       </div>
     </div>
@@ -209,6 +212,6 @@
 
   <!-- Skrypty -->
   <script src="assets/main.js?v=10"></script>
-  <script src="assets/games.js?v=4.0"></script>
+  <script src="assets/games.js?v=4.3"></script>
 </body>
 </html>
