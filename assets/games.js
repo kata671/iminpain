@@ -224,3 +224,77 @@ $all("[data-game-close]").forEach(btn=>{
 // ========== Aim Pro ==========
 (function(){
   const start=$("#aimStart"), reset=$("#aimReset"), board=$("#aimBoard"), timeEl=$("#aimTime"), scoreEl=$("#aimScore"), bestEl=$("#aim
+/* =============================
+   🎯 AIM PRO
+   ============================= */
+(function(){
+  const modal = document.getElementById('gAim');
+  if(!modal) return;
+
+  const board = document.getElementById('aimBoard');
+  const scoreEl = document.getElementById('aimScore');
+  const bestEl = document.getElementById('aimBest');
+  const timeEl = document.getElementById('aimTime');
+  const startBtn = document.getElementById('aimStart');
+  const resetBtn = document.getElementById('aimReset');
+
+  let score=0, best=0, time=30, timer=null, spawnTimer=null;
+
+  function updateUI(){
+    scoreEl.textContent = score;
+    bestEl.textContent = best || '—';
+    timeEl.textContent = time+'s';
+  }
+
+  function spawnTarget(){
+    const target = document.createElement('div');
+    target.className='aim-target';
+    const size = Math.random()*40+30;
+    const x = Math.random()*(board.clientWidth-size-10);
+    const y = Math.random()*(board.clientHeight-size-10);
+    target.style.width=size+'px';
+    target.style.height=size+'px';
+    target.style.left=x+'px';
+    target.style.top=y+'px';
+    target.addEventListener('click',()=>{
+      score++;
+      if(score>best) best=score;
+      updateUI();
+      target.remove();
+    });
+    board.appendChild(target);
+    setTimeout(()=>target.remove(),1500);
+  }
+
+  function startGame(){
+    score=0; time=30;
+    updateUI();
+    board.innerHTML='';
+    clearInterval(timer); clearInterval(spawnTimer);
+
+    timer=setInterval(()=>{
+      time--;
+      updateUI();
+      if(time<=0){ endGame(); }
+    },1000);
+
+    spawnTimer=setInterval(spawnTarget,800);
+  }
+
+  function endGame(){
+    clearInterval(timer);
+    clearInterval(spawnTimer);
+    toast('Koniec gry! Twój wynik: '+score);
+  }
+
+  function resetGame(){
+    clearInterval(timer);
+    clearInterval(spawnTimer);
+    score=0; time=30;
+    board.innerHTML='';
+    updateUI();
+  }
+
+  startBtn.addEventListener('click', startGame);
+  resetBtn.addEventListener('click', resetGame);
+})();
