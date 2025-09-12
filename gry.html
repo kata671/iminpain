@@ -115,6 +115,20 @@
     details.how{ margin:8px 0 0 }
     details.how summary{ cursor:pointer; font-weight:900 }
     details.how .hlp{ margin-top:6px }
+
+    /* 🎯 AIM PRO */
+    .aim-target{
+      position:absolute;
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #5eead4, #0e1230 70%);
+      cursor:pointer;
+      box-shadow:0 0 12px rgba(94,234,212,.6), 0 0 24px rgba(164,107,255,.35) inset;
+      transition:transform .1s;
+    }
+    .aim-target:hover{
+      transform:scale(1.15);
+      box-shadow:0 0 18px rgba(94,234,212,.9), 0 0 28px rgba(164,107,255,.5) inset;
+    }
   </style>
 </head>
 
@@ -146,7 +160,7 @@
     <section aria-label="Edukacja interaktywna — gry" style="margin-top:8px">
       <div class="bh-games-grid">
 
-        <!-- ...tu są Twoje dotychczasowe karty gier... -->
+        <!-- ... Twoje dotychczasowe karty gier ... -->
 
         <!-- Aim Pro -->
         <article class="bh-games-card">
@@ -168,7 +182,7 @@
     <div class="box" id="gToastText">OK</div>
   </div>
 
-  <!-- ===== MODALE (zachowane ID) ===== -->
+  <!-- ===== MODALE ===== -->
 
   <!-- Aim Pro -->
   <div id="gAimpro" class="bh-games-modal" aria-hidden="true" role="dialog" aria-labelledby="aimTitle">
