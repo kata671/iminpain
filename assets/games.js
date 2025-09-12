@@ -480,4 +480,256 @@ $all("[data-game-close]").forEach(btn=>{
   reset.addEventListener("click", resetGame);
 })();
 
+// ========== Neuro N-Back Holo (2025) ==========
+(function(){
+  const start = document.getElementById("nbStart");
+  const reset = document.getElementById("nbReset");
+  const board = document.getElementById("nbBoard");
+  const timeEl= document.getElementById("nbTime");
+  const scoreEl=document.getElementById("nbScore");
+  const bestEl =document.getElementById("nbBest");
+  const levelEl=document.getElementById("nbLevel");
+  const accEl  =document.getElementById("nbAcc");
+  const posBtn =document.getElementById("nbPos");
+  const symBtn =document.getElementById("nbSym");
+  if(!start || !reset || !board) return;
+
+  // Canvas
+  let canvas, ctx, dpr=1, rafId=null, running=false;
+  function ensureCanvas(){
+    if(canvas) return;
+    canvas = document.createElement("canvas");
+    canvas.style.width="100%"; canvas.style.height="100%"; canvas.style.display="block";
+    board.innerHTML=""; board.appendChild(canvas);
+    ctx = canvas.getContext("2d");
+    resize();
+  }
+  function resize(){
+    dpr = Math.min(2, window.devicePixelRatio||1);
+    const r = board.getBoundingClientRect();
+    canvas.width = Math.max(320, Math.floor(r.width * dpr));
+    canvas.height= Math.max(260, Math.floor(r.height* dpr));
+  }
+  window.addEventListener("resize", ()=>{ if(canvas) resize(); });
+
+  // Stan
+  let time=60, score=0, best=+localStorage.getItem("nbBest2025")||0;
+  let n=1, goodStreak=0, badStreak=0;
+  let stream=[]; // {pos:0..8, sym:'A'.., ts}
+  let idx=-1;    // bieżący indeks bodźca
+  let period=2000; // ms między bodźcami (adaptacyjne 2000→1300)
+  let tLastStim=0;
+  let hits=0, falseAlarms=0, misses=0;
+  let posArmed=false, symArmed=false; // czy można oddać odpowiedź na bieżący bodziec
+
+  const alphabet = "ABCDEFGHJKLMNPRSTUVWXYZ"; // bez podobnych znaków
+  function rndSym(){ return alphabet[Math.floor(Math.random()*alphabet.length)]; }
+  function rndPos(){ return Math.floor(Math.random()*9); }
+
+  function pushStim(){
+    const st={ pos:rndPos(), sym:rndSym(), ts:performance.now() };
+    stream.push(st); idx++;
+    posArmed=true; symArmed=true;
+  }
+
+  function isPosMatch(){
+    if(idx-n<0) return false;
+    return stream[idx].pos === stream[idx-n].pos;
+  }
+  function isSymMatch(){
+    if(idx-n<0) return false;
+    return stream[idx].sym === stream[idx-n].sym;
+  }
+
+  function adaptDifficulty(){
+    // liczymy skuteczność z ostatnich ~10 bodźców
+    const window = Math.min(10, stream.length);
+    if(window<6) return;
+    const from = stream.length - window;
+    const recentHits = stats.slice(from).filter(x=>x.hit).length;
+    const recentTotal= stats.slice(from).length;
+    const acc = recentTotal ? recentHits*100/recentTotal : 0;
+    // n w górę gdy acc>=85% i mamy >=2 trafienia pozytywne, w dół gdy acc<60% lub dużo FA/miss
+    if(acc>=85 && n<3){ n++; goodStreak++; badStreak=0; period=Math.max(1300, period-80); }
+    else if(acc<60 && n>1){ n--; badStreak++; goodStreak=0; period=Math.min(2100, period+80); }
+    levelEl && (levelEl.textContent=String(n));
+  }
+
+  // pion: siatka 3×3, hologram; HUD: symbol, n, combo
+  function drawStim(){
+    const W=canvas.width, H=canvas.height;
+    ctx.clearRect(0,0,W,H);
+
+    // tło lekko holograficzne
+    const bg = ctx.createLinearGradient(0,0,W,H);
+    bg.addColorStop(0,"rgba(164,107,255,0.08)");
+    bg.addColorStop(1,"rgba(94,234,212,0.08)");
+    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+
+    // siatka
+    const pad=20*dpr, gridSize=Math.min(W,H)-pad*2;
+    const cell=gridSize/3;
+    const gx=(W-gridSize)/2, gy=(H-gridSize)/2;
+
+    // glow siatki
+    ctx.save();
+    ctx.shadowColor="rgba(164,107,255,0.25)";
+    ctx.shadowBlur=18*dpr;
+    ctx.strokeStyle="rgba(255,255,255,0.18)";
+    ctx.lineWidth=1*dpr;
+    for(let i=0;i<=3;i++){
+      ctx.beginPath(); ctx.moveTo(gx+i*cell, gy); ctx.lineTo(gx+i*cell, gy+gridSize); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(gx, gy+i*cell); ctx.lineTo(gx+gridSize, gy+i*cell); ctx.stroke();
+    }
+    ctx.restore();
+
+    // zaznacz bieżącą pozycję
+    if(idx>=0){
+      const p=stream[idx].pos; const cx0=p%3, cy0=Math.floor(p/3);
+      const cxg = gx + cx0*cell + cell/2;
+      const cyg = gy + cy0*cell + cell/2;
+
+      // pulsujący neon
+      const t = (performance.now()/300)%Math.PI;
+      const R = Math.min(cell*0.38, 42*dpr) * (0.92 + 0.06*Math.sin(t));
+      ctx.beginPath();
+      ctx.arc(cxg, cyg, R*1.25, 0, Math.PI*2);
+      ctx.fillStyle="rgba(94,234,212,0.18)";
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.lineWidth=Math.max(2*dpr, R*0.12);
+      ctx.strokeStyle="rgba(94,234,212,0.88)";
+      ctx.arc(cxg, cyg, R, 0, Math.PI*2);
+      ctx.stroke();
+
+      // symbol na środku siatki
+      ctx.font = `${Math.floor(cell*0.5)}px system-ui, -apple-system, Segoe UI, Roboto`;
+      ctx.textAlign="center"; ctx.textBaseline="middle";
+      ctx.fillStyle="rgba(255,255,255,0.92)";
+      ctx.fillText(stream[idx].sym, W/2, gy - pad*0.3);
+    }
+
+    // HUD dolny
+    const acc = (hits+falseAlarms+misses)>0 ? Math.round(hits*100/(hits+falseAlarms+misses)) : 100;
+    accEl && (accEl.textContent = `${acc}%`);
+    ctx.font = `${14*dpr}px system-ui, -apple-system, Segoe UI, Roboto`;
+    ctx.fillStyle="rgba(255,255,255,0.85)";
+    ctx.textAlign="left";
+    ctx.fillText(`n=${n} • Acc ${acc}%`, gx, gy+gridSize+16*dpr);
+  }
+
+  // ocena i statystyki
+  const stats=[]; // {i, posNeed, symNeed, posHit, symHit}
+  function evaluateEndOfStim(){
+    if(idx<0) return;
+    const needPos = isPosMatch();
+    const needSym = isSymMatch();
+    let posHit=false, symHit=false;
+
+    // jeżeli użytkownik nie wcisnął, a była potrzeba -> miss
+    if(needPos && posArmed===true){ misses++; }
+    if(needSym && symArmed===true){ misses++; }
+
+    stats.push({i:idx, posNeed:needPos, symNeed:needSym, posHit, symHit});
+    adaptDifficulty();
+  }
+
+  function handleAnswer(type){
+    if(idx<0) return;
+    const need = (type==="pos") ? isPosMatch() : isSymMatch();
+    if(type==="pos" && posArmed){
+      if(need){ hits++; score+=2; markStat("posHit"); } else { falseAlarms++; score=Math.max(0, score-1); }
+      posArmed=false;
+    }
+    if(type==="sym" && symArmed){
+      if(need){ hits++; score+=2; markStat("symHit"); } else { falseAlarms++; score=Math.max(0, score-1); }
+      symArmed=false;
+    }
+    scoreEl && (scoreEl.textContent=String(score));
+  }
+  function markStat(key){
+    if(stats.length===0) return;
+    const s=stats[stats.length-1];
+    s[key]=true;
+  }
+
+  // pętla
+  function loop(ts){
+    if(!running) return;
+    if(!tLastStim) tLastStim=ts;
+
+    // nowy bodziec co 'period' ms
+    if(ts - tLastStim >= period){
+      evaluateEndOfStim(); // rozlicz poprzedni
+      pushStim(); tLastStim = ts;
+    }
+
+    drawStim();
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function startGame(){
+    ensureCanvas();
+    time=60; score=0; n=1; goodStreak=0; badStreak=0; period=2000;
+    stream.length=0; idx=-1; stats.length=0;
+    hits=0; falseAlarms=0; misses=0;
+    posArmed=false; symArmed=false;
+
+    scoreEl && (scoreEl.textContent="0");
+    levelEl && (levelEl.textContent="1");
+    accEl   && (accEl.textContent="—");
+    timeEl  && (timeEl.textContent="60s");
+
+    running=true; tLastStim=0;
+    if(rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(loop);
+
+    // licznik czasu
+    if(timer) clearInterval(timer);
+    timer=setInterval(()=>{
+      time--;
+      timeEl && (timeEl.textContent=time+"s");
+      if(time<=0) endGame();
+    },1000);
+  }
+
+  function resetGame(){
+    running=false;
+    if(rafId) cancelAnimationFrame(rafId);
+    if(timer) clearInterval(timer);
+    stream.length=0; idx=-1; stats.length=0;
+    hits=0; falseAlarms=0; misses=0;
+    time=60; score=0; n=1; period=2000;
+    scoreEl && (scoreEl.textContent="0");
+    levelEl && (levelEl.textContent="1");
+    accEl   && (accEl.textContent="—");
+    timeEl  && (timeEl.textContent="60s");
+    if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+
+  function endGame(){
+    running=false;
+    if(rafId) cancelAnimationFrame(rafId);
+    if(timer) clearInterval(timer);
+    const attempts = hits+falseAlarms+misses;
+    const acc = attempts? Math.round(hits*100/attempts) : 100;
+    if(score > best){
+      best = score; localStorage.setItem("nbBest2025", best);
+      bestEl && (bestEl.textContent=String(best));
+    }
+    showToast(`Koniec! Wynik: ${score} • Acc ${acc}% • n=${n}`);
+  }
+
+  let timer=null;
+  start.addEventListener("click", startGame);
+  reset.addEventListener("click", resetGame);
+  posBtn && posBtn.addEventListener("click", ()=>handleAnswer("pos"));
+  symBtn && symBtn.addEventListener("click", ()=>handleAnswer("sym"));
+  document.addEventListener("keydown", (e)=>{
+    if(!running) return;
+    if(e.key==='z' || e.key==='Z') handleAnswer("pos");
+    if(e.key==='x' || e.key==='X') handleAnswer("sym");
+  });
+})();
 })(); // koniec głównego IIFE
