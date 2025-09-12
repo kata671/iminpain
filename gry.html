@@ -138,5 +138,63 @@
 
   <script src="assets/main.js?v=10"></script>
   <script src="assets/games.js?v=5.0"></script>
+<!-- === BoliHelp: hotfix modali + start gier (wkleić przed </body>) === -->
+<script>
+(function(){
+  // 1) MODALE: działaj zarówno dla .modal jak i .bh-games-modal
+  function openModalByKey(key){
+    const id = 'g' + key.charAt(0).toUpperCase() + key.slice(1); // aimpro -> gAimpro
+    const m  = document.getElementById(id);
+    if (m) m.setAttribute('aria-hidden','false');
+  }
+  function closeModal(m){
+    if (!m) return;
+    m.setAttribute('aria-hidden','true');
+  }
+  function closeAll(){
+    document.querySelectorAll('.modal[aria-hidden="false"], .bh-games-modal[aria-hidden="false"]').forEach(closeModal);
+  }
+
+  // Otwieranie
+  document.addEventListener('click',(e)=>{
+    const btn = e.target.closest('[data-game-open]');
+    if (btn){
+      openModalByKey(btn.getAttribute('data-game-open'));
+    }
+    if (e.target.closest('[data-game-close]')){
+      closeModal(e.target.closest('.modal, .bh-games-modal'));
+    }
+  });
+  // Klik w tło
+  document.addEventListener('mousedown',(e)=>{
+    const m = e.target.closest('.modal, .bh-games-modal');
+    if (m && e.target === m) closeModal(m);
+  });
+  // Escape
+  document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeAll(); });
+
+  // 2) SZYBKI CHECK BIBLIOTEK
+  window.addEventListener('load', function(){
+    var missing=[];
+    if(!window.PIXI)  missing.push('PIXI.js');
+    if(!window.THREE) missing.push('Three.js');
+    if(missing.length){
+      var box=document.createElement('div');
+      Object.assign(box.style,{
+        position:'fixed',left:'16px',right:'16px',bottom:'16px',zIndex:99999,
+        padding:'12px 14px',border:'1px solid rgba(255,107,107,.6)',
+        background:'rgba(60,32,100,.95)',color:'#ffeaea',borderRadius:'12px',
+        font:'600 14px system-ui,Segoe UI,Roboto'
+      });
+      box.textContent='Nie załadowały się biblioteki: '+missing.join(', ')+'. Odśwież twardo (Ctrl/Cmd+Shift+R).';
+      document.body.appendChild(box);
+    }
+  });
+})();
+</script>
+
+<!-- 3) Ładowanie nowoczesnych gier (zmień nazwę tylko jeśli wgrałaś inne) -->
+<script defer src="assets/pro-aim.js?v=2"></script>
+<script defer src="assets/pro-neonreflex.js?v=2"></script>
 </body>
 </html>
