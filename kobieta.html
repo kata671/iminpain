@@ -87,12 +87,12 @@
       outline-offset:2px;
     }
 
-    /* ===== WYGLĄD SELEKTORA JĘZYKA (spójny) ===== */
+    /* ===== WYGLĄD SELEKTORA JĘZYKA (SPÓJNY) ===== */
     .langpick{
       position:fixed;
-      top:clamp(8px, env(safe-area-inset-top, 8px), 20px);
-      right:12px;
-      z-index:10000;
+      top:10px;
+      right:10px;
+      z-index:3000;
       display:flex; gap:8px; align-items:center;
       background:rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.24);
@@ -110,17 +110,26 @@
     }
     .langpick option{ color:#0e1230; background:#ffffff }
 
-    @media (max-width:560px){
-      body{ padding-top: calc(48px + env(safe-area-inset-top, 0px)); }
+    /* Mobile: ten sam wygląd w prawym rogu */
+    @media (max-width:768px){
       .langpick{
-        left:50%; right:auto; transform:translateX(-50%);
-        gap:6px; padding:5px 8px;
+        position:fixed !important;
+        top:10px !important;
+        right:10px !important;
+        left:auto !important;
+        transform:none !important;
+        margin:0 !important;
+        display:inline-flex !important;
+        align-items:center;
+        gap:6px;
+        padding:5px 8px;
       }
-      .langpick label{ display:none; }
+      .langpick label{ display:none !important; }
       .langpick select{ font-size:12px; padding:5px 9px; }
-      .container header.header{ margin-top:8px; }
+      body{ padding-top:64px !important; }
     }
 
+    /* Ukryj ewentualne resztki starego GT */
     .goog-te-banner-frame.skiptranslate{display:none!important}
     .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
   </style>
@@ -144,7 +153,6 @@
     <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
 
     <header class="header"><h1 id="bhPageTitle">Kobieta — wybierz część ciała</h1></header>
-
     <section class="grid-thumbs" aria-label="Miniatury — kobieta" id="bhThumbs">
       <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=oko&label=Oko"><img src="img/kobieta-oko.png" alt="Oko"><span>Oko</span></a>
       <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=nos&label=Nos"><img src="img/kobieta-nos.png" alt="Nos"><span>Nos</span></a>
@@ -163,6 +171,7 @@
       <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=nerki&label=Nerki"><img src="img/kobieta-nerki.png" alt="Nerki"><span>Nerki</span></a>
     </section>
   </div>
+
   <script>
     // Obsługa guzika "Wróć"
     (function(){
@@ -178,7 +187,7 @@
     })();
   </script>
 
-  <!-- LEKKI TŁUMACZ: współdzieli stan ze stroną główną -->
+  <!-- LEKKI TŁUMACZ PL/EN -->
   <script>
     (function(){
       if(window.__bhKobietaI18n) return; window.__bhKobietaI18n = true;
@@ -239,7 +248,6 @@
         });
 
         if(lab){ lab.textContent = (lang==='en' ? 'Language' : 'Język'); }
-
         if(sel){ sel.value = lang; }
       }
 
