@@ -7,7 +7,6 @@
   <meta name="theme-color" content="#0e1230" />
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="assets/style.css?v=10" />
-
   <style>
     html,body{height:100%}
     body[data-page="dziecko"]{
@@ -64,7 +63,7 @@
     .thumb span{ display:block; padding:10px 12px; font-weight:800; letter-spacing:.2px; color:#eef2ff; border-top:1px solid rgba(164,107,255,.22); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); text-align:center; }
     @media (max-width:640px){ .thumb span{ font-size:12.5px; padding:8px 10px } }
 
-    /* Przycisk Wróć */
+    /* PRZYCISK WRÓĆ */
     #bhBackMini{
       appearance:none;border:1px solid rgba(164,107,255,.28);background:rgba(60,32,100,.28);color:#eef2ff;
       font-weight:700;padding:10px 14px;border-radius:12px;cursor:pointer;margin:16px 0;
@@ -73,18 +72,6 @@
     }
     #bhBackMini:hover{ transform:translateY(-1px); border-color:rgba(164,107,255,.55); box-shadow:0 10px 20px rgba(8,10,22,.45), 0 0 14px rgba(164,107,255,.65), inset 0 0 0 1px rgba(164,107,255,.18) }
     #bhBackMini:focus-visible{ outline:2px solid rgba(164,107,255,.75); outline-offset:2px }
-
-    /* ✅ Spójny guzik tłumacza */
-    #lang-fab{
-      position:fixed; top:10px; right:10px; z-index:4000;
-      display:inline-flex; align-items:center; gap:6px;
-      padding:8px 10px; border-radius:12px;
-      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2);
-      backdrop-filter:blur(8px); line-height:1; font-weight:600;
-      max-width:92px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;
-    }
-    #lang-fab label{ display:none; }
-    #bhLangSelect{ font-size:16px; color:#fff; background:transparent; border:none; }
   </style>
 </head>
 <body data-page="dziecko">
@@ -92,19 +79,18 @@
   <div class="bh-grid" aria-hidden="true"></div>
   <div class="bh-floor-fade" aria-hidden="true"></div>
 
-  <!-- ✅ Guzik tłumacza -->
-  <div id="lang-fab">
-    <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
-      <label for="bhLangSelect">Język</label>
-      <select id="bhLangSelect">
-        <option value="pl">PL</option>
-        <option value="en">EN</option>
-      </select>
-    </div>
+  <!-- SELEKTOR JĘZYKA (spójny jak kobieta / mężczyzna) -->
+  <div id="bhLangPick" aria-label="Wybór języka">
+    <label for="bhLangSelect">Język</label>
+    <select id="bhLangSelect">
+      <option value="pl">PL</option>
+      <option value="en">EN</option>
+    </select>
   </div>
-
   <div class="container">
+    <!-- GUZIK WRÓĆ -->
     <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
+
     <header class="header"><h1 id="bhPageTitle">Dziecko — wybierz część ciała</h1></header>
 
     <section class="grid-thumbs" aria-label="Miniatury — dziecko" id="bhThumbs">
@@ -141,7 +127,7 @@
     })();
   </script>
 
-  <!-- Lekki tłumacz: współdzielony z index.html -->
+  <!-- LEKKI TŁUMACZ: współdzieli stan ze stroną główną (localStorage 'bh.lang') -->
   <script>
     (function(){
       if(window.__bhDzieckoI18n) return; window.__bhDzieckoI18n = true;
@@ -212,61 +198,48 @@
         apply();
       }
 
-      if(sel){ sel.addEventListener('change', function(){ setLang(sel.value); }); }
+      if(sel){
+        sel.addEventListener('change', function(){ setLang(sel.value); });
+      }
 
       apply();
     })();
   </script>
 
-  <script src="assets/translator.js"></script>
-<style>
-  /* SPÓJNY WYGLĄD TŁUMACZA (PL/EN) */
-  #bhLangPick {
-    position: fixed !important;
-    top: 16px !important;
-    right: 24px !important;  /* odsunięcie od krawędzi na laptopie */
-    z-index: 9999 !important;
-
-    display: inline-flex !important;
-    align-items: center;
-    gap: 6px;
-
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.22);
-    border-radius: 12px;
-    padding: 6px 10px;
-
-    backdrop-filter: saturate(120%) blur(6px);
-  }
-
-  /* Ukryj napis "Język", zostaw tylko selektor */
-  #bhLangPick label { display: none !important; }
-
-  #bhLangSelect {
-    font-size: 14px;
-    font-weight: 700;
-    color: #fff;
-    background: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    letter-spacing: .3px;
-  }
-
-  #bhLangSelect option {
-    color: #0e1230;
-    background: #ffffff;
-  }
-
-  /* TELEFON – ciut mniejsze i bliżej rogu */
-  @media (max-width:768px){
-    #bhLangPick{
-      top: 10px !important;
-      right: 12px !important;
-      padding: 5px 8px;
+  <!-- FINALNY STYL TŁUMACZA (uniwersalny) -->
+  <style>
+    #bhLangPick {
+      position: fixed !important;
+      top: 16px !important;
+      right: 24px !important;
+      z-index: 9999 !important;
+      display: inline-flex !important;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 12px;
+      padding: 6px 10px;
+      backdrop-filter: saturate(120%) blur(6px);
     }
-    #bhLangSelect{ font-size: 13px; }
-  }
-</style>
+    #bhLangPick label { display: none !important; }
+    #bhLangSelect {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      letter-spacing: .3px;
+    }
+    #bhLangSelect option { color:#0e1230; background:#fff; }
+    @media (max-width:768px){
+      #bhLangPick{ top:10px !important; right:12px !important; padding:5px 8px; }
+      #bhLangSelect{ font-size:13px; }
+    }
+  </style>
+
+  <script src="assets/translator.js"></script>
 </body>
 </html>
