@@ -20,12 +20,11 @@
 
     .bh-wallpaper,.bh-grid{position:fixed; inset:0; pointer-events:none}
     .bh-wallpaper{
-      z-index:0;
-      background:
-        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
-        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
-        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+      z-index:0; background:
+      radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
+      radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
+      radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
       filter: blur(10px) saturate(118%);
     }
     .bh-grid{
@@ -34,9 +33,10 @@
       background-size:160px 138px; background-position:center;
     }
     .bh-floor-fade{
-      position:fixed;left:0;right:0;bottom:0;height:120px;z-index:2;pointer-events:none;
+      position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
       background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));
     }
+
     .container{ position:relative; z-index:3; background:transparent !important; max-width:1100px; margin:0 auto; padding:0 16px }
 
     .grid-thumbs{display:grid;gap:16px;}
@@ -63,31 +63,17 @@
     .thumb span{ display:block; padding:10px 12px; font-weight:800; letter-spacing:.2px; color:#eef2ff; border-top:1px solid rgba(164,107,255,.22); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); text-align:center; }
     @media (max-width:640px){ .thumb span{ font-size:12.5px; padding:8px 10px } }
 
-    /* ===== PRZYCISK WRÓĆ ===== */
+    /* PRZYCISK WRÓĆ */
     #bhBackMini{
-      appearance:none;
-      border:1px solid rgba(164,107,255,.28);
-      background:rgba(60,32,100,.28);
-      color:#eef2ff;
-      font-weight:700;
-      padding:10px 14px;
-      border-radius:12px;
-      cursor:pointer;
-      margin:16px 0;
+      appearance:none;border:1px solid rgba(164,107,255,.28);background:rgba(60,32,100,.28);color:#eef2ff;
+      font-weight:700;padding:10px 14px;border-radius:12px;cursor:pointer;margin:16px 0;
       box-shadow:0 6px 16px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.12), 0 0 8px rgba(164,107,255,.45);
       transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
-    #bhBackMini:hover{
-      transform:translateY(-1px);
-      border-color:rgba(164,107,255,.55);
-      box-shadow:0 10px 20px rgba(8,10,22,.45), 0 0 14px rgba(164,107,255,.65), inset 0 0 0 1px rgba(164,107,255,.18);
-    }
-    #bhBackMini:focus-visible{
-      outline:2px solid rgba(164,107,255,.75);
-      outline-offset:2px;
-    }
+    #bhBackMini:hover{ transform:translateY(-1px); border-color:rgba(164,107,255,.55); box-shadow:0 10px 20px rgba(8,10,22,.45), 0 0 14px rgba(164,107,255,.65), inset 0 0 0 1px rgba(164,107,255,.18) }
+    #bhBackMini:focus-visible{ outline:2px solid rgba(164,107,255,.75); outline-offset:2px }
 
-    /* ===== WYGLĄD SELEKTORA JĘZYKA (naprawa mobile jak na innych stronach) ===== */
+    /* ===== WYGLĄD SELEKTORA JĘZYKA ===== */
     .langpick{
       position:fixed;
       top:clamp(8px, env(safe-area-inset-top, 8px), 20px);
@@ -106,54 +92,31 @@
       appearance:none;background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.24);
       color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px;
-      max-width:52vw; /* nie rozpycha na mobile */
+      max-width:52vw;
     }
     .langpick option{ color:#0e1230; background:#ffffff }
 
-    /* Mobile: zwężenie, wyśrodkowanie u góry i odsunięcie treści pod notch */
     @media (max-width:560px){
       body{ padding-top: calc(48px + env(safe-area-inset-top, 0px)); }
       .langpick{
         left:50%; right:auto; transform:translateX(-50%);
         gap:6px; padding:5px 8px;
       }
-      .langpick label{ display:none; } /* więcej miejsca na małych ekranach */
+      .langpick label{ display:none; }
       .langpick select{ font-size:12px; padding:5px 9px; }
       .container header.header{ margin-top:8px; }
     }
 
-    /* Ukryj ewentualne resztki starego GT */
     .goog-te-banner-frame.skiptranslate{display:none!important}
     .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
   </style>
-<!-- FIX: stałe miejsce przełącznika języka na telefonach (final) -->
-<style>
-@media (max-width:768px){
-  :where(.lang, .langpick, .language, #lang, #language, .header .tools .lang, .header .tools .langpick){
-    position: fixed !important;
-    top: 10px !important;
-    right: 10px !important;   /* jeśli wolisz lewy róg: left:10px!important; i usuń right */
-    z-index: 3000 !important;
-    margin: 0 !important;
-    transform: none !important;
-    display: inline-flex !important;
-    align-items: center;
-    gap: 8px;
-  }
-  /* schowaj sam napis "Język", zostaw kapsułkę PL/EN */
-  :where(.lang, .langpick, .language, #lang, #language) :where(.label, b, span:first-child){
-    display: none !important;
-  }
-  /* zrób miejsce na przyklejony przełącznik */
-  body{ padding-top: 64px !important; }
-}
-</style></head>
+</head>
 <body data-page="mezczyzna">
   <div class="bh-wallpaper" aria-hidden="true"></div>
   <div class="bh-grid" aria-hidden="true"></div>
   <div class="bh-floor-fade" aria-hidden="true"></div>
 
-  <!-- SELEKTOR JĘZYKA (naprawiony: góra, nie rozpycha, działa na mobile) -->
+  <!-- SELEKTOR JĘZYKA -->
   <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
     <label for="bhLangSelect">Język</label>
     <select id="bhLangSelect">
@@ -163,7 +126,6 @@
   </div>
 
   <div class="container">
-    <!-- GUZIK WRÓĆ -->
     <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
 
     <header class="header"><h1 id="bhPageTitle">Mężczyzna — wybierz część ciała</h1></header>
@@ -186,7 +148,6 @@
       <a class="thumb" href="szczegoly.html?typ=mezczyzna&czesc=nerki&label=Nerki"><img src="img/mezczyzna-nerki.png" alt="Nerki"><span>Nerki</span></a>
     </section>
   </div>
-
   <script>
     // Obsługa guzika "Wróć"
     (function(){
@@ -202,7 +163,7 @@
     })();
   </script>
 
-  <!-- LEKKI TŁUMACZ: współdzieli stan ze stroną główną (localStorage 'bh.lang') -->
+  <!-- LEKKI TŁUMACZ: współdzieli stan ze stroną główną -->
   <script>
     (function(){
       if(window.__bhMezczyznaI18n) return; window.__bhMezczyznaI18n = true;
@@ -243,21 +204,16 @@
       function apply(){
         var d = dict[lang] || dict.pl;
 
-        // <html lang=...>
         root.setAttribute('lang', lang);
 
-        // Tytuł
         var h1 = document.getElementById('bhPageTitle'); if(h1){ h1.textContent = d.title; }
 
-        // Przycisk "Wróć"
         var back = document.getElementById('bhBackMini');
         if(back){ back.textContent = d.back; back.setAttribute('aria-label', d.back_aria); }
 
-        // Aria label sekcji miniaturek
         var grid = document.getElementById('bhThumbs');
         if(grid){ grid.setAttribute('aria-label', d.section_aria); }
 
-        // Podpisy na kafelkach – po id w parametrze "czesc"
         document.querySelectorAll('.grid-thumbs a.thumb').forEach(function(a){
           try{
             var u = new URL(a.getAttribute('href'), location.href);
@@ -267,32 +223,28 @@
           }catch(e){}
         });
 
-        // Etykieta przy selektorze
         if(lab){ lab.textContent = (lang==='en' ? 'Language' : 'Język'); }
 
-        // Ustaw wybraną opcję w selektorze
         if(sel){ sel.value = lang; }
       }
 
       function setLang(l){
         if(!dict[l]) return;
         lang = l;
-        localStorage.setItem(LS_KEY, lang); // klucz współdzielony ze stroną główną
+        localStorage.setItem(LS_KEY, lang);
         apply();
       }
 
-      // Inicjalizacja selektora
       if(sel){
         sel.addEventListener('change', function(){ setLang(sel.value); });
       }
 
-      // Pierwsze zastosowanie (pobiera stan ustawiony na stronie głównej)
       apply();
     })();
   </script>
 
   <!-- USUNIĘTO stary tłumacz -->
   <!-- <script src="/assets/js/translator-unified.js?v=1" defer></script> -->
-<script src="assets/translator.js"></script>
+  <script src="assets/translator.js"></script>
 </body>
 </html>
