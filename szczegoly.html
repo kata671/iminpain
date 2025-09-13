@@ -681,5 +681,75 @@
 
   <!-- jeśli używasz dodatkowego pliku z tłumaczeniami/obsługą, zostaw poniższą linię -->
   <!-- <script src="assets/translator.js"></script> -->
+<script>
+/* BoliHelp – uniwersalny przełącznik języka (PL/EN)
+   Wklej ten blok tuż nad </body> w KAŻDYM pliku .html */
+(function(){
+  const STYLE_ID = 'bh-lang-switch-style';
+  const WRAP_ID  = 'bhLangSwitch';
+
+  // 1) CSS – wstrzyknij raz
+  if(!document.getElementById(STYLE_ID)){
+    const css = `
+:root { --chip-bg: rgba(20,24,28,.72); --chip-br: rgba(255,255,255,.35); --chip-grad1:#59d1ff; --chip-grad2:#a9e6ff; }
+#${WRAP_ID}{position:fixed;top:12px;right:12px;z-index:4000;display:inline-flex;gap:8px;
+  font:500 13px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Noto Sans',Arial;}
+#${WRAP_ID} .chip{min-width:36px;height:32px;padding:0 12px;border-radius:999px;
+  display:inline-flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;
+  color:#fff;border:1px solid var(--chip-br);background:var(--chip-bg);
+  backdrop-filter:saturate(140%) blur(6px);transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;}
+#${WRAP_ID} .chip:hover{transform:translateY(-1px);border-color:rgba(89,209,255,.7);box-shadow:0 2px 10px rgba(89,209,255,.3);}
+#${WRAP_ID} .chip[aria-pressed="true"]{background:linear-gradient(135deg,var(--chip-grad1),var(--chip-grad2));color:#0c2230;font-weight:700;}
+@media (max-width:420px){ #${WRAP_ID}{gap:6px} #${WRAP_ID} .chip{min-width:30px;height:28px;padding:0 10px;font-size:12px;} }
+`;
+    const style = document.createElement('style');
+    style.id = STYLE_ID;
+    style.textContent = css;
+    document.head.appendChild(style);
+  }
+
+  // 2) Schowaj stare selecty (jeśli jeszcze są)
+  try{
+    document.querySelectorAll('.langpick, #bhLangPick').forEach(el=>{
+      el.style.display='none';
+      el.setAttribute('aria-hidden','true');
+    });
+  }catch(_){}
+
+  // 3) Utwórz guziki, jeśli nie istnieją
+  let wrap = document.getElementById(WRAP_ID);
+  if(!wrap){
+    wrap = document.createElement('div');
+    wrap.id = WRAP_ID;
+    wrap.setAttribute('role','group');
+    wrap.setAttribute('aria-label','Language switch');
+    wrap.innerHTML = `
+      <button class="chip" data-lang="pl" aria-pressed="true">PL</button>
+      <button class="chip" data-lang="en" aria-pressed="false">EN</button>
+    `;
+    document.body.appendChild(wrap);
+  }
+
+  // 4) Logika – odczyt/ustawianie języka
+  const root = document.documentElement;
+  const btns = Array.from(wrap.querySelectorAll('.chip[data-lang]'));
+  function setActive(lang){
+    localStorage.setItem('appLang', lang);
+    root.setAttribute('lang', lang);
+    root.setAttribute('data-lang', lang);
+    btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+  }
+  const saved = localStorage.getItem('appLang') || root.getAttribute('data-lang') || root.getAttribute('lang') || 'pl';
+  setActive(saved);
+
+  // 5) Kliki
+  btns.forEach(b => b.addEventListener('click', ()=>{
+    const lang = b.dataset.lang || 'pl';
+    setActive(lang);
+    // Jeśli chcesz przeładowywać kontent po zmianie języka – odkomentuj linię poniżej:
+    // location.reload();
+  }));
+})();
+</script>
 </body>
 </html>
