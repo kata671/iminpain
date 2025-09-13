@@ -193,6 +193,23 @@
   body{ padding-top: 64px !important; }
 }
 </style>
+<style>
+  :root { --chip-bg: rgba(20,24,28,.70); --chip-br: rgba(255,255,255,.18); --chip-txt:#fff;
+          --chip-on-1:#59d1ff; --chip-on-2:#9a66ff; }
+  .lang-switch{position:fixed; top:14px; right:14px; z-index:1000; display:flex; gap:8px;
+               font:500 13px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;}
+  .lang-switch .chip{min-width:34px; height:32px; padding:0 10px; border-radius:999px; 
+    display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
+    user-select:none; border:1px solid var(--chip-br); background:var(--chip-bg); color:var(--chip-txt);
+    backdrop-filter:saturate(140%) blur(6px); transition:transform .08s ease, opacity .15s;}
+  .lang-switch .chip:hover{transform:translateY(-1px)}
+  .lang-switch .chip[aria-current="true"]{
+    background:linear-gradient(135deg, var(--chip-on-1), var(--chip-on-2));
+    color:#fff; border-color:transparent; box-shadow:0 2px 10px rgba(154,102,255,.35);
+  }
+  /* aby nie zasłaniać treści na małych ekranach */
+  @media (max-width:420px){ .lang-switch{gap:6px} .lang-switch .chip{height:30px; min-width:30px; padding:0 8px} }
+</style>
 </head>
 <body data-page="home"></head>
 
@@ -619,5 +636,27 @@
     @keyframes bhGreenPulse{0%{box-shadow:0 0 0 0 rgba(var(--glow-green),.10),0 0 18px rgba(var(--glow-green),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-green),.08),0 0 26px rgba(var(--glow-green),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-green),.10),0 0 18px rgba(var(--glow-green),.35)}}
     @keyframes bhAmberBreath{0%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.08),0 0 18px rgba(var(--glow-amber),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-amber),.06),0 0 26px rgba(var(--glow-amber),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.08),0 0 18px rgba(var(--glow-amber),.35)}}
   </style>
+<script>
+  // ====== Przełącznik języka (PL/EN, gotowy) ======
+  document.addEventListener("DOMContentLoaded", () => {
+    const select = document.getElementById("bhLangSelect");
+    if (!select) return;
+
+    // Wczytaj ostatni wybór z localStorage
+    const savedLang = localStorage.getItem("appLang") || "pl";
+    select.value = savedLang;
+    document.documentElement.setAttribute("lang", savedLang);
+    document.documentElement.setAttribute("data-lang", savedLang);
+
+    // Obsługa zmiany języka
+    select.addEventListener("change", () => {
+      const lang = select.value;
+      localStorage.setItem("appLang", lang);
+      document.documentElement.setAttribute("lang", lang);
+      document.documentElement.setAttribute("data-lang", lang);
+      location.reload(); // odśwież stronę po zmianie języka
+    });
+  });
+</script>
 </body>
 </html>
