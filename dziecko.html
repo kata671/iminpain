@@ -5,161 +5,80 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Dziecko</title>
   <meta name="theme-color" content="#0e1230" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="assets/style.css?v=10" />
+  <link rel="stylesheet" href="assets/style.css?v=12" />
+
   <style>
-    html,body{height:100%}
     body[data-page="dziecko"]{
-      position:relative; background:#0e1230 !important; color:#eef2ff;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      margin:0; background:#0e1230; color:#eef2ff;
+      font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
     }
-    body[data-page="dziecko"]::before,
-    body[data-page="dziecko"]::after,
-    body[data-page="dziecko"] .container::before,
-    body[data-page="dziecko"] .container::after{ content:none !important; display:none !important; }
+    header.app{ max-width:1100px; margin:16px auto; padding:16px; }
+    main{ max-width:1100px; margin:0 auto 72px; padding:0 16px 24px; }
 
-    .bh-wallpaper,.bh-grid{position:fixed; inset:0; pointer-events:none}
-    .bh-wallpaper{
-      z-index:0; background:
-      radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
-      radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
-      radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
-      linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-      filter: blur(10px) saturate(118%);
-    }
-    .bh-grid{
-      z-index:1; opacity:.22;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
-      background-size:160px 138px; background-position:center;
-    }
-    .bh-floor-fade{
-      position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
-      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));
-    }
+    .hero{ background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(164,107,255,.18); border-radius:16px; padding:16px;
+      backdrop-filter: blur(6px) saturate(120%); box-shadow: 0 18px 48px rgba(8,10,22,.55);}
+    .hero-top{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+    .crumbs{font-weight:800; letter-spacing:.2px; color:#cfe2ff}
+    .label{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+      background: rgba(164,107,255,.18); border:1px solid rgba(164,107,255,.18); font-weight:800; }
 
-    .container{ position:relative; z-index:3; background:transparent !important; max-width:1100px; margin:0 auto; padding:0 16px }
+    .grid-thumbs{ display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:12px; margin-top:16px; }
+    .thumb{ display:flex; flex-direction:column; align-items:center; text-decoration:none; color:#eef2ff; font-weight:800;
+      background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:8px; transition:.2s }
+    .thumb:hover{ transform:translateY(-2px); border-color:rgba(164,107,255,.45) }
+    .thumb img{ width:80px; height:80px; object-fit:contain; margin-bottom:6px }
 
-    .grid-thumbs{display:grid;gap:16px;}
-    @media (min-width:981px){ .grid-thumbs{grid-template-columns:repeat(3,1fr)} }
-    @media (max-width:980px){ .grid-thumbs{grid-template-columns:repeat(2,1fr)} }
-    @media (max-width:640px){ .grid-thumbs{grid-template-columns:repeat(2,1fr);gap:12px} }
-
-    .thumb{
-      border-radius:16px; overflow:hidden; text-decoration:none; color:inherit; display:block;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(60,32,100,.32);
-      border:1px solid rgba(164,107,255,.28);
-      box-shadow:0 8px 18px rgba(8,10,22,.35), 0 0 0 1px rgba(164,107,255,.18) inset;
-      backdrop-filter:saturate(120%) blur(6px);
-      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-    }
-    .thumb:hover{ transform:translateY(-3px); box-shadow:0 16px 28px rgba(8,10,22,.45), 0 0 18px rgba(164,107,255,.30), 0 0 0 1px rgba(164,107,255,.34) inset; border-color:rgba(164,107,255,.45) }
-    .thumb:focus-visible{ outline:2px solid rgba(164,107,255,.65); outline-offset:2px; border-radius:18px }
-
-    .thumb img{ width:100%; display:block; object-fit:contain; object-position:center; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); height:140px; }
-    @media (min-width:981px){ .thumb img{ height:150px } }
-    @media (max-width:980px){ .thumb img{ height:110px } }
-    @media (max-width:640px){ .thumb img{ height:84px } }
-
-    .thumb span{ display:block; padding:10px 12px; font-weight:800; letter-spacing:.2px; color:#eef2ff; border-top:1px solid rgba(164,107,255,.22); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); text-align:center; }
-    @media (max-width:640px){ .thumb span{ font-size:12.5px; padding:8px 10px } }
-
-    /* PRZYCISK WRÓĆ */
     #bhBackMini{
-      appearance:none;border:1px solid rgba(164,107,255,.28);background:rgba(60,32,100,.28);color:#eef2ff;
-      font-weight:700;padding:10px 14px;border-radius:12px;cursor:pointer;margin:16px 0;
-      box-shadow:0 6px 16px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.12), 0 0 8px rgba(164,107,255,.45);
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      appearance:none; border:1px solid rgba(164,107,255,.28); background:rgba(60,32,100,.28);
+      color:#eef2ff; font-weight:800; padding:8px 12px; border-radius:12px; cursor:pointer;
+      box-shadow:0 6px 16px rgba(8,10,22,.35);
     }
-    #bhBackMini:hover{ transform:translateY(-1px); border-color:rgba(164,107,255,.55); box-shadow:0 10px 20px rgba(8,10,22,.45), 0 0 14px rgba(164,107,255,.65), inset 0 0 0 1px rgba(164,107,255,.18) }
+    #bhBackMini:hover{ transform:translateY(-1px); border-color:rgba(164,107,255,.55); }
     #bhBackMini:focus-visible{ outline:2px solid rgba(164,107,255,.75); outline-offset:2px }
 
-    /* ===== WYGLĄD SELEKTORA JĘZYKA (ujednolicony) ===== */
-    .langpick{
-      position:fixed;
-      top:clamp(8px, env(safe-area-inset-top, 8px), 20px);
-      right:12px;
-      z-index:10000;
-      display:flex; gap:8px; align-items:center;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.24);
-      border-radius:12px; padding:6px 10px; backdrop-filter:saturate(120%) blur(4px);
-      max-width:100%;
-      white-space:nowrap;
-      contain:layout;
-    }
-    .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
-    .langpick select{
-      appearance:none;background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.24);
-      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px;
-      max-width:52vw;
-    }
-    .langpick option{ color:#0e1230; background:#ffffff }
-
-    /* Mobile: stała pozycja */
-    @media (max-width:560px){
-      body{ padding-top: calc(48px + env(safe-area-inset-top, 0px)); }
-      .langpick{
-        left:50%; right:auto; transform:translateX(-50%);
-        gap:6px; padding:5px 8px;
+    /* ✅ Guzik tłumacza — stała pozycja na telefonach */
+    @media (max-width:768px){
+      #bhLangPick{
+        position:fixed; top:10px; right:10px; z-index:3000;
+        display:inline-flex; align-items:center; gap:6px;
+        padding:6px 10px; border-radius:12px;
+        background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2);
+        backdrop-filter:blur(8px);
       }
-      .langpick label{ display:none; }
-      .langpick select{ font-size:12px; padding:5px 9px; }
-      .container header.header{ margin-top:8px; }
+      #bhLangPick label{ display:none; }
+      body{ padding-top:64px!important; }
     }
-
-    /* Ukryj resztki Google Translate */
-    .goog-te-banner-frame.skiptranslate{display:none!important}
-    .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
   </style>
-
-<!-- FIX: stałe miejsce przełącznika języka na telefonach -->
-<style>
-@media (max-width:768px){
-  :where(.lang, .langpick, .language, #lang, #language, .header .tools .lang, .header .tools .langpick){
-    position: fixed !important;
-    top: 10px !important;
-    right: 10px !important;
-    z-index: 3000 !important;
-    margin: 0 !important;
-    transform: none !important;
-    display: inline-flex !important;
-    align-items: center;
-    gap: 8px;
-  }
-  :where(.lang, .langpick, .language, #lang, #language) :where(.label, b, span:first-child){
-    display: none !important;
-  }
-  body{ padding-top: 64px !important; }
-}
-</style>
 </head>
 <body data-page="dziecko">
-  <div class="bh-wallpaper" aria-hidden="true"></div>
-  <div class="bh-grid" aria-hidden="true"></div>
-  <div class="bh-floor-fade" aria-hidden="true"></div>
+  <header class="app">
+    <div class="hero">
+      <div class="hero-top">
+        <div class="crumbs">Boli Help / <span id="crumb-label">Dziecko</span></div>
+        <div class="label"><span>🧒</span><b>Dziecko</b></div>
+        <!-- ▼ Guzik języka -->
+        <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
+          <label for="bhLangSelect">Język</label>
+          <select id="bhLangSelect">
+            <option value="pl">PL</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
+        <!-- ▲ Guzik języka -->
+      </div>
+      <h1 id="bhPageTitle">Dziecko — wybierz część ciała</h1>
+      <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
+    </div>
+  </header>
 
-  <!-- SELEKTOR JĘZYKA -->
-  <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
-    <label for="bhLangSelect">Język</label>
-    <select id="bhLangSelect">
-      <option value="pl">PL</option>
-      <option value="en">EN</option>
-    </select>
-  </div>
-
-  <div class="container">
-    <!-- GUZIK WRÓĆ -->
-    <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
-
-    <header class="header"><h1 id="bhPageTitle">Dziecko — wybierz część ciała</h1></header>
-
+  <main>
     <section class="grid-thumbs" aria-label="Miniatury — dziecko" id="bhThumbs">
       <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=oko&label=Oko"><img src="img/dziecko-oko.png" alt="Oko"><span>Oko</span></a>
       <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=nos&label=Nos"><img src="img/dziecko-nos.png" alt="Nos"><span>Nos</span></a>
       <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=gardlo&label=Gard%C5%82o"><img src="img/dziecko-gardlo.png" alt="Gardło"><span>Gardło</span></a>
       <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=glowa&label=G%C5%82owa"><img src="img/dziecko-glowa.png" alt="Głowa"><span>Głowa</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=klatka&label=Klatka%20piersiowa"><img src="img/dziecko-klatka.png" alt="Klatka piersiowa"><span>Klatka</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=klatka&label=Klatka%20piersiowa"><img src="img/dziecko-klatka.png" alt="Klatka"><span>Klatka</span></a>
       <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=brzuch&label=Brzuch"><img src="img/dziecko-brzuch.png" alt="Brzuch"><span>Brzuch</span></a>
       <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=plecy&label=Plecy"><img src="img/dziecko-plecy.png" alt="Plecy"><span>Plecy</span></a>
       <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=biodra&label=Biodra"><img src="img/dziecko-biodra.png" alt="Biodra"><span>Biodra</span></a>
@@ -171,113 +90,40 @@
       <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=zoladek&label=%C5%BBo%C5%82%C4%85dek"><img src="img/dziecko-zoladek.png" alt="Żołądek"><span>Żołądek</span></a>
       <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=nerki&label=Nerki"><img src="img/dziecko-nerki.png" alt="Nerki"><span>Nerki</span></a>
     </section>
-  </div>
+  </main>
+
   <script>
-    // Obsługa guzika "Wróć"
+    // Obsługa guzika Wróć
+    document.getElementById('bhBackMini')?.addEventListener('click',()=>{
+      if(document.referrer && document.referrer.includes(location.host)) history.back();
+      else location.href='index.html';
+    });
+
+    // ✅ Lekki tłumacz PL/EN (spójny z index, kobieta, mezczyzna)
     (function(){
-      var btn = document.getElementById('bhBackMini');
-      if(!btn) return;
-      btn.addEventListener('click', function(){
-        if (document.referrer && document.referrer.includes(location.host)) {
-          history.back();
-        } else {
-          location.href = 'index.html';
-        }
-      });
-    })();
-  </script>
-
-  <!-- LEKKI TŁUMACZ: współdzieli stan ze stroną główną (localStorage 'bh.lang') -->
-  <script>
-    (function(){
-      if(window.__bhDzieckoI18n) return; window.__bhDzieckoI18n = true;
-
-      var LS_KEY='bh.lang';
-      var root=document.documentElement;
-      var lang=(localStorage.getItem(LS_KEY)||root.getAttribute('lang')||'pl').toLowerCase();
-      var sel=document.getElementById('bhLangSelect');
-      var lab=document.querySelector('#bhLangPick label');
-
-      var dict = {
-        en: {
-          title: 'Child — choose a body part',
-          back: '← Back',
-          back_aria: 'Go back to previous page',
-          section_aria: 'Thumbnails — child',
-          parts: {
-            oko:'Eye', nos:'Nose', gardlo:'Throat', glowa:'Head',
-            klatka:'Chest', brzuch:'Abdomen', plecy:'Back', biodra:'Hips/Thighs',
-            udo:'Thigh', stopy:'Feet', serce:'Heart', pluca:'Lungs',
-            watroba:'Liver', zoladek:'Stomach', nerki:'Kidneys'
-          }
-        },
-        pl: {
-          title: 'Dziecko — wybierz część ciała',
-          back: '← Wróć',
-          back_aria: 'Wróć do poprzedniej strony',
-          section_aria: 'Miniatury — dziecko',
-          parts: {
-            oko:'Oko', nos:'Nos', gardlo:'Gardło', glowa:'Głowa',
-            klatka:'Klatka', brzuch:'Brzuch', plecy:'Plecy', biodra:'Biodra',
-            udo:'Udo', stopy:'Stopy', serce:'Serce', pluca:'Płuca',
-            watroba:'Wątroba', zoladek:'Żołądek', nerki:'Nerki'
-          }
-        }
+      const I18N = {
+        pl:{ page_title:"Dziecko — wybierz część ciała", back:"← Wróć" },
+        en:{ page_title:"Child — choose body part", back:"← Back" }
       };
+      const LS_KEY='bh.lang';
+      let lang = localStorage.getItem(LS_KEY) || document.documentElement.lang || 'pl';
+      if(!I18N[lang]) lang='pl';
 
-      function apply(){
-        var d = dict[lang] || dict.pl;
-
-        // <html lang=...>
-        root.setAttribute('lang', lang);
-
-        // Tytuł
-        var h1 = document.getElementById('bhPageTitle'); if(h1){ h1.textContent = d.title; }
-
-        // Przycisk "Wróć"
-        var back = document.getElementById('bhBackMini');
-        if(back){ back.textContent = d.back; back.setAttribute('aria-label', d.back_aria); }
-
-        // Aria label sekcji miniaturek
-        var grid = document.getElementById('bhThumbs');
-        if(grid){ grid.setAttribute('aria-label', d.section_aria); }
-
-        // Podpisy na kafelkach – po id w parametrze "czesc"
-        document.querySelectorAll('.grid-thumbs a.thumb').forEach(function(a){
-          try{
-            var u = new URL(a.getAttribute('href'), location.href);
-            var part = u.searchParams.get('czesc');
-            var span = a.querySelector('span');
-            if(part && d.parts[part] && span){ span.textContent = d.parts[part]; }
-          }catch(e){}
-        });
-
-        // Etykieta przy selektorze
-        if(lab){ lab.textContent = (lang==='en' ? 'Language' : 'Język'); }
-
-        // Ustaw wybraną opcję w selektorze
-        if(sel){ sel.value = lang; }
+      function applyTranslations(){
+        document.getElementById('bhPageTitle').textContent = I18N[lang].page_title;
+        const back=document.getElementById('bhBackMini'); if(back) back.textContent=I18N[lang].back;
+        document.documentElement.setAttribute('lang',lang);
+        localStorage.setItem(LS_KEY,lang);
       }
 
-      function setLang(l){
-        if(!dict[l]) return;
-        lang = l;
-        localStorage.setItem(LS_KEY, lang); // współdzielone z główną
-        apply();
-      }
-
-      // Inicjalizacja selektora
+      const sel=document.getElementById('bhLangSelect');
       if(sel){
-        sel.addEventListener('change', function(){ setLang(sel.value); });
+        sel.value=lang;
+        sel.addEventListener('change',()=>{ lang=sel.value; applyTranslations(); });
       }
-
-      // Pierwsze zastosowanie (odczyt stanu z głównej)
-      apply();
+      window.__getLang=()=>lang;
+      applyTranslations();
     })();
   </script>
-
-  <!-- USUNIĘTO stary tłumacz -->
-  <!-- <script src="/assets/js/translator-unified.js?v=1" defer></script> -->
-  <script src="assets/translator.js"></script>
 </body>
 </html>
