@@ -8,7 +8,6 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="assets/style.css?v=10" />
   <style>
-    /* ===== TAPETA (jak na stronie głównej) ===== */
     html,body{height:100%}
     body[data-page="kobieta"]{
       position:relative; background:#0e1230 !important; color:#eef2ff;
@@ -35,50 +34,33 @@
       background-size:160px 138px; background-position:center;
     }
     .bh-floor-fade{
-      position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
+      position:fixed;left:0;right:0;bottom:0;height:120px;z-index:2;pointer-events:none;
       background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));
     }
-    .container{position:relative; z-index:3; background:transparent !important; max-width:1100px; margin:0 auto; padding:0 16px}
+    .container{ position:relative; z-index:3; background:transparent !important; max-width:1100px; margin:0 auto; padding:0 16px }
 
-    /* ===== SIATKA MINIATUREK ===== */
     .grid-thumbs{display:grid;gap:16px;}
     @media (min-width:981px){ .grid-thumbs{grid-template-columns:repeat(3,1fr)} }
     @media (max-width:980px){ .grid-thumbs{grid-template-columns:repeat(2,1fr)} }
     @media (max-width:640px){ .grid-thumbs{grid-template-columns:repeat(2,1fr);gap:12px} }
 
-    /* ===== KAFELKI ===== */
     .thumb{
       border-radius:16px; overflow:hidden; text-decoration:none; color:inherit; display:block;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
-        rgba(60,32,100,.32);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(60,32,100,.32);
       border:1px solid rgba(164,107,255,.28);
       box-shadow:0 8px 18px rgba(8,10,22,.35), 0 0 0 1px rgba(164,107,255,.18) inset;
       backdrop-filter:saturate(120%) blur(6px);
       transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
     }
-    .thumb:hover{
-      transform:translateY(-3px);
-      box-shadow:0 16px 28px rgba(8,10,22,.45), 0 0 18px rgba(164,107,255,.30), 0 0 0 1px rgba(164,107,255,.34) inset;
-      border-color:rgba(164,107,255,.45);
-    }
+    .thumb:hover{ transform:translateY(-3px); box-shadow:0 16px 28px rgba(8,10,22,.45), 0 0 18px rgba(164,107,255,.30), 0 0 0 1px rgba(164,107,255,.34) inset; border-color:rgba(164,107,255,.45) }
     .thumb:focus-visible{ outline:2px solid rgba(164,107,255,.65); outline-offset:2px; border-radius:18px }
 
-    .thumb img{
-      width:100%; display:block; object-fit:contain; object-position:center;
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      height:140px;
-    }
+    .thumb img{ width:100%; display:block; object-fit:contain; object-position:center; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); height:140px; }
     @media (min-width:981px){ .thumb img{ height:150px } }
     @media (max-width:980px){ .thumb img{ height:110px } }
     @media (max-width:640px){ .thumb img{ height:84px } }
 
-    .thumb span{
-      display:block; padding:10px 12px; font-weight:800; letter-spacing:.2px; color:#eef2ff;
-      border-top:1px solid rgba(164,107,255,.22);
-      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      text-align:center;
-    }
+    .thumb span{ display:block; padding:10px 12px; font-weight:800; letter-spacing:.2px; color:#eef2ff; border-top:1px solid rgba(164,107,255,.22); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); text-align:center; }
     @media (max-width:640px){ .thumb span{ font-size:12.5px; padding:8px 10px } }
 
     /* ===== PRZYCISK WRÓĆ ===== */
@@ -105,7 +87,7 @@
       outline-offset:2px;
     }
 
-    /* ===== WYGLĄD SELEKTORA JĘZYKA (naprawa mobile jak na index) ===== */
+    /* ===== WYGLĄD SELEKTORA JĘZYKA (spójny) ===== */
     .langpick{
       position:fixed;
       top:clamp(8px, env(safe-area-inset-top, 8px), 20px);
@@ -124,56 +106,31 @@
       appearance:none;background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.24);
       color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px;
-      max-width:52vw; /* nie rozpycha na mobile */
+      max-width:52vw;
     }
     .langpick option{ color:#0e1230; background:#ffffff }
 
-    /* Mobile: zwężenie, wyśrodkowanie u góry i odsunięcie treści pod notch */
     @media (max-width:560px){
       body{ padding-top: calc(48px + env(safe-area-inset-top, 0px)); }
       .langpick{
         left:50%; right:auto; transform:translateX(-50%);
         gap:6px; padding:5px 8px;
       }
-      .langpick label{ display:none; } /* więcej miejsca na iPhone/małe ekrany */
+      .langpick label{ display:none; }
       .langpick select{ font-size:12px; padding:5px 9px; }
       .container header.header{ margin-top:8px; }
     }
 
-    /* Ukryj ewentualne resztki starego GT */
     .goog-te-banner-frame.skiptranslate{display:none!important}
     .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
   </style>
-<!-- FIX: stałe miejsce przełącznika języka na telefonach (final) -->
-<style>
-@media (max-width:768px){
-  :where(.lang, .langpick, .language, #lang, #language, .header .tools .lang, .header .tools .langpick){
-    position: fixed !important;
-    top: 10px !important;
-    right: 10px !important;   /* jeśli wolisz lewy róg: left:10px!important; i usuń right */
-    z-index: 3000 !important;
-    margin: 0 !important;
-    transform: none !important;
-    display: inline-flex !important;
-    align-items: center;
-    gap: 8px;
-  }
-  /* schowaj sam napis "Język", zostaw kapsułkę PL/EN */
-  :where(.lang, .langpick, .language, #lang, #language) :where(.label, b, span:first-child){
-    display: none !important;
-  }
-  /* zrób miejsce na przyklejony przełącznik */
-  body{ padding-top: 64px !important; }
-}
-</style>
 </head>
 <body data-page="kobieta">
-  <!-- TAPETA -->
   <div class="bh-wallpaper" aria-hidden="true"></div>
   <div class="bh-grid" aria-hidden="true"></div>
   <div class="bh-floor-fade" aria-hidden="true"></div>
 
-  <!-- SELEKTOR JĘZYKA (naprawiony: góra, nie rozpycha, działa na mobile) -->
+  <!-- SELEKTOR JĘZYKA -->
   <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
     <label for="bhLangSelect">Język</label>
     <select id="bhLangSelect">
@@ -204,10 +161,8 @@
       <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=watroba&label=W%C4%85troba"><img src="img/kobieta-watroba.png" alt="Wątroba"><span>Wątroba</span></a>
       <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=zoladek&label=%C5%BBo%C5%82%C4%85dek"><img src="img/kobieta-zoladek.png" alt="Żołądek"><span>Żołądek</span></a>
       <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=nerki&label=Nerki"><img src="img/kobieta-nerki.png" alt="Nerki"><span>Nerki</span></a>
-      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=ciaza&label=Ci%C4%85%C5%BCa"><img src="img/kobieta-ciaza.png" alt="Ciąża"><span>Ciąża</span></a>
     </section>
   </div>
-
   <script>
     // Obsługa guzika "Wróć"
     (function(){
@@ -223,7 +178,7 @@
     })();
   </script>
 
-  <!-- LEKKI TŁUMACZ: współdzieli stan ze stroną główną (localStorage 'bh.lang') -->
+  <!-- LEKKI TŁUMACZ: współdzieli stan ze stroną główną -->
   <script>
     (function(){
       if(window.__bhKobietaI18n) return; window.__bhKobietaI18n = true;
@@ -244,7 +199,7 @@
             oko:'Eye', nos:'Nose', gardlo:'Throat', glowa:'Head',
             klatka:'Chest', brzuch:'Abdomen', plecy:'Back', biodra:'Hips/Thighs',
             udo:'Thigh', stopy:'Feet', serce:'Heart', pluca:'Lungs',
-            watroba:'Liver', zoladek:'Stomach', nerki:'Kidneys', ciaza:'Pregnancy'
+            watroba:'Liver', zoladek:'Stomach', nerki:'Kidneys'
           }
         },
         pl: {
@@ -256,7 +211,7 @@
             oko:'Oko', nos:'Nos', gardlo:'Gardło', glowa:'Głowa',
             klatka:'Klatka', brzuch:'Brzuch', plecy:'Plecy', biodra:'Biodra',
             udo:'Udo', stopy:'Stopy', serce:'Serce', pluca:'Płuca',
-            watroba:'Wątroba', zoladek:'Żołądek', nerki:'Nerki', ciaza:'Ciąża'
+            watroba:'Wątroba', zoladek:'Żołądek', nerki:'Nerki'
           }
         }
       };
@@ -264,56 +219,47 @@
       function apply(){
         var d = dict[lang] || dict.pl;
 
-        // <html lang=...>
         root.setAttribute('lang', lang);
 
-        // Tytuł sekcji/strony
         var h1 = document.getElementById('bhPageTitle'); if(h1){ h1.textContent = d.title; }
 
-        // Przycisk "Wróć"
         var back = document.getElementById('bhBackMini');
         if(back){ back.textContent = d.back; back.setAttribute('aria-label', d.back_aria); }
 
-        // Aria label sekcji miniaturek
         var grid = document.getElementById('bhThumbs');
         if(grid){ grid.setAttribute('aria-label', d.section_aria); }
 
-        // Podpisy na kafelkach – po id w parametrze "czesc"
         document.querySelectorAll('.grid-thumbs a.thumb').forEach(function(a){
           try{
             var u = new URL(a.getAttribute('href'), location.href);
-            var part = u.searchParams.get('czesc'); // np. "oko"
+            var part = u.searchParams.get('czesc');
             var span = a.querySelector('span');
             if(part && d.parts[part] && span){ span.textContent = d.parts[part]; }
           }catch(e){}
         });
 
-        // Etykieta przy selektorze
         if(lab){ lab.textContent = (lang==='en' ? 'Language' : 'Język'); }
 
-        // Ustaw wybraną opcję w selektorze
         if(sel){ sel.value = lang; }
       }
 
       function setLang(l){
         if(!dict[l]) return;
         lang = l;
-        localStorage.setItem(LS_KEY, lang); // klucz współdzielony ze stroną główną
+        localStorage.setItem(LS_KEY, lang);
         apply();
       }
 
-      // Inicjalizacja selektora
       if(sel){
         sel.addEventListener('change', function(){ setLang(sel.value); });
       }
 
-      // Pierwsze zastosowanie (pobiera stan ustawiony na stronie głównej)
       apply();
     })();
   </script>
 
   <!-- USUNIĘTO stary tłumacz -->
   <!-- <script src="/assets/js/translator-unified.js?v=1" defer></script> -->
-<script src="assets/translator.js"></script>
+  <script src="assets/translator.js"></script>
 </body>
 </html>
