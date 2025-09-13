@@ -974,5 +974,68 @@
     #bhLangSelect{ font-size: 13px; }
   }
 </style>
+<style>
+/* --- FIX: Spójny tłumacz PL/EN --- */
+#bhLangPick {
+  display: inline-flex !important;
+  gap: 6px;
+  align-items: center;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 12px;
+  padding: 5px 8px;
+  backdrop-filter: saturate(120%) blur(6px);
+}
+
+#bhLangPick label,
+#bhLangSelect {
+  display: none !important; /* chowamy stary select */
+}
+
+#bhLangPick button {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background .2s;
+}
+#bhLangPick button:hover {
+  background: rgba(255,255,255,.15);
+}
+#bhLangPick button.active {
+  background: rgba(164,107,255,.35);
+}
+</style>
+
+<script>
+(function(){
+  const LS_KEY = 'bh.lang';
+  const root = document.documentElement;
+  let lang = (localStorage.getItem(LS_KEY) || root.getAttribute('lang') || 'pl').toLowerCase();
+
+  function setLang(l){
+    localStorage.setItem(LS_KEY, l);
+    location.reload(); // odśwież stronę, żeby tłumaczenie się przeładowało
+  }
+
+  // Dodaj przyciski
+  const pick = document.getElementById('bhLangPick');
+  if(pick && !pick.querySelector('button')){
+    pick.innerHTML = `
+      <button data-lang="pl">PL</button>
+      <button data-lang="en">EN</button>
+    `;
+    pick.querySelectorAll('button').forEach(btn=>{
+      if(btn.dataset.lang === lang){ btn.classList.add('active'); }
+      btn.addEventListener('click', ()=> setLang(btn.dataset.lang));
+    });
+  }
+})();
+</script>
 </body>
 </html>
