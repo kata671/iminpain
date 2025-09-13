@@ -73,7 +73,7 @@
     #bhBackMini:hover{ transform:translateY(-1px); border-color:rgba(164,107,255,.55); box-shadow:0 10px 20px rgba(8,10,22,.45), 0 0 14px rgba(164,107,255,.65), inset 0 0 0 1px rgba(164,107,255,.18) }
     #bhBackMini:focus-visible{ outline:2px solid rgba(164,107,255,.75); outline-offset:2px }
 
-    /* ===== WYGLĄD SELEKTORA JĘZYKA (naprawa mobile jak na innych stronach) ===== */
+    /* ===== WYGLĄD SELEKTORA JĘZYKA (ujednolicony) ===== */
     .langpick{
       position:fixed;
       top:clamp(8px, env(safe-area-inset-top, 8px), 20px);
@@ -92,33 +92,34 @@
       appearance:none;background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.24);
       color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px;
-      max-width:52vw; /* nie rozpycha na mobile */
+      max-width:52vw;
     }
     .langpick option{ color:#0e1230; background:#ffffff }
 
-    /* Mobile: zwężenie, wyśrodkowanie u góry i odsunięcie treści pod notch */
+    /* Mobile: stała pozycja */
     @media (max-width:560px){
       body{ padding-top: calc(48px + env(safe-area-inset-top, 0px)); }
       .langpick{
         left:50%; right:auto; transform:translateX(-50%);
         gap:6px; padding:5px 8px;
       }
-      .langpick label{ display:none; } /* więcej miejsca na małych ekranach */
+      .langpick label{ display:none; }
       .langpick select{ font-size:12px; padding:5px 9px; }
       .container header.header{ margin-top:8px; }
     }
 
-    /* Ukryj ewentualne resztki starego GT */
+    /* Ukryj resztki Google Translate */
     .goog-te-banner-frame.skiptranslate{display:none!important}
     .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
   </style>
-<!-- FIX: stałe miejsce przełącznika języka na telefonach (final) -->
+
+<!-- FIX: stałe miejsce przełącznika języka na telefonach -->
 <style>
 @media (max-width:768px){
   :where(.lang, .langpick, .language, #lang, #language, .header .tools .lang, .header .tools .langpick){
     position: fixed !important;
     top: 10px !important;
-    right: 10px !important;   /* jeśli wolisz lewy róg: left:10px!important; i usuń right */
+    right: 10px !important;
     z-index: 3000 !important;
     margin: 0 !important;
     transform: none !important;
@@ -126,11 +127,9 @@
     align-items: center;
     gap: 8px;
   }
-  /* schowaj sam napis "Język", zostaw kapsułkę PL/EN */
   :where(.lang, .langpick, .language, #lang, #language) :where(.label, b, span:first-child){
     display: none !important;
   }
-  /* zrób miejsce na przyklejony przełącznik */
   body{ padding-top: 64px !important; }
 }
 </style>
@@ -140,7 +139,7 @@
   <div class="bh-grid" aria-hidden="true"></div>
   <div class="bh-floor-fade" aria-hidden="true"></div>
 
-  <!-- SELEKTOR JĘZYKA (naprawiony: góra, nie rozpycha, działa na mobile) -->
+  <!-- SELEKTOR JĘZYKA -->
   <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
     <label for="bhLangSelect">Język</label>
     <select id="bhLangSelect">
@@ -173,7 +172,6 @@
       <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=nerki&label=Nerki"><img src="img/dziecko-nerki.png" alt="Nerki"><span>Nerki</span></a>
     </section>
   </div>
-
   <script>
     // Obsługa guzika "Wróć"
     (function(){
@@ -280,6 +278,6 @@
 
   <!-- USUNIĘTO stary tłumacz -->
   <!-- <script src="/assets/js/translator-unified.js?v=1" defer></script> -->
-<script src="assets/translator.js"></script>
+  <script src="assets/translator.js"></script>
 </body>
 </html>
