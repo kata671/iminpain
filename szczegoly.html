@@ -61,6 +61,7 @@
       background: rgba(164,107,255,.18); border:1px solid var(--stroke); font-weight:800; letter-spacing:.3px; }
     .hero-note{ margin-top:10px; color:#b8c2e0; font-size:13px; }
     .legend{ color:#d6e4ff; font-weight:700; margin-top:6px; font-size:13px }
+
     .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0 0}
     .step{position:relative; padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.14);
       background:rgba(255,255,255,.05); font-weight:900; letter-spacing:.2px; color:#dfe6ff; text-align:center}
@@ -121,26 +122,69 @@
     .dx-badge.sor,.doc-badge.sor{ background:rgba(255,107,107,.20); border:1px solid rgba(255,107,107,.65); color:#ffe6e6 }
   </style>
 
-  <!-- ✅ UNIFIKACJA: Guzik tłumacza w prawym górnym rogu (telefon + laptop) -->
+  <!-- ✅ TYLKO DLA TEJ STRONY: sanity + ukrycie starego miejsca + jedyny styl #lang-fab -->
   <style>
-    #lang-fab{
-      position:fixed; top:10px; right:10px; z-index:4000;
-      display:inline-flex; align-items:center; gap:6px;
-      padding:8px 10px; border-radius:12px;
-      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2);
-      backdrop-filter:blur(8px); line-height:1; font-weight:600;
-      max-width:92px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;
+    html,body{max-width:100%;overflow-x:hidden}
+    *,*::before,*::after{box-sizing:border-box}
+    img,video,canvas{max-width:100%;height:auto}
+    .bg-anim,.grid-bg,#bh-particles{position:fixed;inset:0;pointer-events:none}
+
+    @media (max-width:768px){
+      /* ukryj ewentualny stary selektor w headerze */
+      .header .tools :is(.lang,.langpick,#bhLangPick){display:none!important}
+      .header .tools :is(.lang,.langpick,#bhLangPick)::before,
+      .header .tools :is(.lang,.langpick,#bhLangPick)::after{content:none!important;display:none!important}
+
+      /* jedyna definicja pływającego guzika języka */
+      #lang-fab{
+        position:fixed; top:10px; right:10px; z-index:4000;
+        display:inline-flex; align-items:center; gap:6px;
+        padding:8px 10px; border-radius:12px;
+        background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2);
+        backdrop-filter:blur(8px); line-height:1; font-weight:600;
+        max-width:92px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;
+      }
+      #lang-fab label{ display:none; }
+      #bhLangSelect{ font-size:16px; }  /* brak zoomu na iOS */
+      body{ padding-top:0!important; }
     }
-    #lang-fab label{ display:none; }
-    #bhLangSelect{ font-size:16px; } /* brak zoomu na iOS */
   </style>
-</head>
+<style>
+  /* --- dopieszczenie układu kroków i ciasnych ekranów --- */
+
+  /* rozdziel 1. tytuł i podtytuł; niech podtytuł spada w nową linię */
+  .steps .step{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+  }
+  .steps .step small{
+    display:block;           /* wymuś nową linię */
+    margin-top:4px;
+    color:#b8c2e0;
+    font-weight:700;
+  }
+
+  /* kiedy jest węziej – 2 kolumny; bardzo wąsko – 1 kolumna */
+  @media (max-width: 600px){
+    .steps{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 380px){
+    .steps{ grid-template-columns: 1fr; }
+  }
+
+  /* minimalne odstępy, by nic nie nachodziło na górze w trybie poziomym */
+  @media (max-height: 420px) and (orientation: landscape){
+    header.app{ margin-top: 8px; }
+  }
+</style></head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
   <div class="grid-bg" aria-hidden="true"></div>
   <canvas id="bh-particles" aria-hidden="true"></canvas>
 
-  <!-- ✅ SELEKTOR JĘZYKA -->
+  <!-- ✅ SELEKTOR JĘZYKA (tylko jeden, bez inline-style) -->
   <div id="lang-fab">
     <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
       <label for="bhLangSelect">Język</label>
@@ -150,310 +194,492 @@
       </select>
     </div>
   </div>
+
   <div class="bh-backbar">
-    <button id="bhReturnTop" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
+    <button id="bhReturnTop" type="button" aria-label="Wróć do poprzedniej strony">↑</button>
   </div>
 
-  <header class="app">
-    <div class="hero">
+  <header class="app" aria-label="Nawigacja lokalna">
+    <div class="hero" role="region" aria-label="Nagłówek szczegółów">
       <div class="hero-top">
-        <div class="crumbs" id="bhCrumbs">Strona główna → ...</div>
-        <div class="label" id="bhLabel">Objaw</div>
+        <div class="crumbs" id="crumbs">Boli Help / <span id="crumb-typ">—</span> / <span id="crumb-label">Szczegóły</span></div>
+        <div class="label"><span id="label-icon" aria-hidden="true">●</span><span id="label-text"><b>—</b></span></div>
       </div>
-      <div class="hero-note" id="bhNote">Tutaj znajdziesz szczegóły dotyczące wybranego objawu.</div>
-      <div class="legend" id="bhLegend">Sekcje poniżej:</div>
-      <div class="steps" id="bhSteps"></div>
+
+      <div class="steps" aria-label="Asystent kroków">
+        <div class="step" id="step-1">1. Objawy<small>Zaznacz</small></div>
+        <div class="step" id="step-2">2. Choroby<small>Zobacz podpowiedzi</small></div>
+        <div class="step" id="step-3">3. Lekarze<small>Gdzie iść?</small></div>
+        <div class="step" id="step-4">4. Co dalej<small>112/SOR lub dom</small></div>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Sekcje treści">
+        <button class="tab" data-variant="symptoms" role="tab" aria-selected="true"  data-target="#s-objawy">Objawy</button>
+        <button class="tab" data-variant="causes"   role="tab" aria-selected="false" data-target="#s-przyczyny">Przyczyny</button>
+        <button class="tab" data-variant="firstaid" role="tab" aria-selected="false" data-target="#s-aid">Pierwsza pomoc</button>
+        <button class="tab" data-variant="otc"      role="tab" aria-selected="false" data-target="#s-otc">Leki OTC</button>
+        <button class="tab" data-variant="rx"       role="tab" aria-selected="false" data-target="#s-rx">Leki na receptę</button>
+        <button class="tab" data-variant="rehab"    role="tab" aria-selected="false" data-target="#s-rehab">Rehabilitacja / Profilaktyka</button>
+        <button class="tab" data-variant="myths"    role="tab" aria-selected="false" data-target="#s-mity">Mity vs Fakty</button>
+        <button class="tab" data-variant="faq"      role="tab" aria-selected="false" data-target="#s-faq">FAQ</button>
+        <button class="tab" data-variant="dx"       role="tab" aria-selected="false" data-target="#s-dx">Choroby (beta)</button>
+        <button class="tab" data-variant="docs"     role="tab" aria-selected="false" data-target="#s-docs">Lekarze</button>
+      </div>
+
+      <p class="hero-note">Edukacyjnie, nie diagnostycznie. W nagłej, ciężkiej dolegliwości lub przy czerwonych flagach — skorzystaj z <b>112</b> lub SOR.</p>
+      <p class="legend">Zaznacz <strong>objawy</strong> — pasek <b>Ryzyko</b> oraz karty <b>Choroby</b>/<b>Lekarze</b> dopasują się automatycznie.</p>
     </div>
   </header>
 
   <main>
-    <div class="tabs" id="bhTabs"></div>
-    <div class="cards" id="bhCards"></div>
+    <section class="cards" aria-label="Karty z informacjami szczegółowymi">
+      <!-- OBJAWY -->
+      <article class="card" id="s-objawy" role="tabpanel" aria-hidden="false">
+        <h3 id="h-obj">Objawy</h3>
+        <ul class="clean" id="symp-common"></ul>
+
+        <div class="subhead">Kiedy się niepokoić (czerwone flagi)</div>
+        <div class="risk-mini" aria-label="Szacowany poziom ryzyka">
+          <small>Ryzyko: <span id="risk-label">niskie</span></small>
+          <span class="riskbar" id="riskbar"><span class="cursor" id="risk-cursor-card" style="left:0%"></span></span>
+        </div>
+        <ul class="clean" id="urgent"></ul>
+
+        <div class="strip strip--warn" id="urgent-strip">
+          Masz objawy alarmowe? <strong>Nie zwlekaj.</strong>
+          <a class="cta" id="cta-112" href="tel:112" aria-label="Zadzwoń 112">Zadzwoń 112</a>
+        </div>
+
+        <div id="dx-hint" class="dx-hint" role="status" aria-live="polite">
+          Masz zaznaczone objawy. Zobacz edukacyjne podpowiedzi w <strong>Choroby</strong> lub przejdź do <strong>Lekarze</strong>.
+          <button type="button" id="dx-open">Choroby</button>
+          <button type="button" id="docs-open">Lekarze</button>
+        </div>
+      </article>
+
+      <!-- PRZYCZYNY -->
+      <article class="card" id="s-przyczyny" role="tabpanel" aria-hidden="true">
+        <h3 id="h-cause">Przyczyny</h3>
+        <ul class="clean" id="causes"></ul>
+      </article>
+
+      <!-- POMOC -->
+      <article class="card" id="s-aid" role="tabpanel" aria-hidden="true">
+        <h3 id="h-aid">Pierwsza pomoc</h3>
+        <ul class="clean" id="firstaid"></ul>
+      </article>
+
+      <!-- OTC -->
+      <article class="card" id="s-otc" role="tabpanel" aria-hidden="true">
+        <h3 id="h-otc">Leki bez recepty (OTC)</h3>
+        <ul class="clean" id="meds-otc"></ul>
+      </article>
+
+      <!-- RX -->
+      <article class="card" id="s-rx" role="tabpanel" aria-hidden="true">
+        <h3 id="h-rx">Leki na receptę (informacyjnie)</h3>
+        <ul class="clean" id="meds-rx"></ul>
+      </article>
+
+      <!-- REHAB -->
+      <article class="card" id="s-rehab" role="tabpanel" aria-hidden="true">
+        <h3 id="h-rehab">Rehabilitacja / Profilaktyka</h3>
+        <ul class="clean" id="rehab"></ul>
+      </article>
+
+      <!-- MITY -->
+      <article class="card" id="s-mity" role="tabpanel" aria-hidden="true">
+        <h3 id="h-mity">Mity vs Fakty</h3>
+        <ul class="clean" id="myths"></ul>
+      </article>
+
+      <!-- FAQ -->
+      <article class="card" id="s-faq" role="tabpanel" aria-hidden="true">
+        <h3 id="h-faq">FAQ</h3>
+        <ul class="clean" id="faq"></ul>
+      </article>
+
+      <!-- CHOROBY -->
+      <article class="card" id="s-dx" role="tabpanel" aria-hidden="true">
+        <h3 id="h-dx">Choroby (beta)</h3>
+        <p class="dx-note">Podpowiedzi edukacyjne z zaznaczonych objawów. Nie zastępują konsultacji.</p>
+        <ul class="clean dx-list" id="dx-list"></ul>
+      </article>
+
+      <!-- LEKARZE -->
+      <article class="card" id="s-docs" role="tabpanel" aria-hidden="true">
+        <h3 id="h-docs">Lekarze</h3>
+        <p class="docs-note">Kolejność: <b>POZ</b> → specjaliści. Czerwone flagi kierują do <b>SOR/112</b>.</p>
+        <ul class="clean" id="docs-list"></ul>
+      </article>
+    </section>
   </main>
-
   <script>
-    (function(){
-      const LS_KEY='bh.lang';
-      const root=document.documentElement;
-      let lang=(localStorage.getItem(LS_KEY)||root.getAttribute('lang')||'pl').toLowerCase();
+    /* --- język (localStorage) --- */
+    (function langInit(){
+      const KEY='bh.lang';
+      const get = ()=> localStorage.getItem(KEY) || 'pl';
+      const set = (v)=> localStorage.setItem(KEY, v);
+      window.__getLang = get;
 
-      const dict={
-        pl:{
-          back:'← Wróć',
-          back_aria:'Wróć do poprzedniej strony',
-          crumbs:'Strona główna →',
-          note:'Tutaj znajdziesz szczegóły dotyczące wybranego objawu.',
-          legend:'Sekcje poniżej:',
-          label:'Objaw',
-        },
-        en:{
-          back:'← Back',
-          back_aria:'Go back to previous page',
-          crumbs:'Home →',
-          note:'Here you will find details about the selected symptom.',
-          legend:'Sections below:',
-          label:'Symptom',
-        }
-      };
-
-      function apply(){
-        const d=dict[lang]||dict.pl;
-        root.setAttribute('lang',lang);
-        localStorage.setItem(LS_KEY,lang);
-
-        const btn=document.getElementById('bhReturnTop');
-        if(btn){ btn.textContent=d.back; btn.setAttribute('aria-label',d.back_aria); }
-
-        const crumbs=document.getElementById('bhCrumbs'); if(crumbs) crumbs.textContent=d.crumbs;
-        const note=document.getElementById('bhNote'); if(note) note.textContent=d.note;
-        const legend=document.getElementById('bhLegend'); if(legend) legend.textContent=d.legend;
-        const label=document.getElementById('bhLabel'); if(label) label.textContent=d.label;
-
-        const lab=document.querySelector('#bhLangPick label');
-        if(lab){ lab.textContent=(lang==='en'?'Language':'Język'); }
-
-        const sel=document.getElementById('bhLangSelect'); if(sel) sel.value=lang;
-      }
-
-      function setLang(l){
-        lang=l; apply();
-      }
-
-      const sel=document.getElementById('bhLangSelect');
-      if(sel){
-        sel.addEventListener('change',()=>setLang(sel.value));
-      }
-
-      apply();
-    })();
-  </script>
-
-  <script>
-    (function(){
-      const btn=document.getElementById('bhReturnTop');
-      if(!btn) return;
-      btn.addEventListener('click',function(){
-        if(document.referrer && document.referrer.includes(location.host)){
-          history.back();
-        }else{
-          location.href='index.html';
-        }
-      });
-    })();
-  </script>
-  <script>
-    (function(){
-      const tabs=document.getElementById('bhTabs');
-      const cards=document.getElementById('bhCards');
-      if(!tabs||!cards) return;
-
-      const sections={
-        pl:[
-          {id:'opis',title:'Opis'},
-          {id:'przyczyny',title:'Przyczyny'},
-          {id:'leczenie',title:'Leczenie'},
-          {id:'profilaktyka',title:'Profilaktyka'},
-        ],
-        en:[
-          {id:'opis',title:'Description'},
-          {id:'przyczyny',title:'Causes'},
-          {id:'leczenie',title:'Treatment'},
-          {id:'profilaktyka',title:'Prevention'},
-        ]
-      };
-
-      const LS_KEY='bh.lang';
-      let lang=(localStorage.getItem(LS_KEY)||'pl').toLowerCase();
-      if(!sections[lang]) lang='pl';
-
-      function render(){
-        const list=sections[lang];
-        tabs.innerHTML='';
-        cards.innerHTML='';
-        list.forEach((s,i)=>{
-          const tab=document.createElement('button');
-          tab.type='button';
-          tab.textContent=s.title;
-          tab.dataset.id=s.id;
-          if(i===0) tab.classList.add('active');
-          tabs.appendChild(tab);
-
-          const card=document.createElement('div');
-          card.className='card-section';
-          if(i!==0) card.style.display='none';
-          card.id='card-'+s.id;
-          card.textContent='Treść dla: '+s.title;
-          cards.appendChild(card);
+      const sel = document.getElementById('bhLangSelect');
+      if (sel){
+        sel.value = get();
+        sel.addEventListener('change', ()=>{
+          set(sel.value||'pl');
+          // odśwież stronę, by UI/teksty przeładowały się w wybranym języku
+          location.replace(location.href);
         });
       }
+    })();
+    const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
 
-      tabs.addEventListener('click',function(e){
-        if(!e.target.matches('button')) return;
-        const id=e.target.dataset.id;
-        tabs.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
-        e.target.classList.add('active');
-        cards.querySelectorAll('.card-section').forEach(c=>{
-          c.style.display=(c.id==='card-'+id)?'block':'none';
-        });
+    /* --- i18n słowniki (UI) --- */
+    const I18N={
+      pl:{lang_label:'Język',back:'← Wróć',
+          hero_note:'Edukacyjnie, nie diagnostycznie. W nagłej, ciężkiej dolegliwości lub przy czerwonych flagach — skorzystaj z <b>112</b> lub SOR.',
+          legend:'Zaznacz <strong>objawy</strong> — pasek <b>Ryzyko</b> oraz karty <b>Choroby</b>/<b>Lekarze</b> dopasują się automatycznie.',
+          tabs:{symptoms:'Objawy',causes:'Przyczyny',firstaid:'Pierwsza pomoc',otc:'Leki OTC',rx:'Leki na receptę',rehab:'Rehabilitacja / Profilaktyka',myths:'Mity vs Fakty',faq:'FAQ',dx:'Choroby (beta)',docs:'Lekarze'},
+          symptoms_head:'Objawy', urgent_head:'Kiedy się niepokoić (czerwone flagi)',
+          risk:'Ryzyko:', risk_low:'niskie', risk_mid:'umiarkowane', risk_high:'wysokie',
+          urgent_strip:'Masz objawy alarmowe? <strong>Nie zwlekaj.</strong>', call_112:'Zadzwoń 112',
+          hint:'Masz zaznaczone objawy. Zobacz edukacyjne podpowiedzi w <strong>Choroby</strong> lub przejdź do <strong>Lekarze</strong>.',
+          hint_btn_dx:'Choroby', hint_btn_docs:'Lekarze',
+          badge_sor:'pilnie SOR', badge_poz:'POZ', badge_doc:'POZ/specjalista',
+          crumbs_details:'Szczegóły'},
+      en:{lang_label:'Language',back:'← Back',
+          hero_note:'Educational, not diagnostic. If symptoms are severe or red flags — use <b>112</b> / ER.',
+          legend:'Select <strong>symptoms</strong> — <b>Risk</b> and <b>Conditions/Doctors</b> auto-adjust.',
+          tabs:{symptoms:'Symptoms',causes:'Causes',firstaid:'First aid',otc:'OTC',rx:'Prescription',rehab:'Rehab / Prevention',myths:'Myths vs Facts',faq:'FAQ',dx:'Conditions (beta)',docs:'Doctors'},
+          symptoms_head:'Symptoms', urgent_head:'When to worry (red flags)',
+          risk:'Risk:', risk_low:'low', risk_mid:'moderate', risk_high:'high',
+          urgent_strip:'Alarm signs? <strong>Don’t wait.</strong>', call_112:'Call 112',
+          hint:'You selected symptoms. See hints in <strong>Conditions</strong> or open <strong>Doctors</strong>.',
+          hint_btn_dx:'Conditions', hint_btn_docs:'Doctors',
+          badge_sor:'urgent ER', badge_poz:'GP', badge_doc:'GP/specialist',
+          crumbs_details:'Details'}
+    };
+
+    /* --- minimalne dane demonstracyjne (wystarczają do działania UI) --- */
+    const BASE={pl:{rehabCommon:["Sen 7–9 h","Nawodnienie","Lekka aktywność"],
+                    otcPain:[{t:"Paracetamol — ból/gorączka",audience:"all"},{t:"Ibuprofen — dorośli",audience:"adult"}],
+                    urgentCommon:["Utrata przytomności","Duszność","Krwawienie nie do opanowania"]},
+                en:{rehabCommon:["Sleep 7–9 h","Hydration","Light activity"],
+                    otcPain:[{t:"Paracetamol — pain/fever",audience:"all"},{t:"Ibuprofen — adults",audience:"adult"}],
+                    urgentCommon:["Loss of consciousness","Dyspnea","Uncontrolled bleeding"]}};
+
+    const CONTENT_PL={
+      glowa:{label:"Głowa (ból)",symptoms:["Ucisk obustronny","Pulsujący jednostronny","Nadwrażliwość na światło"],causes:["Napięcie/stres","Migrena"],firstaid:["Nawodnienie","Odpoczynek"],otc:[...BASE.pl.otcPain],rx:["Tryptany"],rehab:[...BASE.pl.rehabCommon],urgent:["Nagły najgorszy ból","Gorączka + sztywność karku",...BASE.pl.urgentCommon],myths:[{m:"Antybiotyk pomaga",f:"Ból głowy zwykle nie ma podłoża bakteryjnego"}],faq:[{q:"Kiedy do lekarza?",a:"Gdy silny/nowy lub z czerwonymi flagami."}]},
+      nos:{label:"Nos",symptoms:["Katar","Zatkanie","Ból zatok","Krwawienie z nosa"],causes:["Przeziębienie","Alergia","Zapalenie zatok"],firstaid:["Nawilżanie NaCl"],otc:["Sól morska","Krople obkurczające (krótko)"],rx:["Donosowe GKS"],rehab:[...BASE.pl.rehabCommon],urgent:["Krwawienie >20 min",...BASE.pl.urgentCommon],myths:[],faq:[]},
+      klatka:{label:"Klatka piersiowa",symptoms:["Ucisk","Zgaga","Duszność"],causes:["Mięśniowe","Refluks","Wieńcowa"],firstaid:["Odpoczynek"],otc:["Na refluks"],rx:["Nitrogliceryna wg zaleceń"],rehab:[...BASE.pl.rehabCommon],urgent:["Ucisk + duszność/zimny pot",...BASE.pl.urgentCommon],myths:[],faq:[]},
+      brzuch:{label:"Brzuch",symptoms:["Ból","Wzdęcia","Biegunka/zaparcie"],causes:["Niestrawność","IBS"],firstaid:["Nawadnianie","Odpoczynek"],otc:["Osłonowe","Drotaweryna (dorośli)"],rx:["PPI wg rozpoznania"],rehab:[...BASE.pl.rehabCommon],urgent:["Twardy brzuch, silny ból",...BASE.pl.urgentCommon],myths:[],faq:[]},
+      serce:{label:"Serce",symptoms:["Kołatanie","Zawroty"],causes:["Stres/odwodnienie","Zaburzenia rytmu"],firstaid:["Odpoczynek"],otc:["—"],rx:["EKG + leczenie"],rehab:[...BASE.pl.rehabCommon],urgent:["Kołatanie z omdleniem",...BASE.pl.urgentCommon],myths:[],faq:[]}
+    };
+    const CONTENT_EN={
+      glowa:{label:"Headache",symptoms:["Bilateral pressing","Unilateral throbbing","Light sensitivity"],causes:["Tension","Migraine"],firstaid:["Hydration","Rest"],otc:[...BASE.en.otcPain],rx:["Triptans"],rehab:[...BASE.en.rehabCommon],urgent:["Thunderclap","Fever + neck stiffness",...BASE.en.urgentCommon],myths:[{m:"Antibiotics help",f:"Headache is rarely bacterial."}],faq:[{q:"When to see a doctor?",a:"If severe/new or with red flags."}]},
+      nos:{label:"Nose",symptoms:["Runny nose","Blockage","Sinus pain","Nosebleed"],causes:["Cold","Allergy","Sinusitis"],firstaid:["Saline"],otc:["Sea water","Decongestants (short)"],rx:["Intranasal steroids"],rehab:[...BASE.en.rehabCommon],urgent:["Bleeding >20 min",...BASE.en.urgentCommon],myths:[],faq:[]},
+      klatka:{label:"Chest",symptoms:["Pressure","Heartburn","Dyspnea"],causes:["Muscular","Reflux","Coronary"],firstaid:["Rest"],otc:["Anti-reflux"],rx:["Nitroglycerin per doctor"],rehab:[...BASE.en.rehabCommon],urgent:["Pressure + dyspnea/cold sweat",...BASE.en.urgentCommon],myths:[],faq:[]},
+      brzuch:{label:"Abdomen",symptoms:["Pain","Bloating","Diarrhea/constipation"],causes:["Indigestion","IBS"],firstaid:["Fluids","Rest"],otc:["Gut protectives","Drotaverine (adults)"],rx:["PPI as indicated"],rehab:[...BASE.en.rehabCommon],urgent:["Rigid abdomen, severe pain",...BASE.en.urgentCommon],myths:[],faq:[]},
+      serce:{label:"Heart",symptoms:["Palpitations","Dizziness"],causes:["Stress/dehydration","Arrhythmias"],firstaid:["Rest"],otc:["—"],rx:["ECG + treatment"],rehab:[...BASE.en.rehabCommon],urgent:["Palpitations with syncope",...BASE.en.urgentCommon],myths:[],faq:[]}
+    };
+
+    /* --- router / parametry --- */
+    const qs=new URLSearchParams(location.search);
+    const RAW_TYP=(qs.get('typ')||'kobieta').toLowerCase();
+    const RAW_CZESC=(qs.get('czesc')||'glowa').toLowerCase();
+    const RAW_LABEL=(qs.get('label')||RAW_CZESC).toString();
+    const ALIAS={'oko':'glowa','klatka-piersiowa':'klatka','zoladek':'brzuch'};
+    const TYP=RAW_TYP, CZESC=(ALIAS[RAW_CZESC]||RAW_CZESC), LABEL=RAW_LABEL;
+
+    /* --- zastosowanie i18n do UI (tylko nagłówki/teksty, nie listy) --- */
+    (function applyI18N(){
+      const d=I18N[L()];
+      // breadcrumb
+      const typMap = L()==='en' ? {kobieta:'Woman',mezczyzna:'Man',dziecko:'Child'} : {kobieta:'Kobieta',mezczyzna:'Mężczyzna',dziecko:'Dziecko'};
+      document.getElementById('crumb-typ').textContent=(typMap[TYP]||TYP);
+      document.getElementById('crumb-label').textContent=d.crumbs_details;
+
+      // hero
+      const note=document.querySelector('.hero-note'); if(note) note.innerHTML=d.hero_note;
+      const leg=document.querySelector('.legend'); if(leg) leg.innerHTML=d.legend;
+
+      // tabs
+      const tab=(v,txt)=>{ const el=document.querySelector(`.tab[data-variant="${v}"]`); if(el) el.textContent=txt; };
+      Object.entries(d.tabs).forEach(([k,v])=>tab(k,v));
+
+      // headings
+      const setTxt=(sel,txt)=>{ const el=document.querySelector(sel); if(el) el.textContent=txt; };
+      setTxt('#h-obj', d.symptoms_head);
+      setTxt('.subhead', d.urgent_head);
+      setTxt('#h-cause', d.tabs.causes);
+      setTxt('#h-aid', d.tabs.firstaid);
+      setTxt('#h-otc', d.tabs.otc);
+      setTxt('#h-rx', d.tabs.rx);
+      setTxt('#h-rehab', d.tabs.rehab);
+      setTxt('#h-mity', d.tabs.myths);
+      setTxt('#h-faq', d.tabs.faq);
+      setTxt('#h-dx', d.tabs.dx);
+      setTxt('#h-docs', d.tabs.docs);
+
+      // labels
+      const lab=document.querySelector('.langpick label'); if(lab) lab.textContent=d.lang_label;
+
+      // back + urgent strip + risk caption
+      const back=document.getElementById('bhReturnTop'); if(back) back.textContent=d.back;
+      const strip=document.getElementById('urgent-strip'); if(strip) strip.innerHTML=`${d.urgent_strip} <a class="cta" id="cta-112" href="tel:112" aria-label="${d.call_112}">${d.call_112}</a>`;
+      const riskWrap=document.querySelector('.risk-mini small');
+      if(riskWrap){
+        const lbl=document.getElementById('risk-label')||document.createElement('span');
+        lbl.id='risk-label'; lbl.textContent=d.risk_low;
+        riskWrap.textContent=d.risk+' '; riskWrap.appendChild(lbl);
+      }
+    })();
+
+    /* --- wybór contentu wg języka i części ciała --- */
+    const CONTENT=(L()==='en')?CONTENT_EN:CONTENT_PL;
+    const entry = CONTENT[CZESC] || CONTENT.glowa;
+    document.getElementById('label-text').innerHTML='<b>'+(entry.label||LABEL)+'</b> • '+TYP;
+
+    /* --- helpers / scoring --- */
+    const isChild=(TYP==='dziecko');
+    const allowItem=(it)=> typeof it==='string' ? true : (isChild ? (it.audience!=='adult') : (it.audience!=='child'));
+    const textOf =(it)=> typeof it==='string' ? it : it.t;
+
+    const HIGH_PL=["duszność","sinica","utrata przytomności","krwawienie","twardy brzuch","najgorszy ból"];
+    const MID_PL =["gorączka","sztywność karku","silny ból"];
+    const HIGH_EN=["dyspnea","cyanosis","loss of consciousness","bleeding","rigid abdomen","thunderclap"];
+    const MID_EN =["fever","neck stiffness","severe pain"];
+    const phrases=()=> L()==='en'?{H:HIGH_EN,M:MID_EN}:{H:HIGH_PL,M:MID_PL};
+    function weightFor(text,bucket){
+      const s=(text||'').toLowerCase();
+      if(bucket==='urgent') return 35;
+      const P=phrases();
+      if(P.H.some(k=>s.includes(k))) return 20;
+      if(P.M.some(k=>s.includes(k))) return 10;
+      if(bucket==='symptoms') return 6;
+      return 0;
+    }
+
+    /* --- renderery list --- */
+    let selectedWeights=0, selectedCount=0;
+    function renderListInteractive(id,arr,bucket){
+      const ul=document.getElementById(id); ul.innerHTML='';
+      (arr||[]).filter(allowItem).map(textOf).forEach(txt=>{
+        const li=document.createElement('li');
+        const cb=document.createElement('span'); cb.className='cb'; cb.setAttribute('role','checkbox'); cb.setAttribute('aria-checked','false');
+        const w=weightFor(txt,bucket); li.dataset.weight=w;
+        li.appendChild(cb); li.appendChild(document.createTextNode(txt));
+        function toggle(){
+          const on=cb.classList.toggle('checked'); li.classList.toggle('li-checked',on); cb.setAttribute('aria-checked',on?'true':'false');
+          selectedWeights += on? +w : -w; selectedCount += on? 1 : -1; updateRisk(); document.dispatchEvent(new CustomEvent('bh:symptoms-changed'));
+        }
+        li.addEventListener('click',e=>{ if(e.target!==cb) toggle(); });
+        cb.addEventListener('click',e=>{ e.stopPropagation(); toggle(); });
+        ul.appendChild(li);
       });
-
-      render();
-    })();
-  </script>
-
-  <script>
-    (function(){
-      const url=new URL(location.href);
-      const typ=url.searchParams.get('typ');
-      const czesc=url.searchParams.get('czesc');
-      const label=url.searchParams.get('label');
-
-      const crumbs=document.getElementById('bhCrumbs');
-      const bhLabel=document.getElementById('bhLabel');
-
-      if(label && bhLabel){ bhLabel.textContent=decodeURIComponent(label); }
-      if(typ && crumbs){
-        let txt='Strona główna → ';
-        if(typ==='kobieta') txt+='Kobieta';
-        if(typ==='mezczyzna') txt+='Mężczyzna';
-        if(typ==='dziecko') txt+='Dziecko';
-        if(typ==='porada') txt+='Porada';
-        crumbs.textContent=txt;
-      }
-    })();
-  </script>
-
-  <!-- FIX CSS: tłumacz w prawym górnym rogu na desktop i mobile -->
-  <style>
-    .langpick{
-      position:fixed !important;
-      top:10px !important;
-      right:10px !important;
-      z-index:9999 !important;
-      margin:0 !important;
-      transform:none !important;
-      display:inline-flex !important;
-      align-items:center;
-      gap:8px;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.24);
-      border-radius:12px;
-      padding:6px 10px;
-      backdrop-filter:saturate(120%) blur(4px);
     }
-    .langpick label{
-      font-weight:800;
-      color:#cfe2ff;
-      font-size:13px;
+    function renderListPlain(id,arr){
+      const ul=document.getElementById(id); ul.innerHTML='';
+      (arr||[]).filter(allowItem).map(textOf).forEach(txt=>{
+        const li=document.createElement('li'); const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
+        li.appendChild(cb); li.appendChild(document.createTextNode(txt)); ul.appendChild(li);
+      });
     }
-    .langpick select{
-      appearance:none;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.24);
-      color:#ffffff;
-      border-radius:10px;
-      padding:6px 10px;
-      cursor:pointer;
-      font-weight:900;
-      letter-spacing:.3px;
+    function fillPairs(id,arr){
+      const ul=document.getElementById(id); ul.innerHTML='';
+      (arr||[]).forEach(x=>{
+        const li=document.createElement('li'); const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
+        li.appendChild(cb);
+        const isEn=L()==='en';
+        const m=document.createElement('div'); m.innerHTML='<strong>'+(isEn?'Myth:':'Mit:')+'</strong> '+(x.m||'—');
+        const f=document.createElement('div'); f.innerHTML='<strong>'+(isEn?'Fact:':'Fakt:')+'</strong> '+(x.f||'—');
+        li.appendChild(m); li.appendChild(f); ul.appendChild(li);
+      });
     }
-    .langpick option{
-      color:#0e1230;
-      background:#ffffff;
+    function fillFAQ(id,arr){
+      const ul=document.getElementById(id); ul.innerHTML='';
+      (arr||[]).forEach(x=>{
+        const li=document.createElement('li'); const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
+        li.appendChild(cb);
+        li.innerHTML+='<strong>'+(x.q|| (L()==='en'?'Question':'Pytanie'))+'</strong><div style="margin-top:4px;color:#b8c2e0">'+(x.a|| (L()==='en'?'Answer':'Odpowiedź'))+'</div>';
+        ul.appendChild(li);
+      });
     }
-  </style>
-  <!-- LEKKI TŁUMACZ: współdzielony stan z localStorage -->
-  <script>
-    (function(){
-      if(window.__bhSzczegolyI18n) return; window.__bhSzczegolyI18n = true;
 
-      const LS_KEY='bh.lang';
-      const root=document.documentElement;
-      let lang=(localStorage.getItem(LS_KEY)||root.getAttribute('lang')||'pl').toLowerCase();
+    renderListInteractive('symp-common',entry.symptoms,'symptoms');
+    renderListInteractive('urgent',entry.urgent||[],'urgent');
+    renderListPlain('causes',entry.causes||[]);
+    renderListPlain('firstaid',entry.firstaid||[]);
+    renderListPlain('meds-otc',entry.otc||[]);
+    renderListPlain('meds-rx',entry.rx||[]);
+    renderListPlain('rehab',entry.rehab||[]);
+    fillPairs('myths',entry.myths||[]);
+    fillFAQ('faq',entry.faq||[]);
 
-      const sel=document.getElementById('bhLangSelect');
-      const lab=document.querySelector('#bhLangPick label');
+    function updateRisk(){
+      const d=I18N[L()];
+      const c=document.getElementById('risk-cursor-card');
+      const lbl=document.getElementById('risk-label');
+      const val=Math.max(0,Math.min(100,selectedWeights));
+      if(c) c.style.left=val+'%';
+      if(lbl){ let t=d.risk_low; if(val>=70) t=d.risk_high; else if(val>=40) t=d.risk_mid; lbl.textContent=t; }
+      const hint=document.getElementById('dx-hint');
+      hint.classList.toggle('show',selectedCount>0);
+    }
+    updateRisk();
 
-      const dict={
-        en:{
-          back:'← Back',
-          back_aria:'Go back to previous page',
-          crumbs_home:'Home → ',
-          section_tabs:'Information',
-        },
-        pl:{
-          back:'← Wróć',
-          back_aria:'Wróć do poprzedniej strony',
-          crumbs_home:'Strona główna → ',
-          section_tabs:'Informacje',
-        }
-      };
+    /* --- tabs --- */
+    const tabs=[...document.querySelectorAll('.tab')];
+    const panels=[...document.querySelectorAll('.card[role="tabpanel"]')];
+    function showPanel(sel){
+      panels.forEach(p=>p.setAttribute('aria-hidden',('#'+p.id)===sel?'false':'true'));
+      tabs.forEach(t=>t.setAttribute('aria-selected', t.getAttribute('data-target')===sel?'true':'false'));
+      document.querySelector(sel)?.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+    tabs.forEach(t=>t.addEventListener('click',()=>showPanel(t.getAttribute('data-target'))));
 
-      function apply(){
-        const d=dict[lang]||dict.pl;
-        const back=document.getElementById('bhBackMini');
-        if(back){
-          back.textContent=d.back;
-          back.setAttribute('aria-label',d.back_aria);
-        }
-
-        const crumbs=document.getElementById('bhCrumbs');
-        if(crumbs && crumbs.textContent.startsWith('Strona')||crumbs.textContent.startsWith('Home')){
-          crumbs.textContent=d.crumbs_home + (crumbs.textContent.split('→')[1]||'').trim();
-        }
-
-        const tabs=document.getElementById('bhTabs');
-        if(tabs) tabs.setAttribute('aria-label',d.section_tabs);
-
-        if(lab){ lab.textContent=(lang==='en'?'Language':'Język'); }
-        if(sel){ sel.value=lang; }
-
-        root.setAttribute('lang',lang);
-      }
-
-      function setLang(l){
-        if(!dict[l]) return;
-        lang=l;
-        localStorage.setItem(LS_KEY,lang);
-        apply();
-      }
-
-      if(sel){ sel.addEventListener('change',()=>setLang(sel.value)); }
-
-      apply();
-    })();
-  </script>
-
-  <!-- Ukryj stare Google Translate -->
-  <style>
-    .goog-te-banner-frame.skiptranslate{display:none!important}
-    .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
-  </style>
-
-  <!-- BACK BUTTON -->
-  <script>
-    (function(){
-      const btn=document.getElementById('bhBackMini');
-      if(!btn) return;
-      btn.addEventListener('click',function(){
-        if(document.referrer && document.referrer.includes(location.host)){
-          history.back();
-        }else{
-          location.href='index.html';
+    /* --- Dx / Doctors --- */
+    function gather(){ const from=(id)=>[...document.querySelectorAll('#'+id+' li.li-checked')].map(li=>li.textContent.toLowerCase()); return {symp:from('symp-common'),urgent:from('urgent')}; }
+    const DX_RULES={
+      glowa:[
+        {pl:{name:"Ból napięciowy",advice:"POZ / higiena snu"},en:{name:"Tension-type headache",advice:"GP / sleep hygiene"},keys:["ucisk","napięcie","bilateral"],badge:"poz"},
+        {pl:{name:"Migrena",advice:"POZ; przy nawrotach neurolog"},en:{name:"Migraine",advice:"GP; neurologist if recurrent"},keys:["pulsujący","światło"],badge:"poz"},
+        {pl:{name:"Zapalenie opon — pilnie",advice:"SOR/112"},en:{name:"Meningitis — urgent",advice:"ER/112"},keys:["sztywność karku","gorączka","najgorszy ból"],badge:"sor"}
+      ],
+      nos:[
+        {pl:{name:"Nieżyt nosa",advice:"POZ / objawowo, sól"},en:{name:"Rhinitis",advice:"GP / symptomatic, saline"},keys:["katar","zatkanie"],badge:"poz"},
+        {pl:{name:"Zapalenie zatok",advice:"POZ; ew. antybiotyk"},en:{name:"Sinusitis",advice:"GP; consider antibiotics"},keys:["ból zatok","gorączka"],badge:"poz"}
+      ],
+      klatka:[
+        {pl:{name:"Refluks",advice:"POZ; dieta, PPI"},en:{name:"Reflux",advice:"GP; diet, PPI"},keys:["zgaga","pieczenie"],badge:"poz"},
+        {pl:{name:"OZW/Zawał — pilnie",advice:"SOR/112"},en:{name:"ACS/MI — urgent",advice:"ER/112"},keys:["ucisk","duszność","zimny pot"],badge:"sor"}
+      ],
+      brzuch:[
+        {pl:{name:"Niestrawność/IBS",advice:"POZ; dieta"},en:{name:"Indigestion/IBS",advice:"GP; diet"},keys:["wzdęcia","biegunka","zaparcie"],badge:"poz"},
+        {pl:{name:"Ostry brzuch — pilnie",advice:"SOR/112"},en:{name:"Acute abdomen — urgent",advice:"ER/112"},keys:["twardy brzuch","silny ból"],badge:"sor"}
+      ],
+      serce:[
+        {pl:{name:"Zaburzenia rytmu",advice:"POZ → EKG"},en:{name:"Arrhythmias",advice:"GP → ECG"},keys:["kołatanie","zawroty"],badge:"poz"}
+      ]
+    };
+    function computeDx(){
+      const {symp,urgent}=gather(); const picked=symp.concat(urgent);
+      const rules=DX_RULES[CZESC]||[]; const hits=[];
+      const urgentHit = (L()==='en' ? ["dyspnea","cyanosis","loss of consciousness","rigid abdomen","bleeding","thunderclap"]
+                                     : ["duszność","sinica","utrata przytomności","twardy brzuch","krwawienie","najgorszy ból"])
+                        .some(k=>picked.some(p=>p.includes(k)));
+      if(urgentHit) hits.push({_score:999,name:L()==='en'?'Alarm signs':'Objawy alarmowe',advice:L()==='en'?'Call 112 / ER':'Zadzwoń 112 / SOR',badge:'sor',ico:'⚠️',_max:1,_match:[]});
+      rules.forEach(r=>{
+        const keys=(r.keys||[]).map(k=>String(k).toLowerCase());
+        const matched=keys.filter(k=>picked.some(p=>p.includes(k)));
+        if(matched.length){
+          const meta=L()==='en'?r.en:r.pl;
+          hits.push({_score:matched.length,name:meta.name,advice:meta.advice,badge:r.badge,ico:r.badge==='sor'?'⚠️':'🩺',_max:keys.length,_match:matched});
         }
       });
+      return hits.length?hits.sort((a,b)=>b._score-a._score).slice(0,5):[{_score:0,name:L()==='en'?'Too little data':'Za mało danych',advice:L()==='en'?'Select symptoms first.':'Najpierw zaznacz objawy.',badge:'poz',ico:'ℹ️',_max:1,_match:[]}];
+    }
+    function renderDx(){
+      const ul=document.getElementById('dx-list'); ul.innerHTML='';
+      computeDx().forEach(it=>{
+        const li=document.createElement('li');
+        const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
+        const ico=document.createElement('span'); ico.className='dx-ico'; ico.textContent=it.ico||'🩺';
+        const text=document.createElement('div'); const matchTxt=it._match?.length?` (${L()==='en'?'hits':'trafienia'}: ${it._match.length})`:''; text.innerHTML=`<strong title="${(it._match||[]).join(', ')}">${it.name}${matchTxt}</strong><div style="color:#b8c2e0;margin-top:4px">${it.advice}</div>`;
+        const meta=document.createElement('div'); meta.className='dx-meta';
+        const confWrap=document.createElement('div'); confWrap.className='conf-wrap';
+        const confBar=document.createElement('div'); confBar.className='conf-bar';
+        const ratio=it._max?Math.min(100,Math.round((it._score/it._max)*100)):(it._score>=999?100:0);
+        confBar.style.width=ratio+'%'; confWrap.appendChild(confBar);
+        const badge=document.createElement('span'); badge.className='dx-badge '+(it.badge==='sor'?'sor':'poz'); badge.textContent=it.badge==='sor'?I18N[L()].badge_sor:I18N[L()].badge_poz;
+        meta.appendChild(confWrap); meta.appendChild(badge);
+        li.appendChild(cb); li.appendChild(ico); li.appendChild(text); li.appendChild(meta); ul.appendChild(li);
+      });
+    }
+    function computeDocs(){
+      const {symp,urgent}=gather(); const picked=symp.concat(urgent);
+      const urgentHit=(L()==='en'?["dyspnea","cyanosis","loss of consciousness","rigid abdomen","bleeding","thunderclap"]:["duszność","sinica","utrata przytomności","twardy brzuch","krwawienie","najgorszy ból"]).some(k=>picked.some(p=>p.includes(k)));
+      const d=I18N[L()]; const list=[];
+      if(urgentHit) list.push({name:L()==='en'?'ER / 112':'SOR / 112',why:L()==='en'?'Red flags — urgent care':'Czerwone flagi — pilnie',badge:'sor'});
+      list.push({name:L()==='en'?'GP — family doctor':'POZ — lekarz rodzinny',why:L()==='en'?'First contact, assessment, referrals':'Pierwszy kontakt, ocena, skierowania',badge:'poz'});
+      const spec=L()==='en'
+        ? {glowa:["Neurologist"],nos:["ENT","Allergist"],klatka:["Cardiologist","Gastroenterologist"],brzuch:["Gastroenterologist"],serce:["Cardiologist"]}
+        : {glowa:["Neurolog"],nos:["Laryngolog","Alergolog"],klatka:["Kardiolog","Gastroenterolog"],brzuch:["Gastroenterolog"],serce:["Kardiolog"]};
+      (spec[CZESC]||[]).forEach(s=>list.push({name:s,why:L()==='en'?'Relevant specialist':'Specjalista adekwatny',badge:'poz'}));
+      return list;
+    }
+    function renderDocs(){
+      const ul=document.getElementById('docs-list'); ul.innerHTML='';
+      const d=I18N[L()];
+      computeDocs().forEach(it=>{
+        const li=document.createElement('li');
+        const cb=document.createElement('span'); cb.className='cb'; cb.style.visibility='hidden';
+        const t=document.createElement('div'); t.innerHTML=`<strong>${it.name}</strong><div style="color:#b8c2e0;margin-top:4px">${it.why}</div>`;
+        const badge=document.createElement('span'); badge.className='doc-badge '+(it.badge==='sor'?'sor':'poz'); badge.textContent=it.badge==='sor'?d.badge_sor:d.badge_doc;
+        const right=document.createElement('div'); right.style.marginLeft='auto'; right.appendChild(badge);
+        li.appendChild(cb); li.appendChild(t); li.appendChild(right); ul.appendChild(li);
+      });
+    }
+
+    // spiecie interakcji
+    document.addEventListener('bh:symptoms-changed',()=>{ renderDx(); renderDocs(); });
+    document.querySelector('[data-variant="dx"]').addEventListener('click',()=>{ renderDx(); showPanel('#s-dx'); });
+    document.querySelector('[data-variant="docs"]').addEventListener('click',()=>{ renderDocs(); showPanel('#s-docs'); });
+
+    // hint bind (po rekreacji treści)
+    const hintBind=()=>{
+      const a=document.getElementById('dx-open'), b=document.getElementById('docs-open');
+      if(a) a.onclick=()=>{ renderDx(); showPanel('#s-dx'); };
+      if(b) b.onclick=()=>{ renderDocs(); showPanel('#s-docs'); };
+    };
+    hintBind();
+    const mo=new MutationObserver(()=>hintBind());
+    mo.observe(document.getElementById('dx-hint'),{childList:true,subtree:true});
+
+    /* --- Back behavior + start at top --- */
+    try{ if('scrollRestoration' in history){ history.scrollRestoration='manual'; } }catch(e){}
+    window.addEventListener('DOMContentLoaded',()=>{
+      window.scrollTo(0,0);
+      document.getElementById('bhReturnTop')?.addEventListener('click',()=>{
+        if(document.referrer && document.referrer.includes(location.host)) history.back();
+        else location.href='index.html';
+      });
+    });
+
+    /* --- cząsteczki (canvas) --- */
+    (function particles(){
+      const c=document.getElementById('bh-particles'); if(!c) return;
+      const ctx=c.getContext('2d'); const dpr=Math.min(2,devicePixelRatio||1);
+      let W,H,dots=[];
+      const prefersReduced=matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+      function targetCount(){ const t=Math.floor((innerWidth*innerHeight)/12000); return Math.max(90,Math.min(220,t)); }
+      function resize(){
+        W=c.width=Math.floor(innerWidth*dpr); H=c.height=Math.floor(innerHeight*dpr);
+        c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px';
+        const N=targetCount(); dots=Array.from({length:N},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.18*dpr,vy:(Math.random()-.5)*.18*dpr,r:(Math.random()*1.7+0.9)*dpr,a:Math.random()*.6+.25}));
+      }
+      function step(){
+        ctx.clearRect(0,0,W,H);
+        for(const p of dots){
+          p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>W) p.vx*=-1; if(p.y<0||p.y>H) p.vy*=-1;
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3.2);
+          g.addColorStop(0,`rgba(164,107,255,.26)`); g.addColorStop(1,`rgba(94,234,212,0)`); ctx.fillStyle=g; ctx.fill();
+        }
+        if(!prefersReduced) requestAnimationFrame(step);
+      }
+      addEventListener('resize',resize,{passive:true}); resize(); step();
     })();
   </script>
-  <!-- Service Worker -->
+  <!-- (opcjonalnie) mini-sprzątacz: ukryj ewentualny duplikat selektora w headerze -->
   <script>
-    if('serviceWorker' in navigator){
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(reg=>console.log('SW registered',reg.scope))
-        .catch(err=>console.error('SW error',err));
-    }
+    (function(){
+      var stray = document.querySelector('.header .tools .langpick, .header .tools #bhLangPick');
+      if (stray) stray.style.display = 'none';
+    })();
   </script>
 
-  <!-- Add to Home Screen -->
-  <script src="assets/a2hs.js?v=1"></script>
+  <!-- jeśli używasz dodatkowego pliku z tłumaczeniami/obsługą, zostaw poniższą linię -->
+  <!-- <script src="assets/translator.js"></script> -->
 </body>
 </html>
