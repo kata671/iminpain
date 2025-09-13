@@ -840,18 +840,85 @@
     background: #ffffff;
   }
 </style>
+<!-- FINAL FIX 2: Spójny tłumacz na szczegóły -->
+<div class="langpick" id="bhLangPick" aria-label="Wybór języka">
+  <label for="bhLangSelect">Język</label>
+  <select id="bhLangSelect">
+    <option value="pl">PL</option>
+    <option value="en">EN</option>
+  </select>
+</div>
+
+<style>
+  /* Wyłącz wszystkie stare duchy */
+  #lang-fab,
+  .goog-te-banner-frame,
+  .goog-te-gadget,
+  .goog-te-combo,
+  .skiptranslate {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Guzik tłumacza – wspólny styl */
+  #bhLangPick {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    left: auto !important;
+    z-index: 5000 !important;
+
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.24);
+    border-radius: 12px;
+    padding: 6px 10px;
+
+    backdrop-filter: saturate(120%) blur(6px);
+  }
+
+  #bhLangPick label {
+    display: none !important; /* chowamy napis "Język" */
+  }
+
+  #bhLangSelect {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    letter-spacing: .3px;
+  }
+
+  #bhLangSelect option {
+    color: #0e1230;
+    background: #ffffff;
+  }
+
+  /* Mobile: zostaw mniej miejsca od góry */
+  @media (max-width:768px){
+    #bhLangPick{
+      top: 10px !important;
+      right: 10px !important;
+      padding: 5px 8px;
+    }
+    #bhLangSelect{ font-size: 13px; }
+  }
+</style>
 
 <script>
-  // Synchronizacja języka - wspólny stan
+  // Synchronizacja języka
   (function(){
     const KEY='bh.lang';
     const sel=document.getElementById('bhLangSelect');
     if(!sel) return;
 
-    // wczytaj język z localStorage
     sel.value=localStorage.getItem(KEY)||'pl';
-
-    // reaguj na zmianę
     sel.addEventListener('change',()=>{
       localStorage.setItem(KEY,sel.value);
       location.reload();
