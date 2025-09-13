@@ -681,5 +681,42 @@
 
   <!-- jeśli używasz dodatkowego pliku z tłumaczeniami/obsługą, zostaw poniższą linię -->
   <!-- <script src="assets/translator.js"></script> -->
+<!-- FIX: Ujednolicenie przycisku tłumacza -->
+<style>
+  /* zawsze prawy górny róg */
+  #lang-fab, 
+  .langpick#bhLangPick {
+    position: fixed !important;
+    top: 10px !important;
+    right: 10px !important;
+    left: auto !important;
+    margin: 0 !important;
+    z-index: 5000 !important;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 12px;
+    padding: 6px 10px;
+    backdrop-filter: blur(8px);
+  }
+  #bhLangPick label { display: none !important; }
+  #bhLangSelect { font-size: 16px; font-weight: 600; color: #fff; background: transparent; border: none; }
+</style>
+
+<script>
+  // zsynchronizuj język z localStorage, tak jak na innych stronach
+  (function(){
+    const KEY='bh.lang';
+    const sel=document.getElementById('bhLangSelect');
+    if(!sel) return;
+    sel.value=localStorage.getItem(KEY)||'pl';
+    sel.addEventListener('change',()=>{
+      localStorage.setItem(KEY,sel.value);
+      location.reload();
+    });
+  })();
+</script>
 </body>
 </html>
