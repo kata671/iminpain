@@ -785,5 +785,78 @@
     });
   })();
 </script>
+<!-- SUPER FIX: tylko jeden guzik tłumacza, spójny wszędzie -->
+<style>
+  /* usuń starą plamkę i wszystko co niepotrzebne */
+  #lang-fab,
+  .goog-te-banner-frame,
+  .goog-te-gadget,
+  .goog-te-combo,
+  .skiptranslate {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+  }
+
+  /* nowy guzik - spójny z index/kobieta/mężczyzna/dziecko */
+  #bhLangPick {
+    position: fixed !important;
+    top: 10px !important;
+    right: 10px !important;
+    left: auto !important;
+    z-index: 5000 !important;
+
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.24);
+    border-radius: 12px;
+    padding: 6px 10px;
+
+    backdrop-filter: saturate(120%) blur(6px);
+  }
+
+  #bhLangPick label {
+    display: none !important; /* ukryj napis "Język" */
+  }
+
+  #bhLangSelect {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    letter-spacing: .3px;
+  }
+
+  #bhLangSelect option {
+    color: #0e1230;
+    background: #ffffff;
+  }
+</style>
+
+<script>
+  // Synchronizacja języka - wspólny stan
+  (function(){
+    const KEY='bh.lang';
+    const sel=document.getElementById('bhLangSelect');
+    if(!sel) return;
+
+    // wczytaj język z localStorage
+    sel.value=localStorage.getItem(KEY)||'pl';
+
+    // reaguj na zmianę
+    sel.addEventListener('change',()=>{
+      localStorage.setItem(KEY,sel.value);
+      location.reload();
+    });
+  })();
+</script>
 </body>
 </html>
