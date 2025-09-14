@@ -222,15 +222,12 @@
     right: 32px !important;
   }
 }
-</style>
-
-<!-- 🔧 Skrypt zapamiętywania języka -->
 <script>
   (function(){
     const KEY='bh.lang';
     const sel=document.getElementById('bhLangSelect');
     if (!sel) return;
-    const saved=localStorage.getItem(KEY)||'pl';
+    const saved=localStorage.getItem(KEY)||'en'; // domyślnie EN
     sel.value=saved;
     sel.addEventListener('change',()=>{
       localStorage.setItem(KEY,sel.value);
@@ -238,6 +235,7 @@
     });
   })();
 </script>
+</head>
 </head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
