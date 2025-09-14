@@ -222,9 +222,39 @@
     right: 32px !important;
   }
 }
-</style> 
+</style>
+
+<!-- 🔧 Skrypt zapamiętywania języka -->
+<script>
+  (function(){
+    const KEY='bh.lang';
+    const sel=document.getElementById('bhLangSelect');
+    if (!sel) return;
+    const saved=localStorage.getItem(KEY)||'pl';
+    sel.value=saved;
+    sel.addEventListener('change',()=>{
+      localStorage.setItem(KEY,sel.value);
+      location.reload();
+    });
+  })();
+</script>
 </head>
-</style></head>
+<body data-page="szczegoly">
+  <div class="bg-anim" aria-hidden="true"></div>
+  <div class="grid-bg" aria-hidden="true"></div>
+  <canvas id="bh-particles" aria-hidden="true"></canvas>
+
+  <!-- ✅ SELEKTOR JĘZYKA (tylko jeden, bez inline-style) -->
+  <div id="lang-fab">
+    <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
+      <label for="bhLangSelect">Język</label>
+      <select id="bhLangSelect">
+        <option value="pl">PL</option>
+        <option value="en">EN</option>
+      </select>
+    </div>
+  </div>
+</head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
   <div class="grid-bg" aria-hidden="true"></div>
