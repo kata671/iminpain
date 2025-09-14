@@ -177,114 +177,22 @@
   /* minimalne odstępy, by nic nie nachodziło na górze w trybie poziomym */
   @media (max-height: 420px) and (orientation: landscape){
     header.app{ margin-top: 8px; }
-    /* Guzik tłumacza – wspólny styl */
-#bhLangPick {
-  position: fixed !important;
-  top: 16px !important;
-  right: 20px !important;
-  z-index: 9999 !important;
-
-  display: inline-flex !important;
-  align-items: center;
-  gap: 6px;
-
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.24);
-  border-radius: 12px;
-  padding: 6px 10px;
-
-  backdrop-filter: saturate(120%) blur(6px);
-}
-
-/* Usuń etykietę Język */
-#bhLangPick label { display: none !important; }
-
-/* Select bez strzałki systemowej */
-#bhLangSelect {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  font-size: 14px;
-  font-weight: 700;
-  color: #fff;
-  background: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  letter-spacing: .3px;
-}
-
-/* Opcje rozwijanego menu */
-#bhLangSelect option {
-  color: #0e1230;
-  background: #fff;
-}
-
-/* Mobile – bliżej rogu */
-@media (max-width:768px){
-  #bhLangPick {
-    top: 10px !important;
-    right: 10px !important;
-    padding: 5px 8px;
   }
-  #bhLangSelect { font-size: 13px; }
-}
-
-  }
+</style></head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
   <div class="grid-bg" aria-hidden="true"></div>
   <canvas id="bh-particles" aria-hidden="true"></canvas>
 
-  <!-- ✅ JEDYNY GUZIK TŁUMACZA -->
-  <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
-    <select id="bhLangSelect">
-      <option value="pl">PL</option>
-      <option value="en">EN</option>
-    </select>
-  </div>
-
-  <div class="bh-backbar">
-    <button id="bhReturnTop" type="button" aria-label="Wróć do poprzedniej strony">↑</button>
-  </div>
-
-    transition: background .2s;
-  }
-
-  #bhLangPick button:hover {
-    background: rgba(255,255,255,.15);
-  }
-
-  #bhLangPick button.active {
-    background: rgba(164,107,255,.35);
-  }
-
-  @media (max-width:768px){
-    #bhLangPick{
-      top: 10px !important;
-      right: 12px !important;
-      padding: 5px 8px;
-    }
-    #bhLangPick button{ font-size: 13px; }
-  }
-</style>
-
-<script>
-  (function(){
-    const KEY = 'bh.lang';
-    let lang = localStorage.getItem(KEY) || 'pl';
-    const btns = document.querySelectorAll('#bhLangPick button');
-    btns.forEach(btn=>{
-      if(btn.dataset.lang===lang) btn.classList.add('active');
-      btn.addEventListener('click', ()=>{
-        localStorage.setItem(KEY, btn.dataset.lang);
-        location.reload();
-      });
-    });
-  })();
-</script>
-
+  <!-- ✅ SELEKTOR JĘZYKA (tylko jeden, bez inline-style) -->
+  <div id="lang-fab">
+    <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
+      <label for="bhLangSelect">Język</label>
+      <select id="bhLangSelect">
+        <option value="pl">PL</option>
+        <option value="en">EN</option>
+      </select>
+    </div>
   </div>
 
   <div class="bh-backbar">
@@ -1066,18 +974,5 @@
     #bhLangSelect{ font-size: 13px; }
   }
 </style>
-<script>
-  (function(){
-    const KEY='bh.lang';
-    const sel=document.getElementById('bhLangSelect');
-    if(!sel) return;
-
-    sel.value=localStorage.getItem(KEY)||'pl';
-    sel.addEventListener('change',()=>{
-      localStorage.setItem(KEY,sel.value);
-      location.reload();
-    });
-  })();
-</script>
 </body>
 </html>
