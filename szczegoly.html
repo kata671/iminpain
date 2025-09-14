@@ -179,6 +179,24 @@
     header.app{ margin-top: 8px; }
   }
   @media (max-height: 420px) and (orientation: landscape){
+   <script>
+  (function(){
+    const KEY='bh.lang';
+    const sel=document.getElementById('bhLangSelect');
+    if (!sel) return;
+
+    // ustaw guzik zgodnie z wyborem z innych stron
+    const saved=localStorage.getItem(KEY)||'pl';
+    sel.value=saved;
+
+    // przy zmianie zapisz i przeładuj
+    sel.addEventListener('change',()=>{
+      localStorage.setItem(KEY,sel.value);
+      location.reload();
+    });
+  })();
+</script>
+
     header.app{ margin-top: 8px; }
   }
   /* USUNIĘCIE STRZAŁKI Z SELECTA */
@@ -195,10 +213,16 @@
     outline: none;
     cursor: pointer;
     letter-spacing: .3px;
+ padding-right: 4px;
+}
 
-    padding-right: 4px;
+/* Odsunięcie guzika na laptopie */
+@media (min-width:769px){
+  #bhLangPick{
+    right: 32px !important;
   }
-</style>
+}
+</style> 
 </head>
 </style></head>
 <body data-page="szczegoly">
