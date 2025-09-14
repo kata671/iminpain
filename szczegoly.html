@@ -178,28 +178,18 @@
   @media (max-height: 420px) and (orientation: landscape){
     header.app{ margin-top: 8px; }
   }
-</style></head>
-  <body data-page="szczegoly">
-    <div class="bg-anim" aria-hidden="true"></div>
-    <div class="grid-bg" aria-hidden="true"></div>
-    <canvas id="bh-particles" aria-hidden="true"></canvas>
+  <!-- ✅ SELEKTOR JĘZYKA (tylko jeden, bez inline-style) -->
+  <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
+    <label for="bhLangSelect">Język</label>
+    <select id="bhLangSelect">
+      <option value="pl">PL</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
 
-    <!-- ✅ JEDYNY GUZIK TŁUMACZA -->
-    <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
-      <button data-lang="pl">PL</button>
-      <button data-lang="en">EN</button>
-    </div>
-
-    <div class="bh-backbar">
-      <button id="bhReturnTop" type="button" aria-label="Wróć do poprzedniej strony">↑</button>
-    </div>
-
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.22);
-    border-radius: 12px;
-    padding: 6px 10px;
-    backdrop-filter: saturate(120%) blur(6px);
-  }
+  <div class="bh-backbar">
+    <button id="bhReturnTop" type="button" aria-label="Wróć do poprzedniej strony">↑</button>
+  </div>
 
   #bhLangPick button {
     border: none;
