@@ -179,25 +179,21 @@
     header.app{ margin-top: 8px; }
   }
 </style></head>
-<body data-page="szczegoly">
-  <div class="bg-anim" aria-hidden="true"></div>
-  <div class="grid-bg" aria-hidden="true"></div>
-  <canvas id="bh-particles" aria-hidden="true"></canvas>
-<!-- ✅ GUZIKI TŁUMACZA -->
-<div class="langpick" id="bhLangPick" aria-label="Wybór języka">
-  <button data-lang="pl">PL</button>
-  <button data-lang="en">EN</button>
-</div>
+  <body data-page="szczegoly">
+    <div class="bg-anim" aria-hidden="true"></div>
+    <div class="grid-bg" aria-hidden="true"></div>
+    <canvas id="bh-particles" aria-hidden="true"></canvas>
 
-<style>
-  #bhLangPick {
-    position: fixed !important;
-    top: 16px !important;
-    right: 24px !important;
-    z-index: 9999 !important;
+    <!-- ✅ JEDYNY GUZIK TŁUMACZA -->
+    <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
+      <button data-lang="pl">PL</button>
+      <button data-lang="en">EN</button>
+    </div>
 
-    display: inline-flex !important;
-    gap: 6px;
+    <div class="bh-backbar">
+      <button id="bhReturnTop" type="button" aria-label="Wróć do poprzedniej strony">↑</button>
+    </div>
+
     background: rgba(255,255,255,.08);
     border: 1px solid rgba(255,255,255,.22);
     border-radius: 12px;
