@@ -3601,5 +3601,55 @@ main #urgent.clean > li.li-checked::after{ content:"" !important; display:none !
   }
 }
 </style>
+<style id="bh-urgent-override">
+/* UL — układ siatki jak w Objawach */
+body[data-page="szczegoly"] main .cards .card ul#urgent.clean{
+  display:grid !important;
+  grid-template-columns:repeat(auto-fit, minmax(240px,1fr)) !important;
+  gap:12px !important;
+  margin-top:10px !important;
+}
+
+/* LI — kształt/wygląd (stan bazowy) */
+body[data-page="szczegoly"] main .cards .card ul#urgent.clean > li{
+  display:flex !important; align-items:center !important; justify-content:center !important;
+  padding:14px 16px !important; min-height:58px !important; text-align:center !important;
+  border-radius:16px !important;
+  border:1px solid rgba(164,107,255,.35) !important;
+  background:linear-gradient(180deg, rgba(164,107,255,.10), rgba(255,255,255,.02)) !important;
+  box-shadow:0 6px 18px rgba(8,10,22,.45), inset 0 0 0 1px rgba(255,255,255,.05) !important;
+  color:#eaf2ff !important; position:relative !important; overflow:hidden !important;
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease !important;
+}
+body[data-page="szczegoly"] main .cards .card ul#urgent.clean > li:hover{
+  transform:translateY(-1px) !important;
+  border-color:rgba(255,107,107,.45) !important;
+}
+
+/* ZAZNACZONA FLAGA — czerwony motyw (bez ptaszka) */
+body[data-page="szczegoly"] main .cards .card ul#urgent.clean > li.li-checked{
+  border-color:rgba(255,107,107,.85) !important;
+  background:linear-gradient(180deg, rgba(255,107,107,.22), rgba(255,255,255,.03)) !important;
+  box-shadow:
+    0 0 0 2px rgba(255,107,107,.55),
+    0 14px 26px rgba(8,10,22,.55),
+    inset 0 0 0 1px rgba(255,255,255,.06) !important;
+}
+
+/* Wyłącz checkbox i jakiekolwiek pseudo-ikonki tylko w #urgent */
+body[data-page="szczegoly"] main .cards .card ul#urgent.clean > li .cb{ display:none !important; }
+body[data-page="szczegoly"] main .cards .card ul#urgent.clean > li::before,
+body[data-page="szczegoly"] main .cards .card ul#urgent.clean > li::after{ content:none !important; display:none !important; }
+body[data-page="szczegoly"] main .cards .card ul#urgent.clean > li.li-checked::before,
+body[data-page="szczegoly"] main .cards .card ul#urgent.clean > li.li-checked::after{ content:none !important; display:none !important; }
+
+/* Trochę gęściej na wąskich ekranach */
+@media (max-width:560px){
+  body[data-page="szczegoly"] main .cards .card ul#urgent.clean{
+    grid-template-columns:repeat(auto-fit, minmax(180px,1fr)) !important;
+    gap:10px !important;
+  }
+}
+</style>
 </body>
 </html>
