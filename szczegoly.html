@@ -178,7 +178,92 @@
   @media (max-height: 420px) and (orientation: landscape){
     header.app{ margin-top: 8px; }
   }
-</style></head>
+</style><!-- 🌟 Nowoczesny wygląd kafelków i opisów tylko dla SZCZEGÓŁY -->
+<style id="bh-upgrade-2025">
+  /* Nowoczesna czcionka */
+  body[data-page="szczegoly"] {
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    letter-spacing: 0.2px;
+  }
+
+  /* Kafle/ramki (cards) – kwadratowe, szklane */
+  .card {
+    border-radius: 20px !important;
+    padding: 20px !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(16px) saturate(140%) !important;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45),
+                inset 0 0 8px rgba(255, 255, 255, 0.08) !important;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55),
+                0 0 12px rgba(164, 107, 255, 0.5);
+  }
+
+  /* Nagłówki w kartach */
+  .card h3 {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+
+  /* Lista objawów/przyczyn – styl nowoczesny */
+  ul.clean li {
+    border-radius: 14px !important;
+    margin-bottom: 10px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    padding: 12px 14px 12px 38px !important;
+    transition: background .25s ease, transform .2s ease;
+  }
+  ul.clean li:hover {
+    background: rgba(164, 107, 255, 0.12) !important;
+    transform: scale(1.02);
+  }
+
+  /* Checkbox (cb) – świecący kwadrat */
+  .cb {
+    width: 18px; height: 18px;
+    border-radius: 6px !important;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 0 4px rgba(255,255,255,0.2);
+  }
+  .cb.checked {
+    background: linear-gradient(135deg, #a46bff, #5eead4);
+    box-shadow: 0 0 8px rgba(164,107,255,0.8);
+  }
+
+  /* FAQ i mity – elegancki wygląd */
+  #faq li, #myths li {
+    background: rgba(255,255,255,0.07) !important;
+    border-left: 3px solid #a46bff !important;
+    padding: 14px 16px 14px 40px !important;
+  }
+
+  /* Guziki (np. Choroby, Lekarze) */
+  .tab {
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    font-weight: 700 !important;
+    transition: background .25s, transform .2s;
+  }
+  .tab:hover {
+    background: rgba(164, 107, 255, 0.15) !important;
+    transform: translateY(-2px);
+  }
+  .tab[aria-selected="true"] {
+    background: linear-gradient(135deg, #a46bff, #5eead4) !important;
+    color: #fff !important;
+    box-shadow: 0 0 10px rgba(164,107,255,0.6);
+  }
+</style>
+</head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
   <div class="grid-bg" aria-hidden="true"></div>
