@@ -1785,5 +1785,43 @@ const CONTENT_EN={
   document.querySelector('[data-variant="docs"]')?.addEventListener('click', ()=>setPulse(true));
 })();
 </script>
+<style>
+/* 🔵 Pulsujący niebieski glow dla przycisków */
+.bh-glow-blue {
+  animation: bhBluePulse 2.4s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(59,130,246,.55),
+              0 0 24px rgba(59,130,246,.35),
+              0 0 36px rgba(59,130,246,.25);
+  border-color: rgba(59,130,246,.65) !important;
+}
+@keyframes bhBluePulse {
+  0%   { box-shadow: 0 0 4px rgba(59,130,246,.35), 0 0 12px rgba(59,130,246,.25); }
+  50%  { box-shadow: 0 0 16px rgba(59,130,246,.65), 0 0 32px rgba(59,130,246,.45); }
+  100% { box-shadow: 0 0 4px rgba(59,130,246,.35), 0 0 12px rgba(59,130,246,.25); }
+}
+</style>
+
+<script>
+(function(){
+  // Funkcja aktywująca glow na dole (przyciski w komunikacie)
+  function activateHintButtonsGlow(){
+    document.querySelectorAll('#symptom-hints button').forEach(btn=>{
+      btn.classList.add('bh-glow-blue');
+    });
+  }
+
+  // Gdy użytkownik wybierze objaw – uruchom glow
+  document.addEventListener('bh:symptom-selected', activateHintButtonsGlow);
+
+  // 🔄 Jeśli Twoje eventy nie używają customowego bh:symptom-selected,
+  // możesz zamiast tego podpiąć się pod kliknięcia w objawy:
+  document.querySelectorAll('#symp-common input[type=checkbox], #urgent input[type=checkbox]')
+    .forEach(cb=>{
+      cb.addEventListener('change', ()=>{
+        if(cb.checked) activateHintButtonsGlow();
+      });
+    });
+})();
+</script>
 </body>
 </html>
