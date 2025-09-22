@@ -3889,5 +3889,18 @@ body[data-page="szczegoly"] #s-objawy .cursor{ width:18px !important; height:18p
     setTimeout(function(){ apply(window.innerWidth <= 768); }, 300);
   })();
 </script>
+<style id="bh-lang-arrow-killer">
+  /* usuń domyślną strzałkę z selecta */
+  body[data-page="szczegoly"] #bhLangPick select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-image: none !important;
+    background-color: rgba(255,255,255,.08) !important;
+    border: 1px solid rgba(255,255,255,.24) !important;
+    padding-right: 12px !important; /* trochę miejsca, by tekst nie kleił się do krawędzi */
+    text-align: center !important;
+  }
+</style>
 </body>
 </html>
