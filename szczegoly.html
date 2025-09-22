@@ -368,14 +368,540 @@
                     otcPain:[{t:"Paracetamol — pain/fever",audience:"all"},{t:"Ibuprofen — adults",audience:"adult"}],
                     urgentCommon:["Loss of consciousness","Dyspnea","Uncontrolled bleeding"]}};
 
-    const CONTENT_PL={
-      glowa:{label:"Głowa (ból)",symptoms:["Ucisk obustronny","Pulsujący jednostronny","Nadwrażliwość na światło"],causes:["Napięcie/stres","Migrena"],firstaid:["Nawodnienie","Odpoczynek"],otc:[...BASE.pl.otcPain],rx:["Tryptany"],rehab:[...BASE.pl.rehabCommon],urgent:["Nagły najgorszy ból","Gorączka + sztywność karku",...BASE.pl.urgentCommon],myths:[{m:"Antybiotyk pomaga",f:"Ból głowy zwykle nie ma podłoża bakteryjnego"}],faq:[{q:"Kiedy do lekarza?",a:"Gdy silny/nowy lub z czerwonymi flagami."}]},
-      nos:{label:"Nos",symptoms:["Katar","Zatkanie","Ból zatok","Krwawienie z nosa"],causes:["Przeziębienie","Alergia","Zapalenie zatok"],firstaid:["Nawilżanie NaCl"],otc:["Sól morska","Krople obkurczające (krótko)"],rx:["Donosowe GKS"],rehab:[...BASE.pl.rehabCommon],urgent:["Krwawienie >20 min",...BASE.pl.urgentCommon],myths:[],faq:[]},
-      klatka:{label:"Klatka piersiowa",symptoms:["Ucisk","Zgaga","Duszność"],causes:["Mięśniowe","Refluks","Wieńcowa"],firstaid:["Odpoczynek"],otc:["Na refluks"],rx:["Nitrogliceryna wg zaleceń"],rehab:[...BASE.pl.rehabCommon],urgent:["Ucisk + duszność/zimny pot",...BASE.pl.urgentCommon],myths:[],faq:[]},
-      brzuch:{label:"Brzuch",symptoms:["Ból","Wzdęcia","Biegunka/zaparcie"],causes:["Niestrawność","IBS"],firstaid:["Nawadnianie","Odpoczynek"],otc:["Osłonowe","Drotaweryna (dorośli)"],rx:["PPI wg rozpoznania"],rehab:[...BASE.pl.rehabCommon],urgent:["Twardy brzuch, silny ból",...BASE.pl.urgentCommon],myths:[],faq:[]},
-      serce:{label:"Serce",symptoms:["Kołatanie","Zawroty"],causes:["Stres/odwodnienie","Zaburzenia rytmu"],firstaid:["Odpoczynek"],otc:["—"],rx:["EKG + leczenie"],rehab:[...BASE.pl.rehabCommon],urgent:["Kołatanie z omdleniem",...BASE.pl.urgentCommon],myths:[],faq:[]}
-    };
-    const CONTENT_EN={
+   const CONTENT_PL={
+  glowa:{
+    label:"Głowa (ból)",
+    symptoms:[
+      "Ucisk obustronny","Pulsujący jednostronny","Nadwrażliwość na światło",
+      "Nudności/wymioty","Aura (mroczki, błyski)","Ból przy wysiłku","Nasilenie przy schylaniu"
+    ],
+    causes:[
+      "Ból napięciowy (stres, brak snu, odwodnienie)",
+      "Migrena (czasem z aurą)",
+      "Zatokowy (zapalny, alergiczny)",
+      "Odwodnienie / kofeinowy withdrawal",
+      "Nadciśnienie (ból potylicy)",
+      "Bruksizm / napięcie karku",
+      "Polekowy ból głowy (nadużycie NLPZ)"
+    ],
+    firstaid:[
+      "Nawodnienie, lekki posiłek",
+      "Cisza, przyciemnione pomieszczenie",
+      "Chłodny okład na czoło/kark",
+      "Delikatna mobilizacja karku/rozluźnienie barków",
+      "Higiena snu (stałe pory, ekran off ≥1h przed snem)"
+    ],
+    otc:[
+      {t:"Paracetamol — ból/gorączka",audience:"all"},
+      {t:"Ibuprofen — dorośli (jeśli brak przeciwwskazań)",audience:"adult"},
+      {t:"Naproksen — dorośli (doraźnie)",audience:"adult"},
+      {t:"Kofeina w połączeniu z analgetykiem (epizodycznie)",audience:"adult"},
+      {t:"Aerozole soli morskiej przy podejrzeniu zatok",audience:"all"}
+    ],
+    rx:[
+      "Tryptany w migrenie (np. sumatryptan)",
+      "Profilaktyka migreny (np. beta-bloker, topiramat — decyzja lekarza)",
+      "Donosowe GKS przy zapaleniu zatok (krótkie kursy)",
+      "Leczenie nadciśnienia wg zaleceń"
+    ],
+    rehab:[
+      "Regularny sen 7–9 h, stałe pory",
+      "Codzienne nawodnienie 30–35 ml/kg",
+      "Ćwiczenia rozciągające kark i obręcz barkową",
+      "Ograniczenie ekranów i migających świateł",
+      "Dzienniczek bólów (wyzwalacze: stres, głód, odwodnienie)"
+    ],
+    urgent:[
+      "Nagły „najgorszy w życiu” ból",
+      "Gorączka + sztywność karku",
+      "Zaburzenia neurologiczne (niedowład, bełkotliwa mowa, drgawki)",
+      "Uraz głowy z utratą przytomności",
+      "Nowy ból u ciężarnej lub w połogu",
+      "…oraz: Utrata przytomności / Duszność / Krwawienie nie do opanowania"
+    ],
+    myths:[
+      {m:"Antybiotyk pomaga na ból głowy",f:"Większość bólów nie ma podłoża bakteryjnego."},
+      {m:"Kawa zawsze szkodzi przy migrenie",f:"U części osób umiarkowana kofeina łagodzi napad (u innych nasila)."},
+      {m:"Migrena to „zwykły ból”",f:"To choroba neurologiczna, może wymagać leczenia profilaktycznego."}
+    ],
+    faq:[
+      {q:"Kiedy do lekarza?",a:"Gdy ból nowy/silny, z czerwonymi flagami, po urazie, w ciąży lub gdy doraźne leczenie nie pomaga."},
+      {q:"Co z lekami bez recepty?",a:"Stosuj doraźnie. Jeśli potrzebujesz częściej niż 10 dni/mies., skonsultuj nawyki i leczenie z lekarzem."},
+      {q:"Czy obrazowanie (TK/MR) zawsze potrzebne?",a:"Nie. W typowych napięciowych/migrenowych bólach bez alarmów — zwykle nie."}
+    ]
+  },
+
+  nos:{
+    label:"Nos / Zatoki",
+    symptoms:[
+      "Katar wodnisty","Zatkanie nosa","Ból/ucisk w okolicy zatok",
+      "Kichanie/świąd (alergia)","Gęsta wydzielina","Krwawienie z nosa"
+    ],
+    causes:[
+      "Nieżyt nosa (infekcyjny lub alergiczny)",
+      "Zapalenie zatok (ostre/podostre)",
+      "Przerost małżowin / skrzywienie przegrody",
+      "Polekowy nieżyt (nadużywanie kropli obkurczających)"
+    ],
+    firstaid:[
+      "Płukanie izotoniczne NaCl / woda morska",
+      "Nawilżanie powietrza, picie płynów",
+      "Inhalacje parowe (ostrożnie), ciepłe okłady na zatoki",
+      "Unikanie dymu/pyłów/alergenów"
+    ],
+    otc:[
+      {t:"Sól morska / izotoniczny NaCl",audience:"all"},
+      {t:"Ksylometazolina/oksymetazolina — ≤3–5 dni",audience:"adult"},
+      {t:"Leki przeciwhistaminowe (alergia)",audience:"adult"},
+      {t:"Ibuprofen/paracetamol na ból",audience:"all"}
+    ],
+    rx:[
+      "Donosowe GKS (alergia, przewlekły nieżyt)",
+      "Antybiotyk przy potwierdzonej bakteryjnej zap. zatok",
+      "Immunoterapia swoista (alergie) — laryngolog/alergolog"
+    ],
+    rehab:[
+      "Higiena nosa: płukanie, krótkie kuracje kropli",
+      "Unikanie spustów alergicznych, filtracja powietrza",
+      "Nawodnienie i sen"
+    ],
+    urgent:[
+      "Krwawienie z nosa >20 min mimo ucisku",
+      "Gorączka, obrzęk twarzy, nasilenie bólu z zatok",
+      "Zaburzenia widzenia, silny ból oka/czoła",
+      "Objawy ogólnoustrojowe (u dziecka/ciężarnej — pilnie)"
+    ],
+    myths:[
+      {m:"Im mocniejsze krople, tym lepiej",f:"Nadużywanie obkurczających nasila obrzęk (odbicie)."},
+      {m:"Zielony katar = koniecznie antybiotyk",f:"Kolor nie przesądza o etiologii bakteryjnej."}
+    ],
+    faq:[
+      {q:"Kiedy antybiotyk na zatoki?",a:"Gdy lekarz potwierdzi bakteryjne zapalenie (gorączka, silny ból, objawy >10 dni)."},
+      {q:"Jak tamować krwawienie?",a:"Uciśnij skrzydełka nosa 10–15 min, pochyl głowę do przodu, zimny okład na nasadę."}
+    ]
+  },
+
+  klatka:{
+    label:"Klatka piersiowa",
+    symptoms:[
+      "Ucisk w klatce","Pieczenie (zgaga)","Kłujący ból przy ruchu",
+      "Duszność","Kołatanie serca","Ból promieniujący do lewej ręki/szczęki"
+    ],
+    causes:[
+      "Mięśniowo-szkieletowy (przeciążenie, stres)",
+      "Refluks/zgaga (GERD)",
+      "Choroba wieńcowa / OZW (nagłe)",
+      "Zapalenie opłucnej/kaszel infekcyjny",
+      "Lęk/panika (somatyzacja)"
+    ],
+    firstaid:[
+      "Przerwij wysiłek, odpocznij",
+      "Sprawdź okoliczności: posiłek, stres, wysiłek",
+      "Unikaj leżenia płasko przy zgadze (podniesione wezgłowie)",
+      "Ciepły okład na napięte mięśnie, delikatne rozciąganie"
+    ],
+    otc:[
+      {t:"Leki na refluks: alginiany/antacida",audience:"all"},
+      {t:"Ibuprofen/naproksen — ból mięśniowo-kostny (jeśli brak przeciwwskazań)",audience:"adult"},
+      {t:"Maści/żele rozgrzewające na mięśnie",audience:"adult"}
+    ],
+    rx:[
+      "Nitrogliceryna wg zaleceń (bóle wieńcowe — SOR jeśli nowe/nasilone)",
+      "PPI (inhibitory pompy protonowej) przy GERD",
+      "Leczenie kardiologiczne przy rozpoznaniu choroby wieńcowej",
+      "Leki przeciwarytmiczne wg EKG i rozpoznania"
+    ],
+    rehab:[
+      "Redukcja masy ciała, unikanie późnych ciężkich posiłków",
+      "Modyfikacja diety (kawa/alkohol/pikantne — według tolerancji)",
+      "Regularny, spokojny trening aerobowy (po ocenie lekarskiej)",
+      "Techniki relaksacyjne/oddechowe"
+    ],
+    urgent:[
+      "Ucisk w klatce + duszność/zimny pot/nudności — podejrzenie zawału",
+      "Silna duszność spoczynkowa, sinica",
+      "Nagły kłujący ból z krwiopluciem (ZP) — pilnie",
+      "Utrata przytomności/kołatanie z omdleniem"
+    ],
+    myths:[
+      {m:"Skoro mija po antacidzie, to serce zdrowe",f:"GERD i choroba wieńcowa mogą współistnieć — objawy wieńcowe wymagają oceny."},
+      {m:"Młodzi nie mają zawałów",f:"Ryzyko mniejsze, ale zawały u młodych się zdarzają (np. palenie, dyslipidemia)."}
+    ],
+    faq:[
+      {q:"Kiedy 112/SOR?",a:"Nowy/silny ucisk, duszność, zimny pot, promieniowanie do ręki/szczęki, omdlenie — dzwoń 112."},
+      {q:"Badania na początek?",a:"Lekarz zdecyduje: EKG, troponiny, RTG klp, próby refluksowe — zależnie od obrazu."}
+    ]
+  },
+
+  brzuch:{
+    label:"Brzuch",
+    symptoms:[
+      "Ból kurczowy/kolkowy","Wzdęcia","Biegunka/zaparcie",
+      "Zgaga/uczucie pieczenia","Nudności/wymioty","Twardy brzuch"
+    ],
+    causes:[
+      "Niestrawność/IRQ/IBS","Zatrucie pokarmowe",
+      "Wirusowe zapalenie żołądka i jelit",
+      "Refluks/choroba wrzodowa",
+      "Kolka nerkowa/wątrobowa (promieniowanie)",
+      "Ciąża: do oceny lekarskiej (u kobiet w wieku rozrodczym)"
+    ],
+    firstaid:[
+      "Nawadnianie małymi porcjami, elektrolity",
+      "Lekka dieta (BRAT/łatwostrawna) 24–48 h",
+      "Ciepły okład na brzuch przy kurczach",
+      "Odpoczynek; obserwacja stolca/gazów"
+    ],
+    otc:[
+      {t:"Drotaweryna na skurcze (dorośli)",audience:"adult"},
+      {t:"Probiotyk/elektrolity przy biegunce",audience:"all"},
+      {t:"Inhibitory pompy protonowej na zgagę (krótko)",audience:"adult"},
+      {t:"Loperamid (ostra biegunka bez krwi/gorączki)",audience:"adult"},
+      {t:"Symetykon na wzdęcia",audience:"all"}
+    ],
+    rx:[
+      "PPI/H2 wg wskazań (refluks/WRZ)",
+      "Eradykacja H. pylori (po potwierdzeniu)",
+      "Leki prokinetyczne wg wskazań",
+      "Antybiotykoterapia przy bakteryjnych zakażeniach — decyzja lekarska"
+    ],
+    rehab:[
+      "Dziennik żywieniowy, low-FODMAP (próba, pod kontrolą)",
+      "Ruch: 20–30 min dziennie, praca z oddechem",
+      "Higiena snu i stresu (relaks, CBT przy IBS)"
+    ],
+    urgent:[
+      "Twardy „deskowaty” brzuch, silny stały ból",
+      "Krew w stolcu/wymiotach, czarne stolce",
+      "Wysoka gorączka, odwodnienie, bez oddawania gazów/stolca",
+      "Ból w prawym dole z gorączką (wyrostek) — pilnie",
+      "U kobiet: silny ból + opóźnienie miesiączki (ciąża ektopowa?)"
+    ],
+    myths:[
+      {m:"Przy bólu brzucha najlepiej nic nie jeść kilka dni",f:"Krótka dieta lekkostrawna ok, ale długie głodówki szkodzą."},
+      {m:"Każda biegunka = antybiotyk",f:"Większość ostrych biegunek to wirusy — nawodnienie najważniejsze."}
+    ],
+    faq:[
+      {q:"Kiedy do lekarza pilnie?",a:"Gdy ból narasta/utrzymuje się >24–48 h, pojawia się krew, wysoka gorączka, odwodnienie lub „twardy brzuch”."},
+      {q:"Czy badania z krwi pomogą?",a:"Tak, ale decyzja zależy od obrazu: morfologia, CRP, elektrolity; czasem USG/TK."}
+    ]
+  },
+
+  serce:{
+    label:"Serce / Kołatania",
+    symptoms:[
+      "Kołatanie (przyspieszone/nieregularne)","Zawroty głowy",
+      "Duszność wysiłkowa","Uczucie „przeskakiwania” serca","Omdlenie"
+    ],
+    causes:[
+      "Stres/odwodnienie/kofeina/alkohol",
+      "Niedobór snu, infekcja, gorączka",
+      "Zaburzenia rytmu (np. nadkomorowe, AF)",
+      "Niedokrwistość/tyreotoksykoza (wtórne przyczyny)"
+    ],
+    firstaid:[
+      "Usiądź/połóż się, oddychaj spokojnie",
+      "Nawodnienie; ogranicz kofeinę/alkohol",
+      "Manewry wagotoniczne przy SVT (wg zaleceń)"
+    ],
+    otc:[
+      {t:"Elektrolity/nawodnienie",audience:"all"},
+      {t:"Preparaty magnezu/potasu (jeśli niedobór)",audience:"adult"}
+    ],
+    rx:[
+      "EKG/Holter — dobór leczenia po rozpoznaniu",
+      "Beta-blokery/antyarytmiczne wg wskazań",
+      "Antykoagulacja przy AF wg skali CHA₂DS₂-VASc",
+      "Leczenie przyczynowe (np. tarczyca, anemia)"
+    ],
+    rehab:[
+      "Higiena snu, redukcja stresu",
+      "Umiarkowana aktywność aerobowa (po ocenie)",
+      "Ograniczenie używek, kontrola elektrolitów"
+    ],
+    urgent:[
+      "Kołatanie z omdleniem lub ból w klatce — pilnie",
+      "Duszność spoczynkowa, sinica",
+      "Tachykardia >150/min utrzymująca się mimo odpoczynku",
+      "Objawy udaru (AF + neurologiczne) — 112"
+    ],
+    myths:[
+      {m:"Skoro mam kołatania, na pewno groźna arytmia",f:"Często to łagodne pobudzenia — ale wymaga oceny EKG."},
+      {m:"Magnez zawsze rozwiąże problem",f:"Pomaga przy niedoborach, nie leczy arytmii strukturalnych."}
+    ],
+    faq:[
+      {q:"Jak się przygotować do wizyty?",a:"Lista epizodów (kiedy, po czym, ile trwa), leki, choroby, pomiary tętna/ciśnienia."},
+      {q:"Czy smartwatch wystarczy do diagnozy?",a:"Może wychwycić epizod, ale diagnozę stawia się na podstawie EKG/Holtera."}
+    ]
+  }
+};
+
+const CONTENT_EN={
+  glowa:{
+    label:"Headache",
+    symptoms:[
+      "Bilateral pressing","Unilateral throbbing","Photophobia",
+      "Nausea/vomiting","Aura (scotomas, flashes)","Exertional headache","Worse on bending"
+    ],
+    causes:[
+      "Tension-type (stress, poor sleep, dehydration)",
+      "Migraine (sometimes with aura)",
+      "Sinus-related headache",
+      "Dehydration / caffeine withdrawal",
+      "Hypertensive headache",
+      "Bruxism / neck tension",
+      "Medication-overuse headache"
+    ],
+    firstaid:[
+      "Hydration and light snack",
+      "Quiet, dark room",
+      "Cool pack on forehead/neck",
+      "Gentle neck/shoulder mobility",
+      "Sleep hygiene (fixed hours, screen off ≥1h)"
+    ],
+    otc:[
+      {t:"Paracetamol/acetaminophen — pain/fever",audience:"all"},
+      {t:"Ibuprofen — adults (if no contraindications)",audience:"adult"},
+      {t:"Naproxen — adults (short-term)",audience:"adult"},
+      {t:"Caffeine + analgesic (episodically)",audience:"adult"},
+      {t:"Saline sprays for suspected sinus issues",audience:"all"}
+    ],
+    rx:[
+      "Triptans for migraine",
+      "Migraine prophylaxis (e.g., beta-blocker, topiramate — physician decision)",
+      "Intranasal steroids for sinusitis (short courses)",
+      "Antihypertensive therapy as indicated"
+    ],
+    rehab:[
+      "Regular sleep 7–9 h",
+      "Daily hydration 30–35 ml/kg",
+      "Neck/shoulder stretches",
+      "Limit flickering lights/screens",
+      "Headache diary (triggers)"
+    ],
+    urgent:[
+      "Sudden “worst-ever” headache",
+      "Fever + neck stiffness",
+      "Neurologic deficits (weakness, speech issues, seizures)",
+      "Head injury with LOC",
+      "New headache in pregnancy/postpartum",
+      "…and: Loss of consciousness / Dyspnea / Uncontrolled bleeding"
+    ],
+    myths:[
+      {m:"Antibiotics fix headaches",f:"Most headaches are non-bacterial."},
+      {m:"Caffeine always worsens migraine",f:"Moderate caffeine helps some, worsens others."},
+      {m:"Migraine is just a strong headache",f:"It’s a neurologic disorder; prevention may be needed."}
+    ],
+    faq:[
+      {q:"When to see a doctor?",a:"Severe/new headache, red flags, after head injury, during pregnancy, or if OTC fails."},
+      {q:"OTC use?",a:"Use occasionally. If >10 days/month — review with a clinician."},
+      {q:"Do I need imaging?",a:"Not routinely for typical tension/migraine without alarms."}
+    ]
+  },
+
+  nos:{
+    label:"Nose / Sinuses",
+    symptoms:[
+      "Watery runny nose","Nasal blockage","Sinus pain/pressure",
+      "Sneezing/itch (allergy)","Thick discharge","Nosebleed"
+    ],
+    causes:[
+      "Rhinitis (infectious or allergic)",
+      "Sinusitis (acute/subacute)",
+      "Turbinate hypertrophy / septal deviation",
+      "Rhinitis medicamentosa (decongestant overuse)"
+    ],
+    firstaid:[
+      "Isotonic saline rinses",
+      "Humidify air, drink fluids",
+      "Steam inhalation (careful), warm packs over sinuses",
+      "Avoid smoke/dust/allergens"
+    ],
+    otc:[
+      {t:"Sea water / isotonic saline",audience:"all"},
+      {t:"Topical decongestants — ≤3–5 days",audience:"adult"},
+      {t:"Antihistamines for allergy",audience:"adult"},
+      {t:"Ibuprofen/paracetamol for pain",audience:"all"}
+    ],
+    rx:[
+      "Intranasal steroids (allergy, chronic rhinitis)",
+      "Antibiotics for confirmed bacterial sinusitis",
+      "Allergen immunotherapy — ENT/allergist"
+    ],
+    rehab:[
+      "Nasal hygiene and short decongestant courses",
+      "Allergen avoidance, air filtration",
+      "Hydration and sleep"
+    ],
+    urgent:[
+      "Nosebleed >20 min despite pressure",
+      "Fever, facial swelling, worsening sinus pain",
+      "Visual disturbance, severe eye/forehead pain",
+      "Systemic symptoms (child/pregnancy — urgent)"
+    ],
+    myths:[
+      {m:"Stronger drops work better",f:"Overuse rebounds and worsens blockage."},
+      {m:"Green mucus means bacteria",f:"Color alone doesn’t prove bacterial cause."}
+    ],
+    faq:[
+      {q:"When antibiotics for sinuses?",a:"When a clinician confirms bacterial sinusitis (fever, severe pain, >10 days)."},
+      {q:"How to stop a nosebleed?",a:"Pinch soft nose 10–15 min, lean forward, cold pack on the bridge."}
+    ]
+  },
+
+  klatka:{
+    label:"Chest pain",
+    symptoms:[
+      "Chest pressure","Heartburn","Sharp pain with movement",
+      "Shortness of breath","Palpitations","Pain to left arm/jaw"
+    ],
+    causes:[
+      "Musculoskeletal strain",
+      "Reflux/GERD",
+      "Coronary ischemia / ACS (acute)",
+      "Pleurisy/infectious cough",
+      "Anxiety/panic with somatic symptoms"
+    ],
+    firstaid:[
+      "Stop exertion, rest",
+      "Review triggers: meal, stress, effort",
+      "Elevate head when lying (GERD)",
+      "Warm pack, gentle stretch if musculoskeletal"
+    ],
+    otc:[
+      {t:"Reflux relief: alginates/antacids",audience:"all"},
+      {t:"Ibuprofen/naproxen for MSK pain (if suitable)",audience:"adult"},
+      {t:"Topical warming gels",audience:"adult"}
+    ],
+    rx:[
+      "Nitroglycerin per plan (suspected angina — ER if new/worsening)",
+      "PPIs for GERD",
+      "Cardiology therapy for CAD",
+      "Antiarrhythmics as indicated"
+    ],
+    rehab:[
+      "Weight management, avoid large late meals",
+      "Diet tweaks (coffee/alcohol/spicy as tolerated)",
+      "Regular light aerobic training (post evaluation)",
+      "Relaxation/controlled breathing"
+    ],
+    urgent:[
+      "New/severe pressure + dyspnea/cold sweat/nausea — call emergency",
+      "Rest dyspnea, cyanosis",
+      "Sudden sharp pain with hemoptysis (PE) — urgent",
+      "Syncope with palpitations"
+    ],
+    myths:[
+      {m:"If antacid helps, heart is fine",f:"GERD can coexist with CAD — ischemic signs need assessment."},
+      {m:"Young people don’t get heart attacks",f:"Less common but possible; risk factors matter."}
+    ],
+    faq:[
+      {q:"When to call 112/911?",a:"Severe/new pressure, dyspnea, cold sweat, radiation to arm/jaw, syncope — call immediately."},
+      {q:"Initial tests?",a:"Clinician may order ECG, troponins, CXR, reflux workup — based on presentation."}
+    ]
+  },
+
+  brzuch:{
+    label:"Abdomen",
+    symptoms:[
+      "Crampy/colicky pain","Bloating","Diarrhea/constipation",
+      "Heartburn/burning","Nausea/vomiting","Rigid abdomen"
+    ],
+    causes:[
+      "Indigestion/IBS","Foodborne illness",
+      "Viral gastroenteritis","GERD/ulcer disease",
+      "Renal/biliary colic","Pregnancy-related pain (needs assessment)"
+    ],
+    firstaid:[
+      "Oral rehydration in small sips",
+      "Light diet 24–48 h",
+      "Warm pack for cramps",
+      "Rest; monitor stool/gas"
+    ],
+    otc:[
+      {t:"Drotaverine for cramps (adults)",audience:"adult"},
+      {t:"Probiotics/electrolytes for diarrhea",audience:"all"},
+      {t:"Short course PPI/H2 for heartburn",audience:"adult"},
+      {t:"Loperamide (no blood/fever)",audience:"adult"},
+      {t:"Simethicone for bloating",audience:"all"}
+    ],
+    rx:[
+      "PPI/H2 as indicated",
+      "H. pylori eradication (if positive)",
+      "Prokinetics as indicated",
+      "Antibiotics for confirmed bacterial causes — clinician decision"
+    ],
+    rehab:[
+      "Food diary; low-FODMAP trial (guided)",
+      "Daily light activity; breathing work",
+      "Sleep and stress hygiene (CBT can help in IBS)"
+    ],
+    urgent:[
+      "Board-like rigid abdomen, persistent severe pain",
+      "Blood in stool/emesis, black stools",
+      "High fever, dehydration, no stool/gas",
+      "RLQ pain + fever (appendicitis) — urgent",
+      "Women: severe pain + missed period (ectopic?)"
+    ],
+    myths:[
+      {m:"Best to fast for days",f:"Short light diet is fine; long fasting can harm."},
+      {m:"All diarrhea needs antibiotics",f:"Most acute cases are viral — rehydration is key."}
+    ],
+    faq:[
+      {q:"When urgent care?",a:"Persistent/worsening pain >24–48 h, blood, high fever, dehydration or rigid abdomen."},
+      {q:"Will blood tests help?",a:"Often yes, but it depends; sometimes US/CT needed — clinician decides."}
+    ]
+  },
+
+  serce:{
+    label:"Heart / Palpitations",
+    symptoms:[
+      "Fast/irregular heartbeat","Dizziness",
+      "Exertional dyspnea","Skipped beats","Fainting"
+    ],
+    causes:[
+      "Stress/dehydration/caffeine/alcohol",
+      "Sleep deficit, infection, fever",
+      "Arrhythmias (e.g., SVT, AF)",
+      "Secondary causes (anemia, hyperthyroidism)"
+    ],
+    firstaid:[
+      "Sit/lie down, slow breathing",
+      "Hydration; limit caffeine/alcohol",
+      "Vagal maneuvers in SVT (as advised)"
+    ],
+    otc:[
+      {t:"Electrolytes/hydration",audience:"all"},
+      {t:"Magnesium/potassium (if deficient)",audience:"adult"}
+    ],
+    rx:[
+      "ECG/Holter — therapy per diagnosis",
+      "Beta-blockers/antiarrhythmics as indicated",
+      "Anticoagulation for AF per CHA₂DS₂-VASc",
+      "Treat underlying causes (thyroid, anemia)"
+    ],
+    rehab:[
+      "Sleep hygiene and stress reduction",
+      "Moderate aerobic activity (post assessment)",
+      "Avoid stimulants; monitor electrolytes"
+    ],
+    urgent:[
+      "Palpitations with syncope or chest pain — urgent",
+      "Rest dyspnea, cyanosis",
+      "Sustained tachycardia >150/min",
+      "Stroke symptoms (AF + neuro deficits) — call emergency"
+    ],
+    myths:[
+      {m:"Palpitations always mean dangerous arrhythmia",f:"Often benign ectopy — but needs ECG assessment."},
+      {m:"Magnesium cures all palpitations",f:"Helps if deficient; not a fix for structural arrhythmias."}
+    ],
+    faq:[
+      {q:"How to prep for a visit?",a:"Note episodes (when, trigger, duration), meds, conditions, HR/BP readings."},
+      {q:"Is smartwatch enough?",a:"It can capture episodes; diagnosis still relies on ECG/Holter."}
+    ]
+  }
+};
+
       glowa:{label:"Headache",symptoms:["Bilateral pressing","Unilateral throbbing","Light sensitivity"],causes:["Tension","Migraine"],firstaid:["Hydration","Rest"],otc:[...BASE.en.otcPain],rx:["Triptans"],rehab:[...BASE.en.rehabCommon],urgent:["Thunderclap","Fever + neck stiffness",...BASE.en.urgentCommon],myths:[{m:"Antibiotics help",f:"Headache is rarely bacterial."}],faq:[{q:"When to see a doctor?",a:"If severe/new or with red flags."}]},
       nos:{label:"Nose",symptoms:["Runny nose","Blockage","Sinus pain","Nosebleed"],causes:["Cold","Allergy","Sinusitis"],firstaid:["Saline"],otc:["Sea water","Decongestants (short)"],rx:["Intranasal steroids"],rehab:[...BASE.en.rehabCommon],urgent:["Bleeding >20 min",...BASE.en.urgentCommon],myths:[],faq:[]},
       klatka:{label:"Chest",symptoms:["Pressure","Heartburn","Dyspnea"],causes:["Muscular","Reflux","Coronary"],firstaid:["Rest"],otc:["Anti-reflux"],rx:["Nitroglycerin per doctor"],rehab:[...BASE.en.rehabCommon],urgent:["Pressure + dyspnea/cold sweat",...BASE.en.urgentCommon],myths:[],faq:[]},
