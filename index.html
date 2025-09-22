@@ -935,5 +935,84 @@
   nav.situations{ margin-top: 8px !important; }
 }
 </style>
+<style id="bh-mobile-topbar-and-emergency">
+@media (max-width:768px){
+  /* wysokości referencyjne — dopasujesz w razie czego */
+  body[data-page="home"]{
+    --topbarH: 56px;    /* wysokość paska z wyszukiwarką + tłumaczem */
+    --emergH:  82px;    /* przybliżona wysokość belki numerów (z paddingiem) */
+  }
+
+  /* ===== TOPBAR: wyszukiwarka + tłumacz (fixed) ===== */
+  body[data-page="home"] .header .tools{
+    position: fixed !important;
+    top: 8px !important;
+    left: 12px !important;
+    right: 12px !important;
+    z-index: 6000 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+
+    padding: 8px 10px !important;
+    border-radius: 14px !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)) !important;
+    border: 1px solid rgba(255,255,255,.20) !important;
+    box-shadow: 0 10px 24px rgba(8,10,22,.45), inset 0 0 0 1px rgba(164,107,255,.12) !important;
+    backdrop-filter: saturate(120%) blur(6px) !important;
+  }
+  /* nie rozjeżdża się: search zajmuje całą szerokość, tłumacz obok */
+  body[data-page="home"] .header .tools .search{ flex:1 1 auto !important; min-width: 0 !important; }
+  body[data-page="home"] .header .tools #bhLangPick{ flex:0 0 auto !important; }
+
+  /* ===== NUMERY ALARMOWE: fixed pod topbarem ===== */
+  body[data-page="home"] .emergency-list{
+    position: fixed !important;
+    top: calc(8px + var(--topbarH)) !important; /* dokładnie pod topbarem */
+    left: 12px !important;
+    right: 12px !important;
+    z-index: 5800 !important;
+
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px !important;
+
+    margin: 0 !important;
+    padding: 8px !important;
+    border-radius: 14px !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)) !important;
+    border: 1px solid rgba(255,255,255,.20) !important;
+    box-shadow: 0 10px 24px rgba(8,10,22,.45), inset 0 0 0 1px rgba(164,107,255,.12) !important;
+    backdrop-filter: saturate(120%) blur(6px) !important;
+
+    /* stała wysokość, żeby poduszka poniżej była przewidywalna */
+    min-height: calc(var(--emergH) - 16px) !important; /* odliczamy padding */
+  }
+  body[data-page="home"] .emergency-list a{
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px 0 !important;
+    border-radius: 10px !important;
+    text-decoration: none !important;
+    font-weight: 900 !important;
+    letter-spacing: .2px !important;
+    color:#ffeef0 !important;
+
+    border: 1px solid rgba(255,107,107,.55) !important;
+    background: linear-gradient(180deg, rgba(255,107,107,.22), rgba(255,255,255,.03)) !important;
+    box-shadow: 0 6px 14px rgba(255,107,107,.35), 0 0 0 1px rgba(255,107,107,.22) inset !important;
+  }
+
+  /* ===== PODUSZKA NA TREŚĆ: nic nie nachodzi ===== */
+  body[data-page="home"] .container{
+    padding-top: calc(8px + var(--topbarH) + var(--emergH) + 16px) !important;
+  }
+
+  /* lekki oddech nad sytuacjami */
+  body[data-page="home"] nav.situations{ margin-top: 8px !important; }
+}
+</style>
 </body>
 </html>
