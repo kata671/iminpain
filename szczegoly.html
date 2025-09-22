@@ -4212,5 +4212,32 @@ document.addEventListener("DOMContentLoaded", ()=>{
   });
 });
 </script>
+<style id="bh-kill-label">
+  /* zabij pasek "● Głowa (ból) • kobieta" */
+  .hero .label,
+  #label-icon,
+  #label-text{
+    display:none !important;
+    visibility:hidden !important;
+    width:0 !important;
+    height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    border:0 !important;
+  }
+</style>
+
+<script>
+  (function(){
+    function killLabel(){
+      document.querySelectorAll('.hero .label, #label-icon, #label-text')
+        .forEach(el => { try{ el.remove(); }catch(e){ el.style.display='none'; } });
+    }
+    // po załadowaniu:
+    document.addEventListener('DOMContentLoaded', killLabel);
+    // oraz gdyby skrypt później znowu wstawił label:
+    new MutationObserver(killLabel).observe(document.body, { childList:true, subtree:true });
+  })();
+</script>
 </body>
 </html>
