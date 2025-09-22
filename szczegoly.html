@@ -2772,5 +2772,38 @@ ul.clean li:hover{
     transform:translateY(-1px);
   }
 </style>
+<style id="bh-urgent-flags-v2">
+/* Nowoczesne kafelki dla czerwonych flag i innych list pod paskiem ryzyka */
+.urgent-list li,
+#urgent li {
+  list-style: none;
+  margin: 10px 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  font-weight: 600;
+  letter-spacing: .2px;
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.14);
+  color: #f8faff;
+  box-shadow: 0 4px 14px rgba(0,0,0,.35), 0 0 0 1px rgba(164,107,255,.15) inset;
+  backdrop-filter: blur(6px) saturate(120%);
+  transition: transform .2s ease, box-shadow .2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.urgent-list li:hover,
+#urgent li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.45), 0 0 14px rgba(164,107,255,.35), 0 0 0 1px rgba(164,107,255,.25) inset;
+}
+.urgent-list li::before,
+#urgent li::before {
+  content: "⚠️";
+  flex-shrink: 0;
+  font-size: 1.1em;
+  opacity: .85;
+}
+</style>
 </body>
 </html>
