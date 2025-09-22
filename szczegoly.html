@@ -2428,5 +2428,74 @@ ul.clean li:hover{
     .cb{ left: 16px; width: 20px; height: 20px; border-radius: 7px; }
   }
 </style>
+<style id="bh-objawy-redesign">
+  /* Sekcja OBJAWY – nowoczesny grid */
+  #symp-common ul.clean {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  #symp-common ul.clean li {
+    position: relative;
+    padding: 18px 14px 18px 14px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(164,107,255,0.25);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #eef2ff;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.25s ease;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+  }
+
+  /* Hover */
+  #symp-common ul.clean li:hover {
+    background: rgba(164,107,255,0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,.35), 0 0 18px rgba(164,107,255,.28);
+  }
+
+  /* Stan zaznaczenia (Twoja logika dokłada klasę .li-checked) */
+  #symp-common ul.clean li.li-checked {
+    background: rgba(94,234,212,0.12);
+    border-color: rgba(94,234,212,.6);
+    box-shadow: 0 0 0 2px rgba(94,234,212,.55), 0 0 20px rgba(94,234,212,.45);
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  /* Checkbox zastąpiony eleganckim "✓" */
+  #symp-common ul.clean li .cb {
+    display: none;
+  }
+  #symp-common ul.clean li.li-checked::after {
+    content: "✓";
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 18px;
+    color: #5eead4;
+    text-shadow: 0 0 8px rgba(94,234,212,.6);
+  }
+
+  /* Responsywność */
+  @media (max-width: 640px) {
+    #symp-common ul.clean {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+    }
+    #symp-common ul.clean li {
+      font-size: 14px;
+      padding: 14px 10px;
+    }
+  }
+</style>
 </body>
 </html>
