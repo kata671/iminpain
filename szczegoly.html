@@ -4021,5 +4021,51 @@ body[data-page="szczegoly"] #s-objawy .cursor{ width:18px !important; height:18p
   try { document.dispatchEvent(new CustomEvent('bh:lang-changed',{detail:{lang: currentLang()}})); }catch(e){}
 })();
 </script>
+<script>
+/* ANTY-DUPLIKACJA LIST + BEZPIECZNE CZYSZCZENIE (bez innerHTML) */
+(function(){
+  // 1) Uniwersalne czyszczenie węzła bez innerHTML (nie łamie naszej ochrony data-no-i18n)
+  function safeClear(el){ if(!el) return; while(el.firstChild) el.removeChild(el.firstChild); }
+
+  // 2) Owiń istniejące renderery tak, by przed ich wykonaniem czyścić listy "fizycznie"
+  const wrap = (fnName) => {
+    const orig = window[fnName];
+    if (typeof orig !== 'function') return;
+    window[fnName] = function(id, ...rest){
+      const el = (typeof id === 'string') ? document.getElementById(id) : id;
+      if (el) safeClear(el);           // czyść zanim oryginał ruszy (on może próbować innerHTML='')
+      return orig.apply(this, [id, ...rest]);
+    };
+  };
+  wrap('renderListInteractive');
+  wrap('renderListPlain');
+  wrap('fillPairs');
+  wrap('fillFAQ');
+
+  // 3) Jednorazowe odduplikowanie istniejących list po załadowaniu
+  function dedupeListByText(ul){
+    if(!ul) return;
+    const seen = new Set();
+    [...ul.children].forEach(li=>{
+      const key = (li.textContent || '').trim().toLowerCase().replace(/\s+/g,' ');
+      if (seen.has(key)) li.remove();
+      else seen.add(key);
+    });
+  }
+
+  function runOnce(){
+    ['symp-common','urgent','causes','firstaid','meds-otc','meds-rx','rehab','myths','faq'].forEach(id=>{
+      const el = document.getElementById(id);
+      dedupeListByText(el);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runOnce, {once:true});
+  } else {
+    runOnce();
+  }
+})();
+</script>
 </body>
 </html>
