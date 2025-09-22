@@ -4113,5 +4113,70 @@ body[data-page="szczegoly"] #s-objawy .cursor{ width:18px !important; height:18p
   box-shadow: 0 14px 28px rgba(164,107,255,.4), 0 0 0 2px rgba(164,107,255,.45), 0 0 26px rgba(164,107,255,.45) !important;
 }
 </style>
+<style id="bh-mobile-polish">
+/* TELEFON: układ kroków (1–4) pionowo i mniejsze karty */
+@media (max-width: 768px){
+  .steps{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:10px !important;
+    margin-top:10px !important;
+  }
+  .steps .step{
+    min-height:48px !important;
+    padding:10px 12px !important;
+    font-size:14px !important;
+    border-radius:12px !important;
+    text-align:center !important;
+    background:rgba(255,255,255,.06) !important;
+    border:1px solid rgba(255,255,255,.16) !important;
+    box-shadow:0 6px 16px rgba(0,0,0,.25) !important;
+  }
+
+  /* Guziki nawigacji sekcji (Objawy / Przyczyny / Pierwsza pomoc / Leki itd.) */
+  .tabs{
+    display:grid !important;
+    grid-template-columns: 1fr 1fr !important; /* dwa w rzędzie */
+    gap:10px !important;
+    margin:14px 0 8px !important;
+  }
+  @media (max-width: 380px){
+    .tabs{ grid-template-columns: 1fr !important; } /* bardzo wąsko – jeden w rzędzie */
+  }
+  .tabs .tab{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    min-height:56px !important;
+    border-radius:14px !important;
+    font-size:15px !important;
+    font-weight:900 !important;
+    letter-spacing:.3px !important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+      rgba(164,107,255,.14) !important;
+    border:1px solid rgba(164,107,255,.35) !important;
+    box-shadow:
+      0 8px 18px rgba(164,107,255,.25),
+      0 0 0 1px rgba(164,107,255,.30) inset !important;
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease !important;
+  }
+  .tabs .tab:hover,
+  .tabs .tab:focus-visible{
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow:
+      0 14px 28px rgba(164,107,255,.40),
+      0 0 0 2px rgba(164,107,255,.45),
+      0 0 26px rgba(164,107,255,.45) !important;
+  }
+  .tabs .tab[aria-selected="true"]{
+    border-color: rgba(94,234,212,.60) !important;
+    box-shadow:
+      0 12px 26px rgba(94,234,212,.35),
+      0 0 0 2px rgba(94,234,212,.50),
+      0 0 22px rgba(94,234,212,.40) !important;
+  }
+}
+</style>
 </body>
 </html>
