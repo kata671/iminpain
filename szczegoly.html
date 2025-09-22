@@ -304,6 +304,50 @@
       0 0 28px rgba(96,165,250,.55) !important;
   }
 </style>
+<style id="bh-cards-glow-fix">
+  /* upewnij się, że karta może „wylewać” poświatę poza obrys */
+  .card.pulse-blue{ overflow: visible; position: relative; }
+
+  /* 🔵 niezależny, animowany halo jako pseudo-element (działa nawet przy ciężkich box-shadow karty) */
+  .card.pulse-blue::after{
+    content:"";
+    position:absolute;
+    inset:-8px;                 /* halo nieco większe niż karta */
+    border-radius: inherit;
+    pointer-events:none;
+    /* startowa poświata */
+    box-shadow:
+      0 0 0 2px rgba(59,130,246,.45) inset,
+      0 0 22px rgba(96,165,250,.55),
+      0 10px 26px rgba(8,10,22,.45);
+    opacity:.9;
+    animation: bhBluePulseCard 2.2s ease-in-out infinite;
+  }
+
+  /* animacja dla kart (odrobinkę mocniejsza niż dla tabów) */
+  @keyframes bhBluePulseCard{
+    0%   { box-shadow:
+            0 0 0 2px rgba(59,130,246,.45) inset,
+            0 0 16px rgba(96,165,250,.40),
+            0 10px 24px rgba(8,10,22,.40);
+          opacity:.85; }
+    50%  { box-shadow:
+            0 0 0 2px rgba(59,130,246,.75) inset,
+            0 0 34px rgba(96,165,250,.75),
+            0 14px 34px rgba(8,10,22,.55);
+          opacity:1; }
+    100% { box-shadow:
+            0 0 0 2px rgba(59,130,246,.45) inset,
+            0 0 16px rgba(96,165,250,.40),
+            0 10px 24px rgba(8,10,22,.40);
+          opacity:.85; }
+  }
+
+  /* szacunek dla preferencji systemowych */
+  @media (prefers-reduced-motion: reduce){
+    .card.pulse-blue::after{ animation:none !important }
+  }
+</style>
 </head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
