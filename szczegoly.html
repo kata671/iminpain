@@ -3034,5 +3034,124 @@ ul.clean li:hover{
   window.addEventListener('DOMContentLoaded', syncUIStates);
 })();
 </script>
+<style id="bh-hero-pro">
+/* —— KARTA HERO (glass + siatka + eleganckie tytuły) —— */
+header.app .hero{
+  border-radius:20px;
+  border:1px solid rgba(164,107,255,.22);
+  background:
+    radial-gradient(120% 140% at 20% 0%, rgba(164,107,255,.10), transparent 60%),
+    radial-gradient(120% 140% at 100% 0%, rgba(94,234,212,.10), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  backdrop-filter: blur(10px) saturate(125%);
+  box-shadow: 0 22px 54px rgba(8,10,22,.55), inset 0 0 0 1px rgba(255,255,255,.05);
+}
+
+/* breadcrumb + label */
+header.app .crumbs{
+  font-weight:900; letter-spacing:.3px; color:#d8e6ff; opacity:.95;
+}
+header.app .label{
+  background:linear-gradient(180deg,rgba(164,107,255,.16),rgba(255,255,255,.03));
+  border:1px solid rgba(164,107,255,.35);
+  box-shadow:0 8px 22px rgba(8,10,22,.45), inset 0 0 0 1px rgba(255,255,255,.06);
+  border-radius:999px;
+}
+
+/* —— KROKI — kwadratowe „capsule” z numerem —— */
+.steps{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:14px 0 0;
+}
+.step{
+  position:relative; border-radius:16px; padding:14px 12px;
+  text-align:center; font-weight:900; letter-spacing:.3px; color:#e8f0ff;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 12px 28px rgba(8,10,22,.42), inset 0 0 0 1px rgba(255,255,255,.04);
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.step::before{
+  /* numer jako badge (odczyta cyfrę z treści „1. …”) */
+  content: attr(id);
+}
+.step:hover{ transform:translateY(-2px) }
+.step.active{
+  border-color:rgba(59,130,246,.75);
+  box-shadow:0 0 0 2px rgba(59,130,246,.55), 0 14px 34px rgba(8,10,22,.52);
+}
+.step small{display:block;color:#bcd2ff;font-weight:800;margin-top:4px}
+
+/* —— ZAKŁADKI (Objawy/Przyczyny/…/Lekarze) —— */
+.tabs{ gap:10px; margin:16px 0 8px }
+.tab{
+  padding:10px 14px; border-radius:14px; font-weight:900; letter-spacing:.3px;
+  border:1px solid rgba(255,255,255,.16);
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+  color:#e9efff; cursor:pointer; user-select:none;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+  transition:transform .12s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.tab:hover{ transform:translateY(-1px) }
+.tab[aria-selected="true"]{
+  border-color:rgba(94,234,212,.7);
+  box-shadow:0 0 0 2px rgba(94,234,212,.55), 0 10px 24px rgba(8,10,22,.45);
+}
+
+/* ikonki na podstawie data-variant (bez JS) */
+.tab[data-variant="symptoms"]::before{content:"🩺 "; }
+.tab[data-variant="causes"]::before{content:"🧩 "; }
+.tab[data-variant="firstaid"]::before{content:"⛑️ "; }
+.tab[data-variant="otc"]::before{content:"💊 "; }
+.tab[data-variant="rx"]::before{content:"🧾 "; }
+.tab[data-variant="rehab"]::before{content:"🏃 "; }
+.tab[data-variant="myths"]::before{content:"❗ "; }
+.tab[data-variant="faq"]::before{content:"❓ "; }
+.tab[data-variant="dx"]::before{content:"🧠 "; }
+.tab[data-variant="docs"]::before{content:"👩‍⚕️ "; }
+
+/* —— komunikaty pod zakładkami —— */
+.hero-note,.legend{
+  position:relative; padding:.6rem .8rem; border-radius:12px; margin:.3rem 0 0;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
+}
+.hero-note{ color:#cfe2ff; font-weight:800 }
+.legend{ color:#e9f2ff; font-weight:900 }
+
+/* responsywność: ciasne ekrany */
+@media (max-width:720px){
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .tab{padding:9px 12px}
+}
+@media (max-width:420px){
+  .steps{grid-template-columns:1fr}
+}
+</style>
+<script id="bh-hero-pro-js">
+(function(){
+  const steps = {
+    one:  ['symptoms','causes','firstaid','otc','rx','rehab','myths','faq'],
+    two:  ['dx'],
+    three:['docs'],
+    four: [] // „co dalej” zostaje pasywny
+  };
+  function markStep(){
+    const current = document.querySelector('.tabs .tab[aria-selected="true"]')?.dataset.variant || 'symptoms';
+    const s1 = document.getElementById('step-1'),
+          s2 = document.getElementById('step-2'),
+          s3 = document.getElementById('step-3'),
+          s4 = document.getElementById('step-4');
+    [s1,s2,s3,s4].forEach(el=>el && el.classList.remove('active'));
+    if(steps.one.includes(current))  s1?.classList.add('active');
+    else if(steps.two.includes(current))  s2?.classList.add('active');
+    else if(steps.three.includes(current))s3?.classList.add('active');
+    else                                  s4?.classList.add('active');
+  }
+  // start + każdy klik w tab
+  window.addEventListener('DOMContentLoaded', markStep);
+  document.querySelectorAll('.tabs .tab').forEach(t=>t.addEventListener('click', markStep));
+})();
+</script>
 </body>
 </html>
