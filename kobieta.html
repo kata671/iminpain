@@ -318,5 +318,43 @@
     #bhLangSelect{ font-size: 13px; }
   }
 </style>
+<style>
+  /* Guzik WRÓĆ w lewym górnym rogu */
+  #bhBackMini {
+    position: fixed !important;
+    top: 16px !important;
+    left: 16px !important;
+    margin: 0 !important;
+    z-index: 3000 !important;
+
+    appearance: none;
+    border: 1px solid rgba(164,107,255,.28);
+    background: rgba(60,32,100,.28);
+    color: #eef2ff;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(8,10,22,.35),
+                inset 0 0 0 1px rgba(164,107,255,.12),
+                0 0 8px rgba(164,107,255,.45);
+    transition: transform .18s ease,
+                box-shadow .18s ease,
+                border-color .18s ease;
+  }
+
+  #bhBackMini:hover {
+    transform: translateY(-1px);
+    border-color: rgba(164,107,255,.55);
+    box-shadow: 0 10px 20px rgba(8,10,22,.45),
+                0 0 14px rgba(164,107,255,.65),
+                inset 0 0 0 1px rgba(164,107,255,.18);
+  }
+
+  #bhBackMini:focus-visible {
+    outline: 2px solid rgba(164,107,255,.75);
+    outline-offset: 2px;
+  }
+</style>
 </body>
 </html>
