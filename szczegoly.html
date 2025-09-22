@@ -4188,5 +4188,20 @@ body[data-page="szczegoly"] #s-objawy .cursor{ width:18px !important; height:18p
   display: none !important;
 }
 </style>
+<style id="bh-hide-path-strong">
+/* Usuń pasek np. "● Głowa (ból) • kobieta" */
+h2, h3, .subhead, .path, .breadcrumb {
+  /* jeśli któryś z tych elementów zawiera kropkę ● + nazwę części ciała */
+}
+h2:has(span), h3:has(span){
+  display:none !important;
+}
+h2:contains("●"), h3:contains("●"),
+.subhead:contains("●"),
+.path:contains("●"),
+.breadcrumb:contains("●"){
+  display:none !important;
+}
+</style>
 </body>
 </html>
