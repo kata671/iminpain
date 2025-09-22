@@ -1823,5 +1823,276 @@ const CONTENT_EN={
     });
 })();
 </script>
+<style>
+/* ================================
+   BOLI HELP • SZCZEGÓŁY — PRO LOOK
+   (tylko UI: karty, glow, typografia)
+   ================================ */
+:root{
+  /* kolory & glow */
+  --bh-surface: rgba(28, 18, 50, .42);
+  --bh-stroke:  rgba(164,107,255,.24);
+  --bh-glow:    164,107,255;   /* fiolet */
+  --bh-glow2:   94,234,212;    /* teal   */
+  --bh-blue:    59,130,246;    /* niebieski akcent */
+  --bh-green:   34,227,160;
+  --bh-amber:   255,184,108;
+  --bh-red:     255,107,107;
+
+  /* promień narożników – „bardziej kwadratowe” */
+  --bh-radius: 14px;
+
+  /* typografia */
+  --bh-h: 600;          /* waga nagłówków */
+  --bh-body: 470;       /* waga tekstu */
+  --bh-lh: 1.65;        /* line-height */
+}
+
+/* Typos: czytelniej na wszystkich kartach */
+body[data-page="szczegoly"]{
+  letter-spacing: .1px;
+}
+body[data-page="szczegoly"] .card,
+body[data-page="szczegoly"] ul.clean li{
+  font-variation-settings: "wght" var(--bh-body);
+  line-height: var(--bh-lh);
+}
+
+/* ======================
+   KAFLE: nowoczesny look
+   ====================== */
+.cards{ display: grid; gap: 14px; }
+.card{
+  position: relative;
+  display: block;
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  border: 1px solid var(--bh-stroke);
+  border-radius: var(--bh-radius);
+  padding: 16px 16px 14px;
+  /* bazowy delikatny glow */
+  box-shadow:
+    0 8px 28px rgba(0,0,0,.35),
+    0 0 0 1px rgba(255,255,255,.06) inset,
+    0 0 0 0 rgba(var(--bh-glow), 0.0);
+  transition: box-shadow .28s ease, transform .24s ease, border-color .24s ease, background .24s ease;
+}
+
+/* gradientowa „obrączka” na krawędzi (miękko, nowocześnie) */
+.card::before{
+  content:"";
+  position:absolute; inset:-1px;
+  border-radius: inherit;
+  pointer-events:none;
+  background: radial-gradient(120% 120% at 0% 0%, rgba(var(--bh-glow),.18), transparent 60%),
+              radial-gradient(120% 120% at 100% 0%, rgba(var(--bh-glow2),.12), transparent 60%);
+  mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+  -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+  padding: 1px;
+  opacity:.55;
+}
+
+/* focus/hover = „podniesienie” i mocniejszy glow */
+.card:hover,
+.card:focus-within{
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.26);
+  box-shadow:
+    0 14px 34px rgba(0,0,0,.45),
+    0 0 0 1px rgba(255,255,255,.10) inset,
+    0 0 22px rgba(var(--bh-glow), .25);
+}
+
+/* aktywny tabpanel = ciut mocniejszy glow */
+.card[aria-hidden="false"]{
+  box-shadow:
+    0 12px 32px rgba(0,0,0,.42),
+    0 0 0 1px rgba(255,255,255,.10) inset,
+    0 0 18px rgba(var(--bh-glow), .18);
+}
+
+/* NAGŁÓWKI w kartach */
+.card h3{
+  margin:.1rem 0 .85rem;
+  font-weight: var(--bh-h);
+  letter-spacing: .25px;
+  color:#eaf2ff;
+}
+.card h3::after{
+  content:"";
+  display:block; height:1px; margin-top:.55rem;
+  background: linear-gradient(90deg, rgba(207,226,255,.6), rgba(255,255,255,.08) 40%, transparent);
+}
+
+/* LISTY w kartach – równe, „kwadratowe” klocek-itemy */
+ul.clean{ list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+@media (min-width:720px){ ul.clean{ grid-template-columns: 1fr; } } /* czytelność > siatka */
+ul.clean li{
+  position:relative;
+  display:flex; align-items:center; gap:10px;
+  padding:12px 12px 12px 40px;
+  border-radius: calc(var(--bh-radius) - 2px);
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+ul.clean li:hover{
+  border-color: rgba(255,255,255,.24);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.10) inset;
+}
+/* „kwadratowy” checkbox-znacznik */
+.cb{
+  position:absolute; left:10px; top:50%; transform:translateY(-50%);
+  width:18px; height:18px; border-radius: 6px;
+  border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.06);
+  transition: background .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.li-checked{
+  background: linear-gradient(180deg, rgba(164,107,255,.20), rgba(255,255,255,.04));
+  border-color: rgba(164,107,255,.55);
+  box-shadow: 0 0 0 2px rgba(164,107,255,.20) inset, 0 6px 18px rgba(8,10,22,.35);
+}
+.cb.checked{
+  background:#fff;
+  border-color:#fff;
+  box-shadow: 0 0 0 2px rgba(164,107,255,.25) inset;
+}
+
+/* Pasek ryzyka – subtelny lifting */
+.riskbar{ outline:1px solid rgba(255,255,255,.20); height: 12px; }
+.cursor{
+  width:16px; height:16px; border-radius:8px; background:#fff;
+  box-shadow: 0 0 0 2px rgba(59,130,246,.35);
+}
+
+/* Info strip (alarm) – złotawy akcent */
+.strip{ 
+  border-radius: calc(var(--bh-radius) - 4px);
+  border-color: rgba(var(--bh-amber), .55);
+  background: linear-gradient(180deg, rgba(var(--bh-amber),.16), rgba(255,255,255,.03));
+}
+.strip .cta{
+  font-weight:800;
+  border:1px solid rgba(255,255,255,.24);
+  box-shadow: 0 4px 14px rgba(0,0,0,.25);
+}
+
+/* Tabs – kolory i glow */
+.tab{
+  border-radius: 12px;
+  border:1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.04);
+  font-weight:800;
+}
+.tab:hover{ transform: translateY(-1px); }
+.tab[aria-selected="true"]{
+  border-color: rgba(var(--bh-blue), .75);
+  box-shadow: 0 0 0 2px rgba(var(--bh-blue), .45), 0 8px 18px rgba(8,10,22,.42);
+}
+
+/* „Choroby” i „Lekarze” — mocniejszy niebieski akcent (jak prosiłaś) */
+#s-dx.card,
+#s-docs.card{
+  border-color: rgba(var(--bh-blue), .55);
+  box-shadow:
+    0 14px 34px rgba(8,10,22,.46),
+    0 0 0 1px rgba(59,130,246,.25) inset,
+    0 0 24px rgba(59,130,246,.30);
+}
+#s-dx.card:hover,
+#s-docs.card:hover{
+  box-shadow:
+    0 16px 38px rgba(8,10,22,.50),
+    0 0 0 1px rgba(59,130,246,.30) inset,
+    0 0 36px rgba(59,130,246,.45);
+}
+
+/* Mity & FAQ – lekki „kafelek Q/A” */
+#s-mity ul.clean li, #s-faq ul.clean li{
+  padding-top: 14px; padding-bottom: 14px;
+}
+
+/* Diagnostyka – meta pasek pewności: płynniejszy */
+.conf-wrap{ outline:1px solid rgba(255,255,255,.22); }
+.conf-bar{
+  transition: width .35s ease;
+  background: linear-gradient(90deg, rgba(59,130,246,.75), rgba(94,234,212,.75));
+}
+
+/* Badges – delikatniej, ale czytelnie */
+.dx-badge, .doc-badge{
+  font-weight: 900;
+  letter-spacing:.2px;
+  border: 1px solid transparent;
+}
+.dx-badge.sor, .doc-badge.sor{
+  background: rgba(var(--bh-red), .20);
+  border-color: rgba(var(--bh-red), .65);
+}
+.dx-badge.poz, .doc-badge.poz{
+  background: rgba(var(--bh-green), .18);
+  border-color: rgba(var(--bh-green), .45);
+}
+
+/* Responsywność – estetyka na telefonie */
+@media (max-width: 720px){
+  .card{ padding: 14px 12px; }
+  ul.clean li{ padding: 12px 12px 12px 38px; }
+  .tabs{ gap: 6px; }
+}
+</style>
+
+<!-- Opcjonalny, subtelny puls tylko dla aktywnych „Choroby” i „Lekarze” -->
+<style>
+.bh-pulse-blue{
+  animation: bhBluePulse 2.3s ease-in-out infinite;
+}
+@keyframes bhBluePulse{
+  0%   { box-shadow: 0 0 10px rgba(59,130,246,.35), 0 0 22px rgba(59,130,246,.20); }
+  50%  { box-shadow: 0 0 20px rgba(59,130,246,.65), 0 0 36px rgba(59,130,246,.40); }
+  100% { box-shadow: 0 0 10px rgba(59,130,246,.35), 0 0 22px rgba(59,130,246,.20); }
+}
+/* Dołóż puls NIE zmieniając logiki – jeśli te panele staną się aktywne,
+   dostaną klasę (dodajemy ją tylko wizualnie niżej w JS). */
+</style>
+<script>
+(function(){
+  const dxTab = document.querySelector('.tab[data-variant="dx"]');
+  const docsTab = document.querySelector('.tab[data-variant="docs"]');
+  const dxPanel = document.getElementById('s-dx');
+  const docsPanel = document.getElementById('s-docs');
+
+  function syncPulse(){
+    // Tab ma aria-selected="true" gdy wybrany – nadaj puls panelowi i tabowi
+    const dxOn   = dxTab?.getAttribute('aria-selected')==='true';
+    const docsOn = docsTab?.getAttribute('aria-selected')==='true';
+    [dxTab, dxPanel].forEach(el=> el && el.classList.toggle('bh-pulse-blue', dxOn));
+    [docsTab, docsPanel].forEach(el=> el && el.classList.toggle('bh-pulse-blue', docsOn));
+  }
+
+  // Pierwsza synchronizacja i nasłuch klików w taby
+  syncPulse();
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.addEventListener('click', ()=> setTimeout(syncPulse, 40));
+  });
+
+  // Delikatny hint: jeśli użytkownik zaznaczy jakieś objawy – podkreśl oba taby
+  document.addEventListener('bh:symptoms-changed', ()=>{
+    if (dxTab && docsTab){
+      dxTab.classList.add('bh-pulse-blue');
+      docsTab.classList.add('bh-pulse-blue');
+      // Zdejmij po pierwszym odwiedzeniu któregoś z paneli
+      const off = () => {
+        dxTab.classList.remove('bh-pulse-blue');
+        docsTab.classList.remove('bh-pulse-blue');
+        dxTab.removeEventListener('click', off);
+        docsTab.removeEventListener('click', off);
+      };
+      dxTab.addEventListener('click', off, {once:true});
+      docsTab.addEventListener('click', off, {once:true});
+    }
+  });
+})();
+</script>
 </body>
 </html>
