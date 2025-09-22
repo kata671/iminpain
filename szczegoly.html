@@ -3902,5 +3902,28 @@ body[data-page="szczegoly"] #s-objawy .cursor{ width:18px !important; height:18p
     text-align: center !important;
   }
 </style>
+<style id="bh-lang-toggle-fix">
+  body[data-page="szczegoly"] #bhLangPick select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background: rgba(255,255,255,.08) !important;
+    border: none !important;            /* usuwa ramkę */
+    outline: none !important;
+    box-shadow: none !important;        /* usuwa cień/ramkę */
+    padding: 8px 16px !important;       /* minimalnie większe */
+    font-size: 15px !important;         /* trochę większy font */
+    font-weight: 900 !important;
+    text-align: center !important;      /* centrowanie */
+    min-width: 70px !important;         /* szerokość, żeby PL i EN były idealnie */
+    border-radius: 12px !important;     /* ładne zaokrąglenie */
+    cursor: pointer !important;
+  }
+
+  /* wyrównanie labelki "Język" zniknie, zostaje sam toggle */
+  body[data-page="szczegoly"] #bhLangPick label {
+    display: none !important;
+  }
+</style>
 </body>
 </html>
