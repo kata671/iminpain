@@ -4772,5 +4772,45 @@ document.addEventListener("DOMContentLoaded", ()=>{
 </script>
 <style>
 <script>document.querySelectorAll('#bh-risk-mini').forEach(el=>el.remove());</script>
+<style id="bh-risk-hard-hide">
+  /* Zgasić KAŻDY możliwy wariant naszego pomocniczego paska */
+  #bh-risk-mini,
+  #bhRiskMini,
+  #risk-insight,
+  .risk-insight,
+  .bh-risk-helper,
+  .risk-helper {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+  }
+</style>
+
+<script>
+  (function(){
+    // 1) Usuń po id/klasie (różne warianty nazw)
+    ['bh-risk-mini','bhRiskMini','risk-insight'].forEach(id=>{
+      document.querySelectorAll('#'+id).forEach(el=>el.remove());
+    });
+    ['risk-insight','bh-risk-helper','risk-helper'].forEach(cls=>{
+      document.querySelectorAll('.'+cls).forEach(el=>el.remove());
+    });
+
+    // 2) Jeśli pod paskiem ryzyka został pusty DIV/SECTION — wytnij
+    const riskMini = document.querySelector('#s-objawy .risk-mini');
+    if (riskMini) {
+      const sib = riskMini.nextElementSibling;
+      if (sib && sib.matches('div,section,article') && sib.children.length === 0 && sib.textContent.trim()==='') {
+        sib.remove();
+      }
+    }
+
+    // 3) Jeśli ktoś kiedyś dodał style w <style> o #bh-risk-mini — schowaj je
+    // (bezpieczne: nie dotyka innych stylów, tylko je nadpisujemy wyżej)
+  })();
+</script>
 </body>
 </html>
