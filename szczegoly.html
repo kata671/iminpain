@@ -3948,5 +3948,29 @@ body[data-page="szczegoly"] #s-objawy .cursor{ width:18px !important; height:18p
     display: none !important;
   }
 </style>
+<style id="bh-lang-toggle-fix">
+  body[data-page="szczegoly"] #bhLangPick select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background: transparent !important;   /* całkowicie czyste tło */
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;          /* zero cienia */
+    padding: 4px 10px !important;         /* minimalnie mniejsze */
+    font-size: 13px !important;           /* subtelnie mniejszy font */
+    font-weight: 800 !important;
+    text-align: center !important;
+    min-width: 58px !important;           /* pod PL/EN */
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    color: #fff !important;               /* biały, spójny z UI */
+  }
+
+  /* usuń label obok */
+  body[data-page="szczegoly"] #bhLangPick label {
+    display: none !important;
+  }
+</style>
 </body>
 </html>
