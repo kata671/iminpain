@@ -4770,5 +4770,100 @@ document.addEventListener("DOMContentLoaded", ()=>{
   mo.observe(document.getElementById('s-objawy')||document.body, {childList:true,subtree:true});
 })();
 </script>
+<style>
+  #bh-risk-mini{
+    display:none; margin:10px 0 0; padding:10px 12px;
+    border-radius:12px; border:1px solid rgba(164,107,255,.28);
+    background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+    box-shadow:0 10px 24px rgba(8,10,22,.35), inset 0 0 0 1px rgba(255,255,255,.06);
+    font-weight:700; color:#e9f0ff;
+  }
+  #bh-risk-mini .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  #bh-risk-mini .lvl{padding:3px 8px;border-radius:999px;font-size:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08)}
+  #bh-risk-mini .lvl.low{border-color:rgba(112,225,177,.6)}
+  #bh-risk-mini .lvl.mid{border-color:rgba(255,184,108,.7)}
+  #bh-risk-mini .lvl.high{border-color:rgba(255,107,107,.8)}
+  #bh-risk-mini ul{margin:6px 0 0; padding:0; list-style:none; display:grid; gap:6px}
+  #bh-risk-mini li{padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05)}
+  @keyframes bhRedPulse{0%{box-shadow:0 0 0 0 rgba(255,107,107,.10),0 0 18px rgba(255,107,107,.35)}50%{box-shadow:0 0 0 8px rgba(255,107,107,.08),0 0 26px rgba(255,107,107,.55)}100%{box-shadow:0 0 0 0 rgba(255,107,107,.10),0 0 18px rgba(255,107,107,.35)}}
+  .pulse-red{animation:bhRedPulse 2s ease-in-out infinite; border-color:rgba(255,107,107,.8)!important}
+</style>
+<script>
+(function(){
+  // 1) gdzie wstawić box – NATYCHMIAST pod #riskbar
+  function ensureBox(){
+    var bar = document.getElementById('riskbar');
+    if(!bar) return null;
+    var box = document.getElementById('bh-risk-mini');
+    if(!box){
+      box = document.createElement('div');
+      box.id = 'bh-risk-mini';
+      bar.parentNode.insertBefore(box, bar.nextSibling);
+    }
+    return box;
+  }
+  // 2) PL/EN teksty z automatycznym wykryciem języka
+  function L(){ try{return (window.__getLang && __getLang())==='en'?'en':'pl'; }catch(e){return 'pl';} }
+  var TXT={
+    pl:{low:'Ryzyko niskie', mid:'Ryzyko umiarkowane', high:'Ryzyko wysokie',
+        tips:{low:['Opieka domowa: odpoczynek, płyny.','Obserwuj czerwone flagi.','Zajrzyj do „OTC” i „Pierwsza pomoc”.'],
+              mid:['Rozważ POZ przy utrzymujących się dolegliwościach.','Celowane OTC według objawów.','Sprawdź „Choroby” i „Lekarze”.'],
+              high:['Zaznaczono objawy alarmowe.','Skontaktuj się z pomocą pilnie.','Użyj 112 lub udaj się na SOR.']},
+        cta112:'Zadzwoń 112'},
+    en:{low:'Low risk', mid:'Moderate risk', high:'High risk',
+        tips:{low:['Home care: rest & fluids.','Monitor for red flags.','See “OTC” and “First aid”.'],
+              mid:['Consider GP if persisting.','Targeted OTC for relief.','Open “Conditions” / “Doctors”.'],
+              high:['Red flags selected.','Act now — urgent care.','Call 112 / go to ER.']},
+        cta112:'Call 112'}
+  };
+  // 3) policz bieżące dane
+  function currentRisk(){
+    var c=document.getElementById('risk-cursor-card');
+    var p = c ? parseFloat(String(c.style.left||'0%').replace('%',''))||0 : 0;
+    return Math.max(0,Math.min(100,p));
+  }
+  function selectedCountIn(id){
+    try{ return document.querySelectorAll('#'+id+' li.li-checked').length; }catch(e){ return 0; }
+  }
+  // 4) renderer boxa
+  function renderInsight(){
+    var box=ensureBox(); if(!box) return;
+    var lang=L(), t=TXT[lang];
+    var risk=currentRisk();
+    var urgentCnt=selectedCountIn('urgent');
+    var anySelected = selectedCountIn('symp-common') + urgentCnt > 0;
+
+    var lvl='low';
+    if(risk>=70 || urgentCnt>0) lvl='high';
+    else if(risk>=40) lvl='mid';
+
+    if(!anySelected){ box.style.display='none'; box.innerHTML=''; return; }
+
+    var head = '<div class="row"><span class="lvl '+lvl+'">'+t[lvl]+'</span>' +
+               (urgentCnt>0? '<span style="color:#ffb4b4;font-weight:900">⚠️ '+urgentCnt+'</span>':'' )+
+               '</div>';
+    var tips = (t.tips[lvl]||[]).map(s=>'<li>'+s+'</li>').join('');
+    var cta  = '<a id="bh-mini-112" href="tel:112" class="'+(urgentCnt>0?'pulse-red':'')+'" '+
+               'style="display:inline-block;margin-top:6px;padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.08);font-weight:900;text-decoration:none;color:#fff">'+
+               t.cta112+'</a>';
+
+    box.innerHTML = head+'<ul>'+tips+'</ul>'+cta;
+    box.style.display='block';
+  }
+
+  // 5) wpięcie się w Twoje updateRisk (bez psucia)
+  var _orig = window.updateRisk;
+  window.updateRisk = function(){
+    try{ if(typeof _orig==='function') _orig(); }catch(e){}
+    try{ renderInsight(); }catch(e){}
+  };
+
+  // 6) pierwszy render + reakcje na zmiany
+  document.addEventListener('DOMContentLoaded', renderInsight);
+  document.addEventListener('bh:symptoms-changed', renderInsight);
+  document.addEventListener('bh:lang-changed', renderInsight);
+  setTimeout(renderInsight, 60);
+})();
+</script>
 </body>
 </html>
