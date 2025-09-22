@@ -2094,5 +2094,58 @@ ul.clean li:hover{
   });
 })();
 </script>
+<style id="bh-hotfix-cards-visibility">
+  /* ✅ 1) Tylko jedna karta na raz — przywrócenie logiki aria-hidden */
+  .cards .card { display: none !important; }
+  .cards .card[aria-hidden="false"] { display: block !important; }
+
+  /* ✅ 2) Delikatny „wow” look (kwadratowiej, glow) – bez ruszania treści */
+  :root{
+    --bh-radius: 12px;                  /* bardziej kwadratowo */
+  }
+  .cards .card{
+    border-radius: var(--bh-radius);
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    border: 1px solid rgba(164,107,255,.22);
+    box-shadow:
+      0 10px 28px rgba(0,0,0,.38),
+      0 0 0 1px rgba(255,255,255,.08) inset,
+      0 0 18px rgba(164,107,255,.18);
+    transition: box-shadow .28s ease, transform .24s ease, border-color .24s ease, background .24s ease;
+  }
+  .cards .card:hover,
+  .cards .card:focus-within{
+    transform: translateY(-1px);
+    border-color: rgba(255,255,255,.26);
+    box-shadow:
+      0 14px 36px rgba(0,0,0,.46),
+      0 0 0 1px rgba(255,255,255,.12) inset,
+      0 0 28px rgba(164,107,255,.28);
+  }
+
+  /* „kwadratowe” itemy w kartach */
+  .cards .card ul.clean li{
+    border-radius: 10px;
+    border:1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.04);
+  }
+
+  /* Choroby/Lekarze – nadal mocniejszy niebieski akcent */
+  #s-dx.card,
+  #s-docs.card{
+    border-color: rgba(59,130,246,.55);
+    box-shadow:
+      0 14px 34px rgba(8,10,22,.46),
+      0 0 0 1px rgba(59,130,246,.25) inset,
+      0 0 24px rgba(59,130,246,.30);
+  }
+  #s-dx.card:hover,
+  #s-docs.card:hover{
+    box-shadow:
+      0 16px 38px rgba(8,10,22,.50),
+      0 0 0 1px rgba(59,130,246,.30) inset,
+      0 0 36px rgba(59,130,246,.45);
+  }
+</style>
 </body>
 </html>
