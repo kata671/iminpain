@@ -2147,5 +2147,168 @@ ul.clean li:hover{
       0 0 36px rgba(59,130,246,.45);
   }
 </style>
+<style id="bh-ultra-card-ui">
+  /* 1) Tylko jedna karta naraz (zostawiamy działanie JS z aria-hidden) */
+  .cards .card { display: none !important; }
+  .cards .card[aria-hidden="false"] { display: block !important; }
+
+  /* 2) Akcenty i emoji per karta (kolor = --ac, emoji = --em) */
+  #s-objawy   { --ac: 94,234,212; --em:"📝"; }
+  #s-przyczyny{ --ac:164,107,255; --em:"🧠"; }
+  #s-aid      { --ac:112,225,177; --em:"🆘"; }
+  #s-otc      { --ac:255,184,108; --em:"💊"; }
+  #s-rx       { --ac:255,107,107; --em:"🧾"; }
+  #s-rehab    { --ac: 94,234,212; --em:"🏃"; }
+  #s-mity     { --ac:164,107,255; --em:"🤔"; }
+  #s-faq      { --ac: 94,234,212; --em:"❓"; }
+  #s-dx       { --ac: 59,130,246; --em:"🩺"; }
+  #s-docs     { --ac: 59,130,246; --em:"👩‍⚕️"; }
+
+  :root{
+    --bh-card-r:12px;        /* „bardziej kwadratowe” */
+    --bh-border: rgba(255,255,255,.14);
+    --bh-card-bg: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  }
+
+  /* 3) Karty – szkło + neon + subtelny gradient ramki */
+  .cards .card{
+    position: relative;
+    border-radius: var(--bh-card-r);
+    padding: 16px 16px 14px;
+    background: var(--bh-card-bg);
+    border: 1px solid var(--bh-border);
+    backdrop-filter: blur(10px) saturate(125%);
+    box-shadow:
+      0 14px 34px rgba(8,10,22,.42),
+      0 0 0 1px rgba(255,255,255,.08) inset,
+      0 0 22px rgba(164,107,255,.14);
+    transition: box-shadow .28s ease, transform .22s ease, border-color .24s ease, background .24s ease;
+    isolation: isolate;
+  }
+  .cards .card[aria-hidden="false"]:hover{
+    transform: translateY(-1px);
+    border-color: rgba(255,255,255,.22);
+    box-shadow:
+      0 16px 40px rgba(8,10,22,.50),
+      0 0 0 1px rgba(255,255,255,.12) inset,
+      0 0 34px rgba(164,107,255,.24);
+  }
+
+  /* cienka neonowa aureola w kolorze akcentu karty */
+  .cards .card[aria-hidden="false"]::after{
+    content:"";
+    position:absolute; inset:-2px;
+    border-radius: calc(var(--bh-card-r) + 2px);
+    pointer-events:none; z-index:-1;
+    background: radial-gradient(60% 80% at 50% 0%, rgba(var(--ac),.35), rgba(0,0,0,0)),
+                radial-gradient(60% 80% at 50% 100%, rgba(var(--ac),.18), rgba(0,0,0,0));
+    filter: blur(8px);
+  }
+
+  /* 4) Nagłówki – emotka + linia gradientowa */
+  .cards .card h3{
+    display:flex; align-items:center; gap:10px;
+    margin:.15rem 0 .9rem; font-size:16px; font-weight:900; letter-spacing:.3px; color:#e6f0ff;
+  }
+  .cards .card h3::before{
+    content: var(--em, "•");
+    display:inline-grid; place-items:center;
+    width:26px; height:26px; border-radius:9px;
+    background: rgba(var(--ac), .14);
+    border: 1px solid rgba(var(--ac), .45);
+    box-shadow: inset 0 0 0 1px rgba(var(--ac), .18);
+    font-size:14px;
+  }
+  .cards .card h3::after{
+    content:""; flex:1; height:1px; margin-left:10px;
+    background: linear-gradient(90deg, rgba(207,226,255,.55), rgba(255,255,255,.06) 45%, transparent);
+  }
+
+  /* 5) Listy – „kafelkowe” wiersze z paskiem akcentu i stanem zaznaczenia */
+  ul.clean{ list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+  /* na większych ekranach w niektórych sekcjach możemy składać w kolumny */
+  @media (min-width: 960px){
+    #s-objawy ul.clean, #s-przyczyny ul.clean, #s-aid ul.clean, #s-otc ul.clean,
+    #s-rx ul.clean, #s-rehab ul.clean, #s-mity ul.clean, #s-faq ul.clean{
+      grid-template-columns: 1fr;
+    }
+  }
+  ul.clean li{
+    position:relative; padding:12px 12px 12px 46px;
+    border-radius: 12px;
+    border:1px solid rgba(255,255,255,.14);
+    background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    color:#f6f8ff;
+    transition: border-color .2s ease, box-shadow .2s ease, transform .12s ease, background .2s ease;
+  }
+  /* pionowy pasek akcentu */
+  ul.clean li::before{
+    content:"";
+    position:absolute; left:10px; top:10px; bottom:10px; width:6px; border-radius:6px;
+    background: linear-gradient(180deg, rgba(var(--ac),.55), rgba(var(--ac),.18));
+    box-shadow: 0 0 10px rgba(var(--ac),.28);
+    opacity:.6; transition:opacity .2s ease, box-shadow .2s ease;
+  }
+  /* checkbox-badge (zostawiamy Twój .cb, tylko go upiększamy) */
+  .cb{
+    position:absolute; left:22px; top:50%; transform:translate(-50%,-50%);
+    width:18px; height:18px; border-radius:6px;
+    border:1px solid rgba(255,255,255,.35);
+    background: rgba(255,255,255,.06);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+    transition: all .15s ease;
+  }
+  .li-checked .cb{
+    background:#fff;
+    box-shadow: 0 0 0 2px rgba(var(--ac), .35), 0 0 14px rgba(var(--ac), .35);
+  }
+  /* hover/aktywny stan wiersza */
+  ul.clean li:hover{
+    border-color: rgba(255,255,255,.22);
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    transform: translateY(-1px);
+  }
+  ul.clean li:hover::before{ opacity:.9; box-shadow: 0 0 16px rgba(var(--ac), .42); }
+
+  /* zaznaczony wiersz – mocniejszy glow */
+  ul.clean li.li-checked{
+    border-color: rgba(var(--ac), .55);
+    box-shadow:
+      0 10px 24px rgba(0,0,0,.28),
+      0 0 0 1px rgba(var(--ac), .28) inset,
+      0 0 20px rgba(var(--ac), .28);
+  }
+
+  /* 6) Pasek ryzyka – delikatny lifting */
+  .riskbar{
+    outline: 1px solid rgba(255,255,255,.16);
+    background: linear-gradient(90deg, #70e1b1, #ffd16c, #ff6b6b);
+  }
+  .cursor{
+    box-shadow: 0 0 0 2px rgba(255,255,255,.6), 0 0 14px rgba(255,255,255,.25);
+  }
+
+  /* 7) Choroby/Lekarze – premium blue neon (serce strony) */
+  #s-dx.card,
+  #s-docs.card{
+    border-color: rgba(59,130,246,.65);
+    box-shadow:
+      0 16px 42px rgba(8,10,22,.52),
+      0 0 0 1px rgba(59,130,246,.28) inset,
+      0 0 28px rgba(59,130,246,.34);
+  }
+  #s-dx.card[aria-hidden="false"]::after,
+  #s-docs.card[aria-hidden="false"]::after{
+    background: radial-gradient(60% 80% at 50% 0%, rgba(59,130,246,.35), rgba(0,0,0,0)),
+                radial-gradient(60% 80% at 50% 100%, rgba(59,130,246,.20), rgba(0,0,0,0));
+  }
+
+  /* 8) Małe ekrany – ciasno, ale elegancko */
+  @media (max-width: 640px){
+    .cards .card{ padding: 14px 12px; border-radius: 10px; }
+    ul.clean li{ padding: 10px 10px 10px 42px; border-radius: 10px; }
+    .cards .card h3{ font-size: 15px; }
+  }
+</style>
 </body>
 </html>
