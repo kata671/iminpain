@@ -348,6 +348,45 @@
     .card.pulse-blue::after{ animation:none !important }
   }
 </style>
+<style id="bh-blue-pulse-final">
+  /* Upewnij się że glow jest widoczny nad innymi cieniami */
+  #s-dx.pulse-blue, 
+  #s-docs.pulse-blue {
+    position: relative;
+    z-index: 5; /* ponad inne elementy */
+  }
+
+  #s-dx.pulse-blue::after, 
+  #s-docs.pulse-blue::after {
+    content: "";
+    position: absolute;
+    inset: -6px;  /* halo większe od karty */
+    border-radius: 18px;
+    pointer-events: none;
+    animation: bhPulseDxDocs 2.4s ease-in-out infinite;
+  }
+
+  @keyframes bhPulseDxDocs {
+    0% {
+      box-shadow: 0 0 0 2px rgba(59,130,246,.5),
+                  0 0 18px rgba(96,165,250,.45),
+                  0 0 28px rgba(96,165,250,.55);
+      opacity: .85;
+    }
+    50% {
+      box-shadow: 0 0 0 4px rgba(59,130,246,.7),
+                  0 0 28px rgba(96,165,250,.75),
+                  0 0 42px rgba(96,165,250,.8);
+      opacity: 1;
+    }
+    100% {
+      box-shadow: 0 0 0 2px rgba(59,130,246,.5),
+                  0 0 18px rgba(96,165,250,.45),
+                  0 0 28px rgba(96,165,250,.55);
+      opacity: .85;
+    }
+  }
+</style>
 </head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
