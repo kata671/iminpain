@@ -789,5 +789,103 @@
   }
 }
 </style>
+<style id="bh-mobile-topbar-v2">
+@media (max-width: 768px){
+
+  /* Dajemy miejsce pod stały topbar (search + tłumacz) i sticky numery */
+  body[data-page="home"] .container{
+    padding-top: 136px !important; /* 48px topbar + odstęp + wysokość numerów */
+  }
+
+  /* === TOPBAR === */
+  /* tłumacz – prawa strona topbaru */
+  #bhLangPick{
+    position: fixed !important;
+    top: 10px !important;
+    right: 12px !important;
+    left: auto !important;
+    z-index: 6000 !important;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 12px;
+    padding: 6px 10px;
+    backdrop-filter: saturate(120%) blur(6px);
+  }
+  #bhLangPick label{ display:none !important; }
+  #bhLangSelect{
+    font-size: 13px; font-weight: 700; color:#fff;
+    background: transparent; border: none; outline: none; letter-spacing: .3px;
+  }
+  #bhLangSelect option{ color:#0e1230; background:#fff; }
+
+  /* wyszukiwarka – lewa strona topbaru (przyklejona) */
+  .header .tools .search{
+    position: fixed !important;
+    top: 10px !important;
+    left: 12px !important;
+    right: 108px !important; /* zostawiamy miejsce na tłumacz po prawej */
+    margin: 0 !important;
+    z-index: 6000 !important;
+  }
+  #bhSearch{
+    width: 100%; height: 44px;
+    padding: 0 42px 0 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.22);
+    background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+    color: #fff; font-weight: 700; letter-spacing: .2px;
+    box-shadow: 0 8px 20px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.10);
+  }
+  #bhSearch::placeholder{ color:#cfe2ff; opacity:.75 }
+  #bhSearchIcon{
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    opacity: .9;
+  }
+
+  /* === NUMERY ALARMOWE – sticky tuż pod topbarem, nie zjeżdżają === */
+  .emergency-list{
+    position: sticky !important;
+    top: 64px !important;        /* 10px margines + 44px wysokość topbaru + ~10px luzu */
+    z-index: 5500 !important;
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 8px;
+    padding: 8px; margin: 10px 0 12px 0;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+    border: 1px solid rgba(255,255,255,.20);
+    box-shadow: 0 12px 28px rgba(8,10,22,.45), inset 0 0 0 1px rgba(164,107,255,.12);
+    backdrop-filter: saturate(120%) blur(6px);
+  }
+  .emergency-list a{
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 8px 0; border-radius: 10px; text-decoration: none;
+    font-weight: 900; letter-spacing: .2px; color:#ffeef0;
+    border: 1px solid rgba(255,107,107,.55);
+    background: linear-gradient(180deg, rgba(255,107,107,.22), rgba(255,255,255,.03));
+    box-shadow: 0 6px 14px rgba(255,107,107,.35), 0 0 0 1px rgba(255,107,107,.22) inset;
+  }
+
+  /* Pigułki niżej – zostawiamy jak były, ale lekko porządkujemy odstęp na mobile */
+  nav.situations{ margin-top: 8px !important; }
+
+  /* Brand wyśrodkuj i zbij odstępy (na mobile góra to topbar + emergency) */
+  .header{ margin: 0 0 8px 0 !important; }
+  .header .brand{ text-align: center; }
+  .header .brand h1{
+    margin: 0; font-size: 20px; font-weight: 900; letter-spacing: .3px;
+    text-shadow: 0 1px 0 rgba(0,0,0,.25);
+  }
+  .header .brand small{
+    display:block; margin-top:4px; font-size:12px; color:#cfe2ff; font-weight:700;
+  }
+
+  /* Podpowiedzi wyszukiwarki – niech nie podchodzą pod topbar */
+  .bh2025-suggest{
+    margin-top: 8px !important;
+  }
+}
+</style>
 </body>
 </html>
