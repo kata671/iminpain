@@ -3181,5 +3181,43 @@ a.bh-dx-btn, a.bh-docs-btn {
                    0 0 12px rgba(94,234,212,.4); }
 }
 </style>
+<style id="bh-card-fix-strong">
+/* WYŁĄCZ GLOW TYLKO NA DUŻYCH KARTACH TREŚCI */
+#s-dx.card, #s-docs.card,
+#s-dx.card.glow--blue, #s-docs.card.glow--blue {
+  /* spokojna, elegancka karta */
+  border: 1px solid rgba(164,107,255,.24) !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.08) !important,
+    0 10px 24px rgba(8,10,22,.45) !important;
+  animation: none !important;
+  filter: none !important;
+}
+
+/* jeśli glow był robiony pseudo-elementami – wyłącz je */
+#s-dx.card::before, #s-dx.card::after,
+#s-docs.card::before, #s-docs.card::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* ZOSTAW glow NA PRZYCISKACH „Choroby” / „Lekarze” (góra i dół) */
+.tab[data-variant="dx"][aria-selected="true"],
+.tab[data-variant="docs"][aria-selected="true"],
+#dx-open, #docs-open {
+  border-color: rgba(94,234,212,.85) !important;
+  box-shadow:
+    0 0 0 2px rgba(94,234,212,.55),
+    0 0 18px rgba(94,234,212,.45) !important;
+  animation: bhPulseBlue 2s ease-in-out infinite !important;
+}
+
+@keyframes bhPulseBlue {
+  0%   { box-shadow:0 0 0 2px rgba(94,234,212,.55), 0 0 12px rgba(94,234,212,.40); }
+  50%  { box-shadow:0 0 0 4px rgba(94,234,212,.85), 0 0 26px rgba(94,234,212,.70); }
+  100% { box-shadow:0 0 0 2px rgba(94,234,212,.55), 0 0 12px rgba(94,234,212,.40); }
+}
+</style>
 </body>
 </html>
