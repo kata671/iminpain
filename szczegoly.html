@@ -3829,5 +3829,17 @@ body[data-page="szczegoly"] #s-objawy .risk-mini{ margin:.35rem 2px .65rem !impo
 body[data-page="szczegoly"] #s-objawy .riskbar{ height:14px !important; }
 body[data-page="szczegoly"] #s-objawy .cursor{ width:18px !important; height:18px !important; }
 </style>
+<style>
+  /* Delikatne przesunięcie tłumacza w lewo */
+  #bhLangPick {
+    right: 40px !important; /* było 20px/24px, teraz dalej od krawędzi */
+  }
+
+  @media (max-width:768px){
+    #bhLangPick {
+      right: 24px !important; /* na telefonach też ciut w lewo */
+    }
+  }
+</style>
 </body>
 </html>
