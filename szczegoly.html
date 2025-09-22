@@ -2805,5 +2805,64 @@ ul.clean li:hover{
   opacity: .85;
 }
 </style>
+<style id="bh-urgent-chips-v3">
+/* kontener jak w Objawach */
+#s-objawy #urgent{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:10px !important;
+  margin-top:8px !important;
+}
+
+/* każdy punkt = chip */
+#s-objawy #urgent li{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  padding:10px 14px !important;
+  margin:0 !important;
+  border-radius:14px !important;
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)) !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  color:#f6f8ff !important;
+  box-shadow:0 6px 16px rgba(8,10,22,.35),
+             0 0 0 1px rgba(164,107,255,.16) inset !important;
+  backdrop-filter:blur(6px) saturate(120%) !important;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease !important;
+  width:auto !important;
+}
+
+/* ikonka ostrzeżenia po lewej */
+#s-objawy #urgent li::before{
+  content:"⚠️";
+  font-size:1.05em;
+  opacity:.95;
+}
+
+/* ukryj kwadracik .cb żeby nic nie zawadzało */
+#s-objawy #urgent li .cb{ display:none !important; }
+
+/* hover + stan zaznaczony (jeśli klikalne) */
+#s-objawy #urgent li:hover{
+  transform:translateY(-2px);
+  border-color:rgba(94,234,212,.55) !important;
+  box-shadow:0 10px 24px rgba(8,10,22,.45),
+             0 0 18px rgba(96,165,250,.35),
+             0 0 0 1px rgba(94,234,212,.28) inset !important;
+}
+#s-objawy #urgent li.li-checked{
+  background:linear-gradient(180deg, rgba(59,130,246,.18), rgba(255,255,255,.04)) !important;
+  border-color:rgba(59,130,246,.7) !important;
+  box-shadow:0 0 0 2px rgba(59,130,246,.6),
+             0 8px 22px rgba(8,10,22,.45) !important;
+}
+
+/* dopasowanie nagłówka sekcji czerwonych flag */
+#s-objawy .subhead{
+  display:flex; align-items:center; gap:8px;
+  font-weight:900; letter-spacing:.3px;
+}
+#s-objawy .subhead::before{ content:"🚩"; }
+</style>
 </body>
 </html>
