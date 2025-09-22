@@ -3841,5 +3841,53 @@ body[data-page="szczegoly"] #s-objawy .cursor{ width:18px !important; height:18p
     }
   }
 </style>
+<style id="bh-lang-override-final">
+  /* Najwyższa możliwa specyficzność + !important, tylko na tej stronie */
+  html body[data-page="szczegoly"] .langpick#bhLangPick,
+  html body[data-page="szczegoly"] #bhLangPick,
+  body[data-page="szczegoly"] #bhLangPick {
+    position: fixed !important;
+    top: 16px !important;
+    right: 56px !important;  /* ← przesuń w lewo o tyle pikseli */
+    left: auto !important;
+    z-index: 99999 !important;
+  }
+
+  /* Telefon: trochę mniej w lewo */
+  @media (max-width: 768px){
+    html body[data-page="szczegoly"] #bhLangPick {
+      top: 10px !important;
+      right: 28px !important; /* ← telefon */
+    }
+  }
+</style>
+
+<script>
+  // Ostateczny „armor” – wbicie stylu inline z !important
+  (function(){
+    var el = document.getElementById('bhLangPick');
+    if(!el) return;
+
+    function apply(forceMobile){
+      el.style.setProperty('position','fixed','important');
+      el.style.setProperty('left','auto','important');
+      el.style.setProperty('top', (forceMobile ? '10px' : '16px'), 'important');
+      el.style.setProperty('right', (forceMobile ? '28px' : '56px'), 'important');
+      el.style.setProperty('z-index','99999','important');
+    }
+
+    // start
+    apply(window.innerWidth <= 768);
+
+    // popraw po zmianie rozmiaru / orientacji
+    window.addEventListener('resize', function(){
+      apply(window.innerWidth <= 768);
+    });
+
+    // gdyby ktoś przebijał po czasie – spróbuj jeszcze raz po renderze
+    requestAnimationFrame(function(){ apply(window.innerWidth <= 768); });
+    setTimeout(function(){ apply(window.innerWidth <= 768); }, 300);
+  })();
+</script>
 </body>
 </html>
