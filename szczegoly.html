@@ -2669,5 +2669,108 @@ ul.clean li:hover{
     .card#s-objawy #symp-common>li{font-size:14px;padding:16px 10px}
   }
 </style>
+<style id="bh-risk-visual-v1">
+  /* kontener „Ryzyko” */
+  .card#s-objawy .risk-mini{
+    display:flex; align-items:center; gap:10px;
+    padding:12px 14px; margin:.35rem 0 .6rem;
+    border-radius:14px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.16);
+    backdrop-filter:blur(8px) saturate(130%);
+    box-shadow:inset 0 0 12px rgba(0,0,0,.35);
+  }
+  .card#s-objawy .risk-mini small{
+    font-weight:900; letter-spacing:.2px; color:#cfe2ff;
+    min-width:120px;
+  }
+
+  /* tor paska */
+  .card#s-objawy .riskbar{
+    position:relative; width:100%; height:18px;
+    border-radius:999px; overflow:hidden;
+    outline:1px solid rgba(255,255,255,.16);
+    background:linear-gradient(90deg,#4ade80,#facc15,#ef4444);
+  }
+  /* kursor (kropka) */
+  .card#s-objawy .riskbar .cursor{
+    top:50%; transform:translate(-50%,-50%);
+    width:18px; height:18px; border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 0 4px rgba(255,255,255,.35), 0 0 16px rgba(255,255,255,.6);
+    transition:left .55s ease;   /* płynne przesuwanie */
+  }
+
+  /* kolor napisu „Ryzyko niskie/…” */
+  .card#s-objawy .risk-mini[data-level="low"]    small #risk-label{ color:#4ade80 }
+  .card#s-objawy .risk-mini[data-level="mid"]    small #risk-label{ color:#facc15 }
+  .card#s-objawy .risk-mini[data-level="high"]   small #risk-label{ color:#ef4444 }
+
+  /* lekkie „pompowanie” przy mid/high */
+  @keyframes bhPulseRisk{0%{box-shadow:0 0 0 0 rgba(255,255,255,.2)}70%{box-shadow:0 0 0 10px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+  .card#s-objawy .risk-mini[data-level="mid"]  .cursor{ animation:bhPulseRisk 1.8s ease-in-out infinite; }
+  .card#s-objawy .risk-mini[data-level="high"] .cursor{ animation:bhPulseRisk 1.2s ease-in-out infinite; }
+</style>
+
+<script>
+/* dopnij się do istniejącej funkcji – tylko wizualny status */
+(function(){
+  const wrap = document.querySelector('.card#s-objawy .risk-mini');
+  const bar  = document.getElementById('riskbar');
+  if(!wrap || !bar) return;
+
+  const _oldUpdate = window.updateRisk;
+  window.updateRisk = function(){
+    if(typeof _oldUpdate === 'function') _oldUpdate();
+
+    // po wyliczeniu przez Twój kod:
+    const lbl = document.getElementById('risk-label')?.textContent || '';
+    let level = 'low';
+    if(/wysokie|high/i.test(lbl)) level='high';
+    else if(/umiark|moderate|średnie/i.test(lbl)) level='mid';
+    wrap.setAttribute('data-level', level);
+  };
+
+  // ustaw od razu przy starcie
+  try{ window.updateRisk(); }catch(e){}
+})();
+</script>
+<style id="bh-urgent-cards-v1">
+  .card#s-objawy .subhead{
+    margin:.9rem 0 .5rem;
+    font-size:14px; font-weight:900; letter-spacing:.25px;
+    color:#ffdfd9;
+    text-shadow:0 1px 2px rgba(0,0,0,.5);
+  }
+
+  /* lista czerwonych flag */
+  .card#s-objawy #urgent{
+    list-style:none; margin:.2rem 0 0; padding:0;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .card#s-objawy #urgent > li{
+    position:relative;
+    padding:12px 14px 12px 44px;
+    border-radius:14px;
+    background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+    border:1px solid rgba(255,255,255,.16);
+    color:#ffeaea;
+    font-weight:700;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  .card#s-objawy #urgent > li::before{
+    content:"⚠️";
+    position:absolute; left:12px; top:50%; transform:translateY(-50%);
+    width:24px; height:24px; display:grid; place-items:center;
+    border-radius:8px;
+    background:rgba(255,107,107,.18);
+    box-shadow:inset 0 0 0 1px rgba(255,107,107,.45), 0 0 18px rgba(255,107,107,.25);
+  }
+  /* delikatne podświetlenie przy hoverze/aktywnym elemencie */
+  .card#s-objawy #urgent > li:hover{
+    box-shadow:0 10px 22px rgba(0,0,0,.35), 0 0 24px rgba(255,107,107,.35);
+    transform:translateY(-1px);
+  }
+</style>
 </body>
 </html>
