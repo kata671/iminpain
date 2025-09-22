@@ -2497,5 +2497,73 @@ ul.clean li:hover{
     }
   }
 </style>
+<style id="bh-objawy-redesign-v2">
+  /* OBJAWY = ładna siatka kart (tylko sekcja Objawy) */
+  .card#s-objawy #symp-common{
+    display:grid !important;
+    grid-template-columns:repeat(auto-fill, minmax(180px,1fr));
+    gap:14px;
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+
+  .card#s-objawy #symp-common > li{
+    position:relative;
+    padding:18px 14px;
+    border-radius:16px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(164,107,255,.25);
+    color:#eef2ff;
+    font-weight:600;
+    font-size:15px;
+    line-height:1.4;
+    text-align:center;
+    cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+
+  .card#s-objawy #symp-common > li:hover{
+    background:rgba(164,107,255,.08);
+    transform:translateY(-2px);
+    box-shadow:0 6px 14px rgba(0,0,0,.35), 0 0 18px rgba(164,107,255,.28);
+  }
+
+  /* Zaznaczone (Twoja logika dodaje .li-checked) */
+  .card#s-objawy #symp-common > li.li-checked{
+    background:rgba(94,234,212,.12);
+    border-color:rgba(94,234,212,.6);
+    box-shadow:0 0 0 2px rgba(94,234,212,.55), 0 0 20px rgba(94,234,212,.45);
+    font-weight:700;
+    color:#fff;
+  }
+
+  /* schowaj techniczny „checkbox” i usuń lewy padding z niego */
+  .card#s-objawy #symp-common > li .cb{
+    display:none !important;
+  }
+
+  /* znaczek ✓ w prawym górnym rogu po zaznaczeniu */
+  .card#s-objawy #symp-common > li.li-checked::after{
+    content:"✓";
+    position:absolute;
+    top:10px;
+    right:12px;
+    font-size:18px;
+    color:#5eead4;
+    text-shadow:0 0 8px rgba(94,234,212,.6);
+    pointer-events:none;
+  }
+
+  /* Mobile */
+  @media (max-width:640px){
+    .card#s-objawy #symp-common{
+      grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
+      gap:10px;
+    }
+    .card#s-objawy #symp-common > li{ font-size:14px; padding:14px 10px; }
+  }
+</style>
 </body>
 </html>
