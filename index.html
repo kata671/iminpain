@@ -668,5 +668,126 @@
     #bhLangSelect{ font-size: 13px; }
   }
 </style>
+<style id="bh-mobile-top-polish">
+@media (max-width: 768px){
+
+  /* --- KONTENER / ODDECH --- */
+  body[data-page="home"] .container{
+    padding-top: 64px !important;   /* miejsce dla tłumacza */
+  }
+
+  /* --- TŁUMACZ: stały, prawy górny róg --- */
+  #bhLangPick{
+    position: fixed !important;
+    top: 10px !important; right: 12px !important; left: auto !important;
+    z-index: 5000 !important;
+    display: inline-flex !important; align-items: center; gap: 6px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 12px; padding: 6px 10px;
+    backdrop-filter: saturate(120%) blur(6px);
+  }
+  #bhLangPick label{ display:none !important; }
+  #bhLangSelect{
+    font-size: 13px; font-weight: 700; color:#fff;
+    background: transparent; border: none; outline: none;
+    letter-spacing: .3px;
+  }
+  #bhLangSelect option{ color:#0e1230; background:#fff; }
+
+  /* --- NAGŁÓWEK: logo + podtytuł ładnie wyśrodkowane --- */
+  .header{
+    display: grid; grid-template-columns: 1fr; gap: 8px;
+    margin: 0 0 10px 0;
+  }
+  .header .brand{
+    text-align: center;
+  }
+  .header .brand h1{
+    margin: 0;
+    font-size: 22px; font-weight: 900; letter-spacing: .3px;
+    text-shadow: 0 1px 0 rgba(0,0,0,.25);
+  }
+  .header .brand small{
+    display: block; margin-top: 4px;
+    font-size: 12px; color:#cfe2ff; font-weight: 700;
+    opacity: .9;
+  }
+
+  /* --- WYSZUKIWARKA: pełna szerokość + elegancki „chip” --- */
+  .header .tools{
+    display: contents; /* pozwala ustawić search pod brandem */
+  }
+  .header .tools .search{
+    grid-column: 1 / -1;
+    position: relative;
+    margin: 8px 0 0 0;
+  }
+  #bhSearch{
+    width: 100%; height: 42px;
+    padding: 0 42px 0 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.22);
+    background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+    color: #fff; font-weight: 700; letter-spacing: .2px;
+    box-shadow: 0 8px 20px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.10);
+  }
+  #bhSearch::placeholder{ color:#cfe2ff; opacity:.7 }
+  #bhSearchIcon{
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    opacity: .85;
+  }
+  /* panel podpowiedzi już masz – lekko dopieszczamy margines */
+  .bh2025-suggest{ margin-top: 8px !important; }
+
+  /* --- NUMERY ALARMOWE: jedna „karta” 4 kolumny --- */
+  .emergency-list{
+    position: sticky; top: 58px; z-index: 10;
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 8px;
+    padding: 8px; margin: 12px 0 12px 0;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+    border: 1px solid rgba(255,255,255,.20);
+    box-shadow: 0 12px 28px rgba(8,10,22,.45), inset 0 0 0 1px rgba(164,107,255,.12);
+    backdrop-filter: saturate(120%) blur(6px);
+  }
+  .emergency-list a{
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 8px 0; border-radius: 10px; text-decoration: none;
+    font-weight: 900; letter-spacing: .2px; color:#ffeef0;
+    border: 1px solid rgba(255,107,107,.55);
+    background: linear-gradient(180deg, rgba(255,107,107,.22), rgba(255,255,255,.03));
+    box-shadow: 0 6px 14px rgba(255,107,107,.35), 0 0 0 1px rgba(255,107,107,.22) inset;
+  }
+
+  /* --- PIGUŁKI (situations) – 2 kolumny, równo, bez zmiany linków --- */
+  nav.situations{
+    display: grid; grid-template-columns: repeat(2,1fr); gap: 10px;
+    margin: 10px 0 4px 0;
+  }
+  .situations .pill{
+    width: 100%;
+    justify-content: center;
+    padding: 12px 10px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 14px;
+  }
+  .situations .pill .ico{ width: 22px; height: 22px; border-radius: 6px; }
+  /* lekki hover na mobile (tap) */
+  .situations .pill:active{
+    transform: translateY(0) scale(.98);
+    filter: brightness(1.06);
+  }
+
+  /* --- DODATKOWY ODSTĘP pod „górą” przed trzema kartami (K/M/D) --- */
+  .subheadline{ margin-top: 8px; text-align: center; font-weight: 800; letter-spacing: .2px; }
+
+  /* Kafelki (kobieta/mężczyzna/dziecko) – równa wysokość obrazków na mobile */
+  section.stack[aria-label="Wybór postaci"] .card a{
+    grid-template-rows: 180px auto !important;
+  }
+}
+</style>
 </body>
 </html>
