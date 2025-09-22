@@ -3721,5 +3721,113 @@ body[data-page="szczegoly"] .cards #s-objawy ul#urgent.clean      > li::after{
   }
 }
 </style>
+<style id="bh-symptoms-urgent-polish">
+/* --- WSPÓLNA SIATKA — objawy + czerwone flagi --- */
+body[data-page="szczegoly"] #s-objawy ul#symp-common.clean,
+body[data-page="szczegoly"] #s-objawy ul#urgent.clean{
+  display:grid !important;
+  grid-template-columns:repeat(3, minmax(220px, 1fr)) !important;
+  gap:12px !important;
+  align-items:stretch !important;
+}
+
+/* Duże ekrany – 4 kolumny */
+@media (min-width:1180px){
+  body[data-page="szczegoly"] #s-objawy ul#symp-common.clean,
+  body[data-page="szczegoly"] #s-objawy ul#urgent.clean{
+    grid-template-columns:repeat(4, minmax(220px, 1fr)) !important;
+  }
+}
+/* Tablety */
+@media (max-width:900px){
+  body[data-page="szczegoly"] #s-objawy ul#symp-common.clean,
+  body[data-page="szczegoly"] #s-objawy ul#urgent.clean{
+    grid-template-columns:repeat(2, minmax(180px, 1fr)) !important;
+  }
+}
+/* Telefony wąskie */
+@media (max-width:520px){
+  body[data-page="szczegoly"] #s-objawy ul#symp-common.clean,
+  body[data-page="szczegoly"] #s-objawy ul#urgent.clean{
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+  }
+}
+
+/* --- BAZOWY KAFEL — jednakowy kształt/typografia --- */
+:root{
+  --chip-r:16px;             /* promień */
+  --chip-h:56px;             /* wysokość objawów */
+  --chip-h-urgent:54px;      /* wysokość flag (odrobinę niższe) */
+  --chip-b:1px;              /* grubość obramowania */
+  --chip-t:15px;             /* bazowy rozmiar fontu */
+}
+body[data-page="szczegoly"] #s-objawy ul#symp-common.clean > li,
+body[data-page="szczegoly"] #s-objawy ul#urgent.clean      > li{
+  display:flex !important; align-items:center !important; justify-content:center !important;
+  text-align:center !important;
+  border-radius:var(--chip-r) !important;
+  border:var(--chip-b) solid rgba(164,107,255,.32) !important;
+  background:linear-gradient(180deg, rgba(164,107,255,.10), rgba(255,255,255,.02)) !important;
+  box-shadow:
+    0 10px 22px rgba(8,10,22,.40),
+    inset 0 0 0 1px rgba(255,255,255,.05) !important;
+  padding:12px 14px !important;
+  color:#e9f2ff !important;
+  font-weight:800 !important;
+  letter-spacing:.2px !important;
+  font-size:var(--chip-t) !important;
+  line-height:1.2 !important;
+  min-height:var(--chip-h) !important;
+  position:relative !important; overflow:hidden !important;
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease, background .16s ease !important;
+}
+
+/* Flagi – odrobinę niższe, żeby wizualnie „ustąpiły” objawom, ale ten sam kształt */
+body[data-page="szczegoly"] #s-objawy ul#urgent.clean > li{
+  min-height:var(--chip-h-urgent) !important;
+}
+
+/* Hover – delikatny podbłysk */
+body[data-page="szczegoly"] #s-objawy ul#symp-common.clean > li:hover,
+body[data-page="szczegoly"] #s-objawy ul#urgent.clean      > li:hover{
+  transform:translateY(-1px) !important;
+  border-color:rgba(255,255,255,.38) !important;
+  box-shadow:
+    0 14px 26px rgba(8,10,22,.46),
+    0 0 0 1px rgba(164,107,255,.26) inset !important;
+}
+
+/* ZAZNACZONE (obu list) — czerwone, spójne, bez ptaszków */
+body[data-page="szczegoly"] #s-objawy :is(ul#symp-common.clean, ul#urgent.clean) > li.li-checked{
+  border-color:rgba(255,107,107,.90) !important;
+  background:
+    radial-gradient(120% 120% at 50% 0%, rgba(255,107,107,.25), rgba(255,255,255,0)) ,
+    linear-gradient(180deg, rgba(255,107,107,.18), rgba(255,255,255,.03)) !important;
+  box-shadow:
+    0 0 0 2px rgba(255,107,107,.55),
+    0 16px 30px rgba(8,10,22,.55),
+    inset 0 0 0 1px rgba(255,255,255,.06) !important;
+  color:#fff !important;
+}
+
+/* Usuń mini-checkboxy/ptaszki tylko w tych listach */
+body[data-page="szczegoly"] #s-objawy :is(#symp-common,#urgent) .cb{ display:none !important; }
+
+/* Podpis „Kiedy się niepokoić …” – równo z siatką */
+body[data-page="szczegoly"] #s-objawy .subhead{
+  display:flex; align-items:center; gap:8px;
+  font-weight:900; letter-spacing:.25px; color:#f0f5ff;
+  margin: 14px 2px 6px !important;
+}
+body[data-page="szczegoly"] #s-objawy .subhead::before{
+  content:"⚠️"; opacity:.9; filter:drop-shadow(0 0 6px rgba(255,107,107,.35));
+}
+
+/* Pasek ryzyka – kosmetyka spacingu, żeby całość była symetryczna */
+body[data-page="szczegoly"] #s-objawy .risk-mini{ margin:.35rem 2px .65rem !important; }
+body[data-page="szczegoly"] #s-objawy .riskbar{ height:14px !important; }
+body[data-page="szczegoly"] #s-objawy .cursor{ width:18px !important; height:18px !important; }
+</style>
 </body>
 </html>
