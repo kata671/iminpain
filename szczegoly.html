@@ -4564,5 +4564,211 @@ document.addEventListener("DOMContentLoaded", ()=>{
   mo.observe(document.body,{childList:true,subtree:true});
 })();
 </script>
+<style>
+  /* --- Risk Insight box --- */
+  #bh-risk-insight{
+    display:none; /* JS pokaże gdy będzie treść */
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin: 10px 0 0;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(164,107,255,.25);
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    box-shadow: 0 12px 28px rgba(8,10,22,.35), inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  #bh-risk-insight .ins-head{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    font-weight:900; letter-spacing:.2px; color:#e8f0ff;
+  }
+  #bh-risk-insight .level{
+    padding:4px 8px; border-radius:999px; font-size:12px; font-weight:900;
+    border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.07)
+  }
+  #bh-risk-insight .level.low{    border-color: rgba(112,225,177,.55); box-shadow: 0 0 0 1px rgba(112,225,177,.25) inset }
+  #bh-risk-insight .level.mid{    border-color: rgba(255,184,108,.65); box-shadow: 0 0 0 1px rgba(255,184,108,.30) inset }
+  #bh-risk-insight .level.high{   border-color: rgba(255,107,107,.75); box-shadow: 0 0 0 1px rgba(255,107,107,.35) inset }
+  #bh-risk-insight .ins-body{ margin:2px 0 0 }
+  #bh-risk-insight ul{ list-style:none; margin:0; padding:0; display:grid; gap:8px }
+  #bh-risk-insight li{
+    padding:9px 11px; border-radius:10px; border:1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05); color:#dfe6ff; font-weight:700;
+  }
+  #bh-risk-insight .ins-cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:4px }
+  #bh-risk-insight .ins-cta a,
+  #bh-risk-insight .ins-cta button{
+    appearance:none; border:1px solid rgba(255,255,255,.24);
+    background: rgba(255,255,255,.08); color:#fff; padding:9px 12px;
+    border-radius:12px; font-weight:900; cursor:pointer; text-decoration:none;
+  }
+
+  /* Pulsujący czerwony dla 112 */
+  @keyframes bhRedPulse{0%{box-shadow:0 0 0 0 rgba(255,107,107,.10),0 0 18px rgba(255,107,107,.35)}50%{box-shadow:0 0 0 8px rgba(255,107,107,.08),0 0 26px rgba(255,107,107,.55)}100%{box-shadow:0 0 0 0 rgba(255,107,107,.10),0 0 18px rgba(255,107,107,.35)}}
+  .pulse-red{ animation: bhRedPulse 2s ease-in-out infinite; border-color: rgba(255,107,107,.75)!important }
+
+  /* Pulsujący niebieski dla “Choroby/Lekarze” */
+  @keyframes bhBluePulse{0%{box-shadow:0 0 0 0 rgba(96,165,250,.10),0 0 18px rgba(96,165,250,.35)}50%{box-shadow:0 0 0 8px rgba(96,165,250,.08),0 0 26px rgba(96,165,250,.55)}100%{box-shadow:0 0 0 0 rgba(96,165,250,.10),0 0 18px rgba(96,165,250,.35)}}
+  .pulse-blue{ animation: bhBluePulse 2.2s ease-in-out infinite; border-color: rgba(59,130,246,.75)!important }
+</style>
+<script>
+(function(){
+  // znajdź lub utwórz box pod paskiem ryzyka
+  function ensureBox(){
+    var host = document.getElementById('s-objawy');
+    if(!host) return null;
+    var after = document.getElementById('urgent'); // chcemy TUŻ POD listą flag
+    var box   = document.getElementById('bh-risk-insight');
+    if(!box){
+      box = document.createElement('section');
+      box.id = 'bh-risk-insight';
+      box.setAttribute('aria-live','polite');
+      if(after && after.parentNode){
+        after.parentNode.insertBefore(box, after.nextSibling); // po czerwonych flagach
+      } else {
+        host.appendChild(box);
+      }
+    }
+    return box;
+  }
+
+  // tłumaczenia
+  function T(){
+    var en = (window.__getLang && __getLang()==='en');
+    return en ? {
+      level:{low:'Low risk', mid:'Moderate risk', high:'High risk'},
+      tips:{
+        low:[
+          'Home care: rest, fluids, light diet.',
+          'Watch for red flags — if they appear, seek help.',
+          'You can browse “OTC” and “First aid”.'
+        ],
+        mid:[
+          'Consider a GP evaluation if symptoms persist/worsen.',
+          'Use targeted OTC for relief (see the tab).',
+          'Check “Conditions” and “Doctors” for guidance.'
+        ],
+        high:[
+          'Urgent symptoms reported — act now.',
+          'Call emergency services or go to the ER.',
+          'Do not drive yourself if you feel unwell.'
+        ]
+      },
+      cta112:'Call 112',
+      seeDx:'Open Conditions',
+      seeDocs:'Open Doctors'
+    } : {
+      level:{low:'Ryzyko niskie', mid:'Ryzyko umiarkowane', high:'Ryzyko wysokie'},
+      tips:{
+        low:[
+          'Opieka domowa: odpoczynek, nawodnienie, lekka dieta.',
+          'Obserwuj czerwone flagi — w razie ich pojawienia zgłoś się po pomoc.',
+          'Zajrzyj do „Leki OTC” i „Pierwsza pomoc”.'
+        ],
+        mid:[
+          'Rozważ ocenę u lekarza POZ, jeśli objawy się utrzymują/narastają.',
+          'Użyj celowanych leków OTC (zobacz zakładkę).',
+          'Sprawdź „Choroby” i „Lekarze” po podpowiedzi.'
+        ],
+        high:[
+          'Zaznaczono objawy alarmowe — działaj teraz.',
+          'Zadzwoń po 112 lub jedź na SOR.',
+          'Nie prowadź, jeśli źle się czujesz.'
+        ]
+      },
+      cta112:'Zadzwoń 112',
+      seeDx:'Otwórz: Choroby',
+      seeDocs:'Otwórz: Lekarze'
+    };
+  }
+
+  // narzędzia z Twojej strony
+  function gatherSelected(){
+    try{
+      const from=(id)=>[...document.querySelectorAll('#'+id+' li.li-checked')].map(li=>li.textContent.toLowerCase());
+      return {symp: from('symp-common'), urgent: from('urgent')};
+    }catch(e){ return {symp:[],urgent:[]}; }
+  }
+  function currentRiskPercent(){
+    const c=document.getElementById('risk-cursor-card');
+    if(!c) return 0;
+    const m = String(c.style.left||'0%').replace('%','');
+    const v = Math.max(0, Math.min(100, parseFloat(m)||0));
+    return v;
+  }
+
+  function updateInsight(){
+    const box = ensureBox(); if(!box) return;
+    const L = T();
+    const {symp, urgent} = gatherSelected();
+    const risk = currentRiskPercent();
+    const hasUrgent = urgent.length > 0;
+    const hasAny    = (symp.length + urgent.length) > 0;
+
+    // dobierz poziom
+    let levelKey = 'low';
+    if(risk >= 70 || hasUrgent) levelKey = 'high';
+    else if(risk >= 40) levelKey = 'mid';
+
+    // zbuduj treść
+    const head =
+      '<div class="ins-head">' +
+        '<span class="level '+levelKey+'">'+L.level[levelKey]+'</span>' +
+        (hasUrgent ? '<span style="color:#ffb4b4;font-weight:900">⚠️</span>' : '') +
+        '<span style="color:#b8c2e0;font-weight:700">'+
+        (hasAny ? (symp.length+' • '+(urgent.length||0)+' ⚠︎') : '') +
+        '</span>' +
+      '</div>';
+
+    const tips = (L.tips[levelKey]||[]).map(t=>'<li>'+t+'</li>').join('');
+    const cta  =
+      '<div class="ins-cta">'+
+        (hasUrgent
+          ? '<a id="ins-112" class="pulse-red" href="tel:112">'+L.cta112+'</a>'
+          : '<a id="ins-112" href="tel:112">'+L.cta112+'</a>'
+        )+
+        '<button id="ins-dx" type="button">'+L.seeDx+'</button>'+
+        '<button id="ins-docs" type="button">'+L.seeDocs+'</button>'+
+      '</div>';
+
+    box.innerHTML = head + '<div class="ins-body"><ul>'+tips+'</ul>'+cta+'</div>';
+    box.style.display = hasAny ? 'grid' : 'none';
+
+    // podłącz akcje
+    const dxBtn   = document.getElementById('ins-dx');
+    const docsBtn = document.getElementById('ins-docs');
+    if(dxBtn){ dxBtn.onclick = function(){
+      try{ renderDx && renderDx(); }catch(e){}
+      const tab = document.querySelector('.tab[data-variant="dx"]');
+      if(tab){ tab.click(); }
+    } }
+    if(docsBtn){ docsBtn.onclick = function(){
+      try{ renderDocs && renderDocs(); }catch(e){}
+      const tab = document.querySelector('.tab[data-variant="docs"]');
+      if(tab){ tab.click(); }
+    } }
+
+    // puls dla przycisku 112 na karcie Objawy
+    const top112 = document.getElementById('cta-112');
+    if(top112){ top112.classList.toggle('pulse-red', hasUrgent); }
+
+    // puls dla zakładek „Choroby”/„Lekarze” u góry
+    const tabDx   = document.querySelector('.tab[data-variant="dx"]');
+    const tabDocs = document.querySelector('.tab[data-variant="docs"]');
+    const pulseBlue = hasAny; // coś zaznaczono -> zachęć
+    if(tabDx)   tabDx.classList.toggle('pulse-blue', pulseBlue);
+    if(tabDocs) tabDocs.classList.toggle('pulse-blue', pulseBlue);
+  }
+
+  // pierwsze odpalenie i subskrypcje
+  updateInsight();
+  setTimeout(updateInsight, 80); // po pierwszym renderze list
+  document.addEventListener('bh:symptoms-changed', updateInsight);
+  document.addEventListener('bh:lang-changed',     updateInsight);
+
+  // na wszelki wypadek przy zmianach DOM wokół list
+  const mo = new MutationObserver(updateInsight);
+  mo.observe(document.getElementById('s-objawy')||document.body, {childList:true,subtree:true});
+})();
+</script>
 </body>
 </html>
