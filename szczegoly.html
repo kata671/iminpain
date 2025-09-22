@@ -3972,5 +3972,54 @@ body[data-page="szczegoly"] #s-objawy .cursor{ width:18px !important; height:18p
     display: none !important;
   }
 </style>
+<script>
+/* BH LANG — twarda synchronizacja selektora i atrybutów na szczegóły.html */
+(function(){
+  const KEY = 'bh.lang';
+  const norm = v => (String(v||'pl').toLowerCase() === 'en' ? 'en' : 'pl');
+
+  function currentLang(){
+    try { return norm(localStorage.getItem(KEY)); } catch(e){ return 'pl'; }
+  }
+
+  function applyLang(){
+    const v = currentLang();
+    // Ustaw atrybuty <html>
+    const root = document.documentElement;
+    root.setAttribute('lang', v);
+    root.setAttribute('data-lang', v);
+
+    // Ustaw KAŻDY (nawet zdublowany) selektor #bhLangSelect na właściwą wartość
+    document.querySelectorAll('#bhLangSelect').forEach(sel=>{
+      if (sel && sel.value !== v) sel.value = v;
+    });
+  }
+
+  // Reakcja na zmianę selektora — zapis globalny i reload (jak na innych stronach)
+  function onChange(e){
+    const t = e.target;
+    if (!t || t.id !== 'bhLangSelect') return;
+    const v = norm(t.value);
+    try { localStorage.setItem(KEY, v); } catch(e){}
+    location.reload();
+  }
+
+  // 1) Zastosuj od razu (zanim inne skrypty zdążą „wymusić” PL)
+  applyLang();
+
+  // 2) Po załadowaniu DOM też ustaw poprawnie
+  document.addEventListener('DOMContentLoaded', applyLang, {once:true});
+
+  // 3) Nasłuchuj zmian selektora
+  document.addEventListener('change', onChange);
+
+  // 4) „Strażnik” na wypadek, gdyby inne skrypty próbowały nadpisać wartość
+  const mo = new MutationObserver(applyLang);
+  mo.observe(document.body, {childList:true,subtree:true});
+
+  // 5) Dodatkowo powiadom UI (jeśli coś słucha)
+  try { document.dispatchEvent(new CustomEvent('bh:lang-changed',{detail:{lang: currentLang()}})); }catch(e){}
+})();
+</script>
 </body>
 </html>
