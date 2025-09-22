@@ -4240,5 +4240,165 @@ document.addEventListener("DOMContentLoaded", ()=>{
   })();
 </script>
 <script src="assets/copilot.js"></script>
+<style>
+  /* RISK ANALYZER – karta insightu pod paskiem ryzyka */
+  .bh-risk-insight {
+    margin: 10px 0 14px;
+    border-radius: 14px;
+    padding: 14px 14px;
+    background:
+      radial-gradient(60% 120% at 100% 0%, rgba(94,234,212,.12), rgba(164,107,255,.08) 40%, rgba(255,255,255,.03) 70%),
+      rgba(255,255,255,.04);
+    border: 1px solid rgba(164,107,255,.24);
+    box-shadow: 0 16px 34px rgba(8,10,22,.42), inset 0 0 0 1px rgba(164,107,255,.10);
+    color: #eaf1ff;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px 14px;
+    align-items: center;
+  }
+  .bh-risk-insight .ico {
+    width: 34px; height: 34px; border-radius: 10px;
+    display: grid; place-items: center; font-size: 18px;
+    background: rgba(164,107,255,.18);
+    border: 1px solid rgba(164,107,255,.32);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  .bh-risk-insight .title {
+    font-weight: 900; letter-spacing: .3px; margin: 0;
+  }
+  .bh-risk-insight .badge {
+    justify-self: end;
+    font-size: 12px; padding: 4px 10px; border-radius: 999px; font-weight: 900;
+    border: 1px solid rgba(255,255,255,.22);
+    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  }
+  .bh-risk-insight .badge.low  { border-color: rgba(112,225,177,.55); box-shadow: 0 0 0 1px rgba(112,225,177,.25) inset; }
+  .bh-risk-insight .badge.mid  { border-color: rgba(255,184,108,.65); box-shadow: 0 0 0 1px rgba(255,184,108,.30) inset; }
+  .bh-risk-insight .badge.high { border-color: rgba(255,107,107,.75); box-shadow: 0 0 0 1px rgba(255,107,107,.35) inset; }
+
+  .bh-risk-insight .text { grid-column: 1 / -1; font-size: 14px; color:#cfe2ff }
+  .bh-risk-insight .text b { color:#fff }
+
+  .bh-risk-insight .suggest {
+    grid-column: 1 / -1; display:flex; gap:8px; flex-wrap:wrap; align-items:center
+  }
+  .bh-risk-insight .suggest .chip {
+    display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border-radius:999px;
+    border: 1px solid rgba(94,234,212,.45);
+    background: rgba(94,234,212,.12);
+    font-weight: 800; letter-spacing:.2px;
+  }
+
+  /* mały puls, gdy są czerwone flagi */
+  .bh-risk-insight.flag-alert {
+    animation: riskPulse 1.9s ease-in-out infinite;
+    border-color: rgba(255,107,107,.65);
+    box-shadow: 0 0 0 2px rgba(255,107,107,.25), 0 16px 34px rgba(8,10,22,.46), inset 0 0 0 1px rgba(255,255,255,.08);
+  }
+  @keyframes riskPulse {
+    0%{ box-shadow: 0 0 0 0 rgba(255,107,107,.18), 0 16px 34px rgba(8,10,22,.46) }
+    50%{ box-shadow: 0 0 0 10px rgba(255,107,107,.10), 0 20px 42px rgba(8,10,22,.52) }
+    100%{ box-shadow: 0 0 0 0 rgba(255,107,107,.18), 0 16px 34px rgba(8,10,22,.46) }
+  }
+
+  /* wąskie ekrany: zwarta karta */
+  @media (max-width: 600px){
+    .bh-risk-insight { grid-template-columns: auto 1fr; }
+    .bh-risk-insight .badge { grid-column: 1 / -1; justify-self: start; }
+  }
+</style>
+<script>
+(function(){
+  // Gdzie wstawić kartę – bez dotykania Twojego HTML
+  function ensureContainer(){
+    const host = document.querySelector('#s-objawy .risk-mini');
+    if(!host) return null;
+    let box = document.getElementById('bh-risk-insight');
+    if(!box){
+      box = document.createElement('div');
+      box.id = 'bh-risk-insight';
+      box.className = 'bh-risk-insight';
+      host.insertAdjacentElement('afterend', box);
+    }
+    return box;
+  }
+
+  // Policz aktualny „wynik ryzyka” na podstawie zaznaczonych elementów (czytamy DOM – zero zależności)
+  function getRiskState(){
+    const pick = (sel)=>[...document.querySelectorAll(sel)];
+    const selSymptoms = pick('#symp-common li.li-checked');
+    const selUrgent   = pick('#urgent li.li-checked');
+    const sumWeights = (arr)=>arr.reduce((s,li)=>s+(parseInt(li.dataset.weight||'0',10)||0),0);
+    const w = sumWeights(selSymptoms) + sumWeights(selUrgent);
+    const capped = Math.max(0, Math.min(100, w));
+    const urgentPicked = selUrgent.length > 0;
+    return {score: capped, urgentPicked, selSymptoms, selUrgent};
+  }
+
+  // Pobierz listę lekarzy (korzystamy z Twojej istniejącej logiki, jeśli jest; inaczej – fallback)
+  function getDoctorHints(){
+    if (typeof computeDocs === 'function'){
+      const list = computeDocs().slice(0,3).map(x=>x.name);
+      return Array.from(new Set(list)); // unikalne
+    }
+    // fallback
+    return ['POZ — lekarz rodzinny'];
+  }
+
+  // Render UI
+  function render(){
+    const box = ensureContainer(); if(!box) return;
+    const {score, urgentPicked} = getRiskState();
+
+    // poziom + badge
+    let lvl='low', lbl='niskie';
+    if(score >= 70){ lvl='high'; lbl=(window.__getLang && __getLang()==='en')?'high':'wysokie'; }
+    else if(score >= 40){ lvl='mid'; lbl=(window.__getLang && __getLang()==='en')?'moderate':'umiarkowane'; }
+    else { lbl=(window.__getLang && __getLang()==='en')?'low':'niskie'; }
+
+    const isEN = (window.__getLang && __getLang()==='en');
+
+    const tTitle = isEN ? 'Risk insight' : 'Interpretacja ryzyka';
+    const tLead  = isEN
+      ? `Your current selection suggests <b>${lbl}</b> risk.`
+      : `Twój wybór objawów sugeruje ryzyko: <b>${lbl}</b>.`;
+
+    const tFlags = isEN
+      ? (urgentPicked ? 'Red flags selected — act promptly.' : 'No red flags selected.')
+      : (urgentPicked ? 'Zaznaczono czerwone flagi — działaj pilnie.' : 'Nie zaznaczono czerwonych flag.');
+
+    const docs = getDoctorHints();
+    const tSee = isEN ? 'Consider:' : 'Rozważ:';
+
+    box.classList.toggle('flag-alert', urgentPicked);
+    box.innerHTML = `
+      <div class="ico">${ urgentPicked ? '⚠️' : '🧭' }</div>
+      <h4 class="title">${tTitle}</h4>
+      <span class="badge ${lvl}">${lbl}</span>
+
+      <div class="text">${tLead} ${tFlags}</div>
+      <div class="suggest">
+        <span style="opacity:.85">${tSee}</span>
+        ${docs.map(d=>`<span class="chip">🩺 ${d}</span>`).join('')}
+      </div>
+    `;
+
+    // Mały „asystent”: jeżeli flagi, to podbij CTA 112 (jeśli istnieje)
+    const cta = document.getElementById('cta-112');
+    if (cta){
+      cta.style.animation = urgentPicked ? 'riskPulse 1.6s ease-in-out infinite' : '';
+      cta.style.borderColor = urgentPicked ? 'rgba(255,107,107,.75)' : '';
+    }
+  }
+
+  // Reakcje na zdarzenia (Twoje UI już strzela bh:symptoms-changed)
+  document.addEventListener('DOMContentLoaded', render);
+  document.addEventListener('bh:symptoms-changed', render);
+
+  // Na wszelki wypadek: odśwież po zmianie języka (spójność PL/EN)
+  document.addEventListener('bh:lang-changed', render);
+})();
+</script>
 </body>
 </html>
