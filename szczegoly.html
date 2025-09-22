@@ -4400,5 +4400,149 @@ document.addEventListener("DOMContentLoaded", ()=>{
   document.addEventListener('bh:lang-changed', render);
 })();
 </script>
+<style>
+  /* RISK ANALYZER – karta pod paskiem ryzyka (własne ID + !important, żeby przebić style) */
+  #bh-risk-insight{
+    margin:12px 0 16px!important;border-radius:14px!important;padding:14px 16px!important;
+    background:
+      radial-gradient(60% 120% at 100% 0%, rgba(94,234,212,.12), rgba(164,107,255,.08) 40%, rgba(255,255,255,.03) 70%),
+      rgba(255,255,255,.04)!important;
+    border:1px solid rgba(164,107,255,.24)!important;
+    box-shadow:0 16px 34px rgba(8,10,22,.42), inset 0 0 0 1px rgba(164,107,255,.10)!important;
+    color:#eaf1ff!important; display:grid!important; grid-template-columns:auto 1fr auto!important;
+    gap:10px 14px!important; align-items:center!important;
+  }
+  #bh-risk-insight .ico{
+    width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:18px;
+    background:rgba(164,107,255,.18);border:1px solid rgba(164,107,255,.32);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  #bh-risk-insight .title{font-weight:900;letter-spacing:.3px;margin:0}
+  #bh-risk-insight .badge{
+    justify-self:end;font-size:12px;padding:4px 10px;border-radius:999px;font-weight:900;
+    border:1px solid rgba(255,255,255,.22);
+    background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  }
+  #bh-risk-insight .badge.low{  border-color:rgba(112,225,177,.55); box-shadow:0 0 0 1px rgba(112,225,177,.25) inset }
+  #bh-risk-insight .badge.mid{  border-color:rgba(255,184,108,.65); box-shadow:0 0 0 1px rgba(255,184,108,.30) inset }
+  #bh-risk-insight .badge.high{ border-color:rgba(255,107,107,.75); box-shadow:0 0 0 1px rgba(255,107,107,.35) inset }
+
+  #bh-risk-insight .text{grid-column:1 / -1;font-size:14px;color:#cfe2ff}
+  #bh-risk-insight .text b{color:#fff}
+  #bh-risk-insight .suggest{grid-column:1 / -1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  #bh-risk-insight .chip{
+    display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;
+    border:1px solid rgba(94,234,212,.45);background:rgba(94,234,212,.12);font-weight:800;letter-spacing:.2px;
+  }
+  #bh-risk-insight.flag-alert{
+    animation:bhRiskPulse 1.9s ease-in-out infinite;border-color:rgba(255,107,107,.65);
+    box-shadow:0 0 0 2px rgba(255,107,107,.25), 0 16px 34px rgba(8,10,22,.46), inset 0 0 0 1px rgba(255,255,255,.08)!important;
+  }
+  @keyframes bhRiskPulse{
+    0%{box-shadow:0 0 0 0 rgba(255,107,107,.18), 0 16px 34px rgba(8,10,22,.46)}
+    50%{box-shadow:0 0 0 10px rgba(255,107,107,.10), 0 20px 42px rgba(8,10,22,.52)}
+    100%{box-shadow:0 0 0 0 rgba(255,107,107,.18), 0 16px 34px rgba(8,10,22,.46)}
+  }
+  @media (max-width:600px){
+    #bh-risk-insight{grid-template-columns:auto 1fr!important}
+    #bh-risk-insight .badge{grid-column:1 / -1;justify-self:start}
+  }
+</style>
+
+<script>
+(function(){
+  /* Bezpieczne wstawienie karty tuż pod paskiem ryzyka — działa od razu i przy każdej zmianie */
+  function $(sel,root){ return (root||document).querySelector(sel); }
+  function $all(sel,root){ return Array.from((root||document).querySelectorAll(sel)); }
+
+  function ensureCard(){
+    const host = $('#s-objawy .risk-mini');
+    if(!host) return null;
+    let box = $('#bh-risk-insight');
+    if(!box){
+      box = document.createElement('div');
+      box.id = 'bh-risk-insight';
+      host.insertAdjacentElement('afterend', box);
+    }
+    return box;
+  }
+
+  function getRisk(){
+    const sel = (id)=>$all('#'+id+' li.li-checked');
+    const symp = sel('symp-common');
+    const urg  = sel('urgent');
+    const sum  = (arr)=>arr.reduce((s,li)=> s + (parseInt(li.dataset.weight||'0',10)||0), 0);
+    const w = Math.max(0, Math.min(100, sum(symp)+sum(urg)));
+    return {score:w, urgentPicked: urg.length>0};
+  }
+
+  function getDocs(){
+    try{
+      if(typeof computeDocs==='function'){
+        const names = computeDocs().slice(0,3).map(x=>x.name);
+        return [...new Set(names)];
+      }
+    }catch(e){}
+    return [(window.__getLang && __getLang()==='en')?'GP — family doctor':'POZ — lekarz rodzinny'];
+  }
+
+  function t(key){
+    const isEN = (window.__getLang && __getLang()==='en');
+    const T = {
+      title: isEN ? 'Risk insight' : 'Interpretacja ryzyka',
+      low:   isEN ? 'low' : 'niskie',
+      mid:   isEN ? 'moderate' : 'umiarkowane',
+      high:  isEN ? 'high' : 'wysokie',
+      nf:    isEN ? 'No red flags selected.' : 'Nie zaznaczono czerwonych flag.',
+      rf:    isEN ? 'Red flags selected — act promptly.' : 'Zaznaczono czerwone flagi — działaj pilnie.',
+      lead:  (lbl)=> isEN ? `Your current selection suggests <b>${lbl}</b> risk.` : `Twój wybór objawów sugeruje ryzyko: <b>${lbl}</b>.`,
+      see:   isEN ? 'Consider:' : 'Rozważ:'
+    };
+    return T[key];
+  }
+
+  function render(){
+    const box = ensureCard(); if(!box) return;
+    const {score, urgentPicked} = getRisk();
+
+    let lvl='low', lbl=t('low');
+    if(score>=70){ lvl='high'; lbl=t('high'); }
+    else if(score>=40){ lvl='mid'; lbl=t('mid'); }
+
+    const lead = t('lead')(lbl);
+    const flags= urgentPicked ? t('rf') : t('nf');
+    const docs = getDocs();
+
+    box.classList.toggle('flag-alert', urgentPicked);
+    box.innerHTML = `
+      <div class="ico">${urgentPicked?'⚠️':'🧭'}</div>
+      <h4 class="title">${t('title')}</h4>
+      <span class="badge ${lvl}">${lbl}</span>
+      <div class="text">${lead} ${flags}</div>
+      <div class="suggest">
+        <span style="opacity:.85">${t('see')}</span>
+        ${docs.map(d=>`<span class="chip">🩺 ${d}</span>`).join('')}
+      </div>
+    `;
+
+    const cta = document.getElementById('cta-112');
+    if (cta){ cta.style.animation = urgentPicked ? 'bhRiskPulse 1.6s ease-in-out infinite' : ''; }
+  }
+
+  /* — uruchom od razu, nawet jeśli DOMContentLoaded już minęło — */
+  try{ render(); }catch(e){}
+  // na wszelki wypadek ponów po „mikro-tiku”, gdyby sekcje doszły chwilę później
+  setTimeout(render, 0);
+  setTimeout(render, 120);
+
+  // reaguj na Twoje istniejące eventy
+  document.addEventListener('bh:symptoms-changed', render);
+  document.addEventListener('bh:lang-changed', render);
+
+  // lekki obserwator – jeśli „risk-mini” pojawi się z opóźnieniem, dobijemy renderem
+  const mo = new MutationObserver(()=>render());
+  mo.observe(document.body, {childList:true, subtree:true});
+})();
+</script>
 </body>
 </html>
