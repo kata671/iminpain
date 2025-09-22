@@ -901,15 +901,6 @@ const CONTENT_EN={
     ]
   }
 };
-
-      glowa:{label:"Headache",symptoms:["Bilateral pressing","Unilateral throbbing","Light sensitivity"],causes:["Tension","Migraine"],firstaid:["Hydration","Rest"],otc:[...BASE.en.otcPain],rx:["Triptans"],rehab:[...BASE.en.rehabCommon],urgent:["Thunderclap","Fever + neck stiffness",...BASE.en.urgentCommon],myths:[{m:"Antibiotics help",f:"Headache is rarely bacterial."}],faq:[{q:"When to see a doctor?",a:"If severe/new or with red flags."}]},
-      nos:{label:"Nose",symptoms:["Runny nose","Blockage","Sinus pain","Nosebleed"],causes:["Cold","Allergy","Sinusitis"],firstaid:["Saline"],otc:["Sea water","Decongestants (short)"],rx:["Intranasal steroids"],rehab:[...BASE.en.rehabCommon],urgent:["Bleeding >20 min",...BASE.en.urgentCommon],myths:[],faq:[]},
-      klatka:{label:"Chest",symptoms:["Pressure","Heartburn","Dyspnea"],causes:["Muscular","Reflux","Coronary"],firstaid:["Rest"],otc:["Anti-reflux"],rx:["Nitroglycerin per doctor"],rehab:[...BASE.en.rehabCommon],urgent:["Pressure + dyspnea/cold sweat",...BASE.en.urgentCommon],myths:[],faq:[]},
-      brzuch:{label:"Abdomen",symptoms:["Pain","Bloating","Diarrhea/constipation"],causes:["Indigestion","IBS"],firstaid:["Fluids","Rest"],otc:["Gut protectives","Drotaverine (adults)"],rx:["PPI as indicated"],rehab:[...BASE.en.rehabCommon],urgent:["Rigid abdomen, severe pain",...BASE.en.urgentCommon],myths:[],faq:[]},
-      serce:{label:"Heart",symptoms:["Palpitations","Dizziness"],causes:["Stress/dehydration","Arrhythmias"],firstaid:["Rest"],otc:["—"],rx:["ECG + treatment"],rehab:[...BASE.en.rehabCommon],urgent:["Palpitations with syncope",...BASE.en.urgentCommon],myths:[],faq:[]}
-    };
-
-    /* --- router / parametry --- */
     const qs=new URLSearchParams(location.search);
     const RAW_TYP=(qs.get('typ')||'kobieta').toLowerCase();
     const RAW_CZESC=(qs.get('czesc')||'glowa').toLowerCase();
