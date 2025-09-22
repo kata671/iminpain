@@ -231,7 +231,7 @@
     </div>
   </header>
 
-  <main>
+  <main data-no-i18n="1">
     <section class="cards" aria-label="Karty z informacjami szczegółowymi">
       <!-- OBJAWY -->
       <article class="card" id="s-objawy" role="tabpanel" aria-hidden="false">
@@ -974,5 +974,51 @@
     #bhLangSelect{ font-size: 13px; }
   }
 </style>
+<script>
+/* SZCZEGÓŁY: auto-przywracanie list i ochrona przed tłumaczem */
+
+// jeśli ktoś przez i18n podmieni innerHTML w chronionych sekcjach – zignoruj
+(function(){
+  var setter = Object.getOwnPropertyDescriptor(Element.prototype,'innerHTML')?.set;
+  if (!setter || Element.prototype.__bhNoI18nPatched) return;
+  Object.defineProperty(Element.prototype,'innerHTML',{
+    set:function(v){
+      try{ if(this.closest('[data-no-i18n]')) return; }catch(e){}
+      return setter.call(this,v);
+    }
+  });
+  Element.prototype.__bhNoI18nPatched = true;
+})();
+
+// rerender list (korzysta z już istniejących funkcji/zmiennych tej strony)
+(function(){
+  function safe(fn){ try{ fn&&fn(); }catch(e){} }
+  function reRender(){
+    // entry / renderList* / fill* / updateRisk / renderDx / renderDocs już masz w tym pliku
+    safe(()=>renderListInteractive('symp-common', entry && entry.symptoms, 'symptoms'));
+    safe(()=>renderListInteractive('urgent',      entry && (entry.urgent||[]), 'urgent'));
+    safe(()=>renderListPlain('causes',   entry && entry.causes));
+    safe(()=>renderListPlain('firstaid', entry && entry.firstaid));
+    safe(()=>renderListPlain('meds-otc', entry && entry.otc));
+    safe(()=>renderListPlain('meds-rx',  entry && entry.rx));
+    safe(()=>renderListPlain('rehab',    entry && entry.rehab));
+    safe(()=>fillPairs('myths', entry && entry.myths));
+    safe(()=>fillFAQ('faq',     entry && entry.faq));
+    safe(()=>updateRisk && updateRisk());
+    safe(()=>renderDx && renderDx());
+    safe(()=>renderDocs && renderDocs());
+  }
+
+  // 1) jeśli listy są puste (po „zjedzeniu”) – odtwórz po starcie
+  window.addEventListener('DOMContentLoaded', function(){
+    var need = ['#symp-common','#urgent','#causes','#firstaid','#meds-otc','#meds-rx','#rehab','#myths','#faq']
+      .some(sel=>{ var el=document.querySelector(sel); return el && el.children && el.children.length===0; });
+    if(need) reRender();
+  });
+
+  // 2) po zmianie języka też odtwórz
+  document.addEventListener('bh:lang-changed', reRender);
+})();
+</script>
 </body>
 </html>
