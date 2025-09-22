@@ -4544,5 +4544,25 @@ document.addEventListener("DOMContentLoaded", ()=>{
   mo.observe(document.body, {childList:true, subtree:true});
 })();
 </script>
+<script>
+(function(){
+  function box(){ return document.getElementById('bh-risk-insight'); }
+  function hideIfEmpty(){
+    const el = box(); if(!el) return;
+    const hasContent = el.textContent && el.textContent.trim().length > 0;
+    el.style.display = hasContent ? 'grid' : 'none';
+  }
+  // uruchom od razu i po chwili (gdy reszta doładuje zawartość)
+  hideIfEmpty();
+  setTimeout(hideIfEmpty, 60);
+  setTimeout(hideIfEmpty, 200);
+  // reaguj na Twoje eventy
+  document.addEventListener('bh:symptoms-changed', hideIfEmpty);
+  document.addEventListener('bh:lang-changed', hideIfEmpty);
+  // i na zmiany DOM wokół kart
+  const mo=new MutationObserver(hideIfEmpty);
+  mo.observe(document.body,{childList:true,subtree:true});
+})();
+</script>
 </body>
 </html>
