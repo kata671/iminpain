@@ -4067,5 +4067,51 @@ body[data-page="szczegoly"] #s-objawy .cursor{ width:18px !important; height:18p
   }
 })();
 </script>
+<style id="bh-mobile-step-fix">
+/* 🔹 Stepy na górze — widok mobilny */
+@media (max-width: 768px) {
+  .bh-steps {                /* kontener stepów */
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  .bh-step {
+    flex: none !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    font-size: 14px !important;
+    border-radius: 12px !important;
+    text-align: center !important;
+    padding: 8px 10px !important;
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.16) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25) !important;
+  }
+}
+
+/* 🔹 Guziki (Objawy, Przyczyny, Pierwsza pomoc, Leki itd.) */
+.section-nav .btn {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  min-height: 64px !important;
+  border-radius: 14px !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  letter-spacing: .3px !important;
+  margin: 6px 0 !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(164,107,255,.14) !important;
+  border: 1px solid rgba(164,107,255,.35) !important;
+  box-shadow: 0 8px 18px rgba(164,107,255,.25), 0 0 0 1px rgba(164,107,255,.3) inset !important;
+  transition: all .25s ease !important;
+}
+.section-nav .btn:hover,
+.section-nav .btn:focus-visible {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 14px 28px rgba(164,107,255,.4), 0 0 0 2px rgba(164,107,255,.45), 0 0 26px rgba(164,107,255,.45) !important;
+}
+</style>
 </body>
 </html>
