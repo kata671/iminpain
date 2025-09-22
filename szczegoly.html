@@ -2806,63 +2806,92 @@ ul.clean li:hover{
 }
 </style>
 <style id="bh-urgent-chips-v3">
-/* kontener jak w Objawach */
+/* Siatka jak w Objawach: równe, „kafelkowe” elementy */
 #s-objawy #urgent{
-  display:flex !important;
-  flex-wrap:wrap !important;
-  gap:10px !important;
-  margin-top:8px !important;
+  display:grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
+  gap:12px !important;
+  margin-top:10px !important;
 }
 
-/* każdy punkt = chip */
+/* Każdy punkt = nowoczesny kafelek (kwadratowy/zaokrąglone rogi) */
 #s-objawy #urgent li{
-  display:inline-flex !important;
+  display:flex !important;
   align-items:center !important;
   gap:10px !important;
-  padding:10px 14px !important;
+
+  min-height:56px !important;
+  padding:12px 14px !important;
+
+  border-radius:16px !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)) !important;
+  border:1px solid rgba(164,107,255,.20) !important;
+  color:#eaf2ff !important;
+
+  box-shadow:
+    0 8px 22px rgba(8,10,22,.42),
+    0 0 0 1px rgba(164,107,255,.14) inset,
+    0 0 18px rgba(96,165,250,.18) !important;
+  backdrop-filter: blur(6px) saturate(120%) !important;
+
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease !important;
+
+  width:100% !important;   /* równe szerokości w kolumnach */
   margin:0 !important;
-  border-radius:14px !important;
-  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)) !important;
-  border:1px solid rgba(255,255,255,.16) !important;
-  color:#f6f8ff !important;
-  box-shadow:0 6px 16px rgba(8,10,22,.35),
-             0 0 0 1px rgba(164,107,255,.16) inset !important;
-  backdrop-filter:blur(6px) saturate(120%) !important;
-  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease !important;
-  width:auto !important;
+  word-break: break-word !important;
 }
 
-/* ikonka ostrzeżenia po lewej */
+/* ikonka ostrzeżenia – dyskretna, spójna */
 #s-objawy #urgent li::before{
-  content:"⚠️";
-  font-size:1.05em;
-  opacity:.95;
+  content:"🚨";
+  display:inline-grid;
+  place-items:center;
+  width:22px; height:22px;
+  border-radius:8px;
+  font-size:14px;
+  background: rgba(59,130,246,.18);
+  border:1px solid rgba(59,130,246,.45);
+  box-shadow: inset 0 0 0 1px rgba(59,130,246,.2);
 }
 
-/* ukryj kwadracik .cb żeby nic nie zawadzało */
+/* usuń kwadracik .cb – żeby nic nie nachodziło */
 #s-objawy #urgent li .cb{ display:none !important; }
 
-/* hover + stan zaznaczony (jeśli klikalne) */
+/* hover */
 #s-objawy #urgent li:hover{
-  transform:translateY(-2px);
-  border-color:rgba(94,234,212,.55) !important;
-  box-shadow:0 10px 24px rgba(8,10,22,.45),
-             0 0 18px rgba(96,165,250,.35),
-             0 0 0 1px rgba(94,234,212,.28) inset !important;
-}
-#s-objawy #urgent li.li-checked{
-  background:linear-gradient(180deg, rgba(59,130,246,.18), rgba(255,255,255,.04)) !important;
-  border-color:rgba(59,130,246,.7) !important;
-  box-shadow:0 0 0 2px rgba(59,130,246,.6),
-             0 8px 22px rgba(8,10,22,.45) !important;
+  transform: translateY(-2px);
+  border-color: rgba(94,234,212,.55) !important;
+  box-shadow:
+    0 12px 28px rgba(8,10,22,.48),
+    0 0 0 1px rgba(94,234,212,.28) inset,
+    0 0 24px rgba(96,165,250,.32) !important;
 }
 
-/* dopasowanie nagłówka sekcji czerwonych flag */
+/* „zaznaczony” (jeśli któryś punkt stanie się checked) – bardziej świeci */
+#s-objawy #urgent li.li-checked{
+  background:
+    linear-gradient(180deg, rgba(59,130,246,.22), rgba(255,255,255,.04)) !important;
+  border-color: rgba(59,130,246,.75) !important;
+  box-shadow:
+    0 0 0 2px rgba(59,130,246,.65),
+    0 10px 26px rgba(8,10,22,.5) !important;
+}
+
+/* nagłówek sekcji czerwonych flag – taki sam vibe */
 #s-objawy .subhead{
   display:flex; align-items:center; gap:8px;
   font-weight:900; letter-spacing:.3px;
 }
 #s-objawy .subhead::before{ content:"🚩"; }
+
+/* Responsywność – na bardzo wąskich ekranach jedna kolumna */
+@media (max-width:420px){
+  #s-objawy #urgent{
+    grid-template-columns: 1fr !important;
+  }
+}
 </style>
+
 </body>
 </html>
