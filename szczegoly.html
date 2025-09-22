@@ -263,6 +263,47 @@
     box-shadow: 0 0 10px rgba(164,107,255,0.6);
   }
 </style>
+<style id="bh-cards-glow-2025">
+  /* delikatny kolor dla każdej zakładki */
+  .tab[data-variant="symptoms"]{ box-shadow: 0 0 0 1px rgba(94,234,212,.25) inset, 0 0 10px rgba(94,234,212,.20); border-color: rgba(94,234,212,.45) }
+  .tab[data-variant="causes"]  { box-shadow: 0 0 0 1px rgba(164,107,255,.25) inset, 0 0 10px rgba(164,107,255,.20); border-color: rgba(164,107,255,.45) }
+  .tab[data-variant="firstaid"]{ box-shadow: 0 0 0 1px rgba(112,225,177,.25) inset, 0 0 10px rgba(112,225,177,.20); border-color: rgba(112,225,177,.45) }
+  .tab[data-variant="otc"]     { box-shadow: 0 0 0 1px rgba(255,184,108,.25) inset, 0 0 10px rgba(255,184,108,.20); border-color: rgba(255,184,108,.45) }
+  .tab[data-variant="rx"]      { box-shadow: 0 0 0 1px rgba(255,107,107,.25) inset, 0 0 10px rgba(255,107,107,.20); border-color: rgba(255,107,107,.45) }
+  .tab[data-variant="rehab"]   { box-shadow: 0 0 0 1px rgba(94,234,212,.25)  inset, 0 0 10px rgba(94,234,212,.20);  border-color: rgba(94,234,212,.45) }
+  .tab[data-variant="myths"]   { box-shadow: 0 0 0 1px rgba(164,107,255,.25) inset, 0 0 10px rgba(164,107,255,.20); border-color: rgba(164,107,255,.45) }
+  .tab[data-variant="faq"]     { box-shadow: 0 0 0 1px rgba(135,207,255,.22) inset, 0 0 10px rgba(135,207,255,.18); border-color: rgba(135,207,255,.40) }
+
+  /* jeszcze ładniejsze hoverki */
+  .tab:not([aria-selected="true"]):hover{
+    transform: translateY(-2px);
+    filter: saturate(120%);
+  }
+
+  /* 🔵 animacja „pulse” – użyjemy dla DX i DOCS */
+  @keyframes bhBluePulse {
+    0%   { box-shadow: 0 0 0 0 rgba(96,165,250,.25), 0 0 14px rgba(96,165,250,.35) }
+    50%  { box-shadow: 0 0 0 8px rgba(96,165,250,.12), 0 0 26px rgba(96,165,250,.55) }
+    100% { box-shadow: 0 0 0 0 rgba(96,165,250,.25), 0 0 14px rgba(96,165,250,.35) }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .pulse-blue { animation: none !important; }
+  }
+
+  /* klasa włączana JS-em (taby i karty) */
+  .pulse-blue {
+    border-color: rgba(59,130,246,.85) !important;
+    animation: bhBluePulse 2.2s ease-in-out infinite;
+  }
+
+  /* gdy „pulsujące” są całe karty Choroby/Lekarze na dole */
+  #s-dx.pulse-blue, #s-docs.pulse-blue{
+    box-shadow:
+      0 14px 34px rgba(8,10,22,.55),
+      0 0 0 2px rgba(59,130,246,.45) inset,
+      0 0 28px rgba(96,165,250,.55) !important;
+  }
+</style>
 </head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
@@ -1620,6 +1661,45 @@ const CONTENT_EN={
 
   // 2) po zmianie języka też odtwórz
   document.addEventListener('bh:lang-changed', reRender);
+})();
+</script>
+<script>
+/* 🔵 Pulsujące „Choroby” i „Lekarze” po zaznaczeniu objawów */
+(function(){
+  // elementy: taby na górze i karty na dole
+  const tabDx   = document.querySelector('.tab[data-variant="dx"]');
+  const tabDocs = document.querySelector('.tab[data-variant="docs"]');
+  const cardDx  = document.getElementById('s-dx');
+  const cardDoc = document.getElementById('s-docs');
+
+  // funkcja, którą wywołujemy przy zmianach
+  function setPulse(active){
+    [tabDx, tabDocs, cardDx, cardDoc].forEach(el=>{
+      if(!el) return;
+      el.classList.toggle('pulse-blue', !!active);
+    });
+  }
+
+  // 1) startowo – jeśli już są zaznaczone objawy (np. po powrocie)
+  try {
+    // spróbuj policzyć „li-checked” w sekcjach objawów/urgent
+    const selCount =
+      document.querySelectorAll('#symp-common li.li-checked').length +
+      document.querySelectorAll('#urgent li.li-checked').length;
+    setPulse(selCount > 0);
+  } catch(e){}
+
+  // 2) reaguj na każde zaznaczenie/odznaczenie objawu
+  document.addEventListener('bh:symptoms-changed', function(){
+    const selCount =
+      document.querySelectorAll('#symp-common li.li-checked').length +
+      document.querySelectorAll('#urgent li.li-checked').length;
+    setPulse(selCount > 0);
+  });
+
+  // 3) gdy użytkownik wejdzie w karty „Choroby/Lekarze”, nadal świecimy
+  document.querySelector('[data-variant="dx"]')?.addEventListener('click', ()=>setPulse(true));
+  document.querySelector('[data-variant="docs"]')?.addEventListener('click', ()=>setPulse(true));
 })();
 </script>
 </body>
