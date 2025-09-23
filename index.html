@@ -306,16 +306,16 @@
         </header>
 
         <div class="kafelki-container">
-            <a href="szczegoly.html?typ=porada&czesc=zadlawienie" class="kafelek zielony">
+            <a href="szczegoly.html?typ=porada&czesc=zadlawienie" class="kafelek zielony" data-porada="zadlawienie">
                 <span class="ico">🫁</span>Zadławienie
             </a>
-            <a href="szczegoly.html?typ=porada&czesc=reanimacja" class="kafelek zielony">
+            <a href="szczegoly.html?typ=porada&czesc=reanimacja" class="kafelek zielony" data-porada="reanimacja">
                 <span class="ico">🚑</span>Reanimacja
             </a>
-            <a href="szczegoly.html?typ=porada&czesc=wypadek" class="kafelek zielony">
+            <a href="szczegoly.html?typ=porada&czesc=wypadek" class="kafelek zielony" data-porada="wypadek">
                 <span class="ico">💥</span>Wypadek
             </a>
-            <a href="szczegoly.html?typ=porada&czesc=pierwszopomoc" class="kafelek zielony">
+            <a href="szczegoly.html?typ=porada&czesc=pierwszopomoc" class="kafelek zielony" data-porada="pierwszopomoc">
                 <span class="ico">❤️‍🩹</span>Pierwsza pomoc
             </a>
 
@@ -423,11 +423,11 @@
         }
         function closePorada(){ poradaModal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
 
-        const nav = document.querySelector('nav.situations');
+        const nav = document.querySelector('.kafelki-container');
         if(nav && !nav.dataset.bhPoradaBound){
             nav.dataset.bhPoradaBound='1';
             nav.addEventListener('click', function(e){
-                const a = e.target.closest('a.pill.pill--green[data-porada]');
+                const a = e.target.closest('a.kafelek.zielony[data-porada]');
                 if(!a) return;
                 e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
                 const key = a.getAttribute('data-porada');
