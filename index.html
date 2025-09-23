@@ -6,12 +6,10 @@
   <title>Boli Help — Strona główna</title>
   <meta name="theme-color" content="#0e1230" />
 
-  <!-- PWA -->
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="/icons/icon-512.png">
 
-  <!-- CSS (cache-bust v=12) -->
   <link rel="stylesheet" href="assets/style.css?v=12" />
 
   <style>
@@ -171,13 +169,12 @@
     .header .tools .search{position:relative}
   </style>
 </style>
-<!-- FIX: stałe miejsce przełącznika języka na telefonach (final) -->
 <style>
 @media (max-width:768px){
   :where(.lang, .langpick, .language, #lang, #language, .header .tools .lang, .header .tools .langpick){
     position: fixed !important;
     top: 10px !important;
-    right: 10px !important;   /* jeśli wolisz lewy róg: left:10px!important; i usuń right */
+    right: 10px !important;    /* jeśli wolisz lewy róg: left:10px!important; i usuń right */
     z-index: 3000 !important;
     margin: 0 !important;
     transform: none !important;
@@ -207,7 +204,7 @@
         <h1 data-i18n="brand_title">Boli Help</h1>
         <small data-i18n="brand_sub">Pomoc i pierwsza pomoc w nagłych sytuacjach</small>
       </div>
-      <div class="tools" style="display:flex;align-items:center;gap:10px">
+      <div class="topbar">
         <div class="search" role="search">
           <input id="bhSearch" type="search" placeholder="Szukaj objawu, części ciała lub tematu…" aria-label="Szukaj" />
           <svg id="bhSearchIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="cursor:pointer">
@@ -216,7 +213,6 @@
           </svg>
         </div>
 
-        <!-- ▼▼ NOWY: Tłumacz (PL/EN) – lekki, bez Google banneru ▼▼ -->
         <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
           <label for="bhLangSelect">Język</label>
           <select id="bhLangSelect">
@@ -224,8 +220,7 @@
             <option value="en">EN</option>
           </select>
         </div>
-        <!-- ▲▲ KONIEC: Tłumacz ▲▲ -->
-      </div>
+        </div>
     </header>
 
     <div class="emergency-list" aria-label="Telefony alarmowe">
@@ -248,7 +243,6 @@
       <a class="pill pill--blue" href="gry.html">
         <span class="ico">🎮</span><span data-i18n="pill_games">Gry / Trening</span>
       </a>
-      <!-- NOWY GUZIK: Quizy -->
       <a class="pill pill--blue" href="quizzes.html" id="btn-quizzes">
         <span class="ico">🧠</span><span data-i18n="pill_quizzes">Quizy</span>
       </a>
@@ -264,7 +258,6 @@
 
     <div class="subheadline" data-i18n="subheadline">Boli mnie — wybierz obszar bólu</div>
 
-    <!-- 3 kafelki -->
     <section class="stack" aria-label="Wybór postaci"
       style="display:grid;gap:16px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
       <article class="card">
@@ -288,7 +281,6 @@
     </section>
   </div>
 
-  <!-- Modal PORADA -->
   <div id="bh2025Porada" class="bh2025-porada" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025PoradaTitle">
     <div class="bh2025-porada__panel">
       <div class="bh2025-porada__head">
@@ -302,24 +294,22 @@
       </div>
       <div class="bh2025-video">
         <div class="bh2025-muted" style="margin-bottom:8px;font-weight:800" data-i18n="video_head">Materiał wideo</div>
-        <div id="bh2025VideoWrap"><div class="ph" id="bh2025VideoPh"><span>🎬</span><span data-i18n="video_hint">Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej.</span></div></div>
+        <div id="bh2025VideoWrap"><div class="ph" id="bh2025VideoPh"><span>🎬</span><span data-i18n="video_hint">Dodaj plik: <code>assets/videos/<nazwa>.mp4</code> i zaktualizuj mapę poniżej.</span></div></div>
       </div>
     </div>
   </div>
 
-  <!-- Skrypt bazowy strony -->
   <script src="assets/main.js?v=12"></script>
 
-  <!-- PORADY (klik pigułek przechwycony w capture) -->
   <script>
   (function(){
-    const poradaModal  = document.getElementById('bh2025Porada');
-    const poradaClose  = document.getElementById('bh2025PoradaClose');
-    const poradaTitle  = document.getElementById('bh2025PoradaTitle');
-    const svgWrap      = document.getElementById('bh2025PoradaSvg');
-    const stepsOl      = document.getElementById('bh2025PoradaSteps');
-    const videoWrap    = document.getElementById('bh2025VideoWrap');
-    const videoPh      = document.getElementById('bh2025VideoPh');
+    const poradaModal   = document.getElementById('bh2025Porada');
+    const poradaClose   = document.getElementById('bh2025PoradaClose');
+    const poradaTitle   = document.getElementById('bh2025PoradaTitle');
+    const svgWrap       = document.getElementById('bh2025PoradaSvg');
+    const stepsOl       = document.getElementById('bh2025PoradaSteps');
+    const videoWrap     = document.getElementById('bh2025VideoWrap');
+    const videoPh       = document.getElementById('bh2025VideoPh');
     if(!poradaModal || poradaModal.dataset.bhBound) return; poradaModal.dataset.bhBound='1';
 
     const IMG = { zadlawienie: 'img/zadlawienie.png', reanimacja: 'img/reanimacja.png', wypadek: 'img/wypadek.png', pierwszopomoc: null };
@@ -368,7 +358,6 @@
   })();
   </script>
 
-  <!-- WYSZUKIWARKA (POPRAWIONA) -->
   <script>
   (function(){
     const input = document.getElementById('bhSearch');
@@ -376,21 +365,21 @@
     if(!input || input.dataset.bhSearchBound) return; input.dataset.bhSearchBound='1';
 
     const PARTS = [
-      {id:'oko',       label:'Oko',        alias:['oko','oczy','wzrok']},
-      {id:'nos',       label:'Nos',        alias:['nos','zatoki','katar']},
-      {id:'gardlo',    label:'Gardło',     alias:['gardlo','gardło','angina','chrypka']},
-      {id:'glowa',     label:'Głowa',      alias:['glowa','głowa','migrena','ból głowy']},
+      {id:'oko',         label:'Oko',       alias:['oko','oczy','wzrok']},
+      {id:'nos',         label:'Nos',       alias:['nos','zatoki','katar']},
+      {id:'gardlo',    label:'Gardło',    alias:['gardlo','gardło','angina','chrypka']},
+      {id:'glowa',     label:'Głowa',     alias:['glowa','głowa','migrena','ból głowy']},
       {id:'klatka',    label:'Klatka piersiowa', alias:['klatka','pierś','serce ból','mostek']},
-      {id:'pluca',     label:'Płuca',      alias:['płuca','pluca','duszność','astma']},
-      {id:'brzuch',    label:'Brzuch',     alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
-      {id:'nerki',     label:'Nerki',      alias:['nerki','kolka','lędźwie','ledzwi']},
-      {id:'plecy',     label:'Plecy',      alias:['plecy','kręgosłup','kregoslup','rwa']},
+      {id:'pluca',     label:'Płuca',     alias:['płuca','pluca','duszność','astma']},
+      {id:'brzuch',    label:'Brzuch',    alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
+      {id:'nerki',     label:'Nerki',     alias:['nerki','kolka','lędźwie','ledzwi']},
+      {id:'plecy',     label:'Plecy',     alias:['plecy','kręgosłup','kregoslup','rwa']},
       {id:'biodra',    label:'Biodra/Uda', alias:['biodro','biodra','udo','pachwina']},
-      {id:'kolano',    label:'Kolano',     alias:['kolano','rzepka','łąkotka','lakotka']},
-      {id:'stopy',     label:'Stopy',      alias:['stopa','stopy','pięta','pieta','rozcięgno']},
-      {id:'skora',     label:'Skóra',      alias:['skora','skóra','wysypka','świąd','alergia']},
-      {id:'serce',     label:'Serce',      alias:['serce','kołatania','kolatania','arytmia']},
-      {id:'kaszel',    label:'Kaszel',     alias:['kaszel','kaszle']},
+      {id:'kolano',    label:'Kolano',    alias:['kolano','rzepka','łąkotka','lakotka']},
+      {id:'stopy',     label:'Stopy',     alias:['stopa','stopy','pięta','pieta','rozcięgno']},
+      {id:'skora',     label:'Skóra',     alias:['skora','skóra','wysypka','świąd','alergia']},
+      {id:'serce',     label:'Serce',     alias:['serce','kołatania','kolatania','arytmia']},
+      {id:'kaszel',    label:'Kaszel',    alias:['kaszel','kaszle']},
       {id:'goraczka',  label:'Gorączka',   alias:['gorączka','goraczka','temperatura']},
       {id:'zadlawienie', label:'Zadławienie (SOS)', alias:['zadławienie','zadlawienie','zadławił','zadlawil'] , sos:true},
       {id:'reanimacja',  label:'Reanimacja (RKO)',  alias:['reanimacja','rko','resuscytacja'] , sos:true},
@@ -464,7 +453,6 @@
   })();
   </script>
 
-  <!-- Rejestracja Service Workera -->
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js')
@@ -473,10 +461,8 @@
     }
   </script>
 
-  <!-- Add to Home Screen (iOS/Android) -->
   <script src="assets/a2hs.js?v=1"></script>
 
-  <!-- ▼▼ LEKKI TŁUMACZ PL/EN (POPRAWIONY) ▼▼ -->
   <script>
     (function(){
       if(window.__bhI18nBound) return; window.__bhI18nBound = true;
@@ -499,7 +485,7 @@
           advice_chip:"SOS • instrukcja",
           close_btn:"✕",
           video_head:"Materiał wideo",
-          video_hint:"Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej.",
+          video_hint:"Dodaj plik: <code>assets/videos/<nazwa>.mp4</code> i zaktualizuj mapę poniżej.",
           card_woman:"Kobieta",
           card_man:"Mężczyzna",
           card_child:"Dziecko",
@@ -522,7 +508,7 @@
           advice_chip:"SOS • instructions",
           close_btn:"✕",
           video_head:"Video",
-          video_hint:"Add file: <code>assets/videos/&lt;name&gt;.mp4</code> and update the map below.",
+          video_hint:"Add file: <code>assets/videos/<name>.mp4</code> and update the map below.",
           card_woman:"Woman",
           card_man:"Man",
           card_child:"Child",
@@ -578,9 +564,6 @@
       applyTranslations();
     })();
   </script>
-  <!-- ▲▲ KONIEC TŁUMACZA ▲▲ -->
-
-  <!-- POPRAWKI CSS (glow + literówki) -->
   <style id="bh-final-patch">
     /* Ukryj resztki Google Translate */
     .goog-te-banner-frame.skiptranslate{display:none!important}
@@ -593,80 +576,53 @@
       object-position:50% 25% !important;
     }
     section.stack .card > a > img[src*="kobieta-model1"]{ object-position:50% 22% !important; transform:scale(0.95) }
-    section.stack .card > a > img[src*="mezczyzna-model1"]{ object-position:50% 24% !important; transform:scale(0.95) }
-    section.stack .card > a > img[src*="dziecko-model1"]{ object-position:50% 20% !important; transform:scale(0.92) }
+    section.stack .card > a > img[src*="mezczyzna-model1"]{ object-position:50% 24% !important; transform:sc
+    }
 
-    .bh2025-suggest[aria-hidden="true"]{display:none!important}
-
-    /* Glow dla akcji (POPRAWIONE) */
-    :root{ --glow-green:34,227,160; --glow-red:255,107,107; --glow-amber:255,184,108; }
-    #btn-hosp{
-      border-color: rgba(var(--glow-red), .8) !important;
-      box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-red), .5) inset, 0 0 18px rgba(var(--glow-red), .35);
-      animation: bhRedPulse 2.2s ease-in-out infinite;
+    /* === Header: brand top-left, search + lang on the right (no slide) === */
+    .header{
+      display:flex; align-items:flex-start; justify-content:space-between;
+      gap:12px; margin-top:8px; margin-bottom:10px;
     }
-    #btn-apteka{
-      border-color: rgba(var(--glow-green), .7)!important;
-      box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-green), .45) inset, 0 0 18px rgba(var(--glow-green), .35);
-      animation: bhGreenPulse 2.4s ease-in-out infinite;
+    .header .brand{
+      display:block; min-width:0;
     }
-    #btn-loc{
-      border-color: rgba(var(--glow-amber), .75)!important;
-      box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-amber), .45) inset, 0 0 18px rgba(var(--glow-amber), .35);
-      animation: bhAmberBreath 2.8s ease-in-out infinite;
+    .header .brand h1{
+      margin:0; line-height:1.05; font-size:clamp(20px, 4.2vw, 28px);
+      font-weight:900; letter-spacing:.2px; color:#eef2ff;
+      white-space:nowrap;
     }
-    @keyframes bhRedPulse{0%{box-shadow:0 0 0 0 rgba(var(--glow-red),.10),0 0 18px rgba(var(--glow-red),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-red),.08),0 0 26px rgba(var(--glow-red),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-red),.10),0 0 18px rgba(var(--glow-red),.35)}}
-    @keyframes bhGreenPulse{0%{box-shadow:0 0 0 0 rgba(var(--glow-green),.10),0 0 18px rgba(var(--glow-green),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-green),.08),0 0 26px rgba(var(--glow-green),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-green),.10),0 0 18px rgba(var(--glow-green),.35)}}
-    @keyframes bhAmberBreath{0%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.08),0 0 18px rgba(var(--glow-amber),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-amber),.06),0 0 26px rgba(var(--glow-amber),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.08),0 0 18px rgba(var(--glow-amber),.35)}}
+    .header .brand small{
+      display:block; margin-top:2px; color:#cfe2ff; opacity:.9;
+      font-size:clamp(11px, 2.6vw, 13px); line-height:1.25; white-space:nowrap;
+    }
+    .header .topbar{
+      display:flex; align-items:center; gap:10px; flex-wrap:nowrap;
+      min-width:0;
+    }
+    /* Search stays in normal flow (no sticky/absolute), narrower on mobile */
+    .header .topbar .search{
+      position:relative; flex:1 1 auto; max-width: min(56vw, 460px);
+    }
+    @media (max-width:768px){
+      .header{ flex-direction:column; align-items:flex-start; gap:8px; margin-top:6px }
+      .header .topbar{ width:100%; justify-content:space-between; gap:8px }
+      .header .topbar .search{ max-width: 72%; }
+    }
+    /* Make sure language picker doesn’t push layout down */
+    .header .topbar #bhLangPick{
+      position:static !important; /* keep its mobile fixed from media query later */
+      flex:0 0 auto;
+    }
+    /* Keep your global mobile fixed for #bhLangPick – do not remove existing rule.
+       We just ensure desktop is normal-flow. */
+    /* Input sizing tweaks to avoid overflow */
+    #bhSearch{
+      width:100%; padding-right:28px;
+    }
+    #bhSearchIcon{
+      position:absolute; right:8px; top:50%; transform:translateY(-50%);
+      pointer-events:auto;
+    }
   </style>
-<style>
-  /* SPÓJNY WYGLĄD TŁUMACZA (PL/EN) */
-  #bhLangPick {
-    position: fixed !important;
-    top: 16px !important;
-    right: 24px !important;  /* odsunięcie od krawędzi na laptopie */
-    z-index: 9999 !important;
-
-    display: inline-flex !important;
-    align-items: center;
-    gap: 6px;
-
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.22);
-    border-radius: 12px;
-    padding: 6px 10px;
-
-    backdrop-filter: saturate(120%) blur(6px);
-  }
-
-  /* Ukryj napis "Język", zostaw tylko selektor */
-  #bhLangPick label { display: none !important; }
-
-  #bhLangSelect {
-    font-size: 14px;
-    font-weight: 700;
-    color: #fff;
-    background: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    letter-spacing: .3px;
-  }
-
-  #bhLangSelect option {
-    color: #0e1230;
-    background: #ffffff;
-  }
-
-  /* TELEFON – ciut mniejsze i bliżej rogu */
-  @media (max-width:768px){
-    #bhLangPick{
-      top: 10px !important;
-      right: 12px !important;
-      padding: 5px 8px;
-    }
-    #bhLangSelect{ font-size: 13px; }
-  }
-</style>
-</body>
-</html>
+</head>
