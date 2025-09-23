@@ -175,15 +175,21 @@
         .bh2025-sg-sub{margin-left:auto;font-size:12px;color:#b8c2e0}
         .header .tools .search{position:relative}
 
-        /* Upiększony nagłówek */
+        /* NAGŁÓWEK NA LAPTOPIE: Powrót do poprzedniego wyglądu */
+        .brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
         .brand h1 {
             font-size: 3rem;
             font-weight: 900;
             margin-bottom: 0;
             letter-spacing: 2px;
             text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(255,110,199,0.5);
-            animation: bh-glow 3s ease-in-out infinite alternate;
+            text-shadow: none;
+            animation: none;
         }
         .brand small {
             font-size: 1rem;
@@ -192,9 +198,21 @@
             letter-spacing: 1px;
         }
 
-        @keyframes bh-glow {
-            from { text-shadow: 0 0 10px rgba(255,110,199,0.3), 0 0 20px rgba(255,110,199,0.2) }
-            to { text-shadow: 0 0 20px rgba(255,110,199,0.5), 0 0 30px rgba(255,110,199,0.4) }
+        /* ZMIANA NAGŁÓWKA TYLKO DLA MOBILNYCH (poniżej 768px) */
+        @media (max-width: 768px) {
+            .brand h1 {
+                font-size: 3rem;
+                font-weight: 900;
+                margin-bottom: 0;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                text-shadow: 0 0 20px rgba(255,110,199,0.5);
+                animation: bh-glow 3s ease-in-out infinite alternate;
+            }
+            @keyframes bh-glow {
+                from { text-shadow: 0 0 10px rgba(255,110,199,0.3), 0 0 20px rgba(255,110,199,0.2) }
+                to { text-shadow: 0 0 20px rgba(255,110,199,0.5), 0 0 30px rgba(255,110,199,0.4) }
+            }
         }
     </style>
 
@@ -298,6 +316,39 @@
         .kafelek.zwykly {
             background-color: #6c757d;
         }
+    }
+
+    /* NOWE: Efekt pulsowania dla wszystkich kafelków */
+    .kafelek, .situations .pill, .actions .btn {
+        transition: transform 0.2s, box-shadow 0.4s;
+    }
+
+    .kafelek:hover, .situations .pill:hover, .actions .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .kafelek.zielony, .situations .pill.pill--green {
+        animation: bh-green-pulse 2s ease-in-out infinite;
+    }
+    .kafelek.niebieski, .situations .pill.pill--blue, .actions .btn--hosp {
+        animation: bh-blue-pulse 2.2s ease-in-out infinite;
+    }
+    .kafelek.zwykly {
+        animation: bh-gray-pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes bh-green-pulse {
+        0%, 100% { box-shadow: 0 0 8px rgba(76, 175, 80, 0.4), 0 0 1px rgba(76, 175, 80, 0.2) inset; }
+        50% { box-shadow: 0 0 16px rgba(76, 175, 80, 0.6), 0 0 4px rgba(76, 175, 80, 0.4) inset; }
+    }
+    @keyframes bh-blue-pulse {
+        0%, 100% { box-shadow: 0 0 8px rgba(0, 123, 255, 0.4), 0 0 1px rgba(0, 123, 255, 0.2) inset; }
+        50% { box-shadow: 0 0 16px rgba(0, 123, 255, 0.6), 0 0 4px rgba(0, 123, 255, 0.4) inset; }
+    }
+    @keyframes bh-gray-pulse {
+        0%, 100% { box-shadow: 0 0 8px rgba(108, 117, 125, 0.4), 0 0 1px rgba(108, 117, 125, 0.2) inset; }
+        50% { box-shadow: 0 0 16px rgba(108, 117, 125, 0.6), 0 0 4px rgba(108, 117, 125, 0.4) inset; }
     }
     </style>
 </head>
