@@ -193,6 +193,44 @@
   body{ padding-top: 64px !important; }
 }
 </style>
+<style id="bh-fix-top-tight">
+  /* --- WSPÓLNE --- */
+  .header{
+    display:flex; align-items:center; gap:12px;
+    padding:6px 12px 0 0;       /* mniej góry, bliżej krawędzi */
+  }
+  .header .brand{ 
+    margin:0; flex:0 1 auto; min-width:0;
+    text-align:left; 
+  }
+  .header .brand h1{
+    margin:0; line-height:1.1; font-size:22px;
+    white-space:normal; overflow:visible; text-overflow:clip;
+  }
+  .header .brand small{
+    display:block; margin-top:2px; opacity:.85; 
+    font-size:12.5px; line-height:1.2; white-space:normal;
+  }
+  .header .tools{ display:flex; align-items:center; gap:10px; flex:1 1 auto; }
+  .header .tools .search{ position:relative; flex:1 1 520px; min-width:180px; max-width:760px; }
+  .header .tools .search input{
+    width:100%; box-sizing:border-box;
+    padding:10px 38px 10px 12px; border-radius:12px; 
+    border:1px solid rgba(255,255,255,.22);
+    background:rgba(255,255,255,.08); color:#fff; font-weight:600; outline:none;
+  }
+  #bhSearchIcon{ position:absolute; right:10px; top:50%; transform:translateY(-50%); }
+
+  /* --- MOBILE: podciągnięcie w górę + bufor na tłumacza po PRAWEJ --- */
+  @media (max-width:768px){
+    body{ padding-top:28px !important; }             /* było 64px – podciągamy wyżej */
+    .header{ gap:8px; padding-top:2px; padding-right:98px; } 
+    /* powyżej: 98px bufora po PRAWEJ, żeby nic nie weszło pod tłumacza */
+    .header .brand h1{ font-size:18px; }
+    .header .brand small{ font-size:12px; opacity:.9; }
+    .header .tools .search{ flex:1 1 auto; min-width:0; }
+  }
+</style>
 </head>
 <body data-page="home"><style id="bh-brand-search-patch">
   /* Pasek nagłówka: marka po lewej, obok wyszukiwarka */
