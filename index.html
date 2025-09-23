@@ -935,254 +935,59 @@
   nav.situations{ margin-top: 8px !important; }
 }
 </style>
-<style id="bh-mobile-topbar-and-emergency">
+
+<style id="bh-top-cleanup-mobile">
 @media (max-width:768px){
-  /* wysokości referencyjne — dopasujesz w razie czego */
-  body[data-page="home"]{
-    --topbarH: 56px;    /* wysokość paska z wyszukiwarką + tłumaczem */
-    --emergH:  82px;    /* przybliżona wysokość belki numerów (z paddingiem) */
-  }
-
-  /* ===== TOPBAR: wyszukiwarka + tłumacz (fixed) ===== */
-  body[data-page="home"] .header .tools{
-    position: fixed !important;
-    top: 8px !important;
-    left: 12px !important;
-    right: 12px !important;
-    z-index: 6000 !important;
-
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-
-    padding: 8px 10px !important;
-    border-radius: 14px !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)) !important;
-    border: 1px solid rgba(255,255,255,.20) !important;
-    box-shadow: 0 10px 24px rgba(8,10,22,.45), inset 0 0 0 1px rgba(164,107,255,.12) !important;
-    backdrop-filter: saturate(120%) blur(6px) !important;
-  }
-  /* nie rozjeżdża się: search zajmuje całą szerokość, tłumacz obok */
-  body[data-page="home"] .header .tools .search{ flex:1 1 auto !important; min-width: 0 !important; }
-  body[data-page="home"] .header .tools #bhLangPick{ flex:0 0 auto !important; }
-
-  /* ===== NUMERY ALARMOWE: fixed pod topbarem ===== */
-  body[data-page="home"] .emergency-list{
-    position: fixed !important;
-    top: calc(8px + var(--topbarH)) !important; /* dokładnie pod topbarem */
-    left: 12px !important;
-    right: 12px !important;
-    z-index: 5800 !important;
-
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 8px !important;
-
-    margin: 0 !important;
-    padding: 8px !important;
-    border-radius: 14px !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)) !important;
-    border: 1px solid rgba(255,255,255,.20) !important;
-    box-shadow: 0 10px 24px rgba(8,10,22,.45), inset 0 0 0 1px rgba(164,107,255,.12) !important;
-    backdrop-filter: saturate(120%) blur(6px) !important;
-
-    /* stała wysokość, żeby poduszka poniżej była przewidywalna */
-    min-height: calc(var(--emergH) - 16px) !important; /* odliczamy padding */
-  }
-  body[data-page="home"] .emergency-list a{
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 8px 0 !important;
-    border-radius: 10px !important;
-    text-decoration: none !important;
-    font-weight: 900 !important;
-    letter-spacing: .2px !important;
-    color:#ffeef0 !important;
-
-    border: 1px solid rgba(255,107,107,.55) !important;
-    background: linear-gradient(180deg, rgba(255,107,107,.22), rgba(255,255,255,.03)) !important;
-    box-shadow: 0 6px 14px rgba(255,107,107,.35), 0 0 0 1px rgba(255,107,107,.22) inset !important;
-  }
-
-  /* ===== PODUSZKA NA TREŚĆ: nic nie nachodzi ===== */
-  body[data-page="home"] .container{
-    padding-top: calc(8px + var(--topbarH) + var(--emergH) + 16px) !important;
-  }
-
-  /* lekki oddech nad sytuacjami */
-  body[data-page="home"] nav.situations{ margin-top: 8px !important; }
-}
-</style>
-<style id="bh-mobile-topbar-and-emergency-v2">
-@media (max-width:768px){
-
-  /* === TOPBAR: tłumacz + wyszukiwarka === */
-  body[data-page="home"] .header .tools{
-    position: fixed !important;
-    top: 8px !important;
-    left: 12px !important;
-    right: 12px !important;
-    z-index: 6000 !important;
-
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-
-    padding: 8px 10px !important;
-    border-radius: 14px !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)) !important;
-    border: 1px solid rgba(255,255,255,.20) !important;
-    backdrop-filter: saturate(120%) blur(6px) !important;
-  }
-  body[data-page="home"] .header .tools .search{ flex:1 1 auto !important; min-width:0 !important; }
-  body[data-page="home"] #bhLangPick{ flex:0 0 auto !important; }
-
-  /* === NUMERY ALARMOWE: fixed niżej niż tłumacz === */
-  body[data-page="home"] .emergency-list{
-    position: fixed !important;
-    top: 100px !important;   /* 🔹 odsuwamy od tłumacza/search */
-    left: 12px !important;
-    right: 12px !important;
-    z-index: 5800 !important;
-
-    display: grid !important;
-    grid-template-columns: repeat(4,1fr) !important;
-    gap: 8px !important;
-
-    margin: 0 !important;
-    padding: 8px !important;
-    border-radius: 14px !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)) !important;
-    border: 1px solid rgba(255,255,255,.20) !important;
-    backdrop-filter: saturate(120%) blur(6px) !important;
-  }
-  body[data-page="home"] .emergency-list a{
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 8px 0 !important;
-    border-radius: 10px !important;
-    text-decoration: none !important;
-    font-weight: 900 !important;
-    color:#ffeef0 !important;
-    border: 1px solid rgba(255,107,107,.55) !important;
-    background: linear-gradient(180deg, rgba(255,107,107,.22), rgba(255,255,255,.03)) !important;
-  }
-
-  /* === PODUSZKA NA TREŚĆ (żeby nie nachodziło) === */
-  body[data-page="home"] .container{
-    padding-top: 200px !important;  /* 🔹 więcej miejsca na górze */
-  }
-}
-</style>
-
-</style>
-<style id="bh-mobile-topbar-and-emergency-v4">
-/* MOBILE ONLY */
-@media (max-width:768px){
-
-  /* ——— HARD RESET: usuń wszelkie wcześniejsze fixed/sticky/ghosty ——— */
-  body[data-page="home"] .header,
-  body[data-page="home"] .header::before,
-  body[data-page="home"] .header::after,
-  body[data-page="home"] .header .brand,
-  body[data-page="home"] .header .tools,
-  body[data-page="home"] .emergency-list {
-    position: static !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    margin: 0 !important;
-    transform: none !important;
-    box-shadow: none !important;
-    border: 0 !important;
-    background: transparent !important;
-  }
-  /* ukryj brand, żeby nie zostawiał pustej belki */
-  body[data-page="home"] .header .brand{ display:none !important; }
-
-  /* ——— WYSOKOŚCI jako zmienne (łatwo korygować) ——— */
-  body[data-page="home"]{
-    --bh-topbar-h: 56px;   /* tłumacz + wyszukiwarka */
-    --bh-gap:      10px;   /* odstęp między topbarem a telefonami */
-    --bh-emerg-h:  64px;   /* wysokość kart z numerami alarmowymi */
-    --bh-pad-extra:10px;   /* zapas pod spodem */
-  }
-
-  /* zarezerwuj miejsce pod fixed elementy, żeby NIC nie zjeżdżało */
-  body[data-page="home"] .container{
-    padding-top: calc(var(--bh-topbar-h) + var(--bh-gap) + var(--bh-emerg-h) + var(--bh-pad-extra)) !important;
-  }
-
-  /* ——— TOPBAR (tłumacz + wyszukiwarka) ——— */
-  body[data-page="home"] .header .tools{
-    position: fixed !important;
-    inset: 8px 12px auto 12px !important;  /* top right bottom left */
-    height: var(--bh-topbar-h) !important;
-    z-index: 9000 !important;
-
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-
-    padding: 8px 10px !important;
-    border-radius: 14px !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)) !important;
-    border: 1px solid rgba(255,255,255,.20) !important;
-    backdrop-filter: saturate(120%) blur(6px) !important;
-    box-shadow: 0 8px 22px rgba(8,10,22,.40) !important;
-  }
-  /* wyszukiwarka obok tłumacza */
-  body[data-page="home"] .header .tools .search{
-    flex: 1 1 auto !important;
-    min-width: 0 !important;
-  }
+  /* translator: wyłącz fixed i wszelkie „niewidzialne” rozmiary */
   body[data-page="home"] #bhLangPick{
-    flex: 0 0 auto !important;
-  }
+    position: static !important;
+    inset: auto !important;
+    top: auto !important; left:auto !important; right:auto !important; bottom:auto !important;
+    transform: none !important;
+    z-index: auto !important;
 
-  /* upewnij się, że panel podpowiedzi nie nachodzi na topbar */
-  body[data-page="home"] .bh2025-suggest{
-    top: calc(100% + 6px) !important;
-    z-index: 9050 !important;
-  }
+    /* żadnych ramek/cieni które mogły zostawać jako „ghost” */
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
 
-  /* ——— NUMERY ALARMOWE ——— */
-  body[data-page="home"] .emergency-list{
-    position: fixed !important;
-    top: calc(8px + var(--bh-topbar-h) + var(--bh-gap)) !important;
-    left: 12px !important;
-    right: 12px !important;
-    z-index: 8800 !important;
-
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 8px !important;
-
-    padding: 8px !important;
-    border-radius: 14px !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)) !important;
-    border: 1px solid rgba(255,255,255,.20) !important;
-    backdrop-filter: saturate(120%) blur(6px) !important;
-    box-shadow: 0 8px 22px rgba(8,10,22,.40) !important;
-  }
-  body[data-page="home"] .emergency-list a{
     display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 9px 0 !important;
-    border-radius: 10px !important;
-    text-decoration: none !important;
-    font-weight: 900 !important;
-    color:#ffeef0 !important;
-    border: 1px solid rgba(255,107,107,.55) !important;
-    background: linear-gradient(180deg, rgba(255,107,107,.22), rgba(255,255,255,.03)) !important;
+    margin: 8px 0 6px 0 !important; /* odsuń od góry */
   }
 
-  /* ——— sanity: nic innego nie jest sticky/fixed na górze ——— */
-  body[data-page="home"] .subheadline{ margin-top: 0 !important; }
+  /* narzędzia w headerze też bez fixed */
+  body[data-page="home"] .header .tools{
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    z-index: auto !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center !important;
+    flex-wrap: wrap !important; /* żeby tłumacz + search ładnie się złamały */
+  }
+
+  /* panel podpowiedzi nie ma się przyklejać do viewportu */
+  body[data-page="home"] .bh2025-suggest{
+    position: absolute !important;
+    z-index: 50 !important;
+  }
+
+  /* numery alarmowe: normalny przepływ, zero sticky/fixed */
+  body[data-page="home"] .emergency-list{
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    z-index: auto !important;
+    margin: 8px 0 10px 0 !important; /* lekki odstęp spod wyszukiwarki */
+  }
 }
 </style>
 </body>
