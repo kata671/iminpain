@@ -979,5 +979,149 @@
 })();
 </script>
 <!-- ===== /BH: MOBILE TOP LAYOUT ===== -->
+<!-- ===== BH: MOBILE TOP LAYOUT (ORDER + STYLES) ===== -->
+<style id="bh-mobile-layout">
+@media (max-width:768px){
+  /* Wyłącz wszystkie „fixedy” w topie, by nic nie zjeżdżało */
+  #bhLangPick{ position:static !important; inset:auto !important; transform:none !important; }
+  .header .brand{ position:static !important; }
+
+  /* Kontener nowego układu */
+  #bhMobileTop{
+    display:grid; gap:10px; margin-top:10px;
+    grid-template-columns:1fr; 
+  }
+
+  /* Wiersz 1: brand + tłumacz */
+  #bhRowBrand{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  #bhRowBrand .brand h1{ margin:0; font-size:20px; font-weight:900 }
+  #bhRowBrand .brand small{ display:block; font-size:11px; opacity:.8 }
+
+  /* Sam tłumacz – kapsuła po lewej */
+  #bhRowBrand #bhLangPick{
+    display:inline-flex !important; gap:6px; align-items:center;
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.22);
+    border-radius:12px; padding:6px 10px; 
+  }
+  #bhRowBrand #bhLangPick label{ display:none !important; }
+  #bhRowBrand #bhLangSelect{
+    background:transparent; border:none; color:#fff; font-weight:800; font-size:13px;
+  }
+
+  /* Wiersz 2: Szpitale / Zlokalizuj mnie / apteka24 */
+  #bhRowQuick{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  #bhRowQuick .btn, #bhRowQuick a.btn {
+    display:inline-flex; align-items:center; justify-content:center; text-align:center;
+    padding:10px 8px; min-height:42px; border-radius:12px; font-weight:800;
+    border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06);
+    text-decoration:none; color:#eef2ff;
+  }
+  /* lekkie glow zgodnie z Twoją paletą */
+  #btn-hosp{ box-shadow:0 0 14px rgba(255,107,107,.35); }
+  #bhRowQuick #btn-loc{ box-shadow:0 0 14px rgba(255,184,108,.28); }
+  #bhRowQuick #btn-apteka{ box-shadow:0 0 14px rgba(34,227,160,.32); }
+
+  /* Wiersz 3: 4 zielone pigułki – kwadratowe ramki */
+  #bhRowGreen{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  #bhRowGreen a.pill{
+    border-radius:14px !important; /* „kwadratowe” narożniki  */
+    border:1px solid rgba(59,130,246,.28); 
+    background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02)), rgba(96,165,250,.12) !important;
+    box-shadow:inset 0 0 0 1px rgba(59,130,246,.22), 0 6px 18px rgba(8,10,22,.35);
+    padding:12px !important; justify-content:center;
+  }
+  #bhRowGreen a.pill .ico{ background:rgba(59,130,246,.22); }
+
+  /* Wiersz 4: telefony – zwykły blok (NIC nie fixed!) */
+  #bhRowPhones{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+  #bhRowPhones a{
+    display:flex; align-items:center; justify-content:center;
+    padding:8px 6px; border-radius:10px;
+    border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06);
+    color:#eaf2ff; text-decoration:none; font-weight:900; font-size:13px;
+  }
+
+  /* Wiersz 5: Gry i Quizy – dopasowane niebieskie kapsuły */
+  #bhRowBlue{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  #bhRowBlue a.pill{
+    border-radius:14px !important;
+    border:1px solid rgba(96,165,250,.55) !important;
+    background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02)), rgba(96,165,250,.18) !important;
+    box-shadow:inset 0 0 0 1px rgba(96,165,250,.28), 0 6px 18px rgba(8,10,22,.35) !important;
+    padding:12px !important; justify-content:center;
+  }
+
+  /* Odstęp pod nowym blokiem, zanim zaczną się dalsze sekcje */
+  #bhMobileTop{ margin-bottom:12px; }
+
+  /* Stare listy, które przenosimy — bez dublowania */
+  .emergency-list{ display:none !important; } /* ukryj starą listę telefonów */
+}
+</style>
+
+<script id="bh-mobile-order">
+(function(){
+  if (window.__bhMobileOrdered) return; window.__bhMobileOrdered = true;
+  var isMobile = window.matchMedia('(max-width:768px)').matches;
+  if(!isMobile) return;
+
+  var container = document.querySelector('.container');
+  if(!container) return;
+
+  // ZŁÓŻ nowy top
+  var top = document.createElement('div'); top.id='bhMobileTop';
+
+  // Wiersz 1: brand + tłumacz
+  var rowBrand = document.createElement('div'); rowBrand.id='bhRowBrand';
+  var brand = document.querySelector('.header .brand');
+  var lang  = document.getElementById('bhLangPick');
+  if(brand){ rowBrand.appendChild(brand); }
+  if(lang){ rowBrand.appendChild(lang); }
+  top.appendChild(rowBrand);
+
+  // Wiersz 2: Szpitale / Zlokalizuj / apteka
+  var rowQuick = document.createElement('div'); rowQuick.id='bhRowQuick';
+  var btnHosp = document.getElementById('btn-hosp');
+  var btnLoc  = document.getElementById('btn-loc');
+  var btnApteka = document.getElementById('btn-apteka');
+  if(btnHosp) rowQuick.appendChild(btnHosp);
+  if(btnLoc)  rowQuick.appendChild(btnLoc);
+  if(btnApteka) rowQuick.appendChild(btnApteka);
+  top.appendChild(rowQuick);
+
+  // Wiersz 3: 4 zielone – pobierz tylko SOS pigułki
+  var rowGreen = document.createElement('div'); rowGreen.id='bhRowGreen';
+  var nav = document.querySelector('nav.situations');
+  if(nav){
+    var greens = nav.querySelectorAll('a.pill.pill--green');
+    greens.forEach(function(a){ rowGreen.appendChild(a); });
+  }
+  top.appendChild(rowGreen);
+
+  // Wiersz 4: telefony alarmowe (zrób nowe linki – bez fixed)
+  var rowPhones = document.createElement('div'); rowPhones.id='bhRowPhones';
+  rowPhones.innerHTML = '<a href="tel:112">📞 112</a><a href="tel:999">🚑 999</a><a href="tel:998">🔥 998</a><a href="tel:997">👮 997</a>';
+  top.appendChild(rowPhones);
+
+  // Wiersz 5: Gry i Quizy
+  var rowBlue = document.createElement('div'); rowBlue.id='bhRowBlue';
+  if(nav){
+    var games = nav.querySelector('a[href*="gry"]');
+    var quiz  = document.getElementById('btn-quizzes') || nav.querySelector('a[href*="quizzes"]');
+    if(games) rowBlue.appendChild(games);
+    if(quiz)  rowBlue.appendChild(quiz);
+  }
+  top.appendChild(rowBlue);
+
+  // Wstaw nowy top tuż POD <header> (zostaw wyszukiwarkę i 3 karty bez zmian)
+  var hdr = document.querySelector('.header');
+  if(hdr && hdr.parentNode){
+    hdr.parentNode.insertBefore(top, hdr.nextSibling);
+  }else{
+    container.insertBefore(top, container.firstChild);
+  }
+})();
+</script>
+<!-- ===== /BH: MOBILE TOP LAYOUT ===== -->
 </body>
 </html>
