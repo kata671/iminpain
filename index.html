@@ -747,5 +747,93 @@
   margin-top: 100px; /* odsunięcie od góry żeby nie nachodziło */
 }
 </style>
+<!-- ==== BH MOBILE TOP PATCH (ONE-PASTE) ==== -->
+<style id="bh-mobile-top-patch">
+@media (max-width:768px){
+
+  /* 1) Brand w lewym górnym */
+  .header .brand{
+    position:fixed; top:10px; left:12px; z-index:11000; text-align:left;
+  }
+  .header .brand h1{ margin:0; font-size:18px; font-weight:800 }
+  .header .brand small{ display:block; font-size:11px; opacity:.78 }
+
+  /* 2) Tłumacz przyklejony w prawym górnym */
+  #bhLangPick{
+    position:fixed !important; top:10px !important; right:12px !important;
+    z-index:11000 !important;
+  }
+
+  /* 3) Mini „Zlokalizuj mnie” obok tłumacza */
+  #bhLocMini{
+    position:fixed; top:10px; right:78px; z-index:11000;
+    font-size:12px; line-height:1; padding:6px 9px; border-radius:10px;
+    border:1px solid rgba(94,234,212,.55); background:rgba(94,234,212,.12);
+    color:#5eead4; font-weight:800; letter-spacing:.2px;
+    box-shadow:0 0 12px rgba(94,234,212,.45); backdrop-filter:saturate(120%) blur(4px);
+  }
+
+  /* 4) Nowy pasek z numerami – przyklejony i stabilny */
+  #bhMobileEmergency{
+    position:fixed; left:0; right:0; top:52px; z-index:10500;
+    display:flex; justify-content:center; gap:12px; padding:6px 8px;
+    background:linear-gradient(180deg, rgba(14,18,48,.62), rgba(14,18,48,.48));
+    backdrop-filter:saturate(120%) blur(4px);
+    border-top:1px solid rgba(255,255,255,.06);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  #bhMobileEmergency a{
+    display:inline-block; text-decoration:none; color:#eaf2ff; font-weight:800;
+    font-size:13px; padding:5px 8px; border-radius:9px;
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.06);
+  }
+
+  /* 5) Schowaj stare rzeczy na mobile */
+  #btn-112{ display:none !important; }               /* stary pojedynczy 112 */
+  .emergency-list{ display:none !important; }        /* stary pasek numerów */
+
+  /* 6) Zrób miejsce na przyklejony top, aby nic nie nachodziło */
+  body[data-page="home"]{ padding-top: 124px !important; }
+}
+</style>
+
+<script id="bh-mobile-top-patch-js">
+(function(){
+  if (window.__bhMobileTopApplied) return; window.__bhMobileTopApplied = true;
+
+  var isMobile = window.matchMedia('(max-width:768px)').matches;
+  if (!isMobile) return;
+
+  // 1) Mini „Zlokalizuj mnie” – nie dubluj
+  if (!document.getElementById('bhLocMini')) {
+    var mini = document.createElement('button');
+    mini.id = 'bhLocMini';
+    mini.type = 'button';
+    mini.textContent = ( (localStorage.getItem('bh.lang')||document.documentElement.lang||'pl')==='en' ? 'Locate me' : 'Zlokalizuj mnie' );
+    mini.addEventListener('click', function(){
+      var mainBtn = document.getElementById('btn-loc');
+      if (mainBtn) { mainBtn.click(); }
+      else { try{ navigator.geolocation.getCurrentPosition(()=>{},()=>{}); }catch(e){} }
+    });
+    document.body.appendChild(mini);
+  }
+
+  // 2) Przyklejony pasek numerów – nie dubluj
+  if (!document.getElementById('bhMobileEmergency')) {
+    var dock = document.createElement('div');
+    dock.id = 'bhMobileEmergency';
+    dock.setAttribute('role','navigation');
+    dock.setAttribute('aria-label','Telefony alarmowe');
+    dock.innerHTML =
+      '<a href="tel:112">📞 112</a>' +
+      '<a href="tel:999">🚑 999</a>' +
+      '<a href="tel:998">🔥 998</a>' +
+      '<a href="tel:997">👮 997</a>';
+    document.body.appendChild(dock);
+  }
+})();
+</script>
+<!-- ==== /BH MOBILE TOP PATCH ==== -->
 </body>
 </html>
