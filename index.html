@@ -194,7 +194,50 @@
 }
 </style>
 </head>
-<body data-page="home"></head>
+<body data-page="home"><style id="bh-brand-search-patch">
+  /* Pasek nagłówka: marka po lewej, obok wyszukiwarka */
+  .header{
+    display:flex; align-items:center; justify-content:flex-start; gap:12px;
+    padding:8px 12px 0 0;       /* lekki oddech u góry */
+  }
+  .header .brand{
+    margin:0; flex:0 0 auto; text-align:left;
+  }
+  .header .brand h1{
+    margin:0; line-height:1.1; font-size:22px;
+  }
+  .header .brand small{
+    display:block; margin-top:2px; opacity:.8; font-size:12.5px;
+  }
+
+  /* Prawa część nagłówka – ale używamy jej tylko do wyszukiwarki */
+  .header .tools{
+    display:flex; align-items:center; gap:10px; flex:1 1 auto;
+  }
+  .header .tools .search{
+    position:relative; flex:1 1 520px; min-width:180px; max-width:760px;
+  }
+  .header .tools .search input{
+    width:100%; box-sizing:border-box;
+    padding:10px 38px 10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.22);
+    background:rgba(255,255,255,.08);
+    color:#fff; font-weight:600; outline:none;
+  }
+  /* ikona lupy – ustaw ją na brzegu pola, bez wpływu na layout */
+  #bhSearchIcon{
+    position:absolute; right:10px; top:50%; transform:translateY(-50%);
+    pointer-events:auto;
+  }
+
+  /* MOBILE – zostaw miejsce dla tłumacza w prawym górnym rogu (on jest fixed) */
+  @media (max-width:768px){
+    .header{ gap:8px; padding-right:76px; }     /* bufor, by nie wchodzić pod tłumacza */
+    .header .brand small{ display:none; }       /* pod mobile chowamy podtytuł */
+    .header .brand h1{ font-size:18px; }
+    .header .tools .search{ flex:1 1 auto; min-width:0; }
+  }
+</style>
+</head>
 
 <body data-page="home">
   <div class="bh-wallpaper" aria-hidden="true"></div>
