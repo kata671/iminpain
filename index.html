@@ -207,21 +207,28 @@
         <h1 data-i18n="brand_title">Boli Help</h1>
         <small data-i18n="brand_sub">Pomoc i pierwsza pomoc w nagłych sytuacjach</small>
       </div>
-      <div class="tools" style="display:flex;align-items:center;gap:10px">
-        <div class="search" role="search">
-          <input id="bhSearch" type="search" placeholder="Szukaj objawu, części ciała lub tematu…" aria-label="Szukaj" />
-          <svg id="bhSearchIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="cursor:pointer">
-            <path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
-                  stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
+     <div class="tools" style="display:flex;align-items:center;gap:10px">
+  <div class="search" role="search">
+    <input id="bhSearch" type="search" placeholder="Szukaj objawu, części ciała lub tematu…" aria-label="Szukaj" />
+    <svg id="bhSearchIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="cursor:pointer">
+      <path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
+            stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
 
-        <!-- ▼▼ NOWY: Tłumacz (PL/EN) – lekki, bez Google banneru ▼▼ -->
-        <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
-          <label for="bhLangSelect">Język</label>
-          <select id="bhLangSelect">
-            <option value="pl">PL</option>
-            <option value="en">EN</option>
+  <!-- NOWE: mini przycisk obok wyszukiwarki -->
+  <button id="btn-loc" class="btn" type="button" data-i18n="btn_loc">📍 Zlokalizuj mnie</button>
+
+  <!-- Tłumacz PL/EN -->
+  <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
+    <label for="bhLangSelect">Język</label>
+    <select id="bhLangSelect">
+      <option value="pl">PL</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
+</div>
+
           </select>
         </div>
         <!-- ▲▲ KONIEC: Tłumacz ▲▲ -->
@@ -753,6 +760,12 @@
     margin:6px 0 8px;
   }
   .emergency-list a{ padding:6px 10px; border-radius:10px }
+}
+</style>
+<style id="bh-mobile-header-fix">
+/* —— MOBILE FIRST, BEZPIECZNY PATCH —— */
+@media (max-width:768px){
+  /* ... (tu cały mój kod z poprzedniej wiadomości) ... */
 }
 </style>
 </body>
