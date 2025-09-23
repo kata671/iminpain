@@ -1131,5 +1131,59 @@ body[data-page="home"] {
   top: 10px !important;
 }
 </style>
+<style>
+/* 🧹 ZABLOKUJ DUCHY W GÓRZE STRONY (stare elementy) */
+.header + .emergency-list,
+.header .tools a[href^="tel:"],
+.header .tools .btn.btn--loc,
+.header .tools .locate-mini,
+.header .tools .btn--loc-old {
+  display: none !important;
+}
+
+/* odrobina porządku, żeby góra była równo */
+.header { margin-top: 0 !important; padding-top: 8px !important; }
+body[data-page="home"] { padding-top: 0 !important; margin-top: 0 !important; }
+</style>
+<script>
+(function(){
+  /* 🗑️ usuń legacy paski telefonów w okolicy nagłówka */
+  document.querySelectorAll('.header + .emergency-list, .header .tools a[href^="tel:"]').forEach(el=>el.remove());
+
+  /* 🗑️ usuń stare mini „Zlokalizuj mnie” (zostaw #btn-loc-main jeśli masz) */
+  Array.from(document.querySelectorAll('button, a')).forEach(el=>{
+    if (el.id === 'btn-loc-main') return;
+    const t = (el.textContent||'').trim().toLowerCase();
+    if (t === 'zlokalizuj mnie' || t.includes('zlokalizuj')) el.remove();
+  });
+
+  /* 🔎 jeśli wyszukiwarka znikła — odtwórz ją obok tłumacza */
+  if (!document.getElementById('bhSearch')) {
+    const tools = document.querySelector('.header .tools') || document.querySelector('.header');
+    if (tools) {
+      const wrap = document.createElement('div');
+      wrap.className = 'search'; wrap.setAttribute('role','search');
+      wrap.innerHTML = `
+        <input id="bhSearch" type="search"
+               placeholder="Szukaj objawu, części ciała lub tematu…"
+               aria-label="Szukaj"/>
+        <svg id="bhSearchIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="cursor:pointer">
+          <path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
+                stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
+        </svg>`;
+      tools.appendChild(wrap);
+    }
+  }
+
+  /* 📐 lekki layout, żeby nic nie nachodziło */
+  const style = document.createElement('style');
+  style.textContent = `
+    .header .tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .header .tools .search{position:relative;flex:1 1 100%;max-width:100%}
+    @media (min-width:420px){ .header .tools .search{flex:1 1 auto;min-width:220px} }
+  `;
+  document.head.appendChild(style);
+})();
+</script>
 </body>
 </html>
