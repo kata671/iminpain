@@ -967,5 +967,218 @@
   document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') close(); });
 })();
 </script>
+<script id="BH_FINAL_ONEPATCH">
+(() => {
+  // ---------- 1) CSS: układ top + karty ----------
+  const css = `
+  /* TOP: brand + search (translator zostaje jak był) */
+  .header{
+    display:flex; align-items:flex-start; justify-content:space-between;
+    padding:8px 12px 0 12px; gap:12px;
+  }
+  .header .brand{flex:0 1 auto; min-width:0}
+  .header .brand h1{margin:0; font-size:22px; line-height:1.1}
+  .header .brand small{display:block; margin-top:2px; font-size:12.5px; opacity:.9; line-height:1.2}
+  .header .tools{flex:1 0 auto; display:flex; justify-content:flex-end}
+  .header .tools .search{position:relative; width:min(56vw,480px); min-width:220px}
+  .header .tools .search input{
+    width:100%; box-sizing:border-box; padding:10px 38px 10px 12px;
+    border-radius:12px; border:1px solid rgba(255,255,255,.22);
+    background:rgba(255,255,255,.08); color:#fff; font-weight:600; outline:none;
+  }
+  #bhSearchIcon{position:absolute; right:10px; top:50%; transform:translateY(-50%)}
+
+  /* Nie dotykamy tłumacza; jedynie dajemy bufor, żeby nic pod niego nie wjeżdżało */
+  @media (max-width:768px){
+    body{ padding-top: 50px !important; } /* minimalny bufor pod kapsułkę PL/EN */
+    .header{ padding-right: 96px !important; }
+    .header .brand h1{ font-size:18px }
+    .header .brand small{ font-size:12px }
+    .header .tools .search{ width:min(62vw, 340px); min-width:180px }
+  }
+
+  /* ZIELONE – zostają, ale zapewniamy im układ kart (jak talia) */
+  nav.situations{
+    display:grid !important; grid-template-columns:repeat(4,1fr); gap:10px; margin:10px 0 8px 0;
+  }
+  nav.situations .pill{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    aspect-ratio:63/88; border-radius:16px !important; padding:8px; gap:6px; text-align:center;
+    font-size:12px; font-weight:900; white-space:normal;
+  }
+  nav.situations .pill .ico{ font-size:22px; line-height:1 }
+
+  /* Rząd 2: Telefony, Szpitale/SOR, Zlokalizuj, Apteka – identyczne karty */
+  .bh-row-quick{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:6px 0 10px 0;
+  }
+  .bh-card{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    aspect-ratio:63/88; border-radius:16px; padding:10px; text-align:center;
+    background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.22); color:#eef2ff; text-decoration:none; font-weight:900;
+  }
+  .bh-card--yellow{
+    background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(255,213,0,.08);
+    border:1px solid rgba(255,213,0,.45);
+    box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(255,213,0,.30) inset, 0 0 18px rgba(255,213,0,.35);
+  }
+  .bh-card--yellow:hover{ border-color:rgba(255,213,0,.75); box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(255,213,0,.55), 0 0 26px rgba(255,213,0,.55); transform:translateY(-1px); }
+
+  /* Rząd 3: Gry + Quiz – te same wymiary */
+  .bh-row-play{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin:6px 0 8px 0;
+  }
+
+  /* Subheadline niżej, żeby nic nie nachodziło */
+  .subheadline{ margin:8px 0 10px 2px }
+  section.stack[aria-label="Wybór postaci"]{ margin-top:10px }
+
+  /* Zabijamy „duchy”: stare emergency-list oraz pojedyncze 112 i mini-loc – na wszelki wypadek chowamy */
+  .emergency-list, #btn-112{ display:none !important }
+  `;
+  const style = document.createElement('style');
+  style.id = 'bh-home-layout-final';
+  style.textContent = css;
+  document.head.appendChild(style);
+
+  // ---------- 2) Usunięcie starych duchów ----------
+  document.querySelectorAll('.emergency-list').forEach(n => n.remove());
+
+  // ---------- 3) Złożenie rzędów pod zielonymi (na podstawie istniejących przycisków) ----------
+  const container = document.querySelector('.container');
+  const situations = document.querySelector('nav.situations');
+  if (!container || !situations) return;
+
+  // a) RZĄD 2 – Telefony (żółta), Szpitale/SOR, Zlokalizuj, Apteka
+  //    -> zachowujemy ID: #btn-hosp, #btn-loc, #btn-apteka (żeby glow/funkcje zostały)
+  //    -> Telefony jako jeden przycisk (modal z numerami, niżej)
+  let rowQuick = document.querySelector('.bh-row-quick');
+  if (!rowQuick) {
+    rowQuick = document.createElement('div');
+    rowQuick.className = 'bh-row-quick';
+
+    // Telefony (żółta karta)
+    const telBtn = document.createElement('button');
+    telBtn.type = 'button';
+    telBtn.id = 'btn-phones';
+    telBtn.className = 'bh-card bh-card--yellow';
+    telBtn.textContent = '☎️ Telefony';
+    rowQuick.appendChild(telBtn);
+
+    // Szpitale/SOR (przenosimy istniejący #btn-hosp jeżeli jest)
+    let hosp = document.getElementById('btn-hosp');
+    if (!hosp) {
+      hosp = document.createElement('button');
+      hosp.id = 'btn-hosp';
+      hosp.className = 'btn btn--hosp bh-card';
+      hosp.type = 'button';
+      hosp.textContent = '🏥 Szpitale / SOR';
+    } else {
+      hosp.classList.add('bh-card'); // wygląd karty + zostają glow z Twojego CSS
+    }
+    rowQuick.appendChild(hosp);
+
+    // Zlokalizuj mnie
+    let loc = document.getElementById('btn-loc');
+    if (!loc) {
+      loc = document.createElement('button');
+      loc.id = 'btn-loc';
+      loc.className = 'btn bh-card';
+      loc.type = 'button';
+      loc.textContent = '📍 Zlokalizuj mnie';
+    } else {
+      loc.classList.add('bh-card');
+    }
+    rowQuick.appendChild(loc);
+
+    // Apteka
+    let apt = document.getElementById('btn-apteka');
+    if (!apt) {
+      apt = document.createElement('a');
+      apt.id = 'btn-apteka';
+      apt.href = 'https://www.google.com/maps/search/apteka+otwarta+teraz/';
+      apt.target = '_blank'; apt.rel = 'noopener';
+      apt.className = 'btn bh-card';
+      apt.textContent = 'apteka24';
+    } else {
+      apt.classList.add('bh-card');
+    }
+    rowQuick.appendChild(apt);
+
+    situations.insertAdjacentElement('afterend', rowQuick);
+  }
+
+  // b) RZĄD 3 – Gry + Quiz (zachowaj ID #btn-quizzes)
+  let rowPlay = document.querySelector('.bh-row-play');
+  if (!rowPlay) {
+    rowPlay = document.createElement('div');
+    rowPlay.className = 'bh-row-play';
+
+    // Gry – jeśli istnieje link do gry.html, użyj go; jeśli nie, zrób
+    let games = document.querySelector('a[href$="gry.html"]');
+    if (!games) {
+      games = document.createElement('a');
+      games.href = 'gry.html';
+      games.textContent = '🎮 Gry / Trening';
+    }
+    games.classList.add('bh-card');
+    rowPlay.appendChild(games);
+
+    // Quizy
+    let quiz = document.getElementById('btn-quizzes') || document.querySelector('a[href$="quizzes.html"]');
+    if (!quiz) {
+      quiz = document.createElement('a');
+      quiz.href = 'quizzes.html';
+      quiz.id = 'btn-quizzes';
+      quiz.textContent = '🧠 Quizy';
+    }
+    quiz.classList.add('bh-card');
+    rowPlay.appendChild(quiz);
+
+    rowQuick.insertAdjacentElement('afterend', rowPlay);
+  }
+
+  // ---------- 4) Modal do „Telefony” (112/999/998/997) ----------
+  if (!document.getElementById('bhPhonesModal')) {
+    const modal = document.createElement('div');
+    modal.id = 'bhPhonesModal';
+    modal.className = 'bh2025-modal';
+    modal.setAttribute('role','dialog');
+    modal.setAttribute('aria-modal','true');
+    modal.setAttribute('aria-hidden','true');
+    modal.innerHTML = `
+      <div class="bh2025-modal__panel" style="max-width:420px">
+        <div class="bh2025-porada__head" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <div class="bh2025-porada__title">Telefony alarmowe</div>
+          <button type="button" id="bhPhonesClose" class="bh2025-close--porada" aria-label="Zamknij">✕</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+          <a class="bh-card" href="tel:112">📞 112</a>
+          <a class="bh-card" href="tel:999">🚑 999</a>
+          <a class="bh-card" href="tel:998">🔥 998</a>
+          <a class="bh-card" href="tel:997">👮 997</a>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+
+    const open = () => { modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; };
+    const close = () => { modal.setAttribute('aria-hidden','true');  document.body.style.overflow=''; };
+    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.getAttribute('aria-hidden')==='false') close(); });
+    document.addEventListener('click', e => {
+      const trg = e.target.closest('#bhPhonesClose');
+      if (trg) close();
+    });
+    const telBtn = document.getElementById('btn-phones');
+    if (telBtn) telBtn.addEventListener('click', open);
+  }
+
+  // ---------- 5) Sprzątanie powidoków ----------
+  // Jeżeli gdzieś został pojedynczy stary 112 lub mini „zlokalizuj mnie” – ukryj
+  document.querySelectorAll('#btn-112').forEach(n => n.style.display='none');
+
+})();
+</script>
 </body>
 </html>
