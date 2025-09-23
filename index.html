@@ -1180,5 +1180,229 @@
 
 })();
 </script>
+<script id="BH_LAST_PATCH">
+(() => {
+  // ===== 1) CSS: top, karty o identycznych wymiarach jak zielone, sprzątanie duchów =====
+  const css = `
+    /* TOP: brand + search w jednym rzędzie (po lewej brand, po prawej wyszukiwarka) */
+    .header{margin:0;padding:8px 12px 0;display:block}
+    .header .brand{margin:0}
+    .header .brand h1{margin:0;font-size:22px;line-height:1.1}
+    .header .brand small{display:block;margin-top:2px;font-size:12.5px;opacity:.95;line-height:1.2}
+    .bh-top{display:grid;grid-template-columns:1fr minmax(220px,520px);gap:12px;align-items:center;padding-right:110px}
+    .bh-top .search{position:relative}
+    .bh-top .search input{
+      width:100%;box-sizing:border-box;padding:10px 38px 10px 12px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;font-weight:600;outline:none
+    }
+    #bhSearchIcon{position:absolute;right:10px;top:50%;transform:translateY(-50%)}
+
+    /* mobile: minimalny bufor pod tłumacz, ale wszystko jest najwyżej */
+    @media (max-width:768px){
+      body{padding-top: 44px !important;}
+      .bh-top{grid-template-columns:1fr minmax(180px,1fr);padding-right:96px}
+      .header .brand h1{font-size:18px}
+      .header .brand small{font-size:12px}
+    }
+
+    /* ZIELONE – referencja wymiarów (karty do gry) */
+    nav.situations{
+      display:grid !important; grid-template-columns:repeat(4,1fr); gap:10px; margin:10px 0 8px 0;
+    }
+    nav.situations .pill{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+      aspect-ratio:63/88;border-radius:16px !important;padding:8px;gap:6px;font-size:12px;font-weight:900;white-space:normal;
+    }
+    nav.situations .pill .ico{font-size:22px;line-height:1}
+
+    /* RZĄD 2: Telefony / Szpitale / Zlokalizuj / Apteka – te same wymiary */
+    .bh-row-quick{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:6px 0 10px 0;
+    }
+    .bh-card{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+      aspect-ratio:63/88;border-radius:16px;padding:10px;font-size:12px;font-weight:900;white-space:normal;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.22);color:#eef2ff;text-decoration:none;
+    }
+    .bh-card .badge-round{all:unset}
+    .bh-card--yellow{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(255,213,0,.08);
+      border:1px solid rgba(255,213,0,.45);
+      box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(255,213,0,.30) inset, 0 0 18px rgba(255,213,0,.35);
+    }
+    .bh-card--yellow:hover{border-color:rgba(255,213,0,.75);box-shadow:0 14px 26px rgba(8,10,22,.45),0 0 0 2px rgba(255,213,0,.55),0 0 26px rgba(255,213,0,.55);transform:translateY(-1px)}
+
+    /* RZĄD 3: Gry + Quiz – też karty */
+    .bh-row-play{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:6px 0 8px 0;}
+
+    /* Subheadline niech spadnie odrobinę niżej */
+    .subheadline{margin:8px 0 10px 2px}
+
+    /* Usuwamy „duchy” */
+    .emergency-list, #btn-112{display:none !important;}
+  `;
+  const style = document.createElement('style');
+  style.id = 'bh-home-last-style';
+  style.textContent = css;
+  document.head.appendChild(style);
+
+  // ===== 2) DOM: TOP – brand + search w jednym rzędzie (bez ruszania tłumacza) =====
+  const header = document.querySelector('.header');
+  const brand  = header?.querySelector('.brand');
+  const search = header?.querySelector('.tools .search') || header?.querySelector('.search');
+  if (header && brand && search) {
+    let top = header.querySelector('.bh-top');
+    if (!top) {
+      top = document.createElement('div');
+      top.className = 'bh-top';
+      header.prepend(top);
+    }
+    // przenieś brand + search do .bh-top (bez duplikatów)
+    if (brand.parentElement !== top) top.appendChild(brand);
+    if (search.parentElement !== top) top.appendChild(search);
+  }
+  // Upewnij się, że podtytuł istnieje (był zgłaszany brak)
+  const brandSub = brand?.querySelector('small');
+  if (brand && !brandSub) {
+    const sm = document.createElement('small');
+    sm.setAttribute('data-i18n','brand_sub');
+    sm.textContent = 'Pomoc i pierwsza pomoc w nagłych sytuacjach';
+    brand.appendChild(sm);
+  }
+
+  // ===== 3) RZĄD 2 – Telefony, Szpitale, Zlokalizuj, Apteka (identyczne wymiary jak zielone) =====
+  const container = document.querySelector('.container');
+  const situations = document.querySelector('nav.situations');
+  if (!container || !situations) return;
+
+  // Usuń stary pasek alarmowy (jeśli jeszcze gdzieś jest)
+  document.querySelectorAll('.emergency-list').forEach(n => n.remove());
+
+  // Zabezpieczenie: schowaj stare pojedyncze 112 (gdyby było)
+  const old112 = document.getElementById('btn-112'); if (old112) old112.style.display = 'none';
+
+  // Istniejące przyciski akcji (zachowujemy ich ID, glow i JS)
+  const actions = document.querySelector('.actions');
+
+  let hosp = document.getElementById('btn-hosp');
+  if (!hosp) { // awaryjnie odtwórz
+    hosp = document.createElement('button');
+    hosp.id = 'btn-hosp'; hosp.type='button';
+    hosp.className = 'btn btn--hosp';
+    hosp.textContent = '🏥 Szpitale / SOR';
+  }
+  let loc = document.getElementById('btn-loc');
+  if (!loc) {
+    loc = document.createElement('button');
+    loc.id='btn-loc'; loc.type='button';
+    loc.className='btn';
+    loc.textContent='📍 Zlokalizuj mnie';
+  }
+  let apt = document.getElementById('btn-apteka');
+  if (!apt) {
+    apt = document.createElement('a');
+    apt.id='btn-apteka';
+    apt.href='https://www.google.com/maps/search/apteka+otwarta+teraz/';
+    apt.target='_blank'; apt.rel='noopener';
+    apt.className='btn';
+    apt.textContent='apteka24';
+  }
+  // Odczep z .actions (żeby nie dublować)
+  [hosp,loc,apt].forEach(el => { try{ actions?.contains(el) && actions.removeChild(el); }catch(_){} });
+
+  // Zbuduj rząd quick (jeśli nie istnieje)
+  let rowQuick = document.querySelector('.bh-row-quick');
+  if (!rowQuick) {
+    rowQuick = document.createElement('div');
+    rowQuick.className = 'bh-row-quick';
+    situations.insertAdjacentElement('afterend', rowQuick);
+  } else {
+    rowQuick.innerHTML = '';
+  }
+
+  // Telefony – nowy przycisk (modal z numerami)
+  let telBtn = document.getElementById('btn-phones');
+  if (!telBtn) {
+    telBtn = document.createElement('button');
+    telBtn.id = 'btn-phones'; telBtn.type='button';
+    telBtn.className='bh-card bh-card--yellow';
+    telBtn.textContent='☎️ Telefony';
+  }
+  rowQuick.appendChild(telBtn);
+
+  // Dołóż istniejące (dodając klasę karty; glow zostaje z Twojego CSS)
+  hosp.classList.add('bh-card'); rowQuick.appendChild(hosp);
+  loc.classList.add('bh-card');  rowQuick.appendChild(loc);
+  apt.classList.add('bh-card');  rowQuick.appendChild(apt);
+
+  // Stare .actions chowamy (żeby nie było powidoków)
+  if (actions) actions.style.display = 'none';
+
+  // ===== 4) RZĄD 3 – Gry + Quizy (przenieś z góry, bez duplikatów) =====
+  // Usuń niebieskie z nav.situations i przenieś niżej.
+  const gameLink = document.querySelector('nav.situations a[href$="gry.html"]');
+  const quizLink = document.getElementById('btn-quizzes') || document.querySelector('nav.situations a[href$="quizzes.html"]');
+
+  let rowPlay = document.querySelector('.bh-row-play');
+  if (!rowPlay) {
+    rowPlay = document.createElement('div');
+    rowPlay.className = 'bh-row-play';
+    rowQuick.insertAdjacentElement('afterend', rowPlay);
+  } else {
+    rowPlay.innerHTML = '';
+  }
+
+  if (gameLink) {
+    gameLink.classList.remove('pill','pill--blue');
+    gameLink.classList.add('bh-card');
+    // odczep z nav
+    try { gameLink.parentElement.removeChild(gameLink); } catch(_){}
+    rowPlay.appendChild(gameLink);
+  } else {
+    const g = document.createElement('a');
+    g.href='gry.html'; g.textContent='🎮 Gry / Trening'; g.className='bh-card';
+    rowPlay.appendChild(g);
+  }
+
+  if (quizLink) {
+    quizLink.classList.remove('pill','pill--blue');
+    quizLink.classList.add('bh-card');
+    try { quizLink.parentElement.removeChild(quizLink); } catch(_){}
+    rowPlay.appendChild(quizLink);
+  } else {
+    const q = document.createElement('a');
+    q.href='quizzes.html'; q.id='btn-quizzes'; q.textContent='🧠 Quizy'; q.className='bh-card';
+    rowPlay.appendChild(q);
+  }
+
+  // ===== 5) Modal dla „Telefony” (112/999/998/997) – jeden, bez duplikatów =====
+  if (!document.getElementById('bhPhonesModal')) {
+    const modal = document.createElement('div');
+    modal.id='bhPhonesModal'; modal.className='bh2025-modal';
+    modal.setAttribute('role','dialog'); modal.setAttribute('aria-modal','true'); modal.setAttribute('aria-hidden','true');
+    modal.innerHTML = `
+      <div class="bh2025-modal__panel" style="max-width:420px">
+        <div class="bh2025-porada__head" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <div class="bh2025-porada__title">Telefony alarmowe</div>
+          <button type="button" id="bhPhonesClose" class="bh2025-close--porada" aria-label="Zamknij">✕</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+          <a class="bh-card" href="tel:112">📞 112</a>
+          <a class="bh-card" href="tel:999">🚑 999</a>
+          <a class="bh-card" href="tel:998">🔥 998</a>
+          <a class="bh-card" href="tel:997">👮 997</a>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+    const open = () => { modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; };
+    const close = () => { modal.setAttribute('aria-hidden','true');  document.body.style.overflow=''; };
+    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.getAttribute('aria-hidden')==='false') close(); });
+    document.addEventListener('click', e => { if (e.target.closest('#bhPhonesClose')) close(); });
+    telBtn.addEventListener('click', open);
+  }
+})();
+</script>
 </body>
 </html>
