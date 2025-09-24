@@ -4240,5 +4240,68 @@ document.addEventListener("DOMContentLoaded", ()=>{
   })();
 </script>
 <script src="assets/copilot.js"></script>
+<style id="bh-objawy-force">
+  /* Wyłącz ewentualne nakładki i tła na Objawach */
+  #s-objawy::before,
+  #s-objawy::after { content:none !important; }
+</style>
+
+<script>
+(function(){
+  // 1) znajdź kartę „Objawy” i kartę „Leki na receptę” (PL/EN)
+  var obj = document.querySelector('article.card#s-objawy');
+  if(!obj) return;
+
+  function findRx(){
+    // po ID, jeśli istnieje
+    return document.querySelector('#s-leki-recepte, #s-rx, article.card[data-tab="leki_rx"]')
+        // po nagłówku h3 (PL/EN)
+        || Array.from(document.querySelectorAll('article.card h3'))
+             .map(h=>({h, t:h.textContent.trim().toLowerCase(), card:h.closest('article.card')}))
+             .find(x=>/leki na receptę|leki na recepte|prescription/i.test(x.t))?.card
+        // po atrybucie roli/nazwie, jako ostatnia deska ratunku
+        || Array.from(document.querySelectorAll('article.card')).find(a=>/recept/.test(a.outerHTML.toLowerCase()));
+  }
+
+  var rx = findRx();
+  if(!rx) {
+    // fallback: po prostu ustaw elegancki gradient zbliżony do RX
+    obj.style.setProperty('background',
+      'linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(60,32,100,.36)',
+      'important');
+    obj.style.setProperty('border','1px solid rgba(164,107,255,.28)','important');
+    obj.style.setProperty('box-shadow',
+      '0 10px 24px rgba(255,110,199,.16), 0 0 0 1px rgba(164,107,255,.18) inset, 0 0 18px rgba(164,107,255,.14)',
+      'important');
+    return;
+  }
+
+  // 2) skopiuj finalnie policzone style z RX
+  var cs = getComputedStyle(rx);
+  var bg = cs.getPropertyValue('background') || (cs.getPropertyValue('background-image')+', '+cs.getPropertyValue('background-color'));
+  var br = cs.getPropertyValue('border') || ('1px solid '+(cs.getPropertyValue('border-color')||'transparent'));
+  var sh = cs.getPropertyValue('box-shadow');
+
+  obj.style.setProperty('background', bg, 'important');
+  obj.style.setProperty('border', br, 'important');
+  if(sh && sh!=='none') obj.style.setProperty('box-shadow', sh, 'important');
+
+  // 3) jeżeli RX używa nakładki ::before, to sklonuj też jej tło
+  try{
+    var rxBefore = getComputedStyle(rx, '::before');
+    var rxBeforeBg = rxBefore.getPropertyValue('background');
+    if(rxBeforeBg && rxBeforeBg!=='none'){
+      // dołóż syntetyczną nakładkę na Objawy, by wyglądało identycznie
+      var css = document.createElement('style');
+      css.textContent =
+        '#s-objawy::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:'+rxBeforeBg+' !important;}';
+      document.head.appendChild(css);
+      // i upewnij się, że karta ma kontekst pozycjonowania
+      var pos = getComputedStyle(obj).getPropertyValue('position');
+      if(pos==='static') obj.style.setProperty('position','relative','important');
+    }
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
