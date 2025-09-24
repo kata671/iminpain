@@ -193,7 +193,28 @@
   body{ padding-top: 64px !important; }
 }
 </style>
-</head>
+<style>
+/* FIX: stałe miejsce przełącznika języka na telefonach (final) */
+@media (max-width:768px){
+  :where(.lang, .langpick, .language, #lang, #language, .header .tools .lang, .header .tools .langpick){
+    position: fixed !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 3000 !important;
+    margin: 0 !important;
+    transform: none !important;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+  }
+  /* schowaj sam napis "Język", zostaw kapsułkę PL/EN */
+  :where(.lang, .langpick, .language, #lang, #language) :where(.label, b, span:first-child){
+    display: none !important;
+  }
+  /* zrób miejsce na przyklejony przełącznik */
+  body{ padding-top: 64px !important; }
+}
+</style></head>
 <body data-page="home"></head>
 
 <body data-page="home">
