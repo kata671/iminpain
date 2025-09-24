@@ -387,6 +387,77 @@
     }
   }
 </style>
+<style id="bh-objawy-like-rx">
+/* OBJAWY = kolorystyka jak „leki na receptę” (fiolet + glow) */
+
+/* Kafelek/sekcja Objawy – łapiemy kilka możliwych struktur */
+.section-objawy .bh-card,
+#sec-objawy .bh-card,
+.card-objawy,
+#objawy .bh-card,
+#objawy,
+[data-section="objawy"] .bh-card,
+[data-section="objawy"] {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+    rgba(60,32,100,.34) !important; /* ta sama baza co „receptowe” */
+  border: 1px solid rgba(164,107,255,.38) !important;
+  box-shadow:
+    0 10px 26px rgba(8,10,22,.45),
+    0 0 0 1px rgba(164,107,255,.18) inset,
+    0 0 26px rgba(164,107,255,.28) !important;
+  backdrop-filter: saturate(120%) blur(6px) !important;
+}
+
+/* Teksty i nagłówki w objawach – spójny kontrast jak w „receptowych” */
+.section-objawy .bh-card h3,
+#sec-objawy .bh-card h3,
+.card-objawy h3,
+#objawy h3,
+[data-section="objawy"] h3 {
+  color: #eef2ff !important;
+  letter-spacing: .2px;
+  font-weight: 800;
+}
+
+/* Separator/obramowanie górnej belki w kafelku – identyczne jak RX */
+.section-objawy .bh-card .caption,
+#sec-objawy .bh-card .caption,
+.card-objawy .caption,
+#objawy .caption,
+[data-section="objawy"] .caption {
+  border-top: 1px solid rgba(164,107,255,.22) !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)) !important;
+}
+
+/* Hover/Focus – delikatny podbity glow jak w „leki na receptę” */
+.section-objawy .bh-card:hover,
+#sec-objawy .bh-card:hover,
+.card-objawy:hover,
+#objawy:hover,
+[data-section="objawy"] .bh-card:hover,
+[data-section="objawy"]:hover {
+  transform: translateY(-2px);
+  border-color: rgba(164,107,255,.55) !important;
+  box-shadow:
+    0 16px 28px rgba(8,10,22,.55),
+    0 0 18px rgba(164,107,255,.35),
+    0 0 0 1px rgba(164,107,255,.34) inset !important;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+/* Focus widoczny i elegancki */
+.section-objawy .bh-card:focus-visible,
+#sec-objawy .bh-card:focus-visible,
+.card-objawy:focus-visible,
+#objawy:focus-visible,
+[data-section="objawy"] .bh-card:focus-visible,
+[data-section="objawy"]:focus-visible {
+  outline: 2px solid rgba(164,107,255,.75) !important;
+  outline-offset: 2px;
+  border-radius: 16px;
+}
+</style>
 </head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
