@@ -387,6 +387,32 @@
     }
   }
 </style>
+<script>
+/* BH Title Lock v1 — ustawia część ciała z URL i blokuje późniejsze nadpisy */
+(function(){
+  const url = new URL(location.href);
+  const cz  = (url.searchParams.get('czesc')||'').toLowerCase();
+  const lbl = url.searchParams.get('label');
+  const lang = (localStorage.getItem('bh.lang')||document.documentElement.lang||'pl').toLowerCase();
+
+  const NAME = {
+    pl:{uszy:'Uszy', ucho:'Ucho', kolano:'Kolano', glowa:'Głowa', gardlo:'Gardło', nos:'Nos', oko:'Oko', brzuch:'Brzuch', plecy:'Plecy', klatka:'Klatka piersiowa', stopy:'Stopy', serce:'Serce', pluca:'Płuca', watroba:'Wątroba', zoladek:'Żołądek', nerki:'Nerki', biodra:'Biodra', udo:'Udo', ciaza:'Ciąża'},
+    en:{uszy:'Ears',  ucho:'Ear',  kolano:'Knee',  glowa:'Head',  gardlo:'Throat', nos:'Nose', eye:'Eye', abdomen:'Abdomen'}
+  };
+  const map = NAME[lang]||NAME.pl;
+  const pretty = (lbl && decodeURIComponent(lbl)) || map[cz] || lbl || '—';
+
+  // Podstawowe znaczniki do użycia później
+  document.documentElement.setAttribute('data-bh-part', cz || '');
+  document.documentElement.setAttribute('data-bh-label', pretty);
+
+  // Błyskawicznie ustaw <title>, zanim inne skrypty ruszą
+  try {
+    const base = (lang==='en'?'Boli Help — Details':'Boli Help — Szczegóły');
+    document.title = base + (pretty && pretty!=='—' ? (' • ' + pretty) : '');
+  } catch(e){}
+})();
+</script>
 </head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
@@ -4482,6 +4508,62 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
   });
   mo.observe(root, {subtree:true, childList:true, characterData:true});
+})();
+</script>
+<script>
+/* BH Details Fix v2 — wymusza poprawny nagłówek/okruszki; odporne na nadpisy */
+(function(){
+  const part  = document.documentElement.getAttribute('data-bh-part') || '';
+  const label = document.documentElement.getAttribute('data-bh-label') || '';
+
+  if(!part || !label) return;
+
+  function apply(){
+    // 1) Główny nagłówek (spróbuj różne selektory, wybierz pierwszy istniejący)
+    const h =
+      document.querySelector('#bhSectionTitle') ||
+      document.querySelector('.header h1') ||
+      document.querySelector('.path h2') ||
+      document.querySelector('main h1') ||
+      document.querySelector('h1');
+
+    if(h && h.textContent.trim() !== label) h.textContent = label;
+
+    // 2) Breadcrumb / ścieżka (ostatni element)
+    const bc = document.querySelector('.breadcrumbs, .path, nav[aria-label*=crumb]');
+    if(bc){
+      const last = bc.querySelector('a:last-child, span:last-child, b:last-child, strong:last-child');
+      if(last && last.textContent.trim() !== label) last.textContent = label;
+    }
+
+    // 3) Gdy karta Objawy ma zły tytuł („Głowa/Head”), ujednolić do „Objawy”
+    const h3 = document.getElementById('h-obj');
+    if(h3 && /głowa|glowa|head/i.test(h3.textContent)) {
+      h3.textContent = (document.documentElement.lang||'pl').toLowerCase()==='en' ? 'Symptoms' : 'Objawy';
+    }
+  }
+
+  // Uruchom po załadowaniu
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', apply);
+  } else {
+    apply();
+  }
+
+  // Jeszcze kilka razy po starcie (gdy inne skrypty kończą pracę)
+  setTimeout(apply, 80);
+  setTimeout(apply, 160);
+  setTimeout(apply, 320);
+  requestAnimationFrame(()=>requestAnimationFrame(apply));
+
+  // I obserwuj zmiany DOM – jeśli ktoś znów podmieni na „Głowa”, cofamy
+  const mo = new MutationObserver(()=>{
+    const h = document.querySelector('#bhSectionTitle, .header h1, .path h2, main h1, h1');
+    if(h && /głowa|glowa|head/.test(h.textContent.toLowerCase()) && label.toLowerCase()!=='głowa' && label.toLowerCase()!=='head'){
+      apply();
+    }
+  });
+  mo.observe(document.body || document.documentElement, {subtree:true, childList:true, characterData:true});
 })();
 </script>
 </body>
