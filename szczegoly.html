@@ -4498,5 +4498,96 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }
 })();
 </script>
+<script>
+/* BH-mini-fix: czytaj parametry z URL i ustaw tytuły/etykiety, nie dotykając treści */
+(function(){
+  try{
+    // 1) Odczyt paramów
+    const url = new URL(location.href);
+    let czesc = (url.searchParams.get('czesc') || url.searchParams.get('part') || '').trim().toLowerCase();
+    let label = (url.searchParams.get('label') || '').trim();
+    try { if(label) label = decodeURIComponent(label); } catch(e){}
+
+    // 2) Awaryjne mapy nazw (gdy link ma np. "kolano" a w treści jest "Kolano")
+    const TitleCase = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+    if(!label && czesc){
+      const map = {
+        glowa: 'Głowa', oko:'Oko', uszy:'Uszy', ucho:'Uszy', nos:'Nos', gardlo:'Gardło',
+        klatka:'Klatka piersiowa', serce:'Serce', pluca:'Płuca', brzuch:'Brzuch',
+        watroba:'Wątroba', zoladek:'Żołądek', nerki:'Nerki', plecy:'Plecy',
+        biodra:'Biodra', udo:'Udo', kolano:'Kolano', stopy:'Stopy', skora:'Skóra',
+        ciaza:'Ciąża', ciaża:'Ciąża'
+      };
+      label = map[czesc] || TitleCase(czesc);
+    }
+
+    // 3) Gdzie próbujemy wstawić label (nic się nie stanie, jeśli selektor nie istnieje)
+    const trySetText = (sel, txt) => {
+      if(!txt) return false;
+      const el = document.querySelector(sel);
+      if(!el) return false;
+      el.textContent = txt;
+      return true;
+    };
+
+    // Aktualizuj <title> karty przeglądarki
+    if(label){
+      const base = 'Boli Help — Szczegóły';
+      document.title = `${label} — ${base}`;
+    }
+
+    // Typowe miejsca na stronie „szczegóły” (ustawiamy tylko jeśli są)
+    if(label){
+      trySetText('#bhPageTitle', label);
+      trySetText('header.app h1', label);
+      trySetText('.hero .label', label);
+      trySetText('.crumbs .current, .crumbs strong, .crumbs b', label);
+      trySetText('#partLabel', label);
+      // Czasem karta OBJAWY ma nagłówek – jeśli chcesz, można tu wstawić label,
+      // ale często to „Objawy” – więc zostawiam w komentarzu:
+      // trySetText('#s-objawy h3', label);
+    }
+
+    // 4) Jeśli masz miniatury/zakładki z data-czesc, podświetl właściwą
+    if(czesc){
+      const nodes = document.querySelectorAll('[data-czesc],[data-part],[data-section]');
+      let hit = null;
+      nodes.forEach(n=>{
+        const val = (n.getAttribute('data-czesc') || n.getAttribute('data-part') || n.getAttribute('data-section') || '').toLowerCase();
+        if(val === czesc) hit = n;
+      });
+      if(hit){
+        nodes.forEach(n=> n.classList && (n.classList.remove('active'), n.classList.remove('selected')));
+        hit.classList && (hit.classList.add('active'), hit.classList.add('selected'));
+      }
+    }
+
+    // 5) Gdy treść ładuje się opóźniona – spróbuj raz jeszcze po wykryciu zmian w DOM
+    let appliedOnce = false;
+    const again = () => {
+      if(appliedOnce) return;
+      let ok = false;
+      if(label){
+        ok = trySetText('#bhPageTitle', label) || ok;
+        ok = trySetText('header.app h1', label) || ok;
+        ok = trySetText('.hero .label', label) || ok;
+        ok = trySetText('.crumbs .current, .crumbs strong, .crumbs b', label) || ok;
+        ok = trySetText('#partLabel', label) || ok;
+      }
+      if(ok) appliedOnce = true;
+    };
+    const mo = new MutationObserver(()=>again());
+    mo.observe(document.documentElement, {subtree:true, childList:true});
+    // szybki retry po load
+    window.addEventListener('load', ()=>setTimeout(again, 50));
+    // pierwszy strzał
+    again();
+
+    console.log('[BH-mini-fix] czesc="%s", label="%s" — ok', czesc, label);
+  }catch(e){
+    console.warn('[BH-mini-fix] błąd:', e);
+  }
+})();
+</script>
 </body>
 </html>
