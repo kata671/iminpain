@@ -4322,5 +4322,55 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }
 })();
 </script>
+<script>
+/* BH: hot-fix mapowania dla nowych części (uszy/kolano/ciąża) – nie narusza istniejących danych */
+(function(){
+  try{
+    const url = new URL(location.href);
+    const cz = (url.searchParams.get('czesc')||'').toLowerCase();
+    const KNOWN = { uszy:'Uszy', kolano:'Kolano', ciaza:'Ciąża' };
+    if(!KNOWN[cz]) return; // jeśli to nie uszy/kolano/ciąża – zostaw oryginalne zachowanie
+
+    // Ustaw nagłówek sekcji (spróbuj kilka typowych selektorów)
+    const h = document.querySelector('#bhSectionTitle, .header h1, .path h2, h1');
+    if(h) h.textContent = KNOWN[cz];
+
+    // Minimalne zestawy (PL) – bezpieczne, ogólne; można później rozbudować
+    const SYM = {
+      uszy:  ['Ból ucha', 'Uczucie zatkania', 'Szumy uszne', 'Przejściowe pogorszenie słuchu'],
+      kolano:['Ból kolana', 'Obrzęk / ocieplenie', 'Sztywność', 'Uczucie „przeskakiwania”'],
+      ciaza: ['Nudności / wymioty', 'Zawroty głowy', 'Łagodne bóle podbrzusza', 'Zwiększone zmęczenie'],
+    };
+    const FLAGS = {
+      uszy:  ['Silny ból + gorączka > 38.5°C', 'Ropny lub krwisty wyciek z ucha', 'Silne zawroty / porażenie nerwu twarzowego'],
+      kolano:['Brak możliwości obciążenia nogi', 'Nagłe zniekształcenie po urazie', 'Gorączka + silny ból i zaczerwienienie stawu'],
+      ciaza: ['Krwawienie z dróg rodnych', 'Silny, narastający ból brzucha', 'Omdlenie / duszność / objawy wstrząsu'],
+    };
+
+    function fillList(id, items){
+      const ul = document.getElementById(id);
+      if(!ul) return;
+      ul.innerHTML = '';
+      items.forEach(txt=>{
+        const li = document.createElement('li');
+        li.className = 'chip';
+        li.setAttribute('role','checkbox');
+        li.tabIndex = 0;
+        li.textContent = txt;
+        ul.appendChild(li);
+      });
+    }
+
+    fillList('symp-common', SYM[cz] || []);
+    fillList('urgent',      FLAGS[cz] || []);
+
+    // Zresetuj pasek ryzyka i stan komunikatu
+    const riskLbl = document.getElementById('risk-label'); if(riskLbl) riskLbl.textContent = 'niskie';
+    const cursor  = document.getElementById('risk-cursor-card'); if(cursor) cursor.style.left = '0%';
+
+    // Podpowiedź diagnostyczna – zostaw jak jest; my tylko podmieniamy listy
+  }catch(e){ /* cicho – hotfix ma być bezpieczny */ }
+})();
+</script>
 </body>
 </html>
