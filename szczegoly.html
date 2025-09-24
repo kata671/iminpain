@@ -579,7 +579,34 @@
 
    const CONTENT_PL={
   glowa:{
-    label:"Głowa (ból)",
+    ucho:{
+  label:"Ucho (ból / infekcja)",
+  symptoms:["Ból ucha","Szumy / pełność","Wyciek","Gorsze słyszenie","Gorączka (czasem)"],
+  causes:["Zapalenie ucha zewnętrznego","Zapalenie ucha środkowego","Korek woskowinowy","Barotrauma / lot","Szumy uszne"],
+  firstaid:["Nie wkładaj patyczków","Delikatne oczyszczenie małżowiny","Ciepły okład na ból","Unikaj wody do czasu oceny"],
+  otc:[{t:"Ibuprofen/Paracetamol — ból/gorączka",audience:"all"},{t:"Krople zmiękczające woskowinę (gdy podejrzenie korka)",audience:"dorośli"}],
+  urgent:["Silny ból z gorączką i wyciekiem krwistym","Zawroty + niedosłuch nagły","Poważny uraz / podejrzenie perforacji"],
+  faq:[]
+},
+kolano:{
+  label:"Kolano",
+  symptoms:["Ból kolana","Obrzęk","Ograniczenie ruchu","Uczucie niestabilności","Trzaski"],
+  causes:["Przeciążenie / ITBS","Uraz więzadeł (ACL/MCL)","Łąkotka","Chondromalacja rzepki","Zapalenie kaletki"],
+  firstaid:["RICE: odpoczynek, chłodzenie 15–20 min, ucisk, uniesienie","Odciążenie — laska/orteza wg potrzeby"],
+  otc:[{t:"Ibuprofen/Paracetamol — ból",audience:"all"}],
+  urgent:["Uraz z niemożnością obciążenia","Szybki duży obrzęk (hemartroza)","Gorące, zaczerwienione kolano + gorączka"],
+  faq:[]
+},
+ciaza:{
+  label:"Ciąża",
+  symptoms:["Mdłości","Zmęczenie","Zawroty","Bóle pleców","Skurcze nóg"],
+  causes:["Fizjologiczne zmiany w ciąży","Niedobory (np. żelazo)","Infekcje dróg moczowych"],
+  firstaid:["Nawodnienie, małe częste posiłki","Wit. prenatalne (kwas foliowy)","Bezpieczne pozycje snu (lewy bok)"],
+  otc:[{t:"Paracetamol — preferowany przeciwbólowo w ciąży",audience:"ciąża"}],
+  urgent:["Krwawienie z dróg rodnych","Silny ból brzucha / skurcze przedwczesne","Bóle głowy + zaburzenia widzenia + obrzęki (podejrzenie stan przedrzucawkowy)","Zmniejszone ruchy płodu"],
+  faq:[]
+},
+label:"Głowa (ból)",
     symptoms:[
       "Ucisk obustronny","Pulsujący jednostronny","Nadwrażliwość na światło",
       "Nudności/wymioty","Aura (mroczki, błyski)","Ból przy wysiłku","Nasilenie przy schylaniu"
@@ -847,7 +874,34 @@
 
 const CONTENT_EN={
   glowa:{
-    label:"Headache",
+   ucho:{
+  label:"Ear (pain / infection)",
+  symptoms:["Ear pain","Fullness / tinnitus","Discharge","Worse hearing","Fever (sometimes)"],
+  causes:["Otitis externa","Otitis media","Cerumen impaction","Barotrauma (flight)","Tinnitus"],
+  firstaid:["No cotton swabs","Gently clean auricle only","Warm compress for pain","Avoid water until assessed"],
+  otc:[{t:"Ibuprofen/Acetaminophen — pain/fever",audience:"all"},{t:"Cerumenolytics if wax suspected",audience:"adults"}],
+  urgent:["Severe pain with bloody discharge","Vertigo + sudden hearing loss","Major trauma / suspected perforation"],
+  faq:[]
+},
+kolano:{
+  label:"Knee",
+  symptoms:["Knee pain","Swelling","Limited motion","Instability","Crepitus"],
+  causes:["Overuse / ITBS","Ligament sprain (ACL/MCL)","Meniscus tear","Patellofemoral pain","Bursitis"],
+  firstaid:["RICE: rest, ice 15–20 min, compression, elevation","Off-load as needed (cane/brace)"],
+  otc:[{t:"Ibuprofen/Acetaminophen — pain",audience:"all"}],
+  urgent:["Inability to bear weight after injury","Rapid tense swelling","Hot red knee with fever"],
+  faq:[]
+},
+ciaza:{
+  label:"Pregnancy",
+  symptoms:["Nausea","Fatigue","Dizziness","Back pain","Leg cramps"],
+  causes:["Physiologic changes","Deficiencies (e.g., iron)","Urinary tract infections"],
+  firstaid:["Hydration, small frequent meals","Prenatal vitamins (folic acid)","Safe sleeping positions (left side)"],
+  otc:[{t:"Acetaminophen — preferred analgesic in pregnancy",audience:"pregnancy"}],
+  urgent:["Vaginal bleeding","Severe abdominal pain / preterm contractions","Headache + visual changes + edema (pre-eclampsia concern)","Reduced fetal movements"],
+  faq:[]
+},
+ label:"Headache",
     symptoms:[
       "Bilateral pressing","Unilateral throbbing","Photophobia",
       "Nausea/vomiting","Aura (scotomas, flashes)","Exertional headache","Worse on bending"
