@@ -1110,12 +1110,45 @@ const CONTENT_EN={
     ]
   }
 };
-    const qs=new URLSearchParams(location.search);
-    const RAW_TYP=(qs.get('typ')||'kobieta').toLowerCase();
-    const RAW_CZESC=(qs.get('czesc')||'glowa').toLowerCase();
-    const RAW_LABEL=(qs.get('label')||RAW_CZESC).toString();
-    const ALIAS={'oko':'glowa','klatka-piersiowa':'klatka','zoladek':'brzuch'};
-    const TYP=RAW_TYP, CZESC=(ALIAS[RAW_CZESC]||RAW_CZESC), LABEL=RAW_LABEL;
+    <script>
+// --- Resolver adresu (typ/czesc/label) – bez wymuszania "glowa" ---
+const qs         = new URLSearchParams(location.search);
+const RAW_TYP    = (qs.get('typ')   || 'kobieta').toLowerCase();
+const RAW_CZESC  = (qs.get('czesc') || '').toLowerCase();
+const RAW_LABEL  = (qs.get('label') || '').toString();
+
+// mapy aliasów, by różne zapisy trafiały w ten sam klucz contentu
+const ALIAS = {
+  // głowa
+  head:'glowa','głowa':'glowa',
+  // ucho/uszy
+  ear:'ucho', ears:'ucho', ucho:'ucho', 'uszy':'ucho',
+  // nos/gardło/klatka/brzuch/serce/plecy/nerki/skóra
+  nose:'nos', nos:'nos',
+  throat:'gardlo', gardlo:'gardlo','gardło':'gardlo',
+  'klatka-piersiowa':'klatka', klatka:'klatka', chest:'klatka',
+  brzuch:'brzuch', 'żołądek':'brzuch', zoladek:'brzuch', stomach:'brzuch',
+  serce:'serce', heart:'serce',
+  plecy:'plecy', back:'plecy',
+  nerki:'nerki', kidney:'nerki', kidneys:'nerki',
+  skora:'skora', 'skóra':'skora', skin:'skora',
+  // biodra/kolano/stopy
+  biodro:'biodra', biodra:'biodra', hip:'biodra', hips:'biodra',
+  kolano:'kolano', knee:'kolano',
+  stopy:'stopy', stopa:'stopy', feet:'stopy', foot:'stopy',
+  // dodatkowe
+  pluca:'pluca', 'płuca':'pluca', lungs:'pluca',
+  kaszel:'kaszel', cough:'kaszel',
+  goraczka:'goraczka', 'gorączka':'goraczka', fever:'goraczka',
+  // ciąża
+  ciaza:'ciaza', 'ciąża':'ciaza', pregnancy:'ciaza',
+};
+
+// Ustalone, bez domyślnego podstawiania "glowa"
+const TYP   = RAW_TYP;
+const CZESC = ALIAS[RAW_CZESC] || RAW_CZESC || '';   // ← nie wymuszamy fallbacku tutaj
+const LABEL = RAW_LABEL;
+</script>
 
     /* --- zastosowanie i18n do UI (tylko nagłówki/teksty, nie listy) --- */
     (function applyI18N(){
