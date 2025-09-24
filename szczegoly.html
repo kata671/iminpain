@@ -4376,5 +4376,127 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }
 })();
 </script>
+<script>
+(function(){
+  try{
+    // --- BEZPIECZNY FIX: wymusz właściwy wybór części ciała na stronie szczegóły ---
+    // Wklej ten skrypt na końcu szczegoly.html, tuż przed </body>.
+    // Uwaga: skrypt działa defensywnie - nie usuwa ani nie nadpisuje plików, tylko ustawia widok jeśli są elementy.
+
+    // Pobierz parametry z URL
+    function getParam(name){
+      try{
+        const u = new URL(location.href);
+        return u.searchParams.get(name);
+      }catch(e){ return null; }
+    }
+
+    var czesc = getParam('czesc') || getParam('part') || '';
+    var label = getParam('label') || getParam('labelEncoded') || '';
+
+    // dekoduj label jeśli jest zakodowany
+    try{ if(label) label = decodeURIComponent(label); } catch(e){ /* ignore */ }
+
+    console.log('[BH-fix] szczegoly: czesc=', czesc, 'label=', label);
+
+    // Funkcja: bezpiecznie podstawia tekst/tituly tylko gdy element istnieje
+    function safeSetText(selector, text){
+      if(!text) return false;
+      var el = document.querySelector(selector);
+      if(el){
+        // jeśli element ma wewnętrzne dane, ustaw tekst odpowiednio (nie innerHTML)
+        if(el.tagName && (el.tagName.toLowerCase() === 'input' || el.tagName.toLowerCase() === 'textarea')){
+          el.value = text;
+        } else {
+          el.textContent = text;
+        }
+        return true;
+      }
+      return false;
+    }
+
+    // Główne pola które najczęściej trzeba aktualizować:
+    //  - nagłówek strony / tytuł sekcji (np. #bhPageTitle, h1, .page-title)
+    //  - element pokazujący nazwe części (np. #partLabel, #bhPartLabel, .part-label)
+    //  - atrybuty linków zrobione dynamicznie (jeżeli są)
+    // Dopasuj selektory poniżej do tego co masz w pliku; skrypt próbuje kilka popularnych opcji.
+
+    var applied = false;
+    if(label){
+      applied = applied || safeSetText('#bhPageTitle', label);
+      applied = applied || safeSetText('header h1', label);
+      applied = applied || safeSetText('#partLabel', label);
+      applied = applied || safeSetText('.part-label', label);
+      applied = applied || safeSetText('#h-obj', label); // w szczegóły / karty
+    }
+    if(czesc){
+      // jeśli w kodzie są linki/obrazki z atrybutem data-part lub id=part-..., ustaw ich aktywność:
+      try{
+        // np. podświetl miniaturkę: <a data-czesc="glowa">...
+        var thumb = document.querySelector('[data-czesc="'+czesc+'"], [data-part="'+czesc+'"], [data-section="'+czesc+'"]');
+        if(thumb){
+          // usuń klasę active ze wszystkich podobnych elementów i dodaj do właściwego
+          document.querySelectorAll('[data-czesc],[data-part],[data-section]').forEach(function(n){
+            n.classList && n.classList.remove('active','selected');
+          });
+          thumb.classList && thumb.classList.add('active','selected');
+          applied = true;
+        }
+      }catch(e){}
+    }
+
+    // Jeżeli strona ma funkcję / loader treści JS, spróbuj wywołać dedykowaną funkcję (bez błędu).
+    // Tu defensywnie wywołamy możliwe globalne funkcje, jeśli istnieją:
+    var candidates = ['loadPart','loadDetails','renderDetails','initDetails','showPart'];
+    candidates.forEach(function(fn){
+      try{
+        if(window[fn] && typeof window[fn] === 'function'){
+          console.log('[BH-fix] wywołanie funkcji:', fn, '(', czesc || label, ')');
+          // wywołamy z czesc,label,ale tylko w try/catch aby nic nie zepsuć
+          try{ window[fn](czesc || label); applied = true; }catch(e){ console.warn('[BH-fix] błąd w wywołaniu',fn,e); }
+        }
+      }catch(e){}
+    });
+
+    // Jeśli nic nie zastosowano — pokaż logi, ale NIE nadpisuj zawartości
+    if(!applied){
+      console.warn('[BH-fix] nie wykryto elementów do zaktualizowania automatycznie. Sprawdź selektory w skrypcie lub przekaż fragment HTML szczegoly.html aby przygotować precyzyjny patch.');
+    } else {
+      console.log('[BH-fix] zastosowano zmiany widoku szczegółów (jeśli elementy istniały).');
+    }
+
+    // dodatkowa pomoc: jeśli elementy z treścią są ładowane dopiero po czasie (AJAX),
+    // nasłuchaj na zmiany DOM i spróbuj ponownie ustawić label po ich pojawieniu się.
+    var observer = new MutationObserver(function(mutations){
+      // spróbuj ustawić raz jeszcze jeżeli wcześniej nie ustawiono
+      if(!applied){
+        if(label){
+          applied = applied || safeSetText('#bhPageTitle', label);
+          applied = applied || safeSetText('header h1', label);
+          applied = applied || safeSetText('#partLabel', label);
+          applied = applied || safeSetText('.part-label', label);
+          applied = applied || safeSetText('#h-obj', label);
+        }
+        if(czesc){
+          var thumb = document.querySelector('[data-czesc="'+czesc+'"], [data-part="'+czesc+'"], [data-section="'+czesc+'"]');
+          if(thumb){
+            document.querySelectorAll('[data-czesc],[data-part],[data-section]').forEach(function(n){ n.classList && n.classList.remove('active','selected'); });
+            thumb.classList && thumb.classList.add('active','selected');
+            applied = true;
+          }
+        }
+        if(applied){
+          console.log('[BH-fix] observer: zastosowano ustawienia po załadowaniu DOM.');
+          observer.disconnect();
+        }
+      }
+    });
+    observer.observe(document.documentElement || document.body, { childList:true, subtree:true, attributes:false, characterData:false });
+
+  }catch(err){
+    console.error('[BH-fix] nieoczekiwany błąd', err);
+  }
+})();
+</script>
 </body>
 </html>
