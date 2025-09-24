@@ -4589,5 +4589,91 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }
 })();
 </script>
+<script>
+/* BH force-part-router: pokaż TYLKO treść wybranej części, resztę ukryj */
+(function(){
+  try{
+    // 1) Weź czesc z URL i znormalizuj
+    const url   = new URL(location.href);
+    let partRaw = (url.searchParams.get('czesc') || '').trim().toLowerCase();
+    const ALIAS = {
+      ucho:'uszy', uszy:'uszy',
+      glowa:'glowa', głowa:'glowa',
+      gardlo:'gardlo', gardło:'gardlo',
+      skóra:'skora', skora:'skora',
+      żołądek:'zoladek', zoladek:'zoladek',
+      płuca:'pluca', pluca:'pluca',
+      ciąża:'ciaza', ciaza:'ciaza'
+    };
+    let part = ALIAS[partRaw] || partRaw;
+
+    if(!part){ console.warn('[BH router] Brak ?czesc= w URL — nic nie zmieniam.'); return; }
+
+    // 2) Zbierz wszystkie kandydaty w DOM
+    const CANDIDATE_SEL = [
+      '[data-part]',            // preferowane
+      '[data-czesc]',           // alternatywa
+      'section[id^="part-"]',
+      'article[id^="part-"]',
+      'div[id^="part-"]'
+    ].join(',');
+
+    const nodes = Array.from(document.querySelectorAll(CANDIDATE_SEL));
+    if(!nodes.length){
+      // Jeżeli nie ma oznaczonych bloków, nic nie ruszamy – unikamy uszkodzeń
+      console.warn('[BH router] Nie znaleziono bloków z data-part / part-*.');
+      return;
+    }
+
+    // 3) Funkcja: jaki „klucz części” ma dany węzeł
+    const getKey = (el) => {
+      const d = (el.getAttribute('data-part') || el.getAttribute('data-czesc') || '').toLowerCase().trim();
+      if(d) return ALIAS[d] || d;
+      const id = (el.id || '').toLowerCase();
+      // obsłuż id typu "part-glowa", "part-kolano" itp.
+      if(id.startsWith('part-')) return ALIAS[id.slice(5)] || id.slice(5);
+      return '';
+    };
+
+    // 4) Pokaż tylko te, które pasują; resztę ukryj „bezpiecznie”
+    let anyShown = false;
+    nodes.forEach(el=>{
+      const key = getKey(el);
+      if(key === part){
+        el.hidden = false;
+        el.style.display = ''; // w razie inline display:none
+        anyShown = true;
+        el.classList.add('bh-part-active');
+      }else{
+        // ukryj delikatnie (nie usuwaj klas/treści)
+        el.hidden = true;
+        if(!el.dataset.bhKeepDisplay){ el.style.display = 'none'; }
+        el.classList.remove('bh-part-active');
+      }
+    });
+
+    // 5) Jeśli nic nie pasowało, nie rób szkód (przywróć widoczność)
+    if(!anyShown){
+      nodes.forEach(el=>{ el.hidden=false; el.style.display=''; });
+      console.warn('[BH router] Brak dopasowania do części:', part, '(nic nie ukryto).');
+      return;
+    }
+
+    // 6) Dodatkowo podmień nagłówki/etykiety, jeśli istnieją
+    const LABELS = {
+      glowa:'Głowa', oko:'Oko', uszy:'Uszy', nos:'Nos', gardlo:'Gardło', klatka:'Klatka piersiowa',
+      serce:'Serce', pluca:'Płuca', brzuch:'Brzuch', watroba:'Wątroba', zoladek:'Żołądek',
+      nerki:'Nerki', plecy:'Plecy', biodra:'Biodra', udo:'Udo', kolano:'Kolano',
+      stopy:'Stopy', skora:'Skóra', ciaza:'Ciąża'
+    };
+    const label = LABELS[part] || (part.charAt(0).toUpperCase()+part.slice(1));
+    const trySet = sel => { const el=document.querySelector(sel); if(el){ el.textContent=label; return true; } return false; };
+    trySet('#bhPageTitle'); trySet('header.app h1'); trySet('.hero .label');
+    document.title = label + ' — Boli Help — Szczegóły';
+
+    console.log('[BH router] Aktywna część:', part, '• pokazano dopasowane bloki.');
+  }catch(e){ console.error('[BH router] błąd:', e); }
+})();
+</script>
 </body>
 </html>
