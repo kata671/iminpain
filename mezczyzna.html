@@ -290,5 +290,21 @@
 </style>
 <script src="assets/boli-atlas.bundle.js?v=1" defer></script>
 
+<script src="assets/boli-atlas.bundle.js?v=1" defer></script>
+<script>
+  window.BH_ATLAS_OPTS = {
+    pageType: document.body.getAttribute('data-page'),
+    gridSelector: '#bhThumbs'
+  };
+
+  window.addEventListener('DOMContentLoaded', function(){
+    if (window.BH_ATLAS && typeof BH_ATLAS.init === 'function') {
+      BH_ATLAS.init(window.BH_ATLAS_OPTS);
+      console.log('[Boli Atlas] init OK');
+    } else {
+      console.warn('[Boli Atlas] bundle nie jest dostępny — sprawdź 404 w konsoli');
+    }
+  });
+</script>
 </body>
 </html>
