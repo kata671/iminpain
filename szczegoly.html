@@ -387,32 +387,6 @@
     }
   }
 </style>
-<script>
-/* BH Title Lock v1 — ustawia część ciała z URL i blokuje późniejsze nadpisy */
-(function(){
-  const url = new URL(location.href);
-  const cz  = (url.searchParams.get('czesc')||'').toLowerCase();
-  const lbl = url.searchParams.get('label');
-  const lang = (localStorage.getItem('bh.lang')||document.documentElement.lang||'pl').toLowerCase();
-
-  const NAME = {
-    pl:{uszy:'Uszy', ucho:'Ucho', kolano:'Kolano', glowa:'Głowa', gardlo:'Gardło', nos:'Nos', oko:'Oko', brzuch:'Brzuch', plecy:'Plecy', klatka:'Klatka piersiowa', stopy:'Stopy', serce:'Serce', pluca:'Płuca', watroba:'Wątroba', zoladek:'Żołądek', nerki:'Nerki', biodra:'Biodra', udo:'Udo', ciaza:'Ciąża'},
-    en:{uszy:'Ears',  ucho:'Ear',  kolano:'Knee',  glowa:'Head',  gardlo:'Throat', nos:'Nose', eye:'Eye', abdomen:'Abdomen'}
-  };
-  const map = NAME[lang]||NAME.pl;
-  const pretty = (lbl && decodeURIComponent(lbl)) || map[cz] || lbl || '—';
-
-  // Podstawowe znaczniki do użycia później
-  document.documentElement.setAttribute('data-bh-part', cz || '');
-  document.documentElement.setAttribute('data-bh-label', pretty);
-
-  // Błyskawicznie ustaw <title>, zanim inne skrypty ruszą
-  try {
-    const base = (lang==='en'?'Boli Help — Details':'Boli Help — Szczegóły');
-    document.title = base + (pretty && pretty!=='—' ? (' • ' + pretty) : '');
-  } catch(e){}
-})();
-</script>
 </head>
 <body data-page="szczegoly">
   <div class="bg-anim" aria-hidden="true"></div>
@@ -1138,8 +1112,9 @@ const CONTENT_EN={
 };
     const qs=new URLSearchParams(location.search);
     const RAW_TYP=(qs.get('typ')||'kobieta').toLowerCase();
-    const RAW_CZESC=(qs.get('czesc')||).toLowerCase();
-    
+    const RAW_CZESC=(qs.get('czesc')||'glowa').toLowerCase();
+    const RAW_LABEL=(qs.get('label')||RAW_CZESC).toString();
+    const ALIAS={'oko':'glowa','klatka-piersiowa':'klatka','zoladek':'brzuch'};
     const TYP=RAW_TYP, CZESC=(ALIAS[RAW_CZESC]||RAW_CZESC), LABEL=RAW_LABEL;
 
     /* --- zastosowanie i18n do UI (tylko nagłówki/teksty, nie listy) --- */
@@ -1188,7 +1163,7 @@ const CONTENT_EN={
 
     /* --- wybór contentu wg języka i części ciała --- */
     const CONTENT=(L()==='en')?CONTENT_EN:CONTENT_PL;
-    const entry = CONTENT[CZESC] || CONTENT.null;
+    const entry = CONTENT[CZESC] || CONTENT.glowa;
     document.getElementById('label-text').innerHTML='<b>'+(entry.label||LABEL)+'</b> • '+TYP;
 
     /* --- helpers / scoring --- */
@@ -4344,97 +4319,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
   } else {
     // gdyby RX nie został znaleziony – NIC nie zmieniamy (żeby znów nie trafić innym kolorem)
     // Możesz doprecyzować ID karty RX i podam wersję na twardo.
-  }
-})();
-</script>
-<script>
-
-<script>
-/* BH Safe Details Hot-Fix — zatrzymuje „Głowę” i ustawia poprawną część */
-(function(){
-  const url = new URL(location.href);
-  const cz = (new URL(location.href).searchParams.get('czesc') || '').toLowerCase();
-
-  const lbl = url.searchParams.get('label') ? decodeURIComponent(url.searchParams.get('label')) : '';
-
-  // Zbiór części, które NA PEWNO macie już opisane (dopisz tu realne klucze ze swojej logiki)
-  const SUPPORTED = new Set([
-    'glowa','oko','nos','gardlo','klatka','pluca','brzuch','nerki','plecy','biodra','udo','stopy','serce','watroba','zoladek'
-  ]);
-
-  // Nowe / brakujące u Was: nie chcemy, żeby wpadały w „Głowę”
-  const NEW_PARTS = new Set(['uszy','ucho','kolano','ciaza']);
-
-  // Funkcja ustawiająca nagłówki/okruszki
-  function setHeading(text){
-    const h =
-      document.querySelector('#bhSectionTitle') ||
-      document.querySelector('.header h1') ||
-      document.querySelector('.path h2') ||
-      document.querySelector('main h1') ||
-      document.querySelector('h1');
-    if(h) h.textContent = text;
-
-    const bc = document.querySelector('.breadcrumbs, .path, nav[aria-label*="crumb"]');
-    if(bc){
-      const last = bc.querySelector('a:last-child, span:last-child, b:last-child, strong:last-child');
-      if(last) last.textContent = text;
-    }
-
-    // popraw <title>
-    const lang = (document.documentElement.lang||'pl').toLowerCase();
-    const base = (lang==='en'?'Boli Help — Details':'Boli Help — Szczegóły');
-    document.title = text ? base + ' • ' + text : base;
-  }
-
-  // Jeżeli część nie jest wspierana, NIE pozwól, by jakaś logika wstawiła „Głowa”
-  if (cz && !SUPPORTED.has(cz)) {
-    // Ustal ładną etykietę
-    const label = lbl || (cz.charAt(0).toUpperCase() + cz.slice(1));
-    setHeading(label);
-
-    // 1) Wyczyść listy objawów/flag zamiast pokazywać „Głowę”
-    const ulCommon = document.getElementById('symp-common');
-    const ulUrgent = document.getElementById('urgent');
-    if (ulCommon) {
-      ulCommon.innerHTML = '';
-      const li = document.createElement('li');
-      li.textContent = 'Dane dla tej części będą wkrótce dostępne.';
-      li.style.opacity = '0.9';
-      ulCommon.appendChild(li);
-    }
-    if (ulUrgent) {
-      ulUrgent.innerHTML = '';
-    }
-
-    // 2) Pasek ryzyka ustaw na neutralny
-    const riskLbl = document.getElementById('risk-label');
-    const riskCur = document.getElementById('risk-cursor-card');
-    if (riskLbl) riskLbl.textContent = 'niskie';
-    if (riskCur) riskCur.style.left = '0%';
-
-    // 3) Zmień nagłówek sekcji objawów, jeśli ktoś wcześniej podstawił "Głowa"
-    const h3 = document.getElementById('h-obj');
-    if (h3 && /głowa|glowa|head/i.test(h3.textContent)) {
-      const lang = (document.documentElement.lang||'pl').toLowerCase();
-      h3.textContent = (lang==='en' ? 'Symptoms' : 'Objawy');
-    }
-
-    // 4) Zablokuj późniejsze nadpisania (MutationObserver)
-    const wanted = label.toLowerCase();
-    const mo = new MutationObserver(()=>{
-      const h =
-        document.querySelector('#bhSectionTitle, .header h1, .path h2, main h1, h1');
-      if (!h) return;
-      const cur = (h.textContent||'').trim().toLowerCase();
-      if (/głowa|glowa|head/.test(cur) && wanted && !/głowa|glowa|head/.test(wanted)) {
-        setHeading(label);
-      }
-    });
-    mo.observe(document.body, {subtree:true, childList:true, characterData:true});
-  } else if (cz && SUPPORTED.has(cz)) {
-    // Dla wspieranych części — dopilnuj, żeby nagłówek brał się z ?label=
-    if (lbl) setHeading(lbl);
   }
 })();
 </script>
