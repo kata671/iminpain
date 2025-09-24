@@ -1138,9 +1138,8 @@ const CONTENT_EN={
 };
     const qs=new URLSearchParams(location.search);
     const RAW_TYP=(qs.get('typ')||'kobieta').toLowerCase();
-    const RAW_CZESC=(qs.get('czesc')||'glowa').toLowerCase();
-    const RAW_LABEL=(qs.get('label')||RAW_CZESC).toString();
-    const ALIAS={'oko':'glowa','klatka-piersiowa':'klatka','zoladek':'brzuch'};
+    const RAW_CZESC=(qs.get('czesc')||).toLowerCase();
+    
     const TYP=RAW_TYP, CZESC=(ALIAS[RAW_CZESC]||RAW_CZESC), LABEL=RAW_LABEL;
 
     /* --- zastosowanie i18n do UI (tylko nagłówki/teksty, nie listy) --- */
@@ -1189,7 +1188,7 @@ const CONTENT_EN={
 
     /* --- wybór contentu wg języka i części ciała --- */
     const CONTENT=(L()==='en')?CONTENT_EN:CONTENT_PL;
-    const entry = CONTENT[CZESC] || CONTENT.glowa;
+    const entry = CONTENT[CZESC] || CONTENT.null;
     document.getElementById('label-text').innerHTML='<b>'+(entry.label||LABEL)+'</b> • '+TYP;
 
     /* --- helpers / scoring --- */
@@ -4349,228 +4348,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
 })();
 </script>
 <script>
-/* BH: hot-fix mapowania dla nowych części (uszy/kolano/ciąża) – nie narusza istniejących danych */
-(function(){
-  try{
-    const url = new URL(location.href);
-    const cz = (url.searchParams.get('czesc')||'').toLowerCase();
-    const KNOWN = { uszy:'Uszy', kolano:'Kolano', ciaza:'Ciąża' };
-    if(!KNOWN[cz]) return; // jeśli to nie uszy/kolano/ciąża – zostaw oryginalne zachowanie
 
-    // Ustaw nagłówek sekcji (spróbuj kilka typowych selektorów)
-    const h = document.querySelector('#bhSectionTitle, .header h1, .path h2, h1');
-    if(h) h.textContent = KNOWN[cz];
-
-    // Minimalne zestawy (PL) – bezpieczne, ogólne; można później rozbudować
-    const SYM = {
-      uszy:  ['Ból ucha', 'Uczucie zatkania', 'Szumy uszne', 'Przejściowe pogorszenie słuchu'],
-      kolano:['Ból kolana', 'Obrzęk / ocieplenie', 'Sztywność', 'Uczucie „przeskakiwania”'],
-      ciaza: ['Nudności / wymioty', 'Zawroty głowy', 'Łagodne bóle podbrzusza', 'Zwiększone zmęczenie'],
-    };
-    const FLAGS = {
-      uszy:  ['Silny ból + gorączka > 38.5°C', 'Ropny lub krwisty wyciek z ucha', 'Silne zawroty / porażenie nerwu twarzowego'],
-      kolano:['Brak możliwości obciążenia nogi', 'Nagłe zniekształcenie po urazie', 'Gorączka + silny ból i zaczerwienienie stawu'],
-      ciaza: ['Krwawienie z dróg rodnych', 'Silny, narastający ból brzucha', 'Omdlenie / duszność / objawy wstrząsu'],
-    };
-
-    function fillList(id, items){
-      const ul = document.getElementById(id);
-      if(!ul) return;
-      ul.innerHTML = '';
-      items.forEach(txt=>{
-        const li = document.createElement('li');
-        li.className = 'chip';
-        li.setAttribute('role','checkbox');
-        li.tabIndex = 0;
-        li.textContent = txt;
-        ul.appendChild(li);
-      });
-    }
-
-    fillList('symp-common', SYM[cz] || []);
-    fillList('urgent',      FLAGS[cz] || []);
-
-    // Zresetuj pasek ryzyka i stan komunikatu
-    const riskLbl = document.getElementById('risk-label'); if(riskLbl) riskLbl.textContent = 'niskie';
-    const cursor  = document.getElementById('risk-cursor-card'); if(cursor) cursor.style.left = '0%';
-
-    // Podpowiedź diagnostyczna – zostaw jak jest; my tylko podmieniamy listy
-  }catch(e){ /* cicho – hotfix ma być bezpieczny */ }
-})();
-</script>
-<script>
-/* BH HOTFIX v2 – twarde mapowanie Uszy/Kolano/Ciąża
-   - działa po load, po krótkim opóźnieniu i przy każdej zmianie DOM
-   - podmienia nagłówki, <title>, listy objawów i flag
-   - nie rusza innych części ani Twojej logiki
-*/
-(function(){
-  const url  = new URL(location.href);
-  const cz   = (url.searchParams.get('czesc')||'').toLowerCase();
-  const lang = (localStorage.getItem('bh.lang')||document.documentElement.lang||'pl').toLowerCase();
-
-  const MAP_PL = { uszy:'Uszy', kolano:'Kolano', ciaza:'Ciąża' };
-  const MAP_EN = { uszy:'Ears', kolano:'Knee', ciaza:'Pregnancy' };
-  const TITLE  = (lang==='en'?MAP_EN:MAP_PL);
-
-  if(!TITLE[cz]) return; // jeśli to nie nasza trójka – nic nie rób
-
-  const SYM = {
-    pl:{
-      uszy:['Ból ucha','Uczucie zatkania','Szumy uszne','Przejściowe pogorszenie słuchu'],
-      kolano:['Ból kolana','Obrzęk / ocieplenie','Sztywność','Uczucie „przeskakiwania”'],
-      ciaza:['Nudności / wymioty','Zawroty głowy','Łagodne bóle podbrzusza','Zwiększone zmęczenie']
-    },
-    en:{
-      uszy:['Ear pain','Ear fullness','Tinnitus','Temporary hearing decrease'],
-      kolano:['Knee pain','Swelling/warmth','Stiffness','Sensation of „popping”'],
-      ciaza:['Nausea/vomiting','Dizziness','Mild lower abdominal pains','Increased fatigue']
-    }
-  };
-  const FLAGS = {
-    pl:{
-      uszy:['Silny ból + gorączka > 38.5°C','Ropny lub krwisty wyciek z ucha','Silne zawroty / porażenie nerwu twarzowego'],
-      kolano:['Brak możliwości obciążenia nogi','Nagłe zniekształcenie po urazie','Gorączka + silny ból i zaczerwienienie stawu'],
-      ciaza:['Krwawienie z dróg rodnych','Silny, narastający ból brzucha','Omdlenie / duszność / objawy wstrząsu']
-    },
-    en:{
-      uszy:['Severe pain + fever > 38.5°C','Purulent or bloody ear discharge','Severe vertigo / facial nerve palsy'],
-      kolano:['Unable to bear weight','Sudden deformity after injury','Fever + severe pain/redness of the joint'],
-      ciaza:['Vaginal bleeding','Severe increasing abdominal pain','Fainting/shortness of breath/shock signs']
-    }
-  };
-
-  function txt(keyMap){ return (keyMap[cz] || keyMap['uszy']); }
-
-  function setHeading(){
-    const label = TITLE[cz];
-    // 1) główny nagłówek sekcji
-    const h = document.querySelector('#bhSectionTitle, .header h1, .path h2, h1');
-    if(h) h.textContent = label;
-    // 2) breadcrumb / ścieżki jeśli są
-    document.querySelectorAll('.path, .breadcrumbs, .trail').forEach(el=>{
-      // podmień ostatni (najbardziej szczegółowy) element tekstowy
-      const last = el.querySelector('span, b, strong, a:last-child');
-      if(last) last.textContent = label;
-    });
-    // 3) tytuł karty „Objawy” jeśli woła „Głowa”
-    const h3 = document.getElementById('h-obj');
-    if(h3 && /głowa|glowa|head/i.test(h3.textContent)) h3.textContent = (lang==='en'?'Symptoms':'Objawy');
-
-    // 4) <title>
-    try{
-      const baseTitle = (lang==='en'?'Boli Help — Details':'Boli Help — Szczegóły');
-      document.title = baseTitle + ' • ' + label;
-    }catch(e){}
-  }
-
-  function fillList(id, items){
-    const ul = document.getElementById(id);
-    if(!ul) return;
-    ul.innerHTML = '';
-    items.forEach(txt=>{
-      const li = document.createElement('li');
-      li.className = 'chip';
-      li.setAttribute('role','checkbox');
-      li.tabIndex = 0;
-      li.textContent = txt;
-      ul.appendChild(li);
-    });
-  }
-
-  function resetRisk(){
-    const riskLbl = document.getElementById('risk-label'); if(riskLbl) riskLbl.textContent = (lang==='en'?'low':'niskie');
-    const cursor  = document.getElementById('risk-cursor-card'); if(cursor) cursor.style.left = '0%';
-  }
-
-  function applyAll(){
-    setHeading();
-    fillList('symp-common', (SYM[lang]||SYM.pl)[cz]||[]);
-    fillList('urgent',      (FLAGS[lang]||FLAGS.pl)[cz]||[]);
-    resetRisk();
-  }
-
-  // Uruchom po load
-  window.addEventListener('load', applyAll);
-
-  // Uruchom jeszcze raz po krótkim opóźnieniu (gdy oryginalny init kończy pracę)
-  setTimeout(applyAll, 120);
-  requestAnimationFrame(()=>requestAnimationFrame(applyAll));
-
-  // Pilnuj zmian – gdy oryginalny kod znów nadpisze, wróć do naszych wartości
-  const root = document.body || document.documentElement;
-  const mo = new MutationObserver((muts)=>{
-    // Jeśli w treści pojawi się "Głowa"/"Head" przy uszach/kolanie/ciąży – popraw
-    const h = document.querySelector('#bhSectionTitle, .header h1, .path h2, h1');
-    if(h){
-      const wrong = /głowa|glowa|head/i.test(h.textContent||'');
-      if(wrong) applyAll();
-    }
-  });
-  mo.observe(root, {subtree:true, childList:true, characterData:true});
-})();
-</script>
-<script>
-/* BH Details Fix v2 — wymusza poprawny nagłówek/okruszki; odporne na nadpisy */
-(function(){
-  const part  = document.documentElement.getAttribute('data-bh-part') || '';
-  const label = document.documentElement.getAttribute('data-bh-label') || '';
-
-  if(!part || !label) return;
-
-  function apply(){
-    // 1) Główny nagłówek (spróbuj różne selektory, wybierz pierwszy istniejący)
-    const h =
-      document.querySelector('#bhSectionTitle') ||
-      document.querySelector('.header h1') ||
-      document.querySelector('.path h2') ||
-      document.querySelector('main h1') ||
-      document.querySelector('h1');
-
-    if(h && h.textContent.trim() !== label) h.textContent = label;
-
-    // 2) Breadcrumb / ścieżka (ostatni element)
-    const bc = document.querySelector('.breadcrumbs, .path, nav[aria-label*=crumb]');
-    if(bc){
-      const last = bc.querySelector('a:last-child, span:last-child, b:last-child, strong:last-child');
-      if(last && last.textContent.trim() !== label) last.textContent = label;
-    }
-
-    // 3) Gdy karta Objawy ma zły tytuł („Głowa/Head”), ujednolić do „Objawy”
-    const h3 = document.getElementById('h-obj');
-    if(h3 && /głowa|glowa|head/i.test(h3.textContent)) {
-      h3.textContent = (document.documentElement.lang||'pl').toLowerCase()==='en' ? 'Symptoms' : 'Objawy';
-    }
-  }
-
-  // Uruchom po załadowaniu
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', apply);
-  } else {
-    apply();
-  }
-
-  // Jeszcze kilka razy po starcie (gdy inne skrypty kończą pracę)
-  setTimeout(apply, 80);
-  setTimeout(apply, 160);
-  setTimeout(apply, 320);
-  requestAnimationFrame(()=>requestAnimationFrame(apply));
-
-  // I obserwuj zmiany DOM – jeśli ktoś znów podmieni na „Głowa”, cofamy
-  const mo = new MutationObserver(()=>{
-    const h = document.querySelector('#bhSectionTitle, .header h1, .path h2, main h1, h1');
-    if(h && /głowa|glowa|head/.test(h.textContent.toLowerCase()) && label.toLowerCase()!=='głowa' && label.toLowerCase()!=='head'){
-      apply();
-    }
-  });
-  mo.observe(document.body || document.documentElement, {subtree:true, childList:true, characterData:true});
-})();
-</script>
 <script>
 /* BH Safe Details Hot-Fix — zatrzymuje „Głowę” i ustawia poprawną część */
 (function(){
   const url = new URL(location.href);
-  const cz  = (url.searchParams.get('czesc')||'').toLowerCase();
+  const cz = (new URL(location.href).searchParams.get('czesc') || '').toLowerCase();
+
   const lbl = url.searchParams.get('label') ? decodeURIComponent(url.searchParams.get('label')) : '';
 
   // Zbiór części, które NA PEWNO macie już opisane (dopisz tu realne klucze ze swojej logiki)
