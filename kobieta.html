@@ -149,7 +149,109 @@
   </div>
 
   <div class="container">
-    <!-- GUZIK WRÓĆ -->
+<!-- ===== BH ATLAS: samowystarczalny pasek (no-bundle) ===== -->
+<style>
+  .bhA2-wrap{margin:8px 0 14px}
+  .bhA2{display:grid;gap:10px;border:1px solid rgba(164,107,255,.28);
+        border-radius:14px;padding:10px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02)),rgba(60,32,100,.28);
+        box-shadow:0 8px 18px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.12)}
+  .bhA2-top{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+  .bhA2-search{position:relative}
+  .bhA2-search input{width:100%;padding:11px 38px 11px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.22);
+                     background:rgba(255,255,255,.06);color:#fff;font-weight:800;letter-spacing:.2px}
+  .bhA2-ico{position:absolute;right:10px;top:50%;transform:translateY(-50%);opacity:.8}
+  .bhA2-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .bhA2-btn{appearance:none;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);
+            color:#eaf2ff;padding:9px 12px;border-radius:12px;font-weight:900;cursor:pointer}
+  .bhA2-chips{display:flex;flex-wrap:wrap;gap:8px}
+  .bhA2-chip{appearance:none;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);
+             color:#fff;padding:7px 11px;border-radius:999px;font-weight:800;cursor:pointer}
+  .bhA2-chip:hover,.bhA2-btn:hover{box-shadow:0 10px 20px rgba(0,0,0,.25);transform:translateY(-1px)}
+  @media (max-width:640px){ .bhA2-top{grid-template-columns:1fr} }
+  /* lekki glow pod guzikiem AI */
+  .bhA2-btn[data-ai]{box-shadow:0 0 0 1px rgba(59,130,246,.35) inset, 0 0 18px rgba(96,165,250,.28)}
+</style>
+<div class="bhA2-wrap">
+  <div class="bhA2" id="bhAtlasLite" aria-label="Atlas — szybkie narzędzia">
+    <div class="bhA2-top">
+      <div class="bhA2-search">
+        <input id="bhA2q" type="search" placeholder="Szukaj części ciała lub objawu…">
+        <span class="bhA2-ico">🔎</span>
+      </div>
+      <div class="bhA2-actions">
+        <button class="bhA2-btn" data-fav>⭐ Ulubione</button>
+        <button class="bhA2-btn" data-ai>🧠 AI podpowiedź</button>
+      </div>
+    </div>
+    <div class="bhA2-chips" aria-label="Szybkie skróty">
+      <button class="bhA2-chip" data-part="glowa">Głowa</button>
+      <button class="bhA2-chip" data-part="oko">Oko</button>
+      <button class="bhA2-chip" data-part="nos">Nos</button>
+      <button class="bhA2-chip" data-part="gardlo">Gardło</button>
+      <button class="bhA2-chip" data-part="klatka">Klatka</button>
+      <button class="bhA2-chip" data-part="brzuch">Brzuch</button>
+      <button class="bhA2-chip" data-part="plecy">Plecy</button>
+      <button class="bhA2-chip" data-part="stopy">Stopy</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  // Prosta mapa przejść → prowadzi do szczegółów dla aktualnej płci/typu, jeśli wykryjemy w URL
+  function detectTyp(){
+    const u = new URL(location.href);
+    if(u.pathname.includes('kobieta')) return 'kobieta';
+    if(u.pathname.includes('mezczyzna')) return 'mezczyzna';
+    if(u.pathname.includes('dziecko')) return 'dziecko';
+    return 'kobieta';
+  }
+  function go(part,label){
+    const typ = detectTyp();
+    const url = `szczegoly.html?typ=${encodeURIComponent(typ)}&czesc=${encodeURIComponent(part)}&label=${encodeURIComponent(label||part)}`;
+    location.href = url;
+  }
+  // Klik na chipy
+  document.querySelectorAll('.bhA2-chip').forEach(b=>{
+    b.addEventListener('click', ()=> go(b.dataset.part, b.textContent.trim()));
+  });
+  // Szukajka (entery + najprostsze dopasowania aliasów)
+  const ALIAS = {
+    glowa:['glowa','głowa','migrena','ból głowy'],
+    oko:['oko','oczy','widzenie','wzrok'],
+    nos:['nos','katar','zatoki'],
+    gardlo:['gardlo','gardło','angina'],
+    klatka:['klatka','serce','mostek','pierś'],
+    brzuch:['brzuch','żołądek','zoladek','wzdęcia','biegunka'],
+    plecy:['plecy','kręgosłup','rwa'],
+    stopy:['stopa','stopy','pięta','pieta']
+  };
+  function bestMatch(q){
+    q = (q||'').trim().toLowerCase();
+    if(!q) return null;
+    let best=null;
+    Object.entries(ALIAS).some(([key,arr])=>{
+      if(key.includes(q) || arr.some(a=>a.includes(q))){ best = key; return true; }
+      return false;
+    });
+    return best;
+  }
+  const input = document.getElementById('bhA2q');
+  if(input){
+    input.addEventListener('keydown', (e)=>{
+      if(e.key==='Enter'){
+        const bm = bestMatch(input.value);
+        if(bm) go(bm);
+      }
+    });
+  }
+  // Placeholders: ulubione/AI
+  document.querySelector('.bhA2-btn[data-fav]')?.addEventListener('click', ()=> alert('Wkrótce: zapis wybranych części do ulubionych.'));
+  document.querySelector('.bhA2-btn[data-ai]')?.addEventListener('click', ()=> alert('Wkrótce: podpowiedź AI na podstawie objawów.'));
+})();
+</script>
+<!-- ===== /BH ATLAS ===== -->
+
+ <!-- GUZIK WRÓĆ -->
     <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
 
     <header class="header"><h1 id="bhPageTitle">Kobieta — wybierz część ciała</h1></header>
@@ -318,5 +420,193 @@
     #bhLangSelect{ font-size: 13px; }
   }
 </style>
+<style>
+  /* Guzik WRÓĆ w lewym górnym rogu */
+  #bhBackMini {
+    position: fixed !important;
+    top: 16px !important;
+    left: 16px !important;
+    margin: 0 !important;
+    z-index: 3000 !important;
+
+    appearance: none;
+    border: 1px solid rgba(164,107,255,.28);
+    background: rgba(60,32,100,.28);
+    color: #eef2ff;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(8,10,22,.35),
+                inset 0 0 0 1px rgba(164,107,255,.12),
+                0 0 8px rgba(164,107,255,.45);
+    transition: transform .18s ease,
+                box-shadow .18s ease,
+                border-color .18s ease;
+  }
+
+  #bhBackMini:hover {
+    transform: translateY(-1px);
+    border-color: rgba(164,107,255,.55);
+    box-shadow: 0 10px 20px rgba(8,10,22,.45),
+                0 0 14px rgba(164,107,255,.65),
+                inset 0 0 0 1px rgba(164,107,255,.18);
+  }
+
+  #bhBackMini:focus-visible {
+    outline: 2px solid rgba(164,107,255,.75);
+    outline-offset: 2px;
+  }
+</style>
+<script src="assets/boli-atlas.bundle.js?v=1" defer></script>
+  
+<script src="assets/boli-atlas.bundle.js?v=1" defer></script>
+<script>
+  window.BH_ATLAS_OPTS = {
+    pageType: document.body.getAttribute('data-page'),
+    gridSelector: '#bhThumbs'
+  };
+
+  window.addEventListener('DOMContentLoaded', function(){
+    if (window.BH_ATLAS && typeof BH_ATLAS.init === 'function') {
+      BH_ATLAS.init(window.BH_ATLAS_OPTS);
+      console.log('[Boli Atlas] init OK');
+    } else {
+      console.warn('[Boli Atlas] bundle nie jest dostępny — sprawdź 404 w konsoli');
+    }
+  });
+</script>
+<!-- Boli Help – Atlas Addon -->
+<script>
+  // prosta konfiguracja
+  window.BH_ATLAS_OPTS = {
+    mount: '#bhAtlasRoot',      // gdzie wstawić toolbar/atlas
+    mode: 'toolbar',            // start w trybie paska narzędzi
+    anatomyChips: true,         // szybkie „czipy” z częściami ciała
+    aiHints: true,              // AI podpowiedzi (przy wyszukiwaniu)
+    favorites: true             // zakładka „ulubione”
+  };
+</script>
+<script src="assets/boli-atlas.bundle.js" defer></script>
+<!-- ===== BH ATLAS — AI SUGGEST (PRO-mini) ===== -->
+<style>
+  .bhA2-modal{position:fixed;inset:0;z-index:9998;display:none;
+    background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.88), rgba(14,18,48,.94));
+    backdrop-filter:saturate(120%) blur(6px)}
+  .bhA2-modal[aria-hidden="false"]{display:block}
+  .bhA2-panel{max-width:560px;margin:8vh auto;background:rgba(60,32,100,.36);
+    border:1px solid rgba(164,107,255,.28);border-radius:16px;padding:14px;color:#eef2ff}
+  .bhA2-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+  .bhA2-title{font-weight:900;letter-spacing:.2px}
+  .bhA2-close{appearance:none;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);
+    color:#fff;border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:800}
+  .bhA2-sug{display:grid;gap:8px;margin:8px 0}
+  .bhA2-sug a{display:flex;gap:10px;align-items:center;text-decoration:none;color:#eaf2ff;
+    border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);padding:10px;border-radius:12px}
+  .bhA2-sug a:hover{box-shadow:0 10px 20px rgba(0,0,0,.25);transform:translateY(-1px)}
+  .bhA2-ico{width:22px;height:22px;display:inline-grid;place-items:center;border-radius:6px;
+    background:rgba(164,107,255,.18)}
+  .bhA2-note{font-size:12px;color:#cfe2ff;opacity:.9;margin-top:6px}
+</style>
+<div class="bhA2-modal" id="bhA2Modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="bhA2Title">
+  <div class="bhA2-panel">
+    <div class="bhA2-head">
+      <div class="bhA2-title" id="bhA2Title">Podpowiedzi AI</div>
+      <button class="bhA2-close" type="button" id="bhA2Close">✕</button>
+    </div>
+    <div id="bhA2List" class="bhA2-sug" aria-live="polite"></div>
+    <div class="bhA2-note">Sugestie mają charakter edukacyjny. W nagłych stanach – dzwoń 112.</div>
+  </div>
+</div>
+<script>
+(function(){
+  // mała baza aliasów → części ciała + ikonki
+  const MAP = {
+    glowa:{label:'Głowa', ico:'🧠', alias:['glowa','głowa','migrena','ból głowy']},
+    oko:{label:'Oko', ico:'👁️', alias:['oko','oczy','widzenie','wzrok']},
+    nos:{label:'Nos', ico:'👃', alias:['nos','katar','zatoki']},
+    gardlo:{label:'Gardło', ico:'🗣️', alias:['gardlo','gardło','angina','chrypka']},
+    klatka:{label:'Klatka piersiowa', ico:'💗', alias:['klatka','serce','mostek','pierś','duszność']},
+    brzuch:{label:'Brzuch', ico:'🫃', alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka','mdłości']},
+    plecy:{label:'Plecy', ico:'🦴', alias:['plecy','kręgosłup','rwa','lędźwie']},
+    stopy:{label:'Stopy', ico:'🦶', alias:['stopa','stopy','pięta','pieta']},
+    kaszel:{label:'Kaszel', ico:'🤧', alias:['kaszel','kaszle']},
+    goraczka:{label:'Gorączka', ico:'🌡️', alias:['gorączka','goraczka','temperatura']}
+  };
+  const SOS = [
+    {key:'reanimacja', label:'Reanimacja (RKO)', ico:'🚑'},
+    {key:'zadlawienie', label:'Zadławienie (SOS)', ico:'🫁'},
+    {key:'wypadek', label:'Wypadek (SOS)', ico:'💥'}
+  ];
+  function detectTyp(){
+    const u = new URL(location.href);
+    if(u.pathname.includes('kobieta')) return 'kobieta';
+    if(u.pathname.includes('mezczyzna')) return 'mezczyzna';
+    if(u.pathname.includes('dziecko')) return 'dziecko';
+    return 'kobieta';
+  }
+  function turl(part,label){
+    return `szczegoly.html?typ=${encodeURIComponent(detectTyp())}&czesc=${encodeURIComponent(part)}&label=${encodeURIComponent(label||part)}`;
+  }
+  function porada(key,label){
+    return `szczegoly.html?typ=porada&czesc=${encodeURIComponent(key)}&label=${encodeURIComponent(label)}`;
+  }
+  function pickMatches(q){
+    q=(q||'').trim().toLowerCase();
+    // 1) dopasowanie do części
+    const hits=[];
+    Object.entries(MAP).forEach(([k,v])=>{
+      if(k.includes(q) || v.label.toLowerCase().includes(q) || v.alias.some(a=>a.includes(q))){
+        hits.push({type:'part', key:k, label:v.label, ico:v.ico});
+      }
+    });
+    // 2) jeżeli słowa „silny ból klatki/duszność/omdlenie” → dorzuć SOS
+    const sosWords=['duszn','omdle','silny ból','silny bol','nagły','nagly','zawał','zawal','bezdech'];
+    if(sosWords.some(w=>q.includes(w))){
+      SOS.forEach(s=>hits.unshift({type:'sos', key:s.key, label:s.label, ico:s.ico}));
+    }
+    // 3) jeśli pusto — podaj 3 popularne
+    if(!hits.length){
+      ['glowa','brzuch','klatka'].forEach(k=>{
+        const v=MAP[k]; hits.push({type:'part', key:k, label:v.label, ico:v.ico});
+      });
+      hits.unshift({type:'sos', key:'zadlawienie', label:'Zadławienie (SOS)', ico:'🫁'});
+    }
+    // limit 5
+    return hits.slice(0,5);
+  }
+  function renderList(items){
+    const box=document.getElementById('bhA2List'); if(!box) return;
+    box.innerHTML='';
+    items.forEach(it=>{
+      const a=document.createElement('a'); a.setAttribute('href', it.type==='sos'?porada(it.key,it.label):turl(it.key,it.label));
+      a.innerHTML = `<span class="bhA2-ico">${it.ico}</span><span><b>${it.label}</b><br><small>${it.type==='sos'?'Instrukcja SOS':'Przejdź do szczegółów'}</small></span>`;
+      box.appendChild(a);
+    });
+  }
+  function openModal(items){
+    renderList(items);
+    const m=document.getElementById('bhA2Modal'); if(!m) return;
+    m.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+  }
+  function closeModal(){
+    const m=document.getElementById('bhA2Modal'); if(!m) return;
+    m.setAttribute('aria-hidden','true'); document.body.style.overflow='';
+  }
+  // Podłączamy pod istniejący przycisk AI (z pierwszego bloku)
+  const aiBtn = document.querySelector('.bhA2-btn[data-ai]');
+  if(aiBtn && !aiBtn.dataset.bound){
+    aiBtn.dataset.bound='1';
+    aiBtn.addEventListener('click', ()=>{
+      const q = (document.getElementById('bhA2q')?.value)||'';
+      openModal( pickMatches(q) );
+    });
+  }
+  document.getElementById('bhA2Close')?.addEventListener('click', closeModal);
+  document.getElementById('bhA2Modal')?.addEventListener('click', (e)=>{ if(e.target.id==='bhA2Modal') closeModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && document.getElementById('bhA2Modal')?.getAttribute('aria-hidden')==='false') closeModal(); });
+})();
+</script>
+<!-- ===== /BH ATLAS — AI SUGGEST (PRO-mini) ===== -->
 </body>
 </html>
