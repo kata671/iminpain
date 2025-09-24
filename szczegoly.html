@@ -4892,5 +4892,35 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // (bezpieczne: nie dotyka innych stylów, tylko je nadpisujemy wyżej)
   })();
 </script>
+<style id="bh-objawy-patch">
+  /* Bardzo wysoka specyficzność + !important */
+  article.card#s-objawy,
+  .card#s-objawy,
+  #s-objawy.card {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+      rgba(60,32,100,.36) !important;
+    border: 1px solid rgba(164,107,255,.28) !important;
+    box-shadow:
+      0 10px 24px rgba(255,110,199,.16),
+      0 0 0 1px rgba(164,107,255,.18) inset,
+      0 0 18px rgba(164,107,255,.14) !important;
+    backdrop-filter: saturate(120%) blur(6px);
+  }
+</style>
+
+<script>
+  // Fallback „młot”: jeżeli coś jeszcze to nadpisuje – ustawiamy inline z !important.
+  (function(){
+    var el = document.getElementById('s-objawy');
+    if (!el) return;
+    el.style.setProperty('background',
+      'linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(60,32,100,.36)','important');
+    el.style.setProperty('border','1px solid rgba(164,107,255,.28)','important');
+    el.style.setProperty('box-shadow',
+      '0 10px 24px rgba(255,110,199,.16), 0 0 0 1px rgba(164,107,255,.18) inset, 0 0 18px rgba(164,107,255,.14)',
+      'important');
+  })();
+</script>
 </body>
 </html>
