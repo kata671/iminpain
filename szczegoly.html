@@ -4420,5 +4420,16 @@ document.addEventListener("DOMContentLoaded", ()=>{
 })();
 </script>
 <script src="assets/szczegoly_patch_all.js"></script>
+<!-- BRIDGE: odsłoń consty na window, żeby patch mógł je połączyć -->
+<script>
+  (function () {
+    try { if (typeof CONTENT_PL !== 'undefined')  window.CONTENT_PL  = CONTENT_PL; } catch(e){}
+    try { if (typeof CONTENT_EN !== 'undefined')  window.CONTENT_EN  = CONTENT_EN; } catch(e){}
+    try { if (typeof PART_ALIASES !== 'undefined') window.PART_ALIASES = PART_ALIASES; } catch(e){}
+  })();
+</script>
+
+<!-- Twój patch z dodatkowymi częściami/treściami -->
+<script src="assets/szczegoly_patch_all.js?v=3"></script>
 </body>
 </html>
