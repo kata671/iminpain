@@ -4855,5 +4855,24 @@ document.addEventListener("DOMContentLoaded", ()=>{
   });
 })();
 </script>
+<!-- BH PATCH: wymuś sekcję z parametru ?czesc= -->
+<script>
+(function(){
+  var q = new URLSearchParams(location.search);
+  var p = q.get('czesc');
+  if(!p) return;
+  p = decodeURIComponent(p).toLowerCase();
+
+  if (typeof window.loadPart === 'function') { window.loadPart(p); return; }
+  if (typeof window.showPart === 'function') { window.showPart(p); return; }
+
+  var el = document.querySelector('[data-part="'+p+'"], [data-czesc="'+p+'"], #'+(window.CSS&&CSS.escape?CSS.escape(p):p));
+  if (!el) return;
+
+  if (typeof el.click === 'function') el.click();
+  if (el.setAttribute) el.setAttribute('aria-hidden','false');
+  if (el.style) el.style.display = '';
+})();
+</script>
 </body>
 </html>
