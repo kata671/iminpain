@@ -4874,5 +4874,78 @@ document.addEventListener("DOMContentLoaded", ()=>{
   if (el.style) el.style.display = '';
 })();
 </script>
+<!-- BH RESCUE: wymuś prezentację sekcji z parametru ?czesc= i nie pozwól nadpisać -->
+<script>
+(function(){
+  var qs = new URLSearchParams(location.search);
+  var raw = qs.get('czesc'); if(!raw) return;
+  var part = decodeURIComponent(raw).trim().toLowerCase();
+  var label = decodeURIComponent(qs.get('label')||'').trim();
+
+  // normalizacja nazw
+  var map = {
+    'głowa':'glowa','glowa':'glowa','oczy':'oko','oko':'oko',
+    'uszy':'uszy','ucho':'uszy','gardło':'gardlo','gardlo':'gardlo',
+    'kolana':'kolano','kolano':'kolano','płuca':'pluca','pluca':'pluca',
+    'żołądek':'zoladek','zoladek':'zoladek','skóra':'skora','skora':'skora',
+    'ciąża':'ciaza','ciaza':'ciaza'
+  };
+  part = map[part] || part;
+
+  // pokaż wyłącznie wskazaną sekcję – szukamy po atrybutach/ID używanych w projekcie
+  function show(sel){
+    var el = document.querySelector(sel);
+    if(!el) return false;
+    // ukryj wszystko inne oznaczone data-part/data-czesc/.bh-part
+    var all = document.querySelectorAll('[data-part],[data-czesc],.bh-part');
+    if(all.length){
+      all.forEach(function(n){
+        var on = (n===el);
+        n.style.display = on ? '' : 'none';
+        n.setAttribute('aria-hidden', on ? 'false' : 'true');
+      });
+    }
+    // odśwież tytuły/okruchy jeśli są
+    try{
+      if(label){
+        var crumb = document.querySelector('.crumbs'); if(crumb) crumb.textContent = label;
+        var h = document.querySelector('.hero h1, .hero h2, .hero .label strong'); if(h) h.textContent = label;
+      }
+    }catch(e){}
+    return true;
+  }
+
+  function tryActivate(){
+    if (show('[data-part="'+part+'"]')) return true;
+    if (show('[data-czesc="'+part+'"]')) return true;
+    if (show('#part-'+part)) return true;
+    if (show('#'+(window.CSS&&CSS.escape?CSS.escape(part):part))) return true;
+
+    // jeżeli nie ma sekcji, spróbuj kliknąć odpowiedni przycisk/zakładkę w nawigacji szczegółów
+    var trigger = document.querySelector(
+      '[data-part-link="'+part+'"], [data-part="'+part+'"], [data-czesc-link="'+part+'"], '+
+      'nav a[href*="czesc='+encodeURIComponent(part)+'"]'
+    );
+    if(trigger && trigger.click){ trigger.click(); return true; }
+    return false;
+  }
+
+  function arm(){
+    // od razu + przez chwilę pilnuj (gdy inne skrypty nadpisują)
+    tryActivate();
+    var t0 = Date.now();
+    var hold = setInterval(function(){
+      tryActivate();
+      if(Date.now()-t0>2500) clearInterval(hold);
+    }, 120);
+    var mo = new MutationObserver(tryActivate);
+    mo.observe(document.documentElement, {childList:true,subtree:true});
+    setTimeout(function(){ mo.disconnect(); }, 3000);
+  }
+
+  if (document.readyState !== 'loading') arm();
+  else document.addEventListener('DOMContentLoaded', arm, {once:true});
+})();
+</script>
 </body>
 </html>
