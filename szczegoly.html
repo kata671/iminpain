@@ -1163,7 +1163,19 @@ const CONTENT_EN={
 
     /* --- wybór contentu wg języka i części ciała --- */
     const CONTENT=(L()==='en')?CONTENT_EN:CONTENT_PL;
-    const entry = CONTENT[CZESC] || CONTENT.glowa;
+    
+    // 🛡️ Safe fallback: if content for the selected part is missing, DO NOT fall back to 'glowa'.
+    // Instead, create an empty entry so we never show wrong data.
+    function __emptyEntry(label){
+      return {
+        label: label || LABEL || '',
+        symptoms: [], urgent: [], causes: [], firstaid: [],
+        otc: [], rx: [], rehab: [], myths: [], faq: [],
+        dx: {}, docs: {}
+      };
+    }
+
+    const entry = CONTENT[CZESC] || __emptyEntry(LABEL);
     document.getElementById('label-text').innerHTML='<b>'+(entry.label||LABEL)+'</b> • '+TYP;
 
     /* --- helpers / scoring --- */
