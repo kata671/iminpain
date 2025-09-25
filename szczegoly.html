@@ -4675,5 +4675,55 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }catch(e){ console.error('[BH router] błąd:', e); }
 })();
 </script>
+<script>
+/* BH label hotfix — ustawia nazwy wg ?label= i ?czesc=, nie rusza treści kart */
+(function(){
+  try{
+    var u = new URL(location.href);
+    var label = (u.searchParams.get('label') || '').trim();
+    var part  = (u.searchParams.get('czesc') || '').trim().toLowerCase();
+
+    // mapy ładnych etykiet, gdy ?label brak lub jest "brzydki"
+    var PRETTY = {
+      glowa:'Głowa', oko:'Oko', uszy:'Uszy', nos:'Nos', gardlo:'Gardło',
+      klatka:'Klatka piersiowa', serce:'Serce', pluca:'Płuca', brzuch:'Brzuch',
+      watroba:'Wątroba', zoladek:'Żołądek', nerki:'Nerki', plecy:'Plecy',
+      biodra:'Biodra', udo:'Udo', kolano:'Kolano', stopy:'Stopy',
+      skora:'Skóra', ciaza:'Ciąża'
+    };
+
+    // wybierz najlepszy napis do wyświetlenia
+    var nice = label || PRETTY[part] || (part ? part.charAt(0).toUpperCase()+part.slice(1) : '');
+
+    if(!nice) return; // brak danych — nic nie zmieniamy
+
+    // podmień typowe miejsca z nagłówkiem/okruszkami
+    var selectors = [
+      '#bhPageTitle',
+      'header.app h1',
+      '.hero .label',
+      '.crumbs strong',
+      '.hero h1',
+      'title'
+    ];
+    selectors.forEach(function(sel){
+      var el = document.querySelector(sel);
+      if(!el) return;
+      if(sel === 'title'){
+        document.title = nice + ' — Boli Help — Szczegóły';
+      }else{
+        // jeśli element ma tekst typu "Głowa (ból) • kobieta" — zostaw ogon po "•"
+        var t = (el.textContent || '').trim();
+        if(t.includes('•')){
+          var ogon = t.split('•').slice(1).join('•').trim();
+          el.textContent = ogon ? (nice + ' • ' + ogon) : nice;
+        }else{
+          el.textContent = nice;
+        }
+      }
+    });
+  }catch(e){ console.warn('BH label hotfix error:', e); }
+})();
+</script>
 </body>
 </html>
