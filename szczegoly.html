@@ -4431,5 +4431,64 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 <!-- Twój patch z dodatkowymi częściami/treściami -->
 <script src="assets/szczegoly_patch_all.js?v=3"></script>
+<script>
+/* --- HOTFIX: spłaszcz CONTENT_* gdy wszystko siedzi pod "glowa" i odśwież widok --- */
+(function(){
+  function flatten(obj){
+    if(!obj || typeof obj!=='object') return obj;
+    // Jeśli obiekt ma jedną właściwość "glowa" i w środku są prawdziwe części – przenieś je poziom wyżej
+    if (obj.glowa && typeof obj.glowa==='object') {
+      var inner = obj.glowa;
+      var keys = Object.keys(inner||{});
+      // heurystyka: jeśli w środku są np. nos/oko/gardlo/... to znaczy że trzeba spłaszczyć
+      var looksNested = keys.some(k => k!=='glowa' && typeof inner[k]==='object');
+      if (looksNested){
+        keys.forEach(function(k){ obj[k] = inner[k]; });
+        delete obj.glowa;
+      }
+    }
+    return obj;
+  }
+
+  try { if (typeof CONTENT_PL !== 'undefined') window.CONTENT_PL = flatten(CONTENT_PL); } catch(e){}
+  try { if (typeof CONTENT_EN !== 'undefined') window.CONTENT_EN = flatten(CONTENT_EN); } catch(e){}
+  try { if (typeof PART_ALIASES !== 'undefined') window.PART_ALIASES = PART_ALIASES; } catch(e){}
+
+  // Spróbuj wywołać render aplikacji, jeśli istnieje
+  if (typeof window.__bhRenderDetails === 'function') {
+    window.__bhRenderDetails(); 
+    return;
+  }
+
+  // Minimalne odświeżenie: jeśli mamy czesc w URL i dane, podmień nagłówek + pokaż objawy/flag
+  try{
+    var u = new URL(location.href);
+    var czesc = u.searchParams.get('czesc');
+    var lang = (document.documentElement.getAttribute('lang') || 'pl').toLowerCase();
+    var DB = (lang==='en' ? window.CONTENT_EN : window.CONTENT_PL) || {};
+    var D = DB && czesc ? DB[czesc] : null;
+
+    // Tytuł
+    var h = document.querySelector('.hero .crumbs');
+    if(h && czesc) h.textContent = (u.searchParams.get('label') || czesc);
+
+    // Objawy
+    var ulS = document.getElementById('symp-common');
+    if (ulS && D && Array.isArray(D.symptoms)) {
+      ulS.innerHTML = D.symptoms.map(function(s){
+        return '<li><span class="cb"></span>'+s+'</li>';
+      }).join('');
+    }
+
+    // Czerwone flagi
+    var ulU = document.getElementById('urgent');
+    if (ulU && D && Array.isArray(D.urgent)) {
+      ulU.innerHTML = D.urgent.map(function(s){
+        return '<li><span class="cb"></span>'+s+'</li>';
+      }).join('');
+    }
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
