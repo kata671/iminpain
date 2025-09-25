@@ -4725,5 +4725,65 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }catch(e){ console.warn('BH label hotfix error:', e); }
 })();
 </script>
+<script>
+/* BH mismatch-safety overlay:
+   Gdy ?czesc != 'glowa', a w UI i tak widzisz "Głowa",
+   wycisz błędne treści i pokaż neutralny placeholder. */
+(function(){
+  try{
+    var u = new URL(location.href);
+    var part  = (u.searchParams.get('czesc') || '').trim().toLowerCase();
+    var label = (u.searchParams.get('label') || '').trim();
+    if(!part) return;
+
+    // „Ładna” etykieta do komunikatu
+    var NICE = {
+      glowa:'Głowa', oko:'Oko', uszy:'Uszy', nos:'Nos', gardlo:'Gardło',
+      klatka:'Klatka piersiowa', serce:'Serce', pluca:'Płuca', brzuch:'Brzuch',
+      watroba:'Wątroba', zoladek:'Żołądek', nerki:'Nerki', plecy:'Plecy',
+      biodra:'Biodra', udo:'Udo', kolano:'Kolano', stopy:'Stopy',
+      skora:'Skóra', ciaza:'Ciąża'
+    };
+    var nice = label || NICE[part] || (part.charAt(0).toUpperCase()+part.slice(1));
+
+    // Czy wygląda na to, że w środku nadal jest "Głowa"?
+    var heroText = (document.querySelector('header.app, .hero')?.textContent || '').toLowerCase();
+    var looksLikeHead = heroText.includes('głowa') || heroText.includes('glowa');
+
+    if(part !== 'glowa' && looksLikeHead){
+      // 1) Wycisz listy, żeby nie pokazywać złych treści
+      var lists = document.querySelectorAll('.card ul.clean');
+      lists.forEach(function(ul){
+        ul.innerHTML = '<li style="opacity:.95">Treści w przygotowaniu dla <strong>'+nice+'</strong>.</li>';
+      });
+
+      // 2) Pasek ryzyka – neutral
+      var riskLabel = document.getElementById('risk-label');
+      var riskCursor = document.getElementById('risk-cursor-card');
+      if(riskLabel) riskLabel.textContent = '—';
+      if(riskCursor) riskCursor.style.left = '0%';
+
+      // 3) Pasek ostrzegawczy – schowaj, by nie wprowadzał w błąd
+      var warn = document.getElementById('urgent-strip');
+      if(warn) warn.style.display = 'none';
+
+      // 4) Podpowiedź DX – schowaj
+      var hint = document.getElementById('dx-hint');
+      if(hint) hint.classList.remove('show');
+
+      // 5) Podmień nagłówki (gdyby pierwszy hotfix nie zdążył)
+      var sel = ['#bhPageTitle','header.app h1','.hero .label','.crumbs strong','.hero h1','title'];
+      sel.forEach(function(s){
+        var el = document.querySelector(s);
+        if(!el) return;
+        if(s==='title'){ document.title = nice + ' — Boli Help — Szczegóły'; }
+        else { el.textContent = nice; }
+      });
+
+      console.info('[BH] mismatch overlay: wyciszono błędne treści i ustawiono "'+nice+'".');
+    }
+  }catch(e){ console.warn('BH mismatch overlay error:', e); }
+})();
+</script>
 </body>
 </html>
