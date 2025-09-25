@@ -4334,5 +4334,90 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }
 })();
 </script>
+<script src="assets/boli-atlas.bundle.js"></script>
+<script>
+  // minimalny test – nic nie psuje UI:
+  window.addEventListener('DOMContentLoaded', () => {
+    const ok = !!(window.BH_ATLAS && window.BH_ATLAS.parts);
+    console.log('BH_ATLAS załadowany:', ok, ok ? Object.keys(BH_ATLAS.parts).length + ' części' : 'brak');
+  });
+</script>
+<script>
+(() => {
+  if (!window.BH_ATLAS || !BH_ATLAS.parts) return;
+
+  // 🔑 MAPA: URL czesc -> klucz w atlasie
+  const MAP = {
+    glowa: 'glowa',
+    oko: 'oko',
+    nos: 'nos',
+    uszy: 'ucho',          // ujednolicamy: "uszy" -> "ucho"
+    gardlo: 'gardlo',
+    klatka: 'klatka',
+    pluca: 'pluca',
+    serce: 'serce',
+    brzuch: 'brzuch',
+    zoladek: 'zoladek',
+    watroba: 'watroba',
+    nerki: 'nerki',
+    plecy: 'plecy',
+    biodra: 'biodra',
+    udo: 'udo',
+    kolano: 'kolano',
+    stopy: 'stopy',
+    skora: 'skora',
+    ciaza: 'ciaza'         // nowy kafelek – „ciąża”
+  };
+
+  // Pobierz czesc z URL
+  const url = new URL(location.href);
+  const czescParam = (url.searchParams.get('czesc') || '').toLowerCase();
+  const key = MAP[czescParam] || czescParam;
+
+  // Dane z atlasu
+  const part = BH_ATLAS.parts[key];
+
+  // 📌 Jeśli brak danych – zostaw puste karty (już nie podkładamy głowy)
+  if (!part) {
+    console.warn('Brak danych dla:', key);
+    return;
+  }
+
+  // ====== WSTRZYKIWANIE DANYCH DO KART ======
+  // Oczekiwane właściwości w atlasie: symptoms[], redFlags[], causes[], firstAid[], otc[], rx[], rehab[], myths[], faq[]
+  // Dostępne kontenery (wg Twojego HTML-a): 
+  // #symp-common, #urgent, #causes, #firstaid, #otc, #rx, #rehab, #myths, #faq
+
+  const fillList = (selector, arr) => {
+    const el = document.querySelector(selector);
+    if (!el) return;
+    el.innerHTML = '';
+    (arr || []).forEach(txt => {
+      const li = document.createElement('li');
+      li.textContent = txt;
+      el.appendChild(li);
+    });
+  };
+
+  // Objawy i czerwone flagi
+  fillList('#symp-common', part.symptoms);
+  fillList('#urgent',      part.redFlags);
+
+  // Przyczyny, pierwsza pomoc, leki OTC/Rx, rehabilitacja, mity, FAQ (opcjonalnie – jeśli masz takie kontenery)
+  fillList('#causes',    part.causes);
+  fillList('#firstaid',  part.firstAid);
+  fillList('#otc',       part.otc);
+  fillList('#rx',        part.rx);
+  fillList('#rehab',     part.rehab);
+  fillList('#myths',     part.myths);
+  fillList('#faq',       part.faq);
+
+  // (opcjonalnie) zaktualizuj tytuł sekcji/okruszki, jeśli chcesz
+  const crumbs = document.querySelector('.crumbs');
+  if (crumbs && part.title) {
+    crumbs.textContent = part.title;
+  }
+})();
+</script>
 </body>
 </html>
