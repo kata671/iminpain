@@ -1,0 +1,4 @@
+<!-- BEGIN add-missing-tiles:DZIECKO -->
+<a class="bh-tile" href="szczegoly.html?typ=dziecko&czesc=uszy&label=Uszy" aria-label="Uszy"><span class="bh-tile-label">Uszy</span></a>
+<a class="bh-tile" href="szczegoly.html?typ=dziecko&czesc=kolano&label=Kolano" aria-label="Kolano"><span class="bh-tile-label">Kolano" ></span></a>
+<!-- END add-missing-tiles:DZIECKO -->

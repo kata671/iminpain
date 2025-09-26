@@ -1,0 +1,5 @@
+<!-- BEGIN add-missing-tiles:KOBIETA -->
+<a class="bh-tile" href="szczegoly.html?typ=kobieta&czesc=uszy&label=Uszy" aria-label="Uszy"><span class="bh-tile-label">Uszy</span></a>
+<a class="bh-tile" href="szczegoly.html?typ=kobieta&czesc=kolano&label=Kolano" aria-label="Kolano"><span class="bh-tile-label">Kolano</span></a>
+<a class="bh-tile" href="szczegoly.html?typ=kobieta&czesc=ciaza&label=Ciąża" aria-label="Ciąża"><span class="bh-tile-label">Ciąża</span></a>
+<!-- END add-missing-tiles:KOBIETA -->
