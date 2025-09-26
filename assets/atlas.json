@@ -1,1 +1,494 @@
-
+{
+  "meta": {
+    "version": 1,
+    "lang": "pl"
+  },
+  "parts": {
+    "glowa": {
+      "title": "Głowa",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "nos": {
+      "title": "Nos",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "oko": {
+      "title": "Oko",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "gardlo": {
+      "title": "Gardło",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "uszy": {
+      "title": "Uszy",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "klatka": {
+      "title": "Klatka piersiowa",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "brzuch": {
+      "title": "Brzuch",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "biodra": {
+      "title": "Biodra/Pachwina",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "kolano": {
+      "title": "Kolano",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "udo": {
+      "title": "Udo",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "stopy": {
+      "title": "Stopy",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "serce": {
+      "title": "Serce",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "pluca": {
+      "title": "Płuca",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "watroba": {
+      "title": "Wątroba",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "zoladek": {
+      "title": "Żołądek",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "nerki": {
+      "title": "Nerki",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "skora": {
+      "title": "Skóra",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    },
+    "ciaza": {
+      "title": "Ciąża",
+      "objawy": [
+        "TODO — uzupełnij objawy."
+      ],
+      "przyczyny": [
+        "TODO — uzupełnij najczęstsze przyczyny."
+      ],
+      "pierwsza_pomoc": [
+        "TODO — uzupełnij pierwszą pomoc."
+      ],
+      "leki_otc": [
+        "TODO — przykłady OTC."
+      ],
+      "leki_rx": [
+        "TODO — przykłady na receptę."
+      ],
+      "rehabilitacja": [
+        "TODO — ćwiczenia / postępowanie."
+      ],
+      "mity": [
+        "TODO — popularne mity i sprostowania."
+      ],
+      "faq": [
+        "TODO — często zadawane pytania."
+      ]
+    }
+  }
+}
