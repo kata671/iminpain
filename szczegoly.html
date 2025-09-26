@@ -1,119 +1,138 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Boli Help — Szczegóły</title>
-  <meta name="theme-color" content="#0e1230" />
+  <link rel="stylesheet" href="assets/style.css">
   <style>
-    :root{--bg:#0e1230;--text:#eef2ff;--muted:#b8c2e0;--card:rgba(60,32,100,.30);--stroke:rgba(164,107,255,.18);--radius:16px}
-    html,body{height:100%} body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto}
-    .container{max-width:1100px;margin:0 auto;padding:16px}
-    .crumbs{font-weight:800;letter-spacing:.2px;color:#cfe2ff;margin-bottom:10px}
-    .hero{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--stroke);border-radius:var(--radius);padding:16px}
-    .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 8px}
-    .tab{padding:9px 13px;border-radius:10px;font-weight:800;cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,.16);color:#e9efff}
-    .tab[aria-selected="true"]{box-shadow:0 0 0 2px rgba(94,234,212,.35);border-color:rgba(94,234,212,.55)}
-    .card{display:none;background:var(--card);border:1px solid var(--stroke);border-radius:var(--radius);padding:16px;margin-top:8px}
-    .card[aria-hidden="false"]{display:block}
-    h1,h2,h3{margin:.4rem 0}
-    ul.clean{list-style:none;margin:0;padding:0}
-    ul.clean li{padding:10px 12px;border:1px solid rgba(255,255,255,.12);border-radius:10px;margin:6px 0;background:rgba(255,255,255,.05)}
-    .warn{background:linear-gradient(180deg,rgba(255,184,108,.18),rgba(255,255,255,.04));border:1px solid rgba(255,184,108,.55);padding:10px 12px;border-radius:10px;margin:10px 0}
-    #back{appearance:none;border:1px solid rgba(164,107,255,.28);background:rgba(60,32,100,.28);color:#eef2ff;font-weight:800;padding:8px 12px;border-radius:10px;cursor:pointer}
+    /* Ensure backgrounds are visible but below content without altering global styles */
+    .bh-bg-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+    .bh-content { position: relative; z-index: 1; }
   </style>
 </head>
-<body data-page="szczegoly">
-  <div class="container">
-    <button id="back" type="button">← Wróć</button>
-    <div class="crumbs" id="crumbs">Boli Help • <span id="who"></span> • <span id="part"></span></div>
-    <div class="hero">
-      <h1 id="title">Szczegóły</h1>
-      <p id="note">Wybierz zakładkę, aby zobaczyć treści.</p>
-      <div class="tabs" id="tabs" role="tablist"></div>
-      <div class="cards" id="cards"></div>
-    </div>
+<body>
+  <!-- Backgrounds restored -->
+  <div class="bh-bg-wrap">
+    <div class="bg-anim"></div>
+    <div class="grid-bg"></div>
+    <canvas id="bh-particles"></canvas>
   </div>
 
-<script>
-(function(){
-  // Back button
-  const back=document.getElementById('back');
-  back.addEventListener('click', ()=>{
-    if (document.referrer && document.referrer.includes(location.host)) history.back();
-    else location.href = 'index.html';
-  });
+  <main class="bh-content">
+    <header class="bh-header">
+      <button id="bh-back" aria-label="Wróć">← Wróć</button>
+      <nav class="bh-crumbs"><span id="bh-crumbs"></span></nav>
+      <h1 id="bh-label">Szczegóły</h1>
+      <div id="bh-steps" class="bh-steps"></div>
+    </header>
 
-  // Read params
-  const U=new URL(location.href);
-  const typ=U.searchParams.get('typ')||'kobieta';
-  const czesc=U.searchParams.get('czesc')||'glowa';
-  const label=U.searchParams.get('label')||czesc;
+    <!-- Tabs -->
+    <div class="bh-tabs">
+      <button data-tab="objawy">Objawy</button>
+      <button data-tab="przyczyny">Przyczyny</button>
+      <button data-tab="pierwsza_pomoc">Pierwsza pomoc</button>
+      <button data-tab="otc">OTC</button>
+      <button data-tab="rx">RX</button>
+      <button data-tab="rehabilitacja">Rehabilitacja</button>
+      <button data-tab="mity">Mity</button>
+      <button data-tab="faq">FAQ</button>
+    </div>
 
-  // UI crumbs
-  document.getElementById('who').textContent = (typ==='kobieta'?'Kobieta':(typ==='mezczyzna'?'Mężczyzna':(typ==='dziecko'?'Dziecko':typ)));
-  document.getElementById('part').textContent = decodeURIComponent(label);
+    <!-- Cards -->
+    <section id="tab-objawy" class="bh-card"><h2>Objawy</h2><div class="bh-card-body" data-field="objawy"></div></section>
+    <section id="tab-przyczyny" class="bh-card"><h2>Przyczyny</h2><div class="bh-card-body" data-field="przyczyny"></div></section>
+    <section id="tab-pierwsza_pomoc" class="bh-card"><h2>Pierwsza pomoc</h2><div class="bh-card-body" data-field="pierwsza_pomoc"></div></section>
+    <section id="tab-otc" class="bh-card"><h2>OTC</h2><div class="bh-card-body" data-field="otc"></div></section>
+    <section id="tab-rx" class="bh-card"><h2>RX</h2><div class="bh-card-body" data-field="rx"></div></section>
+    <section id="tab-rehabilitacja" class="bh-card"><h2>Rehabilitacja</h2><div class="bh-card-body" data-field="rehabilitacja"></div></section>
+    <section id="tab-mity" class="bh-card"><h2>Mity</h2><div class="bh-card-body" data-field="mity"></div></section>
+    <section id="tab-faq" class="bh-card"><h2>FAQ</h2><div class="bh-card-body" data-field="faq"></div></section>
 
-  // Load atlas
-  fetch('assets/atlas.json', {cache:'no-store'}).then(r=>r.json()).then(atlas=>{
-    const part = atlas.parts[czesc];
-    if(!part){
-      document.getElementById('title').textContent = 'Brak danych dla: '+czesc;
-      document.getElementById('note').textContent = 'Uzupełnij w assets/atlas.json';
-      return;
-    }
-    document.getElementById('title').textContent = part.title || decodeURIComponent(label);
+  </main>
 
-    const order = [
-      ['objawy','Objawy'],
-      ['przyczyny','Przyczyny'],
-      ['pierwsza_pomoc','Pierwsza pomoc'],
-      ['leki_otc','Leki bez recepty'],
-      ['leki_rx','Leki na receptę'],
-      ['rehabilitacja','Rehabilitacja'],
-      ['mity','Mity'],
-      ['faq','FAQ']
-    ];
+  <script>
+    (function() {
+      // i18n basics, respecting localStorage['bh.lang']
+      const lang = (localStorage.getItem('bh.lang') || 'pl').toLowerCase().startsWith('en') ? 'en' : 'pl';
+      const T = {
+        back: { pl: "← Wróć", en: "← Back" },
+        missing: { pl: "Brak opisu — wkrótce", en: "No description yet — coming soon" },
+        crumbs: { pl: "Strona główna › {typ} › {czesc}", en: "Home › {typ} › {czesc}" }
+      };
 
-    const tabs = document.getElementById('tabs');
-    const cards = document.getElementById('cards');
+      function t(key){ return (T[key] && T[key][lang]) || key; }
 
-    order.forEach(([key, name], idx)=>{
-      const btn = document.createElement('button');
-      btn.className='tab'; btn.type='button'; btn.setAttribute('role','tab');
-      btn.textContent = name; btn.dataset.key=key;
-      if(idx===0) btn.setAttribute('aria-selected','true');
-      tabs.appendChild(btn);
+      // Back button behavior: same-origin referrer -> history.back(), else -> index.html
+      document.getElementById('bh-back').addEventListener('click', function() {
+        try {
+          const ref = document.referrer;
+          const sameOrigin = ref && new URL(ref).origin === location.origin;
+          if (sameOrigin) history.back();
+          else location.href = 'index.html';
+        } catch(e) {
+          location.href = 'index.html';
+        }
+      });
+      document.getElementById('bh-back').textContent = t('back');
 
-      const card = document.createElement('section');
-      card.className='card'; card.id='card-'+key; card.setAttribute('role','tabpanel');
-      card.setAttribute('aria-hidden', idx===0?'false':'true');
+      // URL params
+      const params = new URLSearchParams(location.search);
+      const typ = params.get('typ') || 'kobieta';
+      const czesc = params.get('czesc') || 'glowa';
+      const label = params.get('label') || (czesc.charAt(0).toUpperCase() + czesc.slice(1));
 
-      const h = document.createElement('h3'); h.textContent = name; card.appendChild(h);
-      const list = document.createElement('ul'); list.className='clean';
-      const arr = Array.isArray(part[key]) ? part[key] : (part[key]? [String(part[key])] : []);
-      if(arr.length===0){ const p=document.createElement('p'); p.className='warn'; p.textContent='Brak treści. Uzupełnij w assets/atlas.json.'; card.appendChild(p); }
-      else{
-        arr.forEach(t=>{ const li=document.createElement('li'); li.textContent=t; list.appendChild(li); });
-        card.appendChild(list);
-      }
-      cards.appendChild(card);
-    });
+      // Breadcrumbs + label
+      const crumbsTxt = t('crumbs')
+        .replace('{typ}', typ)
+        .replace('{czesc}', label);
+      document.getElementById('bh-crumbs').textContent = crumbsTxt;
+      document.getElementById('bh-label').textContent = label;
 
-    // Tabs logic
-    tabs.addEventListener('click', (e)=>{
-      const b=e.target.closest('.tab'); if(!b) return;
-      const key=b.dataset.key;
-      [...tabs.children].forEach(x=>x.setAttribute('aria-selected','false'));
-      b.setAttribute('aria-selected','true');
-      [...cards.children].forEach(c=>c.setAttribute('aria-hidden','true'));
-      document.getElementById('card-'+key).setAttribute('aria-hidden','false');
-    });
-  }).catch(err=>{
-    document.getElementById('title').textContent='Błąd ładowania atlasu';
-    document.getElementById('note').textContent=String(err);
-  });
-})();
-</script>
+      // Load atlas.json (single source of truth)
+      fetch('assets/atlas.json', { cache: 'no-cache' })
+        .then(r => r.json())
+        .then(data => {
+          // Robust mapping with fallbacks
+          let node = null;
+          if (data && data[typ] && data[typ][czesc]) {
+            node = data[typ][czesc];
+          } else if (data && data[typ] && data[typ]['glowa']) {
+            node = data[typ]['glowa'];
+            console.warn('[BoliHelp] Missing part "' + czesc + '" for type "' + typ + '". Falling back to glowa.');
+          } else {
+            node = null;
+          }
+
+          const bodies = document.querySelectorAll('.bh-card-body');
+          bodies.forEach(el => {
+            const field = el.getAttribute('data-field');
+            let txt = null;
+            if (node && node[field]) {
+              txt = node[field][lang] || node[field]['pl'] || t('missing');
+            } else {
+              txt = t('missing');
+            }
+            el.textContent = txt;
+          });
+
+          // Activate tabs (simple show/hide, keeping existing look)
+          const btns = document.querySelectorAll('.bh-tabs [data-tab]');
+          function showTab(key){
+            document.querySelectorAll('section[id^="tab-"]').forEach(s => {
+              s.style.display = (s.id === 'tab-' + key) ? '' : 'none';
+            });
+          }
+          btns.forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+          showTab('objawy'); // default
+
+        })
+        .catch(err => {
+          console.error('[BoliHelp] atlas.json load error', err);
+          const bodies = document.querySelectorAll('.bh-card-body');
+          bodies.forEach(el => el.textContent = t('missing'));
+        });
+    })();
+  </script>
 </body>
 </html>
