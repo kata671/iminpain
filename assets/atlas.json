@@ -1,494 +1,1777 @@
 {
-  "meta": {
-    "version": 1,
-    "lang": "pl"
-  },
-  "parts": {
+  "kobieta": {
     "glowa": {
-      "title": "Głowa",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "nos": {
-      "title": "Nos",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "oko": {
-      "title": "Oko",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
-    },
-    "gardlo": {
-      "title": "Gardło",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "Ból, łzawienie, światłowstręt.",
+        "en": "Pain, tearing, light sensitivity."
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "uszy": {
-      "title": "Uszy",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "gardlo": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "klatka": {
-      "title": "Klatka piersiowa",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "brzuch": {
-      "title": "Brzuch",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "biodra": {
-      "title": "Biodra/Pachwina",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "kolano": {
-      "title": "Kolano",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "udo": {
-      "title": "Udo",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "stopy": {
-      "title": "Stopy",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "serce": {
-      "title": "Serce",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "pluca": {
-      "title": "Płuca",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "watroba": {
-      "title": "Wątroba",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "zoladek": {
-      "title": "Żołądek",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "nerki": {
-      "title": "Nerki",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "skora": {
-      "title": "Skóra",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     },
     "ciaza": {
-      "title": "Ciąża",
-      "objawy": [
-        "TODO — uzupełnij objawy."
-      ],
-      "przyczyny": [
-        "TODO — uzupełnij najczęstsze przyczyny."
-      ],
-      "pierwsza_pomoc": [
-        "TODO — uzupełnij pierwszą pomoc."
-      ],
-      "leki_otc": [
-        "TODO — przykłady OTC."
-      ],
-      "leki_rx": [
-        "TODO — przykłady na receptę."
-      ],
-      "rehabilitacja": [
-        "TODO — ćwiczenia / postępowanie."
-      ],
-      "mity": [
-        "TODO — popularne mity i sprostowania."
-      ],
-      "faq": [
-        "TODO — często zadawane pytania."
-      ]
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
     }
-  }
+  },
+  "mezczyzna": {
+    "glowa": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "nos": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "oko": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "uszy": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "gardlo": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "klatka": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "brzuch": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "biodra": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "kolano": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "udo": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "stopy": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "serce": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "pluca": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "watroba": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "zoladek": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "nerki": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "skora": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    }
+  },
+  "dziecko": {
+    "glowa": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "nos": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "oko": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "uszy": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "gardlo": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "klatka": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "brzuch": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "biodra": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "kolano": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "udo": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "stopy": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "serce": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "pluca": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "watroba": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "zoladek": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "nerki": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    },
+    "skora": {
+      "objawy": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "przyczyny": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "pierwsza_pomoc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "otc": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rx": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "rehabilitacja": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "mity": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      },
+      "faq": {
+        "pl": "(Treść w przygotowaniu)",
+        "en": "(Content coming soon)"
+      }
+    }
+  },
+  "porada": {}
 }
