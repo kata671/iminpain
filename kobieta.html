@@ -23,189 +23,228 @@
       z-index:0;
       background:
         radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
-        radial-gradient(36vw 30vh at 84% 10%, rgba(164,107,255,.30), transparent 70%);
-      opacity:.8;
+        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
+        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+      filter: blur(10px) saturate(118%);
     }
     .bh-grid{
-      z-index:1;
-      background:repeating-linear-gradient(0deg,rgba(255,255,255,.03),rgba(255,255,255,.03) 1px,transparent 1px,transparent 40px),repeating-linear-gradient(90deg,rgba(255,255,255,.03),rgba(255,255,255,.03) 1px,transparent 1px,transparent 40px);
+      z-index:1; opacity:.22;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
+      background-size:160px 138px; background-position:center;
+    }
+    .bh-floor-fade{
+      position:fixed;left:0;right:0;bottom:0;height:120px;z-index:2;pointer-events:none;
+      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));
+    }
+    .container{ position:relative; z-index:3; background:transparent !important; max-width:1100px; margin:0 auto; padding:0 16px }
+
+    .grid-thumbs{display:grid;gap:16px;}
+    @media (min-width:981px){ .grid-thumbs{grid-template-columns:repeat(3,1fr)} }
+    @media (max-width:980px){ .grid-thumbs{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ .grid-thumbs{grid-template-columns:repeat(2,1fr);gap:12px} }
+
+    .thumb{
+      border-radius:16px; overflow:hidden; text-decoration:none; color:inherit; display:block;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(60,32,100,.32);
+      border:1px solid rgba(164,107,255,.28);
+      box-shadow:0 8px 18px rgba(8,10,22,.35), 0 0 0 1px rgba(164,107,255,.18) inset;
+      backdrop-filter:saturate(120%) blur(6px);
+      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .thumb:hover{ transform:translateY(-3px); box-shadow:0 16px 28px rgba(8,10,22,.45), 0 0 18px rgba(164,107,255,.30), 0 0 0 1px rgba(164,107,255,.34) inset; border-color:rgba(164,107,255,.45) }
+    .thumb:focus-visible{ outline:2px solid rgba(164,107,255,.65); outline-offset:2px; border-radius:18px }
+
+    .thumb img{ width:100%; display:block; object-fit:contain; object-position:center; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); height:140px; }
+    @media (min-width:981px){ .thumb img{ height:150px } }
+    @media (max-width:980px){ .thumb img{ height:110px } }
+    @media (max-width:640px){ .thumb img{ height:84px } }
+
+    .thumb span{ display:block; padding:10px 12px; font-weight:800; letter-spacing:.2px; color:#eef2ff; border-top:1px solid rgba(164,107,255,.22); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); text-align:center; }
+    @media (max-width:640px){ .thumb span{ font-size:12.5px; padding:8px 10px } }
+
+    /* ===== PRZYCISK WRÓĆ ===== */
+    #bhBackMini{
+      appearance:none;
+      border:1px solid rgba(164,107,255,.28);
+      background:rgba(60,32,100,.28);
+      color:#eef2ff;
+      font-weight:700;
+      padding:10px 14px;
+      border-radius:12px;
+      cursor:pointer;
+      margin:16px 0;
+      box-shadow:0 6px 16px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.12), 0 0 8px rgba(164,107,255,.45);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    #bhBackMini:hover{
+      transform:translateY(-1px);
+      border-color:rgba(164,107,255,.55);
+      box-shadow:0 10px 20px rgba(8,10,22,.45), 0 0 14px rgba(164,107,255,.65), inset 0 0 0 1px rgba(164,107,255,.18);
+    }
+    #bhBackMini:focus-visible{
+      outline:2px solid rgba(164,107,255,.75);
+      outline-offset:2px;
     }
 
-    /* === Mapa ciała (hotspoty) === */
-    .bh-map{
-      position:relative; max-width:800px; margin:0 auto; padding-top:40px;
+    /* ===== WYGLĄD SELEKTORA JĘZYKA (SPÓJNY) ===== */
+    .langpick{
+      position:fixed;
+      top:10px;
+      right:10px;
+      z-index:3000;
+      display:flex; gap:8px; align-items:center;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.24);
+      border-radius:12px; padding:6px 10px; backdrop-filter:saturate(120%) blur(4px);
+      max-width:100%;
+      white-space:nowrap;
+      contain:layout;
     }
-    .bh-map img{ width:100%; height:auto; display:block; }
+    .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
+    .langpick select{
+      appearance:none;background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.24);
+      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px;
+      max-width:52vw;
+    }
+    .langpick option{ color:#0e1230; background:#ffffff }
 
-    .segment{
-      position:absolute; width:120px; height:60px; border-radius:12px;
-      appearance:none; border:1px solid rgba(255,255,255,.18);
-      background:rgba(60,32,100,.30); color:#fff;
-      font-weight:700; font-size:14px; cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      transition:transform .2s ease, box-shadow .2s ease;
-      box-shadow:0 6px 16px rgba(8,10,22,.35),
-                 inset 0 0 0 1px rgba(164,107,255,.12);
-    }
-    .segment:hover{
-      transform:translateY(-1px) scale(1.03);
-      box-shadow:0 10px 20px rgba(8,10,22,.45),
-                 inset 0 0 0 1px rgba(164,107,255,.20);
-    }
-
-    /* Pozycje dla KOBIETA (dostosuj je do swojej grafiki!) */
-    .bh-map[data-gender="female"] .segment[data-area="head"]{
-      top:10%; left:50%; transform:translateX(-50%); width:100px; height:44px;
-    }
-    .bh-map[data-gender="female"] .segment[data-area="torso"]{
-      top:38%; left:50%; transform:translateX(-50%); width:140px; height:80px;
-    }
-    .bh-map[data-gender="female"] .segment[data-area="legs"]{
-      top:70%; left:50%; transform:translateX(-50%);
-    }
-
-    /* Hotspoty (dodatkowe, odblokowane) */
-    .bh-map[data-gender="female"] .segment[data-area="ears"]{
-      top:18%; left:28%; width:100px; height:40px; background:rgba(94,234,212,.30); border-color:rgba(94,234,212,.18);
-    }
-    .bh-map[data-gender="female"] .segment[data-area="knee"]{
-      top:78%; left:30%; width:100px; height:40px; background:rgba(112,225,177,.30); border-color:rgba(112,225,177,.18);
-    }
-    .bh-map[data-gender="female"] .segment[data-area="pregnancy"]{
-      top:50%; left:65%; width:120px; height:50px; background:rgba(255,110,199,.30); border-color:rgba(255,110,199,.18);
-    }
-
-
-    .container{ max-width:1080px; margin:0 auto; padding:0 16px; position:relative; z-index:10; }
-    .page-header{ padding:20px 0 24px; }
-    .page-header h1{ font-size:32px; font-weight:900; letter-spacing:-1px; margin-bottom:4px; }
-    .page-header p{ color:#b8c2e0; font-size:16px; }
-
-    /* SPÓJNY WYGLĄD TŁUMACZA (PL/EN) - ZGODNY Z INDEX.HTML */
-    #bhLangPick {
-      position: fixed !important;
-      top: 16px !important;
-      right: 24px !important;
-      z-index: 9999 !important;
-      display: inline-flex !important;
-      align-items: center;
-      gap: 6px;
-      background: rgba(60,32,100,.38);
-      border: 1px solid rgba(164,107,255,.28);
-      border-radius: 12px;
-      padding: 6px 10px;
-      backdrop-filter: saturate(120%) blur(6px);
-      box-shadow: 0 4px 12px rgba(8,10,22,.35);
-      transition: .2s ease;
-    }
-    #bhLangPick label { display: none !important; }
-    #bhLangSelect {
-      font-size: 14px;
-      font-weight: 700;
-      color: #fff;
-      background: transparent;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      letter-spacing: .3px;
-    }
-
-    #bhLangSelect option {
-      color: #0e1230;
-      background: #ffffff;
-    }
-
-    /* TELEFON – ciut mniejsze i bliżej rogu */
+    /* Mobile: ten sam wygląd w prawym rogu */
     @media (max-width:768px){
-      #bhLangPick{
-        top: 10px !important;
-        right: 12px !important;
-        padding: 5px 8px;
+      .langpick{
+        position:fixed !important;
+        top:10px !important;
+        right:10px !important;
+        left:auto !important;
+        transform:none !important;
+        margin:0 !important;
+        display:inline-flex !important;
+        align-items:center;
+        gap:6px;
+        padding:5px 8px;
       }
-      #bhLangSelect{ font-size: 13px; }
+      .langpick label{ display:none !important; }
+      .langpick select{ font-size:12px; padding:5px 9px; }
+      body{ padding-top:64px !important; }
     }
+
+    /* Ukryj ewentualne resztki starego GT */
+    .goog-te-banner-frame.skiptranslate{display:none!important}
+    .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
   </style>
 </head>
 <body data-page="kobieta">
+  <div class="bh-wallpaper" aria-hidden="true"></div>
+  <div class="bh-grid" aria-hidden="true"></div>
+  <div class="bh-floor-fade" aria-hidden="true"></div>
 
-  <div class="bh-wallpaper"></div>
-  <div class="bh-grid"></div>
-
-  <div class="container">
-    <header class="page-header">
-      <h1 data-lang-part="tytul">Ciało Kobiety</h1>
-      <p data-lang-part="podtytul">Wybierz część ciała, która sprawia problem. Dane dostosowane dla kobiet.</p>
-    </header>
-
-    <main>
-      <div class="bh-map" data-gender="female">
-        <img src="assets/img/kobieta.svg" alt="Mapa ciała kobiety">
-
-        <button class="segment" data-area="head" data-czesc="glowa">Głowa / Szyja</button>
-        <button class="segment" data-area="torso" data-czesc="klatka">Klatka / Piersi / Brzuch</button>
-        <button class="segment" data-area="legs" data-czesc="nogi">Nogi / Stopy</button>
-        
-        <button class="segment" data-area="ears" data-czesc="uszy">Uszy</button>
-        <button class="segment" data-area="knee" data-czesc="kolano">Kolano</button>
-        <button class="segment" data-area="pregnancy" data-czesc="ciaza">Kobieta & Ciąża</button>
-      </div>
-    </main>
-
-  </div>
-
-  <div id="bhLangPick">
+  <!-- SELEKTOR JĘZYKA -->
+  <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
     <label for="bhLangSelect">Język</label>
     <select id="bhLangSelect">
-      <option value="pl" selected>Polski (PL)</option>
-      <option value="en">English (EN)</option>
+      <option value="pl">PL</option>
+      <option value="en">EN</option>
     </select>
   </div>
 
-  <script src="assets/main.js"></script>
+  <div class="container">
+    <!-- GUZIK WRÓĆ -->
+    <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
+
+    <header class="header"><h1 id="bhPageTitle">Kobieta — wybierz część ciała</h1></header>
+    <section class="grid-thumbs" aria-label="Miniatury — kobieta" id="bhThumbs">
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=oko&label=Oko"><img src="img/kobieta-oko.png" alt="Oko"><span>Oko</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=nos&label=Nos"><img src="img/kobieta-nos.png" alt="Nos"><span>Nos</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=gardlo&label=Gard%C5%82o"><img src="img/kobieta-gardlo.png" alt="Gardło"><span>Gardło</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=glowa&label=G%C5%82owa"><img src="img/kobieta-glowa.png" alt="Głowa"><span>Głowa</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=klatka&label=Klatka%20piersiowa"><img src="img/kobieta-klatka.png" alt="Klatka piersiowa"><span>Klatka</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=brzuch&label=Brzuch"><img src="img/kobieta-brzuch.png" alt="Brzuch"><span>Brzuch</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=plecy&label=Plecy"><img src="img/kobieta-plecy.png" alt="Plecy"><span>Plecy</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=biodra&label=Biodra"><img src="img/kobieta-biodra.png" alt="Biodra"><span>Biodra</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=udo&label=Udo"><img src="img/kobieta-udo.png" alt="Udo"><span>Udo</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=stopy&label=Stopy"><img src="img/kobieta-stopy.png" alt="Stopy"><span>Stopy</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=serce&label=Serce"><img src="img/kobieta-serce.png" alt="Serce"><span>Serce</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=pluca&label=P%C5%82uca"><img src="img/kobieta-pluca.png" alt="Płuca"><span>Płuca</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=watroba&label=W%C4%85troba"><img src="img/kobieta-watroba.png" alt="Wątroba"><span>Wątroba</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=zoladek&label=%C5%BBo%C5%82%C4%85dek"><img src="img/kobieta-zoladek.png" alt="Żołądek"><span>Żołądek</span></a>
+      <a class="thumb" href="szczegoly.html?typ=kobieta&czesc=nerki&label=Nerki"><img src="img/kobieta-nerki.png" alt="Nerki"><span>Nerki</span></a>
+    </section>
+  </div>
 
   <script>
-    const LS_KEY = 'bh.lang';
-    const dict = {
-      pl: { parts: {
-        'tytul': 'Ciało Kobiety',
-        'podtytul': 'Wybierz część ciała, która sprawia problem. Dane dostosowane dla kobiet.',
-        'glowa': 'Głowa / Szyja',
-        'klatka': 'Klatka / Piersi / Brzuch',
-        'nogi': 'Nogi / Stopy',
-        'uszy': 'Uszy',
-        'kolano': 'Kolano',
-        'ciaza': 'Kobieta & Ciąża'
-      }},
-      en: { parts: {
-        'tytul': 'Woman\'s Body',
-        'podtytul': 'Select the body part that is causing the problem. Data tailored for women.',
-        'glowa': 'Head / Neck',
-        'klatka': 'Chest / Breasts / Abdomen',
-        'nogi': 'Legs / Feet',
-        'uszy': 'Ears',
-        'kolano': 'Knee',
-        'ciaza': 'Woman & Pregnancy'
-      }}
-    };
-
+    // Obsługa guzika "Wróć"
     (function(){
-      let lang = localStorage.getItem(LS_KEY) || 'pl';
-      const sel = document.getElementById('bhLangSelect');
-      const lab = sel ? document.querySelector('label[for="'+sel.id+'"]') : null;
+      var btn = document.getElementById('bhBackMini');
+      if(!btn) return;
+      btn.addEventListener('click', function(){
+        if (document.referrer && document.referrer.includes(location.host)) {
+          history.back();
+        } else {
+          location.href = 'index.html';
+        }
+      });
+    })();
+  </script>
+
+  <!-- LEKKI TŁUMACZ PL/EN -->
+  <script>
+    (function(){
+      if(window.__bhKobietaI18n) return; window.__bhKobietaI18n = true;
+
+      var LS_KEY='bh.lang';
+      var root=document.documentElement;
+      var lang=(localStorage.getItem(LS_KEY)||root.getAttribute('lang')||'pl').toLowerCase();
+      var sel=document.getElementById('bhLangSelect');
+      var lab=document.querySelector('#bhLangPick label');
+
+      var dict = {
+        en: {
+          title: 'Woman — choose a body part',
+          back: '← Back',
+          back_aria: 'Go back to previous page',
+          section_aria: 'Thumbnails — woman',
+          parts: {
+            oko:'Eye', nos:'Nose', gardlo:'Throat', glowa:'Head',
+            klatka:'Chest', brzuch:'Abdomen', plecy:'Back', biodra:'Hips/Thighs',
+            udo:'Thigh', stopy:'Feet', serce:'Heart', pluca:'Lungs',
+            watroba:'Liver', zoladek:'Stomach', nerki:'Kidneys'
+          }
+        },
+        pl: {
+          title: 'Kobieta — wybierz część ciała',
+          back: '← Wróć',
+          back_aria: 'Wróć do poprzedniej strony',
+          section_aria: 'Miniatury — kobieta',
+          parts: {
+            oko:'Oko', nos:'Nos', gardlo:'Gardło', glowa:'Głowa',
+            klatka:'Klatka', brzuch:'Brzuch', plecy:'Plecy', biodra:'Biodra',
+            udo:'Udo', stopy:'Stopy', serce:'Serce', pluca:'Płuca',
+            watroba:'Wątroba', zoladek:'Żołądek', nerki:'Nerki'
+          }
+        }
+      };
 
       function apply(){
-        document.documentElement.setAttribute('data-lang', lang);
-        document.querySelectorAll('[data-lang-part]').forEach(el=>{
-          const part = el.getAttribute('data-lang-part');
-          try{ 
-            el.textContent = dict[lang].parts[part];
+        var d = dict[lang] || dict.pl;
+
+        root.setAttribute('lang', lang);
+
+        var h1 = document.getElementById('bhPageTitle'); if(h1){ h1.textContent = d.title; }
+
+        var back = document.getElementById('bhBackMini');
+        if(back){ back.textContent = d.back; back.setAttribute('aria-label', d.back_aria); }
+
+        var grid = document.getElementById('bhThumbs');
+        if(grid){ grid.setAttribute('aria-label', d.section_aria); }
+
+        document.querySelectorAll('.grid-thumbs a.thumb').forEach(function(a){
+          try{
+            var u = new URL(a.getAttribute('href'), location.href);
+            var part = u.searchParams.get('czesc');
+            var span = a.querySelector('span');
+            if(part && d.parts[part] && span){ span.textContent = d.parts[part]; }
           }catch(e){}
-        });
-        document.querySelectorAll('.segment').forEach(btn => {
-          const partKey = btn.getAttribute('data-czesc');
-          if (dict[lang].parts[partKey]) {
-            btn.textContent = dict[lang].parts[partKey];
-          }
         });
 
         if(lab){ lab.textContent = (lang==='en' ? 'Language' : 'Język'); }
@@ -223,16 +262,99 @@
         sel.addEventListener('change', function(){ setLang(sel.value); });
       }
 
-      // === Logika przejścia do szczegółów ===
-      document.querySelectorAll('.segment').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const partKey = btn.getAttribute('data-czesc');
-          window.location.href = `szczegoly.html?czesc=${partKey}`;
-        });
-      });
-      
       apply();
     })();
   </script>
+
+  <!-- USUNIĘTO stary tłumacz -->
+  <!-- <script src="/assets/js/translator-unified.js?v=1" defer></script> -->
+  <script src="assets/translator.js"></script>
+<style>
+  /* SPÓJNY WYGLĄD TŁUMACZA (PL/EN) */
+  #bhLangPick {
+    position: fixed !important;
+    top: 16px !important;
+    right: 24px !important;  /* odsunięcie od krawędzi na laptopie */
+    z-index: 9999 !important;
+
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 12px;
+    padding: 6px 10px;
+
+    backdrop-filter: saturate(120%) blur(6px);
+  }
+
+  /* Ukryj napis "Język", zostaw tylko selektor */
+  #bhLangPick label { display: none !important; }
+
+  #bhLangSelect {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    letter-spacing: .3px;
+  }
+
+  #bhLangSelect option {
+    color: #0e1230;
+    background: #ffffff;
+  }
+
+  /* TELEFON – ciut mniejsze i bliżej rogu */
+  @media (max-width:768px){
+    #bhLangPick{
+      top: 10px !important;
+      right: 12px !important;
+      padding: 5px 8px;
+    }
+    #bhLangSelect{ font-size: 13px; }
+  }
+</style>
+<style>
+  /* Guzik WRÓĆ w lewym górnym rogu */
+  #bhBackMini {
+    position: fixed !important;
+    top: 16px !important;
+    left: 16px !important;
+    margin: 0 !important;
+    z-index: 3000 !important;
+
+    appearance: none;
+    border: 1px solid rgba(164,107,255,.28);
+    background: rgba(60,32,100,.28);
+    color: #eef2ff;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(8,10,22,.35),
+                inset 0 0 0 1px rgba(164,107,255,.12),
+                0 0 8px rgba(164,107,255,.45);
+    transition: transform .18s ease,
+                box-shadow .18s ease,
+                border-color .18s ease;
+  }
+
+  #bhBackMini:hover {
+    transform: translateY(-1px);
+    border-color: rgba(164,107,255,.55);
+    box-shadow: 0 10px 20px rgba(8,10,22,.45),
+                0 0 14px rgba(164,107,255,.65),
+                inset 0 0 0 1px rgba(164,107,255,.18);
+  }
+
+  #bhBackMini:focus-visible {
+    outline: 2px solid rgba(164,107,255,.75);
+    outline-offset: 2px;
+  }
+</style>
 </body>
 </html>
