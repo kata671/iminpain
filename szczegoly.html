@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Szczegóły</title>
   <meta name="theme-color" content="#0e1230" />
-  <style>
+  <link rel="stylesheet" href="assets/style.css?v=10" /> <style>
     :root{
       --bg:#0e1230; --text:#eef2ff; --muted:#b8c2e0;
       --card: rgba(60,32,100,.30); --stroke: rgba(164,107,255,.18);
@@ -28,6 +28,20 @@
     h1,h2,h3,h4,h5,h6{ line-height:1.2; font-weight:900; letter-spacing:-.5px; margin-top:0; }
     .container{
       max-width:1080px; margin:0 auto; padding:0 16px; position:relative; z-index:10;
+    }
+
+    /* TAPETA I SIATKA (PRZYWRÓCONE) */
+    .bh-wallpaper,.bh-grid{position:fixed; inset:0; pointer-events:none}
+    .bh-wallpaper{
+      z-index:0;
+      background:
+        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
+        radial-gradient(36vw 30vh at 84% 10%, rgba(164,107,255,.30), transparent 70%);
+      opacity:.8;
+    }
+    .bh-grid{
+      z-index:1;
+      background:repeating-linear-gradient(0deg,rgba(255,255,255,.03),rgba(255,255,255,.03) 1px,transparent 1px,transparent 40px),repeating-linear-gradient(90deg,rgba(255,255,255,.03),rgba(255,255,255,.03) 1px,transparent 1px,transparent 40px);
     }
 
     /* Guzik WRÓĆ w lewym górnym rogu */
@@ -81,7 +95,7 @@
     }
     .chip:hover{ background:rgba(255,255,255,.08); }
 
-    /* KOLORY KART */
+    /* KOLORY KART (jak w poprzednim pliku) */
     #s-objawy{
       border-color:rgba(94,234,212,.35);
       box-shadow:0 10px 22px rgba(94,234,212,.12), inset 0 0 0 1px rgba(94,234,212,.24);
@@ -136,7 +150,7 @@
     #s-rehabilitacja h2{ color:var(--teal); }
     #s-rehabilitacja .chip{ border-color:rgba(94,234,212,.25); }
 
-    /* TŁUMACZ W PRAWYM GÓRNYM ROGU (GLOBALNY STYL) */
+    /* TŁUMACZ W PRAWYM GÓRNYM ROGU (SPÓJNY STYL) */
     #bhLangPick {
       position: fixed !important;
       top: 16px !important;
@@ -145,11 +159,13 @@
       display: inline-flex !important;
       align-items: center;
       gap: 6px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(60,32,100,.38); /* Zmieniony na spójny z index/kobieta */
+      border: 1px solid rgba(164,107,255,.28); /* Zmieniony na spójny */
       border-radius: 12px;
       padding: 6px 10px;
       backdrop-filter: saturate(120%) blur(6px);
+      box-shadow: 0 4px 12px rgba(8,10,22,.35); /* Zmieniony na spójny */
+      transition: .2s ease;
     }
     #bhLangPick label { display: none !important; }
     #bhLangSelect {
@@ -189,8 +205,8 @@
   </style>
 </head>
 <body>
-
-  <div class="container">
+  
+  <div class="bh-wallpaper"></div> <div class="bh-grid"></div> <div class="container">
 
     <button id="bhBackMini">← Wróć</button>
 
@@ -317,7 +333,6 @@
       const partKey = new URLSearchParams(window.location.search).get('czesc'); 
 
       function getSectionData(sectionKey, langCode) {
-          // ZMIENIONY SŁOWNIK DANYCH DLA RÓŻNYCH KAFLI
           const data = {
               'uszy': { 
                   'pl': {
@@ -327,7 +342,8 @@
                       'przyczynyContent': 'Najczęściej: Zapalenie ucha środkowego lub zewnętrznego, infekcja wirusowa, nadmiar woskowiny.', 
                       'przyczynyChips': '<span class="chip">Zapalenie ucha środkowego</span><span class="chip">Infekcja wirusowa</span>', 
                       'otcContent': 'Krople przeciwbólowe do ucha, leki przeciwzapalne (np. Ibuprofen).',
-                      'otcChips': '<span class="chip">Krople przeciwbólowe do ucha</span><span class="chip">Ibuprofen</span>'
+                      'otcChips': '<span class="chip">Krople przeciwbólowe do ucha</span><span class="chip">Ibuprofen</span>',
+                      'rehabilitacjaContent': 'Dbanie o higienę uszu, ciepłe okłady na ucho.'
                   },
                   'en': {
                       'tytul': 'Earache', 'czesc': 'Ears', 
@@ -336,7 +352,8 @@
                       'przyczynyContent': 'Most common: Middle or outer ear infection, viral infection, excess earwax.', 
                       'przyczynyChips': '<span class="chip">Middle ear infection</span><span class="chip">Viral infection</span>', 
                       'otcContent': 'Pain relieving ear drops, anti-inflammatory drugs (e.g., Ibuprofen).',
-                      'otcChips': '<span class="chip">Pain relieving ear drops</span><span class="chip">Ibuprofen</span>'
+                      'otcChips': '<span class="chip">Pain relieving ear drops</span><span class="chip">Ibuprofen</span>',
+                      'rehabilitacjaContent': 'Ear hygiene, warm compresses on the ear.'
                   }
               },
               'kolano': { 
@@ -381,7 +398,6 @@
                       'rxContent': 'Prescription medications only after consultation with an obstetrician-gynecologist.'
                   }
               },
-              // Wprowadź inne kafelki tutaj...
               'glowa': {'pl': {'tytul': 'Ból głowy', 'czesc': 'Głowa', 'objawyContent': 'Pulsujący ból, wrażliwość na światło i dźwięk.', 'objawyChips': '<span class="chip">Pulsujący ból</span><span class="chip">Światłowstręt</span>', 'przyczynyChips': '<span class="chip">Migrena</span><span class="chip">Ból napięciowy</span>', 'otcChips': '<span class="chip">Paracetamol</span><span class="chip">Ibuprofen</span>'}, 'en': {'tytul': 'Headache', 'czesc': 'Head', 'objawyContent': 'Pulsating pain, sensitivity to light and sound.', 'objawyChips': '<span class="chip">Pulsating pain</span><span class="chip">Photophobia</span>', 'przyczynyChips': '<span class="chip">Migraine</span><span class="chip">Tension headache</span>', 'otcChips': '<span class="chip">Paracetamol</span><span class="chip">Ibuprofen</span>'}},
               'szyja': {'pl': {'tytul': 'Ból szyi', 'czesc': 'Szyja', 'objawyContent': 'Ograniczona ruchomość, sztywność, ból promieniujący do barku.', 'objawyChips': '<span class="chip">Sztywność</span><span class="chip">Ograniczenie ruchu</span>', 'przyczynyChips': '<span class="chip">Zwyrodnienia kręgosłupa</span><span class="chip">Przeciążenie mięśni</span>', 'rehabilitacjaChips': '<span class="chip">Kinezyterapia</span><span class="chip">Ciepłe okłady</span>'}, 'en': {'tytul': 'Neck Pain', 'czesc': 'Neck', 'objawyContent': 'Limited mobility, stiffness, pain radiating to the shoulder.', 'objawyChips': '<span class="chip">Stiffness</span><span class="chip">Limited movement</span>', 'przyczynyChips': '<span class="chip">Spinal degeneration</span><span class="chip">Muscle strain</span>', 'rehabilitacjaChips': '<span class="chip">Kinesiotherapy</span><span class="chip">Warm compresses</span>'}},
               'klatka': {'pl': {'tytul': 'Ból klatki piersiowej', 'czesc': 'Klatka Piersiowa', 'objawyContent': 'Ucisk w klatce piersiowej, duszności, ból za mostkiem.', 'objawyChips': '<span class="chip">Ucisk</span><span class="chip">Duszności</span>', 'przyczynyChips': '<span class="chip">Zawał serca</span><span class="chip">Nerwoból</span>', 'pierwszapomocContent': 'Natychmiast wezwij pogotowie (112/999). Ułóż w pozycji półsiedzącej.', 'pierwszapomocChips': '<span class="chip">Wezwij pogotowie!</span>'}, 'en': {'tytul': 'Chest Pain', 'czesc': 'Chest', 'objawyContent': 'Chest pressure, shortness of breath, retrosternal pain.', 'objawyChips': '<span class="chip">Pressure</span><span class="chip">Shortness of breath</span>', 'przyczynyChips': '<span class="chip">Heart attack</span><span class="chip">Neuralgia</span>', 'pierwszapomocContent': 'Call emergency services immediately (112/999). Place in a semi-sitting position.', 'pierwszapomocChips': '<span class="chip">Call emergency!</span>'}},
@@ -391,10 +407,8 @@
               'miednica': {'pl': {'tytul': 'Ból miednicy', 'czesc': 'Miednica', 'objawyContent': 'Przewlekły ból podbrzusza, ból podczas stosunku (dyspareunia).', 'objawyChips': '<span class="chip">Ból podbrzusza</span><span class="chip">Dyspareunia</span>', 'przyczynyChips': '<span class="chip">Endometrioza</span><span class="chip">Zapalenie miednicy</span>', 'rxChips': '<span class="chip">Hormony</span><span class="chip">Antybiotyki</span>'}, 'en': {'tytul': 'Pelvic Pain', 'czesc': 'Pelvis', 'objawyContent': 'Chronic lower abdominal pain, pain during intercourse (dyspareunia).', 'objawyChips': '<span class="chip">Lower abdominal pain</span><span class="chip">Dyspareunia</span>', 'przyczynyChips': '<span class="chip">Endometriosis</span><span class="chip">Pelvic inflammation</span>', 'rxChips': '<span class="chip">Hormones</span><span class="chip">Antibiotics</span>'}},
               'rece': {'pl': {'tytul': 'Ból ręki', 'czesc': 'Ręce', 'objawyContent': 'Drętwienie, mrowienie palców, osłabienie chwytu (kciuk).', 'objawyChips': '<span class="chip">Drętwienie palców</span><span class="chip">Osłabienie chwytu</span>', 'przyczynyChips': '<span class="chip">Zespół cieśni nadgarstka</span><span class="chip">Urazy</span>', 'rehabilitacjaChips': '<span class="chip">Szynowanie</span><span class="chip">Ćwiczenia</span>'}, 'en': {'tytul': 'Hand/Arm Pain', 'czesc': 'Arms/Hands', 'objawyContent': 'Numbness, tingling fingers, weak grip (thumb).', 'objawyChips': '<span class="chip">Finger numbness</span><span class="chip">Weak grip</span>', 'przyczynyChips': '<span class="chip">Carpal tunnel syndrome</span><span class="chip">Injuries</span>', 'rehabilitacjaChips': '<span class="chip">Splinting</span><span class="chip">Exercises</span>'}},
               'nogi': {'pl': {'tytul': 'Ból nogi', 'czesc': 'Nogi', 'objawyContent': 'Obrzęk jednej nogi, ból w łydce, zaczerwienienie skóry, ciepło.', 'objawyChips': '<span class="chip">Obrzęk</span><span class="chip">Ból łydki</span>', 'przyczynyChips': '<span class="chip">Zakrzepica żył głębokich</span><span class="chip">Żylaki</span>', 'pierwszapomocContent': 'W przypadku podejrzenia zakrzepicy, bezwzględny zakaz masowania! Ułóż się i nie ruszaj.', 'pierwszapomocChips': '<span class="chip">Nie masować</span>'}, 'en': {'tytul': 'Leg Pain', 'czesc': 'Legs', 'objawyContent': 'Swelling of one leg, calf pain, skin redness, warmth.', 'objawyChips': '<span class="chip">Swelling</span><span class="chip">Calf pain</span>', 'przyczynyChips': '<span class="chip">Deep vein thrombosis</span><span class="chip">Varicose veins</span>', 'pierwszapomocContent': 'If deep vein thrombosis is suspected, absolutely no massaging! Lie down and do not move.', 'pierwszapomocChips': '<span class="chip">Do not massage</span>'}},
-              // ... wszystkie kafelki zostały wstawione
           };
 
-          // Uzupełnij brakujące dane domyślnymi
           const defaultData = dict[langCode].parts;
           const sectionData = data[sectionKey] ? data[sectionKey][langCode] : {};
           return { ...defaultData, ...sectionData };
@@ -403,16 +417,13 @@
       function apply(){
         document.documentElement.setAttribute('data-lang', lang);
         
-        // Wczytaj dane specyficzne dla sekcji
         const data = getSectionData(partKey, lang);
 
-        // Ustaw domyślne stałe teksty i teksty sekcji
         document.querySelectorAll('[data-lang-part]').forEach(el=>{
           const part = el.getAttribute('data-lang-part');
           try{ 
             const content = data[part] || dict[lang].parts[part];
             if(content !== undefined){
-              // Jeśli to treść HTML (np. chipsy), użyj innerHTML, w przeciwnym razie textContent
               if(part.endsWith('Chips')){
                 el.innerHTML = content;
               } else {
@@ -438,7 +449,6 @@
         sel.addEventListener('change', function(){ setLang(sel.value); });
       }
       
-      // Powrót
       if(back){ back.onclick = ()=>window.history.back(); }
 
       apply();
