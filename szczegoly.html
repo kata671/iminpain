@@ -4321,6 +4321,95 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Możesz doprecyzować ID karty RX i podam wersję na twardo.
   }
 })();
-</script>
+// --- KLUCZOWA LOGIKA ŁADOWANIA TREŚCI DLA DANEJ CZĘŚCI CIAŁA ---
+
+    function getQueryParam(name) {
+      name = name.replace(/[\[\]]/g, '\\$&');
+      const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+      const results = regex.exec(location.href);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    // 1. Pobierz klucz części ciała z URL (np. 'gardlo' z ?area=gardlo)
+    const areaKey = getQueryParam('area'); 
+    
+    // 2. Wybierz dane. Jeśli klucz jest niepoprawny lub nieznany, użyj 'glowa' jako fallback.
+    const currentAreaKey = areaKey && CONTENT_PL[areaKey] ? areaKey : 'glowa';
+    const currentContent = CONTENT_PL[currentAreaKey];
+    
+    // Funkcja do dynamicznego tworzenia elementów listy <li>
+    function createListItem(text, isCheckbox = false) {
+      const li = document.createElement('li');
+      li.innerHTML = text;
+
+      if (isCheckbox) {
+        const cb = document.createElement('span');
+        cb.className = 'cb';
+        cb.setAttribute('aria-hidden', 'true');
+        li.prepend(cb);
+      }
+      return li;
+    }
+
+    // Funkcja do wypełniania listy na podstawie danych z obiektu
+    function populateList(selectorId, dataArray, isCheckboxList = false) {
+      const ul = document.getElementById(selectorId);
+      if (!ul || !dataArray) return;
+      ul.innerHTML = ''; // Wyczyść istniejącą zawartość
+      
+      dataArray.forEach(item => {
+        // Obsługa różnych formatów w danych (string, {t:}, {m:}, {q:})
+        let text = '';
+        
+        if (typeof item === 'string') {
+          text = item;
+        } else if (item.t) {
+          text = item.t;
+        } else if (item.m && item.f) { // Mity
+          text = `<strong>Mit:</strong> ${item.m} <br> <strong>Fakt:</strong> ${item.f}`;
+        } else if (item.q && item.a) { // FAQ
+          text = `<strong>${item.q}</strong> <br> ${item.a}`;
+        }
+
+        if (text) {
+          ul.appendChild(createListItem(text, isCheckboxList));
+        }
+      });
+    }
+
+    // 3. Wypełnij dynamiczne elementy po załadowaniu DOM:
+    document.addEventListener('DOMContentLoaded', () => {
+        if (!currentContent) return; 
+
+        // Aktualizacja nagłówków (label i crumbs)
+        document.getElementById('crumb-typ').textContent = currentContent.label.split(' / ')[0];
+        document.getElementById('label-text').innerHTML = `<b>${currentContent.label}</b>`;
+
+        // Wypełnianie wszystkich sekcji:
+        populateList('symp-common', currentContent.symptoms, true);
+        
+        // Czerwone flagi - filtruj ogólne flagi z BASE, bo są już w strip--warn
+        // UWAGA: Musisz mieć obiekt BASE zdefiniowany W TWOIM KODZIE JS
+        const urgentItems = currentContent.urgent.filter(t => !BASE.pl.urgentCommon.includes(t));
+        populateList('urgent', urgentItems, true); 
+
+        populateList('causes', currentContent.causes);
+        populateList('firstaid', currentContent.firstaid);
+        populateList('meds-otc', currentContent.otc);
+        populateList('meds-rx', currentContent.rx);
+        populateList('rehab', currentContent.rehab);
+        populateList('myths', currentContent.myths);
+        populateList('faq', currentContent.faq);
+        
+        // Domyślne dla Chorób/Lekarzy
+        document.getElementById('dx-list').innerHTML = `<li>Brak sugerowanych diagnoz dla ${currentContent.label} (moduł beta)</li>`;
+        document.getElementById('docs-list').innerHTML = `<li>Zalecany lekarz POZ lub specjalista: ${currentContent.label}</li>`;
+
+        // Ustawienie kursora ryzyka na 0% (domyślny niski poziom)
+        document.getElementById('risk-cursor-card').style.left = '0%';
+        document.getElementById('risk-label').textContent = 'niskie';
+    });</script>
 </body>
 </html>
