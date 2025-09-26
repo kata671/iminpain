@@ -19,20 +19,19 @@
   });
 })();
 
-/* ====== Twój kod: Hotspoty w kartach (zostawiamy 1:1) ====== */
+/* ====== Twój kod: Hotspoty w kartach (POPRAWIONA NAWIGACJA JEDYNIE) ====== */
 (function(){
   document.querySelectorAll('.segment').forEach(btn => {
     btn.addEventListener('click', () => {
-      const gender = btn.parentElement.dataset.gender;     // 'female' | 'male'
-      const area   = btn.dataset.area;                     // 'head' | 'torso' | 'legs'
+      // Pobierz typ strony z <body> (np. 'kobieta')
+      const pageType = document.body.dataset.page || 'kobieta';
+      // Pobierz część ciała z data-area (np. 'glowa')
+      const bodyPart = btn.dataset.area;                      
 
-      const map = {
-        female: { head:'female-head.html', torso:'female-torso.html', legs:'female-legs.html' },
-        male:   { head:'male-head.html',   torso:'male-torso.html',   legs:'male-legs.html' }
-      };
-
-      const target = map[gender]?.[area];
-      if (target) window.location.href = target;
+      // Warunek: Jeśli mamy część ciała, utwórz PRAWIDŁOWY URL i przekieruj
+      if (bodyPart) {
+        window.location.href = `szczegoly.html?typ=${pageType}&czesc=${bodyPart}`;
+      }
     });
   });
 })();
