@@ -1,11 +1,23 @@
-Boli Help — FIX: szczegoly.html + atlas.json
+Boli Help — DELTA PATCH (bez nadpisywania kafelków)
 Data: 2025-09-26
 
-Zmiany (diff-minimal):
-1) szczegoly.html: przywrócono warstwy tła (.bg-anim, .grid-bg, #bh-particles) pod treści (z-index).
-2) szczegoly.html: naprawiono mapowanie danych: teraz szuka data[typ][czesc]; fallback: data[typ].glowa, a gdy brak — komunikat.
-3) szczegoly.html: „← Wróć” — jeśli referrer z tej samej domeny → history.back(), inaczej → index.html.
-4) szczegoly.html: karty (objawy/przyczyny/…) renderowane z atlas.json; gdy brak treści — placeholder (PL/EN) z poszanowaniem localStorage['bh.lang'].
-5) assets/atlas.json: jeden spójny plik źródłowy; komplet części (wspólne + „ciaza” dla kobiety); pełen zestaw kart z placeholderami.
-6) kobieta.html / mezczyzna.html / dziecko.html: dodano brakujące kafelki („Uszy”, „Kolano”, „Ciąża” tylko dla kobiety) z prawidłowymi href.
-7) Brak zmian w index.html, stylach i istniejącym translatorze. Brak wywołań nieistniejących ścieżek (konsola czysta).
+ZAWARTOŚĆ:
+- szczegoly.html — naprawione mapowanie + tła + „← Wróć” (jak w pełnym fixie).
+- assets/atlas.json — kompletny atlas z placeholderami (jeden backend treści).
+- patches/kobieta-tiles.htmlfrag — FRAGMENT do wklejenia (Uszy, Kolano, Ciąża).
+- patches/mezczyzna-tiles.htmlfrag — FRAGMENT do wklejenia (Uszy, Kolano).
+- patches/dziecko-tiles.htmlfrag — FRAGMENT do wklejenia (Uszy, Kolano).
+
+INSTRUKCJA (SAFE):
+1) Podmień TYLKO: `szczegoly.html` oraz `assets/atlas.json`.
+2) Otwórz po kolei: `kobieta.html`, `mezczyzna.html`, `dziecko.html` i znajdź kontener siatki (np. `<div class="bh-tiles">…`).
+   W dowolnym miejscu wewnątrz tej siatki wklej odpowiedni FRAGMENT z folderu patches (zachowaj istniejące kafelki).
+3) Zapisz i sprawdź linki do:
+   - kobieta: uszy, kolano, ciąża
+   - mężczyzna: uszy, kolano
+   - dziecko: uszy, kolano
+4) Testy akceptacyjne URL-i dla `szczegoly.html` powinny przejść (brak wymuszonego „glowa”).
+
+Dlaczego delta:
+- Nie nadpisujemy Twoich stron kafelków, tylko dopinamy brakujące kafelki.
+- Zostawiamy Twoje style/layout bez ingerencji.

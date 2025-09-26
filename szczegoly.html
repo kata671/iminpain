@@ -6,13 +6,11 @@
   <title>Boli Help — Szczegóły</title>
   <link rel="stylesheet" href="assets/style.css">
   <style>
-    /* Ensure backgrounds are visible but below content without altering global styles */
     .bh-bg-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
     .bh-content { position: relative; z-index: 1; }
   </style>
 </head>
 <body>
-  <!-- Backgrounds restored -->
   <div class="bh-bg-wrap">
     <div class="bg-anim"></div>
     <div class="grid-bg"></div>
@@ -27,7 +25,6 @@
       <div id="bh-steps" class="bh-steps"></div>
     </header>
 
-    <!-- Tabs -->
     <div class="bh-tabs">
       <button data-tab="objawy">Objawy</button>
       <button data-tab="przyczyny">Przyczyny</button>
@@ -39,7 +36,6 @@
       <button data-tab="faq">FAQ</button>
     </div>
 
-    <!-- Cards -->
     <section id="tab-objawy" class="bh-card"><h2>Objawy</h2><div class="bh-card-body" data-field="objawy"></div></section>
     <section id="tab-przyczyny" class="bh-card"><h2>Przyczyny</h2><div class="bh-card-body" data-field="przyczyny"></div></section>
     <section id="tab-pierwsza_pomoc" class="bh-card"><h2>Pierwsza pomoc</h2><div class="bh-card-body" data-field="pierwsza_pomoc"></div></section>
@@ -48,75 +44,52 @@
     <section id="tab-rehabilitacja" class="bh-card"><h2>Rehabilitacja</h2><div class="bh-card-body" data-field="rehabilitacja"></div></section>
     <section id="tab-mity" class="bh-card"><h2>Mity</h2><div class="bh-card-body" data-field="mity"></div></section>
     <section id="tab-faq" class="bh-card"><h2>FAQ</h2><div class="bh-card-body" data-field="faq"></div></section>
-
   </main>
 
   <script>
     (function() {
-      // i18n basics, respecting localStorage['bh.lang']
       const lang = (localStorage.getItem('bh.lang') || 'pl').toLowerCase().startsWith('en') ? 'en' : 'pl';
       const T = {
         back: { pl: "← Wróć", en: "← Back" },
         missing: { pl: "Brak opisu — wkrótce", en: "No description yet — coming soon" },
         crumbs: { pl: "Strona główna › {typ} › {czesc}", en: "Home › {typ} › {czesc}" }
       };
-
       function t(key){ return (T[key] && T[key][lang]) || key; }
 
-      // Back button behavior: same-origin referrer -> history.back(), else -> index.html
       document.getElementById('bh-back').addEventListener('click', function() {
         try {
           const ref = document.referrer;
           const sameOrigin = ref && new URL(ref).origin === location.origin;
-          if (sameOrigin) history.back();
-          else location.href = 'index.html';
-        } catch(e) {
-          location.href = 'index.html';
-        }
+          if (sameOrigin) history.back(); else location.href = 'index.html';
+        } catch(e) { location.href = 'index.html'; }
       });
       document.getElementById('bh-back').textContent = t('back');
 
-      // URL params
       const params = new URLSearchParams(location.search);
       const typ = params.get('typ') || 'kobieta';
       const czesc = params.get('czesc') || 'glowa';
       const label = params.get('label') || (czesc.charAt(0).toUpperCase() + czesc.slice(1));
 
-      // Breadcrumbs + label
-      const crumbsTxt = t('crumbs')
-        .replace('{typ}', typ)
-        .replace('{czesc}', label);
+      const crumbsTxt = t('crumbs').replace('{typ}', typ).replace('{czesc}', label);
       document.getElementById('bh-crumbs').textContent = crumbsTxt;
       document.getElementById('bh-label').textContent = label;
 
-      // Load atlas.json (single source of truth)
       fetch('assets/atlas.json', { cache: 'no-cache' })
         .then(r => r.json())
         .then(data => {
-          // Robust mapping with fallbacks
           let node = null;
-          if (data && data[typ] && data[typ][czesc]) {
-            node = data[typ][czesc];
-          } else if (data && data[typ] && data[typ]['glowa']) {
+          if (data && data[typ] && data[typ][czesc]) node = data[typ][czesc];
+          else if (data && data[typ] && data[typ]['glowa']) {
             node = data[typ]['glowa'];
-            console.warn('[BoliHelp] Missing part "' + czesc + '" for type "' + typ + '". Falling back to glowa.');
-          } else {
-            node = null;
+            console.warn('[BoliHelp] Missing part "' + czesc + '" for "' + typ + '", fallback to glowa.');
           }
 
-          const bodies = document.querySelectorAll('.bh-card-body');
-          bodies.forEach(el => {
+          document.querySelectorAll('.bh-card-body').forEach(el => {
             const field = el.getAttribute('data-field');
-            let txt = null;
-            if (node && node[field]) {
-              txt = node[field][lang] || node[field]['pl'] || t('missing');
-            } else {
-              txt = t('missing');
-            }
-            el.textContent = txt;
+            const txt = node && node[field] ? (node[field][lang] || node[field]['pl']) : t('missing');
+            el.textContent = txt || t('missing');
           });
 
-          // Activate tabs (simple show/hide, keeping existing look)
           const btns = document.querySelectorAll('.bh-tabs [data-tab]');
           function showTab(key){
             document.querySelectorAll('section[id^="tab-"]').forEach(s => {
@@ -124,13 +97,10 @@
             });
           }
           btns.forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
-          showTab('objawy'); // default
-
+          showTab('objawy');
         })
-        .catch(err => {
-          console.error('[BoliHelp] atlas.json load error', err);
-          const bodies = document.querySelectorAll('.bh-card-body');
-          bodies.forEach(el => el.textContent = t('missing'));
+        .catch(() => {
+          document.querySelectorAll('.bh-card-body').forEach(el => el.textContent = t('missing'));
         });
     })();
   </script>
