@@ -1,1 +1,14 @@
-(function(){try{if(!window.BH?.features?.bodymap)return;/* simplified stub - real file was longer */}catch(e){}})();
+(function(){
+  try{
+    if(!(window.BH&&BH.features&&BH.features.bodymap)) return;
+    const REG={glowa:[42,4,16,16],oczy:[45,9,10,6],oko:[45,9,10,6],uszy:[39,10,6,6],nos:[48,11,4,5],gardlo:[46,18,8,6],szyja:[46,22,8,6],barki:[30,28,40,10],ramie:[20,32,18,42],dlon:[14,66,16,18],klatka:[36,30,28,24],plecy:[34,30,32,28],brzuch:[36,54,28,22],biodra:[34,74,32,12],udo:[36,86,28,20],kolano:[38,106,26,10],lydka:[38,116,26,12],kostka:[40,128,20,6],stopy:[38,134,26,6],serce:[46,38,8,8],pluca:[39,34,22,16],watroba:[40,52,12,8],nerki:[40,54,20,8],ciaza:[39,62,22,18]};
+    const url=new URL(location.href);const czesc=(url.searchParams.get('czesc')||'').toLowerCase();
+    const wrap=document.createElement('div');wrap.className='bh-bodymap';const c=document.createElement('canvas');c.width=100;c.height=140;wrap.appendChild(c);document.body.appendChild(wrap);
+    const ctx=c.getContext('2d'),W=c.width,H=c.height;
+    function drawBase(){ctx.clearRect(0,0,W,H);ctx.fillStyle='rgba(255,255,255,0.06)';ctx.beginPath();ctx.moveTo(50,8);ctx.quadraticCurveTo(55,16,60,26);ctx.lineTo(60,76);ctx.quadraticCurveTo(60,86,52,90);ctx.lineTo(48,90);ctx.quadraticCurveTo(40,86,40,76);ctx.lineTo(40,26);ctx.quadraticCurveTo(45,16,50,8);ctx.closePath();ctx.fill();ctx.beginPath();ctx.ellipse(50,12,8,8,0,0,Math.PI*2);ctx.fill();ctx.fillRect(26,34,8,40);ctx.fillRect(66,34,8,40);ctx.fillRect(40,90,8,18);ctx.fillRect(52,90,8,18);}
+    function highlight(r,a){const[x,y,w,h]=r;const grad=ctx.createRadialGradient(x+w/2,y+h/2,2,x+w/2,y+h/2,Math.max(w,h));grad.addColorStop(0,a?'rgba(113,209,255,0.95)':'rgba(113,209,255,0.65)');grad.addColorStop(1,'rgba(113,209,255,0.0)');ctx.fillStyle=grad;ctx.beginPath();ctx.rect(x,y,w,h);ctx.fill();ctx.strokeStyle='rgba(113,209,255,0.8)';ctx.lineWidth=a?2:1;ctx.strokeRect(x+.5,y+.5,w-1,h-1);}
+    drawBase(); if(REG[czesc]) highlight(REG[czesc],true);
+    c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();const mx=(e.clientX-r.left)*(c.width/r.width);const my=(e.clientY-r.top)*(c.height/r.height);drawBase();if(REG[czesc]) highlight(REG[czesc],true);for(const [k,rect] of Object.entries(REG)){const[x,y,w,h]=rect;if(mx>=x&&mx<=x+w&&my>=y&&my<=y+h){highlight(rect,false);}}});
+    c.addEventListener('click',e=>{const r=c.getBoundingClientRect();const mx=(e.clientX-r.left)*(c.width/r.width);const my=(e.clientY-r.top)*(c.height/r.height);for(const [k,rect] of Object.entries(REG)){const[x,y,w,h]=rect;if(mx>=x&&mx<=x+w&&my>=y&&my<=y+h){const u=new URL(location.href);if(u.pathname.toLowerCase().includes('szczegoly')){u.searchParams.set('czesc',k);u.searchParams.set('label',k.charAt(0).toUpperCase()+k.slice(1));location.href=u.toString();}break;}}});
+  }catch(e){console.warn('BH bodymap error',e)}
+})();
