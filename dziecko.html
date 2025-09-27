@@ -1,361 +1,245 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Boli Help — Dziecko</title>
-  <meta name="theme-color" content="#0e1230" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="assets/style.css?v=11" />   <style>
-    html,body{height:100%}
-    body[data-page="dziecko"]{
-      position:relative; background:#0e1230 !important; color:#eef2ff;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    }
-    body[data-page="dziecko"]::before,
-    body[data-page="dziecko"]::after,
-    body[data-page="dziecko"] .container::before,
-    body[data-page="dziecko"] .container::after{ content:none !important; display:none !important; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Boli Help — Dziecko</title>
+  <meta name="theme-color" content="#0e1230" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="assets/style.css?v=10" />
+  <style>
+    html,body{height:100%}
+    body[data-page="dziecko"]{
+      position:relative; background:#0e1230 !important; color:#eef2ff;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    body[data-page="dziecko"]::before,
+    body[data-page="dziecko"]::after,
+    body[data-page="dziecko"] .container::before,
+    body[data-page="dziecko"] .container::after{ content:none !important; display:none !important; }
 
-    .bh-wallpaper,.bh-grid{position:fixed; inset:0; pointer-events:none}
-    .bh-wallpaper{
-      z-index:0;
-      background:
-        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
-        radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
-        radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-      filter: blur(10px) saturate(118%);
-    }
-    .bh-grid{
-      z-index:1; opacity:.22;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
-      background-size:160px 138px; background-position:center;
-    }
-    .bh-floor-fade{
-      position:fixed;left:0;right:0;bottom:0;height:120px;z-index:2;pointer-events:none;
-      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));
-    }
-    .container{ position:relative; z-index:3; background:transparent !important; max-width:1100px; margin:0 auto; padding:0 16px }
+    .bh-wallpaper,.bh-grid{position:fixed; inset:0; pointer-events:none}
+    .bh-wallpaper{
+      z-index:0; background:
+      radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
+      radial-gradient(36vw 30vh at 84% 10%, rgba(94,234,212,.22), transparent 60%),
+      radial-gradient(40vw 44vh at 20% 88%, rgba(164,107,255,.16), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+      filter: blur(10px) saturate(118%);
+    }
+    .bh-grid{
+      z-index:1; opacity:.22;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'%3E%3Cg fill='none' stroke='rgba(173,216,255,0.26)' stroke-width='1'%3E%3Cpolygon points='30,0 90,0 120,52 90,104 30,104 0,52'/%3E%3C/g%3E%3C/svg%3E");
+      background-size:160px 138px; background-position:center;
+    }
+    .bh-floor-fade{
+      position:fixed; left:0; right:0; bottom:0; height:120px; z-index:2; pointer-events:none;
+      background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6));
+    }
 
-    .grid-thumbs{display:grid;gap:16px;}
-    @media (min-width:981px){ .grid-thumbs{grid-template-columns:repeat(3,1fr)} }
-    @media (max-width:980px){ .grid-thumbs{grid-template-columns:repeat(2,1fr)} }
-    @media (max-width:640px){ .grid-thumbs{grid-template-columns:repeat(2,1fr);gap:12px} }
+    .container{ position:relative; z-index:3; background:transparent !important; max-width:1100px; margin:0 auto; padding:0 16px }
 
-    .thumb{
-      border-radius:16px; overflow:hidden; text-decoration:none; color:inherit; display:block;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(60,32,100,.32);
-      border:1px solid rgba(164,107,255,.28);
-      box-shadow:0 8px 18px rgba(8,10,22,.35), 0 0 0 1px rgba(164,107,255,.18) inset;
-      backdrop-filter:saturate(120%) blur(6px);
-      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-    }
-    .thumb:hover{ transform:translateY(-3px); box-shadow:0 16px 28px rgba(8,10,22,.45), 0 0 18px rgba(164,107,255,.30), 0 0 0 1px rgba(164,107,255,.34) inset; border-color:rgba(164,107,255,.45) }
-    .thumb:focus-visible{ outline:2px solid rgba(164,107,255,.65); outline-offset:2px; border-radius:18px }
+    .grid-thumbs{display:grid;gap:16px;}
+    @media (min-width:981px){ .grid-thumbs{grid-template-columns:repeat(3,1fr)} }
+    @media (max-width:980px){ .grid-thumbs{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ .grid-thumbs{grid-template-columns:repeat(2,1fr);gap:12px} }
 
-    .thumb img{ width:100%; display:block; object-fit:contain; object-position:center; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); height:140px; }
-    @media (min-width:981px){ .thumb img{ height:150px } }
-    @media (max-width:980px){ .thumb img{ height:110px } }
-    @media (max-width:640px){ .thumb img{ height:84px } }
+    .thumb{
+      border-radius:16px; overflow:hidden; text-decoration:none; color:inherit; display:block;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(60,32,100,.32);
+      border:1px solid rgba(164,107,255,.28);
+      box-shadow:0 8px 18px rgba(8,10,22,.35), 0 0 0 1px rgba(164,107,255,.18) inset;
+      backdrop-filter:saturate(120%) blur(6px);
+      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .thumb:hover{ transform:translateY(-3px); box-shadow:0 16px 28px rgba(8,10,22,.45), 0 0 18px rgba(164,107,255,.30), 0 0 0 1px rgba(164,107,255,.34) inset; border-color:rgba(164,107,255,.45) }
+    .thumb:focus-visible{ outline:2px solid rgba(164,107,255,.65); outline-offset:2px; border-radius:18px }
 
-    .thumb span{ display:block; padding:10px 12px; font-weight:800; letter-spacing:.2px; color:#eef2ff; border-top:1px solid rgba(164,107,255,.22); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); text-align:center; }
-    @media (max-width:640px){ .thumb span{ font-size:12.5px; padding:8px 10px } }
+    .thumb img{ width:100%; display:block; object-fit:contain; object-position:center; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); height:140px; }
+    @media (min-width:981px){ .thumb img{ height:150px } }
+    @media (max-width:980px){ .thumb img{ height:110px } }
+    @media (max-width:640px){ .thumb img{ height:84px } }
 
-    /* ===== PRZYCISK WRÓĆ ===== */
-    #bhBackMini{
-      appearance:none;
-      border:1px solid rgba(164,107,255,.28);
-      background:rgba(60,32,100,.28);
-      color:#eef2ff;
-      font-weight:700;
-      padding:10px 14px;
-      border-radius:12px;
-      cursor:pointer;
-      margin:16px 0;
-      box-shadow:0 6px 16px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.12), 0 0 8px rgba(164,107,255,.45);
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-    }
-    #bhBackMini:hover{
-      transform:translateY(-1px);
-      border-color:rgba(164,107,255,.55);
-      box-shadow:0 10px 20px rgba(8,10,22,.45), 0 0 14px rgba(164,107,255,.65), inset 0 0 0 1px rgba(164,107,255,.18);
-    }
-    #bhBackMini:focus-visible{
-      outline:2px solid rgba(164,107,255,.75);
-      outline-offset:2px;
-    }
+    .thumb span{ display:block; padding:10px 12px; font-weight:800; letter-spacing:.2px; color:#eef2ff; border-top:1px solid rgba(164,107,255,.22); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); text-align:center; }
+    @media (max-width:640px){ .thumb span{ font-size:12.5px; padding:8px 10px } }
 
-    /* ===== WYGLĄD SELEKTORA JĘZYKA (SPÓJNY) ===== */
-    .langpick{
-      position:fixed;
-      top:10px;
-      right:10px;
-      z-index:3000;
-      display:flex; gap:8px; align-items:center;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.24);
-      border-radius:12px; padding:6px 10px; backdrop-filter:saturate(120%) blur(4px);
-      max-width:100%;
-      white-space:nowrap;
-      contain:layout;
-    }
-    .langpick label{font-weight:800;color:#cfe2ff;font-size:13px}
-    .langpick select{
-      appearance:none;background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.24);
-      color:#ffffff; border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:900;letter-spacing:.3px;
-      max-width:52vw;
-    }
-    .langpick option{ color:#0e1230; background:#ffffff }
-
-    /* Mobile: ten sam wygląd w prawym rogu */
-    @media (max-width:768px){
-      .langpick{
-        position:fixed !important;
-        top:10px !important;
-        right:10px !important;
-        left:auto !important;
-        transform:none !important;
-        margin:0 !important;
-        display:inline-flex !important;
-        align-items:center;
-        gap:6px;
-        padding:5px 8px;
-      }
-      .langpick label{ display:none !important; }
-      .langpick select{ font-size:12px; padding:5px 9px; }
-      body{ padding-top:64px !important; }
-    }
-
-    /* Ukryj ewentualne resztki starego GT */
-    .goog-te-banner-frame.skiptranslate{display:none!important}
-    .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
-  </style>
+    /* PRZYCISK WRÓĆ */
+    #bhBackMini{
+      appearance:none;border:1px solid rgba(164,107,255,.28);background:rgba(60,32,100,.28);color:#eef2ff;
+      font-weight:700;padding:10px 14px;border-radius:12px;cursor:pointer;margin:16px 0;
+      box-shadow:0 6px 16px rgba(8,10,22,.35), inset 0 0 0 1px rgba(164,107,255,.12), 0 0 8px rgba(164,107,255,.45);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    #bhBackMini:hover{ transform:translateY(-1px); border-color:rgba(164,107,255,.55); box-shadow:0 10px 20px rgba(8,10,22,.45), 0 0 14px rgba(164,107,255,.65), inset 0 0 0 1px rgba(164,107,255,.18) }
+    #bhBackMini:focus-visible{ outline:2px solid rgba(164,107,255,.75); outline-offset:2px }
+  </style>
 </head>
 <body data-page="dziecko">
-  <div class="bh-wallpaper" aria-hidden="true"></div>
-  <div class="bh-grid" aria-hidden="true"></div>
-  <div class="bh-floor-fade" aria-hidden="true"></div>
+  <div class="bh-wallpaper" aria-hidden="true"></div>
+  <div class="bh-grid" aria-hidden="true"></div>
+  <div class="bh-floor-fade" aria-hidden="true"></div>
 
-    <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
-    <label for="bhLangSelect">Język</label>
-    <select id="bhLangSelect">
-      <option value="pl">PL</option>
-      <option value="en">EN</option>
-    </select>
-  </div>
+  <!-- SELEKTOR JĘZYKA (spójny jak kobieta / mężczyzna) -->
+  <div id="bhLangPick" aria-label="Wybór języka">
+    <label for="bhLangSelect">Język</label>
+    <select id="bhLangSelect">
+      <option value="pl">PL</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
+  <div class="container">
+    <!-- GUZIK WRÓĆ -->
+    <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
 
-  <div class="container">
-        <button id="bhBackMini" type="button" aria-label="Wróć do poprzedniej strony">← Wróć</button>
+    <header class="header"><h1 id="bhPageTitle">Dziecko — wybierz część ciała</h1></header>
 
-    <header class="header"><h1 id="bhPageTitle">Dziecko — wybierz część ciała</h1></header>
-    <section class="grid-thumbs" aria-label="Miniatury — dziecko" id="bhThumbs">
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=oko&label=Oko"><img src="img/dziecko-oko.png" alt="Oko"><span>Oko</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=nos&label=Nos"><img src="img/dziecko-nos.png" alt="Nos"><span>Nos</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=gardlo&label=Gard%C5%82o"><img src="img/dziecko-gardlo.png" alt="Gardło"><span>Gardło</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=glowa&label=G%C5%82owa"><img src="img/dziecko-glowa.png" alt="Głowa"><span>Głowa</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=klatka&label=Klatka%20piersiowa"><img src="img/dziecko-klatka.png" alt="Klatka piersiowa"><span>Klatka</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=brzuch&label=Brzuch"><img src="img/dziecko-brzuch.png" alt="Brzuch"><span>Brzuch</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=plecy&label=Plecy"><img src="img/dziecko-plecy.png" alt="Plecy"><span>Plecy</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=biodra&label=Biodra"><img src="img/dziecko-biodra.png" alt="Biodra"><span>Biodra</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=udo&label=Udo"><img src="img/dziecko-udo.png" alt="Udo"><span>Udo</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=stopy&label=Stopy"><img src="img/dziecko-stopy.png" alt="Stopy"><span>Stopy</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=serce&label=Serce"><img src="img/dziecko-serce.png" alt="Serce"><span>Serce</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=pluca&label=P%C5%82uca"><img src="img/dziecko-pluca.png" alt="Płuca"><span>Płuca</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=watroba&label=W%C4%85troba"><img src="img/dziecko-watroba.png" alt="Wątroba"><span>Wątroba</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=zoladek&label=%C5%BBo%C5%82%C4%85dek"><img src="img/dziecko-zoladek.png" alt="Żołądek"><span>Żołądek</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=nerki&label=Nerki"><img src="img/dziecko-nerki.png" alt="Nerki"><span>Nerki</span></a>
-            <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=uszy&label=Uszy"><img src="img/dziecko-uszy.png" alt="Uszy"><span>Uszy</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=kolano&label=Kolano"><img src="img/dziecko-kolano.png" alt="Kolano"><span>Kolano</span></a>
-      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=ospa&label=Ospa"><img src="img/dziecko-ospa.png" alt="Ospa"><span>Ospa</span></a>
-    </section>
-  </div>
+    <section class="grid-thumbs" aria-label="Miniatury — dziecko" id="bhThumbs">
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=oko&label=Oko"><img src="img/dziecko-oko.png" alt="Oko"><span>Oko</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=nos&label=Nos"><img src="img/dziecko-nos.png" alt="Nos"><span>Nos</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=gardlo&label=Gard%C5%82o"><img src="img/dziecko-gardlo.png" alt="Gardło"><span>Gardło</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=glowa&label=G%C5%82owa"><img src="img/dziecko-glowa.png" alt="Głowa"><span>Głowa</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=klatka&label=Klatka%20piersiowa"><img src="img/dziecko-klatka.png" alt="Klatka piersiowa"><span>Klatka</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=brzuch&label=Brzuch"><img src="img/dziecko-brzuch.png" alt="Brzuch"><span>Brzuch</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=plecy&label=Plecy"><img src="img/dziecko-plecy.png" alt="Plecy"><span>Plecy</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=biodra&label=Biodra"><img src="img/dziecko-biodra.png" alt="Biodra"><span>Biodra</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=udo&label=Udo"><img src="img/dziecko-udo.png" alt="Udo"><span>Udo</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=stopy&label=Stopy"><img src="img/dziecko-stopy.png" alt="Stopy"><span>Stopy</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=serce&label=Serce"><img src="img/dziecko-serce.png" alt="Serce"><span>Serce</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=pluca&label=P%C5%82uca"><img src="img/dziecko-pluca.png" alt="Płuca"><span>Płuca</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=watroba&label=W%C4%85troba"><img src="img/dziecko-watroba.png" alt="Wątroba"><span>Wątroba</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=zoladek&label=%C5%BBo%C5%82%C4%85dek"><img src="img/dziecko-zoladek.png" alt="Żołądek"><span>Żołądek</span></a>
+      <a class="thumb" href="szczegoly.html?typ=dziecko&czesc=nerki&label=Nerki"><img src="img/dziecko-nerki.png" alt="Nerki"><span>Nerki</span></a>
+    </section>
+  </div>
 
-  <script>
-    // Obsługa guzika "Wróć"
-    (function(){
-      var btn = document.getElementById('bhBackMini');
-      if(!btn) return;
-      btn.addEventListener('click', function(){
-        if (document.referrer && document.referrer.includes(location.host)) {
-          history.back();
-        } else {
-          location.href = 'index.html';
-        }
-      });
-    })();
-  </script>
+  <script>
+    // Obsługa guzika "Wróć"
+    (function(){
+      var btn = document.getElementById('bhBackMini');
+      if(!btn) return;
+      btn.addEventListener('click', function(){
+        if (document.referrer && document.referrer.includes(location.host)) {
+          history.back();
+        } else {
+          location.href = 'index.html';
+        }
+      });
+    })();
+  </script>
 
-    <script>
-    (function(){
-      if(window.__bhDzieckoI18n) return; window.__bhDzieckoI18n = true;
+  <!-- LEKKI TŁUMACZ: współdzieli stan ze stroną główną (localStorage 'bh.lang') -->
+  <script>
+    (function(){
+      if(window.__bhDzieckoI18n) return; window.__bhDzieckoI18n = true;
 
-      var LS_KEY='bh.lang';
-      var root=document.documentElement;
-      var lang=(localStorage.getItem(LS_KEY)||root.getAttribute('lang')||'pl').toLowerCase();
-      var sel=document.getElementById('bhLangSelect');
-      var lab=document.querySelector('#bhLangPick label');
+      var LS_KEY='bh.lang';
+      var root=document.documentElement;
+      var lang=(localStorage.getItem(LS_KEY)||root.getAttribute('lang')||'pl').toLowerCase();
+      var sel=document.getElementById('bhLangSelect');
+      var lab=document.querySelector('#bhLangPick label');
 
-      var dict = {
-        en: {
-          title: 'Child — choose a body part',
-          back: '← Back',
-          back_aria: 'Go back to previous page',
-          section_aria: 'Thumbnails — child',
-          parts: {
-            oko:'Eye', nos:'Nose', gardlo:'Throat', glowa:'Head',
-            klatka:'Chest', brzuch:'Abdomen', plecy:'Back', biodra:'Hips/Thighs',
-            udo:'Thigh', stopy:'Feet', serce:'Heart', pluca:'Lungs',
-            watroba:'Liver', zoladek:'Stomach', nerki:'Kidneys',
-            // NOWE CZĘŚCI
-            uszy:'Ears', kolano:'Knee', ospa:'Chickenpox'
-          }
-        },
-        pl: {
-          title: 'Dziecko — wybierz część ciała',
-          back: '← Wróć',
-          back_aria: 'Wróć do poprzedniej strony',
-          section_aria: 'Miniatury — dziecko',
-          parts: {
-            oko:'Oko', nos:'Nos', gardlo:'Gardło', glowa:'Głowa',
-            klatka:'Klatka', brzuch:'Brzuch', plecy:'Plecy', biodra:'Biodra',
-            udo:'Udo', stopy:'Stopy', serce:'Serce', pluca:'Płuca',
-            watroba:'Wątroba', zoladek:'Żołądek', nerki:'Nerki',
-            // NOWE CZĘŚCI
-            uszy:'Uszy', kolano:'Kolano', ospa:'Ospa'
-          }
-        }
-      };
+      var dict = {
+        en: {
+          title: 'Child — choose a body part',
+          back: '← Back',
+          back_aria: 'Go back to previous page',
+          section_aria: 'Thumbnails — child',
+          parts: {
+            oko:'Eye', nos:'Nose', gardlo:'Throat', glowa:'Head',
+            klatka:'Chest', brzuch:'Abdomen', plecy:'Back', biodra:'Hips/Thighs',
+            udo:'Thigh', stopy:'Feet', serce:'Heart', pluca:'Lungs',
+            watroba:'Liver', zoladek:'Stomach', nerki:'Kidneys'
+          }
+        },
+        pl: {
+          title: 'Dziecko — wybierz część ciała',
+          back: '← Wróć',
+          back_aria: 'Wróć do poprzedniej strony',
+          section_aria: 'Miniatury — dziecko',
+          parts: {
+            oko:'Oko', nos:'Nos', gardlo:'Gardło', glowa:'Głowa',
+            klatka:'Klatka', brzuch:'Brzuch', plecy:'Plecy', biodra:'Biodra',
+            udo:'Udo', stopy:'Stopy', serce:'Serce', pluca:'Płuca',
+            watroba:'Wątroba', zoladek:'Żołądek', nerki:'Nerki'
+          }
+        }
+      };
 
-      function apply(){
-        var d = dict[lang] || dict.pl;
+      function apply(){
+        var d = dict[lang] || dict.pl;
 
-        root.setAttribute('lang', lang);
+        root.setAttribute('lang', lang);
 
-        var h1 = document.getElementById('bhPageTitle'); if(h1){ h1.textContent = d.title; }
+        var h1 = document.getElementById('bhPageTitle'); if(h1){ h1.textContent = d.title; }
 
-        var back = document.getElementById('bhBackMini');
-        if(back){ back.textContent = d.back; back.setAttribute('aria-label', d.back_aria); }
+        var back = document.getElementById('bhBackMini');
+        if(back){ back.textContent = d.back; back.setAttribute('aria-label', d.back_aria); }
 
-        var grid = document.getElementById('bhThumbs');
-        if(grid){ grid.setAttribute('aria-label', d.section_aria); }
+        var grid = document.getElementById('bhThumbs');
+        if(grid){ grid.setAttribute('aria-label', d.section_aria); }
 
-        document.querySelectorAll('.grid-thumbs a.thumb').forEach(function(a){
-          try{
-            var u = new URL(a.getAttribute('href'), location.href);
-            var part = u.searchParams.get('czesc');
-            var span = a.querySelector('span');
-            if(part && d.parts[part] && span){ span.textContent = d.parts[part]; }
-          }catch(e){}
-        });
+        document.querySelectorAll('.grid-thumbs a.thumb').forEach(function(a){
+          try{
+            var u = new URL(a.getAttribute('href'), location.href);
+            var part = u.searchParams.get('czesc');
+            var span = a.querySelector('span');
+            if(part && d.parts[part] && span){ span.textContent = d.parts[part]; }
+          }catch(e){}
+        });
 
-        if(lab){ lab.textContent = (lang==='en' ? 'Language' : 'Język'); }
-        if(sel){ sel.value = lang; }
-      }
+        if(lab){ lab.textContent = (lang==='en' ? 'Language' : 'Język'); }
+        if(sel){ sel.value = lang; }
+      }
 
-      function setLang(l){
-        if(!dict[l]) return;
-        lang = l;
-        localStorage.setItem(LS_KEY, lang);
-        apply();
-      }
+      function setLang(l){
+        if(!dict[l]) return;
+        lang = l;
+        localStorage.setItem(LS_KEY, lang);
+        apply();
+      }
 
-      if(sel){
-        sel.addEventListener('change', function(){ setLang(sel.value); });
-      }
+      if(sel){
+        sel.addEventListener('change', function(){ setLang(sel.value); });
+      }
 
-      apply();
-    })();
-  </script>
+      apply();
+    })();
+  </script>
 
-      <script src="assets/translator.js"></script>
-<style>
-  /* SPÓJNY WYGLĄD TŁUMACZA (PL/EN) */
-  #bhLangPick {
-    position: fixed !important;
-    top: 16px !important;
-    right: 24px !important;  /* odsunięcie od krawędzi na laptopie */
-    z-index: 9999 !important;
+  <!-- FINALNY STYL TŁUMACZA (uniwersalny) -->
+  <style>
+    #bhLangPick {
+      position: fixed !important;
+      top: 16px !important;
+      right: 24px !important;
+      z-index: 9999 !important;
+      display: inline-flex !important;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 12px;
+      padding: 6px 10px;
+      backdrop-filter: saturate(120%) blur(6px);
+    }
+    #bhLangPick label { display: none !important; }
+    #bhLangSelect {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      letter-spacing: .3px;
+    }
+    #bhLangSelect option { color:#0e1230; background:#fff; }
+    @media (max-width:768px){
+      #bhLangPick{ top:10px !important; right:12px !important; padding:5px 8px; }
+      #bhLangSelect{ font-size:13px; }
+    }
+  </style>
 
-    display: inline-flex !important;
-    align-items: center;
-    gap: 6px;
-
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.22);
-    border-radius: 12px;
-    padding: 6px 10px;
-
-    backdrop-filter: saturate(120%) blur(6px);
-  }
-
-  /* Ukryj napis "Język", zostaw tylko selektor */
-  #bhLangPick label { display: none !important; }
-
-  #bhLangSelect {
-    font-size: 14px;
-    font-weight: 700;
-    color: #fff;
-    background: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    letter-spacing: .3px;
-  }
-
-  #bhLangSelect option {
-    color: #0e1230;
-    background: #ffffff;
-  }
-
-  /* TELEFON – ciut mniejsze i bliżej rogu */
-  @media (max-width:768px){
-    #bhLangPick{
-      top: 10px !important;
-      right: 12px !important;
-      padding: 5px 8px;
-    }
-    #bhLangSelect{ font-size: 13px; }
-  }
-</style>
-<style>
-  /* Guzik WRÓĆ w lewym górnym rogu */
-  #bhBackMini {
-    position: fixed !important;
-    top: 16px !important;
-    left: 16px !important;
-    margin: 0 !important;
-    z-index: 3000 !important;
-
-    appearance: none;
-    border: 1px solid rgba(164,107,255,.28);
-    background: rgba(60,32,100,.28);
-    color: #eef2ff;
-    font-weight: 700;
-    padding: 10px 14px;
-    border-radius: 12px;
-    cursor: pointer;
-    box-shadow: 0 6px 16px rgba(8,10,22,.35),
-                inset 0 0 0 1px rgba(164,107,255,.12),
-                0 0 8px rgba(164,107,255,.45);
-    transition: transform .18s ease,
-                box-shadow .18s ease,
-                border-color .18s ease;
-  }
-
-  #bhBackMini:hover {
-    transform: translateY(-1px);
-    border-color: rgba(164,107,255,.55);
-    box-shadow: 0 10px 20px rgba(8,10,22,.45),
-                0 0 14px rgba(164,107,255,.65),
-                inset 0 0 0 1px rgba(164,107,255,.18);
-  }
-
-  #bhBackMini:focus-visible {
-    outline: 2px solid rgba(164,107,255,.75);
-    outline-offset: 2px;
-  }
-</style>
+  <script src="assets/translator.js"></script>
 </body>
 </html>
