@@ -842,7 +842,16 @@
       {q:"Jak się przygotować do wizyty?",a:"Lista epizodów (kiedy, po czym, ile trwa), leki, choroby, pomiary tętna/ciśnienia."},
       {q:"Czy smartwatch wystarczy do diagnozy?",a:"Może wychwycić epizod, ale diagnozę stawia się na podstawie EKG/Holtera."}
     ]
-  }
+  },
+plecy:{ label:"Plecy", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+biodra:{ label:"Biodra", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+udo:{ label:"Udo", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+stopy:{ label:"Stopy", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+gardlo:{ label:"Gardło", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+pluca:{ label:"Płuca", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+watroba:{ label:"Wątroba", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+nerki:{ label:"Nerki", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] }
+
 };
 
 const CONTENT_EN={
@@ -1108,7 +1117,16 @@ const CONTENT_EN={
       {q:"How to prep for a visit?",a:"Note episodes (when, trigger, duration), meds, conditions, HR/BP readings."},
       {q:"Is smartwatch enough?",a:"It can capture episodes; diagnosis still relies on ECG/Holter."}
     ]
-  }
+  },
+plecy:{ label:"Back", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+biodra:{ label:"Hips", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+udo:{ label:"Thigh", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+stopy:{ label:"Feet", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+gardlo:{ label:"Throat", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+pluca:{ label:"Lungs", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+watroba:{ label:"Liver", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] },
+nerki:{ label:"Kidneys", symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] }
+
 };
     const qs=new URLSearchParams(location.search);
     const RAW_TYP=(qs.get('typ')||'kobieta').toLowerCase();
