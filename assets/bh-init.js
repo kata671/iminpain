@@ -1,0 +1,1 @@
+(function(){try{if(!document.querySelector('link[data-bh-pro-enhance]')){const l=document.createElement('link');l.rel='stylesheet';l.href='assets/bh-pro-enhance.css';l.setAttribute('data-bh-pro-enhance','');document.head.appendChild(l);}}catch(e){}})();

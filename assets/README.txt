@@ -1,0 +1,1 @@
+Drop-in: add link+scripts before </body>. Place files under /assets/.

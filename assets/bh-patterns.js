@@ -1,0 +1,1 @@
+(function(){try{if(!window.BH?.features?.patterns)return;/* simplified stub */}catch(e){}})();

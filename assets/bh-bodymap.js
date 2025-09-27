@@ -1,0 +1,1 @@
+(function(){try{if(!window.BH?.features?.bodymap)return;/* simplified stub - real file was longer */}catch(e){}})();
