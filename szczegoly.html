@@ -844,57 +844,6 @@
     ]
   }
   ,
-  oko: {
-    label:"Oko",
-    symptoms:[
-      "Ból, kłucie, światłowstręt, łzawienie, uczucie piasku",
-      "Zaczerwienienie spojówki, obrzęk powiek, wydzielina",
-      "Pogorszenie widzenia, „mroczki”, błyski, podwójne widzenie",
-      "Ropna wydzielina sklejająca rzęsy o poranku",
-      "Poczucie zasłony/kurtyny w polu widzenia",
-      "Ból przy ruchach gałki ocznej",
-      "Poświaty wokół świateł nocą",
-      "Suchość po klimatyzacji/ekranach",
-      "Uczucie ciała obcego po pyleniu/szlifowaniu"
-    ],
-    urgent:[
-      "Nagłe, bolesne pogorszenie lub utrata widzenia",
-      "Uraz/chemikalia w oku — natychmiastowe płukanie i pomoc medyczna",
-      "Silny ból z nudnościami (podejrzenie ostrej jaskry)"
-    ],
-    causes:[
-      "Zapalenie spojówek/rogówki, zespół suchego oka, alergia",
-      "Ciało obce/otarcie rogówki, jęczmień/gradówka",
-      "Migrena oczna, zapalenie błony naczyniowej, wzrost ciśnienia śródgałkowego"
-    ],
-    firstaid:[
-      "Płukanie oka roztworem soli przy podrażnieniu, nie trzeć",
-      "Nie usuwać na siłę ciał obcych",
-      "Po oparzeniu chemicznym: płukać 15–20 min i pilnie do lekarza"
-    ],
-    otc:[
-      "Sztuczne łzy (bez konserwantów przy częstym stosowaniu)",
-      "Krople p/alergiczne (po zaleceniu)"
-    ],
-    rx:[
-      "Antybiotyk/steryd do oka tylko po badaniu okulistycznym",
-      "Usunięcie ciała obcego, leczenie jaskry wg wskazań"
-    ],
-    rehab:[
-      "Higiena brzegów powiek (ciepłe kompresy)",
-      "Reguła 20-20-20 przy pracy wzrokowej"
-    ],
-    myths:[
-      "„Każde zaczerwienienie to infekcja” — często alergia/suchość",
-      "„Sterydowe krople można profilaktycznie” — tylko z zalecenia"
-    ],
-    faq:[
-      "Kiedy do okulisty? — Ból, światłowstręt, pogorszenie widzenia, oparzenie chemiczne",
-      "Czy krople obkurczające są OK? — Nadużywane pogarszają suchość i zaczerwienienie"
-    ]
-  }
-};
-
 const CONTENT_EN={
   glowa:{
     label:"Headache",
@@ -1160,53 +1109,337 @@ const CONTENT_EN={
     ]
   }
   ,
-  oko: {
+oko: {
     label:"Eye",
     symptoms:[
-      "Pain, foreign-body sensation, photophobia, tearing",
-      "Redness, swollen lids, discharge",
-      "Blurred vision, floaters, flashes, diplopia",
-      "Purulent discharge gluing lashes in the morning",
-      "Curtain-like shadow in visual field",
-      "Pain on eye movements",
-      "Halos around lights at night",
-      "Dryness after AC/screens",
-      "Foreign-body sensation after dust/grinding exposure"
+      "Pain, foreign-body sensation, photophobia, tearing"
+      "Redness, swollen lids, discharge"
+      "Blurred vision, floaters, flashes, diplopia"
+      "Purulent discharge gluing lashes in the morning"
+      "Pain on eye movements, halos around lights"
+      "Dryness after AC/screens, gritty feeling"
     ],
     urgent:[
-      "Sudden painful vision loss",
-      "Chemical/traumatic eye injury — immediate irrigation and emergency care",
-      "Severe pain with nausea (acute angle-closure glaucoma suspicion)"
+      "Sudden vision loss or rapid deterioration"
+      "Chemical/traumatic injury — irrigate 15–20 min and seek urgent care"
+      "Severe pain with nausea/halos (acute angle-closure glaucoma)"
     ],
     causes:[
-      "Conjunctivitis/keratitis, dry eye, allergy",
-      "Foreign body/corneal abrasion, hordeolum/chalazion",
-      "Uveitis, migraine aura, elevated intraocular pressure"
+      "Conjunctivitis/keratitis, dry eye, allergy"
+      "Foreign body/corneal abrasion, hordeolum/chalazion"
+      "Uveitis, ocular migraine, elevated intraocular pressure"
     ],
     firstaid:[
-      "Irrigate with sterile saline for irritation; avoid rubbing",
-      "Do not force-remove foreign bodies",
-      "Chemical burns: 15–20 min irrigation + urgent care"
+      "Irrigate with sterile saline; avoid rubbing"
+      "Do not force-remove foreign bodies"
+      "Chemical burn — copious irrigation + emergency evaluation"
     ],
     otc:[
-      "Artificial tears (preservative-free if frequent use)",
-      "Anti-allergy drops (as advised)"
+      "Artificial tears (preservative-free for frequent use)"
+      "Anti-allergy drops as advised"
     ],
     rx:[
-      "Topical antibiotics/steroids only after ophthalmic exam",
-      "Foreign body removal, glaucoma therapy as indicated"
+      "Topical antibiotics/steroids only after eye exam"
+      "Foreign-body removal; glaucoma therapy when indicated"
     ],
     rehab:[
-      "Lid hygiene (warm compresses)",
+      "Lid hygiene (warm compresses)"
       "20-20-20 rule for screen work"
     ],
     myths:[
-      "“Red eye” ≠ always infection — often dryness/allergy",
-      "Steroid drops never prophylactic — only by prescription"
+      "“Red eye” ≠ always infection — often dryness/allergy"
+      "Steroid drops never prophylactic — prescription only"
     ],
     faq:[
-      "When to see a doctor? — Pain, photophobia, vision decline, chemical burn",
-      "Are decongestant drops safe? — Overuse worsens redness/dryness"
+      "When to see a doctor — pain, photophobia, vision decline, chemical burns"
+      "Are decongestant drops safe? — overuse worsens redness/dryness"
+    ]
+  }
+  ,
+zeby: {
+    label:"Teeth",
+    symptoms:[
+      "Throbbing toothache, worse at night"
+      "Sensitivity to cold/heat/sweets"
+      "Gum swelling/bleeding, cheek swelling"
+      "Bad breath, draining abscess"
+    ],
+    urgent:[
+      "Spreading swelling with fever and swallowing/breathing difficulty"
+      "Trauma with avulsed/luxated tooth — urgent dental care"
+    ],
+    causes:[
+      "Caries, pulpitis/abscess, periodontal disease"
+      "Bruxism, enamel cracks, exposed dentin"
+    ],
+    firstaid:[
+      "Rinse mouth with warm saline, cold packs outside cheek"
+      "Avulsed permanent tooth: hold by crown, rinse milk/saline, store in milk/RORE, dentist <60 min"
+    ],
+    otc:[
+      "Paracetamol/ibuprofen if no contraindications"
+      "Topical gels for gums (short-term)"
+    ],
+    rx:[
+      "Abscess drainage, root canal/extraction as indicated"
+      "Antibiotics only with systemic signs/spread"
+    ],
+    rehab:[
+      "Hygiene: brush 2×/day, floss, fluoride rinse"
+      "Night guard for bruxism"
+    ],
+    myths:[
+      "“Antibiotic fixed it” — underlying cause still needs treatment"
+      "DIY extraction is dangerous"
+    ],
+    faq:[
+      "Urgent signs — expanding swelling with fever, trismus, tooth trauma"
+      "Pain control before visit — cold packs, analgesics, avoid hot/sweet foods"
+    ]
+  }
+  ,
+szyja: {
+    label:"Neck",
+    symptoms:[
+      "Stiff neck, limited rotation, pain radiating to shoulder/arm"
+      "Finger tingling, tension-type headaches"
+      "Worse after prolonged looking down (phone)"
+    ],
+    urgent:[
+      "Stiff neck with fever and photophobia (urgent)"
+      "Trauma with sensory/motor deficits"
+    ],
+    causes:[
+      "Muscle overuse/tension, cervical disc disease, “text neck”"
+      "Less often inflammatory/rheumatic conditions, posture issues"
+    ],
+    firstaid:[
+      "Gentle movement, micro-breaks, ergonomics (screen at eye level)"
+      "Local heat; avoid prolonged static posture"
+    ],
+    otc:[
+      "Paracetamol/ibuprofen PRN; topical NSAID gels"
+      "Heat patches if tolerated"
+    ],
+    rx:[
+      "Physiotherapy: mobilization, neurodynamics, postural training"
+      "Imaging if deficits/persistent symptoms"
+    ],
+    rehab:[
+      "ROM and isometric drills, scapular strengthening"
+      "Sleep hygiene, stress reduction"
+    ],
+    myths:[
+      "“Neck pain = degeneration” — often reversible tension"
+      "“Bed rest only” — moderate movement helps"
+    ],
+    faq:[
+      "When to image? — red flags, post-trauma, no improvement after 6–8 weeks"
+    ]
+  }
+  ,
+strefa: {
+    label:"Intimate area",
+    symptoms:[
+      "Dysuria/burning, itching, discharge (women), scrotal/perineal pain (men)"
+      "Unpleasant odor, redness/swelling of intimate skin"
+      "Frequency, urgency, dyspareunia"
+    ],
+    urgent:[
+      "Fever with severe lower-abdominal/testicular pain, vomiting"
+      "Acute scrotal swelling/pain (torsion) — emergency"
+      "Suspected ectopic pregnancy (acute pain + syncope)"
+    ],
+    causes:[
+      "Intimate infections (bacterial/fungal), BV, UTI"
+      "Epididymitis/prostatitis, irritant/contact dermatitis"
+    ],
+    firstaid:[
+      "Gentle hygiene (no harsh soaps), breathable cotton underwear"
+      "Hydration; post-coital voiding/shower"
+    ],
+    otc:[
+      "Topical antifungals (women) for typical yeast symptoms"
+      "Analgesics PRN; soothing gels for itch"
+    ],
+    rx:[
+      "Antibiotics per culture for UTI, partner treatment for STIs"
+      "Testicular US in pain/swelling, urgent care for torsion"
+    ],
+    rehab:[
+      "Prevention: breathable clothing, avoid prolonged moisture"
+      "Safe sexual practices, hydration"
+    ],
+    myths:[
+      "“All itch = yeast” — many causes incl. allergy/bacterial"
+      "“It will pass” — persistent/worsening symptoms need evaluation"
+    ],
+    faq:[
+      "Urgent — severe testicular pain, fever + abdominal pain, pregnancy with pain"
+    ]
+  }
+}ye/forehead pain",
+      "Systemic symptoms (child/pregnancy — urgent)"
+    ],
+    myths:[
+      {m:"Stronger drops work better",f:"Overuse rebounds and worsens blockage."},
+      {m:"Green mucus means bacteria",f:"Color alone doesn’t prove bacterial cause."}
+    ],
+    faq:[
+      {q:"When antibiotics for sinuses?",a:"When a clinician confirms bacterial sinusitis (fever, severe pain, >10 days)."},
+      {q:"How to stop a nosebleed?",a:"Pinch soft nose 10–15 min, lean forward, cold pack on the bridge."}
+    ]
+  },
+
+  klatka:{
+    label:"Chest pain",
+    symptoms:[
+      "Chest pressure","Heartburn","Sharp pain with movement",
+      "Shortness of breath","Palpitations","Pain to left arm/jaw"
+    ],
+    causes:[
+      "Musculoskeletal strain",
+      "Reflux/GERD",
+      "Coronary ischemia / ACS (acute)",
+      "Pleurisy/infectious cough",
+      "Anxiety/panic with somatic symptoms"
+    ],
+    firstaid:[
+      "Stop exertion, rest",
+      "Review triggers: meal, stress, effort",
+      "Elevate head when lying (GERD)",
+      "Warm pack, gentle stretch if musculoskeletal"
+    ],
+    otc:[
+      {t:"Reflux relief: alginates/antacids",audience:"all"},
+      {t:"Ibuprofen/naproxen for MSK pain (if suitable)",audience:"adult"},
+      {t:"Topical warming gels",audience:"adult"}
+    ],
+    rx:[
+      "Nitroglycerin per plan (suspected angina — ER if new/worsening)",
+      "PPIs for GERD",
+      "Cardiology therapy for CAD",
+      "Antiarrhythmics as indicated"
+    ],
+    rehab:[
+      "Weight management, avoid large late meals",
+      "Diet tweaks (coffee/alcohol/spicy as tolerated)",
+      "Regular light aerobic training (post evaluation)",
+      "Relaxation/controlled breathing"
+    ],
+    urgent:[
+      "New/severe pressure + dyspnea/cold sweat/nausea — call emergency",
+      "Rest dyspnea, cyanosis",
+      "Sudden sharp pain with hemoptysis (PE) — urgent",
+      "Syncope with palpitations"
+    ],
+    myths:[
+      {m:"If antacid helps, heart is fine",f:"GERD can coexist with CAD — ischemic signs need assessment."},
+      {m:"Young people don’t get heart attacks",f:"Less common but possible; risk factors matter."}
+    ],
+    faq:[
+      {q:"When to call 112/911?",a:"Severe/new pressure, dyspnea, cold sweat, radiation to arm/jaw, syncope — call immediately."},
+      {q:"Initial tests?",a:"Clinician may order ECG, troponins, CXR, reflux workup — based on presentation."}
+    ]
+  },
+
+  brzuch:{
+    label:"Abdomen",
+    symptoms:[
+      "Crampy/colicky pain","Bloating","Diarrhea/constipation",
+      "Heartburn/burning","Nausea/vomiting","Rigid abdomen"
+    ],
+    causes:[
+      "Indigestion/IBS","Foodborne illness",
+      "Viral gastroenteritis","GERD/ulcer disease",
+      "Renal/biliary colic","Pregnancy-related pain (needs assessment)"
+    ],
+    firstaid:[
+      "Oral rehydration in small sips",
+      "Light diet 24–48 h",
+      "Warm pack for cramps",
+      "Rest; monitor stool/gas"
+    ],
+    otc:[
+      {t:"Drotaverine for cramps (adults)",audience:"adult"},
+      {t:"Probiotics/electrolytes for diarrhea",audience:"all"},
+      {t:"Short course PPI/H2 for heartburn",audience:"adult"},
+      {t:"Loperamide (no blood/fever)",audience:"adult"},
+      {t:"Simethicone for bloating",audience:"all"}
+    ],
+    rx:[
+      "PPI/H2 as indicated",
+      "H. pylori eradication (if positive)",
+      "Prokinetics as indicated",
+      "Antibiotics for confirmed bacterial causes — clinician decision"
+    ],
+    rehab:[
+      "Food diary; low-FODMAP trial (guided)",
+      "Daily light activity; breathing work",
+      "Sleep and stress hygiene (CBT can help in IBS)"
+    ],
+    urgent:[
+      "Board-like rigid abdomen, persistent severe pain",
+      "Blood in stool/emesis, black stools",
+      "High fever, dehydration, no stool/gas",
+      "RLQ pain + fever (appendicitis) — urgent",
+      "Women: severe pain + missed period (ectopic?)"
+    ],
+    myths:[
+      {m:"Best to fast for days",f:"Short light diet is fine; long fasting can harm."},
+      {m:"All diarrhea needs antibiotics",f:"Most acute cases are viral — rehydration is key."}
+    ],
+    faq:[
+      {q:"When urgent care?",a:"Persistent/worsening pain >24–48 h, blood, high fever, dehydration or rigid abdomen."},
+      {q:"Will blood tests help?",a:"Often yes, but it depends; sometimes US/CT needed — clinician decides."}
+    ]
+  },
+
+  serce:{
+    label:"Heart / Palpitations",
+    symptoms:[
+      "Fast/irregular heartbeat","Dizziness",
+      "Exertional dyspnea","Skipped beats","Fainting"
+    ],
+    causes:[
+      "Stress/dehydration/caffeine/alcohol",
+      "Sleep deficit, infection, fever",
+      "Arrhythmias (e.g., SVT, AF)",
+      "Secondary causes (anemia, hyperthyroidism)"
+    ],
+    firstaid:[
+      "Sit/lie down, slow breathing",
+      "Hydration; limit caffeine/alcohol",
+      "Vagal maneuvers in SVT (as advised)"
+    ],
+    otc:[
+      {t:"Electrolytes/hydration",audience:"all"},
+      {t:"Magnesium/potassium (if deficient)",audience:"adult"}
+    ],
+    rx:[
+      "ECG/Holter — therapy per diagnosis",
+      "Beta-blockers/antiarrhythmics as indicated",
+      "Anticoagulation for AF per CHA₂DS₂-VASc",
+      "Treat underlying causes (thyroid, anemia)"
+    ],
+    rehab:[
+      "Sleep hygiene and stress reduction",
+      "Moderate aerobic activity (post assessment)",
+      "Avoid stimulants; monitor electrolytes"
+    ],
+    urgent:[
+      "Palpitations with syncope or chest pain — urgent",
+      "Rest dyspnea, cyanosis",
+      "Sustained tachycardia >150/min",
+      "Stroke symptoms (AF + neuro deficits) — call emergency"
+    ],
+    myths:[
+      {m:"Palpitations always mean dangerous arrhythmia",f:"Often benign ectopy — but needs ECG assessment."},
+      {m:"Magnesium cures all palpitations",f:"Helps if deficient; not a fix for structural arrhythmias."}
+    ],
+    faq:[
+      {q:"How to prep for a visit?",a:"Note episodes (when, trigger, duration), meds, conditions, HR/BP readings."},
+      {q:"Is smartwatch enough?",a:"It can capture episodes; diagnosis still relies on ECG/Holter."}
     ]
   }
 };
