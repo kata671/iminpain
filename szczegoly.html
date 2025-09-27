@@ -6,7 +6,6 @@
   <title>Boli Help — Szczegóły</title>
   <meta name="theme-color" content="#0e1230" />
   <style>
-    /* Twoje oryginalne zmienne CSS */
     :root{
       --bg:#0e1230; --text:#eef2ff; --muted:#b8c2e0;
       --card: rgba(60,32,100,.30); --stroke: rgba(164,107,255,.18);
@@ -19,391 +18,432 @@
       --c-otc:      rgba(255,184,108,.65);
       --c-rx:       rgba(255,107,107,.70);
       --c-rehab:    rgba(94,234,212,.55);
-      --c-urgent:   rgba(255,107,107,.70);
-      --c-myths:    rgba(255,110,199,.55);
-      --c-faq:      rgba(164,107,255,.55);
     }
-
-    /* Twoje oryginalne style */
     html,body{ height:100%; }
     body{
-      background: var(--bg) !important; color: var(--text);
+      position:relative; background:var(--bg); color:var(--text);
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      padding: 0; margin: 0;
+      line-height:1.55; font-size:15px;
+    }
+    h1,h2,h3,h4,h5,h6{ line-height:1.2; font-weight:900; letter-spacing:-.5px; margin-top:0; }
+    .container{
+      max-width:1080px; margin:0 auto; padding:0 16px; position:relative; z-index:10;
     }
 
-    .bh-wallpaper,.bh-grid{position:fixed; inset:0; pointer-events:none}
-    .bh-wallpaper{
-      z-index:0;
-      background:
-        radial-gradient(42vw 36vh at 16% 12%, rgba(255,110,199,.30), transparent 60%),
-        radial-gradient(36vw 30vh at 84% 10%, rgba(164,107,255,.25), transparent 60%),
-        radial-gradient(55vw 45vh at 50% 100%, rgba(94,234,212,.20), transparent 60%),
-        var(--bg);
+    /* Guzik WRÓĆ w lewym górnym rogu */
+    #bhBackMini {
+      position: fixed !important;
+      top: 16px !important;
+      left: 16px !important;
+      margin: 0 !important;
+      z-index: 3000 !important;
+
+      appearance: none;
+      border: 1px solid var(--stroke);
+      background: var(--card);
+      color: var(--text);
+      font-weight: 700;
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(8,10,22,.35),
+                  inset 0 0 0 1px rgba(164,107,255,.12);
+      transition: .2s ease;
     }
-    .bh-grid{
-      z-index:1; opacity:0.12;
-      background-size: 32px 32px;
-      background-image: linear-gradient(to right, var(--stroke) 1px, transparent 1px), linear-gradient(to bottom, var(--stroke) 1px, transparent 1px);
+    #bhBackMini:hover {
+      background: rgba(60,32,100,.45);
+      box-shadow: 0 10px 20px rgba(8,10,22,.45),
+                  inset 0 0 0 1px rgba(164,107,255,.20);
+    }
+    @media (max-width:768px){
+      #bhBackMini{ top: 10px !important; left: 12px !important; padding: 7px 10px; font-size:13px; }
     }
 
-    main { position:relative; z-index:2; padding: var(--gap); max-width: 900px; margin: 0 auto; }
-    h1 { font-size: 26px; font-weight: 900; margin: 16px 0 24px; color: var(--accent); }
-    h2 { font-size: 22px; font-weight: 800; margin-top: 36px; margin-bottom: 12px; }
-
-    .card {
-      background: var(--card); border: 1px solid var(--stroke);
-      padding: var(--gap); border-radius: var(--radius);
-      margin-bottom: var(--gap); backdrop-filter: saturate(120%) blur(6px);
-      box-shadow: 0 4px 12px rgba(8,10,22,.2);
-      transition: box-shadow var(--speed);
-      position: relative; /* DLA NAKŁADEK RX */
+    /* UKŁAD STRONY SZCZEGÓŁÓW */
+    .section-list{ display:flex; flex-direction:column; gap:var(--gap); padding:16px 0 60px; }
+    .section-card{
+      background:var(--card); border:1px solid var(--stroke); border-radius:var(--radius);
+      box-shadow:0 10px 22px rgba(8,10,22,.12), inset 0 0 0 1px rgba(164,107,255,.14);
+      padding:16px; transition:var(--speed);
     }
-    .card:hover {
-      box-shadow: 0 6px 18px rgba(8,10,22,.45);
+    .section-card:hover{
+      transform:translateY(-1px);
+      box-shadow:0 14px 28px rgba(8,10,22,.18), inset 0 0 0 1px rgba(164,107,255,.24);
     }
-    .card ul { list-style: none; padding: 0; margin: 0; }
-    .card li { margin-bottom: 8px; padding-left: 10px; position: relative; }
-    .card li:last-child { margin-bottom: 0; }
-    .card li::before { content: '•'; color: var(--teal); position: absolute; left: 0; font-weight: 900; }
+    .section-card h2{ font-size:17px; margin-bottom:12px; display:flex; gap:8px; align-items:center; }
+    .section-card p:last-child{ margin-bottom:0; }
+    .section-card .chip-list{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
 
-    /* SPECIFIC CARD STYLES */
-
-    /* Nagłówek i powrót */
-    .header-info { display: flex; align-items: center; justify-content: space-between; gap: var(--gap); margin-bottom: 20px; }
-    .header-info h1 { margin: 0; }
-    #bhBack {
-      appearance: none; border: 1px solid var(--stroke); background: var(--card);
-      color: var(--text); font-weight: 700; padding: 8px 14px;
-      border-radius: var(--radius); cursor: pointer;
-      box-shadow: 0 4px 10px rgba(8,10,22,.2);
-      transition: all var(--speed);
+    .chip{
+      display:inline-flex; align-items:center; padding:6px 10px; border-radius:8px; font-size:13px; font-weight:700;
+      background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); color:var(--text);
+      cursor:default; transition:var(--speed); user-select:none;
     }
-    #bhBack:hover { background: rgba(60,32,100,.50); color: var(--accent); }
+    .chip:hover{ background:rgba(255,255,255,.08); }
 
-    /* Wyróżnienia kolorystyczne dla sekcji */
-    #s-objawy { border-left: 6px solid var(--c-symptoms); }
-    #s-causes { border-left: 6px solid var(--c-causes); }
-    #s-firstaid { border-left: 6px solid var(--c-firstaid); }
-    #s-otc { border-left: 6px solid var(--c-otc); }
-    #s-rx { border-left: 6px solid var(--c-rx); }
-    #s-rehab { border-left: 6px solid var(--c-rehab); }
-    #s-urgent { border-left: 6px solid var(--c-urgent); }
-    #s-myths, #s-faq { border-left: 6px solid var(--c-myths); }
+    /* KOLORY KART */
+    #s-objawy{
+      border-color:rgba(94,234,212,.35);
+      box-shadow:0 10px 22px rgba(94,234,212,.12), inset 0 0 0 1px rgba(94,234,212,.24);
+      background:rgba(60,32,100,.30) linear-gradient(135deg, rgba(94,234,212,.10), transparent 70%);
+      position:relative;
+    }
+    #s-objawy h2{ color:var(--teal); }
+    #s-objawy .chip{ border-color:rgba(94,234,212,.25); }
+
+    #s-przyczyny{
+      border-color:rgba(164,107,255,.35);
+      box-shadow:0 10px 22px rgba(164,107,255,.12), inset 0 0 0 1px rgba(164,107,255,.24);
+      background:var(--card) linear-gradient(135deg, rgba(164,107,255,.10), transparent 70%);
+      position:relative;
+    }
+    #s-przyczyny h2{ color:var(--accent); }
+    #s-przyczyny .chip{ border-color:rgba(164,107,255,.25); }
+
+    #s-pierwszapomoc{
+      border-color:rgba(112,225,177,.35);
+      box-shadow:0 10px 22px rgba(112,225,177,.12), inset 0 0 0 1px rgba(112,225,177,.24);
+      background:var(--card) linear-gradient(135deg, rgba(112,225,177,.10), transparent 70%);
+      position:relative;
+    }
+    #s-pierwszapomoc h2{ color:var(--ok); }
+    #s-pierwszapomoc .chip{ border-color:rgba(112,225,177,.25); }
+
+    #s-lekiotc{
+      border-color:rgba(255,184,108,.35);
+      box-shadow:0 10px 22px rgba(255,184,108,.12), inset 0 0 0 1px rgba(255,184,108,.24);
+      background:var(--card) linear-gradient(135deg, rgba(255,184,108,.10), transparent 70%);
+      position:relative;
+    }
+    #s-lekiotc h2{ color:var(--warn); }
+    #s-lekiotc .chip{ border-color:rgba(255,184,108,.25); }
+
+    #s-lekirx{
+      border-color:rgba(255,107,107,.35);
+      box-shadow:0 10px 22px rgba(255,107,107,.12), inset 0 0 0 1px rgba(255,107,107,.24);
+      background:var(--card) linear-gradient(135deg, rgba(255,107,107,.10), transparent 70%);
+      position:relative;
+    }
+    #s-lekirx h2{ color:var(--danger); }
+    #s-lekirx .chip{ border-color:rgba(255,107,107,.25); }
     
-    /* Listy */
-    .card ul.list { margin-top: 10px; }
-    .card ul.list li::before { font-size: 1.2em; top: -1px; }
-
-    /* Alarmowe li (urgent/rx) */
-    #s-urgent li::before { color: var(--danger) !important; }
-    #s-rx li::before { color: var(--pink) !important; }
-
-    /* Mity i FAQ */
-    .myth-item, .faq-item { margin-bottom: 12px; padding: 8px 0; border-bottom: 1px dashed rgba(184,194,224,.1); }
-    .myth-item:last-child, .faq-item:last-child { border-bottom: none; }
-    .myth-item strong, .faq-item strong { color: var(--accent); display: block; margin-bottom: 4px; }
-    .myth-item span, .faq-item span { color: var(--muted); font-size: 0.9em; }
-    .myth-item span::before { content: "Prawda: "; color: var(--teal); font-weight: 700; }
-    .faq-item span { color: var(--text); }
-
-    /* Poprawka dla copilot.js: wstrzykiwane style */
-    #s-objawy[data-rx]::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      pointer-events: none;
-      background: rgba(255,107,107,.08) !important;
-      box-shadow: 0 0 16px rgba(255,107,107,.4) !important;
+    #s-rehabilitacja{
+      border-color:rgba(94,234,212,.35);
+      box-shadow:0 10px 22px rgba(94,234,212,.12), inset 0 0 0 1px rgba(94,234,212,.24);
+      background:var(--card) linear-gradient(135deg, rgba(94,234,212,.10), transparent 70%);
+      position:relative;
     }
-    /* Koniec Twoich oryginalnych stylów */
+    #s-rehabilitacja h2{ color:var(--teal); }
+    #s-rehabilitacja .chip{ border-color:rgba(94,234,212,.25); }
+
+    /* TŁUMACZ W PRAWYM GÓRNYM ROGU (GLOBALNY STYL) */
+    #bhLangPick {
+      position: fixed !important;
+      top: 16px !important;
+      right: 24px !important;
+      z-index: 9999 !important;
+      display: inline-flex !important;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 12px;
+      padding: 6px 10px;
+      backdrop-filter: saturate(120%) blur(6px);
+    }
+    #bhLangPick label { display: none !important; }
+    #bhLangSelect {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      letter-spacing: .3px;
+    }
+
+    #bhLangSelect option {
+      color: #0e1230;
+      background: #ffffff;
+    }
+
+    /* TELEFON – ciut mniejsze i bliżej rogu */
+    @media (max-width:768px){
+      #bhLangPick{
+        top: 10px !important;
+        right: 12px !important;
+        padding: 5px 8px;
+      }
+      #bhLangSelect{ font-size: 13px; }
+    }
+
+    /* Tytuł strony */
+    .detail-header{
+      padding: 80px 0 20px;
+      position:sticky; top:0; z-index:100;
+      background:linear-gradient(180deg, var(--bg) 60%, rgba(14,18,48,0) 100%);
+    }
+    .detail-header h1{ font-size:28px; }
+    .detail-header h2{ font-size:20px; font-weight:700; color:var(--muted); margin-bottom:4px; }
   </style>
 </head>
 <body>
-  <div class="bh-wallpaper"></div>
-  <div class="bh-grid"></div>
 
-  <main id="content-area">
-    <div class="header-info">
-      <button id="bhBack" onclick="window.history.back()">← Powrót</button>
-      <h1 id="page-title">Szczegóły: Ładowanie...</h1>
-    </div>
+  <div class="container">
 
-    <div id="content-sections">
+    <button id="bhBackMini">← Wróć</button>
+
+    <header class="detail-header">
+      <h2 data-lang-part="czesc"></h2>
+      <h1 data-lang-part="tytul"></h1>
+    </header>
+
+    <main class="content">
+
+      <div class="section-list">
+
+        <div id="s-objawy" class="section-card">
+          <h2 data-lang-part="objawyTitle"></h2>
+          <p data-lang-part="objawyContent"></p>
+          <div data-lang-part="objawyChips" class="chip-list"></div>
+        </div>
+
+        <div id="s-przyczyny" class="section-card">
+          <h2 data-lang-part="przyczynyTitle"></h2>
+          <p data-lang-part="przyczynyContent"></p>
+          <div data-lang-part="przyczynyChips" class="chip-list"></div>
+        </div>
+
+        <div id="s-pierwszapomoc" class="section-card">
+          <h2 data-lang-part="pierwszapomocTitle"></h2>
+          <p data-lang-part="pierwszapomocContent"></p>
+          <div data-lang-part="pierwszapomocChips" class="chip-list"></div>
+        </div>
+
+        <div id="s-lekiotc" class="section-card">
+          <h2 data-lang-part="otcTitle"></h2>
+          <p data-lang-part="otcContent"></p>
+          <div data-lang-part="otcChips" class="chip-list"></div>
+        </div>
+
+        <div id="s-lekirx" class="section-card">
+          <h2 data-lang-part="rxTitle"></h2>
+          <p data-lang-part="rxContent"></p>
+          <div data-lang-part="rxChips" class="chip-list"></div>
+        </div>
+        
+        <div id="s-rehabilitacja" class="section-card">
+          <h2 data-lang-part="rehabilitacjaTitle"></h2>
+          <p data-lang-part="rehabilitacjaContent"></p>
+          <div data-lang-part="rehabilitacjaChips" class="chip-list"></div>
+        </div>
+
       </div>
-  </main>
+
+    </main>
+
+  </div>
+
+  <div id="bhLangPick">
+    <label for="bhLangSelect">Język</label>
+    <select id="bhLangSelect">
+      <option value="pl" selected>Polski (PL)</option>
+      <option value="en">English (EN)</option>
+    </select>
+  </div>
+
+  <script src="assets/main.js"></script>
 
   <script>
-    // Ustawienie domyślnego języka
-    const LANG_KEY = 'bh.lang';
-    let lang = localStorage.getItem(LANG_KEY) || (navigator.language.startsWith('en') ? 'en' : 'pl');
-    const L = () => lang;
-
-    // --- PARSOWANIE URL i ALIASY (POPRAWIONE) ---
-    // Pobiera 'typ' i 'czesc' z URL.
-    const qs=new URLSearchParams(location.search);
-    const RAW_TYP=(qs.get('typ')||'kobieta').toLowerCase();
-    // Pobierz 'czesc' lub 'area' jako fallback. Domyślnie 'glowa'.
-    const RAW_CZESC=(qs.get('czesc') || qs.get('area') || 'glowa').toLowerCase(); 
-    const RAW_LABEL=(qs.get('label')||RAW_CZESC).toString();
-
-    // Aliasy dla ujednolicenia nazw kluczy danych (jeśli np. w HTML jest 'oko' a w DB 'glowa')
-    const ALIAS={'oko':'glowa', 'klatka-piersiowa':'klatka', 'zoladek':'brzuch'};
-
-    const TYP=RAW_TYP;
-    // Skorygowana nazwa części ciała, używana jako klucz w obiekcie CONTENT
-    const CZESC=(ALIAS[RAW_CZESC]||RAW_CZESC); 
-    const LABEL=RAW_LABEL; // Label (np. "Brzuch")
-
-    // --- DANE MEDYCZNE (Przywrócone, spójne z Twoją strukturą) ---
-    
-    // ZAWSZE WŁĄCZ TU SWOJE PEŁNE DANE DLA CONTENT_PL I CONTENT_EN
-    // Poniżej jest tylko PRZYKŁAD, aby upewnić się, że struktura działa!
-
-    const CONTENT_PL = {
-      glowa: {
-        label:"Głowa, Twarz, Szyja",
-        symptoms:["Pulsujący ból głowy (migrena)","Ból uciskowy, 'opaska'","Sztywność karku (alarm!)","Zawroty głowy"],
-        causes:["Stres, zmęczenie","Nadciśnienie","Infekcja (np. zatoki)"],
-        firstaid:["Odpoczynek","Zimny okład"],
-        otc:["Paracetamol","Ibuprofen"],
-        rx:["Tryptany"],
-        rehab:["Ćwiczenia rozluźniające"],
-        urgent:["Nagły, najsilniejszy w życiu ból głowy (piorunujący)","Sztywność karku + gorączka"],
-        myths:[{m:"Bóle głowy to tylko odwodnienie", f:"Często, ale nagłe mogą być objawem udaru."},],
-        faq:[{q:"Kiedy iść do lekarza?", a:"Jeśli ból jest nowy, inny, narastający."},]
-      },
-      brzuch: {
-        label:"Brzuch, Jelita, Żołądek",
-        symptoms:[
-          "Ostry ból po prawej stronie pod żebrami (wątroba/pęcherzyk)",
-          "Ból podbrzusza (wyrostek, jajniki, pęcherz - alarm!)",
-          "Wzdęcia, gazy",
-          "Zgaga/refluks"
-        ],
-        causes:[
-          "Zatrucie pokarmowe",
-          "Zespół jelita drażliwego (IBS)",
-          "Kamica żółciowa (alarm!)",
-          "Zapalenie wyrostka (alarm!)"
-        ],
-        firstaid:[
-          "Lekkostrawna dieta (ryż, banany)",
-          "Ciepły okład na skurcze",
-          "Picie herbaty miętowej"
-        ],
-        otc:[
-          "Leki rozkurczowe (np. Drotaweryna)",
-          "Probiotyki",
-          "Leki zobojętniające kwas"
-        ],
-        rx:[
-          "Silne leki przeciwbólowe (np. Tramadol) - tylko w nagłych przypadkach",
-          "Antybiotyki (przy zakażeniu H. pylori)"
-        ],
-        rehab:[
-          "Unikanie stresu",
-          "Dieta FODMAP (przy IBS)"
-        ],
-        urgent:[
-          "Nagły, przeszywający ból w prawym dolnym kwadrancie (wyrostek) — pilnie SOR/112",
-          "Krew w stolcu lub wymiotach — pilnie SOR/112",
-          "Ból z gorączką, niemożnością oddania stolca (niedrożność) — pilnie SOR/112"
-        ],
-        myths:[
-          {m:"Ból brzucha zawsze sam przechodzi", f:"Nie zawsze, ostre stany jak wyrostek lub niedrożność wymagają natychmiastowej interwencji."},
-        ],
-        faq:[
-          {q:"Czy ból brzucha od stresu jest prawdziwy?", a:"Tak, mózg i jelita są silnie połączone (oś mózgowo-jelitowa)."}
-        ]
-      },
-      // ... UWAGA: Dodaj tutaj resztę swoich oryginalnych danych dla brzuch, serce, klatka itd.
+    const LS_KEY = 'bh.lang';
+    const dict = {
+      pl: { parts: {
+        'back': '← Wróć',
+        // DANE DOMYŚLNE DLA STRONY SZCZEGÓŁÓW
+        'tytul':'Ból/problem zdrowotny',
+        'czesc':'Nieokreślona część ciała',
+        'objawyTitle':'⚠️ Objawy',
+        'objawyContent':'Opis objawów jest dostępny w karcie specyficznej dla dolegliwości.',
+        'objawyChips':'',
+        'przyczynyTitle':'🩺 Przyczyny / Choroby',
+        'przyczynyContent':'Prawdopodobne źródła problemu są dostępne w karcie specyficznej dla dolegliwości.',
+        'przyczynyChips':'',
+        'pierwszapomocTitle':'⛑️ Pierwsza pomoc',
+        'pierwszapomocContent':'Informacje dotyczące pierwszej pomocy są dostępne w karcie specyficznej dla dolegliwości.',
+        'pierwszapomocChips':'',
+        'otcTitle':'💊 Leki OTC',
+        'otcContent':'Leki dostępne bez recepty są dostępne w karcie specyficznej dla dolegliwości.',
+        'otcChips':'',
+        'rxTitle':'💉 Leki RX',
+        'rxContent':'Leki na receptę (wymagana konsultacja) są dostępne w karcie specyficznej dla dolegliwości.',
+        'rxChips':'',
+        'rehabilitacjaTitle':'💪 Inne terapie',
+        'rehabilitacjaContent':'Wskazówki dotyczące zmiany stylu życia i leczenia nie farmakologicznego są dostępne w karcie specyficznej dla dolegliwości.',
+        'rehabilitacjaChips':'',
+      }},
+      en: { parts: {
+        'back': '← Back',
+        // DANE DOMYŚLNE DLA STRONY SZCZEGÓŁÓW
+        'tytul':'Pain/Health Problem',
+        'czesc':'Unspecified Body Part',
+        'objawyTitle':'⚠️ Symptoms',
+        'objawyContent':'Symptom description is available in the specific ailment card.',
+        'objawyChips':'',
+        'przyczynyTitle':'🩺 Causes / Diseases',
+        'przyczynyContent':'Probable sources of the problem are available in the specific ailment card.',
+        'przyczynyChips':'',
+        'pierwszapomocTitle':'⛑️ First Aid',
+        'pierwszapomocContent':'First aid information is available in the specific ailment card.',
+        'pierwszapomocChips':'',
+        'otcTitle':'💊 OTC Drugs',
+        'otcContent':'Over-the-counter medications are available in the specific ailment card.',
+        'otcChips':'',
+        'rxTitle':'💉 RX Drugs',
+        'rxContent':'Prescription medications (consultation required) are available in the specific ailment card.',
+        'rxChips':'',
+        'rehabilitacjaTitle':'💪 Other Therapies',
+        'rehabilitacjaContent':'Tips for lifestyle changes and non-pharmacological treatment are available in the specific ailment card.',
+        'rehabilitacjaChips':'',
+      }}
     };
 
-    const CONTENT_EN = {
-      // Wprowadź tutaj swoje oryginalne dane w języku angielskim
-      glowa: {
-        label:"Head, Face, Neck",
-        symptoms:["Throbbing headache (migraine)","Pressure, 'band-like' pain","Neck stiffness (alarm!)","Dizziness"],
-        causes:["Stress, fatigue","High blood pressure","Infection (e.g., sinuses)"],
-        firstaid:["Rest","Cold compress"],
-        otc:["Paracetamol","Ibuprofen"],
-        rx:["Triptans"],
-        rehab:["Stretching exercises"],
-        urgent:["Sudden, worst headache of life (thunderclap)","Neck stiffness + fever"],
-        myths:[{m:"Headaches are just dehydration", f:"Often true, but sudden, severe pain can be a symptom of a stroke."},],
-        faq:[{q:"When to see a doctor?", a:"If the pain is new, different, worsening."},]
-      },
-      brzuch: {
-        label:"Abdomen, Intestines, Stomach",
-        symptoms:[
-          "Sharp pain under the right ribs (liver/gallbladder)",
-          "Lower abdomen pain (appendix, ovaries, bladder - alarm!)",
-          "Bloating, gas",
-          "Heartburn/reflux"
-        ],
-        causes:[
-          "Food poisoning",
-          "Irritable bowel syndrome (IBS)",
-          "Gallstones (alarm!)",
-          "Appendicitis (alarm!)"
-        ],
-        firstaid:[
-          "Bland diet (rice, bananas)",
-          "Warm compress for cramps",
-          "Drinking mint tea"
-        ],
-        otc:[
-          "Antispasmodics (e.g., Drotaverine)",
-          "Probiotics",
-          "Antacids"
-        ],
-        rx:[
-          "Strong pain relievers (e.g., Tramadol) - only in emergencies",
-          "Antibiotics (for H. pylori infection)"
-        ],
-        rehab:[
-          "Stress avoidance",
-          "FODMAP diet (for IBS)"
-        ],
-        urgent:[
-          "Sudden, stabbing pain in the right lower quadrant (appendix) — urgent ER/112",
-          "Blood in stool or vomit — urgent ER/112",
-          "Pain with fever, inability to pass stool (obstruction) — urgent ER/112"
-        ],
-        myths:[
-          {m:"Stomach pain always goes away on its own", f:"Not always, acute conditions like appendicitis or obstruction require immediate intervention."},
-        ],
-        faq:[
-          {q:"Is stress-related stomach pain real?", a:"Yes, the brain and gut are strongly connected (gut-brain axis)."}
-        ]
-      }
-    };
-
-    // --- TŁUMACZENIA SEKCJI ---
-    const I18N = {
-      pl: {
-        sections: {
-          symptoms: "Objawy", causes: "Przyczyny", firstaid: "Pierwsza pomoc",
-          otc: "Leki bez recepty (OTC)", rx: "Leki na receptę (RX)",
-          rehab: "Rehabilitacja / Profilaktyka", urgent: "🔴 Objawy Alarmowe (Czerwone Flagi)",
-          myths: "❌ Mity medyczne", faq: "❓ FAQ (Pytania i Odpowiedzi)"
-        }
-      },
-      en: {
-        sections: {
-          symptoms: "Symptoms", causes: "Causes", firstaid: "First Aid",
-          otc: "Over-the-Counter (OTC)", rx: "Prescription Drugs (RX)",
-          rehab: "Rehabilitation / Prevention", urgent: "🔴 Urgent Symptoms (Red Flags)",
-          myths: "❌ Medical Myths", faq: "❓ FAQ (Questions and Answers)"
-        }
-      }
-    };
-
-    // --- LOGIKA GENEROWANIA TREŚCI (Przywrócona do stanu roboczego) ---
-    const CONTENT = (L() === 'en') ? CONTENT_EN : CONTENT_PL;
-    const TRANSLATIONS = I18N[L()].sections;
-    const DATA = CONTENT[CZESC];
-    
-    if (DATA) {
-      document.getElementById('page-title').textContent = (L() === 'pl' ? 'Szczegóły: ' : 'Details: ') + DATA.label;
-      const container = document.getElementById('content-sections');
-      container.innerHTML = '';
-      
-      // Definicja kolejności sekcji
-      const SECTION_ORDER = ['symptoms', 'causes', 'firstaid', 'otc', 'rx', 'rehab', 'urgent', 'myths', 'faq'];
-
-      // Funkcja renderująca listy (Objawy, Przyczyny, Leki...)
-      const renderList = (items) => {
-        if (!items || items.length === 0) return '';
-        let html = '<ul class="list">';
-        items.forEach(item => {
-          if (typeof item === 'string') {
-            html += `<li>${item}</li>`;
-          } else if (item.t) { 
-            // Obsługa formatu z tagami (jeśli go używałeś/aś)
-            html += `<li data-audience="${item.audience || 'all'}">${item.t}</li>`;
-          }
-        });
-        html += '</ul>';
-        return html;
-      };
-
-      // Funkcja renderująca Mity
-      const renderMyths = (items) => {
-        if (!items || items.length === 0) return '';
-        let html = '<div class="list">';
-        items.forEach(item => {
-          html += `<div class="myth-item"><strong>Mit: ${item.m}</strong><span>${item.f}</span></div>`;
-        });
-        html += '</div>';
-        return html;
-      };
-
-      // Funkcja renderująca FAQ
-      const renderFAQ = (items) => {
-        if (!items || items.length === 0) return '';
-        let html = '<div class="list">';
-        items.forEach(item => {
-          html += `<div class="faq-item"><strong>${item.q}</strong><span>${item.a}</span></div>`;
-        });
-        html += '</div>';
-        return html;
-      };
-
-      // Rysowanie sekcji w ustalonej kolejności
-      SECTION_ORDER.forEach(key => {
-        const data = DATA[key];
-        if (data && (Array.isArray(data) && data.length > 0 || !Array.isArray(data))) {
-          const section = document.createElement('section');
-          section.id = `s-${key}`;
-          section.className = 'card';
-
-          // Jeśli to sekcja RX, dodaj data-rx dla skryptu copilot.js
-          if (key === 'rx' && data.length > 0) {
-            section.setAttribute('data-rx', 'true');
-          }
-
-          section.innerHTML = `<h2>${TRANSLATIONS[key]}</h2>`;
-          
-          if (key === 'myths') {
-            section.innerHTML += renderMyths(data);
-          } else if (key === 'faq') {
-            section.innerHTML += renderFAQ(data);
-          } else {
-            section.innerHTML += renderList(data);
-          }
-
-          container.appendChild(section);
-        }
-      });
-      
-    } else {
-      // Wyświetlanie błędu braku danych, jeśli klucz nie pasuje
-      document.getElementById('page-title').textContent = (L() === 'pl' ? 'Brak Danych' : 'No Data');
-      document.getElementById('content-sections').innerHTML = '<p class="card" style="color:var(--danger)">' + (L() === 'pl' ? 'Brak szczegółowych danych dla części ciała: ' : 'No details available for body part: ') + CZESC + ' (' + RAW_CZESC + ')</p>';
-    }
-
-    /* ====== Twoje funkcje z _szczegoly.html_ - PRZYKŁAD ODTWORZENIA FUNKCJI RX ====== */
-    // Musisz przywrócić wszystkie dodatkowe funkcje z tego pliku, jeśli miałeś/aś je poniżej skryptu głównego
-    // Przykład funkcji, która dodaje nakładkę, gdy jest RX
     (function(){
-      const el = document.getElementById('s-rx');
-      if (!el || el.dataset.rx !== 'true') return;
+      let lang = localStorage.getItem(LS_KEY) || 'pl';
+      const sel = document.getElementById('bhLangSelect');
+      const lab = sel ? document.querySelector('label[for="'+sel.id+'"]') : null;
+      const back = document.getElementById('bhBackMini');
+      // Pobierz część ciała z URL np. ?czesc=kolano
+      const partKey = new URLSearchParams(window.location.search).get('czesc'); 
 
-      const objawyEl = document.getElementById('s-objawy');
-      if (objawyEl) {
-        objawyEl.setAttribute('data-rx', 'true');
+      function getSectionData(sectionKey, langCode) {
+          // ZMIENIONY SŁOWNIK DANYCH DLA RÓŻNYCH KAFLI
+          const data = {
+              'uszy': { 
+                  'pl': {
+                      'tytul': 'Ból ucha', 'czesc': 'Uszy', 
+                      'objawyContent': 'Gorączka, kłujący ból, szumy uszne (szczególnie w nocy). Może wystąpić problem ze słuchem.', 
+                      'objawyChips': '<span class="chip">Gorączka</span><span class="chip">Kłujący ból</span><span class="chip">Szumy uszne</span>', 
+                      'przyczynyContent': 'Najczęściej: Zapalenie ucha środkowego lub zewnętrznego, infekcja wirusowa, nadmiar woskowiny.', 
+                      'przyczynyChips': '<span class="chip">Zapalenie ucha środkowego</span><span class="chip">Infekcja wirusowa</span>', 
+                      'otcContent': 'Krople przeciwbólowe do ucha, leki przeciwzapalne (np. Ibuprofen).',
+                      'otcChips': '<span class="chip">Krople przeciwbólowe do ucha</span><span class="chip">Ibuprofen</span>'
+                  },
+                  'en': {
+                      'tytul': 'Earache', 'czesc': 'Ears', 
+                      'objawyContent': 'Fever, stabbing pain, tinnitus (especially at night). Hearing problems may occur.', 
+                      'objawyChips': '<span class="chip">Fever</span><span class="chip">Stabbing pain</span><span class="chip">Tinnitus</span>', 
+                      'przyczynyContent': 'Most common: Middle or outer ear infection, viral infection, excess earwax.', 
+                      'przyczynyChips': '<span class="chip">Middle ear infection</span><span class="chip">Viral infection</span>', 
+                      'otcContent': 'Pain relieving ear drops, anti-inflammatory drugs (e.g., Ibuprofen).',
+                      'otcChips': '<span class="chip">Pain relieving ear drops</span><span class="chip">Ibuprofen</span>'
+                  }
+              },
+              'kolano': { 
+                  'pl': {
+                      'tytul': 'Ból kolana', 'czesc': 'Kolano', 
+                      'objawyContent': 'Obrzęk, sztywność, ból nasilający się przy zginaniu lub prostowaniu. Czasem uczucie niestabilności.', 
+                      'objawyChips': '<span class="chip">Obrzęk</span><span class="chip">Sztywność</span><span class="chip">Ból przy ruchu</span>', 
+                      'przyczynyContent': 'Urazy łąkotki lub więzadeł, choroba zwyrodnieniowa (artroza), zapalenie kaletki.', 
+                      'przyczynyChips': '<span class="chip">Uraz łąkotki/więzadeł</span><span class="chip">Artroza</span>', 
+                      'rehabilitacjaContent': 'Ćwiczenia wzmacniające mięśnie czworogłowe i ścięgna. Fizjoterapia, krioterapia.', 
+                      'rehabilitacjaChips': '<span class="chip">Fizjoterapia</span><span class="chip">Ćwiczenia wzmacniające</span>'
+                  },
+                  'en': {
+                      'tytul': 'Knee Pain', 'czesc': 'Knee', 
+                      'objawyContent': 'Swelling, stiffness, pain that worsens when bending or straightening. Sometimes a feeling of instability.', 
+                      'objawyChips': '<span class="chip">Swelling</span><span class="chip">Stiffness</span><span class="chip">Pain on movement</span>', 
+                      'przyczynyContent': 'Meniscus or ligament injuries, osteoarthritis (arthrosis), bursitis.', 
+                      'przyczynyChips': '<span class="chip">Meniscus/Ligament injury</span><span class="chip">Arthrosis</span>', 
+                      'rehabilitacjaContent': 'Exercises to strengthen the quadriceps muscles and tendons. Physiotherapy, cryotherapy.', 
+                      'rehabilitacjaChips': '<span class="chip">Physiotherapy</span><span class="chip">Strengthening exercises</span>'
+                  }
+              },
+              'ciaza': { 
+                  'pl': {
+                      'tytul': 'Dolegliwości w ciąży', 'czesc': 'Kobieta & Ciąża', 
+                      'objawyContent': 'Nudności (poranne), obrzęki nóg i stóp, skurcze Braxtona-Hicksa, zgaga.', 
+                      'objawyChips': '<span class="chip">Nudności</span><span class="chip">Obrzęki</span><span class="chip">Skurcze</span>', 
+                      'przyczynyContent': 'Gwałtowne zmiany hormonalne, powiększająca się macica naciskająca na narządy, zwiększona objętość krwi.', 
+                      'przyczynyChips': '<span class="chip">Zmiany hormonalne</span><span class="chip">Ucisk macicy</span>', 
+                      'pierwszapomocContent': 'Odpowiednie nawodnienie, lekkostrawna dieta (na nudności), unoszenie nóg (na obrzęki).', 
+                      'pierwszapomocChips': '<span class="chip">Nawodnienie</span><span class="chip">Lekkostrawna dieta</span>',
+                      'rxContent': 'Leki na receptę tylko po konsultacji z ginekologiem-położnikiem.'
+                  },
+                  'en': {
+                      'tytul': 'Pregnancy Ailments', 'czesc': 'Woman & Pregnancy', 
+                      'objawyContent': 'Nausea (morning sickness), swelling of legs and feet, Braxton-Hicks contractions, heartburn.', 
+                      'objawyChips': '<span class="chip">Nausea</span><span class="chip">Swelling</span><span class="chip">Contractions</span>', 
+                      'przyczynyContent': 'Rapid hormonal changes, enlarged uterus pressing on organs, increased blood volume.', 
+                      'przyczynyChips': '<span class="chip">Hormonal changes</span><span class="chip">Uterine pressure</span>', 
+                      'pierwszapomocContent': 'Proper hydration, easily digestible diet (for nausea), elevating legs (for swelling).', 
+                      'pierwszapomocChips': '<span class="chip">Hydration</span><span class="chip">Light diet</span>',
+                      'rxContent': 'Prescription medications only after consultation with an obstetrician-gynecologist.'
+                  }
+              },
+              // Wprowadź inne kafelki tutaj...
+              'glowa': {'pl': {'tytul': 'Ból głowy', 'czesc': 'Głowa', 'objawyContent': 'Pulsujący ból, wrażliwość na światło i dźwięk.', 'objawyChips': '<span class="chip">Pulsujący ból</span><span class="chip">Światłowstręt</span>', 'przyczynyChips': '<span class="chip">Migrena</span><span class="chip">Ból napięciowy</span>', 'otcChips': '<span class="chip">Paracetamol</span><span class="chip">Ibuprofen</span>'}, 'en': {'tytul': 'Headache', 'czesc': 'Head', 'objawyContent': 'Pulsating pain, sensitivity to light and sound.', 'objawyChips': '<span class="chip">Pulsating pain</span><span class="chip">Photophobia</span>', 'przyczynyChips': '<span class="chip">Migraine</span><span class="chip">Tension headache</span>', 'otcChips': '<span class="chip">Paracetamol</span><span class="chip">Ibuprofen</span>'}},
+              'szyja': {'pl': {'tytul': 'Ból szyi', 'czesc': 'Szyja', 'objawyContent': 'Ograniczona ruchomość, sztywność, ból promieniujący do barku.', 'objawyChips': '<span class="chip">Sztywność</span><span class="chip">Ograniczenie ruchu</span>', 'przyczynyChips': '<span class="chip">Zwyrodnienia kręgosłupa</span><span class="chip">Przeciążenie mięśni</span>', 'rehabilitacjaChips': '<span class="chip">Kinezyterapia</span><span class="chip">Ciepłe okłady</span>'}, 'en': {'tytul': 'Neck Pain', 'czesc': 'Neck', 'objawyContent': 'Limited mobility, stiffness, pain radiating to the shoulder.', 'objawyChips': '<span class="chip">Stiffness</span><span class="chip">Limited movement</span>', 'przyczynyChips': '<span class="chip">Spinal degeneration</span><span class="chip">Muscle strain</span>', 'rehabilitacjaChips': '<span class="chip">Kinesiotherapy</span><span class="chip">Warm compresses</span>'}},
+              'klatka': {'pl': {'tytul': 'Ból klatki piersiowej', 'czesc': 'Klatka Piersiowa', 'objawyContent': 'Ucisk w klatce piersiowej, duszności, ból za mostkiem.', 'objawyChips': '<span class="chip">Ucisk</span><span class="chip">Duszności</span>', 'przyczynyChips': '<span class="chip">Zawał serca</span><span class="chip">Nerwoból</span>', 'pierwszapomocContent': 'Natychmiast wezwij pogotowie (112/999). Ułóż w pozycji półsiedzącej.', 'pierwszapomocChips': '<span class="chip">Wezwij pogotowie!</span>'}, 'en': {'tytul': 'Chest Pain', 'czesc': 'Chest', 'objawyContent': 'Chest pressure, shortness of breath, retrosternal pain.', 'objawyChips': '<span class="chip">Pressure</span><span class="chip">Shortness of breath</span>', 'przyczynyChips': '<span class="chip">Heart attack</span><span class="chip">Neuralgia</span>', 'pierwszapomocContent': 'Call emergency services immediately (112/999). Place in a semi-sitting position.', 'pierwszapomocChips': '<span class="chip">Call emergency!</span>'}},
+              'plecy': {'pl': {'tytul': 'Ból pleców', 'czesc': 'Plecy', 'objawyContent': 'Ból promieniujący do nogi (rwa kulszowa), sztywność poranna.', 'objawyChips': '<span class="chip">Promieniowanie do nogi</span><span class="chip">Sztywność</span>', 'przyczynyChips': '<span class="chip">Rwa kulszowa</span><span class="chip">Dyskopatia</span>', 'otcChips': '<span class="chip">Leki przeciwbólowe</span><span class="chip">Maści rozgrzewające</span>'}, 'en': {'tytul': 'Back Pain', 'czesc': 'Back', 'objawyContent': 'Pain radiating down the leg (sciatica), morning stiffness.', 'objawyChips': '<span class="chip">Radiating to leg</span><span class="chip">Stiffness</span>', 'przyczynyChips': '<span class="chip">Sciatica</span><span class="chip">Discopathy</span>', 'otcChips': '<span class="chip">Pain relievers</span><span class="chip">Warming ointments</span>'}},
+              'piersi': {'pl': {'tytul': 'Ból piersi', 'czesc': 'Piersi', 'objawyContent': 'Guzek, wydzielina z brodawki, zaczerwienienie, ból cykliczny.', 'objawyChips': '<span class="chip">Guzek</span><span class="chip">Wydzielina</span>', 'przyczynyChips': '<span class="chip">Zmiany hormonalne</span><span class="chip">Zapalenie</span>', 'rehabilitacjaContent': 'Regularne samobadanie piersi. Konsultacja lekarska.', 'rehabilitacjaChips': '<span class="chip">Samobadanie</span>'}, 'en': {'tytul': 'Breast Pain', 'czesc': 'Breasts', 'objawyContent': 'Lump, nipple discharge, redness, cyclical pain.', 'objawyChips': '<span class="chip">Lump</span><span class="chip">Discharge</span>', 'przyczynyChips': '<span class="chip">Hormonal changes</span><span class="chip">Inflammation</span>', 'rehabilitacjaContent': 'Regular breast self-examination. Medical consultation.', 'rehabilitacjaChips': '<span class="chip">Self-examination</span>'}},
+              'brzuch': {'pl': {'tytul': 'Ból brzucha', 'czesc': 'Brzuch', 'objawyContent': 'Silna kolka, wymioty, gorączka, twardy brzuch.', 'objawyChips': '<span class="chip">Silna kolka</span><span class="chip">Wymioty</span>', 'przyczynyChips': '<span class="chip">Zapalenie wyrostka</span><span class="chip">Kamica</span>', 'pierwszapomocContent': 'Nie podawaj jedzenia ani picia. Niezwłocznie do lekarza.', 'pierwszapomocChips': '<span class="chip">Nie jeść/pić</span>'}, 'en': {'tytul': 'Abdominal Pain', 'czesc': 'Abdomen', 'objawyContent': 'Severe colic, vomiting, fever, hard abdomen.', 'objawyChips': '<span class="chip">Severe colic</span><span class="chip">Vomiting</span>', 'przyczynyChips': '<span class="chip">Appendicitis</span><span class="chip">Gallstones</span>', 'pierwszapomocContent': 'Do not give food or drink. See a doctor immediately.', 'pierwszapomocChips': '<span class="chip">Do not eat/drink</span>'}},
+              'miednica': {'pl': {'tytul': 'Ból miednicy', 'czesc': 'Miednica', 'objawyContent': 'Przewlekły ból podbrzusza, ból podczas stosunku (dyspareunia).', 'objawyChips': '<span class="chip">Ból podbrzusza</span><span class="chip">Dyspareunia</span>', 'przyczynyChips': '<span class="chip">Endometrioza</span><span class="chip">Zapalenie miednicy</span>', 'rxChips': '<span class="chip">Hormony</span><span class="chip">Antybiotyki</span>'}, 'en': {'tytul': 'Pelvic Pain', 'czesc': 'Pelvis', 'objawyContent': 'Chronic lower abdominal pain, pain during intercourse (dyspareunia).', 'objawyChips': '<span class="chip">Lower abdominal pain</span><span class="chip">Dyspareunia</span>', 'przyczynyChips': '<span class="chip">Endometriosis</span><span class="chip">Pelvic inflammation</span>', 'rxChips': '<span class="chip">Hormones</span><span class="chip">Antibiotics</span>'}},
+              'rece': {'pl': {'tytul': 'Ból ręki', 'czesc': 'Ręce', 'objawyContent': 'Drętwienie, mrowienie palców, osłabienie chwytu (kciuk).', 'objawyChips': '<span class="chip">Drętwienie palców</span><span class="chip">Osłabienie chwytu</span>', 'przyczynyChips': '<span class="chip">Zespół cieśni nadgarstka</span><span class="chip">Urazy</span>', 'rehabilitacjaChips': '<span class="chip">Szynowanie</span><span class="chip">Ćwiczenia</span>'}, 'en': {'tytul': 'Hand/Arm Pain', 'czesc': 'Arms/Hands', 'objawyContent': 'Numbness, tingling fingers, weak grip (thumb).', 'objawyChips': '<span class="chip">Finger numbness</span><span class="chip">Weak grip</span>', 'przyczynyChips': '<span class="chip">Carpal tunnel syndrome</span><span class="chip">Injuries</span>', 'rehabilitacjaChips': '<span class="chip">Splinting</span><span class="chip">Exercises</span>'}},
+              'nogi': {'pl': {'tytul': 'Ból nogi', 'czesc': 'Nogi', 'objawyContent': 'Obrzęk jednej nogi, ból w łydce, zaczerwienienie skóry, ciepło.', 'objawyChips': '<span class="chip">Obrzęk</span><span class="chip">Ból łydki</span>', 'przyczynyChips': '<span class="chip">Zakrzepica żył głębokich</span><span class="chip">Żylaki</span>', 'pierwszapomocContent': 'W przypadku podejrzenia zakrzepicy, bezwzględny zakaz masowania! Ułóż się i nie ruszaj.', 'pierwszapomocChips': '<span class="chip">Nie masować</span>'}, 'en': {'tytul': 'Leg Pain', 'czesc': 'Legs', 'objawyContent': 'Swelling of one leg, calf pain, skin redness, warmth.', 'objawyChips': '<span class="chip">Swelling</span><span class="chip">Calf pain</span>', 'przyczynyChips': '<span class="chip">Deep vein thrombosis</span><span class="chip">Varicose veins</span>', 'pierwszapomocContent': 'If deep vein thrombosis is suspected, absolutely no massaging! Lie down and do not move.', 'pierwszapomocChips': '<span class="chip">Do not massage</span>'}},
+              // ... wszystkie kafelki zostały wstawione
+          };
+
+          // Uzupełnij brakujące dane domyślnymi
+          const defaultData = dict[langCode].parts;
+          const sectionData = data[sectionKey] ? data[sectionKey][langCode] : {};
+          return { ...defaultData, ...sectionData };
+      }
+
+      function apply(){
+        document.documentElement.setAttribute('data-lang', lang);
+        
+        // Wczytaj dane specyficzne dla sekcji
+        const data = getSectionData(partKey, lang);
+
+        // Ustaw domyślne stałe teksty i teksty sekcji
+        document.querySelectorAll('[data-lang-part]').forEach(el=>{
+          const part = el.getAttribute('data-lang-part');
+          try{ 
+            const content = data[part] || dict[lang].parts[part];
+            if(content !== undefined){
+              // Jeśli to treść HTML (np. chipsy), użyj innerHTML, w przeciwnym razie textContent
+              if(part.endsWith('Chips')){
+                el.innerHTML = content;
+              } else {
+                el.textContent = content;
+              }
+            }
+          }catch(e){}
+        });
+
+        if(lab){ lab.textContent = (lang==='en' ? 'Language' : 'Język'); }
+        if(sel){ sel.value = lang; }
+        if(back){ back.textContent = (lang==='en' ? '← Back' : '← Wróć'); }
+      }
+
+      function setLang(l){
+        if(!dict[l]) return;
+        lang = l;
+        localStorage.setItem(LS_KEY, lang);
+        apply();
+      }
+
+      if(sel){
+        sel.addEventListener('change', function(){ setLang(sel.value); });
       }
       
-      // UWAGA: Stary mechanizm klonowania pseudoelementów jest tu wyłączony,
-      // ponieważ użyłeś/aś go już w CSS (patrz sekcja <style> na górze: #s-objawy[data-rx]::before).
-      // Jeśli chcesz go przywrócić, musisz go dodać tu poniżej.
-      
+      // Powrót
+      if(back){ back.onclick = ()=>window.history.back(); }
+
+      apply();
     })();
-    /* =============================================================================== */
   </script>
+
 </body>
 </html>
