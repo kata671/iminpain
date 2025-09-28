@@ -2740,7 +2740,7 @@ strefa_mezczyzna: {
     const RAW_TYP=(qs.get('typ')||'kobieta').toLowerCase();
     const RAW_CZESC=(qs.get('czesc')||'glowa').toLowerCase();
     const RAW_LABEL=(qs.get('label')||RAW_CZESC).toString();
-    const ALIAS={'oko':'glowa','klatka-piersiowa':'klatka','zoladek':'brzuch'};
+    const ALIAS={'klatka-piersiowa':'klatka','zoladek':'brzuch'};
     const TYP=RAW_TYP, CZESC=(ALIAS[RAW_CZESC]||RAW_CZESC), LABEL=RAW_LABEL;
 
     /* --- zastosowanie i18n do UI (tylko nagłówki/teksty, nie listy) --- */
@@ -2792,7 +2792,7 @@ strefa_mezczyzna: {
     const __qs = new URLSearchParams(window.location.search || '');
 const __typ = (__qs.get('typ') || (typeof TYP!=='undefined'?TYP:'') || '').toLowerCase();
 const __key = (CZESC==='strefa' && (__typ==='kobieta' || __typ==='mezczyzna')) ? ('strefa_'+__typ) : CZESC;
-const entry = CONTENT[__key] || CONTENT[CZESC] || CONTENT.glowa;
+const entry = CONTENT[__key] || CONTENT[CZESC] || { label: LABEL, symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] };
     document.getElementById('label-text').innerHTML='<b>'+(entry.label||LABEL)+'</b> • '+TYP;
 
     /* --- helpers / scoring --- */
