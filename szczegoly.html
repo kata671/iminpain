@@ -2813,7 +2813,7 @@ strefa: {
 
     /* --- wybór contentu wg języka i części ciała --- */
     const CONTENT=(L()==='en')?CONTENT_EN:CONTENT_PL;
-    const entry = CONTENT[CZESC] || CONTENT.glowa;
+    const entry = CONTENT[CZESC] || { label: LABEL, symptoms:[], urgent:[], causes:[], firstaid:[], otc:[], rx:[], rehab:[], myths:[], faq:[] };
     document.getElementById('label-text').innerHTML='<b>'+(entry.label||LABEL)+'</b> • '+TYP;
 
     /* --- helpers / scoring --- */
