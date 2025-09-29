@@ -5972,5 +5972,88 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }
 })();
 </script>
+
+    <script>
+    /* BH_I18N_UI_STRINGS */
+    (function(){
+      try{
+        var LS_KEY='bh.lang';
+        function getLang(){
+          var v=(localStorage.getItem(LS_KEY) || document.documentElement.getAttribute('lang') || 'pl').toLowerCase();
+          return (v==='en')?'en':'pl';
+        }
+        var UI = {
+          pl: {
+            symptoms: 'Objawy',
+            urgent: 'Pilne',
+            causes: 'Możliwe przyczyny',
+            firstaid: 'Pierwsza pomoc',
+            otc: 'Leki bez recepty',
+            rx: 'Leczenie',
+            rehab: 'Rehabilitacja',
+            myths: 'Mity i fakty',
+            faq: 'FAQ',
+            dx: 'Możliwe rozpoznania',
+            docs: 'Lekarze i pomoc'
+          },
+          en: {
+            symptoms: 'Symptoms',
+            urgent: 'Urgent',
+            causes: 'Possible causes',
+            firstaid: 'First aid',
+            otc: 'OTC medicines',
+            rx: 'Treatment',
+            rehab: 'Rehabilitation',
+            myths: 'Myths & facts',
+            faq: 'FAQ',
+            dx: 'Likely diagnoses',
+            docs: 'Doctors & help'
+          }
+        };
+        // Known Polish headings we might see – used to map text nodes safely
+        var POLISH = {
+          'Objawy':'symptoms',
+          'Pilne':'urgent',
+          'Możliwe przyczyny':'causes',
+          'Pierwsza pomoc':'firstaid',
+          'Leki bez recepty':'otc',
+          'Leczenie':'rx',
+          'Rehabilitacja':'rehab',
+          'Mity i fakty':'myths',
+          'FAQ':'faq',
+          'Możliwe rozpoznania':'dx',
+          'Lekarze i pomoc':'docs'
+        };
+        function relabel(){
+          var lang=getLang();
+          var map=UI[lang];
+          // 1) Try data-ui on headings if they exist
+          document.querySelectorAll('[data-ui]').forEach(function(el){
+            var key=el.getAttribute('data-ui');
+            if(map[key]) el.textContent=map[key];
+          });
+          // 2) Fallback: replace by exact heading text matches (safe, only section headers)
+          var sel='h1,h2,h3,h4,.card-title,.section-title,.bh-title,.bh-sec-title';
+          document.querySelectorAll(sel).forEach(function(el){
+            var txt=(el.textContent||'').trim();
+            if(POLISH[txt]){
+              var key=POLISH[txt];
+              if(map[key]) el.textContent=map[key];
+            }
+          });
+          // Sync <html lang>
+          document.documentElement.setAttribute('lang', lang);
+        }
+        if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', relabel); } else { relabel(); }
+        // React on language selector if present
+        var sel=document.getElementById('bhLangSelect');
+        if(sel){ sel.addEventListener('change', function(){ localStorage.setItem(LS_KEY, this.value); relabel(); }); }
+        // Also observe URL changes in case SPA-like nav updates content
+        var mo=new MutationObserver(function(){ relabel(); });
+        mo.observe(document.body, {childList:true, subtree:true});
+      }catch(e){/* silent */}
+    })();
+    </script>
+    
 </body>
 </html>
