@@ -4349,5 +4349,61 @@ document.addEventListener("DOMContentLoaded", ()=>{
 </script>
 <script src="assets/patch-zeby-docs.js"></script>
 <script src="assets/patch-zeby-specialists.js"></script>
+<script>
+/* BH_NO_MIX_CONSERVATIVE — nie miesza języków, nie rusza układu */
+(function(){
+  try{
+    var lang=(localStorage.getItem('bh.lang')||document.documentElement.getAttribute('lang')||'pl').toLowerCase();
+    if(lang!=='en' && lang!=='pl') lang='pl';
+
+    // Oczekujemy, że Twój plik ma CONTENT_PL i CONTENT_EN tak jak wcześniej
+    var _EN=(typeof CONTENT_EN!=='undefined')?CONTENT_EN:{};
+    var _PL=(typeof CONTENT_PL!=='undefined')?CONTENT_PL:{};
+
+    // Renderer oczekuje globalnego CONTENT – kopiujemy wybrany słownik,
+    // żeby niczego nie zepsuć w istniejącym kodzie:
+    function shallowCopy(o){ var r={}; for(var k in o) if(Object.prototype.hasOwnProperty.call(o,k)) r[k]=o[k]; return r; }
+    window.CONTENT = (lang==='en') ? shallowCopy(_EN) : shallowCopy(_PL);
+
+    // Weź parametry z URL:
+    var qs=new URLSearchParams(location.search||'');
+    var typ =(qs.get('typ')||'').toLowerCase();
+    var czesc=(qs.get('czesc')||'').toLowerCase();
+    var KEY = (czesc==='strefa' && (typ==='kobieta'||typ==='mezczyzna')) ? ('strefa_'+typ) : czesc;
+
+    // Funkcja: czy EN kompletne dla tej części?
+    function isComplete(e){
+      if(!e) return false;
+      var fields=['symptoms','urgent','causes','firstaid','otc','rx','rehab','myths','faq','dx','docs'];
+      for(var i=0;i<fields.length;i++){
+        var a=e[fields[i]];
+        if(!a || !Array.isArray(a) || a.length===0) return false;
+      }
+      return !!e.label;
+    }
+
+    if(lang==='en'){
+      var eEN=_EN[KEY] || _EN[czesc] || null;
+      var ePL=_PL[KEY] || _PL[czesc] || null;
+      // Jeśli EN niekompletne, podmień TYLKO tę jedną część w globalnym CONTENT na PL (unikamy miksu):
+      if(!isComplete(eEN) && ePL){ window.CONTENT[KEY]=ePL; }
+    }
+
+    // Ustaw nagłówek i okruszki na bazie finalnego CONTENT:
+    var entry = window.CONTENT[KEY] || window.CONTENT[czesc] || window.CONTENT.glowa || null;
+    var lblNode=document.getElementById('label-text');
+    if(lblNode){
+      var lbl=(entry && entry.label) ? entry.label : (qs.get('label')||czesc||'');
+      var typTxt=typ?(' • '+typ):'';
+      lblNode.innerHTML = '<b>'+lbl+'</b>'+typTxt;
+    }
+    var ct=document.getElementById('crumb-typ');  if(ct) ct.textContent = typ || '—';
+    var cl=document.getElementById('crumb-label');if(cl) cl.textContent = (entry&&entry.label)?entry.label:(qs.get('label')||czesc||'—');
+
+    // Flag do debug (nie wpływa na UI)
+    window.__BH_NO_MIX_ACTIVE = true;
+  }catch(e){/* silent */ }
+})();
+</script>
 </body>
 </html>
