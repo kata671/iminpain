@@ -301,5 +301,45 @@
     outline-offset: 2px;
   }
 </style>
+
+    <script>
+    /* BH_PARTS_I18N_M */
+    (function(){
+      try{
+        var LS_KEY='bh.lang';
+        var lang=(localStorage.getItem(LS_KEY)||document.documentElement.getAttribute('lang')||'pl').toLowerCase();
+        var PARTS={
+          en:{glowa:'Head', oko:'Eye', nos:'Nose', uszy:'Ears', zeby:'Teeth', szyja:'Neck', gardlo:'Throat',
+               klatka:'Chest', plecy:'Back', brzuch:'Abdomen', biodra:'Hips', udo:'Thigh', kolano:'Knee',
+               lydka:'Calf', kostka:'Ankle', stopy:'Feet', serce:'Heart', pluca:'Lungs', watroba:'Liver',
+               zoladek:'Stomach', nerki:'Kidneys', strefa:'Intimate area'},
+          pl:{glowa:'Głowa', oko:'Oko', nos:'Nos', uszy:'Uszy', zeby:'Zęby', szyja:'Szyja', gardlo:'Gardło',
+               klatka:'Klatka', plecy:'Plecy', brzuch:'Brzuch', biodra:'Biodra', udo:'Udo', kolano:'Kolano',
+               lydka:'Łydka', kostka:'Kostka', stopy:'Stopy', serce:'Serce', pluca:'Płuca', watroba:'Wątroba',
+               zoladek:'Żołądek', nerki:'Nerki', strefa:'Strefa intymna'}
+        };
+        function apply(){
+          try{
+            var d=PARTS[lang]||PARTS.pl;
+            document.querySelectorAll('#bhThumbs a.thumb').forEach(function(a){
+              var href=a.getAttribute('href')||'';
+              var m=href.match(/[?&]czesc=([a-z]+)/i);
+              if(!m) return;
+              var key=m[1].toLowerCase();
+              var lab=d[key];
+              if(!lab) return;
+              var s=a.querySelector('span'); if(s) s.textContent=lab;
+              var img=a.querySelector('img'); if(img) img.alt=lab;
+            });
+            document.documentElement.setAttribute('lang',lang);
+          }catch(e){}
+        }
+        if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', apply); } else { apply(); }
+        var sel=document.getElementById('bhLangSelect');
+        if(sel){ sel.addEventListener('change', function(){ lang=this.value.toLowerCase(); localStorage.setItem(LS_KEY, lang); apply(); }); }
+      }catch(e){}
+    })();
+    </script>
+    
 </body>
 </html>
