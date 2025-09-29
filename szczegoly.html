@@ -5972,5 +5972,99 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }
 })();
 </script>
+
+<script>
+/* BH_UI_STRINGS_ENFORCER */
+(function(){
+  try{
+    var LS_KEY='bh.lang';
+    function getLang(){
+      var v=(localStorage.getItem(LS_KEY)||document.documentElement.getAttribute('lang')||'pl').toLowerCase();
+      return (v==='en')?'en':'pl';
+    }
+    var UI = {
+      pl: {
+        tabs: { symptoms:'Objawy', causes:'Możliwe przyczyny', firstaid:'Pierwsza pomoc', otc:'Leki bez recepty',
+                rx:'Leczenie', rehab:'Rehabilitacja', myths:'Mity i fakty', faq:'FAQ', dx:'Możliwe rozpoznania', docs:'Lekarze i pomoc' },
+        table: { symptom:'Objaw', severity:'Nasilenie', duration:'Czas trwania', typical:'Typowe objawy' },
+        chips: { mild:'Łagodne', moderate:'Umiarkowane', severe:'Silne' },
+        actions: { meds:'Leki', rehab:'Rehabilitacja' }
+      },
+      en: {
+        tabs: { symptoms:'Symptoms', causes:'Possible causes', firstaid:'First aid', otc:'OTC medicines',
+                rx:'Treatment', rehab:'Rehabilitation', myths:'Myths & facts', faq:'FAQ', dx:'Likely diagnoses', docs:'Doctors & help' },
+        table: { symptom:'Symptom', severity:'Severity', duration:'Duration', typical:'Typical symptoms' },
+        chips: { mild:'Mild', moderate:'Moderate', severe:'Severe' },
+        actions: { meds:'Medicines', rehab:'Rehabilitation' }
+      }
+    };
+
+    function relabel(){
+      var lang=getLang(), T=UI[lang];
+      document.documentElement.setAttribute('lang', lang);
+
+      // Tabs
+      document.querySelectorAll('.tabs .tab, .bh-tabs .tab, [data-ui-tab]').forEach(function(el){
+        var id=(el.getAttribute('data-target')||'').replace('#','') || el.getAttribute('data-ui-tab') || '';
+        var map = {
+          's-objawy':'symptoms','s-przyczyny':'causes','s-aid':'firstaid','s-otc':'otc','s-rx':'rx',
+          's-rehab':'rehab','s-mity':'myths','s-faq':'faq','s-dx':'dx','s-docs':'docs',
+          's-symptoms':'symptoms','s-causes':'causes','s-firstaid':'firstaid','s-otc':'otc','s-treatment':'rx','s-rehabilitation':'rehab'
+        };
+        var key = map[id];
+        if(key && T.tabs[key]) el.textContent = T.tabs[key];
+      });
+
+      // Table headers in "Objawy" card
+      var headerMap = {
+        'objaw': T.table.symptom, 'symptom': T.table.symptom,
+        'nasilenie': T.table.severity, 'severity': T.table.severity,
+        'czas trwania': T.table.duration, 'duration': T.table.duration,
+        'typowe objawy': T.table.typical, 'typical symptoms': T.table.typical
+      };
+      document.querySelectorAll('table th, .symptoms-table th, .bh-table th').forEach(function(th){
+        var txt=(th.textContent||'').trim().toLowerCase();
+        if(headerMap[txt]) th.textContent = headerMap[txt];
+      });
+
+      // Chips/badges
+      var chipMap = {
+        'łagodne': T.chips.mild, 'mild': T.chips.mild,
+        'umiarkowane': T.chips.moderate, 'moderate': T.chips.moderate,
+        'silne': T.chips.severe, 'severe': T.chips.severe
+      };
+      document.querySelectorAll('.chip, .badge, .pill, .severity .tag').forEach(function(el){
+        var txt=(el.textContent||'').trim().toLowerCase();
+        if(chipMap[txt]) el.textContent = chipMap[txt];
+      });
+
+      // Action buttons
+      var actMap = {
+        'leki': T.actions.meds, 'medicines': T.actions.meds,
+        'rehabilitacja': T.actions.rehab, 'rehabilitation': T.actions.rehab
+      };
+      document.querySelectorAll('.actions .btn, .actions .button, .symptom-actions .btn, [data-ui-action]').forEach(function(btn){
+        var keyAttr = btn.getAttribute('data-ui-action');
+        if(keyAttr && T.actions[keyAttr]) { btn.textContent = T.actions[keyAttr]; return; }
+        var txt=(btn.textContent||'').trim().toLowerCase();
+        if(actMap[txt]) btn.textContent = actMap[txt];
+      });
+    }
+
+    if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', relabel); } else { relabel(); }
+    var sel=document.getElementById('bhLangSelect');
+    if(sel){ sel.addEventListener('change', function(){ localStorage.setItem(LS_KEY,this.value); relabel(); }); }
+    document.addEventListener('click', function(e){
+      var t=e.target;
+      if(!t) return;
+      if(t.matches('.tabs .tab, .bh-tabs .tab, [data-ui-tab], [data-target]')){
+        setTimeout(relabel, 0);
+      }
+    }, true);
+
+  }catch(e){}
+})();
+</script>
+
 </body>
 </html>
