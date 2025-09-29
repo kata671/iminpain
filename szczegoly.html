@@ -641,52 +641,38 @@
   },
 
   nos:{
-    label:"Nos / Zatoki",
+    label:"Nos",
     symptoms:[
-      "Katar wodnisty","Zatkanie nosa","Ból/ucisk w okolicy zatok",
-      "Kichanie/świąd (alergia)","Gęsta wydzielina","Krwawienie z nosa"
-    ],
-    causes:[
-      "Nieżyt nosa (infekcyjny lub alergiczny)",
-      "Zapalenie zatok (ostre/podostre)",
-      "Przerost małżowin / skrzywienie przegrody",
-      "Polekowy nieżyt (nadużywanie kropli obkurczających)"
-    ],
-    firstaid:[
-      "Płukanie izotoniczne NaCl / woda morska",
-      "Nawilżanie powietrza, picie płynów",
-      "Inhalacje parowe (ostrożnie), ciepłe okłady na zatoki",
-      "Unikanie dymu/pyłów/alergenów"
-    ],
-    otc:[
-      {t:"Sól morska / izotoniczny NaCl",audience:"all"},
-      {t:"Ksylometazolina/oksymetazolina — ≤3–5 dni",audience:"adult"},
-      {t:"Leki przeciwhistaminowe (alergia)",audience:"adult"},
-      {t:"Ibuprofen/paracetamol na ból",audience:"all"}
-    ],
-    rx:[
-      "Donosowe GKS (alergia, przewlekły nieżyt)",
-      "Antybiotyk przy potwierdzonej bakteryjnej zap. zatok",
-      "Immunoterapia swoista (alergie) — laryngolog/alergolog"
-    ],
-    rehab:[
-      "Higiena nosa: płukanie, krótkie kuracje kropli",
-      "Unikanie spustów alergicznych, filtracja powietrza",
-      "Nawodnienie i sen"
+      "Niedrożność, katar wodnisty/ropny, kichanie, swędzenie",
+      "Utrata/obniżenie węchu, ból twarzy/ucisku zatok",
     ],
     urgent:[
-      "Krwawienie z nosa >20 min mimo ucisku",
-      "Gorączka, obrzęk twarzy, nasilenie bólu z zatok",
-      "Zaburzenia widzenia, silny ból oka/czoła",
-      "Objawy ogólnoustrojowe (u dziecka/ciężarnej — pilnie)"
+      "Krwiak przegrody po urazie nosa (obrzęk, ból, niedrożność)",
+      "Silny ból z gorączką i obrzękiem okolicy zatok, obrzęk powiek",
+    ],
+    causes:[
+      "Infekcja wirusowa/bakteryjna, alergiczny nieżyt, polipy nosa",
+      "Zapalenie zatok, skrzywienie przegrody",
+    ],
+    firstaid:[
+      "Płukanie nosa roztworami soli, nawilżanie powietrza, dużo płynów",
+      "Przy krwawieniu: ucisk skrzydełek 10 min, pochylenie w przód, zimny okład na kark/nasada nosa",
+    ],
+    otc:[
+      "Spraye z wodą morską, ksylometazolina krótko (max 3–5 dni), leki p/alergiczne (po konsultacji)",
+    ],
+    rx:[
+      "Steryd donosowy przy alergii/polipach, antybiotyk w wybranych bakteryjnych zap. zatok",
+      "Drenaż zatok, korekcja przegrody wg wskazań",
+    ],
+    rehab:[
+      "Higiena nosa: delikatne wydmuchiwanie, unikanie dymu, odpowiednia wilgotność",
     ],
     myths:[
-      {m:"Im mocniejsze krople, tym lepiej",f:"Nadużywanie obkurczających nasila obrzęk (odbicie)."},
-      {m:"Zielony katar = koniecznie antybiotyk",f:"Kolor nie przesądza o etiologii bakteryjnej."}
+      "„Im więcej kropli obkurczających, tym lepiej oddycham” — ryzyko polekowego nieżytu nosa",
     ],
     faq:[
-      {q:"Kiedy antybiotyk na zatoki?",a:"Gdy lekarz potwierdzi bakteryjne zapalenie (gorączka, silny ból, objawy >10 dni)."},
-      {q:"Jak tamować krwawienie?",a:"Uciśnij skrzydełka nosa 10–15 min, pochyl głowę do przodu, zimny okład na nasadę."}
+      "Kiedy do lekarza? — Ból zatok >10 dni, gorączka, obrzęk twarzy/oczu, nawracające krwawienia",
     ]
   },
 
@@ -842,7 +828,846 @@
       {q:"Jak się przygotować do wizyty?",a:"Lista epizodów (kiedy, po czym, ile trwa), leki, choroby, pomiary tętna/ciśnienia."},
       {q:"Czy smartwatch wystarczy do diagnozy?",a:"Może wychwycić epizod, ale diagnozę stawia się na podstawie EKG/Holtera."}
     ]
-  }
+  },
+plecy:{
+    label:"Plecy",
+    symptoms:[
+      "Ból w odcinku lędźwiowym/piersiowym/szyjnym, sztywność, ograniczenie ruchu",
+      "Ból promieniujący do pośladka/uda (rwa kulszowa), mrowienie, czasem osłabienie siły",
+      "Nasilanie przy długim siedzeniu, podnoszeniu, skrętach",
+    ],
+    urgent:[
+      "Ból pleców z utratą kontroli nad mikcją/wypróżnianiem, niedowładem kończyn (pilna pomoc — zespół ogona końskiego)",
+      "Ból po znacznym urazie, z gorączką lub niewyjaśnioną utratą masy ciała",
+      "Stały ból nocny, ból u osób z nowotworem/osteoporozą/na sterydach — pilna ocena",
+    ],
+    causes:[
+      "Napięciowy/przeciążeniowy ból mięśniowo‑powięziowy, dyskopatia",
+      "Dysfunkcje stawów międzywyrostkowych, kręgozmyk",
+      "Rzadziej: zakażenie, zapalenie stawów kręgosłupa, złamanie osteoporotyczne",
+    ],
+    firstaid:[
+      "Ruch w granicach komfortu, krótkie epizody odpoczynku; unikaj długiego leżenia",
+      "Ciepło lub chłodzenie wg preferencji, delikatne rozciąganie (tył uda, zginacze biodra)",
+      "Ergonomia: neutralna pozycja przy siedzeniu, przerwy co 30–45 min",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen doraźnie (zgodnie z ulotką)",
+      "Maści/żele rozgrzewające lub przeciwzapalne",
+    ],
+    rx:[
+      "Fizjoterapia ukierunkowana (stabilizacja centralna, wzmacnianie pośladków, edukacja)",
+      "Leczenie specjalistyczne przy objawach korzeniowych/deficytach neurologicznych (badania obrazowe, blokady)",
+    ],
+    rehab:[
+      "Ćwiczenia core (deska modyfikowana, dead bug), mobilizacje odcinka piersiowego",
+      "Stopniowy powrót do aktywności; trening siłowy z techniką i progresją obciążeń",
+    ],
+    myths:[
+      "„Zawsze trzeba leżeć” — w większości przypadków wczesny ruch przyspiesza powrót do zdrowia",
+      "„Ból pleców = zniszczony kręgosłup” — obrazowanie często pokazuje zmiany związane z wiekiem, nie zawsze źródło bólu",
+    ],
+    faq:[
+      "Kiedy MRI? — Przy deficytach neurologicznych, czerwonych flagach lub braku poprawy po 6 tygodniach leczenia zachowawczego",
+      "Czy pas lędźwiowy pomaga? — Krótkoterminowo może, ale nie zastępuje treningu i ergonomii",
+    ]
+  },
+biodra:{
+    label:"Biodra",
+    symptoms:[
+      "Ból w pachwinie/bocznej części biodra, trudność przy zakładaniu butów",
+      "Trzaski, sztywność po spoczynku",
+    ],
+    urgent:[
+      "Silny ból po upadku, skrócenie/rotacja kończyny (podejrzenie złamania)",
+      "Gorący, zaczerwieniony staw biodrowy z gorączką",
+    ],
+    causes:[
+      "Tendinopatie pośladkowe, konflikt udowo‑panewkowy, zapalenie kaletki",
+      "Choroba zwyrodnieniowa, rwa udowa, przeciążenia biegowe",
+    ],
+    firstaid:[
+      "Modyfikacja obciążeń, chłodzenie/ciepło wg fazy, rozciąganie zginaczy/pośladków",
+      "Spokojny ruch: rower, pływanie",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen, maści p/zapalne",
+    ],
+    rx:[
+      "Fizjoterapia: stabilizacja miednicy, technika chodu/biegu; iniekcje przy wskazaniach",
+    ],
+    rehab:[
+      "Wzmacnianie pośladkowego średniego/wielkiego, core, mobilność biodra",
+    ],
+    myths:[
+      "„Ból biodra = endoproteza” — wiele przypadków leczy się zachowawczo",
+    ],
+    faq:[
+      "Kiedy do ortopedy? — Ból nocny, sztywność znaczna, uraz lub brak poprawy >6–8 tyg.",
+    ]
+  },
+udo:{
+    label:"Udo",
+    symptoms:[
+      "Ból przodu/tyłu uda (czworogłowy/dwugłowy), tkliwość po biegu/skoku",
+      "Naprężenie pasma biodrowo‑piszczelowego po boku uda",
+    ],
+    urgent:[
+      "Nagłe „szarpnięcie” z krwiakiem i osłabieniem (naderwanie/zerwanie)",
+      "Drętwienie/utrata czucia po urazie — pilna ocena",
+    ],
+    causes:[
+      "Naderwania mięśni, przeciążenia, zespół pasma biodrowo‑piszczelowego",
+      "Ból rzutowany z pleców/biodra, zmiany przeciążeniowe",
+    ],
+    firstaid:[
+      "Zasada PEACE & LOVE, stopniowy powrót, delikatne rozciąganie po ustąpieniu bólu ostrego",
+      "Ucisk elastyczny krótko, uniesienie, chłodzenie w 1–2 dobie",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen doraźnie, maści p/zapalne",
+    ],
+    rx:[
+      "USG przy dużych krwiakach, fizjoterapia, czasem leki rozpuszczające krwiak wg zaleceń",
+    ],
+    rehab:[
+      "Ekscentryczne wzmacnianie dwugłowego/pośladków, mobilność biodra",
+    ],
+    myths:[
+      "„Rozciągnę mocniej i szybciej wrócę” — zbyt agresywne rozciąganie opóźnia gojenie",
+    ],
+    faq:[
+      "Kiedy wrócić do biegania? — Bez bólu przy chodzie/skoku, siła i zakres zbliżone do drugiej nogi",
+    ]
+  },
+stopy:{
+    label:"Stopy",
+    symptoms:[
+      "Ból pięty/łuku, uczucie kłucia przy pierwszych krokach rano",
+      "Drętwienie palców, odciski, modzele",
+    ],
+    urgent:[
+      "Zaczerwienienie i ból z gorączką (ropne zakażenie)",
+      "Rana u diabetyka z sączeniem/nieprzyjemnym zapachem",
+    ],
+    causes:[
+      "Zapalenie rozcięgna podeszwowego, neuroma Mortona, haluksy, płaskostopie",
+      "Niewygodne obuwie, przeciążenia, cukrzyca/neuropatia",
+    ],
+    firstaid:[
+      "Zmiana obuwia/wkładek, masaż rozcięgna, rolowanie piłeczką",
+      "Chłodzenie bolesnych miejsc, odciążenie aktywności prowokujących",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen, żele p/zapalne",
+      "Podpiętki/ortezy sklepienia (po konsultacji)",
+    ],
+    rx:[
+      "Fizjoterapia, iniekcje sterydowe przy wskazaniach, leczenie chirurgiczne rzadko",
+    ],
+    rehab:[
+      "Ćwiczenia krótkich mięśni stopy (chwytanie ręcznika palcami), rozciąganie łydki",
+    ],
+    myths:[
+      "„Im miększe buty, tym lepiej” — za miękkie zaburzają stabilność",
+    ],
+    faq:[
+      "Kiedy do podologa/ortopedy? — Ból utrzymujący się >4–6 tyg., deformacje, rany u diabetyków",
+    ]
+  },
+gardlo:{
+    label:"Gardło",
+    symptoms:[
+      "Ból gardła, drapanie, trudności w połykaniu, chrypka",
+      "Gorączka, powiększone węzły, naloty na migdałkach",
+    ],
+    urgent:[
+      "Duszność, ślinienie i ból przy połykaniu (podejrzenie ropnia)",
+      "Utrzymująca się chrypka >3 tyg. u palaczy — pilna laryngologiczna ocena",
+    ],
+    causes:[
+      "Infekcje wirusowe/bakteryjne (angina), refluks, wysuszenie śluzówek, alergie",
+      "Nadmierne obciążenie głosu, dym tytoniowy",
+    ],
+    firstaid:[
+      "Nawadnianie, chłodne/letnie napoje, pastylki nawilżające",
+      "Płukanie gardła roztworami antyseptycznymi/solą, odpoczynek głosu",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen, preparaty miejscowo znieczulające",
+      "Spraye z benzydaminą, tabletki do ssania z szałwią/porostem",
+    ],
+    rx:[
+      "Antybiotyk tylko przy podejrzeniu infekcji bakteryjnej (np. paciorkowcowej) wg skali Centora",
+      "Leczenie refluksu, logopedia/foniatria przy przeciążeniu głosu",
+    ],
+    rehab:[
+      "Higiena głosu, nawilżanie powietrza, unikanie dymu/alkoholu",
+    ],
+    myths:[
+      "„Angina = zawsze antybiotyk” — wiele zapaleń to wirusy",
+      "„Boli gardło, więc nie wolno pić zimnego” — ważniejsze nawodnienie i komfort",
+    ],
+    faq:[
+      "Kiedy test na paciorkowca? — Gorączka, brak kaszlu, naloty, bolesne węzły szyjne",
+    ]
+  },
+pluca:{
+    label:"Płuca",
+    symptoms:[
+      "Kaszel suchy/mokry, duszność, ból w klatce przy oddychaniu",
+      "Świsty, męczliwość, sinienie warg/przypadkowe spadki saturacji",
+    ],
+    urgent:[
+      "Duszność spoczynkowa, sinica, ból w klatce z promieniowaniem (pilna pomoc)",
+      "Wysoka gorączka z dreszczami, krwioplucie",
+    ],
+    causes:[
+      "Infekcje (zapalenie oskrzeli/płuc), astma/POChP, alergie",
+      "Zatorowość płucna, odma opłucnowa (ostra duszność, ból opłucnowy)",
+    ],
+    firstaid:[
+      "Odpoczynek, nawodnienie, pozycja półsiedząca przy duszności",
+      "Nawilżanie powietrza, inhalacje z soli fizjologicznej",
+    ],
+    otc:[
+      "Leki przeciwgorączkowe, syropy wykrztuśne/suplementy zgodnie z ulotką",
+    ],
+    rx:[
+      "Antybiotyk przy bakteryjnych zakażeniach (wg lekarza), leki rozszerzające oskrzela/sterydy wziewne",
+      "Diagnostyka (RTG, gazometria) przy nasilonych objawach",
+    ],
+    rehab:[
+      "Ćwiczenia oddechowe i efektywnego kaszlu, rehabilitacja oddechowa",
+    ],
+    myths:[
+      "„Kaszel zawsze wymaga antybiotyku” — wiele infekcji jest wirusowych",
+    ],
+    faq:[
+      "Kiedy na SOR? — Nagła duszność, sinienie, kaszel z krwią lub ból opłucnowy",
+    ]
+  },
+watroba:{
+    label:"Wątroba",
+    symptoms:[
+      "Zmęczenie, uczucie pełności w prawym podżebrzu, nudności",
+      "Zażółcenie skóry/oczu, świąd (cholestaza)",
+    ],
+    urgent:[
+      "Silny ból w prawym podżebrzu z gorączką i dreszczami",
+      "Nagła żółtaczka, zaburzenia świadomości (encefalopatia)",
+    ],
+    causes:[
+      "Stłuszczenie wątroby, zapalenia wirusowe, leki/toksyny, kamica dróg żółciowych",
+      "Cholestaza ciężarnych, choroby autoimmunologiczne",
+    ],
+    firstaid:[
+      "Dieta odciążająca (mniej tłuszczu/alkoholu), nawodnienie",
+      "Kontrola leków/suplementów potencjalnie hepatotoksycznych",
+    ],
+    otc:[
+      "Leki p/bólowe z ostrożnością (dawki paracetamolu!), preparaty osłonowe — wg lekarza",
+    ],
+    rx:[
+      "Leczenie przyczynowe (np. antywirusowe), ERCP przy kamicy przewodowej",
+    ],
+    rehab:[
+      "Aktywność fizyczna dostosowana, redukcja masy ciała przy NAFLD",
+    ],
+    myths:[
+      "„Zioła są zawsze bezpieczne” — wiele ma potencjał hepatotoksyczny",
+    ],
+    faq:[
+      "Kiedy pilnie do lekarza? — Żółtaczka, ciemny mocz, jasny stolec, silny ból z gorączką",
+    ]
+  },
+nerki:{
+    label:"Nerki",
+    symptoms:[
+      "Ból w okolicy lędźwiowej/bokach, parcie na mocz, pieczenie przy mikcji",
+      "Gorączka, nudności, krwiomocz",
+    ],
+    urgent:[
+      "Silny jednostronny ból z wymiotami i gorączką (kolka nerkowa + zakażenie)",
+      "Brak oddawania moczu, obrzęki uogólnione (ostra niewydolność)",
+    ],
+    causes:[
+      "Zakażenia dróg moczowych, kamica nerkowa, kłębuszkowe zapalenia nerek",
+      "Przewlekła choroba nerek (cukrzyca/nadciśnienie)",
+    ],
+    firstaid:[
+      "Pij odpowiednio (jeśli brak przeciwwskazań), ciepłe okłady na okolicę lędźwiową",
+      "Przy pieczeniu: żurawina/D‑mannoza mogą łagodzić objawy (nie zastępują leczenia)",
+    ],
+    otc:[
+      "Paracetamol na ból (NLPZ z ostrożnością u chorych z nerkami)",
+    ],
+    rx:[
+      "Antybiotyk w ZUM wg posiewu, alfa‑blokery przy kamicy (urolog wg wskazań)",
+      "Diagnostyka: USG/CT przy kamicy lub powikłaniach",
+    ],
+    rehab:[
+      "Profilaktyka: nawodnienie, mikcja po stosunku, nieprzetrzymywanie moczu",
+    ],
+    myths:[
+      "„ZUM zawsze wymaga długiej antybiotykoterapii” — krótkie kursy często wystarczają wg zaleceń",
+    ],
+    faq:[
+      "Kiedy na SOR? — Gorączka z dreszczami i bólem lędźwi, zatrzymanie moczu, silny ból z wymiotami",
+    ]
+  },
+oko:{
+    label:"Oko",
+    symptoms:[
+      "Ból, kłucie, światłowstręt, łzawienie, uczucie piasku",
+      "Zaczerwienienie spojówki, obrzęk powiek, wydzielina",
+      "Pogorszenie widzenia, „mroczki”, błyski, podwójne widzenie",
+    ],
+    urgent:[
+      "Nagłe, bolesne pogorszenie widzenia lub utrata widzenia",
+      "Uraz oka, ciało obce dużej prędkości, chemikalia w oku",
+      "Silny ból z nudnościami (podejrzenie ostrej jaskry)",
+    ],
+    causes:[
+      "Zapalenie spojówek/rogówki, zespół suchego oka, alergia",
+      "Ciało obce/otarcie rogówki, jęczmień/gradówka",
+      "Migrena oczna, zapalenie błony naczyniowej, wzrost ciśnienia śródgałkowego",
+    ],
+    firstaid:[
+      "Płukanie oka jałowym roztworem/solą fizjologiczną przy podrażnieniu",
+      "Nie trzyj oka; przy podejrzeniu ciała obcego — nie usuwaj na siłę",
+      "Przy chemikaliach: natychmiastowe, obfite płukanie min. 15–20 min i pilna pomoc",
+    ],
+    otc:[
+      "Sztuczne łzy (bez konserwantów przy częstym stosowaniu)",
+      "Leki p/alergiczne miejscowe (po zaleceniu)",
+    ],
+    rx:[
+      "Antybiotyk/krople sterydowe tylko po badaniu okulistycznym",
+      "Usunięcie ciała obcego, opatrunek, terapia jaskry wg wskazań",
+    ],
+    rehab:[
+      "Higiena brzegów powiek (ciepłe kompresy), przerwy 20‑20‑20 przy pracy wzrokowej",
+    ],
+    myths:[
+      "„Każde zaczerwienienie to infekcja” — przyczyną często bywa alergia/suchość",
+      "„Krople sterydowe można wziąć profilaktycznie” — tylko z zalecenia specjalisty",
+    ],
+    faq:[
+      "Kiedy do okulisty? — Gdy ból, światłowstręt, pogorszenie widzenia lub chemiczne oparzenie",
+      "Czy krople obkurczające są bezpieczne? — Dają efekt kosmetyczny, nadużywane pogarszają suchość",
+    ]
+  },
+kolano:{
+    label:"Kolano",
+    symptoms:[
+      "Ból z przodu (rzepka), po bokach (więzadła) lub głęboko w stawie",
+      "Obrzęk, uczucie „przeskakiwania”, niestabilność, ograniczenie zgięcia",
+      "Trzaski, sztywność poranna, ból przy schodzeniu po schodach",
+    ],
+    urgent:[
+      "Nagły duży obrzęk po urazie, niemożność obciążania nogi",
+      "Gorący, zaczerwieniony staw z gorączką (podejrzenie zapalenia septycznego)",
+      "Deformacja po urazie, blokada stawu, brak czucia w stopie",
+    ],
+    causes:[
+      "Urazy więzadeł (ACL/MCL), łąkotek, przeciążenia rzepkowo‑udowe",
+      "Zapalenie kaletki, choroba Osgooda‑Schlattera (u młodzieży)",
+      "Choroba zwyrodnieniowa, dna moczanowa, reumatoidalne zapalenie stawów",
+    ],
+    firstaid:[
+      "Zasada PEACE & LOVE: ochrona (Protection), podnoszenie (Elevation), unikanie przeciwbólowych masaży/zimna w pierwszych godzinach przy ostrym krwawym urazie; później łagodne obciążanie i ćwiczenia ruchowe",
+      "Chłodzenie 10–15 min co 2–3 h w pierwszej dobie przy przeciążeniu (nie bezpośrednio na skórę)",
+      "Elastyczny bandaż/orteza krótkoterminowo dla komfortu (nie za ciasno)",
+      "Odpoczynek od aktywności prowokującej ból, stopniowy powrót",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen na ból (zgodnie z ulotką)",
+      "Maści/przeciwzapalne miejscowe (np. diklofenak) — na nieuszkodzoną skórę",
+    ],
+    rx:[
+      "Fizjoterapia ukierunkowana (wzmacnianie czworogłowego/pośladków, torowanie toru rzepki)",
+      "Zastrzyki dostawowe (np. steryd/kwas hialuronowy) wg wskazań",
+      "MRI/USG i leczenie operacyjne przy poważnych uszkodzeniach",
+    ],
+    rehab:[
+      "Ćwiczenia zakresu ruchu (zgięcie/wyprost w bezbólowym zakresie)",
+      "Wzmacnianie: prostowanie nogi w siadzie, przysiady przy ścianie w krótkim zakresie, ćwiczenia pośladków",
+      "Unikaj długiego klęczenia, gwałtownych skrętów na jednej nodze",
+    ],
+    myths:[
+      "„Zawsze trzeba ogrzewać albo zawsze chłodzić” — dobór bodźca zależy od fazy i przyczyny",
+      "„Trzaski to niszczenie stawu” — często to nieszkodliwe zjawiska ścięgniste/chrzęstne",
+    ],
+    faq:[
+      "Kiedy do ortopedy? — Gdy obrzęk/niestabilność/uraz z trzaskiem lub ból >2–3 tygodni mimo leczenia domowego",
+      "Czy bieganie niszczy kolana? — Odpowiedni trening i masa ciała zwykle nie zwiększają ryzyka zmian zwyrodnieniowych",
+    ]
+  },
+uszy:{
+    label:"Uszy",
+    symptoms:[
+      "Ból ucha (tępy, kłujący lub pulsujący), pogarszający się przy żuciu lub nacisku na skrawek ucha",
+      "Uczucie zatkania, szumy uszne, przejściowe pogorszenie słuchu",
+      "Wydzielina z ucha (przezroczysta, ropna, czasem z domieszką krwi)",
+      "Gorączka, drażliwość u dzieci, trudności ze snem",
+      "Zawroty głowy, nudności (szczególnie przy zapaleniu błędnika)",
+    ],
+    urgent:[
+      "Silny ból ucha z wysoką gorączką >38.5°C i złym samopoczuciem",
+      "Nagłe osłabienie słuchu lub całkowita utrata słuchu w jednym uchu",
+      "Wydzielina krwista / ropna po urazie głowy lub barotraumie (lot, nurkowanie)",
+      "Silne zawroty głowy z wymiotami i zaburzeniami równowagi",
+      "Ból ucha u niemowlęcia <6 miesięcy lub osób z niedoborami odporności",
+    ],
+    causes:[
+      "Zapalenie ucha środkowego (po infekcji górnych dróg oddechowych)",
+      "Zapalenie ucha zewnętrznego (tzw. ucho pływaka)",
+      "Korek woskowinowy, ciało obce w przewodzie słuchowym",
+      "Dysfunkcja trąbki słuchowej (alergia, obrzęk po infekcji, lot)",
+      "Urazy ciśnieniowe (barotrauma), pęknięcie błony bębenkowej",
+      "Ból rzutowany z zębów, stawu skroniowo‑żuchwowego lub gardła",
+    ],
+    firstaid:[
+      "Ból: odpoczynek, nawodnienie; unikaj wody w chorym uchu (brak pływania)",
+      "Nie wkładaj patyczków ani przedmiotów do ucha; nie próbuj samodzielnie usuwać ciała obcego",
+      "Na ból/stan podgorączkowy można rozważyć leki przeciwbólowe OTC (patrz sekcja leki)",
+      "Przy ucho pływaka: po konsultacji — delikatne osuszenie zewnętrznej małżowiny (nie kanału)",
+      "Jeśli podejrzewasz barotraumę: żucie, ziewanie, manewr z zatykaniem nosa bardzo delikatnie (bez bólu); przerwij, jeśli ból narasta",
+    ],
+    otc:[
+      "Paracetamol lub ibuprofen (przeciwbólowo/przeciwgorączkowo) — zgodnie z ulotką",
+      "Krople znieczulające do ucha — tylko jeśli błona bębenkowa jest cała (po ocenie lekarskiej)",
+      "Preparaty zmiękczające woskowinę (karbamid, oliwa do uszu) — nie stosuj przy bólu ostrego/wycieku",
+    ],
+    rx:[
+      "Antybiotyk przy bakteryjnym zapaleniu ucha środkowego — wyłącznie po badaniu lekarskim",
+      "Steryd donosowy/przeciwhistaminowy przy alergicznym obrzęku trąbki słuchowej (wg zlecenia)",
+      "Usunięcie ciała obcego lub płukanie w gabinecie, nacięcie błony (paracenteza) w wybranych przypadkach",
+    ],
+    rehab:[
+      "Unikanie hałasu i wody w uchu do ustąpienia objawów",
+      "Ćwiczenia wentylacji trąbki słuchowej (ziewanie, połykanie) po konsultacji",
+      "Higiena nosa przy katarze (płukanie roztworem soli)",
+    ],
+    myths:[
+      "„Patyczki do uszu są do czyszczenia kanału ucha” — NIE: zwiększają ryzyko urazu i korka woskowinowego",
+      "„Alkohol lub olejki zawsze pomagają” — mogą pogorszyć stan, szczególnie przy uszkodzonej błonie",
+      "„Ból ucha to zawsze antybiotyk” — wiele przyczyn jest wirusowych lub mechanicznych",
+    ],
+    faq:[
+      "Ile czekać z wizytą? — Jeśli ból jest łagodny, bez gorączki i wycieku, obserwacja 24–48 h; w razie pogorszenia — lekarz",
+      "Czy można latać? — Przy ostrym bólu, gorączce, wycieku — odradzane; skonsultuj lot",
+      "Kąpiele? — Do ustąpienia objawów unikaj zanurzania ucha; prysznic z ostrożnym osłonięciem",
+    ]
+  },
+ciaza:{
+    label:"Ciąża",
+    symptoms:[
+      "Typowe dolegliwości: nudności/wymioty, zmęczenie, zgaga, zaparcia, bóle krzyża, obrzęki podudzi",
+      "Plamienia z dróg rodnych, bóle podbrzusza (wymagają oceny)",
+      "Ruchy płodu, skurcze Braxtona‑Hicksa w II–III trymestrze",
+    ],
+    urgent:[
+      "Silny ból brzucha, obfite krwawienie, odpływanie płynu owodniowego",
+      "Bóle głowy z zaburzeniami widzenia, nagłe obrzęki twarzy/rąk, nadciśnienie (podejrzenie stanu przedrzucawkowego)",
+      "Zmniejszone/brak ruchów płodu przez >12 h po 28. tygodniu",
+      "Gorączka, ból przy oddawaniu moczu, ból jednostronny łydki z obrzękiem (ryzyko zakrzepicy)",
+    ],
+    causes:[
+      "Fizjologiczne zmiany hormonalne i mechaniczne w ciąży",
+      "Infekcje dróg moczowych, niedokrwistość, choroby tarczycy",
+      "Powikłania ciąży: poronienie, ciąża ektopowa, stan przedrzucawkowy, cholestaza ciężarnych",
+    ],
+    firstaid:[
+      "Odpoczynek, nawodnienie, małe częste posiłki przy nudnościach",
+      "Unoszenie nóg przy obrzękach, pozycje odciążające kręgosłup (leżenie na lewym boku)",
+      "Delikatna aktywność (spacery, pływanie) jeśli brak przeciwwskazań",
+      "W razie niepokojących objawów — nie zwlekaj z kontaktem z położną/lekarzem/oddziałem",
+    ],
+    otc:[
+      "Paracetamol jako pierwszy wybór przeciwbólowy (po konsultacji)",
+      "Preparaty z żelazem/kwasem foliowym wg zaleceń lekarskich",
+      "Unikać: NLPZ (ibuprofen) w III trymestrze, leków bez konsultacji",
+    ],
+    rx:[
+      "Leczenie zależne od rozpoznania i trymestru; decyzje tylko przez lekarza prowadzącego",
+      "Skierowania do diagnostyki (USG, badania lab.) i opieki perinatologicznej przy powikłaniach",
+    ],
+    rehab:[
+      "Ćwiczenia dna miednicy, oddechowe, wzmacnianie posturalne pod okiem fizjoterapeuty uroginekologicznego",
+      "Edukacja ergonomii (wstawanie przez bok, podparcia)",
+    ],
+    myths:[
+      "„W ciąży nie wolno ćwiczyć” — przy prawidłowej ciąży umiarkowana aktywność jest korzystna",
+      "„Zgaga oznacza dużo włosów u dziecka” — brak podstaw naukowych",
+    ],
+    faq:[
+      "Jak odróżnić skurcze przepowiadające? — Nieregularne, słabną po odpoczynku/nawodnieniu; skurcze porodowe nasilają się i regularnie wracają",
+      "Czy można latać? — Zwykle do 36. tyg. bez powikłań; skonsultuj się z lekarzem i linią lotniczą",
+    ]
+  },
+lydka:{
+    label:"Łydka",
+    symptoms:[
+      "Ból/uczucie napięcia w tylnej części podudzia, czasem kurcze nocne",
+      "Obrzęk po wysiłku, tkliwość przy ucisku mięśnia brzuchatego/plikowatego",
+      "Uczucie ciepła, zaczerwienienie skóry (do oceny pod kątem zapalenia żył)",
+    ],
+    urgent:[
+      "Jednostronny obrzęk, ból i ucieplenie łydki połączone z dusznością/bólem w klatce — natychmiastowa pomoc (ryzyko zakrzepicy/ZP)",
+      "Silny ból po urazie z trzaskiem i niemożnością wspięcia na palce (podejrzenie zerwania ścięgna Achillesa)",
+      "Twardy bolesny „sznur” na przebiegu żyły, gorączka",
+    ],
+    causes:[
+      "Przeciążenie mięśniowe, zespół przeciążeniowy piszczeli, odwodnienie i zaburzenia elektrolitowe",
+      "Żylaki i przewlekła niewydolność żylna",
+      "Zakrzepica żył głębokich, zapalenie żył powierzchownych",
+    ],
+    firstaid:[
+      "Odpoczynek względny, delikatne rozciąganie mięśni łydki (po ustąpieniu ostrego bólu)",
+      "Chłodzenie 10–15 min, uniesienie kończyny dla redukcji obrzęku",
+      "Po wysiłku: nawodnienie i uzupełnienie elektrolitów",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen na ból (zgodnie z ulotką)",
+      "Maści chłodzące/łagodzące napięcie mięśni (na nieuszkodzoną skórę)",
+    ],
+    rx:[
+      "USG Doppler przy podejrzeniu zakrzepicy; leczenie przeciwkrzepliwe wg zaleceń",
+      "Rehabilitacja przy przeciążeniach, wkładki/kompresjoterapia w niewydolności żylnej",
+    ],
+    rehab:[
+      "Rozciąganie łydki (wykrok twarzą do ściany), rolowanie powięzi (z umiarem)",
+      "Wzmacnianie: wspięcia na palce, ekscentryczne obciążanie ścięgna Achillesa pod kontrolą fizjo",
+    ],
+    myths:[
+      "„Skurcze to zawsze magnez” — przyczyny są wieloczynnikowe (nawodnienie, obciążenia, sen, elektrolity)",
+    ],
+    faq:[
+      "Kiedy iść do lekarza? — Jednostronny obrzęk/ból bez urazu, objawy zakrzepicy, brak poprawy w 1–2 tygodnie mimo odpoczynku",
+    ]
+  },
+kostka:{
+    label:"Kostka",
+    symptoms:[
+      "Ból po skręceniu, obrzęk bocznej/przyśrodkowej okolicy, zasinienie",
+      "Utykanie, niestabilność, ból przy obciążeniu i skręcie stopy",
+    ],
+    urgent:[
+      "Niemożność wykonania 4 kroków od razu po urazie (kryteria Ottawa)",
+      "Deformacja, podejrzenie złamania/zwichnięcia, drętwienie stopy",
+      "Gorący, zaczerwieniony staw z gorączką bez urazu",
+    ],
+    causes:[
+      "Skręcenie więzadeł skokowych (najczęściej ATFL), naderwania mięśni/ścięgien",
+      "Złamania kostek/awulsyjne (wymagają RTG wg reguł Ottawskich)",
+      "Przewlekła niestabilność po niedoleczonym urazie",
+    ],
+    firstaid:[
+      "PEACE & LOVE: ochrona, podniesienie, kompresja elastyczna, stopniowy powrót ruchu",
+      "Chłodzenie w pierwszej dobie 10–15 min co 2–3 h (nie bezpośrednio na skórę)",
+      "Unikaj długiego unieruchomienia — wczesna bezbolesna mobilizacja poprawia rokowanie",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen na ból (zgodnie z ulotką)",
+      "Maści przeciwzapalne miejscowe",
+    ],
+    rx:[
+      "RTG wg kryteriów Ottawa przy bólu kostki + niemożności obciążania/bolesności palpacyjnej punktów kostnych",
+      "Fizjoterapia sensomotoryczna (propriocepcja), stabilizacja ścięgien strzałkowych",
+      "Orteza krótko po ostrym skręceniu; w niestabilności — konsultacja ortopedyczna",
+    ],
+    rehab:[
+      "Ćwiczenia równowagi (stanie na jednej nodze, poduszki sensomotoryczne)",
+      "Wzmacnianie mięśni strzałkowych, zakres zgięcie‑wyprost skokowego w bezbólowym zakresie",
+    ],
+    myths:[
+      "„Trzeba zawsze usztywnić na tygodnie” — zbyt długie unieruchomienie opóźnia powrót funkcji",
+    ],
+    faq:[
+      "Kiedy biec do RTG? — Gdy spełniasz reguły Ottawa lub ból i obrzęk nie maleją po 3–5 dniach",
+    ]
+  },
+  oczy:{
+    label:"Oczy",
+    symptoms:[
+      "Zmęczenie, pieczenie, suchość, zamglenie widzenia",
+      "Światłowstręt, łzawienie, bóle głowy po długiej pracy wzrokowej",
+    ],
+    urgent:[
+      "Nagłe jednooczne pogorszenie widzenia, błyski i mroczki",
+      "Uraz oka, chemikalia, silny ból oka z nudnościami",
+    ],
+    causes:[
+      "Przemęczenie cyfrowe (CVS), suchość, wady refrakcji, alergie",
+      "Migrena, infekcje, zapalenia struktur oka",
+    ],
+    firstaid:[
+      "Reguła 20‑20‑20, mruganie, nawilżanie powietrza",
+      "Sztuczne łzy, przerwy od ekranów, ergonomia oświetlenia",
+    ],
+    otc:[
+      "Sztuczne łzy, krople z kwasem hialuronowym",
+      "Okulary ochronne przy wietrze/kurzu",
+    ],
+    rx:[
+      "Dobór szkieł/korekcji po badaniu wzroku, leczenie stanów zapalnych wg zaleceń",
+    ],
+    rehab:[
+      "Ćwiczenia akomodacji, higiena snu, ekspozycja dzienna na światło naturalne",
+    ],
+    myths:[
+      "„Im jaśniej ekran, tym lepiej” — zbyt wysokie natężenie męczy oczy",
+    ],
+    faq:[
+      "Czy niebieskie filtry pomagają? — Dla komfortu tak, ale nie są panaceum",
+    ]
+  },
+  szyja:{
+    label:"Szyja",
+    symptoms:[
+      "Sztywność karku, ograniczenie obrotu, ból promieniujący do barku/ramienia",
+      "Bóle napięciowe głowy, zawroty przy długim patrzeniu w dół",
+    ],
+    urgent:[
+      "Sztywność karku z gorączką i światłowstrętem (pilna ocena)",
+      "Uraz z neurologicznymi objawami: drętwienie, osłabienie kończyn",
+    ],
+    causes:[
+      "Napięcie mięśniowe, dyskopatia szyjna, zespół „text neck”, wady postawy",
+      "Rzadziej: zapalenia, choroby reumatyczne, schorzenia tarczycy",
+    ],
+    firstaid:[
+      "Delikatny ruch, mikroprzerwy, ciepło na mięśnie, rozluźnianie stresu",
+      "Ergonomia biurka: ekran na wysokości oczu, podparcie odcinka lędźwiowego",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen doraźnie, plastry rozgrzewające",
+      "Maści miejscowe (mentol/NSAID)",
+    ],
+    rx:[
+      "Fizjoterapia: mobilizacje, trening posturalny, neuromobilizacje",
+      "Obrazowanie i leczenie specjalistyczne przy deficytach/neuralgii",
+    ],
+    rehab:[
+      "Ćwiczenia zakresu ruchu, izometryczne, wzmacnianie łopatek",
+      "Ćwiczenia oddechowe, relaksacja mięśni podpotylicznych",
+    ],
+    myths:[
+      "„Ból szyi = zwyrodnienie” — najczęściej to odwracalne napięcia/przeciążenia",
+    ],
+    faq:[
+      "Kiedy RTG/MRI? — Czerwone flagi/uraz/objawy korzeniowe lub brak poprawy po 6 tygodniach",
+    ]
+  },
+  barki:{
+    label:"Barki",
+    symptoms:[
+      "Ból przy unoszeniu ręki, ograniczenie rotacji, przeskakiwanie",
+      "Nocne pobudki z bólu barku, osłabienie siły",
+    ],
+    urgent:[
+      "Uraz z deformacją/niemożnością poruszenia (zwichnięcie/złamanie)",
+      "Gorący, zaczerwieniony bark z gorączką (septyczne zapalenie stawu)",
+    ],
+    causes:[
+      "Zespół ciasnoty podbarkowej, tendinopatie stożka rotatorów, zamrożony bark",
+      "Kalcia (zwapnienia), zwyrodnienia stawu barkowo‑obojczykowego",
+    ],
+    firstaid:[
+      "Odpoczynek względny, unikanie ruchów prowokujących ból, zimno/ciepło wg preferencji",
+      "Wzmacnianie łopatki i rotatorów w bezbólowym zakresie (guma oporowa)",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen, maści p/zapalne",
+      "Taśmy kinesio doraźnie (komfort)",
+    ],
+    rx:[
+      "Fizjoterapia ukierunkowana, iniekcje sterydowe przy wskazaniach",
+      "USG/MRI przy podejrzeniu uszkodzeń; leczenie operacyjne rzadko",
+    ],
+    rehab:[
+      "Ćwiczenia: retrakcja łopatki, rotacja zewnętrzna z gumą, Y‑T‑W",
+      "Postawa: kontrola protrakcjii barków, ergonomia pracy",
+    ],
+    myths:[
+      "„Strzelanie w barku niszczy staw” — zwykle nieszkodliwe kawitacje/ścięgna",
+    ],
+    faq:[
+      "Kiedy do ortopedy? — Gdy brak poprawy po 6–8 tyg., uraz z utrzymującym się ograniczeniem",
+    ]
+  },
+  ramie:{
+    label:"Ramię",
+    symptoms:[
+      "Ból wzdłuż ramienia, tkliwość ścięgien bicepsa/tricepsa",
+      "Nasilenie przy podnoszeniu/skręcaniu, przeciążenia siłowe",
+    ],
+    urgent:[
+      "Ostry ból po urazie z trzaskiem i osłabieniem siły (zerwanie ścięgna)",
+      "Zaczerwienienie, gorączka, wyraźny obrzęk stawu",
+    ],
+    causes:[
+      "Tendinopatie, zapalenie kaletek, konflikt mięśniowo‑ścięgnisty",
+      "Podrażnienia nerwowe z odcinka szyjnego (ból rzutowany)",
+    ],
+    firstaid:[
+      "Modyfikacja obciążeń, zimno/ciepło, delikatne rozciąganie",
+      "Automasaż/rolowanie umiarkowane",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen doraźnie, maści p/zapalne",
+    ],
+    rx:[
+      "Fizjoterapia, czasem iniekcje sterydowe; diagnostyka obrazowa gdy brak poprawy",
+    ],
+    rehab:[
+      "Wzmacnianie ekscentryczne, stabilizacja łopatki, poprawa techniki ćwiczeń",
+    ],
+    myths:[
+      "„Ból = zakaz ruchu” — zbyt długie unikanie obciążeń pogarsza wytrzymałość",
+    ],
+    faq:[
+      "Ile odpoczywać? — Zwykle 1–2 tyg. modyfikacji, potem stopniowy powrót wg bólu",
+    ]
+  },
+  dlon:{
+    label:"Dłoń",
+    symptoms:[
+      "Ból nadgarstka/palców, mrowienie kciuka‑palca środkowego, spadek chwytu",
+      "Obrzęk, trzaski przy ruchu, poranna sztywność",
+    ],
+    urgent:[
+      "Uraz z deformacją/zanikiem czucia, zakażone rany kłute dłoni",
+      "Nagłe drętwienie i osłabienie chwytu (ucisk nerwu)",
+    ],
+    causes:[
+      "Zespół cieśni nadgarstka, de Quervain, choroba/Dupuytren, zap. stawów",
+      "Przeciążenia przy pracy manualnej/komputerowej, urazy",
+    ],
+    firstaid:[
+      "Odpoczynek względny, orteza nocna przy cieśni, zimno na obrzęk",
+      "Ergonomia myszki/klawiatury, mikropauzy",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen, maści p/zapalne",
+      "Żele chłodzące, plastry rozgrzewające",
+    ],
+    rx:[
+      "Fizjoterapia (ślizgi ścięgien/nerwów), iniekcje sterydowe wg wskazań",
+      "EMG/USG przy utrzymujących się parestezjach",
+    ],
+    rehab:[
+      "Ćwiczenia ślizgowe nerwu pośrodkowego, gumowe piłeczki, chwyt izometryczny",
+    ],
+    myths:[
+      "„Cieśń biorę tylko tabletkami” — bez rehabilitacji nawraca",
+    ],
+    faq:[
+      "Kiedy operacja? — Gdy objawy cieśni utrzymują się mimo ortezy/fizjo i EMG potwierdza ucisk",
+    ]
+  },
+  zeby: {
+  label: "Zęby",
+  symptoms: [
+    "Pulsujący ból zęba nasilający się w nocy lub przy nagryzaniu",
+    "Nadwrażliwość na zimno/ciepło/słodkie; krótkie „przeszycie” bólu",
+    "Obrzęk i zaczerwienienie dziąsła, krwawienie przy szczotkowaniu",
+    "Ropień: guzek na dziąśle, sączenie ropy, nieprzyjemny smak/zapach",
+    "Ukruszenie/złamanie zęba, wypadnięcie wypełnienia/korony",
+    "Ból promieniujący do ucha/szczęki/skroni; szczękościsk (trismus)"
+  ],
+  urgent: [
+    "Rozszerzający się obrzęk twarzy/szyi, duszność lub trudności z przełykaniem — pilnie SOR",
+    "Gorączka, dreszcze, złe samopoczucie z bólem zęba (podejrzenie ropowicy)",
+    "Uraz wybicia wybitego zęba stałego (im szybciej replantacja, tym lepiej)"
+  ],
+  causes: [
+    "Próchnica i zapalenie miazgi (pulpitis), martwica miazgi",
+    "Zapalenie tkanek okołowierzchołkowych, ropień podokostnowy",
+    "Zapalenie dziąseł/przyzębia (paradontoza)",
+    "Nadwrażliwość szyjek zębowych, bruksizm (zgrzytanie)",
+    "Uraz mechaniczny, pęknięcia szkliwa"
+  ],
+  firstaid: [
+    "Płukanka letnią wodą z solą (krótko), delikatne oczyszczenie okolicy",
+    "Zimny okład zewnętrznie (10–15 min z przerwami), nie przykładać aspiryny do dziąsła",
+    "Jeśli wypadła plomba/korona — tymczasowo osłonić preparatem tymczasowym z apteki",
+    "Przy wybiciu zęba stałego: uchwycić za koronę, przepłukać mlekiem/solą, umieścić w jamie/albo w mleku i natychmiast do dentysty"
+  ],
+  otc: [
+    "Paracetamol lub ibuprofen (jeśli brak przeciwwskazań); unikać NLPZ przy skłonności do krwawień",
+    "Żele stomatologiczne z lignokainą (krótkotrwale)",
+    "Płukanki antyseptyczne (chlorheksydyna) — krótkie serie wg zaleceń"
+  ],
+  rx: [
+    "Leczenie kanałowe lub odbudowa/ekstrakcja w zależności od rozpoznania",
+    "Antybiotyk tylko przy objawach ogólnych/ropowicy — decyzja lekarza",
+    "Nacięcie i drenaż ropnia, RTG/CBCT wg wskazań"
+  ],
+  rehab: [
+    "Higiena: szczotkowanie 2×/dobę pastą z fluorem, nitkowanie/irygator",
+    "Ochrona przed bruksizmem (szyna) i kontrola parafunkcji",
+    "Edukacja dietetyczna: ograniczenie cukrów, popijanie wodą"
+  ],
+  myths: [
+    "„Ból zęba minie sam” — stany zapalne zwykle się nasilają",
+    "„Antybiotyk bez leczenia wystarczy” — konieczna przyczyna przy zębie (np. leczenie kanałowe)"
+  ],
+  faq: [
+    "Kiedy do dentysty? — jak najszybciej przy bólu >24–48 h, obrzęku, gorączce, sączeniu ropy",
+    "Czy można ćwiczyć? — przy ostrym bólu i obrzęku odpuść do czasu leczenia"
+  ],
+  dx: [],
+  docs: [
+    "Stomatolog zachowawczy",
+    "Endodonta",
+    "Pogotowie stomatologiczne (w nocy/święta, nagły ból/obrzęk)"
+  ]
+}
+
+  ,
+strefa: {
+  label:"Strefa intymna",
+  symptoms:[
+    "Ból/pieczenie przy mikcji, świąd, upławy (kobieta), ból jąder/krocza (mężczyzna)",
+    "Nieprzyjemny zapach, zaczerwienienie/obrzęk okolic intymnych",
+    "Częstomocz, parcie na mocz, ból podczas stosunku"
+  ],
+  urgent:[
+    "Gorączka z silnym bólem podbrzusza/jąder, wymioty",
+    "Silny obrzęk i ból jąder (skręt) — natychmiast SOR",
+    "Podejrzenie ciąży pozamacicznej (ostry ból + omdlenia)"
+  ],
+  causes:[
+    "Zakażenia intymne (bakteryjne/grzybicze), waginoza, ZUM",
+    "Zapalenie najądrzy/prostaty, podrażnienia/alergie skóry"
+  ],
+  firstaid:[
+    "Delikatna higiena (bez drażniących środków), bawełniana bielizna",
+    "Nawodnienie; po stosunku mikcja i prysznic"
+  ],
+  otc:[
+    "Leki przeciwgrzybicze miejscowe (kobieta) przy typowych objawach",
+    "Leki przeciwbólowe doraźnie; żele łagodzące świąd"
+  ],
+  rx:[
+    "Antybiotyk wg posiewu przy ZUM, leczenie partnerów przy STI",
+    "USG jąder przy bólu/obrzęku, pilna ocena przy podejrzeniu skrętu"
+  ],
+  rehab:[
+    "Profilaktyka: oddychająca bielizna, unikanie długiej wilgoci",
+    "Bezpieczne praktyki seksualne, nawadnianie"
+  ],
+  myths:[
+    "„Każdy świąd = grzybica” — przyczyn bywa wiele (alergia, bakteryjne)",
+    "„Samo przejdzie” — nasilone objawy wymagają oceny"
+  ],
+  faq:[
+    "Kiedy pilnie? — silny ból jąder, gorączka + ból podbrzusza, ciąża z bólem"
+  ]
+}
 };
 
 const CONTENT_EN={
@@ -909,52 +1734,38 @@ const CONTENT_EN={
   },
 
   nos:{
-    label:"Nose / Sinuses",
+    label:"Nose",
     symptoms:[
-      "Watery runny nose","Nasal blockage","Sinus pain/pressure",
-      "Sneezing/itch (allergy)","Thick discharge","Nosebleed"
-    ],
-    causes:[
-      "Rhinitis (infectious or allergic)",
-      "Sinusitis (acute/subacute)",
-      "Turbinate hypertrophy / septal deviation",
-      "Rhinitis medicamentosa (decongestant overuse)"
-    ],
-    firstaid:[
-      "Isotonic saline rinses",
-      "Humidify air, drink fluids",
-      "Steam inhalation (careful), warm packs over sinuses",
-      "Avoid smoke/dust/allergens"
-    ],
-    otc:[
-      {t:"Sea water / isotonic saline",audience:"all"},
-      {t:"Topical decongestants — ≤3–5 days",audience:"adult"},
-      {t:"Antihistamines for allergy",audience:"adult"},
-      {t:"Ibuprofen/paracetamol for pain",audience:"all"}
-    ],
-    rx:[
-      "Intranasal steroids (allergy, chronic rhinitis)",
-      "Antibiotics for confirmed bacterial sinusitis",
-      "Allergen immunotherapy — ENT/allergist"
-    ],
-    rehab:[
-      "Nasal hygiene and short decongestant courses",
-      "Allergen avoidance, air filtration",
-      "Hydration and sleep"
+      "Niedrożność, katar wodnisty/ropny, kichanie, swędzenie",
+      "Utrata/obniżenie węchu, ból twarzy/ucisku zatok",
     ],
     urgent:[
-      "Nosebleed >20 min despite pressure",
-      "Fever, facial swelling, worsening sinus pain",
-      "Visual disturbance, severe eye/forehead pain",
-      "Systemic symptoms (child/pregnancy — urgent)"
+      "Krwiak przegrody po urazie nosa (obrzęk, ból, niedrożność)",
+      "Silny ból z gorączką i obrzękiem okolicy zatok, obrzęk powiek",
+    ],
+    causes:[
+      "Infekcja wirusowa/bakteryjna, alergiczny nieżyt, polipy nosa",
+      "Zapalenie zatok, skrzywienie przegrody",
+    ],
+    firstaid:[
+      "Płukanie nosa roztworami soli, nawilżanie powietrza, dużo płynów",
+      "Przy krwawieniu: ucisk skrzydełek 10 min, pochylenie w przód, zimny okład na kark/nasada nosa",
+    ],
+    otc:[
+      "Spraye z wodą morską, ksylometazolina krótko (max 3–5 dni), leki p/alergiczne (po konsultacji)",
+    ],
+    rx:[
+      "Steryd donosowy przy alergii/polipach, antybiotyk w wybranych bakteryjnych zap. zatok",
+      "Drenaż zatok, korekcja przegrody wg wskazań",
+    ],
+    rehab:[
+      "Higiena nosa: delikatne wydmuchiwanie, unikanie dymu, odpowiednia wilgotność",
     ],
     myths:[
-      {m:"Stronger drops work better",f:"Overuse rebounds and worsens blockage."},
-      {m:"Green mucus means bacteria",f:"Color alone doesn’t prove bacterial cause."}
+      "„Im więcej kropli obkurczających, tym lepiej oddycham” — ryzyko polekowego nieżytu nosa",
     ],
     faq:[
-      {q:"When antibiotics for sinuses?",a:"When a clinician confirms bacterial sinusitis (fever, severe pain, >10 days)."},
-      {q:"How to stop a nosebleed?",a:"Pinch soft nose 10–15 min, lean forward, cold pack on the bridge."}
+      "Kiedy do lekarza? — Ból zatok >10 dni, gorączka, obrzęk twarzy/oczu, nawracające krwawienia",
     ]
   },
 
@@ -1108,13 +1919,852 @@ const CONTENT_EN={
       {q:"How to prep for a visit?",a:"Note episodes (when, trigger, duration), meds, conditions, HR/BP readings."},
       {q:"Is smartwatch enough?",a:"It can capture episodes; diagnosis still relies on ECG/Holter."}
     ]
-  }
+  },
+plecy:{
+    label:"Back",
+    symptoms:[
+      "Ból w odcinku lędźwiowym/piersiowym/szyjnym, sztywność, ograniczenie ruchu",
+      "Ból promieniujący do pośladka/uda (rwa kulszowa), mrowienie, czasem osłabienie siły",
+      "Nasilanie przy długim siedzeniu, podnoszeniu, skrętach",
+    ],
+    urgent:[
+      "Ból pleców z utratą kontroli nad mikcją/wypróżnianiem, niedowładem kończyn (pilna pomoc — zespół ogona końskiego)",
+      "Ból po znacznym urazie, z gorączką lub niewyjaśnioną utratą masy ciała",
+      "Stały ból nocny, ból u osób z nowotworem/osteoporozą/na sterydach — pilna ocena",
+    ],
+    causes:[
+      "Napięciowy/przeciążeniowy ból mięśniowo‑powięziowy, dyskopatia",
+      "Dysfunkcje stawów międzywyrostkowych, kręgozmyk",
+      "Rzadziej: zakażenie, zapalenie stawów kręgosłupa, złamanie osteoporotyczne",
+    ],
+    firstaid:[
+      "Ruch w granicach komfortu, krótkie epizody odpoczynku; unikaj długiego leżenia",
+      "Ciepło lub chłodzenie wg preferencji, delikatne rozciąganie (tył uda, zginacze biodra)",
+      "Ergonomia: neutralna pozycja przy siedzeniu, przerwy co 30–45 min",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen doraźnie (zgodnie z ulotką)",
+      "Maści/żele rozgrzewające lub przeciwzapalne",
+    ],
+    rx:[
+      "Fizjoterapia ukierunkowana (stabilizacja centralna, wzmacnianie pośladków, edukacja)",
+      "Leczenie specjalistyczne przy objawach korzeniowych/deficytach neurologicznych (badania obrazowe, blokady)",
+    ],
+    rehab:[
+      "Ćwiczenia core (deska modyfikowana, dead bug), mobilizacje odcinka piersiowego",
+      "Stopniowy powrót do aktywności; trening siłowy z techniką i progresją obciążeń",
+    ],
+    myths:[
+      "„Zawsze trzeba leżeć” — w większości przypadków wczesny ruch przyspiesza powrót do zdrowia",
+      "„Ból pleców = zniszczony kręgosłup” — obrazowanie często pokazuje zmiany związane z wiekiem, nie zawsze źródło bólu",
+    ],
+    faq:[
+      "When MRI? — Red flags/neurological deficits or no improvement after ~6 weeks of conservative care",
+      "Do lumbar braces help? — Short‑term relief possible; not a substitute for activity & rehab",
+    ]
+  },
+biodra:{
+    label:"Hips",
+    symptoms:[
+      "Ból w pachwinie/bocznej części biodra, trudność przy zakładaniu butów",
+      "Trzaski, sztywność po spoczynku",
+    ],
+    urgent:[
+      "Silny ból po upadku, skrócenie/rotacja kończyny (podejrzenie złamania)",
+      "Gorący, zaczerwieniony staw biodrowy z gorączką",
+    ],
+    causes:[
+      "Tendinopatie pośladkowe, konflikt udowo‑panewkowy, zapalenie kaletki",
+      "Choroba zwyrodnieniowa, rwa udowa, przeciążenia biegowe",
+    ],
+    firstaid:[
+      "Modyfikacja obciążeń, chłodzenie/ciepło wg fazy, rozciąganie zginaczy/pośladków",
+      "Spokojny ruch: rower, pływanie",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen, maści p/zapalne",
+    ],
+    rx:[
+      "Fizjoterapia: stabilizacja miednicy, technika chodu/biegu; iniekcje przy wskazaniach",
+    ],
+    rehab:[
+      "Wzmacnianie pośladkowego średniego/wielkiego, core, mobilność biodra",
+    ],
+    myths:[
+      "„Ból biodra = endoproteza” — wiele przypadków leczy się zachowawczo",
+    ],
+    faq:[
+      "Kiedy do ortopedy? — Ból nocny, sztywność znaczna, uraz lub brak poprawy >6–8 tyg.",
+    ]
+  },
+udo:{
+    label:"Thigh",
+    symptoms:[
+      "Ból przodu/tyłu uda (czworogłowy/dwugłowy), tkliwość po biegu/skoku",
+      "Naprężenie pasma biodrowo‑piszczelowego po boku uda",
+    ],
+    urgent:[
+      "Nagłe „szarpnięcie” z krwiakiem i osłabieniem (naderwanie/zerwanie)",
+      "Drętwienie/utrata czucia po urazie — pilna ocena",
+    ],
+    causes:[
+      "Naderwania mięśni, przeciążenia, zespół pasma biodrowo‑piszczelowego",
+      "Ból rzutowany z pleców/biodra, zmiany przeciążeniowe",
+    ],
+    firstaid:[
+      "Zasada PEACE & LOVE, stopniowy powrót, delikatne rozciąganie po ustąpieniu bólu ostrego",
+      "Ucisk elastyczny krótko, uniesienie, chłodzenie w 1–2 dobie",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen doraźnie, maści p/zapalne",
+    ],
+    rx:[
+      "USG przy dużych krwiakach, fizjoterapia, czasem leki rozpuszczające krwiak wg zaleceń",
+    ],
+    rehab:[
+      "Ekscentryczne wzmacnianie dwugłowego/pośladków, mobilność biodra",
+    ],
+    myths:[
+      "„Rozciągnę mocniej i szybciej wrócę” — zbyt agresywne rozciąganie opóźnia gojenie",
+    ],
+    faq:[
+      "Kiedy wrócić do biegania? — Bez bólu przy chodzie/skoku, siła i zakres zbliżone do drugiej nogi",
+    ]
+  },
+stopy:{
+    label:"Feet",
+    symptoms:[
+      "Ból pięty/łuku, uczucie kłucia przy pierwszych krokach rano",
+      "Drętwienie palców, odciski, modzele",
+    ],
+    urgent:[
+      "Zaczerwienienie i ból z gorączką (ropne zakażenie)",
+      "Rana u diabetyka z sączeniem/nieprzyjemnym zapachem",
+    ],
+    causes:[
+      "Zapalenie rozcięgna podeszwowego, neuroma Mortona, haluksy, płaskostopie",
+      "Niewygodne obuwie, przeciążenia, cukrzyca/neuropatia",
+    ],
+    firstaid:[
+      "Zmiana obuwia/wkładek, masaż rozcięgna, rolowanie piłeczką",
+      "Chłodzenie bolesnych miejsc, odciążenie aktywności prowokujących",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen, żele p/zapalne",
+      "Podpiętki/ortezy sklepienia (po konsultacji)",
+    ],
+    rx:[
+      "Fizjoterapia, iniekcje sterydowe przy wskazaniach, leczenie chirurgiczne rzadko",
+    ],
+    rehab:[
+      "Ćwiczenia krótkich mięśni stopy (chwytanie ręcznika palcami), rozciąganie łydki",
+    ],
+    myths:[
+      "„Im miększe buty, tym lepiej” — za miękkie zaburzają stabilność",
+    ],
+    faq:[
+      "Kiedy do podologa/ortopedy? — Ból utrzymujący się >4–6 tyg., deformacje, rany u diabetyków",
+    ]
+  },
+gardlo:{
+    label:"Throat",
+    symptoms:[
+      "Ból gardła, drapanie, trudności w połykaniu, chrypka",
+      "Gorączka, powiększone węzły, naloty na migdałkach",
+    ],
+    urgent:[
+      "Duszność, ślinienie i ból przy połykaniu (podejrzenie ropnia)",
+      "Utrzymująca się chrypka >3 tyg. u palaczy — pilna laryngologiczna ocena",
+    ],
+    causes:[
+      "Infekcje wirusowe/bakteryjne (angina), refluks, wysuszenie śluzówek, alergie",
+      "Nadmierne obciążenie głosu, dym tytoniowy",
+    ],
+    firstaid:[
+      "Nawadnianie, chłodne/letnie napoje, pastylki nawilżające",
+      "Płukanie gardła roztworami antyseptycznymi/solą, odpoczynek głosu",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen, preparaty miejscowo znieczulające",
+      "Spraye z benzydaminą, tabletki do ssania z szałwią/porostem",
+    ],
+    rx:[
+      "Antybiotyk tylko przy podejrzeniu infekcji bakteryjnej (np. paciorkowcowej) wg skali Centora",
+      "Leczenie refluksu, logopedia/foniatria przy przeciążeniu głosu",
+    ],
+    rehab:[
+      "Higiena głosu, nawilżanie powietrza, unikanie dymu/alkoholu",
+    ],
+    myths:[
+      "„Angina = zawsze antybiotyk” — wiele zapaleń to wirusy",
+      "„Boli gardło, więc nie wolno pić zimnego” — ważniejsze nawodnienie i komfort",
+    ],
+    faq:[
+      "Kiedy test na paciorkowca? — Gorączka, brak kaszlu, naloty, bolesne węzły szyjne",
+    ]
+  },
+pluca:{
+    label:"Lungs",
+    symptoms:[
+      "Kaszel suchy/mokry, duszność, ból w klatce przy oddychaniu",
+      "Świsty, męczliwość, sinienie warg/przypadkowe spadki saturacji",
+    ],
+    urgent:[
+      "Duszność spoczynkowa, sinica, ból w klatce z promieniowaniem (pilna pomoc)",
+      "Wysoka gorączka z dreszczami, krwioplucie",
+    ],
+    causes:[
+      "Infekcje (zapalenie oskrzeli/płuc), astma/POChP, alergie",
+      "Zatorowość płucna, odma opłucnowa (ostra duszność, ból opłucnowy)",
+    ],
+    firstaid:[
+      "Odpoczynek, nawodnienie, pozycja półsiedząca przy duszności",
+      "Nawilżanie powietrza, inhalacje z soli fizjologicznej",
+    ],
+    otc:[
+      "Leki przeciwgorączkowe, syropy wykrztuśne/suplementy zgodnie z ulotką",
+    ],
+    rx:[
+      "Antybiotyk przy bakteryjnych zakażeniach (wg lekarza), leki rozszerzające oskrzela/sterydy wziewne",
+      "Diagnostyka (RTG, gazometria) przy nasilonych objawach",
+    ],
+    rehab:[
+      "Ćwiczenia oddechowe i efektywnego kaszlu, rehabilitacja oddechowa",
+    ],
+    myths:[
+      "„Kaszel zawsze wymaga antybiotyku” — wiele infekcji jest wirusowych",
+    ],
+    faq:[
+      "Kiedy na SOR? — Nagła duszność, sinienie, kaszel z krwią lub ból opłucnowy",
+    ]
+  },
+watroba:{
+    label:"Liver",
+    symptoms:[
+      "Zmęczenie, uczucie pełności w prawym podżebrzu, nudności",
+      "Zażółcenie skóry/oczu, świąd (cholestaza)",
+    ],
+    urgent:[
+      "Silny ból w prawym podżebrzu z gorączką i dreszczami",
+      "Nagła żółtaczka, zaburzenia świadomości (encefalopatia)",
+    ],
+    causes:[
+      "Stłuszczenie wątroby, zapalenia wirusowe, leki/toksyny, kamica dróg żółciowych",
+      "Cholestaza ciężarnych, choroby autoimmunologiczne",
+    ],
+    firstaid:[
+      "Dieta odciążająca (mniej tłuszczu/alkoholu), nawodnienie",
+      "Kontrola leków/suplementów potencjalnie hepatotoksycznych",
+    ],
+    otc:[
+      "Leki p/bólowe z ostrożnością (dawki paracetamolu!), preparaty osłonowe — wg lekarza",
+    ],
+    rx:[
+      "Leczenie przyczynowe (np. antywirusowe), ERCP przy kamicy przewodowej",
+    ],
+    rehab:[
+      "Aktywność fizyczna dostosowana, redukcja masy ciała przy NAFLD",
+    ],
+    myths:[
+      "„Zioła są zawsze bezpieczne” — wiele ma potencjał hepatotoksyczny",
+    ],
+    faq:[
+      "Kiedy pilnie do lekarza? — Żółtaczka, ciemny mocz, jasny stolec, silny ból z gorączką",
+    ]
+  },
+nerki:{
+    label:"Kidneys",
+    symptoms:[
+      "Ból w okolicy lędźwiowej/bokach, parcie na mocz, pieczenie przy mikcji",
+      "Gorączka, nudności, krwiomocz",
+    ],
+    urgent:[
+      "Silny jednostronny ból z wymiotami i gorączką (kolka nerkowa + zakażenie)",
+      "Brak oddawania moczu, obrzęki uogólnione (ostra niewydolność)",
+    ],
+    causes:[
+      "Zakażenia dróg moczowych, kamica nerkowa, kłębuszkowe zapalenia nerek",
+      "Przewlekła choroba nerek (cukrzyca/nadciśnienie)",
+    ],
+    firstaid:[
+      "Pij odpowiednio (jeśli brak przeciwwskazań), ciepłe okłady na okolicę lędźwiową",
+      "Przy pieczeniu: żurawina/D‑mannoza mogą łagodzić objawy (nie zastępują leczenia)",
+    ],
+    otc:[
+      "Paracetamol na ból (NLPZ z ostrożnością u chorych z nerkami)",
+    ],
+    rx:[
+      "Antybiotyk w ZUM wg posiewu, alfa‑blokery przy kamicy (urolog wg wskazań)",
+      "Diagnostyka: USG/CT przy kamicy lub powikłaniach",
+    ],
+    rehab:[
+      "Profilaktyka: nawodnienie, mikcja po stosunku, nieprzetrzymywanie moczu",
+    ],
+    myths:[
+      "„ZUM zawsze wymaga długiej antybiotykoterapii” — krótkie kursy często wystarczają wg zaleceń",
+    ],
+    faq:[
+      "Kiedy na SOR? — Gorączka z dreszczami i bólem lędźwi, zatrzymanie moczu, silny ból z wymiotami",
+    ]
+  },
+oko:{
+    label:"Eye",
+    symptoms:[
+      "Ból, kłucie, światłowstręt, łzawienie, uczucie piasku",
+      "Zaczerwienienie spojówki, obrzęk powiek, wydzielina",
+      "Pogorszenie widzenia, „mroczki”, błyski, podwójne widzenie",
+    ],
+    urgent:[
+      "Nagłe, bolesne pogorszenie widzenia lub utrata widzenia",
+      "Uraz oka, ciało obce dużej prędkości, chemikalia w oku",
+      "Silny ból z nudnościami (podejrzenie ostrej jaskry)",
+    ],
+    causes:[
+      "Zapalenie spojówek/rogówki, zespół suchego oka, alergia",
+      "Ciało obce/otarcie rogówki, jęczmień/gradówka",
+      "Migrena oczna, zapalenie błony naczyniowej, wzrost ciśnienia śródgałkowego",
+    ],
+    firstaid:[
+      "Płukanie oka jałowym roztworem/solą fizjologiczną przy podrażnieniu",
+      "Nie trzyj oka; przy podejrzeniu ciała obcego — nie usuwaj na siłę",
+      "Przy chemikaliach: natychmiastowe, obfite płukanie min. 15–20 min i pilna pomoc",
+    ],
+    otc:[
+      "Sztuczne łzy (bez konserwantów przy częstym stosowaniu)",
+      "Leki p/alergiczne miejscowe (po zaleceniu)",
+    ],
+    rx:[
+      "Antybiotyk/krople sterydowe tylko po badaniu okulistycznym",
+      "Usunięcie ciała obcego, opatrunek, terapia jaskry wg wskazań",
+    ],
+    rehab:[
+      "Higiena brzegów powiek (ciepłe kompresy), przerwy 20‑20‑20 przy pracy wzrokowej",
+    ],
+    myths:[
+      "„Każde zaczerwienienie to infekcja” — przyczyną często bywa alergia/suchość",
+      "„Krople sterydowe można wziąć profilaktycznie” — tylko z zalecenia specjalisty",
+    ],
+    faq:[
+      "Kiedy do okulisty? — Gdy ból, światłowstręt, pogorszenie widzenia lub chemiczne oparzenie",
+      "Czy krople obkurczające są bezpieczne? — Dają efekt kosmetyczny, nadużywane pogarszają suchość",
+    ]
+  },
+kolano:{
+    label:"Knee",
+    symptoms:[
+      "Ból z przodu (rzepka), po bokach (więzadła) lub głęboko w stawie",
+      "Obrzęk, uczucie „przeskakiwania”, niestabilność, ograniczenie zgięcia",
+      "Trzaski, sztywność poranna, ból przy schodzeniu po schodach",
+    ],
+    urgent:[
+      "Nagły duży obrzęk po urazie, niemożność obciążania nogi",
+      "Gorący, zaczerwieniony staw z gorączką (podejrzenie zapalenia septycznego)",
+      "Deformacja po urazie, blokada stawu, brak czucia w stopie",
+    ],
+    causes:[
+      "Urazy więzadeł (ACL/MCL), łąkotek, przeciążenia rzepkowo‑udowe",
+      "Zapalenie kaletki, choroba Osgooda‑Schlattera (u młodzieży)",
+      "Choroba zwyrodnieniowa, dna moczanowa, reumatoidalne zapalenie stawów",
+    ],
+    firstaid:[
+      "Zasada PEACE & LOVE: ochrona (Protection), podnoszenie (Elevation), unikanie przeciwbólowych masaży/zimna w pierwszych godzinach przy ostrym krwawym urazie; później łagodne obciążanie i ćwiczenia ruchowe",
+      "Chłodzenie 10–15 min co 2–3 h w pierwszej dobie przy przeciążeniu (nie bezpośrednio na skórę)",
+      "Elastyczny bandaż/orteza krótkoterminowo dla komfortu (nie za ciasno)",
+      "Odpoczynek od aktywności prowokującej ból, stopniowy powrót",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen na ból (zgodnie z ulotką)",
+      "Maści/przeciwzapalne miejscowe (np. diklofenak) — na nieuszkodzoną skórę",
+    ],
+    rx:[
+      "Fizjoterapia ukierunkowana (wzmacnianie czworogłowego/pośladków, torowanie toru rzepki)",
+      "Zastrzyki dostawowe (np. steryd/kwas hialuronowy) wg wskazań",
+      "MRI/USG i leczenie operacyjne przy poważnych uszkodzeniach",
+    ],
+    rehab:[
+      "Ćwiczenia zakresu ruchu (zgięcie/wyprost w bezbólowym zakresie)",
+      "Wzmacnianie: prostowanie nogi w siadzie, przysiady przy ścianie w krótkim zakresie, ćwiczenia pośladków",
+      "Unikaj długiego klęczenia, gwałtownych skrętów na jednej nodze",
+    ],
+    myths:[
+      "„Zawsze trzeba ogrzewać albo zawsze chłodzić” — dobór bodźca zależy od fazy i przyczyny",
+      "„Trzaski to niszczenie stawu” — często to nieszkodliwe zjawiska ścięgniste/chrzęstne",
+    ],
+    faq:[
+      "When to see orthopedist? — Swelling/instability/traumatic pop or pain >2–3 weeks despite home care",
+      "Does running ruin knees? — With proper training and body weight, risk is not higher for OA",
+    ]
+  },
+uszy:{
+    label:"Ears",
+    symptoms:[
+      "Ból ucha (tępy, kłujący lub pulsujący), pogarszający się przy żuciu lub nacisku na skrawek ucha",
+      "Uczucie zatkania, szumy uszne, przejściowe pogorszenie słuchu",
+      "Wydzielina z ucha (przezroczysta, ropna, czasem z domieszką krwi)",
+      "Gorączka, drażliwość u dzieci, trudności ze snem",
+      "Zawroty głowy, nudności (szczególnie przy zapaleniu błędnika)",
+    ],
+    urgent:[
+      "Silny ból ucha z wysoką gorączką >38.5°C i złym samopoczuciem",
+      "Nagłe osłabienie słuchu lub całkowita utrata słuchu w jednym uchu",
+      "Wydzielina krwista / ropna po urazie głowy lub barotraumie (lot, nurkowanie)",
+      "Silne zawroty głowy z wymiotami i zaburzeniami równowagi",
+      "Ból ucha u niemowlęcia <6 miesięcy lub osób z niedoborami odporności",
+    ],
+    causes:[
+      "Zapalenie ucha środkowego (po infekcji górnych dróg oddechowych)",
+      "Zapalenie ucha zewnętrznego (tzw. ucho pływaka)",
+      "Korek woskowinowy, ciało obce w przewodzie słuchowym",
+      "Dysfunkcja trąbki słuchowej (alergia, obrzęk po infekcji, lot)",
+      "Urazy ciśnieniowe (barotrauma), pęknięcie błony bębenkowej",
+      "Ból rzutowany z zębów, stawu skroniowo‑żuchwowego lub gardła",
+    ],
+    firstaid:[
+      "Ból: odpoczynek, nawodnienie; unikaj wody w chorym uchu (brak pływania)",
+      "Nie wkładaj patyczków ani przedmiotów do ucha; nie próbuj samodzielnie usuwać ciała obcego",
+      "Na ból/stan podgorączkowy można rozważyć leki przeciwbólowe OTC (patrz sekcja leki)",
+      "Przy ucho pływaka: po konsultacji — delikatne osuszenie zewnętrznej małżowiny (nie kanału)",
+      "Jeśli podejrzewasz barotraumę: żucie, ziewanie, manewr z zatykaniem nosa bardzo delikatnie (bez bólu); przerwij, jeśli ból narasta",
+    ],
+    otc:[
+      "Paracetamol lub ibuprofen (przeciwbólowo/przeciwgorączkowo) — zgodnie z ulotką",
+      "Krople znieczulające do ucha — tylko jeśli błona bębenkowa jest cała (po ocenie lekarskiej)",
+      "Preparaty zmiękczające woskowinę (karbamid, oliwa do uszu) — nie stosuj przy bólu ostrego/wycieku",
+    ],
+    rx:[
+      "Antybiotyk przy bakteryjnym zapaleniu ucha środkowego — wyłącznie po badaniu lekarskim",
+      "Steryd donosowy/przeciwhistaminowy przy alergicznym obrzęku trąbki słuchowej (wg zlecenia)",
+      "Usunięcie ciała obcego lub płukanie w gabinecie, nacięcie błony (paracenteza) w wybranych przypadkach",
+    ],
+    rehab:[
+      "Unikanie hałasu i wody w uchu do ustąpienia objawów",
+      "Ćwiczenia wentylacji trąbki słuchowej (ziewanie, połykanie) po konsultacji",
+      "Higiena nosa przy katarze (płukanie roztworem soli)",
+    ],
+    myths:[
+      "„Patyczki do uszu są do czyszczenia kanału ucha” — NIE: zwiększają ryzyko urazu i korka woskowinowego",
+      "„Alkohol lub olejki zawsze pomagają” — mogą pogorszyć stan, szczególnie przy uszkodzonej błonie",
+      "„Ból ucha to zawsze antybiotyk” — wiele przyczyn jest wirusowych lub mechanicznych",
+    ],
+    faq:[
+      "How long to wait before seeing a doctor? — Mild pain without fever/discharge: observe 24–48 h; worsening → seek care",
+      "Can I fly? — Avoid with acute pain/fever/discharge; ask your clinician",
+      "Swimming? — Avoid immersing the ear until symptoms resolve",
+    ]
+  },
+ciaza:{
+    label:"Pregnancy",
+    symptoms:[
+      "Typowe dolegliwości: nudności/wymioty, zmęczenie, zgaga, zaparcia, bóle krzyża, obrzęki podudzi",
+      "Plamienia z dróg rodnych, bóle podbrzusza (wymagają oceny)",
+      "Ruchy płodu, skurcze Braxtona‑Hicksa w II–III trymestrze",
+    ],
+    urgent:[
+      "Silny ból brzucha, obfite krwawienie, odpływanie płynu owodniowego",
+      "Bóle głowy z zaburzeniami widzenia, nagłe obrzęki twarzy/rąk, nadciśnienie (podejrzenie stanu przedrzucawkowego)",
+      "Zmniejszone/brak ruchów płodu przez >12 h po 28. tygodniu",
+      "Gorączka, ból przy oddawaniu moczu, ból jednostronny łydki z obrzękiem (ryzyko zakrzepicy)",
+    ],
+    causes:[
+      "Fizjologiczne zmiany hormonalne i mechaniczne w ciąży",
+      "Infekcje dróg moczowych, niedokrwistość, choroby tarczycy",
+      "Powikłania ciąży: poronienie, ciąża ektopowa, stan przedrzucawkowy, cholestaza ciężarnych",
+    ],
+    firstaid:[
+      "Odpoczynek, nawodnienie, małe częste posiłki przy nudnościach",
+      "Unoszenie nóg przy obrzękach, pozycje odciążające kręgosłup (leżenie na lewym boku)",
+      "Delikatna aktywność (spacery, pływanie) jeśli brak przeciwwskazań",
+      "W razie niepokojących objawów — nie zwlekaj z kontaktem z położną/lekarzem/oddziałem",
+    ],
+    otc:[
+      "Paracetamol jako pierwszy wybór przeciwbólowy (po konsultacji)",
+      "Preparaty z żelazem/kwasem foliowym wg zaleceń lekarskich",
+      "Unikać: NLPZ (ibuprofen) w III trymestrze, leków bez konsultacji",
+    ],
+    rx:[
+      "Leczenie zależne od rozpoznania i trymestru; decyzje tylko przez lekarza prowadzącego",
+      "Skierowania do diagnostyki (USG, badania lab.) i opieki perinatologicznej przy powikłaniach",
+    ],
+    rehab:[
+      "Ćwiczenia dna miednicy, oddechowe, wzmacnianie posturalne pod okiem fizjoterapeuty uroginekologicznego",
+      "Edukacja ergonomii (wstawanie przez bok, podparcia)",
+    ],
+    myths:[
+      "„W ciąży nie wolno ćwiczyć” — przy prawidłowej ciąży umiarkowana aktywność jest korzystna",
+      "„Zgaga oznacza dużo włosów u dziecka” — brak podstaw naukowych",
+    ],
+    faq:[
+      "How to tell Braxton–Hicks? — Irregular, ease with rest/hydration; labor contractions intensify and become regular",
+      "Is flying allowed? — Usually until 36 weeks if uncomplicated; confirm with your clinician and airline",
+    ]
+  },
+lydka:{
+    label:"Calf",
+    symptoms:[
+      "Ból/uczucie napięcia w tylnej części podudzia, czasem kurcze nocne",
+      "Obrzęk po wysiłku, tkliwość przy ucisku mięśnia brzuchatego/plikowatego",
+      "Uczucie ciepła, zaczerwienienie skóry (do oceny pod kątem zapalenia żył)",
+    ],
+    urgent:[
+      "Jednostronny obrzęk, ból i ucieplenie łydki połączone z dusznością/bólem w klatce — natychmiastowa pomoc (ryzyko zakrzepicy/ZP)",
+      "Silny ból po urazie z trzaskiem i niemożnością wspięcia na palce (podejrzenie zerwania ścięgna Achillesa)",
+      "Twardy bolesny „sznur” na przebiegu żyły, gorączka",
+    ],
+    causes:[
+      "Przeciążenie mięśniowe, zespół przeciążeniowy piszczeli, odwodnienie i zaburzenia elektrolitowe",
+      "Żylaki i przewlekła niewydolność żylna",
+      "Zakrzepica żył głębokich, zapalenie żył powierzchownych",
+    ],
+    firstaid:[
+      "Odpoczynek względny, delikatne rozciąganie mięśni łydki (po ustąpieniu ostrego bólu)",
+      "Chłodzenie 10–15 min, uniesienie kończyny dla redukcji obrzęku",
+      "Po wysiłku: nawodnienie i uzupełnienie elektrolitów",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen na ból (zgodnie z ulotką)",
+      "Maści chłodzące/łagodzące napięcie mięśni (na nieuszkodzoną skórę)",
+    ],
+    rx:[
+      "USG Doppler przy podejrzeniu zakrzepicy; leczenie przeciwkrzepliwe wg zaleceń",
+      "Rehabilitacja przy przeciążeniach, wkładki/kompresjoterapia w niewydolności żylnej",
+    ],
+    rehab:[
+      "Rozciąganie łydki (wykrok twarzą do ściany), rolowanie powięzi (z umiarem)",
+      "Wzmacnianie: wspięcia na palce, ekscentryczne obciążanie ścięgna Achillesa pod kontrolą fizjo",
+    ],
+    myths:[
+      "„Skurcze to zawsze magnez” — przyczyny są wieloczynnikowe (nawodnienie, obciążenia, sen, elektrolity)",
+    ],
+    faq:[
+      "When to see a doctor? — Unilateral swelling/pain without injury, DVT signs, or no improvement after 1–2 weeks",
+    ]
+  },
+kostka:{
+    label:"Ankle",
+    symptoms:[
+      "Ból po skręceniu, obrzęk bocznej/przyśrodkowej okolicy, zasinienie",
+      "Utykanie, niestabilność, ból przy obciążeniu i skręcie stopy",
+    ],
+    urgent:[
+      "Niemożność wykonania 4 kroków od razu po urazie (kryteria Ottawa)",
+      "Deformacja, podejrzenie złamania/zwichnięcia, drętwienie stopy",
+      "Gorący, zaczerwieniony staw z gorączką bez urazu",
+    ],
+    causes:[
+      "Skręcenie więzadeł skokowych (najczęściej ATFL), naderwania mięśni/ścięgien",
+      "Złamania kostek/awulsyjne (wymagają RTG wg reguł Ottawskich)",
+      "Przewlekła niestabilność po niedoleczonym urazie",
+    ],
+    firstaid:[
+      "PEACE & LOVE: ochrona, podniesienie, kompresja elastyczna, stopniowy powrót ruchu",
+      "Chłodzenie w pierwszej dobie 10–15 min co 2–3 h (nie bezpośrednio na skórę)",
+      "Unikaj długiego unieruchomienia — wczesna bezbolesna mobilizacja poprawia rokowanie",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen na ból (zgodnie z ulotką)",
+      "Maści przeciwzapalne miejscowe",
+    ],
+    rx:[
+      "RTG wg kryteriów Ottawa przy bólu kostki + niemożności obciążania/bolesności palpacyjnej punktów kostnych",
+      "Fizjoterapia sensomotoryczna (propriocepcja), stabilizacja ścięgien strzałkowych",
+      "Orteza krótko po ostrym skręceniu; w niestabilności — konsultacja ortopedyczna",
+    ],
+    rehab:[
+      "Ćwiczenia równowagi (stanie na jednej nodze, poduszki sensomotoryczne)",
+      "Wzmacnianie mięśni strzałkowych, zakres zgięcie‑wyprost skokowego w bezbólowym zakresie",
+    ],
+    myths:[
+      "„Trzeba zawsze usztywnić na tygodnie” — zbyt długie unieruchomienie opóźnia powrót funkcji",
+    ],
+    faq:[
+      "Do I need X‑ray? — If Ottawa rules are met or swelling/pain persist after 3–5 days",
+    ]
+  },
+  oczy:{
+    label:"Eyes",
+    symptoms:[
+      "Zmęczenie, pieczenie, suchość, zamglenie widzenia",
+      "Światłowstręt, łzawienie, bóle głowy po długiej pracy wzrokowej",
+    ],
+    urgent:[
+      "Nagłe jednooczne pogorszenie widzenia, błyski i mroczki",
+      "Uraz oka, chemikalia, silny ból oka z nudnościami",
+    ],
+    causes:[
+      "Przemęczenie cyfrowe (CVS), suchość, wady refrakcji, alergie",
+      "Migrena, infekcje, zapalenia struktur oka",
+    ],
+    firstaid:[
+      "Reguła 20‑20‑20, mruganie, nawilżanie powietrza",
+      "Sztuczne łzy, przerwy od ekranów, ergonomia oświetlenia",
+    ],
+    otc:[
+      "Sztuczne łzy, krople z kwasem hialuronowym",
+      "Okulary ochronne przy wietrze/kurzu",
+    ],
+    rx:[
+      "Dobór szkieł/korekcji po badaniu wzroku, leczenie stanów zapalnych wg zaleceń",
+    ],
+    rehab:[
+      "Ćwiczenia akomodacji, higiena snu, ekspozycja dzienna na światło naturalne",
+    ],
+    myths:[
+      "„Im jaśniej ekran, tym lepiej” — zbyt wysokie natężenie męczy oczy",
+    ],
+    faq:[
+      "Czy niebieskie filtry pomagają? — Dla komfortu tak, ale nie są panaceum",
+    ]
+  },
+  szyja:{
+    label:"Neck",
+    symptoms:[
+      "Sztywność karku, ograniczenie obrotu, ból promieniujący do barku/ramienia",
+      "Bóle napięciowe głowy, zawroty przy długim patrzeniu w dół",
+    ],
+    urgent:[
+      "Sztywność karku z gorączką i światłowstrętem (pilna ocena)",
+      "Uraz z neurologicznymi objawami: drętwienie, osłabienie kończyn",
+    ],
+    causes:[
+      "Napięcie mięśniowe, dyskopatia szyjna, zespół „text neck”, wady postawy",
+      "Rzadziej: zapalenia, choroby reumatyczne, schorzenia tarczycy",
+    ],
+    firstaid:[
+      "Delikatny ruch, mikroprzerwy, ciepło na mięśnie, rozluźnianie stresu",
+      "Ergonomia biurka: ekran na wysokości oczu, podparcie odcinka lędźwiowego",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen doraźnie, plastry rozgrzewające",
+      "Maści miejscowe (mentol/NSAID)",
+    ],
+    rx:[
+      "Fizjoterapia: mobilizacje, trening posturalny, neuromobilizacje",
+      "Obrazowanie i leczenie specjalistyczne przy deficytach/neuralgii",
+    ],
+    rehab:[
+      "Ćwiczenia zakresu ruchu, izometryczne, wzmacnianie łopatek",
+      "Ćwiczenia oddechowe, relaksacja mięśni podpotylicznych",
+    ],
+    myths:[
+      "„Ból szyi = zwyrodnienie” — najczęściej to odwracalne napięcia/przeciążenia",
+    ],
+    faq:[
+      "Kiedy RTG/MRI? — Czerwone flagi/uraz/objawy korzeniowe lub brak poprawy po 6 tygodniach",
+    ]
+  },
+  barki:{
+    label:"Shoulders",
+    symptoms:[
+      "Ból przy unoszeniu ręki, ograniczenie rotacji, przeskakiwanie",
+      "Nocne pobudki z bólu barku, osłabienie siły",
+    ],
+    urgent:[
+      "Uraz z deformacją/niemożnością poruszenia (zwichnięcie/złamanie)",
+      "Gorący, zaczerwieniony bark z gorączką (septyczne zapalenie stawu)",
+    ],
+    causes:[
+      "Zespół ciasnoty podbarkowej, tendinopatie stożka rotatorów, zamrożony bark",
+      "Kalcia (zwapnienia), zwyrodnienia stawu barkowo‑obojczykowego",
+    ],
+    firstaid:[
+      "Odpoczynek względny, unikanie ruchów prowokujących ból, zimno/ciepło wg preferencji",
+      "Wzmacnianie łopatki i rotatorów w bezbólowym zakresie (guma oporowa)",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen, maści p/zapalne",
+      "Taśmy kinesio doraźnie (komfort)",
+    ],
+    rx:[
+      "Fizjoterapia ukierunkowana, iniekcje sterydowe przy wskazaniach",
+      "USG/MRI przy podejrzeniu uszkodzeń; leczenie operacyjne rzadko",
+    ],
+    rehab:[
+      "Ćwiczenia: retrakcja łopatki, rotacja zewnętrzna z gumą, Y‑T‑W",
+      "Postawa: kontrola protrakcjii barków, ergonomia pracy",
+    ],
+    myths:[
+      "„Strzelanie w barku niszczy staw” — zwykle nieszkodliwe kawitacje/ścięgna",
+    ],
+    faq:[
+      "Kiedy do ortopedy? — Gdy brak poprawy po 6–8 tyg., uraz z utrzymującym się ograniczeniem",
+    ]
+  },
+  ramie:{
+    label:"Arm",
+    symptoms:[
+      "Ból wzdłuż ramienia, tkliwość ścięgien bicepsa/tricepsa",
+      "Nasilenie przy podnoszeniu/skręcaniu, przeciążenia siłowe",
+    ],
+    urgent:[
+      "Ostry ból po urazie z trzaskiem i osłabieniem siły (zerwanie ścięgna)",
+      "Zaczerwienienie, gorączka, wyraźny obrzęk stawu",
+    ],
+    causes:[
+      "Tendinopatie, zapalenie kaletek, konflikt mięśniowo‑ścięgnisty",
+      "Podrażnienia nerwowe z odcinka szyjnego (ból rzutowany)",
+    ],
+    firstaid:[
+      "Modyfikacja obciążeń, zimno/ciepło, delikatne rozciąganie",
+      "Automasaż/rolowanie umiarkowane",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen doraźnie, maści p/zapalne",
+    ],
+    rx:[
+      "Fizjoterapia, czasem iniekcje sterydowe; diagnostyka obrazowa gdy brak poprawy",
+    ],
+    rehab:[
+      "Wzmacnianie ekscentryczne, stabilizacja łopatki, poprawa techniki ćwiczeń",
+    ],
+    myths:[
+      "„Ból = zakaz ruchu” — zbyt długie unikanie obciążeń pogarsza wytrzymałość",
+    ],
+    faq:[
+      "Ile odpoczywać? — Zwykle 1–2 tyg. modyfikacji, potem stopniowy powrót wg bólu",
+    ]
+  },
+  dlon:{
+    label:"Hand",
+    symptoms:[
+      "Ból nadgarstka/palców, mrowienie kciuka‑palca środkowego, spadek chwytu",
+      "Obrzęk, trzaski przy ruchu, poranna sztywność",
+    ],
+    urgent:[
+      "Uraz z deformacją/zanikiem czucia, zakażone rany kłute dłoni",
+      "Nagłe drętwienie i osłabienie chwytu (ucisk nerwu)",
+    ],
+    causes:[
+      "Zespół cieśni nadgarstka, de Quervain, choroba/Dupuytren, zap. stawów",
+      "Przeciążenia przy pracy manualnej/komputerowej, urazy",
+    ],
+    firstaid:[
+      "Odpoczynek względny, orteza nocna przy cieśni, zimno na obrzęk",
+      "Ergonomia myszki/klawiatury, mikropauzy",
+    ],
+    otc:[
+      "Paracetamol/ibuprofen, maści p/zapalne",
+      "Żele chłodzące, plastry rozgrzewające",
+    ],
+    rx:[
+      "Fizjoterapia (ślizgi ścięgien/nerwów), iniekcje sterydowe wg wskazań",
+      "EMG/USG przy utrzymujących się parestezjach",
+    ],
+    rehab:[
+      "Ćwiczenia ślizgowe nerwu pośrodkowego, gumowe piłeczki, chwyt izometryczny",
+    ],
+    myths:[
+      "„Cieśń biorę tylko tabletkami” — bez rehabilitacji nawraca",
+    ],
+    faq:[
+      "Kiedy operacja? — Gdy objawy cieśni utrzymują się mimo ortezy/fizjo i EMG potwierdza ucisk",
+    ]
+  },
+  zeby: {
+  label: "Teeth",
+  symptoms: [
+    "Throbbing toothache worse at night or on biting",
+    "Sensitivity to cold/heat/sweets; brief sharp pains",
+    "Gum swelling/redness, bleeding on brushing",
+    "Abscess: gum bump with pus, bad taste/odor",
+    "Chipped/broken tooth, lost filling/crown",
+    "Pain radiating to ear/jaw/temple; limited opening (trismus)"
+  ],
+  urgent: [
+    "Spreading facial/neck swelling, breathing or swallowing trouble — ER urgently",
+    "Fever/chills with tooth pain (deep infection/phlegmon)",
+    "Avulsed permanent tooth after trauma (replant ASAP)"
+  ],
+  causes: [
+    "Caries and pulpitis, pulp necrosis",
+    "Periapical inflammation, subperiosteal abscess",
+    "Gingivitis/periodontitis",
+    "Cervical dentin hypersensitivity, bruxism",
+    "Traumatic injury, enamel cracks"
+  ],
+  firstaid: [
+    "Rinse gently with lukewarm saline, clean area carefully",
+    "Cold pack externally 10–15 min with breaks; never place aspirin on gum",
+    "Temporary filling material for lost filling/crown until dentist visit",
+    "Avulsed permanent tooth: hold by crown, rinse with milk/saline, keep in socket or milk and go to dentist immediately"
+  ],
+  otc: [
+    "Paracetamol/acetaminophen or ibuprofen if appropriate; avoid NSAIDs if bleeding risk",
+    "Topical dental gels with lidocaine (short term)",
+    "Short courses of chlorhexidine mouthwash as directed"
+  ],
+  rx: [
+    "Root canal treatment or restoration/extraction as indicated",
+    "Antibiotics only with systemic signs or phlegmon — dentist decision",
+    "Incision and drainage of abscess; X‑ray/CBCT as needed"
+  ],
+  rehab: [
+    "Oral hygiene: brush twice daily with fluoride toothpaste; floss/irrigator",
+    "Bruxism protection (occlusal splint); address parafunctions",
+    "Diet: limit free sugars; water after snacks"
+  ],
+  myths: [
+    "\"Toothache will pass on its own\" — infections usually worsen",
+    "\"Antibiotic alone is enough\" — dental cause must be treated (e.g., root canal)"
+  ],
+  faq: [
+    "When to see a dentist? — within 24–48 h if persistent pain, swelling, fever, or pus",
+    "Can I exercise? — avoid strenuous activity during acute pain/swelling"
+  ],
+  dx: [],
+  docs: [
+    "General dentist",
+    "Endodontist",
+    "Emergency dental service (out‑of‑hours acute pain/swelling)"
+  ]
+}
+
+  ,
+strefa: {
+  label:"Intimate area",
+  symptoms:[
+    "Dysuria/burning, itching, discharge (women); scrotal/perineal pain (men)",
+    "Unpleasant odor, redness/swelling of intimate skin",
+    "Frequency, urgency, dyspareunia"
+  ],
+  urgent:[
+    "Fever with severe lower-abdominal/testicular pain, vomiting",
+    "Acute scrotal swelling/pain (torsion) — emergency",
+    "Suspected ectopic pregnancy (acute pain + syncope)"
+  ],
+  causes:[
+    "Intimate infections (bacterial/fungal), BV, UTI",
+    "Epididymitis/prostatitis, irritant/contact dermatitis"
+  ],
+  firstaid:[
+    "Gentle hygiene (no harsh soaps), breathable cotton underwear",
+    "Hydration; post-coital voiding/shower"
+  ],
+  otc:[
+    "Topical antifungals (women) for typical yeast symptoms",
+    "Analgesics PRN; soothing gels for itch"
+  ],
+  rx:[
+    "Antibiotics per culture for UTI; partner treatment for STIs",
+    "Testicular US in pain/swelling; urgent care for torsion"
+  ],
+  rehab:[
+    "Prevention: breathable clothing, avoid prolonged moisture",
+    "Safe sexual practices, hydration"
+  ],
+  myths:[
+    "“All itch = yeast” — many causes incl. allergy/bacterial",
+    "“It will pass” — persistent/worsening symptoms need evaluation"
+  ],
+  faq:[
+    "Urgent — severe testicular pain, fever + abdominal pain, pregnancy with pain"
+  ]
+}
 };
     const qs=new URLSearchParams(location.search);
     const RAW_TYP=(qs.get('typ')||'kobieta').toLowerCase();
     const RAW_CZESC=(qs.get('czesc')||'glowa').toLowerCase();
     const RAW_LABEL=(qs.get('label')||RAW_CZESC).toString();
-    const ALIAS={'oko':'glowa','klatka-piersiowa':'klatka','zoladek':'brzuch'};
+    const ALIAS={'oczy':'oko','klatka-piersiowa':'klatka','zoladek':'brzuch'};
     const TYP=RAW_TYP, CZESC=(ALIAS[RAW_CZESC]||RAW_CZESC), LABEL=RAW_LABEL;
 
     /* --- zastosowanie i18n do UI (tylko nagłówki/teksty, nie listy) --- */
@@ -1161,41 +2811,12 @@ const CONTENT_EN={
       }
     })();
 
-    
-    
     /* --- wybór contentu wg języka i części ciała --- */
-    (function(){
-      var __lang = (localStorage.getItem('bh.lang') || document.documentElement.getAttribute('lang') || 'pl').toLowerCase();
-      if(__lang!=='pl' && __lang!=='en'){ __lang='pl'; }
-      var CONTENT = (__lang==='en') ? CONTENT_EN : CONTENT_PL;
-
-      var __qs = new URLSearchParams(window.location.search || '');
-      var TYP = (__qs.get('typ') || (typeof TYP!=='undefined'?TYP:'') || '').toLowerCase();
-      var CZESC = (__qs.get('czesc') || (typeof CZESC!=='undefined'?CZESC:'') || '').toLowerCase();
-      var LABEL = (__qs.get('label') || (typeof LABEL!=='undefined'?LABEL:'') || '');
-
-      var __key = (CZESC==='strefa' && (TYP==='kobieta' || TYP==='mezczyzna')) ? ('strefa_'+TYP) : CZESC;
-
-      // Prefer entry from selected lang; if brak, fallback to other lang for the SAME key; dopiero potem 'glowa'
-      var entry = CONTENT[__key]
-               || ((__lang==='en' ? CONTENT_PL : CONTENT_EN)[__key])
-               || CONTENT.glowa;
-
-      // Ustaw etykietę z entry.label (nie z URL), zachowaj TYP
-      var lbl = (entry && entry.label) ? entry.label : (LABEL || CZESC || ''); 
-      var lblNode = document.getElementById('label-text');
-      if(lblNode){ lblNode.innerHTML = '<b>'+lbl+'</b> • '+(TYP||''); }
-
-      // Udostępnij do dalszych fragmentów kodu
-      window.__BH_LANG = __lang;
-      window.__BH_ENTRY = entry;
-      window.__BH_KEY = __key;
-      window.__BH_TYP = TYP;
-    })();
+    const CONTENT=(L()==='en')?CONTENT_EN:CONTENT_PL;
+    const entry = CONTENT[CZESC] || CONTENT.glowa;
+    document.getElementById('label-text').innerHTML='<b>'+(entry.label||LABEL)+'</b> • '+TYP;
 
     /* --- helpers / scoring --- */
-
-
     const isChild=(TYP==='dziecko');
     const allowItem=(it)=> typeof it==='string' ? true : (isChild ? (it.audience!=='adult') : (it.audience!=='child'));
     const textOf =(it)=> typeof it==='string' ? it : it.t;
@@ -4351,7 +5972,5 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }
 })();
 </script>
-<script src="assets/patch-zeby-docs.js"></script>
-<script src="assets/patch-zeby-specialists.js"></script>
 </body>
 </html>
