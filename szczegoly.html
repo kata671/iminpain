@@ -2811,12 +2811,58 @@ strefa: {
       }
     })();
 
+    
     /* --- wybór contentu wg języka i części ciała --- */
-    const CONTENT=(L()==='en')?CONTENT_EN:CONTENT_PL;
-    const entry = CONTENT[CZESC] || CONTENT.glowa;
-    document.getElementById('label-text').innerHTML='<b>'+(entry.label||LABEL)+'</b> • '+TYP;
+    (function(){
+      var __lang = (localStorage.getItem('bh.lang') || document.documentElement.getAttribute('lang') || 'pl').toLowerCase();
+      if(__lang!=='pl' && __lang!=='en'){ __lang='pl'; }
+      var EN = (typeof CONTENT_EN!=='undefined') ? CONTENT_EN : {};
+      var PL = (typeof CONTENT_PL!=='undefined') ? CONTENT_PL : {};
+
+      var qs   = new URLSearchParams(window.location.search || '');
+      var TYP  = (qs.get('typ')   || (typeof TYP!=='undefined'?TYP:'')   || '').toLowerCase();
+      var CZES = (qs.get('czesc') || (typeof CZESC!=='undefined'?CZESC:'') || '').toLowerCase();
+      var LABEL= (qs.get('label') || (typeof LABEL!=='undefined'?LABEL:'') || '');
+
+      var KEY = (CZES==='strefa' && (TYP==='kobieta' || TYP==='mezczyzna')) ? ('strefa_'+TYP) : CZES;
+
+      var eEN = EN[KEY] || EN[CZES] || null;
+      var ePL = PL[KEY] || PL[CZES] || PL.glowa || null;
+
+      function isComplete(e){
+        if(!e) return false;
+        var arrs=['symptoms','urgent','causes','firstaid','otc','rx','rehab','myths','faq','dx','docs'];
+        for(var i=0;i<arrs.length;i++){
+          var a=e[arrs[i]];
+          if(!a || !Array.isArray(a) || a.length===0) return false;
+        }
+        return !!e.label;
+      }
+
+      var entry;
+      if(__lang==='en'){
+        entry = isComplete(eEN) ? eEN : (isComplete(ePL) ? ePL : (eEN||ePL));
+      }else{
+        entry = isComplete(ePL) ? ePL : (isComplete(eEN) ? eEN : (ePL||eEN));
+      }
+
+      var lblNode = document.getElementById('label-text');
+      var lbl = (entry && entry.label) ? entry.label : (LABEL || CZES || '');
+      if(lblNode){ lblNode.innerHTML = '<b>'+lbl+'</b>' + (TYP?(' • '+TYP):''); }
+
+      var crumbTyp = document.getElementById('crumb-typ');
+      var crumbLbl = document.getElementById('crumb-label');
+      if(crumbTyp) crumbTyp.textContent = TYP || '—';
+      if(crumbLbl) crumbLbl.textContent = (entry && entry.label) ? entry.label : (LABEL || CZES || '—');
+
+      window.__BH_LANG = __lang;
+      window.__BH_ENTRY = entry;
+      window.__BH_KEY = KEY;
+      window.__BH_TYP = TYP;
+    })();
 
     /* --- helpers / scoring --- */
+
     const isChild=(TYP==='dziecko');
     const allowItem=(it)=> typeof it==='string' ? true : (isChild ? (it.audience!=='adult') : (it.audience!=='child'));
     const textOf =(it)=> typeof it==='string' ? it : it.t;
