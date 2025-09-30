@@ -3,100 +3,60 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ból zęba 24H — Pro (V3)</title>
-  <meta name="theme-color" content="#0f122a" />
-
-  <!-- Leaflet -->
+  <title>Ból zęba 24H — PRO</title>
+  <meta name="theme-color" content="#0c0f24" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIJ3UVdB6QBCrR8O2U4Vib4rVZ9Cj8k=" crossorigin="anonymous"></script>
-
-  <!-- MarkerCluster + Heatmap -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-
-  <!-- opening_hours (evaluate open now) -->
   <script src="https://unpkg.com/opening_hours@4.20.0/opening_hours.js"></script>
-
   <style>
-    :root{
-      --bg:#0f122a; --panel:rgba(25,26,56,.72); --glass:rgba(255,255,255,.06);
-      --txt:#eaf2ff; --muted:#cfe2ff; --b:#8c7bff; --ok:#22e3a0; --warn:#ffb86c; --bad:#ff6b6b;
-      --br:18px; --ring:0 0 0 3px rgba(140,123,255,.35);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;background:radial-gradient(1200px 600px at 70% -10%, rgba(164,107,255,.12), transparent) , var(--bg); color:var(--txt);
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    :root{ --bg:#0c0f24; --panel:rgba(22,24,56,.75); --glass:rgba(255,255,255,.06);
+      --txt:#ecf1ff; --muted:#cfe1ff; --b:#7e73ff; --ok:#22e3a0; --warn:#ffb86c; --bad:#ff6b6b;
+      --br:16px; --ring:0 0 0 3px rgba(126,115,255,.35) }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:
+      radial-gradient(900px 500px at 80% -10%, rgba(164,107,255,.15), transparent),
+      radial-gradient(700px 400px at 10% -20%, rgba(46,196,255,.12), transparent),
+      var(--bg); color:var(--txt); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
     a{color:inherit}
-
-    header{position:sticky;top:0;z-index:30;padding:10px 14px;background:linear-gradient(180deg, rgba(15,18,42,.95), rgba(15,18,42,.6));
-      border-bottom:1px solid rgba(140,123,255,.22);backdrop-filter:saturate(120%) blur(8px)}
-    .row{max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
-    .title{font-weight:900;letter-spacing:.2px;display:flex;align-items:center;gap:8px}
-    .title .ver{opacity:.8;font-weight:700;font-size:12px;padding:3px 8px;border:1px solid rgba(255,255,255,.18);border-radius:999px}
+    header{position:sticky;top:0;z-index:30;padding:10px 14px;background:linear-gradient(180deg, rgba(12,15,36,.95), rgba(12,15,36,.6));
+      border-bottom:1px solid rgba(126,115,255,.22);backdrop-filter:saturate(120%) blur(8px)}
+    .row{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .title{font-weight:900;letter-spacing:.2px;display:flex;align-items:center;gap:10px}
     .btn{appearance:none;border:1px solid rgba(255,255,255,.18);background:var(--glass);color:var(--txt);border-radius:12px;
       padding:9px 12px;font-weight:800;cursor:pointer;display:inline-flex;gap:8px;align-items:center;text-decoration:none}
     .btn:hover{box-shadow:var(--ring); transform:translateY(-1px)}
-    .btn--pri{border-color:rgba(140,123,255,.5)}
-    .btn--ok{border-color:rgba(34,227,160,.6)}
-    .btn--warn{border-color:rgba(255,184,108,.6)}
-
-    .wrap{max-width:1300px;margin:12px auto;padding:0 14px;display:grid;grid-template-columns:1.35fr .65fr;gap:14px}
-    @media (max-width:1100px){ .wrap{grid-template-columns:1fr} }
-
-    .card{background:var(--panel);border:1px solid rgba(140,123,255,.25);border-radius:var(--br);overflow:hidden}
-    .card .head{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid rgba(140,123,255,.22)}
-
-    /* TRIAGE */
-    .triage{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;padding:10px 12px;border-bottom:1px dashed rgba(140,123,255,.22)}
-    .triage label{font-size:12px;opacity:.9;margin-bottom:4px;display:block}
-    .triage input[type="range"]{width:100%}
-    .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:12px}
-    .pill--red{border-color:rgba(255,107,107,.6)}
-    .pill--amber{border-color:rgba(255,184,108,.7)}
-    .pill--green{border-color:rgba(34,227,160,.7)}
-    .triage .result{grid-column:1/-1;padding:6px 8px;color:var(--muted)}
-
-    /* CONTROLS */
-    .controls{display:flex;flex-wrap:wrap;gap:10px;padding:10px 12px;border-bottom:1px dashed rgba(140,123,255,.22)}
-    .toggle{display:inline-flex;gap:6px;align-items:center}
-    .toggle input{accent-color:#22e3a0}
-    .range{display:flex;align-items:center;gap:6px}
-    .range input{width:160px}
-    .chip{display:inline-flex;gap:6px;align-items:center;padding:6px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.18);cursor:pointer;user-select:none}
-    .chip.active{box-shadow:var(--ring)}
-
-    /* MAP + LAYERS */
-    #map{height:68vh;min-height:420px}
-    .floating{position:absolute;z-index:25;display:flex;gap:8px;top:16px;right:16px}
-    .fab{border-radius:999px;padding:10px 12px}
-    .toast{position:fixed;z-index:40;bottom:16px;left:50%;transform:translateX(-50%);padding:10px 14px;background:rgba(20,24,50,.9);
-      border:1px solid rgba(140,123,255,.3);border-radius:12px;display:none}
-    .legend{display:flex;gap:8px;align-items:center;padding:8px 12px;border-top:1px solid rgba(140,123,255,.22)}
-    .legend .dot{width:10px;height:10px;border-radius:50%}
-    .dot-24h{background:#22e3a0}.dot-open{background:#70e0ff}.dot-other{background:#d1b4ff}
-
-    /* LIST */
+    .btn--pri{border-color:rgba(126,115,255,.5)} .btn--ok{border-color:rgba(34,227,160,.6)} .btn--warn{border-color:rgba(255,184,108,.6)}
+    .wrap{max-width:1280px;margin:14px auto;padding:0 14px;display:grid;grid-template-columns:1.25fr .75fr;gap:14px}
+    @media (max-width:1100px){ .wrap{grid-template-columns:1fr } }
+    .card{background:var(--panel);border:1px solid rgba(126,115,255,.25);border-radius:var(--br);overflow:hidden}
+    .card .head{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid rgba(126,115,255,.22)}
+    .triage{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;padding:12px;border-bottom:1px dashed rgba(126,115,255,.22)}
+    .triage .group{display:flex;flex-direction:column;gap:6px}
+    .seg{display:flex;flex-wrap:wrap;gap:6px}
+    .seg .seg-btn{padding:8px 10px;border:1px solid rgba(255,255,255,.18);border-radius:10px;background:var(--glass);cursor:pointer;font-weight:800}
+    .seg .seg-btn.active{box-shadow:var(--ring)}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:12px}
+    .badge.red{border-color:rgba(255,107,107,.6)} .badge.amber{border-color:rgba(255,184,108,.7)} .badge.green{border-color:rgba(34,227,160,.7)}
+    .triage .result{grid-column:1/-1;color:var(--muted)}
+    .controls{display:flex;flex-wrap:wrap;gap:10px;padding:10px 12px;border-bottom:1px dashed rgba(126,115,255,.22)}
+    .toggle{display:inline-flex;gap:6px;align-items:center} .toggle input{accent-color:#22e3a0}
+    .range{display:flex;align-items:center;gap:6px} .range input{width:170px}
+    #map{height:66vh;min-height:420px}
+    .legend{display:flex;gap:8px;align-items:center;padding:8px 12px;border-top:1px solid rgba(126,115,255,.22)}
+    .legend .dot{width:10px;height:10px;border-radius:50%} .dot-24h{background:#22e3a0}.dot-open{background:#70e0ff}.dot-other{background:#d1b4ff}
     .pane{display:flex;flex-direction:column;height:100%}
-    .list{padding:8px;overflow:auto;min-height:240px;max-height:calc(68vh - 100px)}
-    .dent{border:1px solid rgba(140,123,255,.25);border-radius:12px;padding:8px;margin:8px 0;background:rgba(255,255,255,.04)}
-    .dent .name{font-weight:900}
-    .dent .meta{opacity:.9}
+    .list{padding:8px;overflow:auto;min-height:240px;max-height:calc(66vh - 92px)}
+    .dent{border:1px solid rgba(126,115,255,.25);border-radius:12px;padding:8px;margin:8px 0;background:rgba(255,255,255,.04)}
+    .dent .name{font-weight:900} .dent .meta{opacity:.9}
     .tag{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:12px}
-    .tag--24h{border-color:rgba(34,227,160,.65);box-shadow:0 0 0 1px rgba(34,227,160,.35) inset}
-    .tag--open{border-color:rgba(34,227,160,.65)}
-    .tag--closed{border-color:rgba(255,107,107,.7)}
-
-    .foot{padding:10px;border-top:1px solid rgba(140,123,255,.22);display:flex;gap:8px;flex-wrap:wrap}
-    .hint{font-size:13px;color:var(--muted);padding:8px}
+    .tag--24h{border-color:rgba(34,227,160,.65);box-shadow:0 0 0 1px rgba(34,227,160,.35) inset} .tag--open{border-color:rgba(34,227,160,.65)} .tag--closed{border-color:rgba(255,107,107,.7)}
+    .empty{padding:10px;color:var(--muted)}
   </style>
 </head>
 <body>
   <header>
     <div class="row">
-      <div class="title">🦷 Ból zęba 24H — Pro <span class="ver">V3</span></div>
+      <div class="title">🦷 Ból zęba 24H — PRO</div>
       <div class="row" style="gap:8px">
         <a class="btn" href="index.html">← Wróć</a>
       </div>
@@ -108,57 +68,53 @@
       <div class="head">
         <div style="font-weight:800">Twoja okolica</div>
         <div class="row" style="gap:8px">
-          <button class="btn btn--pri fab" id="btn-geoloc">📍 Lokalizacja</button>
-          <button class="btn fab" id="btn-search-viewport">🔄 Szukaj w tym widoku</button>
-          <a class="btn fab" id="gm-24" href="#" target="_blank" rel="noopener">🗺️ Google 24h</a>
-          <a class="btn fab" id="gm-all" href="#" target="_blank" rel="noopener">🗺️ Google wszyscy</a>
+          <button class="btn btn--pri" id="btn-geoloc">📍 Lokalizacja</button>
+          <button class="btn" id="btn-search-viewport">🔄 Szukaj w tym widoku</button>
+          <a class="btn" id="gm-24" href="#" target="_blank" rel="noopener">🗺️ Google 24h</a>
+          <a class="btn" id="gm-all" href="#" target="_blank" rel="noopener">🗺️ Google wszyscy</a>
         </div>
       </div>
 
-      <!-- TRIAGE (reaktywny) -->
-      <div class="triage" id="triage">
-        <div>
-          <label>Natężenie bólu (0–10)</label>
-          <input id="t-pain" type="range" min="0" max="10" value="6">
+      <div class="triage">
+        <div class="group">
+          <label>Natężenie bólu</label>
+          <div class="seg" id="pain-seg"></div>
         </div>
-        <div>
-          <label>Obrzęk / gorączka?</label>
-          <select id="t-swelling">
-            <option value="no">Nie</option>
-            <option value="mild">Łagodny obrzęk</option>
-            <option value="high">Silny obrzęk / gorączka</option>
-          </select>
+        <div class="group">
+          <label>Obrzęk / gorączka</label>
+          <div class="seg" id="swelling-seg">
+            <button class="seg-btn" data-val="no">Brak</button>
+            <button class="seg-btn" data-val="mild">Łagodny</button>
+            <button class="seg-btn" data-val="high">Silny / gorączka</button>
+          </div>
         </div>
-        <div>
-          <label>Uraz / po zabiegu?</label>
-          <select id="t-trauma">
-            <option value="no">Nie</option>
-            <option value="recent">Tak, ostatnie 48 h</option>
-            <option value="bleeding">Tak, krwawienie / złamanie</option>
-          </select>
+        <div class="group">
+          <label>Uraz / po zabiegu</label>
+          <div class="seg" id="trauma-seg">
+            <button class="seg-btn" data-val="no">Nie</button>
+            <button class="seg-btn" data-val="recent">Ost. 48h</button>
+            <button class="seg-btn" data-val="bleeding">Krwawienie / złamanie</button>
+          </div>
         </div>
-        <div>
-          <span id="t-badge" class="pill pill--amber">Dziś</span>
+        <div class="group">
+          <label>Wynik</label>
+          <div id="t-badge" class="badge amber">Dziś</div>
         </div>
         <div class="result" id="t-out"></div>
       </div>
 
-      <!-- KONTROLKI (reaktywne) -->
       <div class="controls">
-        <span class="range">Promień: <input id="radius" type="range" min="2" max="20" step="1" value="6">
-          <b id="radiusVal">6 km</b></span>
+        <span class="range">Promień:
+          <input id="radius" type="range" min="2" max="20" step="1" value="6">
+          <b id="radiusVal">6 km</b>
+        </span>
         <label class="toggle"><input type="checkbox" id="f-24"> tylko 24/7</label>
         <label class="toggle"><input type="checkbox" id="f-open"> otwarte teraz</label>
         <label class="toggle"><input type="checkbox" id="f-nfz"> NFZ</label>
         <label class="toggle"><input type="checkbox" id="f-wheel"> dostępność ♿</label>
-        <span class="chip" id="chip-heat">🔥 heatmap</span>
-        <span class="chip" id="chip-cluster">🧩 clustering</span>
       </div>
 
-      <div style="position:relative">
-        <div id="map"></div>
-        <div class="toast" id="toast"></div>
-      </div>
+      <div id="map"></div>
 
       <div class="legend">
         <span class="dot dot-24h"></span><span>24/7 / emergency</span>
@@ -169,8 +125,7 @@
 
     <aside class="card pane">
       <div class="head"><div style="font-weight:800">Lista</div><div id="count" class="muted">–</div></div>
-      <div class="hint">🔴 Jeśli ból + duży obrzęk/gorączka/dusznosć → SOR / 112. Nie przykładaj aspiryny do dziąsła.</div>
-      <div class="list" id="list"></div>
+      <div class="list" id="list"><div class="empty">Szukam dentystów…</div></div>
       <div class="foot">
         <a class="btn btn--ok" href="tel:112">📞 112</a>
         <a class="btn btn--warn" href="https://www.google.com/search?q=pogotowie+stomatologiczne" target="_blank" rel="noopener">🚑 Pogotowie stomatologiczne</a>
@@ -180,223 +135,117 @@
   </div>
 
   <script>
-  // ===== Helpers =====
-  const $ = (sel,root=document)=>root.querySelector(sel);
-  const $$ = (sel,root=document)=>Array.from(root.querySelectorAll(sel));
-  const store = (k,v)=>localStorage.setItem(k, JSON.stringify(v));
-  const load = (k,def)=>{ try{ const x = localStorage.getItem(k); return x?JSON.parse(x):def }catch(e){ return def } };
+  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+  function ohIsOpen(oh){ try{ if(!oh) return null; const ohObj=new opening_hours(oh); return ohObj.getState(new Date()); }catch(e){ return null } }
 
-  // ===== TRIAGE (reactive) =====
-  (function triage(){
-    const pain = $('#t-pain'), swell=$('#t-swelling'), trauma=$('#t-trauma');
+  // TRIAGE
+  const painSeg=$('#pain-seg'); for(let i=0;i<=10;i++){ const b=document.createElement('button'); b.className='seg-btn'; b.dataset.val=i; b.textContent=i; painSeg.appendChild(b); }
+  function triageEval(){
+    const p=+($('.seg-btn.active[data-val]', painSeg)?.dataset.val||0);
+    const s=$('.seg-btn.active', $('#swelling-seg'))?.dataset.val||'no';
+    const t=$('.seg-btn.active', $('#trauma-seg'))?.dataset.val||'no';
+    let score=(p>=8?2:(p>=5?1:0))+(s==='high'?2:(s==='mild'?1:0))+(t==='bleeding'?2:(t==='recent'?1:0));
     const badge=$('#t-badge'), out=$('#t-out');
-    function evalNow(){
-      const p=+pain.value, s=swell.value, t=trauma.value;
-      let score = (p>=8?2:(p>=5?1:0)) + (s==='high'?2:(s==='mild'?1:0)) + (t==='bleeding'?2:(t==='recent'?1:0));
-      if(score>=4){ badge.className='pill pill--red'; badge.textContent='Pilne'; out.textContent='Skontaktuj się pilnie z gabinetem 24/7. Jeśli duszność/trudności w połykaniu → 112.'; }
-      else if(score>=2){ badge.className='pill pill--amber'; badge.textContent='Dziś'; out.textContent='Znajdź gabinet otwarty teraz lub umów się na dziś. Zimny okład policzka, leki p/bólowe zgodnie z ulotką.'; }
-      else{ badge.className='pill pill--green'; badge.textContent='Planowo'; out.textContent='Umów wizytę planową. Unikaj skrajnych temperatur napojów; higiena jamy ustnej.'; }
-    }
-    [pain,swell,trauma].forEach(el=>el.addEventListener('input', evalNow));
-    evalNow();
-  })();
+    if(score>=4){ badge.className='badge red'; badge.textContent='Pilne'; out.textContent='Zadzwoń do gabinetu 24/7 lub SOR przy duszności/gorączce.'; }
+    else if(score>=2){ badge.className='badge amber'; badge.textContent='Dziś'; out.textContent='Znajdź gabinet otwarty teraz i umów wizytę. Zimny okład policzka, leki p/bólowe zgodnie z ulotką.'; }
+    else{ badge.className='badge green'; badge.textContent='Planowo'; out.textContent='Umów wizytę planową, unikaj skrajnych temp. napojów, utrzymuj higienę jamy ustnej.'; }
+  }
+  function segActivate(box,target){ $$('.seg-btn',box).forEach(el=>el.classList.toggle('active',el===target)); triageEval(); }
+  painSeg.addEventListener('click',e=>{ if(e.target.matches('.seg-btn')) segActivate(painSeg,e.target); });
+  $('#swelling-seg').addEventListener('click',e=>{ if(e.target.matches('.seg-btn')) segActivate($('#swelling-seg'),e.target); });
+  $('#trauma-seg').addEventListener('click',e=>{ if(e.target.matches('.seg-btn')) segActivate($('#trauma-seg'),e.target); });
+  painSeg.querySelector('.seg-btn[data-val="6"]').classList.add('active'); $('#swelling-seg .seg-btn[data-val="no"]').classList.add('active'); $('#trauma-seg .seg-btn[data-val="no"]').classList.add('active'); triageEval();
 
-  // ===== MAPA =====
-  let map, heatLayer, cluster24, clusterOpen, clusterOther, userMarker;
-  let allPts = []; // pełne dane
-  let RADIUS_KM = load('d24.radius', 6);
-  let center = load('d24.center', {lat:52.2297, lon:21.0122});
-
-  const radiusInput = $('#radius'); const radiusVal = $('#radiusVal');
-  radiusInput.value = RADIUS_KM; radiusVal.textContent = RADIUS_KM+' km';
-
-  initMap();
-  useGeoloc(); // spróbuj od razu
+  // MAP
+  let map,userMarker,layer24,layerOpen,layerOther,allPts=[]; let center={lat:52.2297,lon:21.0122}; let R=6;
+  initMap(); useGeoloc();
 
   function initMap(){
-    map = L.map('map', { zoomControl:true, scrollWheelZoom:true }).setView([center.lat, center.lon], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19, attribution:'&copy; OpenStreetMap'}).addTo(map);
-
-    cluster24   = L.markerClusterGroup({ disableClusteringAtZoom: 16 });
-    clusterOpen = L.markerClusterGroup({ disableClusteringAtZoom: 16 });
-    clusterOther= L.markerClusterGroup({ disableClusteringAtZoom: 16 });
-    cluster24.addTo(map); clusterOpen.addTo(map); clusterOther.addTo(map);
-
-    $('#btn-geoloc').addEventListener('click', useGeoloc);
-    $('#btn-search-viewport').addEventListener('click', ()=>{
-      const c = map.getCenter(); center = {lat:c.lat, lon:c.lng}; store('d24.center', center);
-      fetchDentists(center.lat, center.lon);
-    });
-
-    // Reactive controls
-    radiusInput.addEventListener('input', ()=>{
-      RADIUS_KM = +radiusInput.value; radiusVal.textContent = RADIUS_KM+' km'; store('d24.radius', RADIUS_KM);
-      fetchDentists(center.lat, center.lon);
-    });
-    ['f-24','f-open','f-nfz','f-wheel'].forEach(id=> $('#'+id).addEventListener('change', applyFilters));
-    $('#chip-heat').addEventListener('click', (e)=>{ e.currentTarget.classList.toggle('active'); updateHeat(); });
-    $('#chip-cluster').addEventListener('click', (e)=>{ e.currentTarget.classList.toggle('active'); toggleClustering(); });
-
-    updateGoogleLinks(center.lat, center.lon);
+    map=L.map('map',{zoomControl:true,scrollWheelZoom:true}).setView([center.lat,center.lon],13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);
+    layer24=L.layerGroup().addTo(map); layerOpen=L.layerGroup().addTo(map); layerOther=L.layerGroup().addTo(map);
+    $('#btn-geoloc').addEventListener('click',useGeoloc);
+    $('#btn-search-viewport').addEventListener('click',()=>{ const c=map.getCenter(); center={lat:c.lat,lon:c.lng}; fetchDentists(center.lat,center.lon); });
+    $('#radius').addEventListener('input',e=>{ R=+e.target.value; $('#radiusVal').textContent=R+' km'; const c=map.getCenter(); fetchDentists(c.lat,c.lng); });
+    ['f-24','f-open','f-nfz','f-wheel'].forEach(id=> $('#'+id).addEventListener('change',applyFilters));
+    updateGoogleLinks(center.lat,center.lon);
   }
+  function useGeoloc(){ if(!navigator.geolocation){ fetchDentists(center.lat,center.lon); return; }
+    navigator.geolocation.getCurrentPosition(pos=>{ center={lat:pos.coords.latitude,lon:pos.coords.longitude}; setUser(center.lat,center.lon); fetchDentists(center.lat,center.lon); updateGoogleLinks(center.lat,center.lon); },
+      _=>{ fetchDentists(center.lat,center.lon); }, {enableHighAccuracy:true,timeout:10000,maximumAge:30000}); }
+  function setUser(lat,lon){ if(userMarker) map.removeLayer(userMarker); userMarker=L.marker([lat,lon],{title:'Twoja lokalizacja'}).addTo(map); map.setView([lat,lon],14); }
+  function updateGoogleLinks(lat,lon){ const z=14,base='@'+lat+','+lon+','+z+'z'; $('#gm-24').href='https://www.google.com/maps/search/stomatolog+24h/'+base; $('#gm-all').href='https://www.google.com/maps/search/stomatolog/'+base; }
 
-  function toast(msg, ms=1800){ const t=$('#toast'); t.textContent=msg; t.style.display='block'; setTimeout(()=>t.style.display='none', ms); }
-
-  function useGeoloc(){
-    if(!navigator.geolocation){ toast('Brak geolokacji'); fetchDentists(center.lat, center.lon); return; }
-    navigator.geolocation.getCurrentPosition(pos=>{
-      center = {lat:pos.coords.latitude, lon:pos.coords.longitude}; store('d24.center', center);
-      setUser(center.lat, center.lon);
-      fetchDentists(center.lat, center.lon);
-      updateGoogleLinks(center.lat, center.lon);
-    }, err=>{
-      console.warn('Geolokacja odmówiona/nieudana:', err);
-      fetchDentists(center.lat, center.lon);
-    }, { enableHighAccuracy:true, timeout:10000, maximumAge:30000 });
+  function fetchDentists(lat,lon){
+    const radius=Math.round(R*1000);
+    const q=`[out:json][timeout:25];(node["amenity"="dentist"](around:${radius},${lat},${lon});way["amenity"="dentist"](around:${radius},${lat},${lon});relation["amenity"="dentist"](around:${radius},${lat},${lon}););out center 200;`;
+    setListInfo('Szukam dentystów w okolicy…'); layer24.clearLayers(); layerOpen.clearLayers(); layerOther.clearLayers();
+    fetch('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(q))
+      .then(r=>r.json()).then(json=>{ allPts=normalize(json); applyFilters(); })
+      .catch(_=>{ setListInfo('Nie udało się pobrać danych (Overpass). Spróbuj ponownie.'); });
   }
-
-  function setUser(lat, lon){
-    if(userMarker) map.removeLayer(userMarker);
-    userMarker = L.marker([lat,lon], {title:'Twoja lokalizacja'}).addTo(map);
-    map.setView([lat,lon], 14);
-  }
-
-  function updateGoogleLinks(lat, lon){
-    const z=14, base=`@${lat},${lon},${z}z`;
-    $('#gm-24').href = `https://www.google.com/maps/search/stomatolog+24h/${base}`;
-    $('#gm-all').href = `https://www.google.com/maps/search/stomatolog/${base}`;
-  }
-
-  function fetchDentists(lat, lon){
-    const radius = Math.round(RADIUS_KM*1000);
-    const q = `
-      [out:json][timeout:25];
-      (
-        node["amenity"="dentist"](around:${radius},${lat},${lon});
-        way["amenity"="dentist"](around:${radius},${lat},${lon});
-        relation["amenity"="dentist"](around:${radius},${lat},${lon});
-      );
-      out center 250;
-    `;
-    const url = 'https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(q);
-    setList('Szukam dentystów…');
-    clearLayers();
-    fetch(url).then(r=>r.json()).then(json=>{
-      allPts = normalize(json);
-      applyFilters();
-      updateHeat();
-      toast(`Znaleziono: ${allPts.length}`);
-    }).catch(err=>{
-      console.error(err); setList('Nie udało się pobrać danych (Overpass).');
-    });
-  }
-
-  function normalize(data){
-    if(!data || !data.elements) return [];
-    return data.elements.map(el=>{
-      const c = el.type==='node' ? [el.lat, el.lon] : [el.center.lat, el.center.lon];
-      const t = el.tags || {};
-      const nfz = (t['healthcare:insurance:pl:NFZ']==='yes') || /\bNFZ\b/i.test(t.name||'') || /\bnfz\b/i.test(t.operator||'');
-      const wheel = (t.wheelchair==='yes');
-      const twenty4 = (t.opening_hours==='24/7') || /24.?7/.test(t.opening_hours||'');
-      const emergency = (t.emergency==='yes') || /emergency/i.test(t.name||'');
-      return {
-        id: el.id, lat:c[0], lon:c[1],
-        name: t.name || 'Gabinet stomatologiczny',
-        phone: t.phone || t['contact:phone'] || null,
-        website: t.website || t['contact:website'] || null,
-        addr: [t['addr:street'], t['addr:housenumber'], t['addr:city']].filter(Boolean).join(' ') || (t['addr:full']||''),
-        oh: t.opening_hours || null,
-        emergency, twenty4, nfz, wheel, tags: t
-      };
-    });
-  }
-
-  function ohIsOpen(oh){
-    try{ if(!oh) return null; const ohObj = new opening_hours(oh); return ohObj.getState(new Date()); }catch(e){ return null; }
-  }
-
-  function setList(content){
-    const list = $('#list');
-    if(typeof content === 'string'){ list.innerHTML = '<div class="hint">'+content+'</div>'; return; }
-    list.innerHTML = '';
-    content.forEach(html => { const li=document.createElement('div'); li.className='dent'; li.innerHTML=html; list.appendChild(li); });
-  }
-
-  function clearLayers(){
-    cluster24.clearLayers(); clusterOpen.clearLayers(); clusterOther.clearLayers();
-  }
+  function normalize(data){ if(!data||!data.elements) return []; return data.elements.map(el=>{
+    const c=el.type==='node'?[el.lat,el.lon]:[el.center.lat,el.center.lon]; const t=el.tags||{};
+    const nfz=(t['healthcare:insurance:pl:NFZ']==='yes')||/\bNFZ\b/i.test(t.name||'')||/\bnfz\b/i.test(t.operator||'');
+    const wheel=(t.wheelchair==='yes'); const twenty4=(t.opening_hours==='24/7')||/24.?7/.test(t.opening_hours||''); const emergency=(t.emergency==='yes')||/emergency/i.test(t.name||'');
+    return {id:el.id,lat:c[0],lon:c[1],name:t.name||'Gabinet stomatologiczny',phone:t.phone||t['contact:phone']||null,website:t.website||t['contact:website']||null,
+      addr:[t['addr:street'],t['addr:housenumber'],t['addr:city']].filter(Boolean).join(' ')||(t['addr:full']||''),oh:t.opening_hours||null,emergency,twenty4,nfz,wheel,tags:t}; }); }
+  function setListInfo(msg){ $('#list').innerHTML='<div class="empty">'+msg+'</div>'; }
+  function setList(htmlArr){ const list=$('#list'); list.innerHTML=''; htmlArr.forEach(h=>{ const li=document.createElement('div'); li.className='dent'; li.innerHTML=h; list.appendChild(li); }); }
 
   function applyFilters(){
-    const only24 = $('#f-24').checked;
-    const openNow = $('#f-open').checked;
-    const onlyNFZ = $('#f-nfz').checked;
-    const onlyWheel = $('#f-wheel').checked;
+    const only24=$('#f-24').checked, openNow=$('#f-open').checked, onlyNFZ=$('#f-nfz').checked, onlyWheel=$('#f-wheel').checked;
+    layer24.clearLayers(); layerOpen.clearLayers(); layerOther.clearLayers();
+    const pts=allPts.slice().sort((a,b)=>{ const aOpen=ohIsOpen(a.oh), bOpen=ohIsOpen(b.oh);
+      const sA=(a.twenty4?3:0)+(a.emergency?2:0)+(aOpen===true?1:0)+(a.nfz?0.5:0); const sB=(b.twenty4?3:0)+(b.emergency?2:0)+(bOpen===true?1:0)+(b.nfz?0.5:0); return sB-sA; });
 
-    clearLayers();
-    const out = [];
-    let shown = 0;
-    const pts = allPts.slice().sort((a,b)=>{
-      const aOpen = ohIsOpen(a.oh), bOpen = ohIsOpen(b.oh);
-      const aScore = (a.twenty4?3:0) + (a.emergency?2:0) + (aOpen===true?1:0) + (a.nfz?0.5:0);
-      const bScore = (b.twenty4?3:0) + (b.emergency?2:0) + (bOpen===true?1:0) + (b.nfz?0.5:0);
-      return bScore - aScore;
-    });
-
+    const out=[]; let shown=0;
     pts.forEach(p=>{
-      const isOpen = ohIsOpen(p.oh);
-      if(only24 && !p.twenty4 && !p.emergency) return;
-      if(openNow && isOpen!==true) return;
-      if(onlyNFZ && !p.nfz) return;
-      if(onlyWheel && !p.wheel) return;
-
-      const color = p.twenty4||p.emergency ? '#22e3a0' : (isOpen===true ? '#70e0ff' : '#d1b4ff');
-      const marker = L.circleMarker([p.lat,p.lon], {radius:8, color, weight:2, fillColor:color, fillOpacity:.35});
-      const html = `
-        <div class="name">${p.name}</div>
-        <div class="meta">${p.addr || ''}</div>
-        <div class="meta">${p.oh ? ('🕒 ' + p.oh) : ''}</div>
+      const isOpen=ohIsOpen(p.oh); if(only24 && !p.twenty4 && !p.emergency) return; if(openNow && isOpen!==true) return; if(onlyNFZ && !p.nfz) return; if(onlyWheel && !p.wheel) return;
+      const color=p.twenty4||p.emergency?'#22e3a0':(isOpen===true?'#70e0ff':'#d1b4ff'); const m=L.circleMarker([p.lat,p.lon],{radius:8,color,weight:2,fillColor:color,fillOpacity:.35});
+      const dest=encodeURIComponent(p.lat+','+p.lon); const esc=s=>(s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); const escA=s=>(s||'').replace(/"/g,'&quot;');
+      const html=`
+        <div class="name">${esc(p.name)}</div>
+        <div class="meta">${esc(p.addr||'')}</div>
+        ${p.oh?('<div class="meta">🕒 '+esc(p.oh)+'</div>'):''}
         <div style="margin-top:6px">
-          ${p.twenty4 ? '<span class="tag tag--24h">24/7</span>' : ''}
-          ${p.emergency ? '<span class="tag tag--24h">emergency</span>' : ''}
-          ${isOpen===true ? '<span class="tag tag--open">otwarte teraz</span>' : (isOpen===false ? '<span class="tag tag--closed">zamknięte</span>' : '')}
-          ${p.nfz ? '<span class="tag">NFZ</span>' : ''}
-          ${p.wheel ? '<span class="tag">♿</span>' : ''}
+          ${p.twenty4?'<span class="tag tag--24h">24/7</span>':''}
+          ${p.emergency?'<span class="tag tag--24h">emergency</span>':''}
+          ${isOpen===true?'<span class="tag tag--open">otwarte teraz</span>':(isOpen===false?'<span class="tag tag--closed">zamknięte</span>':'')}
+          ${p.nfz?'<span class="tag">NFZ</span>':''}
+          ${p.wheel?'<span class="tag">♿</span>':''}
         </div>
         <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap">
-          ${p.phone ? `<a href="tel:${p.phone}" class="btn">📞 Zadzwoń</a>` : ''}
-          <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name)}">🗺️ Trasa</a>
-          ${p.website ? `<a class="btn" target="_blank" rel="noopener" href="${p.website}">🌐 Strona</a>` : ''}
-        </div>
-      `;
-      marker.bindPopup(html);
-
-      if(p.twenty4 || p.emergency){ cluster24.addLayer(marker); }
-      else if(isOpen===true){ clusterOpen.addLayer(marker); }
-      else { clusterOther.addLayer(marker); }
-
-      out.push(html); shown++;
+          ${p.phone?('<a class="btn" href="tel:'+encodeURIComponent(p.phone)+'">📞 Zadzwoń</a>'):''}
+          <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${dest}">🗺️ Trasa</a>
+          ${p.website?('<a class="btn" target="_blank" rel="noopener" href="'+escA(p.website)+'">🌐 Strona</a>'):''}
+        </div>`;
+      m.bindPopup(html); if(p.twenty4||p.emergency){layer24.addLayer(m)} else if(isOpen===true){layerOpen.addLayer(m)} else {layerOther.addLayer(m)}
+      out.append(html) if False else None
     });
 
-    setList(out);
-    $('#count').textContent = shown;
-  }
-
-  function updateHeat(){
-    const active = $('#chip-heat').classList.contains('active');
-    if(heatLayer){ map.removeLayer(heatLayer); heatLayer=null; }
-    if(!active) return;
-    const points = allPts.map(p=>[p.lat, p.lon, p.twenty4||p.emergency ? 0.9 : 0.4]);
-    if(points.length) heatLayer = L.heatLayer(points, {radius: 25, blur: 15, maxZoom: 16}).addTo(map);
-  }
-
-  function toggleClustering(){
-    const on = $('#chip-cluster').classList.toggle('active');
-    // markerClusterGroup nie ma prostego switcha per se — korzystamy z trzech grup już dodanych.
-    // "Wyłączenie" clusteringu = rozbicie na zwykłe LayerGroup (zachowamy proste klastry przy niskim zoomie).
-    // Dla prostoty UI pozostawiamy klastry (optymalne wydajnościowo i wizualnie).
-    toast(on ? 'Clustering włączony' : 'Clustering pozostaje dla wydajności 🙂');
-    $('#chip-cluster').classList.add('active'); // dla UX zostaw aktywny
+    const out2=[]; pts.forEach(p=>{
+      const isOpen=ohIsOpen(p.oh); if(only24 && !p.twenty4 && !p.emergency) return; if(openNow && isOpen!==true) return; if(onlyNFZ && !p.nfz) return; if(onlyWheel && !p.wheel) return;
+      const dest=encodeURIComponent(p.lat+','+p.lon); const esc=s=>(s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); const escA=s=>(s||'').replace(/"/g,'&quot;');
+      out2.push(`
+        <div class="name">${esc(p.name)}</div>
+        <div class="meta">${esc(p.addr||'')}</div>
+        ${p.oh?('<div class="meta">🕒 '+esc(p.oh)+'</div>'):''}
+        <div style="margin-top:6px">
+          ${p.twenty4?'<span class="tag tag--24h">24/7</span>':''}
+          ${p.emergency?'<span class="tag tag--24h">emergency</span>':''}
+          ${isOpen===true?'<span class="tag tag--open">otwarte teraz</span>':(isOpen===false?'<span class="tag tag--closed">zamknięte</span>':'')}
+          ${p.nfz?'<span class="tag">NFZ</span>':''}
+          ${p.wheel?'<span class="tag">♿</span>':''}
+        </div>
+        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap">
+          ${p.phone?('<a class="btn" href="tel:'+encodeURIComponent(p.phone)+'">📞 Zadzwoń</a>'):''}
+          <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${dest}">🗺️ Trasa</a>
+          ${p.website?('<a class="btn" target="_blank" rel="noopener" href="'+escA(p.website)+'">🌐 Strona</a>'):''}
+        </div>`);
+    });
+    if(out2.length===0){ setListInfo('Brak wyników dla wybranych filtrów. Zmień promień / odznacz filtry.'); } else { setList(out2); }
+    $('#count').textContent=out2.length;
   }
   </script>
 </body>
