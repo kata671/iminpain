@@ -3,131 +3,244 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ból zęba 24H — mapa dentystów w okolicy</title>
+  <title>Ból zęba 24H — mapa dentystów w okolicy (V2)</title>
   <meta name="theme-color" content="#0e1230" />
-  <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
 
-  <!-- Leaflet (mapa) -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-          integrity="sha256-20nQCchB9co0qIJ3UVdB6QBCrR8O2U4Vib4rVZ9Cj8k=" crossorigin="anonymous"></script>
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIJ3UVdB6QBCrR8O2U4Vib4rVZ9Cj8k=" crossorigin="anonymous"></script>
 
-  <!-- opening_hours (ocena czy otwarte teraz) -->
+  <!-- MarkerCluster -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- opening_hours (evaluate open now) -->
   <script src="https://unpkg.com/opening_hours@4.20.0/opening_hours.js"></script>
 
   <style>
-    :root{ --bg:#0e1230; --card:rgba(60,32,100,.36); --br:18px; --txt:#eaf2ff; --b:#a46bff; --ok:#22e3a0; --warn:#ffb86c; }
+    :root{
+      --bg:#0e1230; --card:rgba(60,32,100,.36); --txt:#eaf2ff; --border:rgba(164,107,255,.25);
+      --accent:#a46bff; --ok:#22e3a0; --warn:#ffb86c; --bad:#ff6b6b; --muted:#cfe2ff;
+      --br:18px;
+    }
+    *{box-sizing:border-box}
     html,body{height:100%}
     body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif}
-    header{position:sticky;top:0;background:linear-gradient(180deg, rgba(14,18,48,.9), rgba(14,18,48,.75));backdrop-filter:saturate(120%) blur(6px);
-           padding:10px 12px;border-bottom:1px solid rgba(164,107,255,.22);z-index:10}
-    header .row{display:flex;align-items:center;gap:10px;justify-content:space-between;max-width:1100px;margin:0 auto}
+
+    header{position:sticky;top:0;z-index:20;padding:10px 12px;
+      background:linear-gradient(180deg, rgba(14,18,48,.95), rgba(14,18,48,.75));
+      border-bottom:1px solid var(--border);backdrop-filter:saturate(120%) blur(6px);
+    }
+    header .row{max-width:1200px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:space-between}
     header .title{font-weight:900;letter-spacing:.2px}
-    header a.btn-back{color:var(--txt);text-decoration:none;border:1px solid rgba(164,107,255,.35);padding:8px 12px;border-radius:12px}
+    header a.btn-back{color:var(--txt);text-decoration:none;border:1px solid var(--border);padding:8px 12px;border-radius:12px}
 
-    .wrap{max-width:1100px;margin:12px auto;padding:0 12px;display:grid;grid-template-columns:1.2fr .8fr;gap:12px}
-    @media (max-width:900px){ .wrap{grid-template-columns:1fr} }
+    .wrap{max-width:1200px;margin:12px auto;padding:0 12px;display:grid;grid-template-columns:1.2fr .8fr;gap:12px}
+    @media (max-width:980px){ .wrap{grid-template-columns:1fr} }
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--br);overflow:hidden}
 
-    .card{background:var(--card);border:1px solid rgba(164,107,255,.25);border-radius:var(--br);overflow:hidden}
-    #map{height:70vh;min-height:420px}
-    .filters{display:flex;gap:8px;flex-wrap:wrap;padding:10px;border-bottom:1px solid rgba(164,107,255,.2)}
-    .filters button,.filters a{appearance:none;border:1px solid rgba(164,107,255,.35);background:rgba(255,255,255,.06);color:var(--txt);
-                               border-radius:12px;padding:8px 12px;font-weight:800;cursor:pointer;text-decoration:none}
-    .filters button:hover,.filters a:hover{box-shadow:0 8px 20px rgba(0,0,0,.28);transform:translateY(-1px)}
+    /* TRIAGE */
+    .triage{padding:10px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end}
+    .triage label{font-size:12px;opacity:.9;margin-bottom:4px;display:block}
+    .triage input[type="range"]{width:100%}
+    .triage .q{display:flex;flex-direction:column}
+    .triage .btn{align-self:stretch;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.06);
+      color:var(--txt);font-weight:800;cursor:pointer}
+    .triage .result{padding:8px 10px;border-top:1px dashed var(--border);font-size:14px}
+    .pill{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid var(--border);margin-right:6px;font-size:12px}
+    .pill--red{border-color:rgba(255,107,107,.6);box-shadow:0 0 0 1px rgba(255,107,107,.3) inset}
+    .pill--amber{border-color:rgba(255,184,108,.7);box-shadow:0 0 0 1px rgba(255,184,108,.35) inset}
+    .pill--green{border-color:rgba(34,227,160,.7);box-shadow:0 0 0 1px rgba(34,227,160,.35) inset}
 
-    .list{padding:8px;max-height:70vh;overflow:auto}
-    .dent{border:1px solid rgba(164,107,255,.2);border-radius:12px;padding:8px;margin:8px 0;background:rgba(255,255,255,.04)}
+    /* CONTROLS */
+    .controls{display:flex;gap:10px;flex-wrap:wrap;padding:10px;border-bottom:1px solid var(--border)}
+    .controls .btn, .controls .toggle, .controls .select{
+      border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--txt);
+      border-radius:12px;padding:8px 12px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;gap:6px;align-items:center
+    }
+    .controls .toggle input{accent-color:#22e3a0}
+    .controls .group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .controls .range{display:flex;align-items:center;gap:6px}
+    .controls input[type="range"]{width:150px}
+
+    /* MAP + SIDE */
+    #map{height:68vh;min-height:420px}
+    .legend{display:flex;gap:8px;align-items:center;padding:8px 10px;border-top:1px solid var(--border)}
+    .legend .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+    .dot-24h{background:#22e3a0}
+    .dot-open{background:#70e0ff}
+    .dot-other{background:#d1b4ff}
+
+    .list{padding:8px;max-height:68vh;overflow:auto}
+    .dent{border:1px solid var(--border);border-radius:12px;padding:8px;margin:8px 0;background:rgba(255,255,255,.04)}
     .dent .name{font-weight:900}
     .dent .tag{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:12px}
     .tag--24h{border-color:rgba(34,227,160,.65);box-shadow:0 0 0 1px rgba(34,227,160,.35) inset}
     .tag--open{border-color:rgba(34,227,160,.65)}
     .tag--closed{border-color:rgba(255,107,107,.7)}
-    .foot{padding:10px;border-top:1px solid rgba(164,107,255,.2);display:flex;gap:8px;flex-wrap:wrap}
 
-    .hint{font-size:13px;color:#cfe2ff;padding:8px}
-    .muted{opacity:.8}
+    .foot{padding:10px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap}
+    .hint{font-size:13px;color:var(--muted);padding:8px}
 
-    .legend{display:flex;gap:8px;align-items:center;padding:8px 10px;border-top:1px solid rgba(164,107,255,.2)}
-    .legend .dot{width:10px;height:10px;border-radius:50%}
-    .dot-24h{background:#22e3a0}
-    .dot-open{background:#70e0ff}
-    .dot-other{background:#d1b4ff}
+    .flex{display:flex;gap:12px}
+    .col{flex:1}
   </style>
 </head>
 <body>
   <header>
     <div class="row">
-      <div class="title">🦷 Ból zęba 24H — pomoc w okolicy</div>
+      <div class="title">🦷 Ból zęba 24H — pomoc w okolicy (V2)</div>
       <a class="btn-back" href="index.html">← Wróć</a>
     </div>
   </header>
 
   <div class="wrap">
     <section class="card">
-      <div class="filters">
-        <button id="btn-geoloc">📍 Użyj mojej lokalizacji</button>
-        <a id="gm-24" href="#" target="_blank" rel="noopener">Otwórz w Google Maps — 24h</a>
-        <a id="gm-all" href="#" target="_blank" rel="noopener">Otwórz w Google Maps — wszyscy</a>
+      <!-- TRIAGE -->
+      <div class="triage" id="triage">
+        <div class="q">
+          <label>Natężenie bólu (0–10)</label>
+          <input id="t-pain" type="range" min="0" max="10" value="6">
+        </div>
+        <div class="q">
+          <label>Obrzęk / gorączka?</label>
+          <select id="t-swelling">
+            <option value="no">Nie</option>
+            <option value="mild">Łagodny obrzęk</option>
+            <option value="high">Silny obrzęk / gorączka</option>
+          </select>
+        </div>
+        <div class="q">
+          <label>Uraz / po zabiegu?</label>
+          <select id="t-trauma">
+            <option value="no">Nie</option>
+            <option value="recent">Tak, ostatnie 48 h</option>
+            <option value="bleeding">Tak, krwawienie / złamanie</option>
+          </select>
+        </div>
+        <button class="btn" id="t-eval">Ocena 60s</button>
+        <div class="result" id="t-out"></div>
       </div>
+
+      <!-- CONTROLS -->
+      <div class="controls">
+        <div class="group range">
+          <span>Promień:</span>
+          <input id="radius" type="range" min="2" max="20" step="1" value="5">
+          <span id="radiusVal">5 km</span>
+        </div>
+        <label class="toggle"><input type="checkbox" id="f-24"> tylko 24/7</label>
+        <label class="toggle"><input type="checkbox" id="f-open"> otwarte teraz</label>
+        <label class="toggle"><input type="checkbox" id="f-nfz"> NFZ</label>
+        <label class="toggle"><input type="checkbox" id="f-wheel"> dostępność (wózek)</label>
+        <button class="btn" id="btn-geoloc">📍 Użyj mojej lokalizacji</button>
+        <a class="btn" id="gm-24" href="#" target="_blank" rel="noopener">Google Maps — 24h</a>
+        <a class="btn" id="gm-all" href="#" target="_blank" rel="noopener">Google Maps — wszyscy</a>
+      </div>
+
       <div id="map"></div>
       <div class="legend">
-        <div class="dot dot-24h"></div><div>24/7 / emergency</div>
-        <div class="dot dot-open"></div><div>Otwarte teraz</div>
-        <div class="dot dot-other"></div><div>Pozostali dentyści</div>
+        <span class="dot dot-24h"></span><span>24/7 / emergency</span>
+        <span class="dot dot-open"></span><span>Otwarte teraz</span>
+        <span class="dot dot-other"></span><span>Pozostali</span>
       </div>
     </section>
 
     <aside class="card">
-      <div class="hint">Jeśli ból jest bardzo silny, obrzęk szybko narasta, masz gorączkę lub problemy z oddychaniem — rozważ SOR / 112.</div>
+      <div class="hint">
+        🔴 Silny ból z obrzękiem, gorączką, trudnościami w oddychaniu / połykaniu → rozważ SOR / 112.
+        Unikaj gorących okładów; nie przykładaj aspiryny do dziąsła.
+      </div>
       <div class="list" id="list"></div>
       <div class="foot">
-        <a class="filters" href="tel:112">📞 112</a>
-        <a class="filters" href="https://www.google.com/search?q=pogotowie+stomatologiczne" target="_blank" rel="noopener">🚑 Pogotowie stomatologiczne</a>
-        <a class="filters" href="https://www.nfz.gov.pl/dla-pacjenta/dpn/" target="_blank" rel="noopener">ℹ️ NFZ — nocna pomoc</a>
+        <a class="btn" href="tel:112">📞 112</a>
+        <a class="btn" href="https://www.google.com/search?q=pogotowie+stomatologiczne" target="_blank" rel="noopener">🚑 Pogotowie stomatologiczne</a>
+        <a class="btn" href="https://www.nfz.gov.pl/dla-pacjenta/dpn/" target="_blank" rel="noopener">ℹ️ NFZ — nocna pomoc</a>
       </div>
     </aside>
   </div>
 
   <script>
-    // --- USTAWIENIA ---
-    const RADIUS_KM = 5;             // promień wyszukiwania
-    const LIMIT = 120;               // maks. liczba punktów z Overpass
-    // -------------------
+    // ====== TRIAGE ======
+    (function(){
+      const pain = document.getElementById('t-pain');
+      const swell = document.getElementById('t-swelling');
+      const trauma = document.getElementById('t-trauma');
+      const out = document.getElementById('t-out');
+      function evalNow(){
+        const p = +pain.value;
+        const s = swell.value;
+        const t = trauma.value;
+        let score = p >= 8 ? 2 : (p >= 5 ? 1 : 0);
+        if(s === 'high') score += 2; else if(s === 'mild') score += 1;
+        if(t === 'bleeding') score += 2; else if(t === 'recent') score += 1;
 
-    let map, userMarker, layer24h, layerOpen, layerOther;
+        if(score >= 4){
+          out.innerHTML = '<span class="pill pill--red">Pilne</span> Skontaktuj się pilnie z gabinetem (24/7 jeśli możliwe). Jeśli dojdą duszność / trudności w połykaniu → 112.';
+        }else if(score >= 2){
+          out.innerHTML = '<span class="pill pill--amber">Dziś</span> Poszukaj gabinetu otwartego teraz lub umów się na dziś. Stosuj zimne okłady policzka, środki p/bólowe zgodnie z ulotką.';
+        }else{
+          out.innerHTML = '<span class="pill pill--green">Planowo</span> Umów wizytę planową. Unikaj bardzo gorących / zimnych napojów; dbaj o higienę jamy ustnej.';
+        }
+      }
+      document.getElementById('t-eval').addEventListener('click', evalNow);
+      evalNow();
+    })();
 
+    // ====== MAPA & DANE ======
+    const R_DEFAULT = 5; // km
+    let RADIUS_KM = R_DEFAULT;
+    let map, userMarker, cluster24, clusterOpen, clusterOther;
+    let allPts = []; // pełny zbiór (filtrowany w UI)
+
+    const radiusInput = document.getElementById('radius');
+    const radiusVal = document.getElementById('radiusVal');
+    radiusInput.addEventListener('input', ()=>{
+      RADIUS_KM = +radiusInput.value; radiusVal.textContent = RADIUS_KM+' km';
+      if(lastCenter) fetchDentists(lastCenter.lat, lastCenter.lon);
+    });
+
+    function ohIsOpen(oh){
+      try{
+        if(!oh) return null;
+        const now = new Date();
+        const ohObj = new opening_hours(oh);
+        return ohObj.getState(now); // true/false
+      }catch(e){ return null; }
+    }
+
+    let lastCenter = {lat:52.2297, lon:21.0122}; // Warszawa
     init();
 
     function init(){
-      map = L.map('map', { zoomControl:true, scrollWheelZoom:true }).setView([52.2297,21.0122], 13); // Warszawa jako start
-      const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19, attribution: '&copy; OpenStreetMap'
-      }).addTo(map);
-
-      layer24h  = L.layerGroup().addTo(map);
-      layerOpen = L.layerGroup().addTo(map);
-      layerOther= L.layerGroup().addTo(map);
+      map = L.map('map', { zoomControl:true, scrollWheelZoom:true }).setView([lastCenter.lat,lastCenter.lon], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19, attribution:'&copy; OpenStreetMap'}).addTo(map);
+      cluster24  = L.markerClusterGroup({ disableClusteringAtZoom: 16 });
+      clusterOpen= L.markerClusterGroup({ disableClusteringAtZoom: 16 });
+      clusterOther= L.markerClusterGroup({ disableClusteringAtZoom: 16 });
+      cluster24.addTo(map); clusterOpen.addTo(map); clusterOther.addTo(map);
 
       document.getElementById('btn-geoloc').addEventListener('click', useGeoloc);
-      // Spróbuj od razu:
-      useGeoloc();
+      document.getElementById('f-24').addEventListener('change', applyFilters);
+      document.getElementById('f-open').addEventListener('change', applyFilters);
+      document.getElementById('f-nfz').addEventListener('change', applyFilters);
+      document.getElementById('f-wheel').addEventListener('change', applyFilters);
 
-      // Przyciski Google Maps
-      updateGoogleLinks(52.2297,21.0122);
+      updateGoogleLinks(lastCenter.lat, lastCenter.lon);
+      useGeoloc(); // spróbuj od razu
     }
 
     function useGeoloc(){
-      if(!navigator.geolocation){ alert('Brak geolokacji w przeglądarce'); return; }
+      if(!navigator.geolocation){ alert('Brak geolokacji w przeglądarce'); fetchDentists(lastCenter.lat,lastCenter.lon); return; }
       navigator.geolocation.getCurrentPosition(pos=>{
-        const lat = pos.coords.latitude, lon = pos.coords.longitude;
-        setUser(lat, lon);
-        fetchDentists(lat, lon);
-        updateGoogleLinks(lat, lon);
+        lastCenter = {lat:pos.coords.latitude, lon:pos.coords.longitude};
+        setUser(lastCenter.lat, lastCenter.lon);
+        fetchDentists(lastCenter.lat, lastCenter.lon);
+        updateGoogleLinks(lastCenter.lat, lastCenter.lon);
       }, err=>{
         console.warn('Geolokacja odmówiona/nieudana:', err);
-        // Zostaw mapę na starcie (Warszawa) i pokaż dentystów tam:
-        fetchDentists(52.2297,21.0122);
+        fetchDentists(lastCenter.lat, lastCenter.lon);
       }, { enableHighAccuracy:true, timeout:10000, maximumAge:30000 });
     }
 
@@ -138,14 +251,12 @@
     }
 
     function updateGoogleLinks(lat, lon){
-      const z = 14;
-      const base = `@${lat},${lon},${z}z`;
+      const z=14, base=`@${lat},${lon},${z}z`;
       document.getElementById('gm-24').href = `https://www.google.com/maps/search/stomatolog+24h/${base}`;
       document.getElementById('gm-all').href = `https://www.google.com/maps/search/stomatolog/${base}`;
     }
 
     function fetchDentists(lat, lon){
-      // Overpass: amenity=dentist w promieniu RADIUS_KM
       const radius = Math.round(RADIUS_KM*1000);
       const q = `
         [out:json][timeout:25];
@@ -154,40 +265,30 @@
           way["amenity"="dentist"](around:${radius},${lat},${lon});
           relation["amenity"="dentist"](around:${radius},${lat},${lon});
         );
-        out center ${LIMIT};
-        `;
+        out center 200;
+      `;
       const url = 'https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(q);
-      layer24h.clearLayers(); layerOpen.clearLayers(); layerOther.clearLayers();
-      document.getElementById('list').innerHTML = '<div class="muted">Szukam dentystów w okolicy…</div>';
-
+      setListInfo('Szukam dentystów w okolicy…');
+      cluster24.clearLayers(); clusterOpen.clearLayers(); clusterOther.clearLayers();
       fetch(url).then(r=>r.json()).then(json=>{
-        renderDentists(json, lat, lon);
+        allPts = normalize(json);
+        applyFilters();
       }).catch(err=>{
         console.error(err);
-        document.getElementById('list').innerHTML = '<div class="muted">Nie udało się pobrać danych (Overpass). Spróbuj odświeżyć.</div>';
+        setListInfo('Nie udało się pobrać danych (Overpass). Spróbuj odświeżyć.');
       });
     }
 
-    function ohIsOpen(oh){
-      try{
-        if(!oh) return null;
-        const now = new Date();
-        const ohObj = new opening_hours(oh);
-        return ohObj.getState(now); // true/false
-      }catch(e){
-        return null;
-      }
-    }
-
-    function renderDentists(data, lat, lon){
-      const list = document.getElementById('list'); list.innerHTML = '';
-      if(!data || !data.elements || !data.elements.length){
-        list.innerHTML = '<div class="muted">Brak punktów w pobliżu. Zwiększ promień lub otwórz Google Maps powyżej.</div>';
-        return;
-      }
-      const pts = data.elements.map(el=>{
+    function normalize(data){
+      if(!data || !data.elements) return [];
+      return data.elements.map(el=>{
         const c = el.type==='node' ? [el.lat, el.lon] : [el.center.lat, el.center.lon];
         const t = el.tags || {};
+        // heurystyki NFZ i dostępności
+        const nfz = (t['healthcare:insurance:pl:NFZ']==='yes') || /\bNFZ\b/i.test(t.name||'') || /\bnfz\b/i.test(t.operator||'');
+        const wheel = (t.wheelchair==='yes');
+        const twenty4 = (t.opening_hours==='24/7') || /24.?7/.test(t.opening_hours||'');
+        const emergency = (t.emergency==='yes') || /emergency/i.test(t.name||'');
         return {
           id: el.id, lat:c[0], lon:c[1],
           name: t.name || 'Gabinet stomatologiczny',
@@ -195,23 +296,44 @@
           website: t.website || t['contact:website'] || null,
           addr: [t['addr:street'], t['addr:housenumber'], t['addr:city']].filter(Boolean).join(' ') || (t['addr:full']||''),
           oh: t.opening_hours || null,
-          emergency: (t.emergency === 'yes' || /emergency/i.test(t.name||'')),
-          twenty4: (t['opening_hours'] === '24/7' || /24.?7/.test(t['opening_hours']||'')),
-          tags: t
+          emergency, twenty4, nfz, wheel, tags: t
         };
       });
+    }
 
-      pts.sort((a,b)=>{
-        const aScore = (a.twenty4?3:0) + (a.emergency?2:0) + ((ohIsOpen(a.oh)===true)?1:0);
-        const bScore = (b.twenty4?3:0) + (b.emergency?2:0) + ((ohIsOpen(b.oh)===true)?1:0);
+    function setListInfo(msg){
+      const list=document.getElementById('list');
+      list.innerHTML = '<div class="hint">'+msg+'</div>';
+    }
+
+    function applyFilters(){
+      const only24 = document.getElementById('f-24').checked;
+      const openNow = document.getElementById('f-open').checked;
+      const onlyNFZ = document.getElementById('f-nfz').checked;
+      const onlyWheel = document.getElementById('f-wheel').checked;
+
+      cluster24.clearLayers(); clusterOpen.clearLayers(); clusterOther.clearLayers();
+      const list = document.getElementById('list'); list.innerHTML = '';
+
+      // sortowanie: 24/7/emergency > otwarte teraz > NFZ > reszta (stabilne)
+      const pts = allPts.slice().sort((a,b)=>{
+        const aOpen = ohIsOpen(a.oh);
+        const bOpen = ohIsOpen(b.oh);
+        const aScore = (a.twenty4?3:0) + (a.emergency?2:0) + (aOpen===true?1:0) + (a.nfz?0.5:0);
+        const bScore = (b.twenty4?3:0) + (b.emergency?2:0) + (bOpen===true?1:0) + (b.nfz?0.5:0);
         return bScore - aScore;
       });
 
+      let shown = 0;
       pts.forEach(p=>{
         const isOpen = ohIsOpen(p.oh);
-        const color = p.twenty4||p.emergency ? '#22e3a0' : (isOpen===true ? '#70e0ff' : '#d1b4ff');
-        const icon = L.circleMarker([p.lat,p.lon], {radius:8, color, weight:2, fillColor:color, fillOpacity:.35});
+        if(only24 && !p.twenty4 && !p.emergency) return;
+        if(openNow && isOpen!==true) return;
+        if(onlyNFZ && !p.nfz) return;
+        if(onlyWheel && !p.wheel) return;
 
+        const color = p.twenty4||p.emergency ? '#22e3a0' : (isOpen===true ? '#70e0ff' : '#d1b4ff');
+        const marker = L.circleMarker([p.lat,p.lon], {radius:8, color, weight:2, fillColor:color, fillOpacity:.35});
         const html = `
           <div class="name">${p.name}</div>
           <div class="muted">${p.addr || ''}</div>
@@ -220,24 +342,31 @@
             ${p.twenty4 ? '<span class="tag tag--24h">24/7</span>' : ''}
             ${p.emergency ? '<span class="tag tag--24h">emergency</span>' : ''}
             ${isOpen===true ? '<span class="tag tag--open">otwarte teraz</span>' : (isOpen===false ? '<span class="tag tag--closed">zamknięte</span>' : '')}
+            ${p.nfz ? '<span class="tag">NFZ</span>' : ''}
+            ${p.wheel ? '<span class="tag">♿</span>' : ''}
           </div>
-          <div style="margin-top:6px">
-            ${p.phone ? `<a href="tel:${'${p.phone}'}" class="filters">📞 Zadzwoń</a>` : ''}
-            <a class="filters" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${'${encodeURIComponent(p.name)}'}&query_place_id=">🗺️ Trasa</a>
-            ${p.website ? `<a class="filters" target="_blank" rel="noopener" href="${'${p.website}'}">🌐 Strona</a>` : ''}
+          <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap">
+            ${p.phone ? `<a href="tel:${p.phone}" class="btn">📞 Zadzwoń</a>` : ''}
+            <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name)}">🗺️ Trasa</a>
+            ${p.website ? `<a class="btn" target="_blank" rel="noopener" href="${p.website}">🌐 Strona</a>` : ''}
           </div>
         `;
+        marker.bindPopup(html);
 
-        icon.bindPopup(html);
-        if(p.twenty4 || p.emergency){ icon.addTo(layer24h); }
-        else if(isOpen===true){ icon.addTo(layerOpen); }
-        else { icon.addTo(layerOther); }
+        if(p.twenty4 || p.emergency){ cluster24.addLayer(marker); }
+        else if(isOpen===true){ clusterOpen.addLayer(marker); }
+        else { clusterOther.addLayer(marker); }
 
         const li = document.createElement('div');
         li.className = 'dent';
         li.innerHTML = html;
         list.appendChild(li);
+        shown++;
       });
+
+      if(shown===0){
+        setListInfo('Brak wyników dla wybranych filtrów. Zmień promień / odznacz filtry.');
+      }
     }
   </script>
 </body>
