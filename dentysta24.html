@@ -3,19 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ból zęba 24H — ULTRA</title>
-  <meta name="theme-color" content="#0f1424" />
-
-  <!-- Leaflet -->
+  <title>Ból zęba 24H — ULTRA (mobile++)</title>
+  <meta name="theme-color" content="#151c33" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
-
-  <!-- opening_hours (otwarte teraz) -->
   <script src="https://unpkg.com/opening_hours@4.20.0/opening_hours.js"></script>
-
   <style>
     :root{
-      --bg:#0f1424; --panel:#121a30; --panel2:#0e162b;
+      --bg:#151c33; --panel:#162142; --panel2:#141e3a;
       --txt:#e9f1ff; --muted:#b6c7e6; --accent:#8b7bff; --ok:#2ce39b; --warn:#ffb963; --bad:#ff6b6b;
       --br:16px; --ring:0 0 0 3px rgba(139,123,255,.35);
     }
@@ -23,27 +18,20 @@
     body{margin:0;background:
       radial-gradient(900px 500px at 85% -10%, rgba(139,123,255,.14), transparent),
       radial-gradient(700px 400px at 10% -20%, rgba(46,196,255,.10), transparent),
-      var(--bg);
-      color:var(--txt);
+      var(--bg); color:var(--txt);
       font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
     a{color:inherit;text-decoration:none}
-
-    header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg, rgba(15,20,36,.95), rgba(15,20,36,.6));
+    header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg, rgba(21,28,51,.95), rgba(21,28,51,.6));
       border-bottom:1px solid rgba(139,123,255,.25);backdrop-filter:saturate(120%) blur(8px)}
     .row{max-width:1280px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .title{font-weight:900;letter-spacing:.2px;display:flex;align-items:center;gap:10px}
     .btn{appearance:none;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:var(--txt);border-radius:12px;
       padding:9px 12px;font-weight:800;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
-    .btn:hover{box-shadow:var(--ring); transform:translateY(-1px)}
-    .btn.pri{border-color:rgba(139,123,255,.5)}
-
+    .btn:hover{box-shadow:var(--ring); transform:translateY(-1px)} .btn.pri{border-color:rgba(139,123,255,.5)}
     .grid{max-width:1280px;margin:14px auto;padding:0 14px;display:grid;grid-template-columns:1.25fr .75fr;gap:14px}
     @media (max-width:1100px){ .grid{grid-template-columns:1fr} }
-
     .card{background:var(--panel);border:1px solid rgba(139,123,255,.25);border-radius:var(--br);overflow:hidden}
     .head{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid rgba(139,123,255,.25)}
-
-    /* TRIAGE */
     .triage{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;padding:12px;border-bottom:1px dashed rgba(139,123,255,.25)}
     .group{display:flex;flex-direction:column;gap:6px}
     .seg{display:flex;flex-wrap:wrap;gap:6px}
@@ -52,26 +40,31 @@
     .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:12px}
     .badge.red{border-color:rgba(255,107,107,.6)} .badge.amber{border-color:rgba(255,185,99,.7)} .badge.green{border-color:rgba(44,227,155,.7)}
     .muted{color:var(--muted);font-size:14px;margin-top:4px}
-
-    /* Controls */
     .controls{display:flex;flex-wrap:wrap;gap:10px;padding:10px 12px;border-bottom:1px dashed rgba(139,123,255,.25)}
-    .range{display:flex;align-items:center;gap:8px}
-    .range input{width:170px}
-
-    /* Map + list */
+    .range{display:flex;align-items:center;gap:8px} .range input{width:170px}
     #map{height:66vh;min-height:420px}
     .legend{display:flex;gap:10px;align-items:center;padding:8px 12px;border-top:1px solid rgba(139,123,255,.25);background:var(--panel2)}
-    .dot{width:10px;height:10px;border-radius:50%}
-    .dot24{background:#2ce39b}.dotOpen{background:#73d2ff}.dotElse{background:#b9a6ff}
-
+    .dot{width:10px;height:10px;border-radius:50%}.dot24{background:#2ce39b}.dotOpen{background:#73d2ff}.dotElse{background:#b9a6ff}
     .side{display:flex;flex-direction:column;height:100%}
     .list{padding:8px;overflow:auto;min-height:240px;max-height:calc(66vh - 90px)}
     .dent{border:1px solid rgba(139,123,255,.25);border-radius:12px;padding:8px;margin:8px 0;background:rgba(255,255,255,.04)}
-    .dent .name{font-weight:900}
-    .dent .meta{opacity:.9}
+    .dent .name{font-weight:900} .dent .meta{opacity:.9}
     .tag{display:inline-block;margin-right:6px;margin-top:4px;padding:2px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:12px}
     .tag.open{border-color:rgba(44,227,155,.7)} .tag.closed{border-color:rgba(255,107,107,.7)} .tag.hi{border-color:rgba(44,227,155,.7);box-shadow:inset 0 0 0 1px rgba(44,227,155,.35)}
     .empty{padding:8px;color:var(--muted)}
+
+    /* ===== Mobile narrow tweaks (v2) ===== */
+    @media (max-width: 480px){
+      .row{max-width:340px}
+      .grid{max-width:340px}
+      .head{padding:8px 10px}
+      .controls{gap:8px}
+      .triage{grid-template-columns:1fr 1fr}
+      .seg .seg-btn{padding:6px 8px;font-size:13px}
+      .badge{font-size:12px;padding:5px 9px}
+      .btn{padding:8px 10px;font-size:14px}
+      #map{height:60vh;min-height:340px}
+    }
   </style>
 </head>
 <body>
@@ -156,7 +149,7 @@
     function escA(s){ return (s||'').replace(/"/g,'&quot;'); }
     function ohIsOpen(oh){ try{ if(!oh) return null; const ohObj=new opening_hours(oh); return ohObj.getState(new Date()); }catch(e){ return null } }
 
-    // TRIAGE — klikalny, natychmiastowy
+    // TRIAGE
     const painSeg=$('#pain-seg'); for(let i=0;i<=10;i++){ const b=document.createElement('button'); b.className='seg-btn'; b.dataset.val=i; b.textContent=i; painSeg.appendChild(b); }
     function triageEval(){
       const p=+($('.seg-btn.active[data-val]', painSeg)?.dataset.val||0);
@@ -172,7 +165,6 @@
     painSeg.addEventListener('click', e=>{ if(e.target.matches('.seg-btn')) segActivate(painSeg, e.target); });
     $('#swelling-seg').addEventListener('click', e=>{ if(e.target.matches('.seg-btn')) segActivate($('#swelling-seg'), e.target); });
     $('#trauma-seg').addEventListener('click', e=>{ if(e.target.matches('.seg-btn')) segActivate($('#trauma-seg'), e.target); });
-    // default
     painSeg.querySelector('.seg-btn[data-val="6"]').classList.add('active');
     $('#swelling-seg .seg-btn[data-val="no"]').classList.add('active');
     $('#trauma-seg .seg-btn[data-val="no"]').classList.add('active');
@@ -181,7 +173,7 @@
     // MAPA + DANE
     let map, layer24, layerOpen, layerElse, userMarker, allPts=[];
     let R=6;
-    const initCenter = {lat:52.2297, lon:21.0122}; // Warszawa
+    const initCenter = {lat:52.2297, lon:21.0122};
     initMap();
 
     function initMap(){
@@ -258,7 +250,7 @@
         return sB-sA;
       });
 
-      const listHtml=[]; let shown=0;
+      const items=[]; let shown=0;
       pts.forEach(p=>{
         const isOpen = ohIsOpen(p.oh);
         if(only24 && !p.twenty4 && !p.emergency) return;
@@ -270,11 +262,11 @@
         const m = L.circleMarker([p.lat,p.lon], {radius:8, color, weight:2, fillColor:color, fillOpacity:.32});
         m.bindPopup(popupHTML(p));
         if(p.twenty4 || p.emergency) layer24.addLayer(m); else if(isOpen===true) layerOpen.addLayer(m); else layerElse.addLayer(m);
-        listHtml.push(popupHTML(p));
+        items.push(popupHTML(p));
         shown++;
       });
 
-      renderList(listHtml);
+      renderList(items);
       $('#count').textContent = shown;
       if(shown===0) setListInfo('Brak wyników — zmień promień lub odznacz filtry.');
     }
