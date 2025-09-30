@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ból zęba 24H — mapa dentystów w okolicy</title>
+  <meta name="theme-color" content="#0e1230" />
+  <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
+
+  <!-- Leaflet (mapa) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIJ3UVdB6QBCrR8O2U4Vib4rVZ9Cj8k=" crossorigin="anonymous"></script>
+
+  <!-- opening_hours (ocena czy otwarte teraz) -->
+  <script src="https://unpkg.com/opening_hours@4.20.0/opening_hours.js"></script>
+
+  <style>
+    :root{ --bg:#0e1230; --card:rgba(60,32,100,.36); --br:18px; --txt:#eaf2ff; --b:#a46bff; --ok:#22e3a0; --warn:#ffb86c; }
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif}
+    header{position:sticky;top:0;background:linear-gradient(180deg, rgba(14,18,48,.9), rgba(14,18,48,.75));backdrop-filter:saturate(120%) blur(6px);
+           padding:10px 12px;border-bottom:1px solid rgba(164,107,255,.22);z-index:10}
+    header .row{display:flex;align-items:center;gap:10px;justify-content:space-between;max-width:1100px;margin:0 auto}
+    header .title{font-weight:900;letter-spacing:.2px}
+    header a.btn-back{color:var(--txt);text-decoration:none;border:1px solid rgba(164,107,255,.35);padding:8px 12px;border-radius:12px}
+
+    .wrap{max-width:1100px;margin:12px auto;padding:0 12px;display:grid;grid-template-columns:1.2fr .8fr;gap:12px}
+    @media (max-width:900px){ .wrap{grid-template-columns:1fr} }
+
+    .card{background:var(--card);border:1px solid rgba(164,107,255,.25);border-radius:var(--br);overflow:hidden}
+    #map{height:70vh;min-height:420px}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;padding:10px;border-bottom:1px solid rgba(164,107,255,.2)}
+    .filters button,.filters a{appearance:none;border:1px solid rgba(164,107,255,.35);background:rgba(255,255,255,.06);color:var(--txt);
+                               border-radius:12px;padding:8px 12px;font-weight:800;cursor:pointer;text-decoration:none}
+    .filters button:hover,.filters a:hover{box-shadow:0 8px 20px rgba(0,0,0,.28);transform:translateY(-1px)}
+
+    .list{padding:8px;max-height:70vh;overflow:auto}
+    .dent{border:1px solid rgba(164,107,255,.2);border-radius:12px;padding:8px;margin:8px 0;background:rgba(255,255,255,.04)}
+    .dent .name{font-weight:900}
+    .dent .tag{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:12px}
+    .tag--24h{border-color:rgba(34,227,160,.65);box-shadow:0 0 0 1px rgba(34,227,160,.35) inset}
+    .tag--open{border-color:rgba(34,227,160,.65)}
+    .tag--closed{border-color:rgba(255,107,107,.7)}
+    .foot{padding:10px;border-top:1px solid rgba(164,107,255,.2);display:flex;gap:8px;flex-wrap:wrap}
+
+    .hint{font-size:13px;color:#cfe2ff;padding:8px}
+    .muted{opacity:.8}
+
+    .legend{display:flex;gap:8px;align-items:center;padding:8px 10px;border-top:1px solid rgba(164,107,255,.2)}
+    .legend .dot{width:10px;height:10px;border-radius:50%}
+    .dot-24h{background:#22e3a0}
+    .dot-open{background:#70e0ff}
+    .dot-other{background:#d1b4ff}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="row">
+      <div class="title">🦷 Ból zęba 24H — pomoc w okolicy</div>
+      <a class="btn-back" href="index.html">← Wróć</a>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <section class="card">
+      <div class="filters">
+        <button id="btn-geoloc">📍 Użyj mojej lokalizacji</button>
+        <a id="gm-24" href="#" target="_blank" rel="noopener">Otwórz w Google Maps — 24h</a>
+        <a id="gm-all" href="#" target="_blank" rel="noopener">Otwórz w Google Maps — wszyscy</a>
+      </div>
+      <div id="map"></div>
+      <div class="legend">
+        <div class="dot dot-24h"></div><div>24/7 / emergency</div>
+        <div class="dot dot-open"></div><div>Otwarte teraz</div>
+        <div class="dot dot-other"></div><div>Pozostali dentyści</div>
+      </div>
+    </section>
+
+    <aside class="card">
+      <div class="hint">Jeśli ból jest bardzo silny, obrzęk szybko narasta, masz gorączkę lub problemy z oddychaniem — rozważ SOR / 112.</div>
+      <div class="list" id="list"></div>
+      <div class="foot">
+        <a class="filters" href="tel:112">📞 112</a>
+        <a class="filters" href="https://www.google.com/search?q=pogotowie+stomatologiczne" target="_blank" rel="noopener">🚑 Pogotowie stomatologiczne</a>
+        <a class="filters" href="https://www.nfz.gov.pl/dla-pacjenta/dpn/" target="_blank" rel="noopener">ℹ️ NFZ — nocna pomoc</a>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // --- USTAWIENIA ---
+    const RADIUS_KM = 5;             // promień wyszukiwania
+    const LIMIT = 120;               // maks. liczba punktów z Overpass
+    // -------------------
+
+    let map, userMarker, layer24h, layerOpen, layerOther;
+
+    init();
+
+    function init(){
+      map = L.map('map', { zoomControl:true, scrollWheelZoom:true }).setView([52.2297,21.0122], 13); // Warszawa jako start
+      const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19, attribution: '&copy; OpenStreetMap'
+      }).addTo(map);
+
+      layer24h  = L.layerGroup().addTo(map);
+      layerOpen = L.layerGroup().addTo(map);
+      layerOther= L.layerGroup().addTo(map);
+
+      document.getElementById('btn-geoloc').addEventListener('click', useGeoloc);
+      // Spróbuj od razu:
+      useGeoloc();
+
+      // Przyciski Google Maps
+      updateGoogleLinks(52.2297,21.0122);
+    }
+
+    function useGeoloc(){
+      if(!navigator.geolocation){ alert('Brak geolokacji w przeglądarce'); return; }
+      navigator.geolocation.getCurrentPosition(pos=>{
+        const lat = pos.coords.latitude, lon = pos.coords.longitude;
+        setUser(lat, lon);
+        fetchDentists(lat, lon);
+        updateGoogleLinks(lat, lon);
+      }, err=>{
+        console.warn('Geolokacja odmówiona/nieudana:', err);
+        // Zostaw mapę na starcie (Warszawa) i pokaż dentystów tam:
+        fetchDentists(52.2297,21.0122);
+      }, { enableHighAccuracy:true, timeout:10000, maximumAge:30000 });
+    }
+
+    function setUser(lat, lon){
+      if(userMarker){ map.removeLayer(userMarker); }
+      userMarker = L.marker([lat, lon], { title:'Twoja lokalizacja' }).addTo(map);
+      map.setView([lat, lon], 14);
+    }
+
+    function updateGoogleLinks(lat, lon){
+      const z = 14;
+      const base = `@${lat},${lon},${z}z`;
+      document.getElementById('gm-24').href = `https://www.google.com/maps/search/stomatolog+24h/${base}`;
+      document.getElementById('gm-all').href = `https://www.google.com/maps/search/stomatolog/${base}`;
+    }
+
+    function fetchDentists(lat, lon){
+      // Overpass: amenity=dentist w promieniu RADIUS_KM
+      const radius = Math.round(RADIUS_KM*1000);
+      const q = `
+        [out:json][timeout:25];
+        (
+          node["amenity"="dentist"](around:${radius},${lat},${lon});
+          way["amenity"="dentist"](around:${radius},${lat},${lon});
+          relation["amenity"="dentist"](around:${radius},${lat},${lon});
+        );
+        out center ${LIMIT};
+        `;
+      const url = 'https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(q);
+      layer24h.clearLayers(); layerOpen.clearLayers(); layerOther.clearLayers();
+      document.getElementById('list').innerHTML = '<div class="muted">Szukam dentystów w okolicy…</div>';
+
+      fetch(url).then(r=>r.json()).then(json=>{
+        renderDentists(json, lat, lon);
+      }).catch(err=>{
+        console.error(err);
+        document.getElementById('list').innerHTML = '<div class="muted">Nie udało się pobrać danych (Overpass). Spróbuj odświeżyć.</div>';
+      });
+    }
+
+    function ohIsOpen(oh){
+      try{
+        if(!oh) return null;
+        const now = new Date();
+        const ohObj = new opening_hours(oh);
+        return ohObj.getState(now); // true/false
+      }catch(e){
+        return null;
+      }
+    }
+
+    function renderDentists(data, lat, lon){
+      const list = document.getElementById('list'); list.innerHTML = '';
+      if(!data || !data.elements || !data.elements.length){
+        list.innerHTML = '<div class="muted">Brak punktów w pobliżu. Zwiększ promień lub otwórz Google Maps powyżej.</div>';
+        return;
+      }
+      const pts = data.elements.map(el=>{
+        const c = el.type==='node' ? [el.lat, el.lon] : [el.center.lat, el.center.lon];
+        const t = el.tags || {};
+        return {
+          id: el.id, lat:c[0], lon:c[1],
+          name: t.name || 'Gabinet stomatologiczny',
+          phone: t.phone || t['contact:phone'] || null,
+          website: t.website || t['contact:website'] || null,
+          addr: [t['addr:street'], t['addr:housenumber'], t['addr:city']].filter(Boolean).join(' ') || (t['addr:full']||''),
+          oh: t.opening_hours || null,
+          emergency: (t.emergency === 'yes' || /emergency/i.test(t.name||'')),
+          twenty4: (t['opening_hours'] === '24/7' || /24.?7/.test(t['opening_hours']||'')),
+          tags: t
+        };
+      });
+
+      pts.sort((a,b)=>{
+        const aScore = (a.twenty4?3:0) + (a.emergency?2:0) + ((ohIsOpen(a.oh)===true)?1:0);
+        const bScore = (b.twenty4?3:0) + (b.emergency?2:0) + ((ohIsOpen(b.oh)===true)?1:0);
+        return bScore - aScore;
+      });
+
+      pts.forEach(p=>{
+        const isOpen = ohIsOpen(p.oh);
+        const color = p.twenty4||p.emergency ? '#22e3a0' : (isOpen===true ? '#70e0ff' : '#d1b4ff');
+        const icon = L.circleMarker([p.lat,p.lon], {radius:8, color, weight:2, fillColor:color, fillOpacity:.35});
+
+        const html = `
+          <div class="name">${p.name}</div>
+          <div class="muted">${p.addr || ''}</div>
+          <div class="muted">${p.oh ? ('🕒 ' + p.oh) : ''}</div>
+          <div style="margin-top:6px">
+            ${p.twenty4 ? '<span class="tag tag--24h">24/7</span>' : ''}
+            ${p.emergency ? '<span class="tag tag--24h">emergency</span>' : ''}
+            ${isOpen===true ? '<span class="tag tag--open">otwarte teraz</span>' : (isOpen===false ? '<span class="tag tag--closed">zamknięte</span>' : '')}
+          </div>
+          <div style="margin-top:6px">
+            ${p.phone ? `<a href="tel:${'${p.phone}'}" class="filters">📞 Zadzwoń</a>` : ''}
+            <a class="filters" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${'${encodeURIComponent(p.name)}'}&query_place_id=">🗺️ Trasa</a>
+            ${p.website ? `<a class="filters" target="_blank" rel="noopener" href="${'${p.website}'}">🌐 Strona</a>` : ''}
+          </div>
+        `;
+
+        icon.bindPopup(html);
+        if(p.twenty4 || p.emergency){ icon.addTo(layer24h); }
+        else if(isOpen===true){ icon.addTo(layerOpen); }
+        else { icon.addTo(layerOther); }
+
+        const li = document.createElement('div');
+        li.className = 'dent';
+        li.innerHTML = html;
+        list.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
