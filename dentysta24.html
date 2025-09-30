@@ -3,201 +3,210 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ból zęba 24H — Lekki i prosty</title>
+  <title>Ból zęba 24H — ULTRA</title>
+  <meta name="theme-color" content="#0f1424" />
 
   <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
 
-  <!-- opening_hours -->
+  <!-- opening_hours (otwarte teraz) -->
   <script src="https://unpkg.com/opening_hours@4.20.0/opening_hours.js"></script>
 
   <style>
     :root{
-      --bg:#ffffff; --txt:#141414; --muted:#5b6570; --primary:#1a73e8; --ok:#0a8a37; --warn:#d97706; --bad:#c81e1e;
-      --border:#e5e7eb; --card:#ffffff; --soft:#f8fafc; --br:14px;
+      --bg:#0f1424; --panel:#121a30; --panel2:#0e162b;
+      --txt:#e9f1ff; --muted:#b6c7e6; --accent:#8b7bff; --ok:#2ce39b; --warn:#ffb963; --bad:#ff6b6b;
+      --br:16px; --ring:0 0 0 3px rgba(139,123,255,.35);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;background:var(--bg);color:var(--txt);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:
+      radial-gradient(900px 500px at 85% -10%, rgba(139,123,255,.14), transparent),
+      radial-gradient(700px 400px at 10% -20%, rgba(46,196,255,.10), transparent),
+      var(--bg);
+      color:var(--txt);
+      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    a{color:inherit;text-decoration:none}
 
-    header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--border)}
-    .wrap{max-width:1200px;margin:0 auto;padding:10px 12px}
-    .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-    .title{font-weight:800;font-size:18px}
-    .btn{appearance:none;background:#fff;border:1px solid var(--border);color:var(--txt);border-radius:10px;padding:10px 12px;font-weight:700;cursor:pointer;text-decoration:none}
-    .btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
-    .btn.ghost{background:#fff}
-    .btn:focus{outline:3px solid rgba(26,115,232,.2)}
+    header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg, rgba(15,20,36,.95), rgba(15,20,36,.6));
+      border-bottom:1px solid rgba(139,123,255,.25);backdrop-filter:saturate(120%) blur(8px)}
+    .row{max-width:1280px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .title{font-weight:900;letter-spacing:.2px;display:flex;align-items:center;gap:10px}
+    .btn{appearance:none;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:var(--txt);border-radius:12px;
+      padding:9px 12px;font-weight:800;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+    .btn:hover{box-shadow:var(--ring); transform:translateY(-1px)}
+    .btn.pri{border-color:rgba(139,123,255,.5)}
 
-    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-top:12px}
-    @media (max-width:980px){ .grid{grid-template-columns:1fr} }
+    .grid{max-width:1280px;margin:14px auto;padding:0 14px;display:grid;grid-template-columns:1.25fr .75fr;gap:14px}
+    @media (max-width:1100px){ .grid{grid-template-columns:1fr} }
 
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--br)}
-    .card .head{padding:10px 12px;border-bottom:1px solid var(--border);font-weight:800}
-    .card .section{padding:10px 12px;border-bottom:1px solid var(--border)}
+    .card{background:var(--panel);border:1px solid rgba(139,123,255,.25);border-radius:var(--br);overflow:hidden}
+    .head{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid rgba(139,123,255,.25)}
 
     /* TRIAGE */
-    .triage{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+    .triage{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;padding:12px;border-bottom:1px dashed rgba(139,123,255,.25)}
     .group{display:flex;flex-direction:column;gap:6px}
     .seg{display:flex;flex-wrap:wrap;gap:6px}
-    .seg .seg-btn{padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:var(--soft);cursor:pointer;font-weight:700}
-    .seg .seg-btn.active{border-color:var(--primary);box-shadow:0 0 0 2px rgba(26,115,232,.15)}
-
-    .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid var(--border);font-size:13px;background:var(--soft)}
-    .badge.red{border-color:#fecaca;background:#fee2e2;color:#991b1b}
-    .badge.amber{border-color:#fde68a;background:#fef3c7;color:#92400e}
-    .badge.green{border-color:#bbf7d0;background:#dcfce7;color:#065f46}
-    .muted{color:var(--muted);font-size:14px}
+    .seg .seg-btn{padding:8px 10px;border:1px solid rgba(255,255,255,.18);border-radius:10px;background:rgba(255,255,255,.06);cursor:pointer;font-weight:800}
+    .seg .seg-btn.active{box-shadow:var(--ring)}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:12px}
+    .badge.red{border-color:rgba(255,107,107,.6)} .badge.amber{border-color:rgba(255,185,99,.7)} .badge.green{border-color:rgba(44,227,155,.7)}
+    .muted{color:var(--muted);font-size:14px;margin-top:4px}
 
     /* Controls */
-    .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .controls{display:flex;flex-wrap:wrap;gap:10px;padding:10px 12px;border-bottom:1px dashed rgba(139,123,255,.25)}
     .range{display:flex;align-items:center;gap:8px}
-    .range input{width:180px}
+    .range input{width:170px}
 
     /* Map + list */
-    #map{height:64vh;min-height:380px;border-radius:0 0 var(--br) var(--br)}
-    .legend{display:flex;gap:10px;align-items:center;padding:10px 12px;border-top:1px solid var(--border);background:#fff;border-radius:0 0 var(--br) var(--br)}
-    .dot{width:12px;height:12px;border-radius:50%}
-    .dot-24{background:#0a8a37}.dot-open{background:#1a73e8}.dot-else{background:#9ca3af}
+    #map{height:66vh;min-height:420px}
+    .legend{display:flex;gap:10px;align-items:center;padding:8px 12px;border-top:1px solid rgba(139,123,255,.25);background:var(--panel2)}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot24{background:#2ce39b}.dotOpen{background:#73d2ff}.dotElse{background:#b9a6ff}
 
-    .list{max-height:64vh;overflow:auto;padding:10px 12px}
-    .dent{border:1px solid var(--border);border-radius:10px;padding:10px;margin:8px 0;background:#fff}
-    .dent .name{font-weight:800}
-    .dent .line{font-size:14px}
-    .tag{display:inline-block;margin-right:6px;margin-top:4px;padding:2px 8px;border-radius:999px;border:1px solid var(--border);font-size:12px;background:var(--soft)}
-
-    .empty{padding:8px}
+    .side{display:flex;flex-direction:column;height:100%}
+    .list{padding:8px;overflow:auto;min-height:240px;max-height:calc(66vh - 90px)}
+    .dent{border:1px solid rgba(139,123,255,.25);border-radius:12px;padding:8px;margin:8px 0;background:rgba(255,255,255,.04)}
+    .dent .name{font-weight:900}
+    .dent .meta{opacity:.9}
+    .tag{display:inline-block;margin-right:6px;margin-top:4px;padding:2px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:12px}
+    .tag.open{border-color:rgba(44,227,155,.7)} .tag.closed{border-color:rgba(255,107,107,.7)} .tag.hi{border-color:rgba(44,227,155,.7);box-shadow:inset 0 0 0 1px rgba(44,227,155,.35)}
+    .empty{padding:8px;color:var(--muted)}
   </style>
 </head>
 <body>
   <header>
-    <div class="wrap row">
-      <div class="title">🦷 Ból zęba 24H — Lekki i prosty</div>
+    <div class="row">
+      <div class="title">🦷 Ból zęba 24H — ULTRA</div>
       <div class="row" style="gap:8px">
-        <a class="btn ghost" href="index.html">← Wróć</a>
+        <a class="btn" href="index.html">← Wróć</a>
       </div>
     </div>
   </header>
 
-  <div class="wrap grid">
+  <div class="grid">
     <section class="card">
-      <div class="head">Twoja okolica</div>
-      <div class="section controls">
-        <button class="btn primary" id="btn-geoloc">📍 Użyj mojej lokalizacji</button>
-        <button class="btn" id="btn-search-viewport">🔄 Szukaj w tym widoku</button>
-        <div class="range">Promień: <input id="radius" type="range" min="2" max="20" step="1" value="6"> <b id="radiusVal">6 km</b></div>
+      <div class="head">
+        <div style="font-weight:800">Twoja okolica</div>
+        <div class="row" style="gap:8px">
+          <button class="btn pri" id="btn-geoloc">📍 Lokalizacja</button>
+          <button class="btn" id="btn-search-viewport">🔄 Szukaj w tym widoku</button>
+          <a class="btn" id="gm-24" href="#" target="_blank" rel="noopener">🗺️ Google 24h</a>
+          <a class="btn" id="gm-all" href="#" target="_blank" rel="noopener">🗺️ Google wszyscy</a>
+        </div>
+      </div>
+
+      <div class="triage">
+        <div class="group">
+          <label>Natężenie bólu</label>
+          <div class="seg" id="pain-seg"></div>
+        </div>
+        <div class="group">
+          <label>Obrzęk / gorączka</label>
+          <div class="seg" id="swelling-seg">
+            <button class="seg-btn" data-val="no">Brak</button>
+            <button class="seg-btn" data-val="mild">Łagodny</button>
+            <button class="seg-btn" data-val="high">Silny / gorączka</button>
+          </div>
+        </div>
+        <div class="group">
+          <label>Uraz / po zabiegu</label>
+          <div class="seg" id="trauma-seg">
+            <button class="seg-btn" data-val="no">Nie</button>
+            <button class="seg-btn" data-val="recent">Ost. 48h</button>
+            <button class="seg-btn" data-val="bleeding">Krwawienie / złamanie</button>
+          </div>
+        </div>
+        <div class="group">
+          <label>Wynik</label>
+          <div id="t-badge" class="badge amber">Dziś</div>
+        </div>
+      </div>
+      <div class="muted" id="t-out"></div>
+
+      <div class="controls">
+        <div class="range">Promień: <input id="radius" type="range" min="2" max="25" step="1" value="6"> <b id="radiusVal">6 km</b></div>
         <label><input type="checkbox" id="f-24"> tylko 24/7</label>
         <label><input type="checkbox" id="f-open"> otwarte teraz</label>
         <label><input type="checkbox" id="f-nfz"> NFZ</label>
         <label><input type="checkbox" id="f-wheel"> ♿</label>
-        <a class="btn" id="gm-24" href="#" target="_blank" rel="noopener">Mapa Google 24h</a>
-        <a class="btn" id="gm-all" href="#" target="_blank" rel="noopener">Mapa Google — wszyscy</a>
-      </div>
-
-      <div class="section">
-        <div class="triage">
-          <div class="group">
-            <label>Natężenie bólu</label>
-            <div class="seg" id="pain-seg"></div>
-          </div>
-          <div class="group">
-            <label>Obrzęk / gorączka</label>
-            <div class="seg" id="swelling-seg">
-              <button class="seg-btn" data-val="no">Brak</button>
-              <button class="seg-btn" data-val="mild">Łagodny</button>
-              <button class="seg-btn" data-val="high">Silny / gorączka</button>
-            </div>
-          </div>
-          <div class="group">
-            <label>Uraz / po zabiegu</label>
-            <div class="seg" id="trauma-seg">
-              <button class="seg-btn" data-val="no">Nie</button>
-              <button class="seg-btn" data-val="recent">Ost. 48h</button>
-              <button class="seg-btn" data-val="bleeding">Krwawienie / złamanie</button>
-            </div>
-          </div>
-          <div class="group">
-            <label>Wynik</label>
-            <div id="t-badge" class="badge amber">Dziś</div>
-          </div>
-        </div>
-        <div class="muted" id="t-out" style="margin-top:8px"></div>
       </div>
 
       <div id="map"></div>
       <div class="legend">
-        <span class="dot dot-24"></span> 24/7 / emergency
-        <span class="dot dot-open" style="margin-left:12px"></span> Otwarte teraz
-        <span class="dot dot-else" style="margin-left:12px"></span> Pozostali
+        <span class="dot dot24"></span> 24/7 / emergency
+        <span class="dot dotOpen" style="margin-left:12px"></span> Otwarte teraz
+        <span class="dot dotElse" style="margin-left:12px"></span> Pozostali
       </div>
     </section>
 
-    <aside class="card">
-      <div class="head">Lista</div>
-      <div class="list" id="list"><div class="empty">Wybierz lokalizację lub wyszukaj w aktualnym widoku.</div></div>
+    <aside class="card side">
+      <div class="head"><div style="font-weight:800">Lista</div><div id="count" class="muted">–</div></div>
+      <div class="list" id="list"><div class="empty">Kliknij „📍 Lokalizacja” lub „Szukaj w tym widoku”.</div></div>
+      <div class="head" style="justify-content:center">
+        <a class="btn" href="tel:112">📞 112</a>
+        <a class="btn" href="https://www.google.com/search?q=pogotowie+stomatologiczne" target="_blank" rel="noopener">🚑 Pogotowie stomatologiczne</a>
+      </div>
     </aside>
   </div>
 
   <script>
     const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+    function esc(s){ return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+    function escA(s){ return (s||'').replace(/"/g,'&quot;'); }
     function ohIsOpen(oh){ try{ if(!oh) return null; const ohObj=new opening_hours(oh); return ohObj.getState(new Date()); }catch(e){ return null } }
 
-    // TRIAGE — prosto i czytelnie
-    const painSeg=$('#pain-seg');
-    for(let i=0;i<=10;i++){ const b=document.createElement('button'); b.className='seg-btn'; b.dataset.val=i; b.textContent=i; painSeg.appendChild(b); }
+    // TRIAGE — klikalny, natychmiastowy
+    const painSeg=$('#pain-seg'); for(let i=0;i<=10;i++){ const b=document.createElement('button'); b.className='seg-btn'; b.dataset.val=i; b.textContent=i; painSeg.appendChild(b); }
     function triageEval(){
       const p=+($('.seg-btn.active[data-val]', painSeg)?.dataset.val||0);
-      const s=$('.seg-btn.active', $('#swelling-seg'))?.dataset.val||'no';
-      const t=$('.seg-btn.active', $('#trauma-seg'))?.dataset.val||'no';
+      const s=$('#swelling-seg .seg-btn.active')?.dataset.val || 'no';
+      const t=$('#trauma-seg .seg-btn.active')?.dataset.val || 'no';
       let score=(p>=8?2:(p>=5?1:0))+(s==='high'?2:(s==='mild'?1:0))+(t==='bleeding'?2:(t==='recent'?1:0));
       const badge=$('#t-badge'), out=$('#t-out');
-      if(score>=4){ badge.className='badge red'; badge.textContent='Pilne'; out.textContent='Zadzwoń do gabinetu 24/7 lub SOR przy duszności/gorączce.'; }
-      else if(score>=2){ badge.className='badge amber'; badge.textContent='Dziś'; out.textContent='Poszukaj gabinetu otwartego teraz; zimny okład policzka; leki p/bólowe zgodnie z ulotką.'; }
-      else{ badge.className='badge green'; badge.textContent='Planowo'; out.textContent='Umów wizytę planową; unikaj skrajnych temperatur; higiena jamy ustnej.'; }
+      if(score>=4){ badge.className='badge red'; badge.textContent='Pilne'; out.textContent='Skontaktuj się PILNIE z gabinetem 24/7. W razie duszności/gorączki – SOR/112.'; }
+      else if(score>=2){ badge.className='badge amber'; badge.textContent='Dziś'; out.textContent='Znajdź gabinet otwarty teraz i umów wizytę na dziś. Zimny okład policzka, leki p/bólowe wg ulotki.'; }
+      else{ badge.className='badge green'; badge.textContent='Planowo'; out.textContent='Umów wizytę planową. Unikaj skrajnych temp. napojów. Dbaj o higienę jamy ustnej.'; }
     }
-    function segActivate(box,target){ $$('.seg-btn',box).forEach(el=>el.classList.toggle('active',el===target)); triageEval(); }
-    painSeg.addEventListener('click',e=>{ if(e.target.matches('.seg-btn')) segActivate(painSeg,e.target); });
-    $('#swelling-seg').addEventListener('click',e=>{ if(e.target.matches('.seg-btn')) segActivate($('#swelling-seg'),e.target); });
-    $('#trauma-seg').addEventListener('click',e=>{ if(e.target.matches('.seg-btn')) segActivate($('#trauma-seg'),e.target); });
+    function segActivate(box, target){ $$('.seg-btn',box).forEach(el=>el.classList.toggle('active', el===target)); triageEval(); }
+    painSeg.addEventListener('click', e=>{ if(e.target.matches('.seg-btn')) segActivate(painSeg, e.target); });
+    $('#swelling-seg').addEventListener('click', e=>{ if(e.target.matches('.seg-btn')) segActivate($('#swelling-seg'), e.target); });
+    $('#trauma-seg').addEventListener('click', e=>{ if(e.target.matches('.seg-btn')) segActivate($('#trauma-seg'), e.target); });
+    // default
     painSeg.querySelector('.seg-btn[data-val="6"]').classList.add('active');
     $('#swelling-seg .seg-btn[data-val="no"]').classList.add('active');
     $('#trauma-seg .seg-btn[data-val="no"]').classList.add('active');
     triageEval();
 
-    // MAPA
-    let map, layer24, layerOpen, layerOther, userMarker, allPts=[];
-    let center={lat:52.2297, lon:21.0122}; // Warszawa
+    // MAPA + DANE
+    let map, layer24, layerOpen, layerElse, userMarker, allPts=[];
     let R=6;
-
+    const initCenter = {lat:52.2297, lon:21.0122}; // Warszawa
     initMap();
 
     function initMap(){
-      map=L.map('map',{zoomControl:true,scrollWheelZoom:true}).setView([center.lat,center.lon],13);
+      map=L.map('map',{zoomControl:true,scrollWheelZoom:true}).setView([initCenter.lat, initCenter.lon], 13);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);
-      layer24=L.layerGroup().addTo(map); layerOpen=L.layerGroup().addTo(map); layerOther=L.layerGroup().addTo(map);
-
-      $('#btn-geoloc').addEventListener('click', geoloc);
-      $('#btn-search-viewport').addEventListener('click', ()=>{ const c=map.getCenter(); fetchDentists(c.lat,c.lng); updateGoogle(c.lat,c.lng); });
+      layer24=L.layerGroup().addTo(map); layerOpen=L.layerGroup().addTo(map); layerElse=L.layerGroup().addTo(map);
+      $('#btn-geoloc').addEventListener('click', geolocNow);
+      $('#btn-search-viewport').addEventListener('click', ()=>{ const c=map.getCenter(); fetchDentists(c.lat, c.lng); updateGM(c.lat,c.lng); });
       $('#radius').addEventListener('input', e=>{ R=+e.target.value; $('#radiusVal').textContent=R+' km'; const c=map.getCenter(); fetchDentists(c.lat,c.lng); });
       ['f-24','f-open','f-nfz','f-wheel'].forEach(id=> $('#'+id).addEventListener('change', applyFilters));
-
-      updateGoogle(center.lat,center.lon);
+      updateGM(initCenter.lat, initCenter.lon);
     }
 
-    function geoloc(){
-      if(!navigator.geolocation){ fetchDentists(center.lat,center.lon); return; }
+    function geolocNow(){
+      if(!navigator.geolocation){ const c=map.getCenter(); fetchDentists(c.lat,c.lng); return; }
       navigator.geolocation.getCurrentPosition(pos=>{
-        center={lat:pos.coords.latitude,lon:pos.coords.longitude};
+        const lat=pos.coords.latitude, lon=pos.coords.longitude;
         if(userMarker) map.removeLayer(userMarker);
-        userMarker=L.marker([center.lat,center.lon],{title:'Twoja lokalizacja'}).addTo(map);
-        map.setView([center.lat,center.lon],14);
-        fetchDentists(center.lat,center.lon);
-        updateGoogle(center.lat,center.lon);
-      }, _=>{ fetchDentists(center.lat,center.lon); }, {enableHighAccuracy:true,timeout:8000,maximumAge:30000});
+        userMarker=L.marker([lat,lon],{title:'Twoja lokalizacja'}).addTo(map);
+        map.setView([lat,lon],14);
+        fetchDentists(lat,lon); updateGM(lat,lon);
+      }, _=>{ const c=map.getCenter(); fetchDentists(c.lat,c.lng); }, {enableHighAccuracy:true,timeout:9000,maximumAge:30000});
     }
 
-    function updateGoogle(lat,lon){
+    function updateGM(lat,lon){
       const z=14, base='@'+lat+','+lon+','+z+'z';
       $('#gm-24').href='https://www.google.com/maps/search/stomatolog+24h/'+base;
       $('#gm-all').href='https://www.google.com/maps/search/stomatolog/'+base;
@@ -210,15 +219,15 @@
          way["amenity"="dentist"](around:${radius},${lat},${lon});
          relation["amenity"="dentist"](around:${radius},${lat},${lon}););
         out center 200;`;
-      setListInfo('Szukam dentystów…');
-      layer24.clearLayers(); layerOpen.clearLayers(); layerOther.clearLayers();
+      setListInfo('Szukam gabinetów…');
+      layer24.clearLayers(); layerOpen.clearLayers(); layerElse.clearLayers();
       fetch('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(q))
         .then(r=>r.json()).then(json=>{ allPts=normalize(json); applyFilters(); })
-        .catch(_=>{ setListInfo('Błąd pobierania danych (Overpass). Spróbuj ponownie.'); });
+        .catch(_=> setListInfo('Błąd pobierania danych (Overpass). Spróbuj ponownie.'));
     }
 
     function normalize(data){
-      if(!data||!data.elements) return [];
+      if(!data || !data.elements) return [];
       return data.elements.map(el=>{
         const c = el.type==='node' ? [el.lat, el.lon] : [el.center.lat, el.center.lon];
         const t = el.tags || {};
@@ -232,8 +241,7 @@
           phone:t.phone || t['contact:phone'] || null,
           website:t.website || t['contact:website'] || null,
           addr:[t['addr:street'],t['addr:housenumber'],t['addr:city']].filter(Boolean).join(' ') || (t['addr:full']||''),
-          oh:t.opening_hours || null,
-          emergency, twenty4, nfz, wheel
+          oh:t.opening_hours || null, nfz, wheel, twenty4, emergency
         };
       });
     }
@@ -242,15 +250,15 @@
 
     function applyFilters(){
       const only24=$('#f-24').checked, openNow=$('#f-open').checked, onlyNFZ=$('#f-nfz').checked, onlyWheel=$('#f-wheel').checked;
-      layer24.clearLayers(); layerOpen.clearLayers(); layerOther.clearLayers();
-      const list=[];
-      const pts=allPts.slice().sort((a,b)=>{
+      layer24.clearLayers(); layerOpen.clearLayers(); layerElse.clearLayers();
+      const pts = allPts.slice().sort((a,b)=>{
         const aOpen=ohIsOpen(a.oh), bOpen=ohIsOpen(b.oh);
         const sA=(a.twenty4?3:0)+(a.emergency?2:0)+(aOpen===true?1:0)+(a.nfz?0.5:0);
         const sB=(b.twenty4?3:0)+(b.emergency?2:0)+(bOpen===true?1:0)+(b.nfz?0.5:0);
         return sB-sA;
       });
-      let shown=0;
+
+      const listHtml=[]; let shown=0;
       pts.forEach(p=>{
         const isOpen = ohIsOpen(p.oh);
         if(only24 && !p.twenty4 && !p.emergency) return;
@@ -258,52 +266,44 @@
         if(onlyNFZ && !p.nfz) return;
         if(onlyWheel && !p.wheel) return;
 
-        const color = p.twenty4||p.emergency ? '#0a8a37' : (isOpen===true ? '#1a73e8' : '#9ca3af');
-        const m = L.circleMarker([p.lat,p.lon],{radius:8,color,weight:2,fillColor:color,fillOpacity:.25}).bindPopup(popupHTML(p));
-        if(p.twenty4||p.emergency) layer24.addLayer(m); else if(isOpen===true) layerOpen.addLayer(m); else layerOther.addLayer(m);
-
-        list.append(popupHTML(p)) if false else None; // keep noop
+        const color = p.twenty4||p.emergency ? '#2ce39b' : (isOpen===true ? '#73d2ff' : '#b9a6ff');
+        const m = L.circleMarker([p.lat,p.lon], {radius:8, color, weight:2, fillColor:color, fillOpacity:.32});
+        m.bindPopup(popupHTML(p));
+        if(p.twenty4 || p.emergency) layer24.addLayer(m); else if(isOpen===true) layerOpen.addLayer(m); else layerElse.addLayer(m);
+        listHtml.push(popupHTML(p));
         shown++;
       });
-      renderList(pts, {only24, openNow, onlyNFZ, onlyWheel});
+
+      renderList(listHtml);
+      $('#count').textContent = shown;
       if(shown===0) setListInfo('Brak wyników — zmień promień lub odznacz filtry.');
     }
 
     function popupHTML(p){
-      const esc = s => (s||'').replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-      const escA = s => (s||'').replace(/"/g,'&quot;');
       const dest = encodeURIComponent(p.lat+','+p.lon);
       const open = ohIsOpen(p.oh);
       return `
         <div class="name">${esc(p.name)}</div>
-        <div class="line">${esc(p.addr||'')}</div>
-        ${p.oh?('<div class="line">🕒 '+esc(p.oh)+'</div>'):''}
-        <div>
-          ${p.twenty4?'<span class="tag">24/7</span>':''}
-          ${p.emergency?'<span class="tag">emergency</span>':''}
-          ${open===true?'<span class="tag">otwarte teraz</span>':(open===false?'<span class="tag">zamknięte</span>':'')}
+        <div class="meta">${esc(p.addr||'')}</div>
+        ${p.oh?('<div class="meta">🕒 '+esc(p.oh)+'</div>'):''}
+        <div style="margin-top:6px">
+          ${p.twenty4?'<span class="tag hi">24/7</span>':''}
+          ${p.emergency?'<span class="tag hi">emergency</span>':''}
+          ${open===true?'<span class="tag open">otwarte teraz</span>':(open===false?'<span class="tag closed">zamknięte</span>':'')}
           ${p.nfz?'<span class="tag">NFZ</span>':''}
           ${p.wheel?'<span class="tag">♿</span>':''}
         </div>
         <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap">
-          ${p.phone?('<a class="btn" href="tel:'+encodeURIComponent(p.phone)+'">Zadzwoń</a>'):''}
-          <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${dest}">Trasa</a>
-          ${p.website?('<a class="btn" target="_blank" rel="noopener" href="'+escA(p.website)+'">Strona</a>'):''}
+          ${p.phone?('<a class="btn" href="tel:'+encodeURIComponent(p.phone)+'">📞 Zadzwoń</a>'):''}
+          <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${dest}">🗺️ Trasa</a>
+          ${p.website?('<a class="btn" target="_blank" rel="noopener" href="'+escA(p.website)+'">🌐 Strona</a>'):''}
         </div>`;
     }
 
-    function renderList(pts, filters){
+    function renderList(items){
       const box=$('#list'); box.innerHTML='';
-      let count=0;
-      pts.forEach(p=>{
-        const isOpen=ohIsOpen(p.oh);
-        if(filters.only24 && !p.twenty4 && !p.emergency) return;
-        if(filters.openNow && isOpen!==true) return;
-        if(filters.onlyNFZ && !p.nfz) return;
-        if(filters.onlyWheel && !p.wheel) return;
-        const d=document.createElement('div'); d.className='dent'; d.innerHTML=popupHTML(p); box.appendChild(d); count++;
-      });
-      if(count===0) setListInfo('Brak wyników — zmień promień lub odznacz filtry.');
+      if(items.length===0){ setListInfo('Brak wyników — zmień promień lub odznacz filtry.'); return; }
+      items.forEach(h=>{ const d=document.createElement('div'); d.className='dent'; d.innerHTML=h; box.appendChild(d); });
     }
   </script>
 </body>
