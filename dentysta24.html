@@ -79,6 +79,14 @@
       user-select:none;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);}
     .lg-toggle input{accent-color:#2ce39b; margin-right:2px}
 
+    /* === WIDOCZNOŚĆ MARKERÓW — glow, większe, puls === */
+    .leaflet-pane svg path.mk{transition: r .18s ease, transform .18s ease, opacity .18s ease; stroke:#fff; stroke-width:2px}
+    .leaflet-pane svg path.m24{filter: drop-shadow(0 0 6px rgba(44,227,155,.9)) drop-shadow(0 0 14px rgba(44,227,155,.5))}
+    .leaflet-pane svg path.mOpen{filter: drop-shadow(0 0 6px rgba(115,210,255,.95)) drop-shadow(0 0 14px rgba(115,210,255,.5))}
+    .leaflet-pane svg path.mElse{filter: drop-shadow(0 0 6px rgba(185,166,255,.85)) drop-shadow(0 0 12px rgba(185,166,255,.45))}
+    @keyframes pulse{ 0%{transform:scale(1)} 35%{transform:scale(1.35)} 100%{transform:scale(1)} }
+    .leaflet-pane svg path.pulse{animation:pulse 0.9s ease-out 1}
+
     /* ===== Mobile overflow fix (wrap buttons, no cut) ===== */
     @media (max-width: 480px){
       .row{max-width:none !important; padding:8px 10px}
@@ -179,7 +187,7 @@
 
   <script>
     const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
-    function esc(s){ return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+    function esc(s){ return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&gt;','>':'&gt;'}[c])); }
     function escA(s){ return (s||'').replace(/"/g,'&quot;'); }
     function ohIsOpen(oh){ try{ if(!oh) return null; const ohObj=new opening_hours(oh); return ohObj.getState(new Date()); }catch(e){ return null } }
 
@@ -250,7 +258,7 @@
       setListInfo('Szukam gabinetów…');
       layer24.clearLayers(); layerOpen.clearLayers(); layerElse.clearLayers();
       fetch('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(q))
-        .then(r=>r.json()).then(json=>{ allPts=normalize(json); applyFilters(); })
+        .then(r=>r.json()).then(json=>{ allPts=normalize(json); applyFilters(true); })
         .catch(_=> setListInfo('Błąd pobierania danych (Overpass). Spróbuj ponownie.'));
     }
 
@@ -297,7 +305,8 @@
         </div>`;
     }
 
-    function applyFilters(){
+    // rysowanie + „boost” widoczności
+    function applyFilters(firstDraw=false){
       const only24=$('#f-24').checked, openNow=$('#f-open').checked, onlyNFZ=$('#f-nfz').checked, onlyWheel=$('#f-wheel').checked;
       layer24.clearLayers(); layerOpen.clearLayers(); layerElse.clearLayers();
       const pts = allPts.slice().sort((a,b)=>{
@@ -307,7 +316,7 @@
         return sB-sA;
       });
 
-      const items=[]; let shown=0;
+      const items=[]; let shown=0; const bounds=[];
       pts.forEach(p=>{
         const isOpen = ohIsOpen(p.oh);
         if(only24 && !p.twenty4 && !p.emergency) return;
@@ -316,17 +325,32 @@
         if(onlyWheel && !p.wheel) return;
 
         const color = p.twenty4||p.emergency ? '#2ce39b' : (isOpen===true ? '#73d2ff' : '#b9a6ff');
-        const m = L.circleMarker([p.lat,p.lon], {radius:8, color, weight:2, fillColor:color, fillOpacity:.32});
-        m.bindPopup(popupHTML(p));
-        if(p.twenty4 || p.emergency) layer24.addLayer(m); else if(isOpen===true) layerOpen.addLayer(m); else layerElse.addLayer(m);
+        const cls = (p.twenty4||p.emergency) ? 'mk m24' : (isOpen===true ? 'mk mOpen' : 'mk mElse');
+
+        const m = L.circleMarker([p.lat,p.lon], {
+          radius:10, color:'#ffffff', weight:2, fillColor:color, fillOpacity:.62, className:cls
+        }).bindPopup(popupHTML(p));
+
+        // pulsing & bringToFront na start i przy fokusie
+        m.on('add', ()=>{ try{ const el=m.getElement(); if(el){ el.classList.add('pulse'); setTimeout(()=>el.classList.remove('pulse'), 900); } }catch(e){} });
+        m.on('popupopen', ()=>{ try{ m.setStyle({radius:12}); m.bringToFront(); }catch(e){} });
+        m.on('popupclose', ()=>{ try{ m.setStyle({radius:10}); }catch(e){} });
+
+        if(p.twenty4 || p.emergency) layer24.addLayer(m);
+        else if(isOpen===true) layerOpen.addLayer(m);
+        else layerElse.addLayer(m);
+
         items.push(popupHTML(p));
+        bounds.push([p.lat,p.lon]);
         shown++;
       });
 
       renderList(items);
       $('#count').textContent = shown;
       if(shown===0) setListInfo('Brak wyników — zmień promień lub odznacz filtry.');
-      // zapewnij zgodność z legend toggle
+      if(firstDraw && bounds.length){ try{ map.fitBounds(bounds, {padding:[30,30]}); }catch(e){} }
+
+      // dostosuj widoczność zgodnie z legendą
       applyLegendVisibility();
     }
 
