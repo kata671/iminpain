@@ -640,5 +640,111 @@ body[data-page="home"] section.stack .card img{ object-fit:cover !important; obj
       applyTranslations();
     })();
   </script>
+<style id="bh-mobile-polish">
+/* --- MOBILE POLISH (nie rusza desktopu) --- */
+@media (max-width: 640px){
+
+  /* sufit – bezpieczne marginesy i brak przewijania w bok */
+  html, body { overflow-x: hidden; }
+  .container { padding: 0 14px; }
+
+  /* Pigułki (sytuacje nagłe) – równy, dwukolumnowy grid */
+  nav.situations{
+    display:grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin: 14px 0 10px !important;
+  }
+  nav.situations .pill{
+    height: 54px !important;
+    border-radius: 14px !important;
+    justify-content: center !important;
+    font-size: 14px !important;
+    letter-spacing: .2px !important;
+    line-height: 1.15 !important;
+    padding: 8px 10px !important;
+  }
+  nav.situations .pill .ico{
+    width: 22px !important; height: 22px !important; border-radius: 7px !important;
+  }
+
+  /* Szybkie akcje – równy dwukolumnowy grid i identyczna wysokość */
+  .actions{
+    display:grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin: 14px 0 12px !important;
+  }
+  .actions .btn{
+    height: 52px !important;
+    border-radius: 14px !important;
+    font-size: 14px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  /* lekkie skróty tekstów gdyby się nie mieściły */
+  #btn-hosp span, #btn-apteka .badge-round { font-size: 12.5px !important; }
+
+  /* Karty (Kobieta/Mężczyzna/Dziecko) – dwa w rzędzie, równe, eleganckie */
+  section.stack[aria-label="Wybór postaci"]{
+    display:grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+  @media (max-width: 380px){
+    section.stack[aria-label="Wybór postaci"]{
+      grid-template-columns: 1fr !important;   /* bardzo wąskie telefony */
+    }
+  }
+  section.stack .card{
+    min-height: 220px !important;
+    border-radius: 16px !important;
+  }
+  section.stack .card a{
+    grid-template-rows: minmax(160px, 200px) auto !important;
+  }
+  section.stack .card img{
+    object-fit: cover !important;
+    object-position: 50% 24% !important;
+  }
+  section.stack .card .caption{
+    padding: 10px 12px !important;
+  }
+
+  /* Wyszukiwarka – porządny, “appkowy” wygląd i brak przesunięć */
+  .header .tools .search{
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+  #bhSearch{
+    width: 100% !important;
+    padding: 10px 34px 10px 12px !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255,255,255,.20) !important;
+    background: rgba(255,255,255,.06) !important;
+    color: #fff !important;
+    font-size: 14px !important;
+  }
+  #bhSearchIcon{
+    position: absolute !important; right: 10px !important; top: 50% !important; transform: translateY(-50%) !important;
+  }
+  .bh2025-suggest{
+    left: 0 !important; right: 0 !important;
+  }
+
+  /* Język – drobna korekta, by nie kolidował z headerem */
+  #bhLangPick{
+    top: 10px !important; right: 10px !important;
+    padding: 5px 8px !important;
+  }
+
+  /* Większe cele dotykowe dla telefonów, ale bez animacyjnego “skakania” */
+  .situations .pill:active, .actions .btn:active{
+    transform: translateY(0) !important;
+    box-shadow: 0 0 0 2px rgba(164,107,255,.35) inset !important;
+  }
+}
+</style>
 </body>
 </html>
