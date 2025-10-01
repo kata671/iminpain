@@ -770,5 +770,73 @@ body[data-page="home"] section.stack .card img{ object-fit:cover !important; obj
   }
 }
 </style>
+<style id="bh-suggest-portal-css">
+  /* Wygląd dropdownu (pozostawiamy Twój styl, tylko warstwa i max wysokość) */
+  .bh2025-suggest[data-portalized="1"]{
+    position: fixed !important;
+    z-index: 40001 !important;
+    box-shadow: 0 16px 34px rgba(8,10,22,.52);
+    border:1px solid rgba(164,107,255,.28);
+    border-radius:12px;
+    background: rgba(60,32,100,.96);
+    overflow:auto;
+    -webkit-overflow-scrolling: touch;
+  }
+</style>
+
+<script id="bh-suggest-portal">
+(function(){
+  const input    = document.getElementById('bhSearch');
+  const dropdown = document.querySelector('.bh2025-suggest');
+  if(!input || !dropdown || dropdown.dataset.portalReady) return;
+  dropdown.dataset.portalReady = '1';
+
+  // 1) Utwórz portal na końcu body (najwyższa warstwa, poza wszystkimi stacking-contexts)
+  const portal = document.createElement('div');
+  portal.id = 'bhSuggestPortal';
+  portal.style.position = 'fixed';
+  portal.style.zIndex   = '40000';
+  portal.style.left     = '0';
+  portal.style.top      = '0';
+  portal.style.width    = '0';
+  portal.style.height   = '0';
+  document.body.appendChild(portal);
+
+  // 2) Przenieś dropdown do portalu – raz, bez zmiany jego zawartości / logiki
+  portal.appendChild(dropdown);
+  dropdown.dataset.portalized = '1';
+
+  // 3) Funkcja ustawiająca pozycję i rozmiar pod polem szukania
+  function place(){
+    const hidden = dropdown.getAttribute('aria-hidden') === 'true';
+    if(hidden){ dropdown.style.display = 'none'; return; }
+    const r = input.getBoundingClientRect();
+    const gutter = 6; // odstęp pod polem
+    dropdown.style.display   = 'block';
+    dropdown.style.left      = (Math.round(r.left)) + 'px';
+    dropdown.style.top       = (Math.round(r.bottom + gutter)) + 'px';
+    dropdown.style.width     = (Math.round(r.width)) + 'px';
+    dropdown.style.maxHeight = Math.max(180, window.innerHeight - r.bottom - 16) + 'px';
+  }
+
+  // 4) Reaguj gdy dropdown zmienia widoczność (aria-hidden), rozmiar ekranu, scroll itd.
+  const mo = new MutationObserver(place);
+  mo.observe(dropdown, { attributes:true, attributeFilter:['aria-hidden','style'] });
+
+  ['resize','scroll'].forEach(ev => window.addEventListener(ev, place, {passive:true}));
+  input.addEventListener('focus', place);
+  input.addEventListener('input', place);
+  document.addEventListener('click', (e)=>{
+    // zamykanie po kliknięciu poza dropdownem i inputem (zachowujemy Twoje sterowanie aria-hidden)
+    if(dropdown.getAttribute('aria-hidden')==='true') return;
+    if(e.target === input || dropdown.contains(e.target)) return;
+    dropdown.setAttribute('aria-hidden','true');
+  });
+
+  // 5) Pierwsze ustawienie (gdy już są wyniki)
+  // Jeżeli Twoja logika już ustawia aria-hidden=false po wpisaniu znaków, to wystarczy:
+  // place(); // zostawiamy reakcję na input/focus.
+})();
+</script>
 </body>
 </html>
