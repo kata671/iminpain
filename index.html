@@ -147,7 +147,7 @@
     }
     .langpick option{ color:#0e1230; background:#ffffff }
 
-    /* Wyszukiwarka – panel podpowiedzi (izolowany) */
+    /* Wyszukiwarka – panel podpowiedzi (bazowy wygląd; pozycja nadpisywana przez portal) */
     .bh2025-suggest{position:absolute;right:0;left:0;top:100%;margin-top:6px;z-index:50;
       background:rgba(60,32,100,.96); border:1px solid rgba(164,107,255,.28); border-radius:12px;
       box-shadow:0 16px 34px rgba(8,10,22,.52); overflow:hidden; display:none}
@@ -166,87 +166,105 @@
     .header .tools .search{position:relative}
   </style>
 </style>
-<!-- FIX: stałe miejsce przełącznika języka na telefonach (final) + NOWOCZESNY UKŁAD -->
+
+<!-- MOBILE POLISH + NOWOCZESNE SIATKI (nie rusza desktopu) -->
+<style id="bh-mobile-polish">
+@media (max-width: 640px){
+  html, body { overflow-x: hidden; }
+  .container { padding: 0 14px; }
+
+  nav.situations{
+    display:grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin: 14px 0 10px !important;
+  }
+  nav.situations .pill{
+    height: 54px !important;
+    border-radius: 14px !important;
+    justify-content: center !important;
+    font-size: 14px !important;
+    letter-spacing: .2px !important;
+    line-height: 1.15 !important;
+    padding: 8px 10px !important;
+  }
+  nav.situations .pill .ico{
+    width: 22px !important; height: 22px !important; border-radius: 7px !important;
+  }
+
+  .actions{
+    display:grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin: 14px 0 12px !important;
+  }
+  .actions .btn{
+    height: 52px !important;
+    border-radius: 14px !important;
+    font-size: 14px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  #btn-hosp span, #btn-apteka .badge-round { font-size: 12.5px !important; }
+
+  section.stack[aria-label="Wybór postaci"]{
+    display:grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+  @media (max-width: 380px){
+    section.stack[aria-label="Wybór postaci"]{
+      grid-template-columns: 1fr !important;
+    }
+  }
+  section.stack .card{
+    min-height: 220px !important;
+    border-radius: 16px !important;
+  }
+  section.stack .card a{
+    grid-template-rows: minmax(160px, 200px) auto !important;
+  }
+  section.stack .card img{
+    object-fit: cover !important;
+    object-position: 50% 24% !important;
+  }
+  section.stack .card .caption{
+    padding: 10px 12px !important;
+  }
+
+  .header .tools .search{
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+  #bhSearch{
+    width: 100% !important;
+    padding: 10px 34px 10px 12px !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255,255,255,.20) !important;
+    background: rgba(255,255,255,.06) !important;
+    color: #fff !important;
+    font-size: 14px !important;
+  }
+  #bhSearchIcon{
+    position: absolute !important; right: 10px !important; top: 50% !important; transform: translateY(-50%) !important;
+  }
+  .bh2025-suggest{ left: 0 !important; right: 0 !important; }
+
+  #bhLangPick{
+    top: 10px !important; right: 10px !important;
+    padding: 5px 8px !important;
+  }
+
+  .situations .pill:active, .actions .btn:active{
+    transform: translateY(0) !important;
+    box-shadow: 0 0 0 2px rgba(164,107,255,.35) inset !important;
+  }
+}
+</style>
+
+<!-- SPÓJNY WYGLĄD TŁUMACZA (PL/EN) -->
 <style>
-@media (max-width:768px){
-  :where(.lang, .langpick, .language, #lang, #language, .header .tools .lang, .header .tools .langpick){
-    position: fixed !important;
-    top: 10px !important;
-    right: 10px !important;
-    z-index: 3000 !important;
-    margin: 0 !important;
-    transform: none !important;
-    display: inline-flex !important;
-    align-items: center;
-    gap: 8px;
-  }
-  :where(.lang, .langpick, .language, #lang, #language) :where(.label, b, span:first-child){
-    display: none !important;
-  }
-  body{ padding-top: 64px !important; }
-}
-
-/* NOWOCZESNY UKŁAD PIGUŁEK I PRZYCISKÓW */
-body[data-page="home"] nav.situations{
-  display:grid; gap:12px; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-  align-items:stretch; margin:14px 0 8px;
-}
-body[data-page="home"] nav.situations .pill{
-  height:56px; justify-content:center; border-radius:16px;
-  backdrop-filter:saturate(125%) blur(4px);
-  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-body[data-page="home"] nav.situations .pill .ico{ width:26px;height:26px;border-radius:8px }
-
-body[data-page="home"] .actions{
-  display:grid !important; gap:10px !important;
-  grid-template-columns:repeat(auto-fit, minmax(170px,1fr)) !important;
-  align-items:stretch !important; margin:16px 0 10px !important;
-}
-body[data-page="home"] .actions .btn{
-  display:inline-flex; align-items:center; justify-content:center;
-  height:52px; border-radius:14px; font-weight:900; letter-spacing:.2px;
-  border:1px solid rgba(255,255,255,.18);
-  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-  color:#eef2ff;
-  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-body[data-page="home"] .actions .btn:hover,
-body[data-page="home"] .actions .btn:focus-visible{
-  transform:translateY(-1px); outline:none;
-  box-shadow:0 10px 22px rgba(0,0,0,.28), 0 0 0 2px rgba(164,107,255,.35);
-  border-color:rgba(164,107,255,.45);
-}
-
-body[data-page="home"] #btn-112{
-  border-color:rgba(255,107,107,.85) !important;
-  box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(255,107,107,.55) inset, 0 0 18px rgba(255,107,107,.35);
-}
-body[data-page="home"] #btn-hosp{
-  border-color:rgba(255,184,108,.8) !important;
-  box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(255,184,108,.5) inset, 0 0 18px rgba(255,184,108,.28);
-}
-body[data-page="home"] #btn-apteka .badge-round{ font-size:13px; padding:6px 10px }
-body[data-page="home"] #btn-dent24{
-  border-color:rgba(139,123,255,.55);
-  box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(139,123,255,.35) inset, 0 0 18px rgba(139,123,255,.30);
-}
-
-body[data-page="home"] section.stack[aria-label="Wybór postaci"]{ gap:14px !important }
-body[data-page="home"] section.stack .card{ min-height:260px; border-radius:20px }
-body[data-page="home"] section.stack .card a{ grid-template-rows:minmax(190px,260px) auto }
-body[data-page="home"] section.stack .card img{ object-fit:cover !important; object-position:50% 24% !important }
-
-.bh-wallpaper,.bh-grid,.bh-floor-fade{ pointer-events:none !important }
-.header, .situations, .actions, section.stack, .search{ position:relative; z-index:5 }
-
-@media (max-width:640px){
-  body[data-page="home"] nav.situations{ grid-template-columns:1fr }
-  body[data-page="home"] .actions{ grid-template-columns:1fr }
-  body[data-page="home"] .actions .btn{ height:50px }
-}
-
-/* SPÓJNY WYGLĄD TŁUMACZA (PL/EN) */
 #bhLangPick {
   position: fixed !important; top: 16px !important; right: 24px !important; z-index: 9999 !important;
   display: inline-flex !important; align-items: center; gap: 6px;
@@ -435,45 +453,118 @@ body[data-page="home"] section.stack .card img{ object-fit:cover !important; obj
   })();
   </script>
 
-  <!-- WYSZUKIWARKA (POPRAWIONA) -->
+  <!-- WYSZUKIWARKA (PL/EN) — ROZSZERZONA, z odmianami i bez PL znaków -->
   <script>
   (function(){
     const input = document.getElementById('bhSearch');
     const icon  = document.getElementById('bhSearchIcon');
-    if(!input || input.dataset.bhSearchBound) return; input.dataset.bhSearchBound='1';
+    if(!input) return;
+
+    // Usuń ewentualny stary dropdown
+    const prev = input.parentElement.querySelector('.bh2025-suggest');
+    if(prev){ prev.remove(); }
+
+    const dePL = (s)=>
+      s.normalize('NFD')
+       .replace(/[\u0300-\u036f]/g,'')
+       .replaceAll('ł','l').replaceAll('Ł','l')
+       .replaceAll('ś','s').replaceAll('Ś','s')
+       .replaceAll('ż','z').replaceAll('Ż','z')
+       .replaceAll('ź','z').replaceAll('Ź','z')
+       .replaceAll('ć','c').replaceAll('Ć','c')
+       .replaceAll('ą','a').replaceAll('Ą','a')
+       .replaceAll('ę','e').replaceAll('Ę','e')
+       .replaceAll('ó','o').replaceAll('Ó','o');
+    const norm = (s)=> dePL(String(s||'').toLowerCase().trim());
+
+    const LEMMAS = {
+      'oko':'oko','oczy':'oko','oczami':'oko','wzrok':'oko',
+      'nos':'nos','zatoki':'nos','katar':'nos',
+      'gardlo':'gardlo','angina':'gardlo','chrypka':'gardlo','bolgardla':'gardlo',
+      'glowa':'glowa','migrena':'glowa','bolglowy':'glowa',
+      'klatka':'klatka','piers':'klatka','mostek':'klatka',
+      'pluca':'pluca','duszno':'pluca','dyszenie':'pluca','astma':'pluca',
+      'brzuch':'brzuch','zoladek':'brzuch','wzdecia':'brzuch','biegunka':'brzuch',
+      'nerki':'nerki','nerka':'nerki','ledzwie':'nerki','kolka':'nerki',
+      'plecy':'plecy','kregoslup':'plecy','rwa':'plecy',
+      'biodra':'biodra','biodro':'biodra','udo':'uda','uda':'uda','pachwina':'biodra',
+      'kolano':'kolano','kolana':'kolano','rzepka':'kolano','lakotka':'kolano',
+      'lydka':'lydka','lydki':'lydka','skurcze lydki':'lydka','skurcz lydki':'lydka',
+      'kostka':'kostka','kostki':'kostka','skrecenie kostki':'kostka','zwichniecie kostki':'kostka',
+      'stopy':'stopy','stopa':'stopy','pieta':'stopy','rozciagno':'stopy','rozciagnosc':'stopy',
+      'skora':'skora','wysypka':'skora','swid':'skora','alergia':'skora',
+      'serce':'serce','kolatanie':'serce','arytmia':'serce','kolatanieserca':'serce',
+      'kaszel':'kaszel','kaszle':'kaszel',
+      'goraczka':'goraczka','temperatura':'goraczka',
+      'uszy':'uszy','ucho':'uszy','uchem':'uszy','uszu':'uszy','bolucha':'uszy',
+      'szyja':'szyja','kark':'szyja','bolszyi':'szyja','bolkarku':'szyja',
+      'zeby':'zeby','zub':'zeby','zab':'zeby','zebybol':'zeby','bolzeba':'zeby','stomatolog':'zeby','dentysta':'zeby',
+      'ciaza':'ciaza','wciazy':'ciaza','ciezarna':'ciaza','ciazowe':'ciaza','pregnancy':'ciaza',
+      'strefaintymna':'strefa','intymna':'strefa','intymne':'strefa','narzadyplciowe':'strefa','okoliceintymne':'strefa',
+    };
 
     const PARTS = [
       {id:'oko',       label:'Oko',        alias:['oko','oczy','wzrok']},
       {id:'nos',       label:'Nos',        alias:['nos','zatoki','katar']},
-      {id:'gardlo',    label:'Gardło',     alias:['gardlo','gardło','angina','chrypka']},
-      {id:'glowa',     label:'Głowa',      alias:['glowa','głowa','migrena','ból głowy']},
-      {id:'klatka',    label:'Klatka piersiowa', alias:['klatka','pierś','serce ból','mostek']},
-      {id:'pluca',     label:'Płuca',      alias:['płuca','pluca','duszność','astma']},
-      {id:'brzuch',    label:'Brzuch',     alias:['brzuch','żołądek','zoladek','wzdęcia','biegunka']},
-      {id:'nerki',     label:'Nerki',      alias:['nerki','kolka','lędźwie','ledzwi']},
-      {id:'plecy',     label:'Plecy',      alias:['plecy','kręgosłup','kregoslup','rwa']},
-      {id:'biodra',    label:'Biodra/Uda', alias:['biodro','biodra','udo','pachwina']},
-      {id:'kolano',    label:'Kolano',     alias:['kolano','rzepka','łąkotka','lakotka']},
-      {id:'stopy',     label:'Stopy',      alias:['stopa','stopy','pięta','pieta','rozcięgno']},
-      {id:'skora',     label:'Skóra',      alias:['skora','skóra','wysypka','świąd','alergia']},
-      {id:'serce',     label:'Serce',      alias:['serce','kołatania','kolatania','arytmia']},
+      {id:'gardlo',    label:'Gardło',     alias:['gardlo','gardło','angina','chrypka','bol gardla']},
+      {id:'glowa',     label:'Głowa',      alias:['glowa','głowa','migrena','bol glowy']},
+      {id:'szyja',     label:'Szyja',      alias:['szyja','kark','bol szyi','bol karku']},
+      {id:'uszy',      label:'Uszy',       alias:['uszy','ucho','uchem','bol ucha','szum w uszach']},
+      {id:'zeby',      label:'Zęby',       alias:['zeby','zab','zub','bol zeba','stomatolog','dentysta']},
+
+      {id:'klatka',    label:'Klatka piersiowa', alias:['klatka','piers','mostek']},
+      {id:'pluca',     label:'Płuca',      alias:['pluca','płuca','dyszenie','duszno','astma']},
+      {id:'serce',     label:'Serce',      alias:['serce','kolatanie','arytmia']},
+      {id:'brzuch',    label:'Brzuch',     alias:['brzuch','zoladek','wzdecia','biegunka']},
+      {id:'nerki',     label:'Nerki',      alias:['nerki','nerka','ledzwie','kolka']},
+      {id:'plecy',     label:'Plecy',      alias:['plecy','kregoslup','rwa']},
+
+      {id:'biodra',    label:'Biodra/Uda', alias:['biodra','biodro','udo','uda','pachwina']},
+      {id:'kolano',    label:'Kolano',     alias:['kolano','kolana','rzepka','lakotka']},
+      {id:'lydka',     label:'Łydka',      alias:['lydka','lydki','skurcz lydki','skurcze lydki']},
+      {id:'kostka',    label:'Kostka',     alias:['kostka','kostki','skrecenie kostki','zwichniecie kostki']},
+      {id:'stopy',     label:'Stopy',      alias:['stopy','stopa','pieta','rozciagnosc','rozciagno']},
+
+      {id:'skora',     label:'Skóra',      alias:['skora','wysypka','swid','alergia']},
+
       {id:'kaszel',    label:'Kaszel',     alias:['kaszel','kaszle']},
-      {id:'goraczka',  label:'Gorączka',   alias:['gorączka','goraczka','temperatura']},
-      {id:'zadlawienie', label:'Zadławienie (SOS)', alias:['zadławienie','zadlawienie','zadławił','zadlawil'] , sos:true},
-      {id:'reanimacja',  label:'Reanimacja (RKO)',  alias:['reanimacja','rko','resuscytacja'] , sos:true},
-      {id:'wypadek',     label:'Wypadek (SOS)',     alias:['wypadek','kolizja','potrącenie','potracenie'] , sos:true},
-      {id:'pierwszopomoc',label:'Pierwsza pomoc',   alias:['pierwsza pomoc','pierwszopomoc','abc'] , sos:true}
-    ];
-    const GENDERS = [
-      {id:'kobieta',label:'Kobieta'},{id:'mezczyzna',label:'Mężczyzna'},{id:'dziecko',label:'Dziecko'}
+      {id:'goraczka',  label:'Gorączka',   alias:['goraczka','temperatura']},
+
+      {id:'ciaza',     label:'Ciąża',      alias:['ciaza','w ciazy','ciezarna','pregnancy']},
+      {id:'strefa',    label:'Strefa intymna', alias:['strefa intymna','intymna','intymne','narzady plciowe']},
+
+      {id:'zadlawienie', label:'Zadławienie (SOS)', alias:['zadlawienie','zadlawil','zadlawila'], sos:true},
+      {id:'reanimacja',  label:'Reanimacja (RKO)',  alias:['reanimacja','rko','resuscytacja'], sos:true},
+      {id:'wypadek',     label:'Wypadek (SOS)',     alias:['wypadek','kolizja','potracenie'], sos:true},
+      {id:'pierwszopomoc',label:'Pierwsza pomoc',   alias:['pierwsza pomoc','abc','pierwszopomoc'], sos:true},
     ];
 
+    const INDEX = PARTS.map(p=>{
+      const base = norm(p.label);
+      const aliases = (p.alias||[]).map(norm);
+      const extra = [];
+      Object.keys(LEMMAS).forEach(k=>{
+        const tgt = LEMMAS[k];
+        if(tgt === p.id || (p.id==='strefa' && tgt==='strefa')) extra.push(k);
+      });
+      const lemmaAliases = extra.map(norm);
+      const all = Array.from(new Set([base, ...aliases, ...lemmaAliases]));
+      return {...p, _keys: all};
+    });
+
     const panel = document.createElement('div');
-    panel.className = 'bh2025-suggest'; panel.setAttribute('role','listbox'); panel.setAttribute('aria-hidden','true');
+    panel.className = 'bh2025-suggest';
+    panel.setAttribute('role','listbox');
+    panel.setAttribute('aria-hidden','true');
     panel.innerHTML = `<div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>`;
     input.parentElement.appendChild(panel);
     const list = panel.querySelector('#bh2025List');
-    let results = [], active = -1;
+
+    const GENDERS = [
+      {id:'kobieta',label:'Kobieta'},
+      {id:'mezczyzna',label:'Mężczyzna'},
+      {id:'dziecko',label:'Dziecko'}
+    ];
 
     function buildUrls(hit){
       if(hit.sos){
@@ -485,13 +576,20 @@ body[data-page="home"] section.stack .card img{ object-fit:cover !important; obj
         return {label:`${hit.label} • ${g.label}`, url, sub:g.label};
       });
     }
+
     function search(q){
-      const s=q.trim().toLowerCase(); if(!s) return [];
-      const hits = PARTS.filter(p =>
-        p.alias?.some(a => a.includes(s)) || p.id.includes(s) || p.label.toLowerCase().includes(s)
-      ).slice(0,6);
-      return hits.flatMap(buildUrls).slice(0,12);
+      const s = norm(q);
+      if(!s) return [];
+      const hits = INDEX.filter(p => p._keys.some(k => k.includes(s) || s.includes(k)));
+      const scored = hits.map(p=>{
+        const score = p._keys.some(k=>k===s || k.startsWith(s)) ? 0 : 1;
+        return {p, score};
+      }).sort((a,b)=>a.score-b.score);
+      return scored.map(x=>x.p).slice(0,6).flatMap(buildUrls).slice(0,12);
     }
+
+    let results = [], active = -1;
+
     function render(){
       list.innerHTML = ''; active = -1;
       results.forEach((r,idx)=>{
@@ -504,6 +602,8 @@ body[data-page="home"] section.stack .card img{ object-fit:cover !important; obj
         list.appendChild(li);
       });
       panel.setAttribute('aria-hidden', results.length ? 'false':'true');
+      // po pokazaniu – niech portal przeliczy pozycję
+      document.dispatchEvent(new CustomEvent('bh-suggest-open'));
     }
     function setActive(i){
       active = i;
@@ -528,6 +628,67 @@ body[data-page="home"] section.stack .card img{ object-fit:cover !important; obj
     });
     document.addEventListener('click', (e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); active=-1; } });
     if(icon){ icon.addEventListener('click', ()=>{ results = search(input.value); if(results.length){ panel.setAttribute('aria-hidden','false'); render(); } }); }
+  })();
+  </script>
+
+  <!-- PORTAL dla podpowiedzi – dropdown zawsze nad wszystkimi i pod polem -->
+  <style id="bh-suggest-portal-css">
+    .bh2025-suggest[data-portalized="1"]{
+      position: fixed !important;
+      z-index: 40001 !important;
+      box-shadow: 0 16px 34px rgba(8,10,22,.52);
+      border:1px solid rgba(164,107,255,.28);
+      border-radius:12px;
+      background: rgba(60,32,100,.96);
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  </style>
+  <script id="bh-suggest-portal">
+  (function(){
+    const input    = document.getElementById('bhSearch');
+    let dropdown   = document.querySelector('.bh2025-suggest');
+    if(!input || !dropdown || dropdown.dataset.portalReady) return;
+    dropdown.dataset.portalReady = '1';
+
+    const portal = document.createElement('div');
+    portal.id = 'bhSuggestPortal';
+    portal.style.position = 'fixed';
+    portal.style.zIndex   = '40000';
+    portal.style.left     = '0';
+    portal.style.top      = '0';
+    portal.style.width    = '0';
+    portal.style.height   = '0';
+    document.body.appendChild(portal);
+
+    portal.appendChild(dropdown);
+    dropdown.dataset.portalized = '1';
+
+    function place(){
+      if(!dropdown) return;
+      const hidden = dropdown.getAttribute('aria-hidden') === 'true';
+      if(hidden){ dropdown.style.display = 'none'; return; }
+      const r = input.getBoundingClientRect();
+      const gutter = 6;
+      dropdown.style.display   = 'block';
+      dropdown.style.left      = (Math.round(r.left)) + 'px';
+      dropdown.style.top       = (Math.round(r.bottom + gutter)) + 'px';
+      dropdown.style.width     = (Math.round(r.width)) + 'px';
+      dropdown.style.maxHeight = Math.max(180, window.innerHeight - r.bottom - 16) + 'px';
+    }
+
+    const mo = new MutationObserver(place);
+    mo.observe(dropdown, { attributes:true, attributeFilter:['aria-hidden','style'] });
+
+    ['resize','scroll'].forEach(ev => window.addEventListener(ev, place, {passive:true}));
+    input.addEventListener('focus', place);
+    input.addEventListener('input', place);
+    document.addEventListener('bh-suggest-open', place);
+    document.addEventListener('click', (e)=>{
+      if(dropdown.getAttribute('aria-hidden')==='true') return;
+      if(e.target === input || dropdown.contains(e.target)) return;
+      dropdown.setAttribute('aria-hidden','true');
+    });
   })();
   </script>
 
@@ -602,7 +763,6 @@ body[data-page="home"] section.stack .card img{ object-fit:cover !important; obj
       let lang = (localStorage.getItem(LS_KEY) || root.getAttribute('data-lang') || root.lang || 'pl').toLowerCase();
       if(!I18N[lang]) lang = 'pl';
 
-      // API
       window.__getLang = () => lang;
       window.__t = (k) => (I18N[lang] && I18N[lang][k]) || (I18N['pl'] && I18N['pl'][k]) || k;
 
@@ -640,203 +800,5 @@ body[data-page="home"] section.stack .card img{ object-fit:cover !important; obj
       applyTranslations();
     })();
   </script>
-<style id="bh-mobile-polish">
-/* --- MOBILE POLISH (nie rusza desktopu) --- */
-@media (max-width: 640px){
-
-  /* sufit – bezpieczne marginesy i brak przewijania w bok */
-  html, body { overflow-x: hidden; }
-  .container { padding: 0 14px; }
-
-  /* Pigułki (sytuacje nagłe) – równy, dwukolumnowy grid */
-  nav.situations{
-    display:grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 10px !important;
-    margin: 14px 0 10px !important;
-  }
-  nav.situations .pill{
-    height: 54px !important;
-    border-radius: 14px !important;
-    justify-content: center !important;
-    font-size: 14px !important;
-    letter-spacing: .2px !important;
-    line-height: 1.15 !important;
-    padding: 8px 10px !important;
-  }
-  nav.situations .pill .ico{
-    width: 22px !important; height: 22px !important; border-radius: 7px !important;
-  }
-
-  /* Szybkie akcje – równy dwukolumnowy grid i identyczna wysokość */
-  .actions{
-    display:grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 10px !important;
-    margin: 14px 0 12px !important;
-  }
-  .actions .btn{
-    height: 52px !important;
-    border-radius: 14px !important;
-    font-size: 14px !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-  }
-  /* lekkie skróty tekstów gdyby się nie mieściły */
-  #btn-hosp span, #btn-apteka .badge-round { font-size: 12.5px !important; }
-
-  /* Karty (Kobieta/Mężczyzna/Dziecko) – dwa w rzędzie, równe, eleganckie */
-  section.stack[aria-label="Wybór postaci"]{
-    display:grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 12px !important;
-  }
-  @media (max-width: 380px){
-    section.stack[aria-label="Wybór postaci"]{
-      grid-template-columns: 1fr !important;   /* bardzo wąskie telefony */
-    }
-  }
-  section.stack .card{
-    min-height: 220px !important;
-    border-radius: 16px !important;
-  }
-  section.stack .card a{
-    grid-template-rows: minmax(160px, 200px) auto !important;
-  }
-  section.stack .card img{
-    object-fit: cover !important;
-    object-position: 50% 24% !important;
-  }
-  section.stack .card .caption{
-    padding: 10px 12px !important;
-  }
-
-  /* Wyszukiwarka – porządny, “appkowy” wygląd i brak przesunięć */
-  .header .tools .search{
-    flex: 1 1 auto !important;
-    min-width: 0 !important;
-  }
-  #bhSearch{
-    width: 100% !important;
-    padding: 10px 34px 10px 12px !important;
-    border-radius: 12px !important;
-    border: 1px solid rgba(255,255,255,.20) !important;
-    background: rgba(255,255,255,.06) !important;
-    color: #fff !important;
-    font-size: 14px !important;
-  }
-  #bhSearchIcon{
-    position: absolute !important; right: 10px !important; top: 50% !important; transform: translateY(-50%) !important;
-  }
-  .bh2025-suggest{
-    left: 0 !important; right: 0 !important;
-  }
-
-  /* Język – drobna korekta, by nie kolidował z headerem */
-  #bhLangPick{
-    top: 10px !important; right: 10px !important;
-    padding: 5px 8px !important;
-  }
-
-  /* Większe cele dotykowe dla telefonów, ale bez animacyjnego “skakania” */
-  .situations .pill:active, .actions .btn:active{
-    transform: translateY(0) !important;
-    box-shadow: 0 0 0 2px rgba(164,107,255,.35) inset !important;
-  }
-}
-</style>
-<style id="bh-suggest-zfix">
-/* Podpowiedzi nad wszystkim (desktop+mobile) */
-.header .tools .search{ position: relative !important; z-index: 10010 !important; }
-.bh2025-suggest{
-  z-index: 10020 !important;               /* wyżej niż karty i pigułki */
-  position: absolute !important;            /* zostaje pod polem szukania */
-  left: 0 !important; right: 0 !important;  /* pełna szerokość inputa */
-  top: calc(100% + 6px) !important;         /* 6px pod polem */
-  pointer-events: auto !important;
-}
-
-/* Na wypadek, gdyby coś z tła miało agresywne z-indexy */
-.bh-wallpaper, .bh-grid, .bh-floor-fade { z-index: 0 !important; }
-.header, .situations, .actions, section.stack { z-index: 5; position: relative; }
-
-/* Mobile – niech dropdown nie wychodzi poza ekran */
-@media (max-width: 640px){
-  .bh2025-suggest{
-    max-height: 50vh !important;
-    overflow: auto !important;
-    -webkit-overflow-scrolling: touch;
-  }
-}
-</style>
-<style id="bh-suggest-portal-css">
-  /* Wygląd dropdownu (pozostawiamy Twój styl, tylko warstwa i max wysokość) */
-  .bh2025-suggest[data-portalized="1"]{
-    position: fixed !important;
-    z-index: 40001 !important;
-    box-shadow: 0 16px 34px rgba(8,10,22,.52);
-    border:1px solid rgba(164,107,255,.28);
-    border-radius:12px;
-    background: rgba(60,32,100,.96);
-    overflow:auto;
-    -webkit-overflow-scrolling: touch;
-  }
-</style>
-
-<script id="bh-suggest-portal">
-(function(){
-  const input    = document.getElementById('bhSearch');
-  const dropdown = document.querySelector('.bh2025-suggest');
-  if(!input || !dropdown || dropdown.dataset.portalReady) return;
-  dropdown.dataset.portalReady = '1';
-
-  // 1) Utwórz portal na końcu body (najwyższa warstwa, poza wszystkimi stacking-contexts)
-  const portal = document.createElement('div');
-  portal.id = 'bhSuggestPortal';
-  portal.style.position = 'fixed';
-  portal.style.zIndex   = '40000';
-  portal.style.left     = '0';
-  portal.style.top      = '0';
-  portal.style.width    = '0';
-  portal.style.height   = '0';
-  document.body.appendChild(portal);
-
-  // 2) Przenieś dropdown do portalu – raz, bez zmiany jego zawartości / logiki
-  portal.appendChild(dropdown);
-  dropdown.dataset.portalized = '1';
-
-  // 3) Funkcja ustawiająca pozycję i rozmiar pod polem szukania
-  function place(){
-    const hidden = dropdown.getAttribute('aria-hidden') === 'true';
-    if(hidden){ dropdown.style.display = 'none'; return; }
-    const r = input.getBoundingClientRect();
-    const gutter = 6; // odstęp pod polem
-    dropdown.style.display   = 'block';
-    dropdown.style.left      = (Math.round(r.left)) + 'px';
-    dropdown.style.top       = (Math.round(r.bottom + gutter)) + 'px';
-    dropdown.style.width     = (Math.round(r.width)) + 'px';
-    dropdown.style.maxHeight = Math.max(180, window.innerHeight - r.bottom - 16) + 'px';
-  }
-
-  // 4) Reaguj gdy dropdown zmienia widoczność (aria-hidden), rozmiar ekranu, scroll itd.
-  const mo = new MutationObserver(place);
-  mo.observe(dropdown, { attributes:true, attributeFilter:['aria-hidden','style'] });
-
-  ['resize','scroll'].forEach(ev => window.addEventListener(ev, place, {passive:true}));
-  input.addEventListener('focus', place);
-  input.addEventListener('input', place);
-  document.addEventListener('click', (e)=>{
-    // zamykanie po kliknięciu poza dropdownem i inputem (zachowujemy Twoje sterowanie aria-hidden)
-    if(dropdown.getAttribute('aria-hidden')==='true') return;
-    if(e.target === input || dropdown.contains(e.target)) return;
-    dropdown.setAttribute('aria-hidden','true');
-  });
-
-  // 5) Pierwsze ustawienie (gdy już są wyniki)
-  // Jeżeli Twoja logika już ustawia aria-hidden=false po wpisaniu znaków, to wystarczy:
-  // place(); // zostawiamy reakcję na input/focus.
-})();
-</script>
 </body>
 </html>
