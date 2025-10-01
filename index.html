@@ -20,6 +20,11 @@
       position:relative; background:#0e1230 !important; color:#eef2ff;
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
+    body[data-page="home"]::before,
+    body[data-page="home"]::after,
+    body[data-page="home"] .container::before,
+    body[data-page="home"] .container::after{content:none !important;display:none !important}
+
     .bh-wallpaper,.bh-grid{position:fixed;inset:0;pointer-events:none}
     .bh-wallpaper{
       z-index:0;
@@ -39,7 +44,7 @@
       background:linear-gradient(180deg, rgba(14,18,48,0), rgba(14,18,48,.35) 55%, rgba(14,18,48,.6)); }
     .container{position:relative;z-index:3;background:transparent !important;max-width:1100px;margin:0 auto;padding:0 16px}
 
-    /* KARTY POSTACI */
+    /* Siatka kart */
     @media (min-width:981px){ section.stack[style]{grid-template-columns:repeat(3,1fr) !important;} }
     @media (max-width:980px){ section.stack[style]{grid-template-columns:repeat(2,1fr) !important;} }
     @media (max-width:640px){ section.stack[style]{grid-template-columns:1fr !important;} }
@@ -53,16 +58,14 @@
     .card .caption{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;
       border-top:1px solid rgba(164,107,255,.22);background:rgba(255,255,255,.04)}
 
-    /* PIGUŁKI SOS / GRY */
+    /* Pigułki */
     :root{ --bhG:34,227,160; --bhG2:20,160,120; }
     .situations .pill{
       display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:14px; text-decoration:none; font-weight:900;
       border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#fff; transition:.2s ease;
     }
-    .situations .pill .ico{
-      display:inline-grid; place-items:center; width:22px; height:22px; border-radius:6px;
-      background: rgba(164,107,255,.18); box-shadow: inset 0 0 0 1px rgba(164,107,255,.25);
-    }
+    .situations .pill .ico{display:inline-grid; place-items:center; width:22px; height:22px; border-radius:6px;
+      background: rgba(164,107,255,.18); box-shadow: inset 0 0 0 1px rgba(164,107,255,.25);}
     .situations .pill.pill--green{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(var(--bhG2), .15);
       color:#ffffff; border:1px solid rgba(var(--bhG), .55);
@@ -76,7 +79,7 @@
       color:#eaf2ff;
     }
 
-    /* AKCJE – siatka mobilna */
+    /* Akcje: siatka na telefonie */
     @media (max-width:640px){
       .actions{
         display:grid !important; grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap:10px !important;
@@ -84,7 +87,7 @@
       }
     }
 
-    /* WYSZUKIWARKA SUGGEST (portal nad kafelkami) */
+    /* Sugestie wyszukiwarki (portal) */
     .bh2025-suggest{position:absolute;right:0;left:0;top:100%;margin-top:6px;z-index:50;
       background:rgba(60,32,100,.96); border:1px solid rgba(164,107,255,.28); border-radius:12px;
       box-shadow:0 16px 34px rgba(8,10,22,.52); overflow:hidden; display:none}
@@ -100,10 +103,8 @@
     .bh2025-sg-ico{width:18px;height:18px;display:inline-grid;place-items:center;border-radius:6px;
       background:rgba(164,107,255,.18); font-size:12px}
     .bh2025-sg-sub{margin-left:auto;font-size:12px;color:#b8c2e0}
-  </style>
 
-  <!-- LANG PICK (przyklejony i bez strzałki systemowej) -->
-  <style>
+    /* Tłumacz — stały wygląd */
     #bhLangPick {
       position: fixed !important; top: 16px !important; right: 24px !important; z-index: 9999 !important;
       display: inline-flex !important; align-items: center; gap: 6px;
@@ -115,13 +116,10 @@
       font-size: 14px; font-weight: 700; color: #fff; background: transparent; border: none; outline: none; cursor: pointer; letter-spacing: .3px;
       appearance:none; -webkit-appearance:none; -moz-appearance:none; background-image:none !important; padding-right:4px;
     }
-    #bhLangSelect::-ms-expand{ display:none; }
     #bhLangSelect option { color:#0e1230; background:#fff }
     @media (max-width:768px){ #bhLangPick{ top:10px !important; right:12px !important; padding:5px 8px } #bhLangSelect{ font-size:13px } }
-  </style>
 
-  <!-- PORTAL CSS dla suggest -->
-  <style id="bh-suggest-portal-css">
+    /* Portal CSS */
     .bh2025-suggest[data-portalized="1"]{
       position: fixed !important;
       z-index: 40001 !important;
@@ -129,74 +127,14 @@
       border:1px solid rgba(164,107,255,.28);
       border-radius:12px;
       background: rgba(60,32,100,.96);
-      overflow:auto;
-      -webkit-overflow-scrolling: touch;
+      overflow:auto; -webkit-overflow-scrolling: touch;
     }
-  </style>
 
-  <!-- AI v2: style + czerwone flagi -->
-  <style id="bh-ai2-css">
-    .bh-ai-btn{
-      appearance:none; border:1px solid rgba(164,107,255,.28);
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      color:#eef2ff; border-radius:14px; padding:10px 14px; font-weight:800; cursor:pointer;
-      box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(164,107,255,.18) inset;
-    }
-    .bh-ai-modal[aria-hidden="true"]{ display:none }
-    .bh-ai-modal{
-      position:fixed; inset:0; z-index:9997;
-      background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95));
-      backdrop-filter:saturate(120%) blur(6px);
-    }
-    .bh-ai-panel{
-      position:relative; max-width:920px; margin:5vh auto; padding:18px;
-      background:rgba(60,32,100,.36); border:1px solid rgba(164,107,255,.25); border-radius:18px; color:#eef2ff;
-    }
-    .bh-ai-panel h3{ margin:.2rem 0 10px; font-size:20px; letter-spacing:.2px }
-    .bh-ai-grid{ display:grid; grid-template-columns: 1fr 300px; gap:16px }
-    @media (max-width:900px){ .bh-ai-grid{ grid-template-columns:1fr } }
-    .bh-ai-panel textarea{
-      width:100%; min-height:140px; resize:vertical; padding:12px; border-radius:12px;
-      border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#fff; font-size:15px;
-    }
-    .bh-ai-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap }
-    .bh-ai-select, .bh-ai-run{
-      border-radius:12px; padding:10px 12px; font-weight:800; letter-spacing:.2px; cursor:pointer;
-      border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.08); color:#fff;
-    }
-    .bh-ai-run{ background:linear-gradient(180deg, rgba(94,234,212,.28), rgba(94,234,212,.10)); border-color:rgba(94,234,212,.55) }
-    .bh-ai-close{
-      position:absolute; right:10px; top:10px; border:none; background:transparent; color:#fff; font-size:20px; cursor:pointer;
-    }
-    .bh-ai-hints{ font-size:13px; color:#cfe2ff }
-    .bh-ai-results{ margin-top:12px; display:grid; gap:10px }
-    .bh-ai-card{
-      border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.06);
-      border-radius:12px; padding:12px; display:flex; gap:12px; align-items:center; justify-content:space-between;
-    }
-    .bh-ai-left{ display:flex; flex-direction:column; gap:6px }
-    .bh-ai-title{ font-weight:900; letter-spacing:.2px }
-    .bh-ai-meta{ font-size:12.5px; color:#cfe2ff }
-    .bh-ai-chip{
-      display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; font-weight:800;
-      border:1px solid rgba(94,234,212,.55); background:rgba(94,234,212,.14); color:#eafff7;
-    }
-    .bh-ai-go{
-      border-radius:10px; padding:9px 12px; border:1px solid rgba(164,107,255,.35); background:rgba(164,107,255,.18);
-      color:#fff; font-weight:800; cursor:pointer;
-    }
-    /* Czerwone flagi */
-    .bh-ai-flag{
-      border:1px solid rgba(255,107,107,.75); background:rgba(255,107,107,.12);
-      box-shadow: 0 0 0 1px rgba(255,107,107,.35) inset, 0 0 18px rgba(255,107,107,.28);
-      border-radius:14px; padding:12px; color:#ffecec; display:flex; gap:10px; align-items:flex-start;
-    }
-    .bh-ai-flag b{ color:#fff; }
-    .bh-ai-flag .btns{ margin-left:auto; display:flex; gap:8px; flex-wrap:wrap }
-    .bh-ai-flag .btns a, .bh-ai-flag .btns button{
-      border-radius:10px; padding:8px 10px; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.12);
-      color:#fff; font-weight:800; text-decoration:none; cursor:pointer;
-    }
+    /* Drobne efekty przycisków akcji */
+    :root{ --glow-green:34,227,160; --glow-red:255,107,107; --glow-amber:255,184,108; }
+    #btn-hosp{ border-color: rgba(var(--glow-red), .8) !important; box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-red), .5) inset, 0 0 18px rgba(var(--glow-red), .35); }
+    #btn-apteka{ border-color: rgba(var(--glow-green), .7)!important; box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-green), .45) inset, 0 0 18px rgba(var(--glow-green), .35); }
+    #btn-loc{ border-color: rgba(var(--glow-amber), .75)!important; box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-amber), .45) inset, 0 0 18px rgba(var(--glow-amber), .35); }
   </style>
 </head>
 
@@ -219,8 +157,6 @@
                   stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
-
-        <!-- Tłumacz (PL/EN) -->
         <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
           <label for="bhLangSelect">Język</label>
           <select id="bhLangSelect"><option value="pl">PL</option><option value="en">EN</option></select>
@@ -245,16 +181,16 @@
       <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
       <button id="btn-hosp" class="btn btn--hosp" type="button" data-i18n="btn_hosp">🏥 Szpitale / SOR</button>
 
-      <!-- apteka24 (z i18n) -->
+      <!-- apteka24 (i18n) -->
       <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener">
         <span class="badge-round" data-i18n="btn_apteka24">apteka24</span>
       </a>
 
-      <!-- Dentysta 24 (z i18n) -->
+      <!-- Dentysta 24 (i18n) -->
       <a id="btn-dent24" class="btn" href="dentysta24.html">🦷 <span data-i18n="btn_dent24">Ból zęba 24H</span></a>
 
       <button id="btn-loc" class="btn" type="button" data-i18n="btn_loc">📍 Zlokalizuj mnie</button>
-      <!-- Przycisk AI dodajemy skryptem, aby nie dublować gdy już jest -->
+      <!-- Przycisk AI wstawiamy skryptem poniżej -->
     </div>
 
     <div class="subheadline" data-i18n="subheadline">Boli mnie — wybierz obszar bólu</div>
@@ -289,7 +225,7 @@
   <!-- Skrypt bazowy -->
   <script src="assets/main.js?v=12"></script>
 
-  <!-- PORADY open/close -->
+  <!-- PORADY (otwieranie) -->
   <script>
   (function(){
     const modal  = document.getElementById('bh2025Porada');
@@ -333,18 +269,18 @@
         openPorada(a.getAttribute('data-porada'), a.textContent.trim());
       }, true);
     }
-    close.addEventListener('click', closePorada);
+    if(close) close.addEventListener('click', closePorada);
     modal.addEventListener('click', (e)=>{ if(e.target===modal) closePorada(); });
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') closePorada(); });
   })();
   </script>
 
-  <!-- WYSZUKIWARKA HOME (portal + odmiany) -->
+  <!-- WYSZUKIWARKA (portal + odmiany) -->
   <script>
   (function(){
     const input = document.getElementById('bhSearch');
     const icon  = document.getElementById('bhSearchIcon');
-    if(!input) return;
+    if(!input || input.dataset.bhSearchBound) return; input.dataset.bhSearchBound='1';
 
     const dePL = (s)=> s.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
       .replaceAll('ł','l').replaceAll('Ł','l').replaceAll('ś','s').replaceAll('Ś','s')
@@ -354,43 +290,71 @@
     const norm = (s)=> dePL(String(s||'').toLowerCase().trim());
 
     const PARTS = [
-      {id:'oko',label:'Oko',alias:['oko','oczy','wzrok']},{id:'nos',label:'Nos',alias:['nos','zatoki','katar']},
+      {id:'oko',label:'Oko',alias:['oko','oczy','wzrok']},
+      {id:'nos',label:'Nos',alias:['nos','zatoki','katar']},
       {id:'gardlo',label:'Gardło',alias:['gardlo','bol gardla','chrypka','angina']},
       {id:'glowa',label:'Głowa',alias:['glowa','migrena','bol glowy']},
-      {id:'szyja',label:'Szyja',alias:['szyja','kark']},{id:'uszy',label:'Uszy',alias:['uszy','ucho','szumy']},
+      {id:'szyja',label:'Szyja',alias:['szyja','kark']},
+      {id:'uszy',label:'Uszy',alias:['uszy','ucho','szumy','szum w uszach']},
       {id:'zeby',label:'Zęby',alias:['zeby','zab','bol zeba','stomatolog','dentysta']},
-      {id:'klatka',label:'Klatka piersiowa',alias:['klatka','piers','mostek']},{id:'pluca',label:'Płuca',alias:['pluca','duszno','astma']},
-      {id:'serce',label:'Serce',alias:['serce','kolatanie','arytmia']},{id:'brzuch',label:'Brzuch',alias:['brzuch','zoladek','wzdecia']},
-      {id:'nerki',label:'Nerki',alias:['nerki','kolka','ledzwie']},{id:'plecy',label:'Plecy',alias:['plecy','kregoslup','rwa']},
+      {id:'klatka',label:'Klatka piersiowa',alias:['klatka','piers','mostek']},
+      {id:'pluca',label:'Płuca',alias:['pluca','duszno','astma']},
+      {id:'serce',label:'Serce',alias:['serce','kolatanie','arytmia','zimny pot']},
+      {id:'brzuch',label:'Brzuch',alias:['brzuch','zoladek','wzdecia']},
+      {id:'nerki',label:'Nerki',alias:['nerki','kolka','ledzwie']},
+      {id:'plecy',label:'Plecy',alias:['plecy','kregoslup','rwa']},
       {id:'biodra',label:'Biodra/Uda',alias:['biodra','biodro','udo','uda','pachwina']},
-      {id:'kolano',label:'Kolano',alias:['kolano','rzepka','lakotka']},{id:'lydka',label:'Łydka',alias:['lydka','skurcz lydki']},
-      {id:'kostka',label:'Kostka',alias:['kostka','skrecenie kostki']},{id:'stopy',label:'Stopy',alias:['stopy','stopa','pieta']},
+      {id:'kolano',label:'Kolano',alias:['kolano','rzepka','lakotka']},
+      {id:'lydka',label:'Łydka',alias:['lydka','skurcz lydki','skurcze lydki']},
+      {id:'kostka',label:'Kostka',alias:['kostka','skrecenie kostki','zwichniecie kostki']},
+      {id:'stopy',label:'Stopy',alias:['stopy','stopa','pieta']},
       {id:'skora',label:'Skóra',alias:['skora','wysypka','swedzenie']},
-      {id:'kaszel',label:'Kaszel',alias:['kaszel']},{id:'goraczka',label:'Gorączka',alias:['goraczka','temperatura']},
-      {id:'ciaza',label:'Ciąża',alias:['ciaza','w ciazy','pregnancy']},{id:'strefa',label:'Strefa intymna',alias:['strefa intymna','intymna']},
+      {id:'kaszel',label:'Kaszel',alias:['kaszel']},
+      {id:'goraczka',label:'Gorączka',alias:['goraczka','temperatura']},
+      {id:'ciaza',label:'Ciąża',alias:['ciaza','w ciazy','ciezarna','pregnancy']},
+      {id:'strefa',label:'Strefa intymna',alias:['strefa intymna','intymna']},
       {id:'zadlawienie',label:'Zadławienie (SOS)',alias:['zadlawienie'],sos:true},
       {id:'reanimacja',label:'Reanimacja (RKO)',alias:['reanimacja','rko'],sos:true},
       {id:'wypadek',label:'Wypadek (SOS)',alias:['wypadek'],sos:true},
       {id:'pierwszopomoc',label:'Pierwsza pomoc',alias:['pierwsza pomoc','abc'],sos:true},
     ];
     const GENDERS=[{id:'kobieta',label:'Kobieta'},{id:'mezczyzna',label:'Mężczyzna'},{id:'dziecko',label:'Dziecko'}];
-    function buildUrls(hit){ return hit.sos ? [{label: hit.label, url:`szczegoly.html?typ=porada&czesc=${hit.id}&label=${encodeURIComponent(hit.label)}`, sub:'SOS'}]
-      : GENDERS.map(g=>({label:`${hit.label} • ${g.label}`, url:`szczegoly.html?typ=${g.id}&czesc=${hit.id}&label=${encodeURIComponent(hit.label)}`, sub:g.label})); }
+
+    function buildUrls(hit){
+      if(hit.sos){
+        return [{label:hit.label,url:`szczegoly.html?typ=porada&czesc=${hit.id}&label=${encodeURIComponent(hit.label)}`,sub:'SOS'}];
+      }
+      return GENDERS.map(g=>({label:`${hit.label} • ${g.label}`,url:`szczegoly.html?typ=${g.id}&czesc=${hit.id}&label=${encodeURIComponent(hit.label)}`,sub:g.label}));
+    }
+
     const INDEX = PARTS.map(p=>({...p,_keys:Array.from(new Set([norm(p.label),...(p.alias||[]).map(norm)]))}));
-    const panel = document.createElement('div'); panel.className='bh2025-suggest'; panel.setAttribute('role','listbox'); panel.setAttribute('aria-hidden','true');
+
+    const panel = document.createElement('div');
+    panel.className='bh2025-suggest'; panel.setAttribute('role','listbox'); panel.setAttribute('aria-hidden','true');
     panel.innerHTML=`<div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>`;
-    input.parentElement.appendChild(panel); const list=panel.querySelector('#bh2025List'); let results=[],active=-1;
+    input.parentElement.appendChild(panel);
+    const list=panel.querySelector('#bh2025List');
+    let results=[],active=-1;
 
     function search(q){ const s=norm(q); if(!s) return []; const hits=INDEX.filter(p=>p._keys.some(k=>k.includes(s)||s.includes(k)));
       return hits.slice(0,6).flatMap(buildUrls).slice(0,12); }
-    function render(){ list.innerHTML=''; active=-1; results.forEach((r,i)=>{ const li=document.createElement('li'); li.className='bh2025-sg-item'; li.dataset.index=String(i);
-      li.innerHTML=`<span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>`;
-      li.addEventListener('click',()=>window.location.href=r.url); list.appendChild(li); }); panel.setAttribute('aria-hidden', results.length?'false':'true'); document.dispatchEvent(new CustomEvent('bh-suggest-open')); }
-    input.addEventListener('input',()=>{results=search(input.value);render();});
-    input.addEventListener('keydown',(e)=>{const shown=panel.getAttribute('aria-hidden')==='false'; if(e.key==='Enter'){ if(!results.length){results=search(input.value);} if(results[0]) window.location.href=results[0].url; }});
-    document.addEventListener('click',(e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); } });
 
-    // PORTAL pozycjonujący nad kafelkami
+    function render(){ list.innerHTML=''; active=-1;
+      results.forEach((r,i)=>{ const li=document.createElement('li'); li.className='bh2025-sg-item'; li.dataset.index=String(i);
+        li.innerHTML=`<span class="bh2025-sg-ico">🔎</span><span>${r.label}</span><span class="bh2025-sg-sub">${r.sub||''}</span>`;
+        li.addEventListener('click',()=>window.location.href=r.url); list.appendChild(li); });
+      panel.setAttribute('aria-hidden', results.length?'false':'true');
+      document.dispatchEvent(new CustomEvent('bh-suggest-open'));
+    }
+
+    input.addEventListener('input',()=>{ results=search(input.value); render(); });
+    input.addEventListener('keydown',(e)=>{ const shown=panel.getAttribute('aria-hidden')==='false';
+      if(e.key==='Enter'){ if(!results.length){ results=search(input.value); } if(results[0]) window.location.href=results[0].url; }
+      else if(e.key==='Escape'){ panel.setAttribute('aria-hidden','true'); active=-1; }
+    });
+    document.addEventListener('click',(e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); active=-1; } });
+
+    // Portal nad kafelkami
     (function(){
       let dropdown = panel; if(!dropdown || dropdown.dataset.portalReady) return; dropdown.dataset.portalReady='1';
       const portal=document.createElement('div'); portal.id='bhSuggestPortal'; portal.style.position='fixed'; portal.style.zIndex='40000'; document.body.appendChild(portal); portal.appendChild(dropdown); dropdown.dataset.portalized='1';
@@ -448,10 +412,19 @@
                   }};
       const root=document.documentElement, LS='bh.lang'; let lang=(localStorage.getItem(LS)||root.getAttribute('data-lang')||root.lang||'pl').toLowerCase(); if(!I18N[lang]) lang='pl';
       window.__getLang=()=>lang; window.__t=(k)=>(I18N[lang]&&I18N[lang][k])||(I18N['pl']&&I18N['pl'][k])||k;
+
       function apply(){
-        document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.getAttribute('data-i18n'); const v=window.__t(k); if(v!=null){ if(el.firstChild && el.firstChild.nodeType===3){ el.firstChild.nodeValue=v; } else { el.innerHTML=v; } } });
-        const s=document.getElementById('bhSearch'); if(s){ s.placeholder=window.__t('search_ph'); s.setAttribute('aria-label', window.__t('search_ph')); }
+        document.querySelectorAll('[data-i18n]').forEach(el=>{
+          const k=el.getAttribute('data-i18n'); const v=window.__t(k);
+          if(v!=null){ if(el.firstChild && el.firstChild.nodeType===3){ el.firstChild.nodeValue=v; } else { el.innerHTML=v; } }
+        });
+        const s=document.getElementById('bhSearch');
+        if(s){ s.placeholder=window.__t('search_ph'); s.setAttribute('aria-label', window.__t('search_ph')); }
         document.querySelectorAll('.bh2025-sg-head').forEach(el=>el.textContent=window.__t('sg_head'));
+        // ✅ aktualizacja napisu na przycisku AI (jeśli już istnieje)
+        const aiLbl = document.getElementById('bhAi2OpenLabel');
+        if(aiLbl) aiLbl.textContent = window.__t('btn_ai');
+
         root.setAttribute('lang',lang); root.setAttribute('data-lang',lang);
         const lab=document.querySelector('#bhLangPick label'); if(lab){ lab.textContent=(lang==='en'?'Language':'Język'); }
       }
@@ -461,28 +434,63 @@
     })();
   </script>
 
-  <!-- AI WYSZUKIWARKA OBJAWÓW v2 (OFFLINE) -->
+  <!-- AI WYSZUKIWARKA – wstrzyknięcie przycisku z tłumaczeniem i pewnym bindowaniem -->
   <script>
   (function(){
     const actions = document.querySelector('.actions');
     if(!actions || actions.dataset.aiBtn2) return;
     actions.dataset.aiBtn2='1';
+
     const btn = document.createElement('button');
-    btn.className='btn bh-ai-btn'; btn.type='button'; btn.id='bhAi2Open';
-    btn.innerHTML='🤖 <span data-i18n="btn_ai">AI wyszukiwarka objawów</span>';
+    btn.className='btn bh-ai-btn';
+    btn.type='button';
+    btn.id='bhAi2Open';
+    const t = (window.__t ? window.__t : (k)=>k);
+    btn.innerHTML = '🤖 <span id="bhAi2OpenLabel">' + t('btn_ai') + '</span>';
     actions.appendChild(btn);
+
+    const modal = document.getElementById('bhAi2Modal');
+    const close = document.getElementById('bhAi2Close');
+    function show(){ if(!modal) return; modal.style.display='block'; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+    function hide(){ if(!modal) return; modal.setAttribute('aria-hidden','true'); modal.style.display='none'; document.body.style.overflow=''; }
+    btn.addEventListener('click', show);
+    if(close) close.addEventListener('click', hide);
+    if(modal) modal.addEventListener('click', (e)=>{ if(e.target===modal) hide(); });
   })();
   </script>
 
   <!-- Modal AI -->
+  <style>
+    .bh-ai-btn{ appearance:none; border:1px solid rgba(164,107,255,.28);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      color:#eef2ff; border-radius:14px; padding:10px 14px; font-weight:800; cursor:pointer;
+      box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(164,107,255,.18) inset; }
+    .bh-ai-modal[aria-hidden="true"]{ display:none }
+    .bh-ai-modal{ position:fixed; inset:0; z-index:9997; background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95)); backdrop-filter:saturate(120%) blur(6px); }
+    .bh-ai-panel{ position:relative; max-width:920px; margin:5vh auto; padding:18px; background:rgba(60,32,100,.36); border:1px solid rgba(164,107,255,.25); border-radius:18px; color:#eef2ff; }
+    .bh-ai-grid{ display:grid; grid-template-columns: 1fr 300px; gap:16px } @media (max-width:900px){ .bh-ai-grid{ grid-template-columns:1fr } }
+    .bh-ai-panel textarea{ width:100%; min-height:140px; resize:vertical; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#fff; font-size:15px; }
+    .bh-ai-select,.bh-ai-run{ border-radius:12px; padding:10px 12px; font-weight:800; letter-spacing:.2px; cursor:pointer; border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.08); color:#fff; }
+    .bh-ai-run{ background:linear-gradient(180deg, rgba(94,234,212,.28), rgba(94,234,212,.10)); border-color:rgba(94,234,212,.55) }
+    .bh-ai-close{ position:absolute; right:10px; top:10px; border:none; background:transparent; color:#fff; font-size:20px; cursor:pointer; }
+    .bh-ai-hints{ font-size:13px; color:#cfe2ff }
+    .bh-ai-results{ margin-top:12px; display:grid; gap:10px }
+    .bh-ai-card{ border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.06); border-radius:12px; padding:12px; display:flex; gap:12px; align-items:center; justify-content:space-between; }
+    .bh-ai-left{ display:flex; flex-direction:column; gap:6px }
+    .bh-ai-title{ font-weight:900; letter-spacing:.2px }
+    .bh-ai-meta{ font-size:12.5px; color:#cfe2ff }
+    .bh-ai-chip{ display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; font-weight:800; border:1px solid rgba(94,234,212,.55); background:rgba(94,234,212,.14); color:#eafff7; }
+    .bh-ai-go{ border-radius:10px; padding:9px 12px; border:1px solid rgba(164,107,255,.35); background:rgba(164,107,255,.18); color:#fff; font-weight:800; cursor:pointer; }
+  </style>
+
   <div class="bh-ai-modal" id="bhAi2Modal" aria-hidden="true" role="dialog" aria-modal="true" style="display:none">
     <div class="bh-ai-panel">
       <button class="bh-ai-close" id="bhAi2Close" aria-label="Zamknij">✕</button>
-      <h3>AI wyszukiwarka objawów (offline)</h3>
+      <h3><span data-i18n="btn_ai">AI wyszukiwarka objawów</span> <small style="opacity:.8">(offline)</small></h3>
       <div class="bh-ai-grid">
         <div>
           <textarea id="bhAi2Text" placeholder="Opisz objawy, np.: ‚boli mnie ucho, szum w uszach, gorzej w nocy, bez gorączki’"></textarea>
-          <div class="bh-ai-row" style="margin-top:10px">
+          <div class="bh-ai-row" style="margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
             <select id="bhAi2Typ" class="bh-ai-select" aria-label="Wybierz profil">
               <option value="kobieta">Kobieta</option>
               <option value="mezczyzna">Mężczyzna</option>
@@ -493,7 +501,6 @@
           <div class="bh-ai-hints" style="margin-top:8px">
             Rozpoznaje synonimy, odmiany, brak polskich znaków i drobne literówki. Wspiera negacje: „bez gorączki”.
           </div>
-          <div id="bhAi2Flags" class="bh-ai-results"></div>
           <div id="bhAi2Results" class="bh-ai-results" aria-live="polite"></div>
         </div>
         <div>
@@ -509,90 +516,69 @@
     </div>
   </div>
 
-  <!-- Logika AI + Czerwone Flagi -->
+  <!-- Logika AI (prosty dobór części) -->
   <script>
   (function(){
     const modal = document.getElementById('bhAi2Modal');
-    const open  = document.getElementById('bhAi2Open');
+    const open  = document.getElementById('bhAi2Open'); // może jeszcze nie istnieć – bindowane w skrypcie wstrzykującym
     const close = document.getElementById('bhAi2Close');
     const run   = document.getElementById('bhAi2Run');
     const txt   = document.getElementById('bhAi2Text');
     const typ   = document.getElementById('bhAi2Typ');
     const out   = document.getElementById('bhAi2Results');
-    const flags = document.getElementById('bhAi2Flags');
-    if(!open || modal.dataset.bound) return; modal.dataset.bound='1';
+    if(!modal || modal.dataset.bound) return; modal.dataset.bound='1';
 
-    function show(){ modal.style.display='block'; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; txt.focus(); }
-    function hide(){ modal.setAttribute('aria-hidden','true'); modal.style.display='none'; document.body.style.overflow=''; out.innerHTML=''; flags.innerHTML=''; txt.value=''; }
+    function hide(){ modal.setAttribute('aria-hidden','true'); modal.style.display='none'; document.body.style.overflow=''; out.innerHTML=''; txt.value=''; }
+    if(close) close.addEventListener('click', hide);
+    modal.addEventListener('click',(e)=>{ if(e.target===modal) hide(); });
+    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') hide(); });
 
-    open.addEventListener('click', show);
-    close.addEventListener('click', hide);
-    modal.addEventListener('click', (e)=>{ if(e.target===modal) hide(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') hide(); });
-
-    // Normalizacja
     const dePL=(s)=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replaceAll('ł','l').replaceAll('Ł','l').replaceAll('ś','s').replaceAll('Ś','s').replaceAll('ż','z').replaceAll('Ż','z').replaceAll('ź','z').replaceAll('Ź','z').replaceAll('ć','c').replaceAll('Ć','c').replaceAll('ą','a').replaceAll('Ą','a').replaceAll('ę','e').replaceAll('Ę','e').replaceAll('ó','o').replaceAll('Ó','o');
     const norm=(s)=>dePL(String(s||'').toLowerCase().trim());
     const STOP=new Set(['i','oraz','a','u','o','do','na','po','w','z','ze','bez','nie','mam','mnie','mi','jest','sa','czy','to','ten','ta','te']);
-    const fixTypos=(t)=>t.replace(/\bb[oó]l\b/g,'bol').replace(/\bboli\b/g,'bol').replace(/\bb[óo]l[au]\b/g,'bol').replace(/\bmnie\b/g,'').replace(/\bw\b/g,' ').replace(/\bprzy\b/g,' ').replace(/\s+/g,' ').trim();
-    const tokens=(s)=>norm(fixTypos(s)).replace(/[^\w\s]/g,' ').split(/\s+/).filter(t=>t && !STOP.has(t));
+    const tokens=(s)=>norm(s).replace(/[^\w\s]/g,' ').split(/\s+/).filter(t=>t && !STOP.has(t));
     function fuzzy1(a,b){ if(a===b) return true; if(Math.abs(a.length-b.length)>1) return false; let i=0,j=0,d=0; while(i<a.length&&j<b.length){ if(a[i]===b[j]){i++;j++;continue;} d++; if(d>1) return false; if(a[i+1]===b[j]) i++; else if(a[i]===b[j+1]) j++; else {i++;j++;} } if(i<a.length||j<b.length) d++; return d<=1; }
 
     const PHRASES=['bol glowy','bol w klatce','bol gardla','bol brzucha','bol ucha','bol zeba','szum w uszach','kolka nerkowa','rwa kulszowa','skurcz lydki','skurcze lydki','opuchlizna kostki','zaburzenia widzenia','trudnosc w polykaniu','zimny pot'];
     const MAP={
-      glowa:'glowa',migrena:'glowa',swiatlowstret:'glowa',svietlowstret:'glowa',nudnosci:'glowa',
-      oko:'oko',oczy:'oko','zaburzenia widzenia':'oko',swiatloplas:'oko',
-      uszy:'uszy',ucho:'uszy',uszu:'uszy',uchem:'uszy','szum w uszach':'uszy',szumy:'uszy','bol ucha':'uszy','wydzielina z ucha':'uszy',
-      nos:'nos',katar:'nos',zatoki:'nos','bol zatok':'nos','zapal zatok':'nos',
-      gardlo:'gardlo','bol gardla':'gardlo',angina:'gardlo',chrypka:'gardlo','trudnosc w polykaniu':'gardlo',
-      zeby:'zeby',zab:'zeby',zub:'zeby','bol zeba':'zeby',nadwrazliwosc:'zeby','opuchlizna zeba':'zeby',ropien:'zeby',
-      szyja:'szyja',kark:'szyja','sztywnosc karku':'szyja',
+      glowa:'glowa',migrena:'glowa',swiatlowstret:'glowa',
+      oko:'oko',oczy:'oko','zaburzenia widzenia':'oko',
+      uszy:'uszy',ucho:'uszy','szum w uszach':'uszy',szumy:'uszy','bol ucha':'uszy',
+      nos:'nos',katar:'nos',zatoki:'nos',
+      gardlo:'gardlo','bol gardla':'gardlo',angina:'gardlo','trudnosc w polykaniu':'gardlo',
+      zeby:'zeby',zab:'zeby','bol zeba':'zeby',stomatolog:'zeby',dentysta:'zeby',
+      szyja:'szyja',kark:'szyja',
       klatka:'klatka','bol w klatce':'klatka',mostek:'klatka',
       serce:'serce',kolatanie:'serce',arytmia:'serce','zimny pot':'serce',
-      pluca:'pluca','duszność':'pluca',duszno:'pluca',dyszenie:'pluca',kaszel:'pluca',sapka:'pluca',astma:'pluca',
-      brzuch:'brzuch','bol brzucha':'brzuch',wzdecia:'brzuch',wymioty:'brzuch',biegunka:'brzuch',
-      nerki:'nerki',nerka:'nerki','kolka nerkowa':'nerki','bol ledzwi':'nerki',
-      plecy:'plecy','rwa kulszowa':'plecy','napiecie miesniowe':'plecy',
-      skora:'skora',wysypka:'skora',swidzenie:'skora',swedzenie:'skora',pokrzywka:'skora',
-      biodra:'biodra',biodro:'biodra',pachwina:'biodra',udo:'biodra',uda:'biodra',
-      kolano:'kolano',kolana:'kolano',rzepka:'kolano',lakotka:'kolano',
+      pluca:'pluca',duszno:'pluca',astma:'pluca',kaszel:'pluca',
+      brzuch:'brzuch','bol brzucha':'brzuch',wzdecia:'brzuch',
+      nerki:'nerki',kolka:'nerki','kolka nerkowa':'nerki',ledzwie:'nerki',
+      plecy:'plecy','rwa kulszowa':'plecy',
+      biodra:'biodra',biodro:'biodra',udo:'biodra',uda:'biodra',pachwina:'biodra',
+      kolano:'kolano',rzepka:'kolano',lakotka:'kolano',
       lydka:'lydka','skurcz lydki':'lydka','skurcze lydki':'lydka',
-      kostka:'kostka','skrecenie kostki':'kostka','zwichniecie kostki':'kostka','opuchlizna kostki':'kostka',
-      stopy:'stopy',stopa:'stopy',pieta:'stopy','bol przy chodzeniu':'stopy',
-      ciaza:'ciaza','w ciazy':'ciaza',ciezarna:'ciaza',
-      'strefa intymna':'strefa',intymna:'strefa','narzady plciowe':'strefa',
-      zadlawienie:'zadlawienie',reanimacja:'reanimacja',wypadek:'wypadek','pierwsza pomoc':'pierwszopomoc'
+      kostka:'kostka','opuchlizna kostki':'kostka','skrecenie kostki':'kostka',
+      stopy:'stopy',stopa:'stopy',pieta:'stopy',
+      ciaza:'ciaza', 'strefa intymna':'strefa', intymna:'strefa',
+      zadlawienie:'zadlawienie', reanimacja:'reanimacja', wypadek:'wypadek', 'pierwsza pomoc':'pierwszopomoc'
     };
     const LABELS={ oko:'Oko', nos:'Nos', gardlo:'Gardło', glowa:'Głowa', szyja:'Szyja', uszy:'Uszy', zeby:'Zęby', klatka:'Klatka piersiowa', pluca:'Płuca', serce:'Serce', brzuch:'Brzuch', nerki:'Nerki', plecy:'Plecy', skora:'Skóra', biodra:'Biodra/Uda', kolano:'Kolano', lydka:'Łydka', kostka:'Kostka', stopy:'Stopy', ciaza:'Ciąża', strefa:'Strefa intymna', zadlawienie:'Zadławienie (SOS)', reanimacja:'Reanimacja (RKO)', wypadek:'Wypadek (SOS)', pierwszopomoc:'Pierwsza pomoc' };
 
-    const NEG = ['bez ','nie ','brak '];
-    function hasNeg(text, word){ return NEG.some(pref=> text.includes(pref+word)); }
-
-    function analyze(raw){
-      const text = norm(fixTypos(raw));
-      if(!text) return {items:[], best:null, flags:[]};
-
-      // (opcjonalnie) czerwone flagi itp. – tu zachowujemy jak było
-      const scores={}; const add=(id,pts)=>{scores[id]=(scores[id]||0)+pts;};
-
-      // Frazy
-      PHRASES.forEach(ph=>{ const n=norm(ph); if(text.includes(n)){ const trg=MAP[ph]||MAP[n]; if(trg) add(trg,7); }});
-      // Tokeny + fuzzy
-      const toks=tokens(text); const keys=Object.keys(MAP);
+    function analyze(text){
+      const t = norm(text||''); if(!t) return {items:[],best:null};
+      const scores={}; const add=(id,pts)=>scores[id]=(scores[id]||0)+pts;
+      PHRASES.forEach(ph=>{ const n=norm(ph); if(t.includes(n)){ const trg=MAP[ph]||MAP[n]; if(trg) add(trg,7); }});
+      const toks=tokens(t); const keys=Object.keys(MAP);
       for(const tok of toks){
-        if(MAP[tok]){ if(hasNeg(text,tok)) continue; add(MAP[tok],3); continue; }
-        for(const k of keys){
-          if(k.length<=12 && fuzzy1(tok, norm(k))){ if(hasNeg(text,k)) continue; add(MAP[k],2); break; }
-        }
+        if(MAP[tok]){ add(MAP[tok],3); continue; }
+        for(const k of keys){ if(k.length<=12 && fuzzy1(tok, norm(k))){ add(MAP[k],2); break; } }
       }
-      // Rozsiewanie lekkie (zachowane)
       if(scores['uszy']) add('glowa',1);
       if(scores['nos']||scores['gardlo']) add('glowa',1);
       if(scores['stopy']||scores['kostka']) add('kolano',1);
-
-      const items = Object.keys(scores).map(id=>({id,label:LABELS[id]||id,score:scores[id]})).sort((a,b)=>b.score-a.score);
-      const best = (items.length===1 || (items[0].score-(items[1]?.score||0) >= 4)) ? items[0] : null;
-      return {items, best, flags:[]};
+      const items=Object.keys(scores).map(id=>({id,label:LABELS[id]||id,score:scores[id]})).sort((a,b)=>b.score-a.score);
+      const best=(items.length===1 || (items[0].score-(items[1]?.score||0) >= 4)) ? items[0] : null;
+      return {items,best};
     }
 
     function openPart(typVal,id,label){
@@ -600,51 +586,25 @@
       window.location.href=url;
     }
 
-    const out   = document.getElementById('bhAi2Results');
-    const flags = document.getElementById('bhAi2Flags');
-    function renderList(res){
+    run.addEventListener('click', ()=>{
+      const res=analyze(txt.value);
       out.innerHTML='';
-      if(!res || (!res.best && !res.items.length)){
-        out.innerHTML=`<div class="bh-ai-card"><div class="bh-ai-left"><div class="bh-ai-title">Nie rozpoznano objawów</div><div class="bh-ai-meta">Dodaj lokalizację bólu (ucho/kostka), charakter (kłujący/pulsujący), czas, czynniki.</div></div></div>`;
-        return;
-      }
+      if(res && res.best && res.best.score>=10){ openPart(typ.value, res.best.id, res.best.label); return; }
+      if(!res.items.length){ out.innerHTML=`<div class="bh-ai-card"><div class="bh-ai-left"><div class="bh-ai-title">Nie rozpoznano objawów</div><div class="bh-ai-meta">Dodaj lokalizację bólu, charakter, czas, czynniki.</div></div></div>`; return; }
       if(res.best){
         const el=document.createElement('div'); el.className='bh-ai-card';
         el.innerHTML=`<div class="bh-ai-left"><div class="bh-ai-title">Najbardziej pasuje: <b>${res.best.label}</b></div><div class="bh-ai-meta">trafność <span class="bh-ai-chip">${res.best.score}</span></div></div>`;
         const go=document.createElement('button'); go.className='bh-ai-go'; go.textContent='Otwórz';
-        go.addEventListener('click',()=>openPart(document.getElementById('bhAi2Typ').value,res.best.id,res.best.label));
+        go.addEventListener('click',()=>openPart(typ.value,res.best.id,res.best.label));
         el.appendChild(go); out.appendChild(el);
       }
       res.items.filter(x=>!res.best||x.id!==res.best.id).slice(0,5).forEach(it=>{
         const row=document.createElement('div'); row.className='bh-ai-card';
         row.innerHTML=`<div class="bh-ai-left"><div class="bh-ai-title">${it.label}</div><div class="bh-ai-meta">trafność <span class="bh-ai-chip">${it.score}</span></div></div>`;
         const go=document.createElement('button'); go.className='bh-ai-go'; go.textContent='Otwórz';
-        go.addEventListener('click',()=>openPart(document.getElementById('bhAi2Typ').value,it.id,it.label)); row.appendChild(go); out.appendChild(row);
+        go.addEventListener('click',()=>openPart(typ.value,it.id,it.label)); row.appendChild(go); out.appendChild(row);
       });
-    }
-
-    const run   = document.getElementById('bhAi2Run');
-    const typ   = document.getElementById('bhAi2Typ');
-    const txt   = document.getElementById('bhAi2Text');
-
-    run.addEventListener('click', ()=>{
-      const res=analyze(txt.value);
-      flags.innerHTML=''; // flagi zostawiamy puste w tej wersji
-      if(res && res.best && res.best.score>=10){
-        openPart(typ.value, res.best.id, res.best.label);
-      } else {
-        renderList(res);
-      }
     });
-
-    // Pojedyncze bindowanie
-    const open  = document.getElementById('bhAi2Open');
-    const modal = document.getElementById('bhAi2Modal');
-    function show(){ modal.style.display='block'; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; txt.focus(); }
-    open.addEventListener('click', show);
-    document.getElementById('bhAi2Close').addEventListener('click', ()=>{ modal.setAttribute('aria-hidden','true'); modal.style.display='none'; document.body.style.overflow=''; out.innerHTML=''; flags.innerHTML=''; txt.value=''; });
-    modal.addEventListener('click',(e)=>{ if(e.target===modal){ modal.setAttribute('aria-hidden','true'); modal.style.display='none'; document.body.style.overflow=''; out.innerHTML=''; flags.innerHTML=''; txt.value=''; }});
-    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false'){ modal.setAttribute('aria-hidden','true'); modal.style.display='none'; document.body.style.overflow=''; out.innerHTML=''; flags.innerHTML=''; txt.value=''; }});
   })();
   </script>
 </body>
