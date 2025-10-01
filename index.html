@@ -79,15 +79,21 @@
       color:#eaf2ff;
     }
 
-    /* Akcje: siatka na telefonie */
-    @media (max-width:640px){
+    /* —— AKCJE: układ i mobil —— */
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 12px}
+    .actions .btn{appearance:none;border:1px solid rgba(164,107,255,.28);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      color:#eef2ff;border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+    @media (max-width:768px){
       .actions{
-        display:grid !important; grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap:10px !important;
-        margin: 14px 0 12px !important;
+        display:grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+        gap:10px !important;
       }
+      .actions .btn{width:100%}
     }
 
-    /* Sugestie wyszukiwarki (portal) */
+    /* —— SUGESTIE WYSZUKIWARKI (portal) —— */
     .bh2025-suggest{position:absolute;right:0;left:0;top:100%;margin-top:6px;z-index:50;
       background:rgba(60,32,100,.96); border:1px solid rgba(164,107,255,.28); border-radius:12px;
       box-shadow:0 16px 34px rgba(8,10,22,.52); overflow:hidden; display:none}
@@ -104,7 +110,7 @@
       background:rgba(164,107,255,.18); font-size:12px}
     .bh2025-sg-sub{margin-left:auto;font-size:12px;color:#b8c2e0}
 
-    /* Tłumacz — stały wygląd */
+    /* —— TŁUMACZ — stały wygląd —— */
     #bhLangPick {
       position: fixed !important; top: 16px !important; right: 24px !important; z-index: 9999 !important;
       display: inline-flex !important; align-items: center; gap: 6px;
@@ -119,7 +125,7 @@
     #bhLangSelect option { color:#0e1230; background:#fff }
     @media (max-width:768px){ #bhLangPick{ top:10px !important; right:12px !important; padding:5px 8px } #bhLangSelect{ font-size:13px } }
 
-    /* Portal CSS */
+    /* —— PORTAL CSS —— */
     .bh2025-suggest[data-portalized="1"]{
       position: fixed !important;
       z-index: 40001 !important;
@@ -130,11 +136,45 @@
       overflow:auto; -webkit-overflow-scrolling: touch;
     }
 
-    /* Drobne efekty przycisków akcji */
+    /* —— Drobne gloWy akcji (były już) —— */
     :root{ --glow-green:34,227,160; --glow-red:255,107,107; --glow-amber:255,184,108; }
     #btn-hosp{ border-color: rgba(var(--glow-red), .8) !important; box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-red), .5) inset, 0 0 18px rgba(var(--glow-red), .35); }
     #btn-apteka{ border-color: rgba(var(--glow-green), .7)!important; box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-green), .45) inset, 0 0 18px rgba(var(--glow-green), .35); }
     #btn-loc{ border-color: rgba(var(--glow-amber), .75)!important; box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-amber), .45) inset, 0 0 18px rgba(var(--glow-amber), .35); }
+
+    /* —— NOWE: Ramki glow dla 112 / dent24 / AI —— */
+    :root{
+      --bh-red:   255,107,107;
+      --bh-blue:   59,130,246;
+      --bh-violet:164,107,255;
+    }
+    .bh-glow-frame{
+      border-radius:14px !important;
+      border:1px solid currentColor !important;
+      box-shadow:
+        0 0 0 1px currentColor inset,
+        0 0 20px rgba(255,255,255,.04);
+    }
+    .bh-glow-red   { color: rgba(var(--bh-red),  .95) !important; }
+    .bh-glow-blue  { color: rgba(var(--bh-blue), .95) !important; }
+    .bh-glow-violet{ color: rgba(var(--bh-violet),.95) !important; }
+    @media (prefers-reduced-motion: no-preference){
+      .bh-glow-red   { animation: bhGlowRed   2.4s ease-in-out infinite; }
+      .bh-glow-blue  { animation: bhGlowBlue  2.6s ease-in-out infinite; }
+      .bh-glow-violet{ animation: bhGlowViolet2 2.8s ease-in-out infinite; }
+    }
+    @keyframes bhGlowRed{
+      0%,100%{ box-shadow:0 0 0 1px currentColor inset, 0 0 20px rgba(var(--bh-red), .25) }
+      50%    { box-shadow:0 0 0 2px currentColor inset, 0 0 28px rgba(var(--bh-red), .45) }
+    }
+    @keyframes bhGlowBlue{
+      0%,100%{ box-shadow:0 0 0 1px currentColor inset, 0 0 20px rgba(var(--bh-blue), .25) }
+      50%    { box-shadow:0 0 0 2px currentColor inset, 0 0 28px rgba(var(--bh-blue), .45) }
+    }
+    @keyframes bhGlowViolet2{
+      0%,100%{ box-shadow:0 0 0 1px currentColor inset, 0 0 20px rgba(var(--bh-violet), .28) }
+      50%    { box-shadow:0 0 0 2px currentColor inset, 0 0 30px rgba(var(--bh-violet), .55) }
+    }
   </style>
 </head>
 
@@ -190,7 +230,7 @@
       <a id="btn-dent24" class="btn" href="dentysta24.html">🦷 <span data-i18n="btn_dent24">Ból zęba 24H</span></a>
 
       <button id="btn-loc" class="btn" type="button" data-i18n="btn_loc">📍 Zlokalizuj mnie</button>
-      <!-- Przycisk AI wstawiamy skryptem poniżej -->
+      <!-- Przycisk AI zostanie wstrzyknięty niżej -->
     </div>
 
     <div class="subheadline" data-i18n="subheadline">Boli mnie — wybierz obszar bólu</div>
@@ -421,7 +461,6 @@
         const s=document.getElementById('bhSearch');
         if(s){ s.placeholder=window.__t('search_ph'); s.setAttribute('aria-label', window.__t('search_ph')); }
         document.querySelectorAll('.bh2025-sg-head').forEach(el=>el.textContent=window.__t('sg_head'));
-        // ✅ aktualizacja napisu na przycisku AI (jeśli już istnieje)
         const aiLbl = document.getElementById('bhAi2OpenLabel');
         if(aiLbl) aiLbl.textContent = window.__t('btn_ai');
 
@@ -434,7 +473,7 @@
     })();
   </script>
 
-  <!-- AI WYSZUKIWARKA – wstrzyknięcie przycisku z tłumaczeniem i pewnym bindowaniem -->
+  <!-- AI przycisk (wstrzyknięcie + tłumaczenie) -->
   <script>
   (function(){
     const actions = document.querySelector('.actions');
@@ -448,14 +487,6 @@
     const t = (window.__t ? window.__t : (k)=>k);
     btn.innerHTML = '🤖 <span id="bhAi2OpenLabel">' + t('btn_ai') + '</span>';
     actions.appendChild(btn);
-
-    const modal = document.getElementById('bhAi2Modal');
-    const close = document.getElementById('bhAi2Close');
-    function show(){ if(!modal) return; modal.style.display='block'; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
-    function hide(){ if(!modal) return; modal.setAttribute('aria-hidden','true'); modal.style.display='none'; document.body.style.overflow=''; }
-    btn.addEventListener('click', show);
-    if(close) close.addEventListener('click', hide);
-    if(modal) modal.addEventListener('click', (e)=>{ if(e.target===modal) hide(); });
   })();
   </script>
 
@@ -516,11 +547,10 @@
     </div>
   </div>
 
-  <!-- Logika AI (prosty dobór części) -->
+  <!-- Logika AI (dobór części) -->
   <script>
   (function(){
     const modal = document.getElementById('bhAi2Modal');
-    const open  = document.getElementById('bhAi2Open'); // może jeszcze nie istnieć – bindowane w skrypcie wstrzykującym
     const close = document.getElementById('bhAi2Close');
     const run   = document.getElementById('bhAi2Run');
     const txt   = document.getElementById('bhAi2Text');
@@ -586,84 +616,99 @@
       window.location.href=url;
     }
 
-    run.addEventListener('click', ()=>{
-      const res=analyze(txt.value);
-      out.innerHTML='';
-      if(res && res.best && res.best.score>=10){ openPart(typ.value, res.best.id, res.best.label); return; }
-      if(!res.items.length){ out.innerHTML=`<div class="bh-ai-card"><div class="bh-ai-left"><div class="bh-ai-title">Nie rozpoznano objawów</div><div class="bh-ai-meta">Dodaj lokalizację bólu, charakter, czas, czynniki.</div></div></div>`; return; }
-      if(res.best){
-        const el=document.createElement('div'); el.className='bh-ai-card';
-        el.innerHTML=`<div class="bh-ai-left"><div class="bh-ai-title">Najbardziej pasuje: <b>${res.best.label}</b></div><div class="bh-ai-meta">trafność <span class="bh-ai-chip">${res.best.score}</span></div></div>`;
-        const go=document.createElement('button'); go.className='bh-ai-go'; go.textContent='Otwórz';
-        go.addEventListener('click',()=>openPart(typ.value,res.best.id,res.best.label));
-        el.appendChild(go); out.appendChild(el);
-      }
-      res.items.filter(x=>!res.best||x.id!==res.best.id).slice(0,5).forEach(it=>{
-        const row=document.createElement('div'); row.className='bh-ai-card';
-        row.innerHTML=`<div class="bh-ai-left"><div class="bh-ai-title">${it.label}</div><div class="bh-ai-meta">trafność <span class="bh-ai-chip">${it.score}</span></div></div>`;
-        const go=document.createElement('button'); go.className='bh-ai-go'; go.textContent='Otwórz';
-        go.addEventListener('click',()=>openPart(typ.value,it.id,it.label)); row.appendChild(go); out.appendChild(row);
+    if(run){
+      run.addEventListener('click', ()=>{
+        const res=analyze(txt.value);
+        const out=document.getElementById('bhAi2Results');
+        out.innerHTML='';
+        if(res && res.best && res.best.score>=10){ openPart(typ.value, res.best.id, res.best.label); return; }
+        if(!res.items.length){ out.innerHTML=`<div class="bh-ai-card"><div class="bh-ai-left"><div class="bh-ai-title">Nie rozpoznano objawów</div><div class="bh-ai-meta">Dodaj lokalizację bólu, charakter, czas, czynniki.</div></div></div>`; return; }
+        if(res.best){
+          const el=document.createElement('div'); el.className='bh-ai-card';
+          el.innerHTML=`<div class="bh-ai-left"><div class="bh-ai-title">Najbardziej pasuje: <b>${res.best.label}</b></div><div class="bh-ai-meta">trafność <span class="bh-ai-chip">${res.best.score}</span></div></div>`;
+          const go=document.createElement('button'); go.className='bh-ai-go'; go.textContent='Otwórz';
+          go.addEventListener('click',()=>openPart(typ.value,res.best.id,res.best.label));
+          el.appendChild(go); out.appendChild(el);
+        }
+        res.items.filter(x=>!res.best||x.id!==res.best.id).slice(0,5).forEach(it=>{
+          const row=document.createElement('div'); row.className='bh-ai-card';
+          row.innerHTML=`<div class="bh-ai-left"><div class="bh-ai-title">${it.label}</div><div class="bh-ai-meta">trafność <span class="bh-ai-chip">${it.score}</span></div></div>`;
+          const go=document.createElement('button'); go.className='bh-ai-go'; go.textContent='Otwórz';
+          go.addEventListener('click',()=>openPart(typ.value,it.id,it.label)); row.appendChild(go); out.appendChild(row);
+        });
       });
-    });
+    }
   })();
   </script>
-<script>
-(function aiOpenPatch(){
-  if (window.__bhAiPatched) return; window.__bhAiPatched = true;
 
-  function bind(){
-    const btn   = document.getElementById('bhAi2Open');
-    const modal = document.getElementById('bhAi2Modal');
-    const close = document.getElementById('bhAi2Close');
+  <!-- Patch: pewne otwieranie modala AI + glow dla 112/dent24/AI -->
+  <script>
+  (function aiOpenPatch(){
+    if (window.__bhAiPatched) return; window.__bhAiPatched = true;
 
-    if (!btn || !modal) return false;
+    function bind(){
+      const btn   = document.getElementById('bhAi2Open');
+      const modal = document.getElementById('bhAi2Modal');
+      const close = document.getElementById('bhAi2Close');
 
-    // Jednorazowe bindowanie
-    if (!btn.dataset.aiBound){
-      btn.dataset.aiBound = '1';
-      btn.addEventListener('click', ()=>{
-        // twarde pokazanie nawet jeśli zewn. CSS chowa
-        modal.style.display = 'block';
-        modal.style.pointerEvents = 'auto';
-        modal.setAttribute('aria-hidden','false');
-        document.body.style.overflow = 'hidden';
-      });
-    }
-    if (close && !close.dataset.aiBound){
-      close.dataset.aiBound = '1';
-      close.addEventListener('click', ()=>{
-        modal.setAttribute('aria-hidden','true');
-        modal.style.display = 'none';
-        document.body.style.overflow = '';
-      });
-    }
-    if (!modal.dataset.aiBackdrop){
-      modal.dataset.aiBackdrop = '1';
-      modal.addEventListener('click', (e)=>{
-        if (e.target === modal){
+      if (!btn || !modal) return false;
+
+      if (!btn.dataset.aiBound){
+        btn.dataset.aiBound = '1';
+        btn.addEventListener('click', ()=>{
+          modal.style.display = 'block';
+          modal.style.pointerEvents = 'auto';
+          modal.setAttribute('aria-hidden','false');
+          document.body.style.overflow = 'hidden';
+        });
+      }
+      if (close && !close.dataset.aiBound){
+        close.dataset.aiBound = '1';
+        close.addEventListener('click', ()=>{
           modal.setAttribute('aria-hidden','true');
           modal.style.display = 'none';
           document.body.style.overflow = '';
-        }
-      });
+        });
+      }
+      if (!modal.dataset.aiBackdrop){
+        modal.dataset.aiBackdrop = '1';
+        modal.addEventListener('click', (e)=>{
+          if (e.target === modal){
+            modal.setAttribute('aria-hidden','true');
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+          }
+        });
+      }
+      modal.style.zIndex = '9999';
+      return true;
     }
 
-    // Podnieś modal nad wszystko (na wypadek z-index tła)
-    modal.style.zIndex = '9999';
+    const tryBind = setInterval(()=>{ if (bind()) clearInterval(tryBind); }, 150);
+    window.addEventListener('load', bind, { once:true });
 
-    return true;
-  }
+    // —— GLOW do przycisków
+    const b112  = document.getElementById('btn-112');
+    const dent  = document.getElementById('btn-dent24');
+    if(b112){ b112.classList.add('bh-glow-frame','bh-glow-red'); }
+    if(dent){ dent.classList.add('bh-glow-frame','bh-glow-blue'); }
 
-  // Próbuj do skutku (gdy przycisk/modał są wstrzykiwane asynchronicznie)
-  const tryBind = setInterval(()=>{
-    if (bind()){
-      clearInterval(tryBind);
+    function markAI(btn){
+      if(!btn || btn.dataset.glowed) return;
+      btn.dataset.glowed = '1';
+      btn.classList.add('bh-glow-frame','bh-glow-violet');
     }
-  }, 150);
-
-  // Dodatkowo po pełnym załadowaniu
-  window.addEventListener('load', bind, { once:true });
-})();
-</script>
+    markAI(document.getElementById('bhAi2Open'));
+    const actions = document.querySelector('.actions');
+    if(actions){
+      const mo = new MutationObserver(()=> markAI(document.getElementById('bhAi2Open')));
+      mo.observe(actions, { childList:true, subtree:true });
+      let tries=0; const t = setInterval(()=>{
+        markAI(document.getElementById('bhAi2Open'));
+        if(++tries>10 || document.getElementById('bhAi2Open')?.dataset.glowed) clearInterval(t);
+      }, 200);
+    }
+  })();
+  </script>
 </body>
 </html>
