@@ -5,13 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boli Help — Strona główna</title>
   <meta name="theme-color" content="#0e1230" />
-
-  <!-- PWA -->
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="/icons/icon-512.png">
-
-  <!-- CSS (cache-bust v=12) -->
   <link rel="stylesheet" href="assets/style.css?v=12" />
 
   <style>
@@ -108,10 +104,8 @@
       100%{ box-shadow:0 0 0 0 rgba(var(--bhG), .00), 0 0 12px rgba(var(--bhG), .18) }
     }
 
-    .bh2025-porada__svg img{
-      max-width:100%; height:auto; display:block; border-radius:12px;
-      border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.04);
-    }
+    .bh2025-porada__svg img{ max-width:100%; height:auto; display:block; border-radius:12px;
+      border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.04) }
 
     .bh2025-modal[aria-hidden="true"],
     .bh2025-porada[aria-hidden="true"]{ display:none }
@@ -147,7 +141,7 @@
     }
     .langpick option{ color:#0e1230; background:#ffffff }
 
-    /* Wyszukiwarka – panel podpowiedzi (bazowy wygląd; pozycja nadpisywana przez portal) */
+    /* Wyszukiwarka – dropdown (bazowy; pozycja nadpisywana przez portal) */
     .bh2025-suggest{position:absolute;right:0;left:0;top:100%;margin-top:6px;z-index:50;
       background:rgba(60,32,100,.96); border:1px solid rgba(164,107,255,.28); border-radius:12px;
       box-shadow:0 16px 34px rgba(8,10,22,.52); overflow:hidden; display:none}
@@ -167,7 +161,7 @@
   </style>
 </style>
 
-<!-- MOBILE POLISH + NOWOCZESNE SIATKI (nie rusza desktopu) -->
+<!-- MOBILE POLISH -->
 <style id="bh-mobile-polish">
 @media (max-width: 640px){
   html, body { overflow-x: hidden; }
@@ -214,47 +208,23 @@
     gap: 12px !important;
   }
   @media (max-width: 380px){
-    section.stack[aria-label="Wybór postaci"]{
-      grid-template-columns: 1fr !important;
-    }
+    section.stack[aria-label="Wybór postaci"]{ grid-template-columns: 1fr !important; }
   }
-  section.stack .card{
-    min-height: 220px !important;
-    border-radius: 16px !important;
-  }
-  section.stack .card a{
-    grid-template-rows: minmax(160px, 200px) auto !important;
-  }
-  section.stack .card img{
-    object-fit: cover !important;
-    object-position: 50% 24% !important;
-  }
-  section.stack .card .caption{
-    padding: 10px 12px !important;
-  }
+  section.stack .card{ min-height: 220px !important; border-radius: 16px !important; }
+  section.stack .card a{ grid-template-rows: minmax(160px, 200px) auto !important; }
+  section.stack .card img{ object-fit: cover !important; object-position: 50% 24% !important; }
+  section.stack .card .caption{ padding: 10px 12px !important; }
 
-  .header .tools .search{
-    flex: 1 1 auto !important;
-    min-width: 0 !important;
-  }
+  .header .tools .search{ flex: 1 1 auto !important; min-width: 0 !important; }
   #bhSearch{
-    width: 100% !important;
-    padding: 10px 34px 10px 12px !important;
-    border-radius: 12px !important;
-    border: 1px solid rgba(255,255,255,.20) !important;
-    background: rgba(255,255,255,.06) !important;
-    color: #fff !important;
-    font-size: 14px !important;
+    width: 100% !important; padding: 10px 34px 10px 12px !important; border-radius: 12px !important;
+    border: 1px solid rgba(255,255,255,.20) !important; background: rgba(255,255,255,.06) !important;
+    color: #fff !important; font-size: 14px !important;
   }
-  #bhSearchIcon{
-    position: absolute !important; right: 10px !important; top: 50% !important; transform: translateY(-50%) !important;
-  }
+  #bhSearchIcon{ position: absolute !important; right: 10px !important; top: 50% !important; transform: translateY(-50%) !important; }
   .bh2025-suggest{ left: 0 !important; right: 0 !important; }
 
-  #bhLangPick{
-    top: 10px !important; right: 10px !important;
-    padding: 5px 8px !important;
-  }
+  #bhLangPick{ top: 10px !important; right: 10px !important; padding: 5px 8px !important; }
 
   .situations .pill:active, .actions .btn:active{
     transform: translateY(0) !important;
@@ -263,7 +233,7 @@
 }
 </style>
 
-<!-- SPÓJNY WYGLĄD TŁUMACZA (PL/EN) -->
+<!-- TŁUMACZ (spójny wygląd) -->
 <style>
 #bhLangPick {
   position: fixed !important; top: 16px !important; right: 24px !important; z-index: 9999 !important;
@@ -282,6 +252,7 @@
 }
 </style>
 </head>
+
 <body data-page="home">
   <div class="bh-wallpaper" aria-hidden="true"></div>
   <div class="bh-grid" aria-hidden="true"></div>
@@ -301,14 +272,9 @@
                   stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
-
-        <!-- Tłumacz PL/EN -->
         <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
           <label for="bhLangSelect">Język</label>
-          <select id="bhLangSelect">
-            <option value="pl">PL</option>
-            <option value="en">EN</option>
-          </select>
+          <select id="bhLangSelect"><option value="pl">PL</option><option value="en">EN</option></select>
         </div>
       </div>
     </header>
@@ -318,31 +284,18 @@
     </div>
 
     <nav class="situations" aria-label="Sytuacje nagłe">
-      <a class="pill pill--green" data-porada="zadlawienie" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie">
-        <span class="ico">🫁</span><span data-i18n="pill_choke">Zadławienie</span>
-      </a>
-      <a class="pill pill--green" data-porada="reanimacja" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja">
-        <span class="ico">🚑</span><span data-i18n="pill_cpr">Reanimacja</span>
-      </a>
-      <a class="pill pill--green" data-porada="wypadek" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek">
-        <span class="ico">💥</span><span data-i18n="pill_accident">Wypadek</span>
-      </a>
-      <a class="pill pill--green" data-porada="pierwszopomoc" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc">
-        <span class="ico">❤️‍🩹</span><span data-i18n="pill_firstaid">Pierwsza pomoc</span>
-      </a>
-      <a class="pill pill--blue" href="gry.html">
-        <span class="ico">🎮</span><span data-i18n="pill_games">Gry / Trening</span>
-      </a>
-      <a class="pill pill--blue" href="quizzes.html" id="btn-quizzes">
-        <span class="ico">🧠</span><span data-i18n="pill_quizzes">Quizy</span>
-      </a>
+      <a class="pill pill--green" data-porada="zadlawienie" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie"><span class="ico">🫁</span><span data-i18n="pill_choke">Zadławienie</span></a>
+      <a class="pill pill--green" data-porada="reanimacja" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja"><span class="ico">🚑</span><span data-i18n="pill_cpr">Reanimacja</span></a>
+      <a class="pill pill--green" data-porada="wypadek" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek"><span class="ico">💥</span><span data-i18n="pill_accident">Wypadek</span></a>
+      <a class="pill pill--green" data-porada="pierwszopomoc" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span><span data-i18n="pill_firstaid">Pierwsza pomoc</span></a>
+      <a class="pill pill--blue" href="gry.html"><span class="ico">🎮</span><span data-i18n="pill_games">Gry / Trening</span></a>
+      <a class="pill pill--blue" href="quizzes.html" id="btn-quizzes"><span class="ico">🧠</span><span data-i18n="pill_quizzes">Quizy</span></a>
     </nav>
 
     <div class="actions actions--grid" role="navigation" aria-label="Szybkie akcje">
       <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
       <button id="btn-hosp" class="btn btn--hosp" type="button" data-i18n="btn_hosp">🏥 Szpitale / SOR</button>
-      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener">
-        <span class="badge-round">apteka24</span></a>
+      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener"><span class="badge-round">apteka24</span></a>
       <a id="btn-dent24" class="btn" href="dentysta24.html">🦷 Ból zęba 24H</a>
       <button id="btn-loc" class="btn" type="button" data-i18n="btn_loc">📍 Zlokalizuj mnie</button>
     </div>
@@ -352,24 +305,9 @@
     <!-- 3 kafelki -->
     <section class="stack" aria-label="Wybór postaci"
       style="display:grid;gap:16px;grid-template-columns:repeat(3,1fr);align-items:stretch;">
-      <article class="card">
-        <a href="kobieta.html">
-          <img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3 data-i18n="card_woman">Kobieta</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
-      <article class="card">
-        <a href="mezczyzna.html">
-          <img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3 data-i18n="card_man">Mężczyzna</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
-      <article class="card">
-        <a href="dziecko.html">
-          <img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/>
-          <div class="caption"><h3 data-i18n="card_child">Dziecko</h3><span class="arrow" aria-hidden="true">→</span></div>
-        </a>
-      </article>
+      <article class="card"><a href="kobieta.html"><img src="img/kobieta-model1.png" alt="Kobieta — wybierz część ciała" onerror="this.src='img/placeholder.png'"/><div class="caption"><h3 data-i18n="card_woman">Kobieta</h3><span class="arrow" aria-hidden="true">→</span></div></a></article>
+      <article class="card"><a href="mezczyzna.html"><img src="img/mezczyzna-model1.png" alt="Mężczyzna — wybierz część ciała" onerror="this.src='img/placeholder.png'"/><div class="caption"><h3 data-i18n="card_man">Mężczyzna</h3><span class="arrow" aria-hidden="true">→</span></div></a></article>
+      <article class="card"><a href="dziecko.html"><img src="img/dziecko-model1.png" alt="Dziecko — wybierz część ciała" onerror="this.src='img/placeholder.png'"/><div class="caption"><h3 data-i18n="card_child">Dziecko</h3><span class="arrow" aria-hidden="true">→</span></div></a></article>
     </section>
   </div>
 
@@ -392,10 +330,10 @@
     </div>
   </div>
 
-  <!-- Skrypt bazowy strony -->
+  <!-- Skrypt bazowy -->
   <script src="assets/main.js?v=12"></script>
 
-  <!-- PORADY (klik pigułek przechwycony w capture) -->
+  <!-- PORADY (przechwyt klików) -->
   <script>
   (function(){
     const poradaModal  = document.getElementById('bh2025Porada');
@@ -453,143 +391,75 @@
   })();
   </script>
 
-  <!-- WYSZUKIWARKA (PL/EN) — ROZSZERZONA, z odmianami i bez PL znaków -->
+  <!-- WYSZUKIWARKA (homepage) + PORTAL -->
   <script>
   (function(){
     const input = document.getElementById('bhSearch');
     const icon  = document.getElementById('bhSearchIcon');
     if(!input) return;
+    const prev = input.parentElement.querySelector('.bh2025-suggest'); if(prev) prev.remove();
 
-    // Usuń ewentualny stary dropdown
-    const prev = input.parentElement.querySelector('.bh2025-suggest');
-    if(prev){ prev.remove(); }
-
-    const dePL = (s)=>
-      s.normalize('NFD')
-       .replace(/[\u0300-\u036f]/g,'')
-       .replaceAll('ł','l').replaceAll('Ł','l')
-       .replaceAll('ś','s').replaceAll('Ś','s')
-       .replaceAll('ż','z').replaceAll('Ż','z')
-       .replaceAll('ź','z').replaceAll('Ź','z')
-       .replaceAll('ć','c').replaceAll('Ć','c')
-       .replaceAll('ą','a').replaceAll('Ą','a')
-       .replaceAll('ę','e').replaceAll('Ę','e')
-       .replaceAll('ó','o').replaceAll('Ó','o');
+    const dePL = (s)=> s.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replaceAll('ł','l').replaceAll('Ł','l').replaceAll('ś','s').replaceAll('Ś','s')
+      .replaceAll('ż','z').replaceAll('Ż','z').replaceAll('ź','z').replaceAll('Ź','z')
+      .replaceAll('ć','c').replaceAll('Ć','c').replaceAll('ą','a').replaceAll('Ą','a')
+      .replaceAll('ę','e').replaceAll('Ę','e').replaceAll('ó','o').replaceAll('Ó','o');
     const norm = (s)=> dePL(String(s||'').toLowerCase().trim());
 
-    const LEMMAS = {
-      'oko':'oko','oczy':'oko','oczami':'oko','wzrok':'oko',
-      'nos':'nos','zatoki':'nos','katar':'nos',
-      'gardlo':'gardlo','angina':'gardlo','chrypka':'gardlo','bolgardla':'gardlo',
-      'glowa':'glowa','migrena':'glowa','bolglowy':'glowa',
-      'klatka':'klatka','piers':'klatka','mostek':'klatka',
-      'pluca':'pluca','duszno':'pluca','dyszenie':'pluca','astma':'pluca',
-      'brzuch':'brzuch','zoladek':'brzuch','wzdecia':'brzuch','biegunka':'brzuch',
-      'nerki':'nerki','nerka':'nerki','ledzwie':'nerki','kolka':'nerki',
-      'plecy':'plecy','kregoslup':'plecy','rwa':'plecy',
-      'biodra':'biodra','biodro':'biodra','udo':'uda','uda':'uda','pachwina':'biodra',
-      'kolano':'kolano','kolana':'kolano','rzepka':'kolano','lakotka':'kolano',
-      'lydka':'lydka','lydki':'lydka','skurcze lydki':'lydka','skurcz lydki':'lydka',
-      'kostka':'kostka','kostki':'kostka','skrecenie kostki':'kostka','zwichniecie kostki':'kostka',
-      'stopy':'stopy','stopa':'stopy','pieta':'stopy','rozciagno':'stopy','rozciagnosc':'stopy',
-      'skora':'skora','wysypka':'skora','swid':'skora','alergia':'skora',
-      'serce':'serce','kolatanie':'serce','arytmia':'serce','kolatanieserca':'serce',
-      'kaszel':'kaszel','kaszle':'kaszel',
-      'goraczka':'goraczka','temperatura':'goraczka',
-      'uszy':'uszy','ucho':'uszy','uchem':'uszy','uszu':'uszy','bolucha':'uszy',
-      'szyja':'szyja','kark':'szyja','bolszyi':'szyja','bolkarku':'szyja',
-      'zeby':'zeby','zub':'zeby','zab':'zeby','zebybol':'zeby','bolzeba':'zeby','stomatolog':'zeby','dentysta':'zeby',
-      'ciaza':'ciaza','wciazy':'ciaza','ciezarna':'ciaza','ciazowe':'ciaza','pregnancy':'ciaza',
-      'strefaintymna':'strefa','intymna':'strefa','intymne':'strefa','narzadyplciowe':'strefa','okoliceintymne':'strefa',
-    };
-
     const PARTS = [
-      {id:'oko',       label:'Oko',        alias:['oko','oczy','wzrok']},
-      {id:'nos',       label:'Nos',        alias:['nos','zatoki','katar']},
-      {id:'gardlo',    label:'Gardło',     alias:['gardlo','gardło','angina','chrypka','bol gardla']},
-      {id:'glowa',     label:'Głowa',      alias:['glowa','głowa','migrena','bol glowy']},
-      {id:'szyja',     label:'Szyja',      alias:['szyja','kark','bol szyi','bol karku']},
-      {id:'uszy',      label:'Uszy',       alias:['uszy','ucho','uchem','bol ucha','szum w uszach']},
-      {id:'zeby',      label:'Zęby',       alias:['zeby','zab','zub','bol zeba','stomatolog','dentysta']},
-
-      {id:'klatka',    label:'Klatka piersiowa', alias:['klatka','piers','mostek']},
-      {id:'pluca',     label:'Płuca',      alias:['pluca','płuca','dyszenie','duszno','astma']},
-      {id:'serce',     label:'Serce',      alias:['serce','kolatanie','arytmia']},
-      {id:'brzuch',    label:'Brzuch',     alias:['brzuch','zoladek','wzdecia','biegunka']},
-      {id:'nerki',     label:'Nerki',      alias:['nerki','nerka','ledzwie','kolka']},
-      {id:'plecy',     label:'Plecy',      alias:['plecy','kregoslup','rwa']},
-
-      {id:'biodra',    label:'Biodra/Uda', alias:['biodra','biodro','udo','uda','pachwina']},
-      {id:'kolano',    label:'Kolano',     alias:['kolano','kolana','rzepka','lakotka']},
-      {id:'lydka',     label:'Łydka',      alias:['lydka','lydki','skurcz lydki','skurcze lydki']},
-      {id:'kostka',    label:'Kostka',     alias:['kostka','kostki','skrecenie kostki','zwichniecie kostki']},
-      {id:'stopy',     label:'Stopy',      alias:['stopy','stopa','pieta','rozciagnosc','rozciagno']},
-
-      {id:'skora',     label:'Skóra',      alias:['skora','wysypka','swid','alergia']},
-
-      {id:'kaszel',    label:'Kaszel',     alias:['kaszel','kaszle']},
-      {id:'goraczka',  label:'Gorączka',   alias:['goraczka','temperatura']},
-
-      {id:'ciaza',     label:'Ciąża',      alias:['ciaza','w ciazy','ciezarna','pregnancy']},
-      {id:'strefa',    label:'Strefa intymna', alias:['strefa intymna','intymna','intymne','narzady plciowe']},
-
+      {id:'oko', label:'Oko', alias:['oko','oczy','wzrok']},
+      {id:'nos', label:'Nos', alias:['nos','zatoki','katar']},
+      {id:'gardlo', label:'Gardło', alias:['gardlo','gardło','angina','chrypka','bol gardla']},
+      {id:'glowa', label:'Głowa', alias:['glowa','głowa','migrena','bol glowy']},
+      {id:'szyja', label:'Szyja', alias:['szyja','kark','bol szyi','bol karku']},
+      {id:'uszy', label:'Uszy', alias:['uszy','ucho','uchem','bol ucha','szum w uszach']},
+      {id:'zeby', label:'Zęby', alias:['zeby','zab','zub','bol zeba','stomatolog','dentysta']},
+      {id:'klatka', label:'Klatka piersiowa', alias:['klatka','piers','mostek']},
+      {id:'pluca', label:'Płuca', alias:['pluca','płuca','dyszenie','duszno','astma']},
+      {id:'serce', label:'Serce', alias:['serce','kolatanie','arytmia']},
+      {id:'brzuch', label:'Brzuch', alias:['brzuch','zoladek','wzdecia','biegunka']},
+      {id:'nerki', label:'Nerki', alias:['nerki','nerka','ledzwie','kolka']},
+      {id:'plecy', label:'Plecy', alias:['plecy','kregoslup','rwa']},
+      {id:'biodra', label:'Biodra/Uda', alias:['biodra','biodro','udo','uda','pachwina']},
+      {id:'kolano', label:'Kolano', alias:['kolano','kolana','rzepka','lakotka']},
+      {id:'lydka', label:'Łydka', alias:['lydka','lydki','skurcz lydki','skurcze lydki']},
+      {id:'kostka', label:'Kostka', alias:['kostka','kostki','skrecenie kostki','zwichniecie kostki']},
+      {id:'stopy', label:'Stopy', alias:['stopy','stopa','pieta','rozciagnosc','rozciagno']},
+      {id:'skora', label:'Skóra', alias:['skora','wysypka','swid','alergia']},
+      {id:'kaszel', label:'Kaszel', alias:['kaszel','kaszle']},
+      {id:'goraczka', label:'Gorączka', alias:['goraczka','temperatura']},
+      {id:'ciaza', label:'Ciąża', alias:['ciaza','w ciazy','ciezarna','pregnancy']},
+      {id:'strefa', label:'Strefa intymna', alias:['strefa intymna','intymna','intymne','narzady plciowe']},
       {id:'zadlawienie', label:'Zadławienie (SOS)', alias:['zadlawienie','zadlawil','zadlawila'], sos:true},
-      {id:'reanimacja',  label:'Reanimacja (RKO)',  alias:['reanimacja','rko','resuscytacja'], sos:true},
-      {id:'wypadek',     label:'Wypadek (SOS)',     alias:['wypadek','kolizja','potracenie'], sos:true},
-      {id:'pierwszopomoc',label:'Pierwsza pomoc',   alias:['pierwsza pomoc','abc','pierwszopomoc'], sos:true},
+      {id:'reanimacja', label:'Reanimacja (RKO)', alias:['reanimacja','rko','resuscytacja'], sos:true},
+      {id:'wypadek', label:'Wypadek (SOS)', alias:['wypadek','kolizja','potracenie'], sos:true},
+      {id:'pierwszopomoc', label:'Pierwsza pomoc', alias:['pierwsza pomoc','abc','pierwszopomoc'], sos:true}
     ];
-
-    const INDEX = PARTS.map(p=>{
-      const base = norm(p.label);
-      const aliases = (p.alias||[]).map(norm);
-      const extra = [];
-      Object.keys(LEMMAS).forEach(k=>{
-        const tgt = LEMMAS[k];
-        if(tgt === p.id || (p.id==='strefa' && tgt==='strefa')) extra.push(k);
-      });
-      const lemmaAliases = extra.map(norm);
-      const all = Array.from(new Set([base, ...aliases, ...lemmaAliases]));
-      return {...p, _keys: all};
-    });
+    const GENDERS = [{id:'kobieta',label:'Kobieta'},{id:'mezczyzna',label:'Mężczyzna'},{id:'dziecko',label:'Dziecko'}];
 
     const panel = document.createElement('div');
-    panel.className = 'bh2025-suggest';
-    panel.setAttribute('role','listbox');
-    panel.setAttribute('aria-hidden','true');
+    panel.className = 'bh2025-suggest'; panel.setAttribute('role','listbox'); panel.setAttribute('aria-hidden','true');
     panel.innerHTML = `<div class="bh2025-sg-head">Podpowiedzi</div><ul class="bh2025-sg-list" id="bh2025List"></ul>`;
     input.parentElement.appendChild(panel);
     const list = panel.querySelector('#bh2025List');
-
-    const GENDERS = [
-      {id:'kobieta',label:'Kobieta'},
-      {id:'mezczyzna',label:'Mężczyzna'},
-      {id:'dziecko',label:'Dziecko'}
-    ];
+    let results = [], active = -1;
 
     function buildUrls(hit){
       if(hit.sos){
         const url = `szczegoly.html?typ=porada&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
         return [{label: hit.label, url, sub:'SOS'}];
       }
-      return GENDERS.map(g=>{
-        const url = `szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`;
-        return {label:`${hit.label} • ${g.label}`, url, sub:g.label};
-      });
+      return GENDERS.map(g=>({label:`${hit.label} • ${g.label}`, sub:g.label,
+        url:`szczegoly.html?typ=${g.id}&czesc=${encodeURIComponent(hit.id)}&label=${encodeURIComponent(hit.label)}`}));
     }
-
     function search(q){
-      const s = norm(q);
-      if(!s) return [];
-      const hits = INDEX.filter(p => p._keys.some(k => k.includes(s) || s.includes(k)));
-      const scored = hits.map(p=>{
-        const score = p._keys.some(k=>k===s || k.startsWith(s)) ? 0 : 1;
-        return {p, score};
-      }).sort((a,b)=>a.score-b.score);
-      return scored.map(x=>x.p).slice(0,6).flatMap(buildUrls).slice(0,12);
+      const s=norm(q); if(!s) return [];
+      const hits = PARTS.filter(p =>
+        p.alias?.some(a => norm(a).includes(s) || s.includes(norm(a))) ||
+        norm(p.id).includes(s) || norm(p.label).includes(s)
+      ).slice(0,6);
+      return hits.flatMap(buildUrls).slice(0,12);
     }
-
-    let results = [], active = -1;
-
     function render(){
       list.innerHTML = ''; active = -1;
       results.forEach((r,idx)=>{
@@ -602,7 +472,6 @@
         list.appendChild(li);
       });
       panel.setAttribute('aria-hidden', results.length ? 'false':'true');
-      // po pokazaniu – niech portal przeliczy pozycję
       document.dispatchEvent(new CustomEvent('bh-suggest-open'));
     }
     function setActive(i){
@@ -611,88 +480,48 @@
         el.setAttribute('aria-selected', (idx===active)?'true':'false');
       });
     }
-    function go(idx){
-      const item = results[idx]; if(!item) return;
-      window.location.href = item.url;
-    }
+    function go(idx){ const item = results[idx]; if(item) window.location.href = item.url; }
 
     input.addEventListener('input', ()=>{ results = search(input.value); render(); });
     input.addEventListener('keydown', (e)=>{
       const shown = panel.getAttribute('aria-hidden')==='false';
       if(e.key==='ArrowDown'){ if(!shown){ results = search(input.value); render(); } setActive( (active+1+results.length)%results.length ); e.preventDefault(); }
       else if(e.key==='ArrowUp'){ if(!shown){ results = search(input.value); render(); } setActive( (active-1+results.length)%results.length ); e.preventDefault(); }
-      else if(e.key==='Enter'){
-        if(shown && active>=0){ e.preventDefault(); go(active); }
-        else { if(!results.length){ results = search(input.value); } if(results[0]) go(0); }
-      } else if(e.key==='Escape'){ panel.setAttribute('aria-hidden','true'); active=-1; }
+      else if(e.key==='Enter'){ if(shown && active>=0){ e.preventDefault(); go(active); } else { if(!results.length){ results = search(input.value); } if(results[0]) go(0); } }
+      else if(e.key==='Escape'){ panel.setAttribute('aria-hidden','true'); active=-1; }
     });
     document.addEventListener('click', (e)=>{ if(!panel.contains(e.target) && e.target!==input){ panel.setAttribute('aria-hidden','true'); active=-1; } });
     if(icon){ icon.addEventListener('click', ()=>{ results = search(input.value); if(results.length){ panel.setAttribute('aria-hidden','false'); render(); } }); }
+
+    /* Portal – dropdown ponad warstwami */
+    (function(){
+      let dropdown   = panel; if(!dropdown || dropdown.dataset.portalReady) return;
+      dropdown.dataset.portalReady = '1';
+      const portal = document.createElement('div'); portal.id='bhSuggestPortal';
+      portal.style.position='fixed'; portal.style.zIndex='40000'; portal.style.left='0'; portal.style.top='0';
+      document.body.appendChild(portal); portal.appendChild(dropdown); dropdown.dataset.portalized='1';
+      function place(){
+        if(!dropdown) return;
+        const hidden = dropdown.getAttribute('aria-hidden')==='true';
+        if(hidden){ dropdown.style.display='none'; return; }
+        const r = input.getBoundingClientRect(); const gutter=6;
+        dropdown.style.display   = 'block';
+        dropdown.style.position  = 'fixed';
+        dropdown.style.left      = Math.round(r.left)+'px';
+        dropdown.style.top       = Math.round(r.bottom+gutter)+'px';
+        dropdown.style.width     = Math.round(r.width)+'px';
+        dropdown.style.maxHeight = Math.max(180, window.innerHeight - r.bottom - 16) + 'px';
+        dropdown.style.zIndex    = '40001';
+      }
+      const mo = new MutationObserver(place); mo.observe(dropdown, {attributes:true, attributeFilter:['aria-hidden','style']});
+      ['resize','scroll'].forEach(ev => window.addEventListener(ev, place, {passive:true}));
+      input.addEventListener('focus', place); input.addEventListener('input', place);
+      document.addEventListener('bh-suggest-open', place);
+    })();
   })();
   </script>
 
-  <!-- PORTAL dla podpowiedzi – dropdown zawsze nad wszystkimi i pod polem -->
-  <style id="bh-suggest-portal-css">
-    .bh2025-suggest[data-portalized="1"]{
-      position: fixed !important;
-      z-index: 40001 !important;
-      box-shadow: 0 16px 34px rgba(8,10,22,.52);
-      border:1px solid rgba(164,107,255,.28);
-      border-radius:12px;
-      background: rgba(60,32,100,.96);
-      overflow:auto;
-      -webkit-overflow-scrolling: touch;
-    }
-  </style>
-  <script id="bh-suggest-portal">
-  (function(){
-    const input    = document.getElementById('bhSearch');
-    let dropdown   = document.querySelector('.bh2025-suggest');
-    if(!input || !dropdown || dropdown.dataset.portalReady) return;
-    dropdown.dataset.portalReady = '1';
-
-    const portal = document.createElement('div');
-    portal.id = 'bhSuggestPortal';
-    portal.style.position = 'fixed';
-    portal.style.zIndex   = '40000';
-    portal.style.left     = '0';
-    portal.style.top      = '0';
-    portal.style.width    = '0';
-    portal.style.height   = '0';
-    document.body.appendChild(portal);
-
-    portal.appendChild(dropdown);
-    dropdown.dataset.portalized = '1';
-
-    function place(){
-      if(!dropdown) return;
-      const hidden = dropdown.getAttribute('aria-hidden') === 'true';
-      if(hidden){ dropdown.style.display = 'none'; return; }
-      const r = input.getBoundingClientRect();
-      const gutter = 6;
-      dropdown.style.display   = 'block';
-      dropdown.style.left      = (Math.round(r.left)) + 'px';
-      dropdown.style.top       = (Math.round(r.bottom + gutter)) + 'px';
-      dropdown.style.width     = (Math.round(r.width)) + 'px';
-      dropdown.style.maxHeight = Math.max(180, window.innerHeight - r.bottom - 16) + 'px';
-    }
-
-    const mo = new MutationObserver(place);
-    mo.observe(dropdown, { attributes:true, attributeFilter:['aria-hidden','style'] });
-
-    ['resize','scroll'].forEach(ev => window.addEventListener(ev, place, {passive:true}));
-    input.addEventListener('focus', place);
-    input.addEventListener('input', place);
-    document.addEventListener('bh-suggest-open', place);
-    document.addEventListener('click', (e)=>{
-      if(dropdown.getAttribute('aria-hidden')==='true') return;
-      if(e.target === input || dropdown.contains(e.target)) return;
-      dropdown.setAttribute('aria-hidden','true');
-    });
-  })();
-  </script>
-
-  <!-- Rejestracja Service Workera -->
+  <!-- Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js')
@@ -700,378 +529,191 @@
         .catch(err => console.error('SW błąd:', err));
     }
   </script>
-
-  <!-- Add to Home Screen (iOS/Android) -->
   <script src="assets/a2hs.js?v=1"></script>
 
   <!-- LEKKI TŁUMACZ PL/EN -->
   <script>
     (function(){
       if(window.__bhI18nBound) return; window.__bhI18nBound = true;
-
       const I18N = {
-        pl: {
-          brand_title:"Boli Help",
-          brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",
-          pill_choke:"Zadławienie",
-          pill_cpr:"Reanimacja",
-          pill_accident:"Wypadek",
-          pill_firstaid:"Pierwsza pomoc",
-          pill_games:"Gry / Trening",
-          pill_quizzes:"Quizy",
-          btn_hosp:"🏥 Szpitale / SOR",
-          btn_loc:"📍 Zlokalizuj mnie",
-          subheadline:"Boli mnie — wybierz obszar bólu",
-          advice_title:"Porada",
-          advice_chip:"SOS • instrukcja",
-          close_btn:"✕",
-          video_head:"Materiał wideo",
-          video_hint:"Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej.",
-          card_woman:"Kobieta",
-          card_man:"Mężczyzna",
-          card_child:"Dziecko",
-          search_ph:"Szukaj objawu, części ciała lub tematu…",
-          sg_head:"Podpowiedzi"
-        },
-        en: {
-          brand_title:"Boli Help",
-          brand_sub:"Help and first aid in emergencies",
-          pill_choke:"Choking",
-          pill_cpr:"CPR",
-          pill_accident:"Accident",
-          pill_firstaid:"First aid",
-          pill_games:"Games / Training",
-          pill_quizzes:"Quizzes",
-          btn_hosp:"🏥 Hospitals / ER",
-          btn_loc:"📍 Locate me",
-          subheadline:"It hurts — choose the area of pain",
-          advice_title:"Advice",
-          advice_chip:"SOS • instructions",
-          close_btn:"✕",
-          video_head:"Video",
-          video_hint:"Add file: <code>assets/videos/&lt;name&gt;.mp4</code> and update the map below.",
-          card_woman:"Woman",
-          card_man:"Man",
-          card_child:"Child",
-          search_ph:"Search symptom, body part or topic…",
-          sg_head:"Suggestions"
-        }
+        pl: { brand_title:"Boli Help", brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach", pill_choke:"Zadławienie", pill_cpr:"Reanimacja", pill_accident:"Wypadek", pill_firstaid:"Pierwsza pomoc", pill_games:"Gry / Trening", pill_quizzes:"Quizy", btn_hosp:"🏥 Szpitale / SOR", btn_loc:"📍 Zlokalizuj mnie", subheadline:"Boli mnie — wybierz obszar bólu", advice_title:"Porada", advice_chip:"SOS • instrukcja", close_btn:"✕", video_head:"Materiał wideo", video_hint:"Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej.", card_woman:"Kobieta", card_man:"Mężczyzna", card_child:"Dziecko", search_ph:"Szukaj objawu, części ciała lub tematu…", sg_head:"Podpowiedzi" },
+        en: { brand_title:"Boli Help", brand_sub:"Help and first aid in emergencies", pill_choke:"Choking", pill_cpr:"CPR", pill_accident:"Accident", pill_firstaid:"First aid", pill_games:"Games / Training", pill_quizzes:"Quizzes", btn_hosp:"🏥 Hospitals / ER", btn_loc:"📍 Locate me", subheadline:"It hurts — choose the area of pain", advice_title:"Advice", advice_chip:"SOS • instructions", close_btn:"✕", video_head:"Video", video_hint:"Add file: <code>assets/videos/&lt;name&gt;.mp4</code> and update the map below.", card_woman:"Woman", card_man:"Man", card_child:"Child", search_ph:"Search symptom, body part or topic…", sg_head:"Suggestions" }
       };
-
-      const root = document.documentElement;
-      const LS_KEY = 'bh.lang';
-      let lang = (localStorage.getItem(LS_KEY) || root.getAttribute('data-lang') || root.lang || 'pl').toLowerCase();
-      if(!I18N[lang]) lang = 'pl';
-
-      window.__getLang = () => lang;
-      window.__t = (k) => (I18N[lang] && I18N[lang][k]) || (I18N['pl'] && I18N['pl'][k]) || k;
-
+      const root=document.documentElement, LS_KEY='bh.lang';
+      let lang=(localStorage.getItem(LS_KEY)||root.getAttribute('data-lang')||root.lang||'pl').toLowerCase();
+      if(!I18N[lang]) lang='pl';
+      window.__getLang=()=>lang; window.__t=(k)=> (I18N[lang]&&I18N[lang][k])||(I18N['pl']&&I18N['pl'][k])||k;
       function applyTranslations(){
         document.querySelectorAll('[data-i18n]').forEach(el=>{
-          const key = el.getAttribute('data-i18n');
-          const val = window.__t(key);
-          if(val!=null){
-            if(el.firstChild && el.firstChild.nodeType===3){ el.firstChild.nodeValue = val; }
-            else { el.innerHTML = val; }
-          }
+          const key=el.getAttribute('data-i18n'); const val=window.__t(key);
+          if(val!=null){ if(el.firstChild && el.firstChild.nodeType===3){ el.firstChild.nodeValue=val; } else { el.innerHTML=val; } }
         });
-        const search = document.getElementById('bhSearch');
-        if(search){ search.placeholder = window.__t('search_ph'); search.setAttribute('aria-label', window.__t('search_ph')); }
-        document.querySelectorAll('.bh2025-sg-head').forEach(el=>{ el.textContent = window.__t('sg_head'); });
-        root.setAttribute('lang', lang);
-        root.setAttribute('data-lang', lang);
-        const lab = document.querySelector('#bhLangPick label');
-        if(lab){ lab.textContent = (lang==='en'?'Language':'Język'); }
+        const search=document.getElementById('bhSearch'); if(search){ search.placeholder=window.__t('search_ph'); search.setAttribute('aria-label', window.__t('search_ph')); }
+        document.querySelectorAll('.bh2025-sg-head').forEach(el=>{ el.textContent=window.__t('sg_head'); });
+        root.setAttribute('lang', lang); root.setAttribute('data-lang', lang);
+        const lab=document.querySelector('#bhLangPick label'); if(lab){ lab.textContent=(lang==='en'?'Language':'Język'); }
       }
-
-      function setLang(newLang){
-        if(!I18N[newLang]) return;
-        lang = newLang;
-        localStorage.setItem(LS_KEY, lang);
-        applyTranslations();
-      }
-
-      const sel = document.getElementById('bhLangSelect');
-      if(sel){
-        sel.value = lang;
-        sel.addEventListener('change', ()=> setLang(sel.value));
-      }
-
+      function setLang(newLang){ if(!I18N[newLang]) return; lang=newLang; localStorage.setItem(LS_KEY, lang); applyTranslations(); }
+      const sel=document.getElementById('bhLangSelect'); if(sel){ sel.value=lang; sel.addEventListener('change', ()=> setLang(sel.value)); }
       applyTranslations();
     })();
   </script>
-<!-- ========== AI WYSZUKIWARKA OBJAWÓW (LIGHT, CLIENT-SIDE) ========== -->
-<style id="bh-ai-scan-css">
-  .bh-ai-btn{
-    appearance:none; border:1px solid rgba(164,107,255,.28);
-    background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
-    color:#eef2ff; border-radius:14px; padding:10px 14px; font-weight:800; cursor:pointer;
-    box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(164,107,255,.18) inset;
-  }
-  /* modal */
-  .bh-ai-modal[aria-hidden="true"]{ display:none }
-  .bh-ai-modal{
-    position:fixed; inset:0; z-index:9997;
-    background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95));
-    backdrop-filter:saturate(120%) blur(6px);
-  }
-  .bh-ai-panel{
-    position:relative; max-width:860px; margin:5vh auto; padding:16px;
-    background:rgba(60,32,100,.36); border:1px solid rgba(164,107,255,.25); border-radius:18px; color:#eef2ff;
-  }
-  .bh-ai-grid{ display:grid; grid-template-columns: 1fr 280px; gap:14px }
-  @media (max-width:880px){ .bh-ai-grid{ grid-template-columns:1fr } }
-  .bh-ai-panel h3{ margin:.2rem 0 6px; font-size:20px; letter-spacing:.2px }
-  .bh-ai-panel textarea{
-    width:100%; min-height:140px; resize:vertical; padding:12px; border-radius:12px;
-    border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#fff; font-size:15px;
-  }
-  .bh-ai-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap }
-  .bh-ai-select, .bh-ai-run{
-    border-radius:12px; padding:10px 12px; font-weight:800; letter-spacing:.2px; cursor:pointer;
-    border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.08); color:#fff;
-  }
-  .bh-ai-run{ background:linear-gradient(180deg, rgba(94,234,212,.25), rgba(94,234,212,.08)); border-color:rgba(94,234,212,.55) }
-  .bh-ai-close{
-    position:absolute; right:10px; top:10px; border:none; background:transparent; color:#fff; font-size:20px; cursor:pointer;
-  }
-  .bh-ai-hints{ font-size:13px; color:#cfe2ff }
-  .bh-ai-results{ margin-top:10px }
-  .bh-ai-result{
-    border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); border-radius:12px; padding:10px; margin:6px 0;
-    display:flex; justify-content:space-between; align-items:center; gap:10px;
-  }
-  .bh-ai-result b{ font-weight:900 }
-  .bh-ai-go{
-    border-radius:10px; padding:8px 10px; border:1px solid rgba(164,107,255,.35); background:rgba(164,107,255,.15); color:#fff; font-weight:800; cursor:pointer;
-  }
-</style>
 
-<!-- Przycisk w sekcji akcji (bez dotykania istniejących) -->
-<script>
-(function(){
-  const actions = document.querySelector('.actions');
-  if(!actions || actions.dataset.aiBtn) return;
-  actions.dataset.aiBtn = '1';
-  const btn = document.createElement('button');
-  btn.className = 'btn bh-ai-btn';
-  btn.type = 'button';
-  btn.id = 'bhAiOpen';
-  btn.innerHTML = '🤖 AI wyszukiwarka objawów';
-  actions.appendChild(btn);
-})();
-</script>
+  <!-- ========== AI WYSZUKIWARKA v2 + CZERWONE FLAGI (offline, safe) ========== -->
+  <style id="bh-ai2-css">
+    .bh-ai-btn{ appearance:none; border:1px solid rgba(164,107,255,.28);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      color:#eef2ff; border-radius:14px; padding:10px 14px; font-weight:800; cursor:pointer;
+      box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(164,107,255,.18) inset; }
+    .bh-ai-modal[aria-hidden="true"]{ display:none }
+    .bh-ai-modal{ position:fixed; inset:0; z-index:9997;
+      background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95)); backdrop-filter:saturate(120%) blur(6px); }
+    .bh-ai-panel{ position:relative; max-width:920px; margin:5vh auto; padding:18px;
+      background:rgba(60,32,100,.36); border:1px solid rgba(164,107,255,.25); border-radius:18px; color:#eef2ff; }
+    .bh-ai-panel h3{ margin:.2rem 0 10px; font-size:20px; letter-spacing:.2px }
+    .bh-ai-grid{ display:grid; grid-template-columns: 1fr 300px; gap:16px }
+    @media (max-width:900px){ .bh-ai-grid{ grid-template-columns:1fr } }
+    .bh-ai-panel textarea{ width:100%; min-height:140px; resize:vertical; padding:12px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#fff; font-size:15px; }
+    .bh-ai-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap }
+    .bh-ai-select, .bh-ai-run{ border-radius:12px; padding:10px 12px; font-weight:800; letter-spacing:.2px; cursor:pointer;
+      border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.08); color:#fff; }
+    .bh-ai-run{ background:linear-gradient(180deg, rgba(94,234,212,.28), rgba(94,234,212,.10)); border-color:rgba(94,234,212,.55) }
+    .bh-ai-close{ position:absolute; right:10px; top:10px; border:none; background:transparent; color:#fff; font-size:20px; cursor:pointer; }
+    .bh-ai-hints{ font-size:13px; color:#cfe2ff }
+    .bh-ai-results{ margin-top:12px; display:grid; gap:10px }
+    .bh-ai-card{ border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.06);
+      border-radius:12px; padding:12px; display:flex; gap:12px; align-items:center; justify-content:space-between; }
+    .bh-ai-left{ display:flex; flex-direction:column; gap:6px }
+    .bh-ai-title{ font-weight:900; letter-spacing:.2px }
+    .bh-ai-meta{ font-size:12.5px; color:#cfe2ff }
+    .bh-ai-chip{ display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; font-weight:800;
+      border:1px solid rgba(94,234,212,.55); background:rgba(94,234,212,.14); color:#eafff7; }
+    .bh-ai-go{ border-radius:10px; padding:9px 12px; border:1px solid rgba(164,107,255,.35);
+      background:rgba(164,107,255,.18); color:#fff; font-weight:800; cursor:pointer; }
 
-<!-- Modal + logika -->
-<div class="bh-ai-modal" id="bhAiModal" aria-hidden="true" role="dialog" aria-modal="true">
-  <div class="bh-ai-panel">
-    <button class="bh-ai-close" id="bhAiClose" aria-label="Zamknij">✕</button>
-    <h3>AI wyszukiwarka objawów (offline)</h3>
-    <div class="bh-ai-grid">
-      <div>
-        <textarea id="bhAiText" placeholder="Opisz swoje objawy, np.: ‚kłujący ból ucha, szum, gorzej w nocy, bez gorączki’"></textarea>
-        <div class="bh-ai-row" style="margin-top:10px">
-          <select id="bhAiTyp" class="bh-ai-select" aria-label="Wybierz profil">
-            <option value="kobieta">Kobieta</option>
-            <option value="mezczyzna">Mężczyzna</option>
-            <option value="dziecko">Dziecko</option>
-          </select>
-          <button id="bhAiRun" class="bh-ai-run">Analizuj i zaproponuj</button>
+    /* Czerwone flagi */
+    .bh-ai-emergency{ border:1px solid rgba(255,107,107,.8); background:rgba(255,107,107,.18);
+      border-radius:14px; padding:12px; display:flex; gap:12px; align-items:center; justify-content:space-between; }
+    .bh-ai-emergency .txt{ font-weight:900; letter-spacing:.2px; color:#ffe9e9 }
+    .bh-ai-call{ border-radius:10px; padding:10px 12px; font-weight:900; border:1px solid rgba(255,107,107,.75);
+      background:rgba(255,107,107,.28); color:#fff; cursor:pointer; text-decoration:none; }
+  </style>
+
+  <script>
+  (function(){
+    /* Dodaj przycisk AI w akcjach – bez dotykania istniejących */
+    const actions = document.querySelector('.actions');
+    if(actions && !actions.dataset.aiBtn2){
+      actions.dataset.aiBtn2='1';
+      const btn = document.createElement('button');
+      btn.className='btn bh-ai-btn'; btn.type='button'; btn.id='bhAi2Open';
+      btn.innerHTML='🤖 AI wyszukiwarka objawów';
+      actions.appendChild(btn);
+    }
+  })();
+  </script>
+
+  <!-- Modal AI -->
+  <div class="bh-ai-modal" id="bhAi2Modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="bh-ai-panel">
+      <button class="bh-ai-close" id="bhAi2Close" aria-label="Zamknij">✕</button>
+      <h3>AI wyszukiwarka objawów (offline)</h3>
+      <div class="bh-ai-grid">
+        <div>
+          <textarea id="bhAi2Text" placeholder="Opisz objawy, np.: ‚boli mnie ucho, szum w uszach, gorzej w nocy, bez gorączki’"></textarea>
+          <div class="bh-ai-row" style="margin-top:10px">
+            <select id="bhAi2Typ" class="bh-ai-select" aria-label="Wybierz profil">
+              <option value="kobieta">Kobieta</option>
+              <option value="mezczyzna">Mężczyzna</option>
+              <option value="dziecko">Dziecko</option>
+            </select>
+            <button id="bhAi2Run" class="bh-ai-run">Analizuj i zaproponuj</button>
+          </div>
+          <div class="bh-ai-hints" style="margin-top:8px">
+            Rozpoznaje synonimy, odmiany, brak polskich znaków i drobne literówki („bół”, „lydka”). Wspiera negacje: „bez gorączki”.
+          </div>
+          <div id="bhAi2Results" class="bh-ai-results" aria-live="polite"></div>
         </div>
-        <div class="bh-ai-hints" style="margin-top:8px">
-          Wspierane: synonimy, liczba mnoga/pojedyncza, brak polskich znaków, proste negacje (np. „bez gorączki”).
-        </div>
-        <div id="bhAiResults" class="bh-ai-results" aria-live="polite"></div>
-      </div>
-      <div>
-        <div class="bh-ai-hints">
-          <b>Przykłady:</b><br>
-          • „pulsujący ból głowy, światłowstręt, nudności”<br>
-          • „ból ucha prawego, gorzej w nocy, szumy, bez gorączki”<br>
-          • „opuchnięta kostka po skręceniu, siniak, ból przy chodzeniu”<br>
-          • „kłujący ból w klatce, duszność, zimny pot”<br>
+        <div>
+          <div class="bh-ai-hints">
+            <b>Przykłady:</b><br>
+            • „pulsujący ból głowy, światłowstręt, nudności”<br>
+            • „boli mnie ucho, szumy, bez gorączki”<br>
+            • „opuchnięta kostka po skręceniu, siniak, ból przy chodzeniu”<br>
+            • „kłujący ból w klatce, duszność, zimny pot”<br>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-(function(){
-  const modal = document.getElementById('bhAiModal');
-  const open  = document.getElementById('bhAiOpen');
-  const close = document.getElementById('bhAiClose');
-  const run   = document.getElementById('bhAiRun');
-  const txt   = document.getElementById('bhAiText');
-  const typ   = document.getElementById('bhAiTyp');
-  const out   = document.getElementById('bhAiResults');
+  <script>
+  (function(){
+    const modal = document.getElementById('bhAi2Modal');
+    const open  = document.getElementById('bhAi2Open');
+    const close = document.getElementById('bhAi2Close');
+    const run   = document.getElementById('bhAi2Run');
+    const txt   = document.getElementById('bhAi2Text');
+    const typ   = document.getElementById('bhAi2Typ');
+    const out   = document.getElementById('bhAi2Results');
+    if(!open || modal.dataset.bound) return; modal.dataset.bound='1';
 
-  if(!open || modal.dataset.bound) return; modal.dataset.bound='1';
+    function show(){ modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; txt.focus(); }
+    function hide(){ modal.setAttribute('aria-hidden','true');  document.body.style.overflow=''; out.innerHTML=''; txt.value=''; }
+    open.addEventListener('click', show);
+    close.addEventListener('click', hide);
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) hide(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') hide(); });
 
-  function show(){ modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; txt.focus(); }
-  function hide(){ modal.setAttribute('aria-hidden','true');  document.body.style.overflow=''; out.innerHTML=''; }
+    /* === NLP-light v2: normalizacja + frazy + fuzzy (<=1 edycja) + CZERWONE FLAGI === */
+    const dePL = (s)=> s.normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replaceAll('ł','l').replaceAll('Ł','l').replaceAll('ś','s').replaceAll('Ś','s')
+      .replaceAll('ż','z').replaceAll('Ż','z').replaceAll('ź','z').replaceAll('Ź','z')
+      .replaceAll('ć','c').replaceAll('Ć','c').replaceAll('ą','a').replaceAll('Ą','a')
+      .replaceAll('ę','e').replaceAll('Ę','e').replaceAll('ó','o').replaceAll('Ó','o');
+    const norm = (s)=> dePL(String(s||'').toLowerCase().trim());
 
-  open.addEventListener('click', show);
-  close.addEventListener('click', hide);
-  modal.addEventListener('click', (e)=>{ if(e.target===modal) hide(); });
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') hide(); });
+    const fixTypos = (t)=> t
+      .replace(/\bb[oó]l\b/g,'bol')
+      .replace(/\bboli\b/g,'bol')
+      .replace(/\bb[óo]l[au]\b/g,'bol')
+      .replace(/\bmnie\b/g,'')
+      .replace(/\bw\b/g,' ')
+      .replace(/\bprzy\b/g,' ')
+      .replace(/\bbez\b/g,'bez ')
+      .replace(/\s+/g,' ').trim();
 
-  // --- NLP-light: normalizacja, słownik, negacje, scoring ---
-  const dePL = (s)=>
-    s.normalize('NFD')
-     .replace(/[\u0300-\u036f]/g,'')
-     .replaceAll('ł','l').replaceAll('Ł','l')
-     .replaceAll('ś','s').replaceAll('Ś','s')
-     .replaceAll('ż','z').replaceAll('Ż','z')
-     .replaceAll('ź','z').replaceAll('Ź','z')
-     .replaceAll('ć','c').replaceAll('Ć','c')
-     .replaceAll('ą','a').replaceAll('Ą','a')
-     .replaceAll('ę','e').replaceAll('Ę','e')
-     .replaceAll('ó','o').replaceAll('Ó','o');
-
-  const norm = (s)=> dePL(String(s||'').toLowerCase());
-
-  // słownik haseł → części ciała
-  const MAP = {
-    // głowa/oko/uszy/nos/gardło/zęby/szyja
-    'migrena':'glowa','bol glowy':'glowa','svietlowstret':'glowa','swiatlowstret':'glowa','nudnosci':'glowa',
-    'oko':'oko','oczy':'oko','zaburzenia widzenia':'oko','swiatloplas':'oko',
-    'ucho':'uszy','uszy':'uszy','szum w uszach':'uszy','szumy':'uszy','bol ucha':'uszy','wydzielina z ucha':'uszy',
-    'nos':'nos','katar':'nos','zatoki':'nos','bol zatok':'nos','zapal zatok':'nos',
-    'gardlo':'gardlo','bol gardla':'gardlo','angina':'gardlo','chrypka':'gardlo','trudnosc w polykaniu':'gardlo',
-    'zab':'zeby','zeby':'zeby','bol zeba':'zeby','nadwrazliwosc':'zeby','opuchlizna zeba':'zeby','ropien':'zeby',
-    'szyja':'szyja','kark':'szyja','sztywnosc karku':'szyja',
-
-    // klatka/serce/płuca
-    'klatka':'klatka','bol w klatce':'klatka','mostek':'klatka',
-    'serce':'serce','kolatanie':'serce','arytmia':'serce','zimny pot':'serce',
-    'duszność':'pluca','dysznost':'pluca','dyszenie':'pluca','kaszel':'pluca','sapka':'pluca','astma':'pluca',
-
-    // brzuch/nerki/plecy/skóra
-    'brzuch':'brzuch','bol brzucha':'brzuch','wzdęcia':'brzuch','wzdecia':'brzuch','biegunka':'brzuch','wymioty':'brzuch',
-    'nerki':'nerki','kolka nerkowa':'nerki','bol ledzwi':'nerki',
-    'plecy':'plecy','rwa kulszowa':'plecy','napiecie miesniowe':'plecy',
-    'wysypka':'skora','swidzenie':'skora','swedzenie':'skora','pokrywa':'skora','pokrzywka':'skora',
-
-    // biodra/uda/kolano/łydka/kostka/stopy
-    'biodro':'biodra','biodra':'biodra','pachwina':'biodra',
-    'udo':'biodra','uda':'biodra',
-    'kolano':'kolano','rzepka':'kolano','lakotka':'kolano','opuchlizna kolana':'kolano',
-    'lydka':'lydka','skurcz lydki':'lydka','skurcze lydki':'lydka',
-    'kostka':'kostka','skrecenie kostki':'kostka','zwichniecie kostki':'kostka','opuchlizna kostki':'kostka',
-    'stopa':'stopy','stopy':'stopy','pieta':'stopy','bol przy chodzeniu':'stopy',
-
-    // ciąża / strefa
-    'ciaza':'ciaza','w ciazy':'ciaza','ciezarna':'ciaza',
-    'strefa intymna':'strefa','intymna':'strefa','narzady plciowe':'strefa',
-
-    // SOS
-    'zadlawienie':'zadlawienie','reanimacja':'reanimacja','wypadek':'wypadek','pierwsza pomoc':'pierwszopomoc'
-  };
-
-  // aliasy wielowyrazowe sprawdzamy najpierw (ważniejsze od pojedynczych tokenów)
-  const PHRASES = [
-    'bol glowy','bol gardla','bol ucha','bol zeba','bol brzucha','bol w klatce',
-    'szum w uszach','skurcz lydki','skurcze lydki','opuchlizna kostki','kolka nerkowa','rwa kulszowa',
-    'zaburzenia widzenia','trudnosc w polykaniu'
-  ];
-
-  // proste negacje – jeśli użytkownik napisze „bez gorączki” to ignorujemy trigger gorączki
-  const NEGATIONS = ['bez ','nie ','brak ']; // szukamy prefiksów
-
-  // Mapujemy wynik na label i docelowy URL (typ z selecta)
-  const LABELS = {
-    oko:'Oko', nos:'Nos', gardlo:'Gardło', glowa:'Głowa', szyja:'Szyja', uszy:'Uszy', zeby:'Zęby',
-    klatka:'Klatka piersiowa', pluca:'Płuca', serce:'Serce', brzuch:'Brzuch', nerki:'Nerki', plecy:'Plecy', skora:'Skóra',
-    biodra:'Biodra/Uda', kolano:'Kolano', lydka:'Łydka', kostka:'Kostka', stopy:'Stopy',
-    ciaza:'Ciąża', strefa:'Strefa intymna',
-    zadlawienie:'Zadławienie (SOS)', reanimacja:'Reanimacja (RKO)', wypadek:'Wypadek (SOS)', pierwszopomoc:'Pierwsza pomoc'
-  };
-
-  function tokenize(s){
-    const clean = norm(s).replace(/[^\w\s]/g,' ').replace(/\s+/g,' ').trim();
-    return clean ? clean.split(' ') : [];
-  }
-
-  function containsNegation(text, word){
-    // negacja jeśli występuje "bez <word>" / "nie <word>" / "brak <word>"
-    return NEGATIONS.some(neg => text.includes(neg + word));
-  }
-
-  function analyze(raw){
-    const text = norm(raw);
-    if(!text) return null;
-
-    const scores = {}; // id -> punkty
-    const add = (id, pts)=>{ scores[id]=(scores[id]||0)+pts; };
-
-    // 1) frazy wielowyrazowe – mocniejsze punkty
-    PHRASES.forEach(ph=>{
-      if(text.includes(ph)){
-        const target = MAP[ph] || MAP[ph.replace(/\s+/g,' ')] || null;
-        if(target) add(target, 6);
+    function fuzzy1(a,b){
+      if(a===b) return true;
+      if(Math.abs(a.length-b.length)>1) return false;
+      let i=0,j=0,diff=0;
+      while(i<a.length && j<b.length){
+        if(a[i]===b[j]){ i++; j++; continue; }
+        diff++; if(diff>1) return false;
+        if(a[i+1]===b[j]) i++;
+        else if(a[i]===b[j+1]) j++;
+        else if(a[i+1]===b[j+1] && a[i]===b[j+1] && a[i+1]===b[j]){ i+=2; j+=2; }
+        else { i++; j++; }
       }
-    });
-
-    // 2) tokeny – lżejsze punkty
-    const toks = tokenize(text);
-    toks.forEach(tok=>{
-      const target = MAP[tok];
-      if(target){
-        // sprawdź negacje dla tokenu (np. "goraczka" gdy jest "bez goraczki")
-        if(containsNegation(text, tok)) return;
-        add(target, 2);
-      }
-    });
-
-    // 3) delikatne rozsiewanie (np. „szumy” -> uszy, ale też minimalnie głowa)
-    if(scores['uszy']) add('glowa', 1);
-    if(scores['nos'] || scores['gardlo']) add('glowa', 1);
-    if(scores['stopy'] || scores['kostka']) add('kolano', 1);
-
-    // wynik
-    const items = Object.keys(scores).map(id=>({id, label: LABELS[id]||id, score: scores[id]}))
-                    .sort((a,b)=> b.score - a.score);
-
-    if(!items.length) return {items:[], best:null};
-
-    // jeżeli lider ma o >=3 pkt więcej niż drugi – traktujemy jako pewny
-    const best = (items.length===1 || (items[0].score - items[1].score >= 3)) ? items[0] : null;
-    return {items, best};
-  }
-
-  function openPart(typVal, id, label){
-    const url = `szczegoly.html?typ=${encodeURIComponent(typVal)}&czesc=${encodeURIComponent(id)}&label=${encodeURIComponent(label||LABELS[id]||id)}`;
-    window.location.href = url;
-  }
-
-  run.addEventListener('click', ()=>{
-    const res = analyze(txt.value);
-    out.innerHTML = '';
-    if(!res || (!res.best && !res.items.length)){
-      out.innerHTML = `<div class="bh-ai-result">Nie rozpoznano objawów. Spróbuj dodać więcej szczegółów (lokalizacja bólu, charakter, czas trwania, czynniki).</div>`;
-      return;
+      if(i<a.length || j<b.length) diff++;
+      return diff<=1;
     }
-    if(res.best){
-      // od razu przejście
-      openPart(typ.value, res.best.id, res.best.label);
-      return;
-    }
-    // kilka kandydatów – pokaż listę
-    res.items.slice(0,5).forEach(it=>{
-      const row = document.createElement('div');
-      row.className = 'bh-ai-result';
-      row.innerHTML = `<span><b>${it.label}</b> • trafność ${it.score}</span>`;
-      const go = document.createElement('button');
-      go.className = 'bh-ai-go';
-      go.textContent = 'Otwórz';
-      go.addEventListener('click', ()=> openPart(typ.value, it.id, it.label));
-      row.appendChild(go);
-      out.appendChild(row);
-    });
-  });
-})();
-</script>
-<!-- ========== /AI WYSZUKIWARKA ========== -->
-</body>
-</html>
+
+    const STOP = new Set(['i','oraz','a','u','o','do','na','po','w','z','ze','bez','nie','mam','mnie','mi','jest','sa','czy','to','ten','ta','te']);
+    function tokens(s){ return norm(fixTypos(s)).replace(/[^\w\s]/g,' ').split(/\s+/).filter(t=>t && !STOP.has(t)); }
+
+    const PHRASES = [
+      'bol glowy','bol w klatce','bol gardla','bol brzucha','bol ucha','bol zeba','szum w uszach',
+      'kolka nerkowa','rwa kulszowa','skurcz lydki','skurcze lydki','opuchlizna kostki',
+      'zaburzenia widzenia','trudnosc w polykaniu','zimny pot','zawroty glowy'
+    ];
+
+    const MAP = {
+      glowa:'glowa', migrena:'glowa', svietlowstret:'glowa', swiatlowstret:'glowa', nudnosci:'glowa', 'zawroty glowy':'glowa',
+      oko:'oko', oczy:'oko', 'zaburzenia widzenia':'oko', swiatloplas:'oko',
+      uszy:'uszy', ucho:'uszy', uszu:'uszy', uchem:'uszy', szumy:'uszy', 'szum w uszach':'uszy', 'bol ucha':'uszy', 'wydzielina z ucha':'uszy',
+      nos:'nos', katar:'nos', zatoki:'nos', 'bol zatok':'nos', 'zapal zatok':'nos',
+      gardlo:'gardlo', 'bol gardla':'gardlo', angina:'gardlo', chrypka:'gardlo', 'trudnosc w polykaniu':'gardlo',
+      zeby:'zeby', zab:'zeby', zub:'zeby', 'bol zeba':'zeby', nadwrazliwosc:'zeby', 'opuchlizna zeba':'zeby', ropien:'zeby',
+      szyja:'s
