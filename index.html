@@ -80,7 +80,6 @@
       box-shadow:0 14px 26px rgba(8,10,22,.45), 0 0 0 2px rgba(var(--bhG), .65), 0 0 26px rgba(var(--bhG), .45);
       outline:none;
     }
-    /* Niebieska pigułka – Gry / Trening */
     .situations .pill.pill--blue{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), rgba(96,165,250,.18);
       border:1px solid rgba(59,130,246,.6);
@@ -109,17 +108,14 @@
       100%{ box-shadow:0 0 0 0 rgba(var(--bhG), .00), 0 0 12px rgba(var(--bhG), .18) }
     }
 
-    /* Obrazek w PORADZIE (png) */
     .bh2025-porada__svg img{
       max-width:100%; height:auto; display:block; border-radius:12px;
       border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.04);
     }
 
-    /* Modale ukryte (twardo) */
     .bh2025-modal[aria-hidden="true"],
     .bh2025-porada[aria-hidden="true"]{ display:none }
 
-    /* QUIZ – poprawiona czytelność */
     .bh2025-cta-quiz{appearance:none;border:1px solid rgba(164,107,255,.28);
       background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       color:#eef2ff;border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer}
@@ -135,7 +131,6 @@
     .bh2025-progress__bar{flex:1;height:12px;border-radius:999px;outline:1px solid rgba(255,255,255,.14);background:linear-gradient(90deg,#5eead4,#ff6ec7);position:relative;overflow:hidden}
     .bh2025-progress__cursor{position:absolute;top:50%;transform:translate(-50%,-50%);left:6%;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(94,234,212,.35)}
 
-    /* PORADA modal */
     .bh2025-porada{position:fixed;inset:0;z-index:9998;background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95));backdrop-filter:saturate(120%) blur(6px)}
     .bh2025-porada__panel{position:relative;max-width:980px;margin:5vh auto;background:rgba(60,32,100,.36);border:1px solid rgba(164,107,255,.25);border-radius:18px;padding:16px;color:#eef2ff}
     .bh2025-porada__grid{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
@@ -171,13 +166,13 @@
     .header .tools .search{position:relative}
   </style>
 </style>
-<!-- FIX: stałe miejsce przełącznika języka na telefonach (final) -->
+<!-- FIX: stałe miejsce przełącznika języka na telefonach (final) + NOWOCZESNY UKŁAD -->
 <style>
 @media (max-width:768px){
   :where(.lang, .langpick, .language, #lang, #language, .header .tools .lang, .header .tools .langpick){
     position: fixed !important;
     top: 10px !important;
-    right: 10px !important;   /* jeśli wolisz lewy róg: left:10px!important; i usuń right */
+    right: 10px !important;
     z-index: 3000 !important;
     margin: 0 !important;
     transform: none !important;
@@ -185,17 +180,90 @@
     align-items: center;
     gap: 8px;
   }
-  /* schowaj sam napis "Język", zostaw kapsułkę PL/EN */
   :where(.lang, .langpick, .language, #lang, #language) :where(.label, b, span:first-child){
     display: none !important;
   }
-  /* zrób miejsce na przyklejony przełącznik */
   body{ padding-top: 64px !important; }
+}
+
+/* NOWOCZESNY UKŁAD PIGUŁEK I PRZYCISKÓW */
+body[data-page="home"] nav.situations{
+  display:grid; gap:12px; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  align-items:stretch; margin:14px 0 8px;
+}
+body[data-page="home"] nav.situations .pill{
+  height:56px; justify-content:center; border-radius:16px;
+  backdrop-filter:saturate(125%) blur(4px);
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+body[data-page="home"] nav.situations .pill .ico{ width:26px;height:26px;border-radius:8px }
+
+body[data-page="home"] .actions{
+  display:grid !important; gap:10px !important;
+  grid-template-columns:repeat(auto-fit, minmax(170px,1fr)) !important;
+  align-items:stretch !important; margin:16px 0 10px !important;
+}
+body[data-page="home"] .actions .btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:52px; border-radius:14px; font-weight:900; letter-spacing:.2px;
+  border:1px solid rgba(255,255,255,.18);
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  color:#eef2ff;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+body[data-page="home"] .actions .btn:hover,
+body[data-page="home"] .actions .btn:focus-visible{
+  transform:translateY(-1px); outline:none;
+  box-shadow:0 10px 22px rgba(0,0,0,.28), 0 0 0 2px rgba(164,107,255,.35);
+  border-color:rgba(164,107,255,.45);
+}
+
+body[data-page="home"] #btn-112{
+  border-color:rgba(255,107,107,.85) !important;
+  box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(255,107,107,.55) inset, 0 0 18px rgba(255,107,107,.35);
+}
+body[data-page="home"] #btn-hosp{
+  border-color:rgba(255,184,108,.8) !important;
+  box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(255,184,108,.5) inset, 0 0 18px rgba(255,184,108,.28);
+}
+body[data-page="home"] #btn-apteka .badge-round{ font-size:13px; padding:6px 10px }
+body[data-page="home"] #btn-dent24{
+  border-color:rgba(139,123,255,.55);
+  box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(139,123,255,.35) inset, 0 0 18px rgba(139,123,255,.30);
+}
+
+body[data-page="home"] section.stack[aria-label="Wybór postaci"]{ gap:14px !important }
+body[data-page="home"] section.stack .card{ min-height:260px; border-radius:20px }
+body[data-page="home"] section.stack .card a{ grid-template-rows:minmax(190px,260px) auto }
+body[data-page="home"] section.stack .card img{ object-fit:cover !important; object-position:50% 24% !important }
+
+.bh-wallpaper,.bh-grid,.bh-floor-fade{ pointer-events:none !important }
+.header, .situations, .actions, section.stack, .search{ position:relative; z-index:5 }
+
+@media (max-width:640px){
+  body[data-page="home"] nav.situations{ grid-template-columns:1fr }
+  body[data-page="home"] .actions{ grid-template-columns:1fr }
+  body[data-page="home"] .actions .btn{ height:50px }
+}
+
+/* SPÓJNY WYGLĄD TŁUMACZA (PL/EN) */
+#bhLangPick {
+  position: fixed !important; top: 16px !important; right: 24px !important; z-index: 9999 !important;
+  display: inline-flex !important; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.22);
+  border-radius: 12px; padding: 6px 10px; backdrop-filter: saturate(120%) blur(6px);
+}
+#bhLangPick label { display: none !important }
+#bhLangSelect {
+  font-size: 14px; font-weight: 700; color: #fff; background: transparent; border: none; outline: none; cursor: pointer; letter-spacing: .3px;
+}
+#bhLangSelect option { color: #0e1230; background: #ffffff }
+@media (max-width:768px){
+  #bhLangPick{ top: 10px !important; right: 12px !important; padding: 5px 8px }
+  #bhLangSelect{ font-size: 13px }
 }
 </style>
 </head>
-<body data-page="home"></head>
-
 <body data-page="home">
   <div class="bh-wallpaper" aria-hidden="true"></div>
   <div class="bh-grid" aria-hidden="true"></div>
@@ -216,7 +284,7 @@
           </svg>
         </div>
 
-        <!-- ▼▼ NOWY: Tłumacz (PL/EN) – lekki, bez Google banneru ▼▼ -->
+        <!-- Tłumacz PL/EN -->
         <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
           <label for="bhLangSelect">Język</label>
           <select id="bhLangSelect">
@@ -224,7 +292,6 @@
             <option value="en">EN</option>
           </select>
         </div>
-        <!-- ▲▲ KONIEC: Tłumacz ▲▲ -->
       </div>
     </header>
 
@@ -248,13 +315,12 @@
       <a class="pill pill--blue" href="gry.html">
         <span class="ico">🎮</span><span data-i18n="pill_games">Gry / Trening</span>
       </a>
-      <!-- NOWY GUZIK: Quizy -->
       <a class="pill pill--blue" href="quizzes.html" id="btn-quizzes">
         <span class="ico">🧠</span><span data-i18n="pill_quizzes">Quizy</span>
       </a>
     </nav>
 
-    <div class="actions" role="navigation" aria-label="Szybkie akcje">
+    <div class="actions actions--grid" role="navigation" aria-label="Szybkie akcje">
       <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
       <button id="btn-hosp" class="btn btn--hosp" type="button" data-i18n="btn_hosp">🏥 Szpitale / SOR</button>
       <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener">
@@ -477,12 +543,11 @@
   <!-- Add to Home Screen (iOS/Android) -->
   <script src="assets/a2hs.js?v=1"></script>
 
-  <!-- ▼▼ LEKKI TŁUMACZ PL/EN (POPRAWIONY) ▼▼ -->
+  <!-- LEKKI TŁUMACZ PL/EN -->
   <script>
     (function(){
       if(window.__bhI18nBound) return; window.__bhI18nBound = true;
 
-      // Słowniki
       const I18N = {
         pl: {
           brand_title:"Boli Help",
@@ -537,7 +602,7 @@
       let lang = (localStorage.getItem(LS_KEY) || root.getAttribute('data-lang') || root.lang || 'pl').toLowerCase();
       if(!I18N[lang]) lang = 'pl';
 
-      // API dla innych skryptów
+      // API
       window.__getLang = () => lang;
       window.__t = (k) => (I18N[lang] && I18N[lang][k]) || (I18N['pl'] && I18N['pl'][k]) || k;
 
@@ -550,15 +615,11 @@
             else { el.innerHTML = val; }
           }
         });
-        
         const search = document.getElementById('bhSearch');
         if(search){ search.placeholder = window.__t('search_ph'); search.setAttribute('aria-label', window.__t('search_ph')); }
-        
         document.querySelectorAll('.bh2025-sg-head').forEach(el=>{ el.textContent = window.__t('sg_head'); });
-
         root.setAttribute('lang', lang);
         root.setAttribute('data-lang', lang);
-
         const lab = document.querySelector('#bhLangPick label');
         if(lab){ lab.textContent = (lang==='en'?'Language':'Język'); }
       }
@@ -579,95 +640,5 @@
       applyTranslations();
     })();
   </script>
-  <!-- ▲▲ KONIEC TŁUMACZA ▲▲ -->
-
-  <!-- POPRAWKI CSS (glow + literówki) -->
-  <style id="bh-final-patch">
-    /* Ukryj resztki Google Translate */
-    .goog-te-banner-frame.skiptranslate{display:none!important}
-    .skiptranslate,.goog-te-gadget,.goog-te-combo,[id*="google_translate_element"]{display:none!important}
-
-    /* Kadrowanie obrazków */
-    section.stack .card > a > img{
-      width:100%; height:100%;
-      object-fit:cover !important;
-      object-position:50% 25% !important;
-    }
-    section.stack .card > a > img[src*="kobieta-model1"]{ object-position:50% 22% !important; transform:scale(0.95) }
-    section.stack .card > a > img[src*="mezczyzna-model1"]{ object-position:50% 24% !important; transform:scale(0.95) }
-    section.stack .card > a > img[src*="dziecko-model1"]{ object-position:50% 20% !important; transform:scale(0.92) }
-
-    .bh2025-suggest[aria-hidden="true"]{display:none!important}
-
-    /* Glow dla akcji (POPRAWIONE) */
-    :root{ --glow-green:34,227,160; --glow-red:255,107,107; --glow-amber:255,184,108; }
-    #btn-hosp{
-      border-color: rgba(var(--glow-red), .8) !important;
-      box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-red), .5) inset, 0 0 18px rgba(var(--glow-red), .35);
-      animation: bhRedPulse 2.2s ease-in-out infinite;
-    }
-    #btn-apteka{
-      border-color: rgba(var(--glow-green), .7)!important;
-      box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-green), .45) inset, 0 0 18px rgba(var(--glow-green), .35);
-      animation: bhGreenPulse 2.4s ease-in-out infinite;
-    }
-    #btn-loc{
-      border-color: rgba(var(--glow-amber), .75)!important;
-      box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-amber), .45) inset, 0 0 18px rgba(var(--glow-amber), .35);
-      animation: bhAmberBreath 2.8s ease-in-out infinite;
-    }
-    @keyframes bhRedPulse{0%{box-shadow:0 0 0 0 rgba(var(--glow-red),.10),0 0 18px rgba(var(--glow-red),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-red),.08),0 0 26px rgba(var(--glow-red),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-red),.10),0 0 18px rgba(var(--glow-red),.35)}}
-    @keyframes bhGreenPulse{0%{box-shadow:0 0 0 0 rgba(var(--glow-green),.10),0 0 18px rgba(var(--glow-green),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-green),.08),0 0 26px rgba(var(--glow-green),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-green),.10),0 0 18px rgba(var(--glow-green),.35)}}
-    @keyframes bhAmberBreath{0%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.08),0 0 18px rgba(var(--glow-amber),.35)}50%{box-shadow:0 0 0 8px rgba(var(--glow-amber),.06),0 0 26px rgba(var(--glow-amber),.55)}100%{box-shadow:0 0 0 0 rgba(var(--glow-amber),.08),0 0 18px rgba(var(--glow-amber),.35)}}
-  </style>
-<style>
-  /* SPÓJNY WYGLĄD TŁUMACZA (PL/EN) */
-  #bhLangPick {
-    position: fixed !important;
-    top: 16px !important;
-    right: 24px !important;  /* odsunięcie od krawędzi na laptopie */
-    z-index: 9999 !important;
-
-    display: inline-flex !important;
-    align-items: center;
-    gap: 6px;
-
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.22);
-    border-radius: 12px;
-    padding: 6px 10px;
-
-    backdrop-filter: saturate(120%) blur(6px);
-  }
-
-  /* Ukryj napis "Język", zostaw tylko selektor */
-  #bhLangPick label { display: none !important; }
-
-  #bhLangSelect {
-    font-size: 14px;
-    font-weight: 700;
-    color: #fff;
-    background: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    letter-spacing: .3px;
-  }
-
-  #bhLangSelect option {
-    color: #0e1230;
-    background: #ffffff;
-  }
-
-  /* TELEFON – ciut mniejsze i bliżej rogu */
-  @media (max-width:768px){
-    #bhLangPick{
-      top: 10px !important;
-      right: 12px !important;
-      padding: 5px 8px;
-    }
-    #bhLangSelect{ font-size: 13px; }
-  }
-</style>
 </body>
 </html>
