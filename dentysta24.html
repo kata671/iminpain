@@ -65,7 +65,22 @@
       .btn{padding:8px 10px;font-size:14px}
       #map{height:60vh;min-height:340px}
     }
-  </style>
+ /* ===== Mobile overflow fix (przyciski nie będą się ucinać) ===== */
+@media (max-width: 480px){
+  /* Nie limituj szerokości kontenerów na mobile */
+  .row{max-width:none !important; padding:8px 10px}
+  .grid{max-width:none !important}
+
+  /* W nagłówku (ta linia z przyciskami): pozwól zawijać do dwóch rzędów */
+  .head > .row:last-child{flex-wrap:wrap}
+
+  /* Każdy przycisk zajmie ~połowę szerokości, dzięki czemu ładnie się ułoży 2x2 */
+  .head > .row:last-child .btn{flex:1 1 calc(50% - 6px)}
+
+  /* Mapa odrobinę niższa, żeby zrobić miejsce na drugi rząd przycisków */
+  #map{height:58vh; min-height:320px}
+}
+ </style>
 </head>
 <body>
   <header>
