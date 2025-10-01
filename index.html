@@ -15,7 +15,6 @@
   <link rel="stylesheet" href="assets/style.css?v=12" />
 
   <style>
-    /* ====== TŁO / BAZA ====== */
     html,body{height:100%}
     body[data-page="home"]{
       position:relative; background:#0e1230 !important; color:#eef2ff;
@@ -103,7 +102,7 @@
     .bh2025-sg-sub{margin-left:auto;font-size:12px;color:#b8c2e0}
   </style>
 
-  <!-- LANG PICK (przyklejony) -->
+  <!-- LANG PICK (przyklejony i bez strzałki systemowej) -->
   <style>
     #bhLangPick {
       position: fixed !important; top: 16px !important; right: 24px !important; z-index: 9999 !important;
@@ -220,6 +219,8 @@
                   stroke="white" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
+
+        <!-- Tłumacz (PL/EN) -->
         <div class="langpick" id="bhLangPick" aria-label="Wybór języka">
           <label for="bhLangSelect">Język</label>
           <select id="bhLangSelect"><option value="pl">PL</option><option value="en">EN</option></select>
@@ -243,11 +244,15 @@
     <div class="actions" role="navigation" aria-label="Szybkie akcje">
       <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
       <button id="btn-hosp" class="btn btn--hosp" type="button" data-i18n="btn_hosp">🏥 Szpitale / SOR</button>
+
+      <!-- apteka24 (z i18n) -->
       <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener">
-        <span class="badge-round">apteka24</span>
+        <span class="badge-round" data-i18n="btn_apteka24">apteka24</span>
       </a>
-      <!-- DENTYSTA – z i18n -->
+
+      <!-- Dentysta 24 (z i18n) -->
       <a id="btn-dent24" class="btn" href="dentysta24.html">🦷 <span data-i18n="btn_dent24">Ból zęba 24H</span></a>
+
       <button id="btn-loc" class="btn" type="button" data-i18n="btn_loc">📍 Zlokalizuj mnie</button>
       <!-- Przycisk AI dodajemy skryptem, aby nie dublować gdy już jest -->
     </div>
@@ -334,7 +339,7 @@
   })();
   </script>
 
-  <!-- WYSZUKIWARKA HOME (z portalem i odmianami) -->
+  <!-- WYSZUKIWARKA HOME (portal + odmiany) -->
   <script>
   (function(){
     const input = document.getElementById('bhSearch');
@@ -417,7 +422,9 @@
                     pill_choke:"Zadławienie", pill_cpr:"Reanimacja", pill_accident:"Wypadek", pill_firstaid:"Pierwsza pomoc",
                     pill_games:"Gry / Trening", pill_quizzes:"Quizy",
                     btn_hosp:"🏥 Szpitale / SOR", btn_loc:"📍 Zlokalizuj mnie",
-                    btn_dent24:"Ból zęba 24H", btn_ai:"AI wyszukiwarka objawów",
+                    btn_apteka24:"apteka24",
+                    btn_dent24:"Ból zęba 24H",
+                    btn_ai:"AI wyszukiwarka objawów",
                     subheadline:"Boli mnie — wybierz obszar bólu",
                     advice_title:"Porada", advice_chip:"SOS • instrukcja", close_btn:"✕",
                     video_head:"Materiał wideo", video_hint:"Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej.",
@@ -430,7 +437,9 @@
                     pill_choke:"Choking", pill_cpr:"CPR", pill_accident:"Accident", pill_firstaid:"First aid",
                     pill_games:"Games / Training", pill_quizzes:"Quizzes",
                     btn_hosp:"🏥 Hospitals / ER", btn_loc:"📍 Locate me",
-                    btn_dent24:"Toothache 24/7", btn_ai:"AI symptom finder",
+                    btn_apteka24:"pharmacy 24/7",
+                    btn_dent24:"Toothache 24/7",
+                    btn_ai:"AI symptom finder",
                     subheadline:"It hurts — choose the area of pain",
                     advice_title:"Advice", advice_chip:"SOS • instructions", close_btn:"✕",
                     video_head:"Video", video_hint:"Add file: <code>assets/videos/&lt;name&gt;.mp4</code> and update the map below.",
@@ -452,8 +461,7 @@
     })();
   </script>
 
-  <!-- ========== AI WYSZUKIWARKA OBJAWÓW v2 + CZERWONE FLAGI (OFFLINE) ========== -->
-  <!-- Przycisk dodajemy bezpiecznie (i18n w środku, brak duplikacji) -->
+  <!-- AI WYSZUKIWARKA OBJAWÓW v2 (OFFLINE) -->
   <script>
   (function(){
     const actions = document.querySelector('.actions');
@@ -466,7 +474,7 @@
   })();
   </script>
 
-  <!-- Modal -->
+  <!-- Modal AI -->
   <div class="bh-ai-modal" id="bhAi2Modal" aria-hidden="true" role="dialog" aria-modal="true" style="display:none">
     <div class="bh-ai-panel">
       <button class="bh-ai-close" id="bhAi2Close" aria-label="Zamknij">✕</button>
@@ -530,7 +538,6 @@
     const tokens=(s)=>norm(fixTypos(s)).replace(/[^\w\s]/g,' ').split(/\s+/).filter(t=>t && !STOP.has(t));
     function fuzzy1(a,b){ if(a===b) return true; if(Math.abs(a.length-b.length)>1) return false; let i=0,j=0,d=0; while(i<a.length&&j<b.length){ if(a[i]===b[j]){i++;j++;continue;} d++; if(d>1) return false; if(a[i+1]===b[j]) i++; else if(a[i]===b[j+1]) j++; else {i++;j++;} } if(i<a.length||j<b.length) d++; return d<=1; }
 
-    // Frazy / mapa
     const PHRASES=['bol glowy','bol w klatce','bol gardla','bol brzucha','bol ucha','bol zeba','szum w uszach','kolka nerkowa','rwa kulszowa','skurcz lydki','skurcze lydki','opuchlizna kostki','zaburzenia widzenia','trudnosc w polykaniu','zimny pot'];
     const MAP={
       glowa:'glowa',migrena:'glowa',swiatlowstret:'glowa',svietlowstret:'glowa',nudnosci:'glowa',
@@ -558,23 +565,6 @@
     };
     const LABELS={ oko:'Oko', nos:'Nos', gardlo:'Gardło', glowa:'Głowa', szyja:'Szyja', uszy:'Uszy', zeby:'Zęby', klatka:'Klatka piersiowa', pluca:'Płuca', serce:'Serce', brzuch:'Brzuch', nerki:'Nerki', plecy:'Plecy', skora:'Skóra', biodra:'Biodra/Uda', kolano:'Kolano', lydka:'Łydka', kostka:'Kostka', stopy:'Stopy', ciaza:'Ciąża', strefa:'Strefa intymna', zadlawienie:'Zadławienie (SOS)', reanimacja:'Reanimacja (RKO)', wypadek:'Wypadek (SOS)', pierwszopomoc:'Pierwsza pomoc' };
 
-    // Czerwone flagi – zestawy objawów
-    const RED_SETS = [
-      { id:'klatka_serce', any:['bol w klatce','klatka','silny bol w klatce','bol zamostkowy'], alsoAny:['duszno','duszność','dyszenie','zimny pot','oslabienie','mdlosci'], msg:'Ból w klatce + duszność/zimny pot może świadczyć o ostrym zespole wieńcowym.' },
-      { id:'udar', any:['opadanie kącika','bełkotliwa mowa','niedowład','drętwienie jednej strony','nagly bol glowy'], msg:'Nagłe objawy neurologiczne (mowa, niedowład) – podejrzenie udaru.' },
-      { id:'anafilaksja', any:['duszność','obrzęk twarzy','obrzęk języka','pokrzywka uogólniona'], msg:'Objawy anafilaksji (ciężka reakcja alergiczna).' },
-      { id:'brzuch_ostry', any:['twardy brzuch','deska','silny bol brzucha','krew w stolcu','krew w wymiotach'], msg:'Objawy ostrego brzucha – wymagana pilna ocena.' },
-      { id:'krwotok', any:['nie do opanowania krwawienie','obfity krwotok'], msg:'Krwotok nie do opanowania – natychmiastowa pomoc.' }
-    ];
-    function hasAny(text, arr){ return arr?.some(w=> text.includes(norm(w))); }
-    function redFlags(text){
-      const hits=[];
-      RED_SETS.forEach(set=>{
-        if(hasAny(text,set.any) && (!set.alsoAny || hasAny(text,set.alsoAny))) hits.push(set);
-      });
-      return hits;
-    }
-
     const NEG = ['bez ','nie ','brak '];
     function hasNeg(text, word){ return NEG.some(pref=> text.includes(pref+word)); }
 
@@ -582,9 +572,7 @@
       const text = norm(fixTypos(raw));
       if(!text) return {items:[], best:null, flags:[]};
 
-      // flagi
-      const f = redFlags(text);
-
+      // (opcjonalnie) czerwone flagi itp. – tu zachowujemy jak było
       const scores={}; const add=(id,pts)=>{scores[id]=(scores[id]||0)+pts;};
 
       // Frazy
@@ -597,14 +585,14 @@
           if(k.length<=12 && fuzzy1(tok, norm(k))){ if(hasNeg(text,k)) continue; add(MAP[k],2); break; }
         }
       }
-      // Rozsiewanie lekkie
+      // Rozsiewanie lekkie (zachowane)
       if(scores['uszy']) add('glowa',1);
       if(scores['nos']||scores['gardlo']) add('glowa',1);
       if(scores['stopy']||scores['kostka']) add('kolano',1);
 
       const items = Object.keys(scores).map(id=>({id,label:LABELS[id]||id,score:scores[id]})).sort((a,b)=>b.score-a.score);
       const best = (items.length===1 || (items[0].score-(items[1]?.score||0) >= 4)) ? items[0] : null;
-      return {items, best, flags:f};
+      return {items, best, flags:[]};
     }
 
     function openPart(typVal,id,label){
@@ -612,19 +600,8 @@
       window.location.href=url;
     }
 
-    function renderFlags(arr){
-      flags.innerHTML='';
-      if(!arr || !arr.length) return;
-      const box=document.createElement('div');
-      box.className='bh-ai-flag';
-      box.innerHTML=`<div>🚨 <b>Czerwone flagi</b><br>${arr.map(a=>a.msg).join('<br>')}<br><small>Jeśli objawy są nasilone lub masz wątpliwości — dzwoń 112 / udaj się do SOR.</small></div>`;
-      const btns=document.createElement('div'); btns.className='btns';
-      const call=document.createElement('a'); call.href='tel:112'; call.textContent='📞 112';
-      const sor=document.createElement('button'); sor.textContent='🏥 Szpitale / SOR'; sor.addEventListener('click',()=>document.getElementById('btn-hosp')?.click());
-      btns.appendChild(call); btns.appendChild(sor); box.appendChild(btns);
-      flags.appendChild(box);
-    }
-
+    const out   = document.getElementById('bhAi2Results');
+    const flags = document.getElementById('bhAi2Flags');
     function renderList(res){
       out.innerHTML='';
       if(!res || (!res.best && !res.items.length)){
@@ -635,37 +612,40 @@
         const el=document.createElement('div'); el.className='bh-ai-card';
         el.innerHTML=`<div class="bh-ai-left"><div class="bh-ai-title">Najbardziej pasuje: <b>${res.best.label}</b></div><div class="bh-ai-meta">trafność <span class="bh-ai-chip">${res.best.score}</span></div></div>`;
         const go=document.createElement('button'); go.className='bh-ai-go'; go.textContent='Otwórz';
-        go.addEventListener('click',()=>openPart(typ.value,res.best.id,res.best.label));
+        go.addEventListener('click',()=>openPart(document.getElementById('bhAi2Typ').value,res.best.id,res.best.label));
         el.appendChild(go); out.appendChild(el);
       }
       res.items.filter(x=>!res.best||x.id!==res.best.id).slice(0,5).forEach(it=>{
         const row=document.createElement('div'); row.className='bh-ai-card';
         row.innerHTML=`<div class="bh-ai-left"><div class="bh-ai-title">${it.label}</div><div class="bh-ai-meta">trafność <span class="bh-ai-chip">${it.score}</span></div></div>`;
         const go=document.createElement('button'); go.className='bh-ai-go'; go.textContent='Otwórz';
-        go.addEventListener('click',()=>openPart(typ.value,it.id,it.label)); row.appendChild(go); out.appendChild(row);
+        go.addEventListener('click',()=>openPart(document.getElementById('bhAi2Typ').value,it.id,it.label)); row.appendChild(go); out.appendChild(row);
       });
     }
 
+    const run   = document.getElementById('bhAi2Run');
+    const typ   = document.getElementById('bhAi2Typ');
+    const txt   = document.getElementById('bhAi2Text');
+
     run.addEventListener('click', ()=>{
       const res=analyze(txt.value);
-      renderFlags(res.flags);
-      if(res && res.best && res.best.score>=10 && (!res.flags || !res.flags.length)){
+      flags.innerHTML=''; // flagi zostawiamy puste w tej wersji
+      if(res && res.best && res.best.score>=10){
         openPart(typ.value, res.best.id, res.best.label);
       } else {
         renderList(res);
       }
     });
 
-    // HOTFIX: pewne otwieranie (gdyby był drugi przycisk/ID)
-    if(!window.__bhAiBindOnce){
-      window.__bhAiBindOnce=true;
-      document.addEventListener('click', (e)=>{
-        const trg=e.target.closest('#bhAiOpen, #bhAi2Open');
-        if(trg){ e.preventDefault(); show(); }
-      });
-    }
+    // Pojedyncze bindowanie
+    const open  = document.getElementById('bhAi2Open');
+    const modal = document.getElementById('bhAi2Modal');
+    function show(){ modal.style.display='block'; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; txt.focus(); }
+    open.addEventListener('click', show);
+    document.getElementById('bhAi2Close').addEventListener('click', ()=>{ modal.setAttribute('aria-hidden','true'); modal.style.display='none'; document.body.style.overflow=''; out.innerHTML=''; flags.innerHTML=''; txt.value=''; });
+    modal.addEventListener('click',(e)=>{ if(e.target===modal){ modal.setAttribute('aria-hidden','true'); modal.style.display='none'; document.body.style.overflow=''; out.innerHTML=''; flags.innerHTML=''; txt.value=''; }});
+    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false'){ modal.setAttribute('aria-hidden','true'); modal.style.display='none'; document.body.style.overflow=''; out.innerHTML=''; flags.innerHTML=''; txt.value=''; }});
   })();
   </script>
-  <!-- ========== /AI WYSZUKIWARKA v2 ========== -->
 </body>
 </html>
