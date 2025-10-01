@@ -3,11 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ból zęba 24H — ULTRA (mobile++)</title>
+  <title>Ból zęba 24H — ULTRA</title>
   <meta name="theme-color" content="#151c33" />
+
+  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
+
+  <!-- opening_hours (otwarte teraz) -->
   <script src="https://unpkg.com/opening_hours@4.20.0/opening_hours.js"></script>
+
   <style>
     :root{
       --bg:#151c33; --panel:#162142; --panel2:#141e3a;
@@ -18,20 +23,27 @@
     body{margin:0;background:
       radial-gradient(900px 500px at 85% -10%, rgba(139,123,255,.14), transparent),
       radial-gradient(700px 400px at 10% -20%, rgba(46,196,255,.10), transparent),
-      var(--bg); color:var(--txt);
+      var(--bg);
+      color:var(--txt);
       font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
     a{color:inherit;text-decoration:none}
+
     header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg, rgba(21,28,51,.95), rgba(21,28,51,.6));
       border-bottom:1px solid rgba(139,123,255,.25);backdrop-filter:saturate(120%) blur(8px)}
     .row{max-width:1280px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .title{font-weight:900;letter-spacing:.2px;display:flex;align-items:center;gap:10px}
     .btn{appearance:none;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:var(--txt);border-radius:12px;
       padding:9px 12px;font-weight:800;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
-    .btn:hover{box-shadow:var(--ring); transform:translateY(-1px)} .btn.pri{border-color:rgba(139,123,255,.5)}
+    .btn:hover{box-shadow:var(--ring); transform:translateY(-1px)}
+    .btn.pri{border-color:rgba(139,123,255,.5)}
+
     .grid{max-width:1280px;margin:14px auto;padding:0 14px;display:grid;grid-template-columns:1.25fr .75fr;gap:14px}
     @media (max-width:1100px){ .grid{grid-template-columns:1fr} }
+
     .card{background:var(--panel);border:1px solid rgba(139,123,255,.25);border-radius:var(--br);overflow:hidden}
     .head{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid rgba(139,123,255,.25)}
+
+    /* TRIAGE */
     .triage{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;padding:12px;border-bottom:1px dashed rgba(139,123,255,.25)}
     .group{display:flex;flex-direction:column;gap:6px}
     .seg{display:flex;flex-wrap:wrap;gap:6px}
@@ -40,47 +52,46 @@
     .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:12px}
     .badge.red{border-color:rgba(255,107,107,.6)} .badge.amber{border-color:rgba(255,185,99,.7)} .badge.green{border-color:rgba(44,227,155,.7)}
     .muted{color:var(--muted);font-size:14px;margin-top:4px}
+
+    /* Controls */
     .controls{display:flex;flex-wrap:wrap;gap:10px;padding:10px 12px;border-bottom:1px dashed rgba(139,123,255,.25)}
-    .range{display:flex;align-items:center;gap:8px} .range input{width:170px}
+    .range{display:flex;align-items:center;gap:8px}
+    .range input{width:170px}
+
+    /* Map + list */
     #map{height:66vh;min-height:420px}
     .legend{display:flex;gap:10px;align-items:center;padding:8px 12px;border-top:1px solid rgba(139,123,255,.25);background:var(--panel2)}
-    .dot{width:10px;height:10px;border-radius:50%}.dot24{background:#2ce39b}.dotOpen{background:#73d2ff}.dotElse{background:#b9a6ff}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot24{background:#2ce39b}.dotOpen{background:#73d2ff}.dotElse{background:#b9a6ff}
+
     .side{display:flex;flex-direction:column;height:100%}
     .list{padding:8px;overflow:auto;min-height:240px;max-height:calc(66vh - 90px)}
     .dent{border:1px solid rgba(139,123,255,.25);border-radius:12px;padding:8px;margin:8px 0;background:rgba(255,255,255,.04)}
-    .dent .name{font-weight:900} .dent .meta{opacity:.9}
+    .dent .name{font-weight:900}
+    .dent .meta{opacity:.9}
     .tag{display:inline-block;margin-right:6px;margin-top:4px;padding:2px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.2);font-size:12px}
     .tag.open{border-color:rgba(44,227,155,.7)} .tag.closed{border-color:rgba(255,107,107,.7)} .tag.hi{border-color:rgba(44,227,155,.7);box-shadow:inset 0 0 0 1px rgba(44,227,155,.35)}
     .empty{padding:8px;color:var(--muted)}
 
-    /* ===== Mobile narrow tweaks (v2) ===== */
+    /* Legend toggles */
+    .legend{flex-wrap:wrap; gap:12px}
+    .lg-toggle{display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+      user-select:none;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);}
+    .lg-toggle input{accent-color:#2ce39b; margin-right:2px}
+
+    /* ===== Mobile overflow fix (wrap buttons, no cut) ===== */
     @media (max-width: 480px){
-      .row{max-width:340px}
-      .grid{max-width:340px}
-      .head{padding:8px 10px}
-      .controls{gap:8px}
+      .row{max-width:none !important; padding:8px 10px}
+      .grid{max-width:none !important}
+      .head > .row:last-child{flex-wrap:wrap}
+      .head > .row:last-child .btn{flex:1 1 calc(50% - 6px)}
       .triage{grid-template-columns:1fr 1fr}
       .seg .seg-btn{padding:6px 8px;font-size:13px}
       .badge{font-size:12px;padding:5px 9px}
       .btn{padding:8px 10px;font-size:14px}
-      #map{height:60vh;min-height:340px}
+      #map{height:58vh; min-height:320px}
     }
- /* ===== Mobile overflow fix (przyciski nie będą się ucinać) ===== */
-@media (max-width: 480px){
-  /* Nie limituj szerokości kontenerów na mobile */
-  .row{max-width:none !important; padding:8px 10px}
-  .grid{max-width:none !important}
-
-  /* W nagłówku (ta linia z przyciskami): pozwól zawijać do dwóch rzędów */
-  .head > .row:last-child{flex-wrap:wrap}
-
-  /* Każdy przycisk zajmie ~połowę szerokości, dzięki czemu ładnie się ułoży 2x2 */
-  .head > .row:last-child .btn{flex:1 1 calc(50% - 6px)}
-
-  /* Mapa odrobinę niższa, żeby zrobić miejsce na drugi rząd przycisków */
-  #map{height:58vh; min-height:320px}
-}
- </style>
+  </style>
 </head>
 <body>
   <header>
@@ -141,10 +152,18 @@
       </div>
 
       <div id="map"></div>
+
+      <!-- Legend with toggles -->
       <div class="legend">
-        <span class="dot dot24"></span> 24/7 / emergency
-        <span class="dot dotOpen" style="margin-left:12px"></span> Otwarte teraz
-        <span class="dot dotElse" style="margin-left:12px"></span> Pozostali
+        <label class="lg-toggle"><input id="lg24" type="checkbox" checked>
+          <span class="dot dot24"></span> 24/7 / emergency
+        </label>
+        <label class="lg-toggle"><input id="lgOpen" type="checkbox" checked>
+          <span class="dot dotOpen"></span> Otwarte teraz
+        </label>
+        <label class="lg-toggle"><input id="lgElse" type="checkbox" checked>
+          <span class="dot dotElse"></span> Pozostali
+        </label>
       </div>
     </section>
 
@@ -164,7 +183,7 @@
     function escA(s){ return (s||'').replace(/"/g,'&quot;'); }
     function ohIsOpen(oh){ try{ if(!oh) return null; const ohObj=new opening_hours(oh); return ohObj.getState(new Date()); }catch(e){ return null } }
 
-    // TRIAGE
+    // TRIAGE — interaktywny
     const painSeg=$('#pain-seg'); for(let i=0;i<=10;i++){ const b=document.createElement('button'); b.className='seg-btn'; b.dataset.val=i; b.textContent=i; painSeg.appendChild(b); }
     function triageEval(){
       const p=+($('.seg-btn.active[data-val]', painSeg)?.dataset.val||0);
@@ -188,17 +207,19 @@
     // MAPA + DANE
     let map, layer24, layerOpen, layerElse, userMarker, allPts=[];
     let R=6;
-    const initCenter = {lat:52.2297, lon:21.0122};
+    const initCenter = {lat:52.2297, lon:21.0122}; // Warszawa
     initMap();
 
     function initMap(){
       map=L.map('map',{zoomControl:true,scrollWheelZoom:true}).setView([initCenter.lat, initCenter.lon], 13);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);
       layer24=L.layerGroup().addTo(map); layerOpen=L.layerGroup().addTo(map); layerElse=L.layerGroup().addTo(map);
+
       $('#btn-geoloc').addEventListener('click', geolocNow);
       $('#btn-search-viewport').addEventListener('click', ()=>{ const c=map.getCenter(); fetchDentists(c.lat, c.lng); updateGM(c.lat,c.lng); });
       $('#radius').addEventListener('input', e=>{ R=+e.target.value; $('#radiusVal').textContent=R+' km'; const c=map.getCenter(); fetchDentists(c.lat,c.lng); });
       ['f-24','f-open','f-nfz','f-wheel'].forEach(id=> $('#'+id).addEventListener('change', applyFilters));
+
       updateGM(initCenter.lat, initCenter.lon);
     }
 
@@ -255,6 +276,27 @@
 
     function setListInfo(msg){ $('#list').innerHTML='<div class="empty">'+msg+'</div>'; }
 
+    function popupHTML(p){
+      const dest = encodeURIComponent(p.lat+','+p.lon);
+      const open = ohIsOpen(p.oh);
+      return `
+        <div class="name">${esc(p.name)}</div>
+        <div class="meta">${esc(p.addr||'')}</div>
+        ${p.oh?('<div class="meta">🕒 '+esc(p.oh)+'</div>'):''}
+        <div style="margin-top:6px">
+          ${p.twenty4?'<span class="tag hi">24/7</span>':''}
+          ${p.emergency?'<span class="tag hi">emergency</span>':''}
+          ${open===true?'<span class="tag open">otwarte teraz</span>':(open===false?'<span class="tag closed">zamknięte</span>':'')}
+          ${p.nfz?'<span class="tag">NFZ</span>':''}
+          ${p.wheel?'<span class="tag">♿</span>':''}
+        </div>
+        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap">
+          ${p.phone?('<a class="btn" href="tel:'+encodeURIComponent(p.phone)+'">📞 Zadzwoń</a>'):''}
+          <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${dest}">🗺️ Trasa</a>
+          ${p.website?('<a class="btn" target="_blank" rel="noopener" href="'+escA(p.website)+'">🌐 Strona</a>'):''}
+        </div>`;
+    }
+
     function applyFilters(){
       const only24=$('#f-24').checked, openNow=$('#f-open').checked, onlyNFZ=$('#f-nfz').checked, onlyWheel=$('#f-wheel').checked;
       layer24.clearLayers(); layerOpen.clearLayers(); layerElse.clearLayers();
@@ -284,27 +326,8 @@
       renderList(items);
       $('#count').textContent = shown;
       if(shown===0) setListInfo('Brak wyników — zmień promień lub odznacz filtry.');
-    }
-
-    function popupHTML(p){
-      const dest = encodeURIComponent(p.lat+','+p.lon);
-      const open = ohIsOpen(p.oh);
-      return `
-        <div class="name">${esc(p.name)}</div>
-        <div class="meta">${esc(p.addr||'')}</div>
-        ${p.oh?('<div class="meta">🕒 '+esc(p.oh)+'</div>'):''}
-        <div style="margin-top:6px">
-          ${p.twenty4?'<span class="tag hi">24/7</span>':''}
-          ${p.emergency?'<span class="tag hi">emergency</span>':''}
-          ${open===true?'<span class="tag open">otwarte teraz</span>':(open===false?'<span class="tag closed">zamknięte</span>':'')}
-          ${p.nfz?'<span class="tag">NFZ</span>':''}
-          ${p.wheel?'<span class="tag">♿</span>':''}
-        </div>
-        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap">
-          ${p.phone?('<a class="btn" href="tel:'+encodeURIComponent(p.phone)+'">📞 Zadzwoń</a>'):''}
-          <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${dest}">🗺️ Trasa</a>
-          ${p.website?('<a class="btn" target="_blank" rel="noopener" href="'+escA(p.website)+'">🌐 Strona</a>'):''}
-        </div>`;
+      // zapewnij zgodność z legend toggle
+      applyLegendVisibility();
     }
 
     function renderList(items){
@@ -312,6 +335,22 @@
       if(items.length===0){ setListInfo('Brak wyników — zmień promień lub odznacz filtry.'); return; }
       items.forEach(h=>{ const d=document.createElement('div'); d.className='dent'; d.innerHTML=h; box.appendChild(d); });
     }
+
+    // --- Legend toggles (pokazywanie/ukrywanie warstw) ---
+    const lg24 = document.getElementById('lg24');
+    const lgOpen = document.getElementById('lgOpen');
+    const lgElse = document.getElementById('lgElse');
+
+    function applyLegendVisibility(){
+      if(lg24 && layer24){ lg24.checked ? map.addLayer(layer24) : map.removeLayer(layer24); }
+      if(lgOpen && layerOpen){ lgOpen.checked ? map.addLayer(layerOpen) : map.removeLayer(layerOpen); }
+      if(lgElse && layerElse){ lgElse.checked ? map.addLayer(layerElse) : map.removeLayer(layerElse); }
+    }
+    [lg24, lgOpen, lgElse].forEach(el=> el && el.addEventListener('change', applyLegendVisibility));
+
+    // start
+    applyLegendVisibility();
+
   </script>
 </body>
 </html>
