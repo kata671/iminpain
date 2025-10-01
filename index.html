@@ -746,5 +746,29 @@ body[data-page="home"] section.stack .card img{ object-fit:cover !important; obj
   }
 }
 </style>
+<style id="bh-suggest-zfix">
+/* Podpowiedzi nad wszystkim (desktop+mobile) */
+.header .tools .search{ position: relative !important; z-index: 10010 !important; }
+.bh2025-suggest{
+  z-index: 10020 !important;               /* wyżej niż karty i pigułki */
+  position: absolute !important;            /* zostaje pod polem szukania */
+  left: 0 !important; right: 0 !important;  /* pełna szerokość inputa */
+  top: calc(100% + 6px) !important;         /* 6px pod polem */
+  pointer-events: auto !important;
+}
+
+/* Na wypadek, gdyby coś z tła miało agresywne z-indexy */
+.bh-wallpaper, .bh-grid, .bh-floor-fade { z-index: 0 !important; }
+.header, .situations, .actions, section.stack { z-index: 5; position: relative; }
+
+/* Mobile – niech dropdown nie wychodzi poza ekran */
+@media (max-width: 640px){
+  .bh2025-suggest{
+    max-height: 50vh !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+</style>
 </body>
 </html>
