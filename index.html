@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="assets/style.css?v=12" />
 
   <style>
-    /* ====== TŁO / BAZA (jak dotąd) ====== */
+    /* ====== TŁO / BAZA ====== */
     html,body{height:100%}
     body[data-page="home"]{
       position:relative; background:#0e1230 !important; color:#eef2ff;
@@ -112,7 +112,11 @@
       border-radius: 12px; padding: 6px 10px; backdrop-filter: saturate(120%) blur(6px);
     }
     #bhLangPick label { display: none !important; }
-    #bhLangSelect { font-size: 14px; font-weight: 700; color: #fff; background: transparent; border: none; outline: none; cursor: pointer; letter-spacing: .3px; }
+    #bhLangSelect {
+      font-size: 14px; font-weight: 700; color: #fff; background: transparent; border: none; outline: none; cursor: pointer; letter-spacing: .3px;
+      appearance:none; -webkit-appearance:none; -moz-appearance:none; background-image:none !important; padding-right:4px;
+    }
+    #bhLangSelect::-ms-expand{ display:none; }
     #bhLangSelect option { color:#0e1230; background:#fff }
     @media (max-width:768px){ #bhLangPick{ top:10px !important; right:12px !important; padding:5px 8px } #bhLangSelect{ font-size:13px } }
   </style>
@@ -239,8 +243,11 @@
     <div class="actions" role="navigation" aria-label="Szybkie akcje">
       <button id="btn-112" class="btn btn--red btn--call" type="button">📞 112</button>
       <button id="btn-hosp" class="btn btn--hosp" type="button" data-i18n="btn_hosp">🏥 Szpitale / SOR</button>
-      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener"><span class="badge-round">apteka24</span></a>
-      <a id="btn-dent24" class="btn" href="dentysta24.html">🦷 Ból zęba 24H</a>
+      <a id="btn-apteka" class="btn" href="https://www.google.com/maps/search/apteka+otwarta+teraz/" target="_blank" rel="noopener">
+        <span class="badge-round">apteka24</span>
+      </a>
+      <!-- DENTYSTA – z i18n -->
+      <a id="btn-dent24" class="btn" href="dentysta24.html">🦷 <span data-i18n="btn_dent24">Ból zęba 24H</span></a>
       <button id="btn-loc" class="btn" type="button" data-i18n="btn_loc">📍 Zlokalizuj mnie</button>
       <!-- Przycisk AI dodajemy skryptem, aby nie dublować gdy już jest -->
     </div>
@@ -255,7 +262,7 @@
     </section>
   </div>
 
-  <!-- Modal PORADA (jak wcześniej) -->
+  <!-- Modal PORADA -->
   <div id="bh2025Porada" class="bh2025-porada" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025PoradaTitle" style="display:none">
     <div class="bh2025-porada__panel" style="max-width:980px;margin:5vh auto;background:rgba(60,32,100,.36);border:1px solid rgba(164,107,255,.25);border-radius:18px;padding:16px;color:#eef2ff">
       <div class="bh2025-porada__head">
@@ -277,7 +284,7 @@
   <!-- Skrypt bazowy -->
   <script src="assets/main.js?v=12"></script>
 
-  <!-- PORADY open/close (bez zmian logiki) -->
+  <!-- PORADY open/close -->
   <script>
   (function(){
     const modal  = document.getElementById('bh2025Porada');
@@ -327,7 +334,7 @@
   })();
   </script>
 
-  <!-- WYSZUKIWARKA HOME (z portalem i odmianami – jak wcześniej) -->
+  <!-- WYSZUKIWARKA HOME (z portalem i odmianami) -->
   <script>
   (function(){
     const input = document.getElementById('bhSearch');
@@ -404,8 +411,32 @@
   <script>
     (function(){
       if(window.__bhI18nBound) return; window.__bhI18nBound=true;
-      const I18N={pl:{brand_title:"Boli Help",brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",pill_choke:"Zadławienie",pill_cpr:"Reanimacja",pill_accident:"Wypadek",pill_firstaid:"Pierwsza pomoc",pill_games:"Gry / Trening",pill_quizzes:"Quizy",btn_hosp:"🏥 Szpitale / SOR",btn_loc:"📍 Zlokalizuj mnie",subheadline:"Boli mnie — wybierz obszar bólu",advice_title:"Porada",advice_chip:"SOS • instrukcja",close_btn:"✕",video_head:"Materiał wideo",video_hint:"Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej.",card_woman:"Kobieta",card_man:"Mężczyzna",card_child:"Dziecko",search_ph:"Szukaj objawu, części ciała lub tematu…",sg_head:"Podpowiedzi"},
-                  en:{brand_title:"Boli Help",brand_sub:"Help and first aid in emergencies",pill_choke:"Choking",pill_cpr:"CPR",pill_accident:"Accident",pill_firstaid:"First aid",pill_games:"Games / Training",pill_quizzes:"Quizzes",btn_hosp:"🏥 Hospitals / ER",btn_loc:"📍 Locate me",subheadline:"It hurts — choose the area of pain",advice_title:"Advice",advice_chip:"SOS • instructions",close_btn:"✕",video_head:"Video",video_hint:"Add file: <code>assets/videos/&lt;name&gt;.mp4</code> and update the map below.",card_woman:"Woman",card_man:"Man",card_child:"Child",search_ph:"Search symptom, body part or topic…",sg_head:"Suggestions"}};
+      const I18N={pl:{
+                    brand_title:"Boli Help",
+                    brand_sub:"Pomoc i pierwsza pomoc w nagłych sytuacjach",
+                    pill_choke:"Zadławienie", pill_cpr:"Reanimacja", pill_accident:"Wypadek", pill_firstaid:"Pierwsza pomoc",
+                    pill_games:"Gry / Trening", pill_quizzes:"Quizy",
+                    btn_hosp:"🏥 Szpitale / SOR", btn_loc:"📍 Zlokalizuj mnie",
+                    btn_dent24:"Ból zęba 24H", btn_ai:"AI wyszukiwarka objawów",
+                    subheadline:"Boli mnie — wybierz obszar bólu",
+                    advice_title:"Porada", advice_chip:"SOS • instrukcja", close_btn:"✕",
+                    video_head:"Materiał wideo", video_hint:"Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej.",
+                    card_woman:"Kobieta", card_man:"Mężczyzna", card_child:"Dziecko",
+                    search_ph:"Szukaj objawu, części ciała lub tematu…", sg_head:"Podpowiedzi"
+                  },
+                  en:{
+                    brand_title:"Boli Help",
+                    brand_sub:"Help and first aid in emergencies",
+                    pill_choke:"Choking", pill_cpr:"CPR", pill_accident:"Accident", pill_firstaid:"First aid",
+                    pill_games:"Games / Training", pill_quizzes:"Quizzes",
+                    btn_hosp:"🏥 Hospitals / ER", btn_loc:"📍 Locate me",
+                    btn_dent24:"Toothache 24/7", btn_ai:"AI symptom finder",
+                    subheadline:"It hurts — choose the area of pain",
+                    advice_title:"Advice", advice_chip:"SOS • instructions", close_btn:"✕",
+                    video_head:"Video", video_hint:"Add file: <code>assets/videos/&lt;name&gt;.mp4</code> and update the map below.",
+                    card_woman:"Woman", card_man:"Man", card_child:"Child",
+                    search_ph:"Search symptom, body part or topic…", sg_head:"Suggestions"
+                  }};
       const root=document.documentElement, LS='bh.lang'; let lang=(localStorage.getItem(LS)||root.getAttribute('data-lang')||root.lang||'pl').toLowerCase(); if(!I18N[lang]) lang='pl';
       window.__getLang=()=>lang; window.__t=(k)=>(I18N[lang]&&I18N[lang][k])||(I18N['pl']&&I18N['pl'][k])||k;
       function apply(){
@@ -422,7 +453,7 @@
   </script>
 
   <!-- ========== AI WYSZUKIWARKA OBJAWÓW v2 + CZERWONE FLAGI (OFFLINE) ========== -->
-  <!-- Przycisk dodajemy bezpiecznie (nie dubluje się) -->
+  <!-- Przycisk dodajemy bezpiecznie (i18n w środku, brak duplikacji) -->
   <script>
   (function(){
     const actions = document.querySelector('.actions');
@@ -430,7 +461,7 @@
     actions.dataset.aiBtn2='1';
     const btn = document.createElement('button');
     btn.className='btn bh-ai-btn'; btn.type='button'; btn.id='bhAi2Open';
-    btn.innerHTML='🤖 AI wyszukiwarka objawów';
+    btn.innerHTML='🤖 <span data-i18n="btn_ai">AI wyszukiwarka objawów</span>';
     actions.appendChild(btn);
   })();
   </script>
