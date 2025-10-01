@@ -800,5 +800,278 @@
       applyTranslations();
     })();
   </script>
+<!-- ========== AI WYSZUKIWARKA OBJAWÓW (LIGHT, CLIENT-SIDE) ========== -->
+<style id="bh-ai-scan-css">
+  .bh-ai-btn{
+    appearance:none; border:1px solid rgba(164,107,255,.28);
+    background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+    color:#eef2ff; border-radius:14px; padding:10px 14px; font-weight:800; cursor:pointer;
+    box-shadow:0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(164,107,255,.18) inset;
+  }
+  /* modal */
+  .bh-ai-modal[aria-hidden="true"]{ display:none }
+  .bh-ai-modal{
+    position:fixed; inset:0; z-index:9997;
+    background:radial-gradient(50% 50% at 50% 50%, rgba(14,18,48,.9), rgba(14,18,48,.95));
+    backdrop-filter:saturate(120%) blur(6px);
+  }
+  .bh-ai-panel{
+    position:relative; max-width:860px; margin:5vh auto; padding:16px;
+    background:rgba(60,32,100,.36); border:1px solid rgba(164,107,255,.25); border-radius:18px; color:#eef2ff;
+  }
+  .bh-ai-grid{ display:grid; grid-template-columns: 1fr 280px; gap:14px }
+  @media (max-width:880px){ .bh-ai-grid{ grid-template-columns:1fr } }
+  .bh-ai-panel h3{ margin:.2rem 0 6px; font-size:20px; letter-spacing:.2px }
+  .bh-ai-panel textarea{
+    width:100%; min-height:140px; resize:vertical; padding:12px; border-radius:12px;
+    border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#fff; font-size:15px;
+  }
+  .bh-ai-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap }
+  .bh-ai-select, .bh-ai-run{
+    border-radius:12px; padding:10px 12px; font-weight:800; letter-spacing:.2px; cursor:pointer;
+    border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.08); color:#fff;
+  }
+  .bh-ai-run{ background:linear-gradient(180deg, rgba(94,234,212,.25), rgba(94,234,212,.08)); border-color:rgba(94,234,212,.55) }
+  .bh-ai-close{
+    position:absolute; right:10px; top:10px; border:none; background:transparent; color:#fff; font-size:20px; cursor:pointer;
+  }
+  .bh-ai-hints{ font-size:13px; color:#cfe2ff }
+  .bh-ai-results{ margin-top:10px }
+  .bh-ai-result{
+    border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); border-radius:12px; padding:10px; margin:6px 0;
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+  }
+  .bh-ai-result b{ font-weight:900 }
+  .bh-ai-go{
+    border-radius:10px; padding:8px 10px; border:1px solid rgba(164,107,255,.35); background:rgba(164,107,255,.15); color:#fff; font-weight:800; cursor:pointer;
+  }
+</style>
+
+<!-- Przycisk w sekcji akcji (bez dotykania istniejących) -->
+<script>
+(function(){
+  const actions = document.querySelector('.actions');
+  if(!actions || actions.dataset.aiBtn) return;
+  actions.dataset.aiBtn = '1';
+  const btn = document.createElement('button');
+  btn.className = 'btn bh-ai-btn';
+  btn.type = 'button';
+  btn.id = 'bhAiOpen';
+  btn.innerHTML = '🤖 AI wyszukiwarka objawów';
+  actions.appendChild(btn);
+})();
+</script>
+
+<!-- Modal + logika -->
+<div class="bh-ai-modal" id="bhAiModal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="bh-ai-panel">
+    <button class="bh-ai-close" id="bhAiClose" aria-label="Zamknij">✕</button>
+    <h3>AI wyszukiwarka objawów (offline)</h3>
+    <div class="bh-ai-grid">
+      <div>
+        <textarea id="bhAiText" placeholder="Opisz swoje objawy, np.: ‚kłujący ból ucha, szum, gorzej w nocy, bez gorączki’"></textarea>
+        <div class="bh-ai-row" style="margin-top:10px">
+          <select id="bhAiTyp" class="bh-ai-select" aria-label="Wybierz profil">
+            <option value="kobieta">Kobieta</option>
+            <option value="mezczyzna">Mężczyzna</option>
+            <option value="dziecko">Dziecko</option>
+          </select>
+          <button id="bhAiRun" class="bh-ai-run">Analizuj i zaproponuj</button>
+        </div>
+        <div class="bh-ai-hints" style="margin-top:8px">
+          Wspierane: synonimy, liczba mnoga/pojedyncza, brak polskich znaków, proste negacje (np. „bez gorączki”).
+        </div>
+        <div id="bhAiResults" class="bh-ai-results" aria-live="polite"></div>
+      </div>
+      <div>
+        <div class="bh-ai-hints">
+          <b>Przykłady:</b><br>
+          • „pulsujący ból głowy, światłowstręt, nudności”<br>
+          • „ból ucha prawego, gorzej w nocy, szumy, bez gorączki”<br>
+          • „opuchnięta kostka po skręceniu, siniak, ból przy chodzeniu”<br>
+          • „kłujący ból w klatce, duszność, zimny pot”<br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const modal = document.getElementById('bhAiModal');
+  const open  = document.getElementById('bhAiOpen');
+  const close = document.getElementById('bhAiClose');
+  const run   = document.getElementById('bhAiRun');
+  const txt   = document.getElementById('bhAiText');
+  const typ   = document.getElementById('bhAiTyp');
+  const out   = document.getElementById('bhAiResults');
+
+  if(!open || modal.dataset.bound) return; modal.dataset.bound='1';
+
+  function show(){ modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; txt.focus(); }
+  function hide(){ modal.setAttribute('aria-hidden','true');  document.body.style.overflow=''; out.innerHTML=''; }
+
+  open.addEventListener('click', show);
+  close.addEventListener('click', hide);
+  modal.addEventListener('click', (e)=>{ if(e.target===modal) hide(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') hide(); });
+
+  // --- NLP-light: normalizacja, słownik, negacje, scoring ---
+  const dePL = (s)=>
+    s.normalize('NFD')
+     .replace(/[\u0300-\u036f]/g,'')
+     .replaceAll('ł','l').replaceAll('Ł','l')
+     .replaceAll('ś','s').replaceAll('Ś','s')
+     .replaceAll('ż','z').replaceAll('Ż','z')
+     .replaceAll('ź','z').replaceAll('Ź','z')
+     .replaceAll('ć','c').replaceAll('Ć','c')
+     .replaceAll('ą','a').replaceAll('Ą','a')
+     .replaceAll('ę','e').replaceAll('Ę','e')
+     .replaceAll('ó','o').replaceAll('Ó','o');
+
+  const norm = (s)=> dePL(String(s||'').toLowerCase());
+
+  // słownik haseł → części ciała
+  const MAP = {
+    // głowa/oko/uszy/nos/gardło/zęby/szyja
+    'migrena':'glowa','bol glowy':'glowa','svietlowstret':'glowa','swiatlowstret':'glowa','nudnosci':'glowa',
+    'oko':'oko','oczy':'oko','zaburzenia widzenia':'oko','swiatloplas':'oko',
+    'ucho':'uszy','uszy':'uszy','szum w uszach':'uszy','szumy':'uszy','bol ucha':'uszy','wydzielina z ucha':'uszy',
+    'nos':'nos','katar':'nos','zatoki':'nos','bol zatok':'nos','zapal zatok':'nos',
+    'gardlo':'gardlo','bol gardla':'gardlo','angina':'gardlo','chrypka':'gardlo','trudnosc w polykaniu':'gardlo',
+    'zab':'zeby','zeby':'zeby','bol zeba':'zeby','nadwrazliwosc':'zeby','opuchlizna zeba':'zeby','ropien':'zeby',
+    'szyja':'szyja','kark':'szyja','sztywnosc karku':'szyja',
+
+    // klatka/serce/płuca
+    'klatka':'klatka','bol w klatce':'klatka','mostek':'klatka',
+    'serce':'serce','kolatanie':'serce','arytmia':'serce','zimny pot':'serce',
+    'duszność':'pluca','dysznost':'pluca','dyszenie':'pluca','kaszel':'pluca','sapka':'pluca','astma':'pluca',
+
+    // brzuch/nerki/plecy/skóra
+    'brzuch':'brzuch','bol brzucha':'brzuch','wzdęcia':'brzuch','wzdecia':'brzuch','biegunka':'brzuch','wymioty':'brzuch',
+    'nerki':'nerki','kolka nerkowa':'nerki','bol ledzwi':'nerki',
+    'plecy':'plecy','rwa kulszowa':'plecy','napiecie miesniowe':'plecy',
+    'wysypka':'skora','swidzenie':'skora','swedzenie':'skora','pokrywa':'skora','pokrzywka':'skora',
+
+    // biodra/uda/kolano/łydka/kostka/stopy
+    'biodro':'biodra','biodra':'biodra','pachwina':'biodra',
+    'udo':'biodra','uda':'biodra',
+    'kolano':'kolano','rzepka':'kolano','lakotka':'kolano','opuchlizna kolana':'kolano',
+    'lydka':'lydka','skurcz lydki':'lydka','skurcze lydki':'lydka',
+    'kostka':'kostka','skrecenie kostki':'kostka','zwichniecie kostki':'kostka','opuchlizna kostki':'kostka',
+    'stopa':'stopy','stopy':'stopy','pieta':'stopy','bol przy chodzeniu':'stopy',
+
+    // ciąża / strefa
+    'ciaza':'ciaza','w ciazy':'ciaza','ciezarna':'ciaza',
+    'strefa intymna':'strefa','intymna':'strefa','narzady plciowe':'strefa',
+
+    // SOS
+    'zadlawienie':'zadlawienie','reanimacja':'reanimacja','wypadek':'wypadek','pierwsza pomoc':'pierwszopomoc'
+  };
+
+  // aliasy wielowyrazowe sprawdzamy najpierw (ważniejsze od pojedynczych tokenów)
+  const PHRASES = [
+    'bol glowy','bol gardla','bol ucha','bol zeba','bol brzucha','bol w klatce',
+    'szum w uszach','skurcz lydki','skurcze lydki','opuchlizna kostki','kolka nerkowa','rwa kulszowa',
+    'zaburzenia widzenia','trudnosc w polykaniu'
+  ];
+
+  // proste negacje – jeśli użytkownik napisze „bez gorączki” to ignorujemy trigger gorączki
+  const NEGATIONS = ['bez ','nie ','brak ']; // szukamy prefiksów
+
+  // Mapujemy wynik na label i docelowy URL (typ z selecta)
+  const LABELS = {
+    oko:'Oko', nos:'Nos', gardlo:'Gardło', glowa:'Głowa', szyja:'Szyja', uszy:'Uszy', zeby:'Zęby',
+    klatka:'Klatka piersiowa', pluca:'Płuca', serce:'Serce', brzuch:'Brzuch', nerki:'Nerki', plecy:'Plecy', skora:'Skóra',
+    biodra:'Biodra/Uda', kolano:'Kolano', lydka:'Łydka', kostka:'Kostka', stopy:'Stopy',
+    ciaza:'Ciąża', strefa:'Strefa intymna',
+    zadlawienie:'Zadławienie (SOS)', reanimacja:'Reanimacja (RKO)', wypadek:'Wypadek (SOS)', pierwszopomoc:'Pierwsza pomoc'
+  };
+
+  function tokenize(s){
+    const clean = norm(s).replace(/[^\w\s]/g,' ').replace(/\s+/g,' ').trim();
+    return clean ? clean.split(' ') : [];
+  }
+
+  function containsNegation(text, word){
+    // negacja jeśli występuje "bez <word>" / "nie <word>" / "brak <word>"
+    return NEGATIONS.some(neg => text.includes(neg + word));
+  }
+
+  function analyze(raw){
+    const text = norm(raw);
+    if(!text) return null;
+
+    const scores = {}; // id -> punkty
+    const add = (id, pts)=>{ scores[id]=(scores[id]||0)+pts; };
+
+    // 1) frazy wielowyrazowe – mocniejsze punkty
+    PHRASES.forEach(ph=>{
+      if(text.includes(ph)){
+        const target = MAP[ph] || MAP[ph.replace(/\s+/g,' ')] || null;
+        if(target) add(target, 6);
+      }
+    });
+
+    // 2) tokeny – lżejsze punkty
+    const toks = tokenize(text);
+    toks.forEach(tok=>{
+      const target = MAP[tok];
+      if(target){
+        // sprawdź negacje dla tokenu (np. "goraczka" gdy jest "bez goraczki")
+        if(containsNegation(text, tok)) return;
+        add(target, 2);
+      }
+    });
+
+    // 3) delikatne rozsiewanie (np. „szumy” -> uszy, ale też minimalnie głowa)
+    if(scores['uszy']) add('glowa', 1);
+    if(scores['nos'] || scores['gardlo']) add('glowa', 1);
+    if(scores['stopy'] || scores['kostka']) add('kolano', 1);
+
+    // wynik
+    const items = Object.keys(scores).map(id=>({id, label: LABELS[id]||id, score: scores[id]}))
+                    .sort((a,b)=> b.score - a.score);
+
+    if(!items.length) return {items:[], best:null};
+
+    // jeżeli lider ma o >=3 pkt więcej niż drugi – traktujemy jako pewny
+    const best = (items.length===1 || (items[0].score - items[1].score >= 3)) ? items[0] : null;
+    return {items, best};
+  }
+
+  function openPart(typVal, id, label){
+    const url = `szczegoly.html?typ=${encodeURIComponent(typVal)}&czesc=${encodeURIComponent(id)}&label=${encodeURIComponent(label||LABELS[id]||id)}`;
+    window.location.href = url;
+  }
+
+  run.addEventListener('click', ()=>{
+    const res = analyze(txt.value);
+    out.innerHTML = '';
+    if(!res || (!res.best && !res.items.length)){
+      out.innerHTML = `<div class="bh-ai-result">Nie rozpoznano objawów. Spróbuj dodać więcej szczegółów (lokalizacja bólu, charakter, czas trwania, czynniki).</div>`;
+      return;
+    }
+    if(res.best){
+      // od razu przejście
+      openPart(typ.value, res.best.id, res.best.label);
+      return;
+    }
+    // kilka kandydatów – pokaż listę
+    res.items.slice(0,5).forEach(it=>{
+      const row = document.createElement('div');
+      row.className = 'bh-ai-result';
+      row.innerHTML = `<span><b>${it.label}</b> • trafność ${it.score}</span>`;
+      const go = document.createElement('button');
+      go.className = 'bh-ai-go';
+      go.textContent = 'Otwórz';
+      go.addEventListener('click', ()=> openPart(typ.value, it.id, it.label));
+      row.appendChild(go);
+      out.appendChild(row);
+    });
+  });
+})();
+</script>
+<!-- ========== /AI WYSZUKIWARKA ========== -->
 </body>
 </html>
