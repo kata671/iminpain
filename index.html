@@ -607,5 +607,63 @@
     });
   })();
   </script>
+<script>
+(function aiOpenPatch(){
+  if (window.__bhAiPatched) return; window.__bhAiPatched = true;
+
+  function bind(){
+    const btn   = document.getElementById('bhAi2Open');
+    const modal = document.getElementById('bhAi2Modal');
+    const close = document.getElementById('bhAi2Close');
+
+    if (!btn || !modal) return false;
+
+    // Jednorazowe bindowanie
+    if (!btn.dataset.aiBound){
+      btn.dataset.aiBound = '1';
+      btn.addEventListener('click', ()=>{
+        // twarde pokazanie nawet jeśli zewn. CSS chowa
+        modal.style.display = 'block';
+        modal.style.pointerEvents = 'auto';
+        modal.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+    if (close && !close.dataset.aiBound){
+      close.dataset.aiBound = '1';
+      close.addEventListener('click', ()=>{
+        modal.setAttribute('aria-hidden','true');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      });
+    }
+    if (!modal.dataset.aiBackdrop){
+      modal.dataset.aiBackdrop = '1';
+      modal.addEventListener('click', (e)=>{
+        if (e.target === modal){
+          modal.setAttribute('aria-hidden','true');
+          modal.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
+    // Podnieś modal nad wszystko (na wypadek z-index tła)
+    modal.style.zIndex = '9999';
+
+    return true;
+  }
+
+  // Próbuj do skutku (gdy przycisk/modał są wstrzykiwane asynchronicznie)
+  const tryBind = setInterval(()=>{
+    if (bind()){
+      clearInterval(tryBind);
+    }
+  }, 150);
+
+  // Dodatkowo po pełnym załadowaniu
+  window.addEventListener('load', bind, { once:true });
+})();
+</script>
 </body>
 </html>
