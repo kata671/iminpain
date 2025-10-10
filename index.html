@@ -865,5 +865,178 @@
 })();
 </script>
 <!-- ==== /BH HARD-FIX ==== -->
+<!-- ==== BH PORADY – PRZYWRÓCENIE DZIAŁANIA (SAFE) ==== -->
+<style id="bh-porady-css">
+  /* Domyślnie modal ukryty; pokazujemy tylko z aria-hidden="false" */
+  .bh2025-porada{
+    display:none; visibility:hidden; opacity:0;
+  }
+  .bh2025-porada[aria-hidden="false"]{
+    display:block; visibility:visible; opacity:1;
+  }
+  /* nad wszystko i blokuj przewijanie tła tylko w trakcie */
+  .bh2025-porada{ position:fixed; inset:0; z-index: 9998; }
+  body.bh-porada-open{ overflow:hidden !important; }
+</style>
+
+<script id="bh-porady-restore">
+(function(){
+  // Usuń poprzednie „hard-fixy”, jeśli istnieją
+  try{
+    document.getElementById('bh-patch-porada-hide')?.remove();
+    document.getElementById('bh-patch-porada-guard')?.remove();
+  }catch(e){}
+
+  const modal   = document.getElementById('bh2025Porada');
+  const titleEl = document.getElementById('bh2025PoradaTitle');
+  const svgWrap = document.getElementById('bh2025PoradaSvg');
+  const stepsOl = document.getElementById('bh2025PoradaSteps');
+  const videoW  = document.getElementById('bh2025VideoWrap');
+  const videoPh = document.getElementById('bh2025VideoPh');
+
+  if(!modal){ console.warn('[BH] Modal porady nie istnieje na indexie.'); return; }
+
+  // Mapy zasobów i treści (PL/EN)
+  const IMG = {
+    zadlawienie: 'img/zadlawienie.png',
+    reanimacja:  'img/reanimacja.png',
+    wypadek:     'img/wypadek.png',
+    pierwszopomoc: null
+  };
+  const STEPS = {
+    pl:{
+      zadlawienie:[
+        "Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.",
+        "Brak skutecznego kaszlu: 5 uderzeń w plecy między łopatki.",
+        "Jeśli nieskuteczne: 5 uciśnięć nadbrzusza.",
+        "Na zmianę: 5 plecy ↔ 5 nadbrzusze, aż do skutku.",
+        "Utrata przytomności: RKO 30:2, 112, AED."
+      ],
+      reanimacja:[
+        "Sprawdź bezpieczeństwo, reakcję i oddech (max 10 s).",
+        "Brak oddechu: zadzwoń 112.",
+        "Uciski: 100–120/min, 5–6 cm, środek mostka.",
+        "30 uciśnięć + 2 oddechy (jeśli umiesz i chcesz).",
+        "Kontynuuj do przyjazdu służb lub powrotu oddechu."
+      ],
+      wypadek:[
+        "Zabezpiecz miejsce.",
+        "Oceń liczbę poszkodowanych i zagrożenia.",
+        "Wezwij 112.",
+        "Priorytet: oddech, krwotoki (ucisk).",
+        "Nie przestawiaj bez potrzeby."
+      ],
+      pierwszopomoc:[
+        "ABC: drożność, oddech, krążenie.",
+        "Pozycja bezpieczna przy oddechu.",
+        "Ucisk krwotoków.",
+        "Oparzenia: chłodzenie 20 min.",
+        "Gdy masz wątpliwości — dzwoń po pomoc."
+      ]
+    },
+    en:{
+      zadlawienie:[
+        "Encourage coughing — if effective, observe.",
+        "If not effective: 5 back blows between shoulder blades.",
+        "Then 5 abdominal thrusts.",
+        "Alternate 5↔5 until success.",
+        "If unconscious: CPR 30:2, call 112/911, AED."
+      ],
+      reanimacja:[
+        "Check safety, response, breathing (≤10 s).",
+        "No breathing: call 112/911.",
+        "Compressions: 100–120/min, 5–6 cm, center chest.",
+        "30 compressions + 2 breaths (if trained).",
+        "Continue until help arrives/returns breathing."
+      ],
+      wypadek:[
+        "Make scene safe.",
+        "Assess casualties and hazards.",
+        "Call 112/911.",
+        "Priority: breathing, bleeding (direct pressure).",
+        "Do not move unnecessarily."
+      ],
+      pierwszopomoc:[
+        "ABC: airway, breathing, circulation.",
+        "Recovery position if breathing.",
+        "Control bleeding.",
+        "Burns: cool for 20 min.",
+        "When in doubt — call for help."
+      ]
+    }
+  };
+
+  const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
+
+  function openPorada(key, titleText){
+    // Tytuł
+    if(titleEl){
+      titleEl.textContent = titleText || (L()==='en' ? 'Advice' : 'Porada');
+    }
+    // Obrazek
+    if(svgWrap){
+      svgWrap.innerHTML = '';
+      const src = IMG[key];
+      if(src){
+        const img = new Image();
+        img.src = src;
+        img.alt = titleText || key;
+        svgWrap.appendChild(img);
+      }
+    }
+    // Kroki
+    if(stepsOl){
+      stepsOl.innerHTML = '';
+      (STEPS[L()]?.[key] || []).forEach(step=>{
+        const li = document.createElement('li');
+        li.textContent = step;
+        stepsOl.appendChild(li);
+      });
+    }
+    // Wideo placeholder (bezpiecznie)
+    if(videoW && videoPh){
+      videoW.innerHTML = '';
+      videoW.appendChild(videoPh.cloneNode(true));
+    }
+
+    // Pokaż modal
+    modal.setAttribute('aria-hidden','false');
+    document.body.classList.add('bh-porada-open');
+  }
+
+  function closePorada(){
+    modal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('bh-porada-open');
+  }
+
+  // Jedno, bezpieczne zbindowanie zdarzeń
+  if(!modal.dataset.bhPoradyBound){
+    modal.dataset.bhPoradyBound = '1';
+
+    // Klik w zielone pigułki – tylko te 4 z data-porada
+    const nav = document.querySelector('nav.situations');
+    if(nav){
+      nav.addEventListener('click', function(e){
+        const a = e.target.closest('a.pill.pill--green[data-porada]');
+        if(!a) return;
+        e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+        const key = a.getAttribute('data-porada');
+        const titleText = (a.textContent||'').trim();
+        openPorada(key, titleText);
+      }, true);
+    }
+
+    // Zamknięcie: X, klik w tło, Escape
+    document.getElementById('bh2025PoradaClose')?.addEventListener('click', closePorada);
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) closePorada(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') closePorada(); });
+
+    // Na wszelki wypadek – po starcie modal zawsze zamknięty
+    modal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('bh-porada-open');
+  }
+})();
+</script>
+<!-- ==== /BH PORADY – PRZYWRÓCENIE DZIAŁANIA ==== -->
 </body>
 </html>
