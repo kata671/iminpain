@@ -136,7 +136,7 @@
       overflow:auto; -webkit-overflow-scrolling: touch;
     }
 
-    /* —— Drobne gloWy akcji (były już) —— */
+    /* —— Glow akcji —— */
     :root{ --glow-green:34,227,160; --glow-red:255,107,107; --glow-amber:255,184,108; }
     #btn-hosp{ border-color: rgba(var(--glow-red), .8) !important; box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-red), .5) inset, 0 0 18px rgba(var(--glow-red), .35); }
     #btn-apteka{ border-color: rgba(var(--glow-green), .7)!important; box-shadow: 0 8px 20px rgba(8,10,22,.35), 0 0 0 1px rgba(var(--glow-green), .45) inset, 0 0 18px rgba(var(--glow-green), .35); }
@@ -175,6 +175,9 @@
       0%,100%{ box-shadow:0 0 0 1px currentColor inset, 0 0 20px rgba(var(--bh-violet), .28) }
       50%    { box-shadow:0 0 0 2px currentColor inset, 0 0 30px rgba(var(--bh-violet), .55) }
     }
+
+    /* —— TWARDY BEZPIECZNIK: modal porady domyślnie ukryty —— */
+    .bh2025-porada[aria-hidden="true"]{ display:none !important; }
   </style>
 </head>
 
@@ -265,7 +268,7 @@
   <!-- Skrypt bazowy -->
   <script src="assets/main.js?v=12"></script>
 
-  <!-- PORADY (otwieranie) -->
+  <!-- PORADY (otwieranie – bezpiecznik) -->
   <script>
   (function(){
     const modal  = document.getElementById('bh2025Porada');
@@ -276,6 +279,10 @@
     const videoW = document.getElementById('bh2025VideoWrap');
     const videoPh= document.getElementById('bh2025VideoPh');
     if(!modal || modal.dataset.bound) return; modal.dataset.bound='1';
+
+    // TWARDY STAN STARTOWY: ukryj modal
+    modal.setAttribute('aria-hidden','true');
+    modal.style.display='none';
 
     const IMG = { zadlawienie: 'img/zadlawienie.png', reanimacja: 'img/reanimacja.png', wypadek: 'img/wypadek.png', pierwszopomoc: null };
     const STEPS = {
@@ -291,25 +298,33 @@
     const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
 
     function openPorada(key, t){
-      title.textContent = t || (L()==='en'?'Advice':'Porada');
-      svgWrap.innerHTML=''; const src=IMG[key]; if(src){ const img=new Image(); img.src=src; svgWrap.appendChild(img); }
-      stepsOl.innerHTML=''; (STEPS[L()]?.[key]||[]).forEach(x=>{ const li=document.createElement('li'); li.textContent=x; stepsOl.appendChild(li); });
-      videoW.innerHTML=''; videoW.appendChild(videoPh.cloneNode(true));
-      modal.style.display='block'; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+      try{
+        title.textContent = t || (L()==='en'?'Advice':'Porada');
+        svgWrap.innerHTML=''; const src=IMG[key]; if(src){ const img=new Image(); img.src=src; img.alt=t||key; svgWrap.appendChild(img); }
+        stepsOl.innerHTML=''; (STEPS[L()]?.[key]||[]).forEach(x=>{ const li=document.createElement('li'); li.textContent=x; stepsOl.appendChild(li); });
+        videoW.innerHTML=''; videoW.appendChild(videoPh.cloneNode(true));
+        modal.style.display='block'; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+      }catch(e){}
     }
     function closePorada(){ modal.setAttribute('aria-hidden','true'); modal.style.display='none'; document.body.style.overflow=''; }
 
     const nav = document.querySelector('nav.situations');
     if(nav && !nav.dataset.bind){
       nav.dataset.bind='1';
+      // PRZECHWYĆ W CAPTURE + stopImmediatePropagation (nie „wyleje” się)
       nav.addEventListener('click', function(e){
         const a = e.target.closest('a.pill.pill--green[data-porada]');
         if(!a) return;
         e.preventDefault();
+        e.stopPropagation();
+        if(e.stopImmediatePropagation) e.stopImmediatePropagation();
         openPorada(a.getAttribute('data-porada'), a.textContent.trim());
       }, true);
     }
-    if(close) close.addEventListener('click', closePorada);
+    if(close && !close.dataset.bound){
+      close.dataset.bound='1';
+      close.addEventListener('click', closePorada);
+    }
     modal.addEventListener('click', (e)=>{ if(e.target===modal) closePorada(); });
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') closePorada(); });
   })();
@@ -710,32 +725,32 @@
     }
   })();
   </script>
-<style>
-  /* upewnij się, że nic nie blokuje kliku */
-  #btn-112{ cursor:pointer !important; pointer-events:auto !important; position:relative; z-index:20; }
-  .actions{ position:relative; z-index:10; }
-</style>
-<script>
-(function fixCall112(){
-  const btn = document.getElementById('btn-112');
-  if(!btn) return;
+  <style>
+    /* upewnij się, że nic nie blokuje kliku 112 */
+    #btn-112{ cursor:pointer !important; pointer-events:auto !important; position:relative; z-index:20; }
+    .actions{ position:relative; z-index:10; }
+  </style>
+  <script>
+  (function fixCall112(){
+    const btn = document.getElementById('btn-112');
+    if(!btn) return;
 
-  // usuń ewentualne atrybuty blokujące
-  btn.removeAttribute('disabled');
-  btn.style.pointerEvents = 'auto';
+    // usuń ewentualne atrybuty blokujące
+    btn.removeAttribute('disabled');
+    btn.style.pointerEvents = 'auto';
 
-  // klik myszką
-  btn.addEventListener('click', function(e){
-    e.preventDefault(); e.stopPropagation();
-    window.location.href = 'tel:112';
-  }, {capture:true});
+    // klik myszką
+    btn.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation();
+      window.location.href = 'tel:112';
+    }, {capture:true});
 
-  // dotyk na iOS/Android (czasem "click" bywa zjadany)
-  btn.addEventListener('touchend', function(e){
-    e.preventDefault(); e.stopPropagation();
-    window.location.href = 'tel:112';
-  }, {passive:false, capture:true});
-})();
-</script>
+    // dotyk na iOS/Android
+    btn.addEventListener('touchend', function(e){
+      e.preventDefault(); e.stopPropagation();
+      window.location.href = 'tel:112';
+    }, {passive:false, capture:true});
+  })();
+  </script>
 </body>
 </html>
