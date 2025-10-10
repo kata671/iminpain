@@ -765,5 +765,69 @@
     height:auto !important; width:auto !important; inset:0 !important; overflow:auto !important;
   }
 </style>
+<script id="bh-patch-porada-guard">
+(function(){
+  const SEL = '.bh2025-porada';
+  const modal = document.getElementById('bh2025Porada');
+
+  function hardHide(){
+    document.querySelectorAll(SEL).forEach(m=>{
+      m.setAttribute('aria-hidden','true');
+      m.style.display='none'; m.style.visibility='hidden'; m.style.opacity='0';
+    });
+    document.body.style.overflow = '';
+  }
+
+  // 1) Ukryj natychmiast po załadowaniu
+  hardHide();
+
+  // 2) Jeśli jakikolwiek skrypt spróbuje „pokazać” modal bez aria-hidden="false" — wyłącz
+  const mo = new MutationObserver(list=>{
+    list.forEach(m=>{
+      if (m.type==='attributes' && m.target.matches(SEL)) {
+        if (m.target.getAttribute('aria-hidden') !== 'false') hardHide();
+      }
+    });
+  });
+  document.querySelectorAll(SEL).forEach(n=>mo.observe(n,{attributes:true,attributeFilter:['aria-hidden','style','class']}));
+
+  // 3) Przechwyć klik tylko na 4 zielonych pigułkach i otwórz modal kontrolowanie
+  document.addEventListener('click', function(e){
+    const a = e.target.closest('a.pill.pill--green[data-porada]');
+    if (!a) return;
+    e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+
+    if (!modal) return;
+    const titleEl = document.getElementById('bh2025PoradaTitle');
+    const key     = a.getAttribute('data-porada');
+    const title   = (a.textContent||'Porada').trim();
+
+    if (titleEl) titleEl.textContent = title;
+    modal.setAttribute('aria-hidden','false');
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }, true);
+
+  // 4) Zamknięcie (klik w tło lub w X)
+  document.addEventListener('click', function(e){
+    if (!modal) return;
+    if (e.target === modal || e.target.id === 'bh2025PoradaClose') {
+      modal.setAttribute('aria-hidden','true');
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+      e.stopPropagation();
+    }
+  }, true);
+
+  // 5) Escape zamyka
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && modal && modal.getAttribute('aria-hidden')==='false') {
+      modal.setAttribute('aria-hidden','true');
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+})();
+</script>
 </body>
 </html>
