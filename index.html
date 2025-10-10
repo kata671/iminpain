@@ -752,5 +752,18 @@
     }, {passive:false, capture:true});
   })();
   </script>
+<style id="bh-patch-porada-hide">
+  /* Domyślnie ukryj WSZYSTKO związane z modalem porady */
+  .bh2025-porada{
+    display:none !important; visibility:hidden !important; opacity:0 !important;
+    height:0 !important; width:0 !important; overflow:hidden !important;
+    position:fixed !important; inset:auto !important; z-index:9998 !important;
+  }
+  /* Jedyny legalny stan „ON” */
+  .bh2025-porada[aria-hidden="false"]{
+    display:block !important; visibility:visible !important; opacity:1 !important;
+    height:auto !important; width:auto !important; inset:0 !important; overflow:auto !important;
+  }
+</style>
 </body>
 </html>
