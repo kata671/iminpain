@@ -829,5 +829,41 @@
   });
 })();
 </script>
+<!-- ==== BH HARD-FIX: wyłącz modal PORADA na indexie i przywróć normalne linki ==== -->
+<script>
+(function(){
+  // 1) Usuń modal porady, jeśli został wstrzyknięty
+  const modal = document.getElementById('bh2025Porada');
+  if (modal && modal.parentNode) modal.parentNode.removeChild(modal);
+
+  // 2) Zduś wszelkie „globalne” nasłuchy, które podmieniają klik na zielonych pigułkach
+  //    (robimy to w fazie CAPTURE, zanim inne skrypty coś przechwycą)
+  document.addEventListener('click', function(e){
+    const a = e.target.closest('nav.situations a.pill.pill--green[data-porada]');
+    if (!a) return;
+    // Pozwalamy na DOMYŚLNE przejście do href (szczegoly.html?...),
+    // ale blokujemy WSZYSTKIE inne handlery w capture/bubble, które mogłyby to nadpisać.
+    e.stopImmediatePropagation(); // nie wywołuj żadnych innych listenerów
+    // UWAGA: nie wywołujemy preventDefault — dzięki temu przeglądarka podąży za a.href
+  }, true);
+
+  // 3) Na wszelki wypadek usuwamy eventy przypięte bezpośrednio do <nav.situations>
+  const nav = document.querySelector('nav.situations');
+  if (nav && !nav.dataset.bhReplacedOnce){
+    const clone = nav.cloneNode(true);            // klon czyści wszystkie handlery na elemencie
+    nav.parentNode.replaceChild(clone, nav);
+    clone.dataset.bhReplacedOnce = '1';
+  }
+
+  // 4) Upewnij się, że pigułki są klikalne (nic nad nimi nie leży)
+  const css = document.createElement('style');
+  css.textContent = `
+    nav.situations { position: relative; z-index: 5; }
+    nav.situations a.pill { pointer-events: auto !important; }
+  `;
+  document.head.appendChild(css);
+})();
+</script>
+<!-- ==== /BH HARD-FIX ==== -->
 </body>
 </html>
