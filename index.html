@@ -829,74 +829,38 @@
   });
 })();
 </script>
-<!-- ==== BH HARD-FIX: wyłącz modal PORADA na indexie i przywróć normalne linki ==== -->
-<script>
-(function(){
-  // 1) Usuń modal porady, jeśli został wstrzyknięty
-  const modal = document.getElementById('bh2025Porada');
-  if (modal && modal.parentNode) modal.parentNode.removeChild(modal);
-
-  // 2) Zduś wszelkie „globalne” nasłuchy, które podmieniają klik na zielonych pigułkach
-  //    (robimy to w fazie CAPTURE, zanim inne skrypty coś przechwycą)
-  document.addEventListener('click', function(e){
-    const a = e.target.closest('nav.situations a.pill.pill--green[data-porada]');
-    if (!a) return;
-    // Pozwalamy na DOMYŚLNE przejście do href (szczegoly.html?...),
-    // ale blokujemy WSZYSTKIE inne handlery w capture/bubble, które mogłyby to nadpisać.
-    e.stopImmediatePropagation(); // nie wywołuj żadnych innych listenerów
-    // UWAGA: nie wywołujemy preventDefault — dzięki temu przeglądarka podąży za a.href
-  }, true);
-
-  // 3) Na wszelki wypadek usuwamy eventy przypięte bezpośrednio do <nav.situations>
-  const nav = document.querySelector('nav.situations');
-  if (nav && !nav.dataset.bhReplacedOnce){
-    const clone = nav.cloneNode(true);            // klon czyści wszystkie handlery na elemencie
-    nav.parentNode.replaceChild(clone, nav);
-    clone.dataset.bhReplacedOnce = '1';
+<!-- ==== BH PORADY – FINAL STABLE FIX ==== -->
+<style>
+  .bh2025-porada {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: rgba(14,18,48,.94);
+    backdrop-filter: blur(6px);
+    overflow: auto;
   }
-
-  // 4) Upewnij się, że pigułki są klikalne (nic nad nimi nie leży)
-  const css = document.createElement('style');
-  css.textContent = `
-    nav.situations { position: relative; z-index: 5; }
-    nav.situations a.pill { pointer-events: auto !important; }
-  `;
-  document.head.appendChild(css);
-})();
-</script>
-<!-- ==== /BH HARD-FIX ==== -->
-<!-- ==== BH PORADY – PRZYWRÓCENIE DZIAŁANIA (SAFE) ==== -->
-<style id="bh-porady-css">
-  /* Domyślnie modal ukryty; pokazujemy tylko z aria-hidden="false" */
-  .bh2025-porada{
-    display:none; visibility:hidden; opacity:0;
+  .bh2025-porada[aria-hidden="false"] {
+    display: block;
+    visibility: visible;
+    opacity: 1;
   }
-  .bh2025-porada[aria-hidden="false"]{
-    display:block; visibility:visible; opacity:1;
-  }
-  /* nad wszystko i blokuj przewijanie tła tylko w trakcie */
-  .bh2025-porada{ position:fixed; inset:0; z-index: 9998; }
-  body.bh-porada-open{ overflow:hidden !important; }
+  body.bh-porada-open { overflow: hidden !important; }
 </style>
 
-<script id="bh-porady-restore">
+<script>
 (function(){
-  // Usuń poprzednie „hard-fixy”, jeśli istnieją
-  try{
-    document.getElementById('bh-patch-porada-hide')?.remove();
-    document.getElementById('bh-patch-porada-guard')?.remove();
-  }catch(e){}
-
+  // --- definicje treści ---
   const modal   = document.getElementById('bh2025Porada');
   const titleEl = document.getElementById('bh2025PoradaTitle');
   const svgWrap = document.getElementById('bh2025PoradaSvg');
   const stepsOl = document.getElementById('bh2025PoradaSteps');
   const videoW  = document.getElementById('bh2025VideoWrap');
   const videoPh = document.getElementById('bh2025VideoPh');
+  if(!modal) return;
 
-  if(!modal){ console.warn('[BH] Modal porady nie istnieje na indexie.'); return; }
-
-  // Mapy zasobów i treści (PL/EN)
   const IMG = {
     zadlawienie: 'img/zadlawienie.png',
     reanimacja:  'img/reanimacja.png',
@@ -909,134 +873,106 @@
         "Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.",
         "Brak skutecznego kaszlu: 5 uderzeń w plecy między łopatki.",
         "Jeśli nieskuteczne: 5 uciśnięć nadbrzusza.",
-        "Na zmianę: 5 plecy ↔ 5 nadbrzusze, aż do skutku.",
+        "Na zmianę: 5 plecy ↔ 5 nadbrzusze.",
         "Utrata przytomności: RKO 30:2, 112, AED."
       ],
       reanimacja:[
         "Sprawdź bezpieczeństwo, reakcję i oddech (max 10 s).",
         "Brak oddechu: zadzwoń 112.",
         "Uciski: 100–120/min, 5–6 cm, środek mostka.",
-        "30 uciśnięć + 2 oddechy (jeśli umiesz i chcesz).",
-        "Kontynuuj do przyjazdu służb lub powrotu oddechu."
+        "30 uciśnięć + 2 oddechy (jeśli umiesz).",
+        "Kontynuuj do przyjazdu pomocy."
       ],
       wypadek:[
-        "Zabezpiecz miejsce.",
-        "Oceń liczbę poszkodowanych i zagrożenia.",
+        "Zabezpiecz miejsce zdarzenia.",
+        "Sprawdź poszkodowanych i zagrożenia.",
         "Wezwij 112.",
-        "Priorytet: oddech, krwotoki (ucisk).",
-        "Nie przestawiaj bez potrzeby."
+        "Oceń oddech i krwotoki.",
+        "Nie przestawiaj poszkodowanego bez potrzeby."
       ],
       pierwszopomoc:[
         "ABC: drożność, oddech, krążenie.",
         "Pozycja bezpieczna przy oddechu.",
-        "Ucisk krwotoków.",
-        "Oparzenia: chłodzenie 20 min.",
-        "Gdy masz wątpliwości — dzwoń po pomoc."
+        "Uciskaj krwotoki.",
+        "Oparzenia chłodź 20 minut.",
+        "Wątpliwości? — dzwoń po pomoc."
       ]
     },
     en:{
       zadlawienie:[
-        "Encourage coughing — if effective, observe.",
-        "If not effective: 5 back blows between shoulder blades.",
+        "Encourage coughing — observe.",
+        "If not effective: 5 back blows.",
         "Then 5 abdominal thrusts.",
         "Alternate 5↔5 until success.",
-        "If unconscious: CPR 30:2, call 112/911, AED."
+        "If unconscious: CPR 30:2, call 112/911."
       ],
       reanimacja:[
         "Check safety, response, breathing (≤10 s).",
         "No breathing: call 112/911.",
-        "Compressions: 100–120/min, 5–6 cm, center chest.",
-        "30 compressions + 2 breaths (if trained).",
-        "Continue until help arrives/returns breathing."
+        "Compressions: 100–120/min, 5–6 cm.",
+        "30 compressions + 2 breaths.",
+        "Continue until help arrives."
       ],
       wypadek:[
         "Make scene safe.",
         "Assess casualties and hazards.",
         "Call 112/911.",
-        "Priority: breathing, bleeding (direct pressure).",
+        "Airway, bleeding, breathing.",
         "Do not move unnecessarily."
       ],
       pierwszopomoc:[
         "ABC: airway, breathing, circulation.",
         "Recovery position if breathing.",
         "Control bleeding.",
-        "Burns: cool for 20 min.",
+        "Burns: cool 20 min.",
         "When in doubt — call for help."
       ]
     }
   };
-
   const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
 
-  function openPorada(key, titleText){
-    // Tytuł
-    if(titleEl){
-      titleEl.textContent = titleText || (L()==='en' ? 'Advice' : 'Porada');
-    }
-    // Obrazek
+  // --- funkcje modalne ---
+  function openPorada(key, label){
+    const lang=L();
+    const steps=STEPS[lang]?.[key]||[];
+    if(titleEl) titleEl.textContent = label;
     if(svgWrap){
-      svgWrap.innerHTML = '';
-      const src = IMG[key];
-      if(src){
-        const img = new Image();
-        img.src = src;
-        img.alt = titleText || key;
-        svgWrap.appendChild(img);
-      }
+      svgWrap.innerHTML='';
+      const src=IMG[key];
+      if(src){ const img=new Image(); img.src=src; img.alt=label; svgWrap.appendChild(img); }
     }
-    // Kroki
     if(stepsOl){
-      stepsOl.innerHTML = '';
-      (STEPS[L()]?.[key] || []).forEach(step=>{
-        const li = document.createElement('li');
-        li.textContent = step;
-        stepsOl.appendChild(li);
-      });
+      stepsOl.innerHTML='';
+      steps.forEach(s=>{ const li=document.createElement('li'); li.textContent=s; stepsOl.appendChild(li); });
     }
-    // Wideo placeholder (bezpiecznie)
     if(videoW && videoPh){
-      videoW.innerHTML = '';
+      videoW.innerHTML='';
       videoW.appendChild(videoPh.cloneNode(true));
     }
-
-    // Pokaż modal
     modal.setAttribute('aria-hidden','false');
     document.body.classList.add('bh-porada-open');
   }
-
   function closePorada(){
     modal.setAttribute('aria-hidden','true');
     document.body.classList.remove('bh-porada-open');
   }
 
-  // Jedno, bezpieczne zbindowanie zdarzeń
-  if(!modal.dataset.bhPoradyBound){
-    modal.dataset.bhPoradyBound = '1';
+  // --- zdarzenia ---
+  document.querySelectorAll('nav.situations a[data-porada]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      e.preventDefault(); e.stopPropagation();
+      openPorada(a.getAttribute('data-porada'), a.textContent.trim());
+    });
+  });
+  document.getElementById('bh2025PoradaClose')?.addEventListener('click', closePorada);
+  modal.addEventListener('click', e=>{ if(e.target===modal) closePorada(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') closePorada(); });
 
-    // Klik w zielone pigułki – tylko te 4 z data-porada
-    const nav = document.querySelector('nav.situations');
-    if(nav){
-      nav.addEventListener('click', function(e){
-        const a = e.target.closest('a.pill.pill--green[data-porada]');
-        if(!a) return;
-        e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();
-        const key = a.getAttribute('data-porada');
-        const titleText = (a.textContent||'').trim();
-        openPorada(key, titleText);
-      }, true);
-    }
-
-    // Zamknięcie: X, klik w tło, Escape
-    document.getElementById('bh2025PoradaClose')?.addEventListener('click', closePorada);
-    modal.addEventListener('click', (e)=>{ if(e.target===modal) closePorada(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') closePorada(); });
-
-    // Na wszelki wypadek – po starcie modal zawsze zamknięty
-    modal.setAttribute('aria-hidden','true');
-    document.body.classList.remove('bh-porada-open');
-  }
+  // Upewnij się, że modal startuje zamknięty
+  modal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('bh-porada-open');
 })();
 </script>
-<!-- ==== /BH PORADY – PRZYWRÓCENIE DZIAŁANIA ==== -->
+<!-- ==== /BH PORADY – FINAL STABLE FIX ==== -->
 </body>
 </html>
