@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pl" data-lang="pl">
+<head>
+<meta charset="utf-8" />
+<title>Boli Help — Strona główna</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" href="assets/style.css?v=12" />
+</head>
+<body data-page="home">
+<nav class="situations" aria-label="Sytuacje nagłe">
+  <a class="pill pill--green" data-porada="zadlawienie" href="#" onclick="openPorada('zadlawienie','Zadławienie')"><span class="ico">🫁</span>Zadławienie</a>
+  <a class="pill pill--green" data-porada="reanimacja" href="#" onclick="openPorada('reanimacja','Reanimacja')"><span class="ico">🚑</span>Reanimacja</a>
+  <a class="pill pill--green" data-porada="wypadek" href="#" onclick="openPorada('wypadek','Wypadek')"><span class="ico">💥</span>Wypadek</a>
+  <a class="pill pill--green" data-porada="pierwszopomoc" href="#" onclick="openPorada('pierwszopomoc','Pierwsza pomoc')"><span class="ico">❤️‍🩹</span>Pierwsza pomoc</a>
+</nav>
+
+<div id="poradaModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.8);color:white;padding:20px;overflow:auto;">
+  <button onclick="closePorada()" style="position:absolute;top:10px;right:20px;">✕</button>
+  <h2 id="poradaTitle"></h2>
+  <ul id="poradaSteps"></ul>
+</div>
+
+<script>
+const PORADY = {
+  zadlawienie:["Zachęcaj do kaszlu.","5 uderzeń w plecy.","5 uciśnięć nadbrzusza.","Na zmianę 5↔5.","Brak oddechu — RKO 30:2 i 112."],
+  reanimacja:["Sprawdź reakcję i oddech.","Brak oddechu — 112.","Uciski 100–120/min.","30 uciśnięć + 2 oddechy.","Kontynuuj do przyjazdu pomocy."],
+  wypadek:["Zabezpiecz miejsce.","Wezwij 112.","Sprawdź oddech i krwotoki.","Nie ruszaj poszkodowanego bez potrzeby."],
+  pierwszopomoc:["ABC: drożność, oddech, krążenie.","Ucisk krwotoków.","Pozycja bezpieczna.","Chłodzenie oparzeń 20 min.","W razie wątpliwości — 112."]
+};
+function openPorada(key,title){
+  document.getElementById('poradaTitle').textContent = title;
+  const list = document.getElementById('poradaSteps');
+  list.innerHTML = '';
+  PORADY[key].forEach(step=>{
+    const li=document.createElement('li');
+    li.textContent=step;
+    list.appendChild(li);
+  });
+  document.getElementById('poradaModal').style.display='block';
+  document.body.style.overflow='hidden';
+}
+function closePorada(){
+  document.getElementById('poradaModal').style.display='none';
+  document.body.style.overflow='';
+}
+</script>
+</body>
+</html>
