@@ -737,46 +737,5 @@
   }, {passive:false, capture:true});
 })();
 </script>
-
-<script>
-// Agresywny patch: zastępuje linki 'pill--green[data-porada]' ich klonami bez listenerów i bez data-porada.
-// Działa natychmiast po DOMContentLoaded i powtarza operację przez kilka sekund (guard against late-binding scripts).
-(function(){
-  function replaceButtons(){
-    const nodes = Array.from(document.querySelectorAll('nav.situations a.pill.pill--green[data-porada]'));
-    nodes.forEach(orig => {
-      try {
-        // jeśli już naprawiony (nie ma data-porada) - pomiń
-        if(!orig.getAttribute('data-porada')) return;
-        const clone = orig.cloneNode(true);
-        // usuń tylko atrybut związany z modalem (niewidoczne dla użytkownika)
-        clone.removeAttribute('data-porada');
-        // upewnij się, że nie ma inline onclicków (zabezpieczenie)
-        clone.removeAttribute('onclick');
-        // zastąp w DOM - to usuwa wszystkie JS event listeners przyczepione do orig
-        orig.parentNode.replaceChild(clone, orig);
-      } catch(e){ /* ignore */ }
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    replaceButtons();
-    // powtarzaj kilka razy przez 6s, bo inne skrypty mogą później podczepiać się dynamicznie
-    let tries = 0, max = 12;
-    const id = setInterval(()=>{
-      replaceButtons();
-      tries++;
-      if(tries>=max) clearInterval(id);
-    }, 500);
-    // dodatkowy guard: gdy ktoś w przyszłości doda handler, nasłuchaj mutacji w nav.situations i popraw
-    const nav = document.querySelector('nav.situations');
-    if(nav){
-      const mo = new MutationObserver(replaceButtons);
-      mo.observe(nav, { childList:true, subtree:true, attributes:false });
-    }
-  });
-})();
-</script>
 </body>
-
 </html>
