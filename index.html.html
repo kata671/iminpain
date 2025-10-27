@@ -265,6 +265,56 @@
   <!-- Skrypt bazowy -->
   <script src="assets/main.js?v=12"></script>
 
+  <!-- PORADY (otwieranie) -->
+  <script>
+  (function(){
+    const modal  = document.getElementById('bh2025Porada');
+    const close  = document.getElementById('bh2025PoradaClose');
+    const title  = document.getElementById('bh2025PoradaTitle');
+    const svgWrap= document.getElementById('bh2025PoradaSvg');
+    const stepsOl= document.getElementById('bh2025PoradaSteps');
+    const videoW = document.getElementById('bh2025VideoWrap');
+    const videoPh= document.getElementById('bh2025VideoPh');
+    if(!modal || modal.dataset.bound) return; modal.dataset.bound='1';
+
+    const IMG = { zadlawienie: 'img/zadlawienie.png', reanimacja: 'img/reanimacja.png', wypadek: 'img/wypadek.png', pierwszopomoc: null };
+    const STEPS = {
+      pl:{ zadlawienie:["Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.","Brak skutecznego kaszlu: 5 uderzeń w plecy.","Jeśli nieskuteczne: 5 uciśnięć nadbrzusza.","Na zmianę: 5 plecy ↔ 5 nadbrzusze.","Utrata przytomności: RKO 30:2, 112, AED."],
+           reanimacja:["Sprawdź bezpieczeństwo, reakcję i oddech (max 10 s).","Brak oddechu: 112.","Uciski: 100–120/min, 5–6 cm.","30 uciśnięć + 2 oddechy.","Kontynuuj do przyjazdu służb."],
+           wypadek:["Zabezpiecz miejsce.","Oceń zagrożenia.","Wezwij 112.","Oddech, krwotoki.","Nie przestawiaj bez potrzeby."],
+           pierwszopomoc:["ABC: drożność, oddech, krążenie.","Pozycja bezpieczna.","Ucisk krwotoków.","Oparzenia: chłodzenie 20 min.","W razie wątpliwości — dzwoń."]},
+      en:{ zadlawienie:["Encourage cough; observe.","If not: 5 back blows.","Then 5 abdominal thrusts.","Alternate 5↔5.","If unconscious: CPR 30:2, AED, call 112/911."],
+           reanimacja:["Check safety, response, breathing (≤10 s).","No breathing: call 112/911.","Compressions 100–120/min, 5–6 cm.","30 compressions + 2 breaths.","Continue until help arrives."],
+           wypadek:["Make scene safe.","Assess hazards.","Call 112/911.","Airway, breathing, bleeding.","Do not move unnecessarily."],
+           pierwszopomoc:["ABC: airway, breathing, circulation.","Recovery position.","Control bleeding.","Burns: cool 20 min.","When in doubt — call."]}
+    };
+    const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
+
+    function openPorada(key, t){
+      title.textContent = t || (L()==='en'?'Advice':'Porada');
+      svgWrap.innerHTML=''; const src=IMG[key]; if(src){ const img=new Image(); img.src=src; svgWrap.appendChild(img); }
+      stepsOl.innerHTML=''; (STEPS[L()]?.[key]||[]).forEach(x=>{ const li=document.createElement('li'); li.textContent=x; stepsOl.appendChild(li); });
+      videoW.innerHTML=''; videoW.appendChild(videoPh.cloneNode(true));
+      modal.style.display='block'; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+    }
+    function closePorada(){ modal.setAttribute('aria-hidden','true'); modal.style.display='none'; document.body.style.overflow=''; }
+
+    const nav = document.querySelector('nav.situations');
+    if(nav && !nav.dataset.bind){
+      nav.dataset.bind='1';
+      nav.addEventListener('click', function(e){
+        const a = e.target.closest('a.pill.pill--green[data-porada]');
+        if(!a) return;
+        e.preventDefault();
+        openPorada(a.getAttribute('data-porada'), a.textContent.trim());
+      }, true);
+    }
+    if(close) close.addEventListener('click', closePorada);
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) closePorada(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') closePorada(); });
+  })();
+  </script>
+
   <!-- WYSZUKIWARKA (portal + odmiany) -->
   <script>
   (function(){
@@ -687,5 +737,19 @@
   }, {passive:false, capture:true});
 })();
 </script>
+
+<script>
+// --- Patch: naprawa zielonych guzików (Reanimacja, Zadławienie, Wypadek, Pierwsza pomoc) ---
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('nav.situations a.pill.pill--green[data-porada]').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopImmediatePropagation(); // zablokuj modal
+      e.preventDefault();
+      window.location.href = this.getAttribute('href'); // otwórz normalnie
+    }, true);
+  });
+});
+</script>
+
 </body>
 </html>
