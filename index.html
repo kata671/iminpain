@@ -209,10 +209,10 @@
     </div>
 
     <nav class="situations" aria-label="Sytuacje nagłe">
-      <a class="pill pill--green" data-porada="zadlawienie" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie"><span class="ico">🫁</span><span data-i18n="pill_choke">Zadławienie</span></a>
-      <a class="pill pill--green" data-porada="reanimacja" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja"><span class="ico">🚑</span><span data-i18n="pill_cpr">Reanimacja</span></a>
-      <a class="pill pill--green" data-porada="wypadek" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek"><span class="ico">💥</span><span data-i18n="pill_accident">Wypadek</span></a>
-      <a class="pill pill--green" data-porada="pierwszopomoc" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc"><span class="ico">❤️‍🩹</span><span data-i18n="pill_firstaid">Pierwsza pomoc</span></a>
+      <a class="pill pill--green" data-porada="zadlawienie" href="szczegoly.html?typ=porada&czesc=zadlawienie&label=Zad%C5%82awienie" target="_blank"><span class="ico">🫁</span><span data-i18n="pill_choke">Zadławienie</span></a>
+      <a class="pill pill--green" data-porada="reanimacja" href="szczegoly.html?typ=porada&czesc=reanimacja&label=Reanimacja" target="_blank"><span class="ico">🚑</span><span data-i18n="pill_cpr">Reanimacja</span></a>
+      <a class="pill pill--green" data-porada="wypadek" href="szczegoly.html?typ=porada&czesc=wypadek&label=Wypadek" target="_blank"><span class="ico">💥</span><span data-i18n="pill_accident">Wypadek</span></a>
+      <a class="pill pill--green" data-porada="pierwszopomoc" href="szczegoly.html?typ=porada&czesc=pierwszopomoc&label=Pierwsza%20pomoc" target="_blank"><span class="ico">❤️‍🩹</span><span data-i18n="pill_firstaid">Pierwsza pomoc</span></a>
       <a class="pill pill--blue" href="gry.html"><span class="ico">🎮</span><span data-i18n="pill_games">Gry / Trening</span></a>
       <a class="pill pill--blue" href="quizzes.html" id="btn-quizzes"><span class="ico">🧠</span><span data-i18n="pill_quizzes">Quizy</span></a>
     </nav>
@@ -244,60 +244,29 @@
   </div>
 
   <!-- Modal PORADA -->
+  <div id="bh2025Porada" class="bh2025-porada" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bh2025PoradaTitle" style="display:none">
+    <div class="bh2025-porada__panel" style="max-width:980px;margin:5vh auto;background:rgba(60,32,100,.36);border:1px solid rgba(164,107,255,.25);border-radius:18px;padding:16px;color:#eef2ff">
+      <div class="bh2025-porada__head">
+        <div class="bh2025-porada__title" id="bh2025PoradaTitle" data-i18n="advice_title">Porada</div>
+        <div class="bh2025-chip" id="bh2025PoradaChip" data-i18n="advice_chip">SOS • instrukcja</div>
+        <button class="bh2025-close--porada" type="button" id="bh2025PoradaClose" aria-label="Zamknij" data-i18n="close_btn">✕</button>
+      </div>
+      <div class="bh2025-porada__grid" style="display:grid;grid-template-columns:1.1fr 1fr;gap:14px">
+        <div class="bh2025-porada__svg" id="bh2025PoradaSvg" aria-label="Instrukcja obrazkowa"></div>
+        <div class="bh2025-steps"><ol id="bh2025PoradaSteps"></ol></div>
+      </div>
+      <div class="bh2025-video">
+        <div class="bh2025-muted" style="margin-bottom:8px;font-weight:800" data-i18n="video_head">Materiał wideo</div>
+        <div id="bh2025VideoWrap"><div class="ph" id="bh2025VideoPh"><span>🎬</span><span data-i18n="video_hint">Dodaj plik: <code>assets/videos/&lt;nazwa&gt;.mp4</code> i zaktualizuj mapę poniżej.</span></div></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Skrypt bazowy -->
   <script src="assets/main.js?v=12"></script>
 
   <!-- PORADY (otwieranie) -->
-  <script>
-  (function(){
-    const modal  = document.getElementById('bh2025Porada');
-    const close  = document.getElementById('bh2025PoradaClose');
-    const title  = document.getElementById('bh2025PoradaTitle');
-    const svgWrap= document.getElementById('bh2025PoradaSvg');
-    const stepsOl= document.getElementById('bh2025PoradaSteps');
-    const videoW = document.getElementById('bh2025VideoWrap');
-    const videoPh= document.getElementById('bh2025VideoPh');
-    if(!modal || modal.dataset.bound) return; modal.dataset.bound='1';
-
-    const IMG = { zadlawienie: 'img/zadlawienie.png', reanimacja: 'img/reanimacja.png', wypadek: 'img/wypadek.png', pierwszopomoc: null };
-    const STEPS = {
-      pl:{ zadlawienie:["Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.","Brak skutecznego kaszlu: 5 uderzeń w plecy.","Jeśli nieskuteczne: 5 uciśnięć nadbrzusza.","Na zmianę: 5 plecy ↔ 5 nadbrzusze.","Utrata przytomności: RKO 30:2, 112, AED."],
-           reanimacja:["Sprawdź bezpieczeństwo, reakcję i oddech (max 10 s).","Brak oddechu: 112.","Uciski: 100–120/min, 5–6 cm.","30 uciśnięć + 2 oddechy.","Kontynuuj do przyjazdu służb."],
-           wypadek:["Zabezpiecz miejsce.","Oceń zagrożenia.","Wezwij 112.","Oddech, krwotoki.","Nie przestawiaj bez potrzeby."],
-           pierwszopomoc:["ABC: drożność, oddech, krążenie.","Pozycja bezpieczna.","Ucisk krwotoków.","Oparzenia: chłodzenie 20 min.","W razie wątpliwości — dzwoń."]},
-      en:{ zadlawienie:["Encourage cough; observe.","If not: 5 back blows.","Then 5 abdominal thrusts.","Alternate 5↔5.","If unconscious: CPR 30:2, AED, call 112/911."],
-           reanimacja:["Check safety, response, breathing (≤10 s).","No breathing: call 112/911.","Compressions 100–120/min, 5–6 cm.","30 compressions + 2 breaths.","Continue until help arrives."],
-           wypadek:["Make scene safe.","Assess hazards.","Call 112/911.","Airway, breathing, bleeding.","Do not move unnecessarily."],
-           pierwszopomoc:["ABC: airway, breathing, circulation.","Recovery position.","Control bleeding.","Burns: cool 20 min.","When in doubt — call."]}
-    };
-    const L = ()=> (window.__getLang && window.__getLang()) || 'pl';
-
-    function openPorada(key, t){
-      title.textContent = t || (L()==='en'?'Advice':'Porada');
-      svgWrap.innerHTML=''; const src=IMG[key]; if(src){ const img=new Image(); img.src=src; svgWrap.appendChild(img); }
-      stepsOl.innerHTML=''; (STEPS[L()]?.[key]||[]).forEach(x=>{ const li=document.createElement('li'); li.textContent=x; stepsOl.appendChild(li); });
-      videoW.innerHTML=''; videoW.appendChild(videoPh.cloneNode(true));
-      modal.style.display='block'; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
-    }
-    function closePorada(){ modal.setAttribute('aria-hidden','true'); modal.style.display='none'; document.body.style.overflow=''; }
-
-    const nav = document.querySelector('nav.situations');
-    if(nav && !nav.dataset.bind){
-      nav.dataset.bind='1';
-      nav.addEventListener('click', function(e){
-        const a = e.target.closest('a.pill.pill--green[data-porada]');
-        if(!a) return;
-        e.preventDefault();
-        openPorada(a.getAttribute('data-porada'), a.textContent.trim());
-      }, true);
-    }
-    if(close) close.addEventListener('click', closePorada);
-    modal.addEventListener('click', (e)=>{ if(e.target===modal) closePorada(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') closePorada(); });
-  })();
-  </script>
-
-  <!-- WYSZUKIWARKA (portal + odmiany) -->
+<!-- WYSZUKIWARKA (portal + odmiany) -->
   <script>
   (function(){
     const input = document.getElementById('bhSearch');
