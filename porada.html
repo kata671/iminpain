@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instrukcja — Boli Help</title>
+<style>
+body{font-family:system-ui,Segoe UI,Roboto,Arial;background:#0e1230;color:#eef2ff;margin:0;padding:24px;line-height:1.6}
+.container{max-width:900px;margin:auto;background:rgba(255,255,255,.05);padding:24px;border-radius:16px;box-shadow:0 0 20px rgba(164,107,255,.25)}
+h1{font-size:28px;color:#6ee7b7;margin-bottom:8px}
+h2{font-size:20px;color:#a78bfa;margin-top:24px}
+img{width:100%;border-radius:12px;margin-top:16px}
+ol{padding-left:20px;margin-top:10px}
+a.back{display:inline-block;margin-top:16px;color:#93c5fd;text-decoration:none;font-weight:700}
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← Wróć na stronę główną</a>
+  <h1 id="t"></h1>
+  <img id="img" alt="Instrukcja"/>
+  <h2>Kroki postępowania:</h2>
+  <ol id="steps"></ol>
+</div>
+
+<script>
+const data={
+  zadlawienie:{
+    t:"Zadławienie",
+    img:"img/zadlawienie.png",
+    steps:["Zachęcaj do kaszlu — jeśli skuteczny, obserwuj.","Brak skutecznego kaszlu: 5 uderzeń w plecy.","Jeśli nieskuteczne: 5 uciśnięć nadbrzusza.","Na zmianę: 5 plecy ↔ 5 nadbrzusze.","Utrata przytomności: RKO 30:2, 112, AED."]
+  },
+  reanimacja:{
+    t:"Reanimacja (RKO)",
+    img:"img/reanimacja.png",
+    steps:["Sprawdź bezpieczeństwo, reakcję i oddech (max 10 s).","Brak oddechu: 112.","Uciski: 100–120/min, 5–6 cm.","30 uciśnięć + 2 oddechy.","Kontynuuj do przyjazdu służb."]
+  },
+  wypadek:{
+    t:"Wypadek",
+    img:"img/wypadek.png",
+    steps:["Zabezpiecz miejsce.","Oceń zagrożenia.","Wezwij 112.","Oddech, krwotoki.","Nie przestawiaj bez potrzeby."]
+  },
+  pierwszopomoc:{
+    t:"Pierwsza pomoc",
+    img:"img/pierwszopomoc.png",
+    steps:["ABC: drożność, oddech, krążenie.","Pozycja bezpieczna.","Ucisk krwotoków.","Oparzenia: chłodzenie 20 min.","W razie wątpliwości — dzwoń."]
+  }
+};
+const p=new URLSearchParams(location.search);
+const c=p.get("czesc");
+const obj=data[c]||data.pierwszopomoc;
+document.getElementById("t").textContent=obj.t;
+document.getElementById("img").src=obj.img;
+obj.steps.forEach(s=>{const li=document.createElement("li");li.textContent=s;document.getElementById("steps").appendChild(li);});
+</script>
+</body>
+</html>
