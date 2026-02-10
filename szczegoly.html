@@ -1,371 +1,210 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BoliHelp – Szczegóły</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Boli Help — Szczegóły</title>
   <style>
     :root{
-      --glass: rgba(255,255,255,.08);
-      --glass-strong: rgba(255,255,255,.12);
-      --accent: #2ecc71;
-      --text: #fff;
-
-      /* akcenty kart – eleganckie paski na górze */
-      --bar-help: linear-gradient(90deg,#2ecc71,#1abc9c);
-      --bar-sym:  linear-gradient(90deg,#f39c12,#f1c40f);
-      --bar-cau:  linear-gradient(90deg,#9b59b6,#8e44ad);
-      --bar-med:  linear-gradient(90deg,#16a085,#27ae60);
-      --bar-doc:  linear-gradient(90deg,#e74c3c,#c0392b);
-
-      /* badge kolory */
-      --badge-rx: #e74c3c;  /* Na receptę */
-      --badge-otc:#2ecc71;  /* Bez recepty */
-
-      /* scrollbar */
-      --scroll-bg: rgba(255,255,255,.15);
-      --scroll-thumb: rgba(255,255,255,.45);
+      --bg:#0d1022;           /* jaśniejsze, chłodne tło */
+      --panel:#131633;
+      --card: rgba(48, 28, 86, .45); /* ciemny, półprzezr. fiolet dla kart */
+      --text:#f3f4fb; --muted:#b9b9d2;
+      --accent:#a46bff; --accent2:#5eead4; --ok:#70e1b1; --warn:#ffb86c; --danger:#ff6b6b;
     }
-
-    /* tło jak u Ciebie */
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#1e3c72,#2a5298);color:var(--text);line-height:1.6;}
-    a{color:var(--text);text-decoration:none;}
-    header{padding:1rem 1.25rem;}
-    h1{margin:.25rem 0 0;font-size:1.9rem;}
-
-    .container{max-width:1100px;margin:1.25rem auto 2.5rem;padding:0 1rem;display:grid;gap:1.5rem;}
-
-    /* POZIOME SEKCJE (używane dla pierwszej pomocy) */
-    .hsection{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;background:var(--glass);border-radius:14px;padding:1rem;box-shadow:0 8px 22px rgba(0,0,0,.25);}
-    .hsection--fa + .hsection--fa{background:var(--glass-strong);}
-    .hsection__media{display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.08);border-radius:12px;padding:.5rem;}
-    .hsection__media img{width:100%;height:auto;border-radius:10px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.3);}
-    .hsection__text h2{margin:.25rem 0 .5rem;font-size:1.6rem;border-bottom:2px solid var(--accent);padding-bottom:.35rem;}
-    .hsection__text ul{margin:.25rem 0 0;padding-left:1.2rem;}
-    .hsection__text li{font-size:1.12rem;line-height:1.7;}
-
-    /* BLOK ANATOMII: lewo obraz, prawo 5 eleganckich kart */
-    .anatomy{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
-    .anatomy__media{background:rgba(0,0,0,.08);border-radius:12px;padding:.5rem;box-shadow:0 8px 22px rgba(0,0,0,.25);}
-    .anatomy__media img{width:100%;height:auto;border-radius:10px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.3);}
-
-    .anatomy__cards{display:grid;grid-template-columns:1fr;gap:1rem;}
-
-    /* Karta z paskiem u góry */
+    body{
+      margin:0; font-family: 'Inter',sans-serif; background:var(--bg); color:var(--text);
+    }
+    .bg-anim{
+      height:60vh;
+      background:
+        radial-gradient(42vw 36vh at 16% 12%, rgba(164,107,255,.22), transparent 60%),
+        radial-gradient(36vw 30vh at 84% 8%, rgba(94,234,212,.18), transparent 60%),
+        radial-gradient(50vw 48vh at 50% 105%, rgba(164,107,255,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+      filter: blur(12px) saturate(120%);
+    }
+    main{ max-width:1100px; margin:auto; padding:1rem; }
+    .tabs{ display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem; }
+    .tab{ padding:.6rem 1rem; border-radius:999px; cursor:pointer; background:rgba(255,255,255,.08); }
+    .tab.is-active{ background:var(--accent); color:white; }
+    .cards{ display:grid; gap:1rem; }
     .card{
-      position:relative;
-      border-radius:12px;
-      background:var(--glass);
-      box-shadow:0 6px 18px rgba(0,0,0,.25);
-      overflow:hidden;
+      background: var(--card);
+      backdrop-filter: blur(8px) saturate(120%);
+      border: 1px solid rgba(164,107,255,.16);
+      border-radius:1rem; padding:1rem;
+      box-shadow: 0 14px 34px rgba(8,10,22,.45);
+      transition: box-shadow .22s, transform .22s, border-color .22s;
     }
-    .card__bar{
-      height:8px;
-      width:100%;
-      background:var(--glass-strong);
+    .card:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 18px 48px rgba(8,10,22,.55), 0 0 18px rgba(164,107,255,.20);
     }
-    .card--help .card__bar{ background: var(--bar-help); }
-    .card--sym  .card__bar{ background: var(--bar-sym);  }
-    .card--cau  .card__bar{ background: var(--bar-cau);  }
-    .card--med  .card__bar{ background: var(--bar-med);  }
-    .card--doc  .card__bar{ background: var(--bar-doc);  }
-
-    .card__inner{ padding:1rem 1rem 0.8rem; }
-    .card__title{margin:0 0 .5rem 0;font-size:1.28rem;font-weight:800;letter-spacing:.2px;}
-    .card__body{
-      font-size:1.08rem; line-height:1.7;
-      max-height: 340px; overflow:auto; padding-right:.25rem;
+    .card h3{
+      position: relative; margin:.1rem 0 .85rem; font-weight:900; letter-spacing:.3px;
     }
-
-    /* nowoczesny, dyskretny scrollbar */
-    .card__body::-webkit-scrollbar{width:10px;}
-    .card__body::-webkit-scrollbar-track{background:var(--scroll-bg);border-radius:10px;}
-    .card__body::-webkit-scrollbar-thumb{background:var(--scroll-thumb);border-radius:10px;}
-    .card__body{scrollbar-color: var(--scroll-thumb) var(--scroll-bg); scrollbar-width: thin;}
-
-    .card__body ul{margin:.25rem 0 0;padding-left:1.2rem;}
-    .muted{opacity:.9}
-
-    /* leki – znaczniki RX/OTC */
-    .pill{
-      display:inline-block; font-weight:700; font-size:.9rem;
-      padding:.2rem .55rem; border-radius:999px; margin:0 .35rem 0 0;
-      vertical-align:middle; line-height:1.2;
-      background:#fff; color:#222;
+    .card h3::after{
+      content:""; display:block; height:1px; margin-top:.55rem;
+      background:linear-gradient(90deg, rgba(255,255,255,.36), rgba(255,255,255,.08) 45%, transparent);
     }
-    .pill--rx  { background: var(--badge-rx); color:#fff; }
-    .pill--otc { background: var(--badge-otc); color:#0d2; }
-
-    .col2{
-      display:grid; grid-template-columns:1fr 1fr; gap:.8rem 1.2rem;
+    .card h3:hover{ text-shadow:0 0 10px rgba(255,110,199,.35) }
+    /* kolorowe ramki */
+    .card--sym{  border-color: rgba(94,234,212,.45) }
+    .card--cause{border-color: rgba(164,107,255,.45) }
+    .card--aid{  border-color: rgba(112,225,177,.45) }
+    .card--med{  border-color: rgba(255,184,108,.45) }
+    .card--rx{   border-color: rgba(255,107,107,.55) }
+    .card--rehab{
+      border-color: rgba(94,234,212,.60);
+      background: linear-gradient(180deg, rgba(94,234,212,.10), rgba(255,255,255,.04));
     }
-    @media (max-width: 880px){
-      .hsection{grid-template-columns:1fr;}
-      .anatomy{grid-template-columns:1fr;}
-      .card__body{max-height: unset;}
-      .col2{grid-template-columns:1fr;}
+    .strip{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.16);
+      padding:.6rem 1rem; border-radius:.8rem; margin:.5rem 0;
+    }
+    .strip--warn{
+      background: linear-gradient(180deg, rgba(255,184,108,.18), rgba(255,255,255,.04));
+      border-color: rgba(255,184,108,.55);
+    }
+    /* akordeony */
+    .more-btn{
+      display:inline-block; margin-top:8px; padding:10px 14px; border-radius:10px;
+      font-weight:800; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18);
+      cursor:pointer; transition:.18s
+    }
+    .more-btn:hover{ box-shadow:0 0 0 2px rgba(255,110,199,.32), 0 0 14px rgba(255,110,199,.18) }
+    #bh-particles{
+      position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.5;
+      filter: blur(.2px) saturate(110%);
     }
   </style>
 </head>
 <body>
-  <header>
-    <a href="index.html">← Wróć</a>
-    <h1 id="page-title">Szczegóły</h1>
-  </header>
+  <div class="bg-anim"></div>
+  <canvas id="bh-particles" aria-hidden="true"></canvas>
 
-  <div class="container" id="content"><!-- JS wstawi treść --></div>
+  <main>
+    <div class="tabs">
+      <div class="tab is-active">Objawy</div>
+      <div class="tab">Przyczyny</div>
+      <div class="tab">Pierwsza pomoc</div>
+      <div class="tab">Leki</div>
+      <div class="tab">Rehabilitacja</div>
+      <div class="tab">Kiedy się niepokoić</div>
+      <div class="tab">Mity vs Fakty</div>
+      <div class="tab">FAQ</div>
+    </div>
+
+    <div class="cards">
+      <section class="card card--sym"><h3>Objawy</h3><ul id="symp-common"></ul></section>
+      <section class="card card--cause"><h3>Przyczyny</h3><ul id="causes"></ul></section>
+      <section class="card card--aid"><h3>Pierwsza pomoc</h3><ul id="firstaid"></ul></section>
+      <section class="card card--med"><h3>Leki bez recepty</h3><ul id="meds-otc"></ul></section>
+      <section class="card card--rx"><h3>Leki na receptę</h3><ul id="meds-rx"></ul></section>
+      <section class="card card--rehab"><h3>Rehabilitacja / Profilaktyka</h3><ul id="rehab-home"></ul></section>
+      <section class="card card--cause" id="lekarz"><h3>Kiedy się niepokoić</h3><ul id="urgent"></ul></section>
+      <section class="card card--aid" id="mity"><h3>Mity vs Fakty</h3><div class="flip"><div class="front"><h3>Mit</h3></div><div class="back"><h3>Fakt</h3></div></div></section>
+      <section class="card card--sym"><h3>FAQ</h3>
+        <p id="q1s"></p><p id="q1a"></p>
+        <p id="q2s"></p><p id="q2a"></p>
+        <p id="q3s"></p><p id="q3a"></p>
+      </section>
+    </div>
+  </main>
 
   <script>
-    /* =========================
-       1) DANE „PIERWSZA POMOC”
-       ========================= */
-    const FIRSTAID = {
-      reanimacja: {
-        title: "Reanimacja (RKO)",
-        img: "/img/reanimacja.png",
-        text: `<ul>
-          <li>Sprawdź przytomność i oddech.</li>
-          <li>Wezwij pomoc – 112.</li>
-          <li>Uciskaj środek klatki piersiowej ok. 5 cm, 100–120/min.</li>
-          <li>Cykl: 30 uciśnięć : 2 oddechy (30:2).</li>
-        </ul>`
-      },
-      zadlawienie: {
-        title: "Zadławienie",
-        img: "/img/zadlawienie.png",
-        text: `<ul>
-          <li>Skuteczny kaszel → zachęcaj do kaszlu, obserwuj.</li>
-          <li>Całkowita niedrożność: 5 uderzeń w plecy → 5 uciśnięć nadbrzusza.</li>
-          <li>Powtarzaj 5/5 do usunięcia przeszkody lub utraty przytomności.</li>
-        </ul>`
-      },
-      wypadek: {
-        title: "Wypadek",
-        img: "/img/wypadek.png",
-        text: `<ul>
-          <li>Oceń miejsce zdarzenia – najpierw Twoje bezpieczeństwo.</li>
-          <li>Wezwij pomoc – 112.</li>
-          <li>Zabezpiecz miejsce: światła awaryjne, trójkąt ostrzegawczy.</li>
-          <li>Udziel pierwszej pomocy i monitoruj poszkodowanego.</li>
-        </ul>`
-      }
+    const typ = new URLSearchParams(location.search).get('typ');
+    const czesc = new URLSearchParams(location.search).get('czesc');
+    const data = {
+      common:["ból","zaczerwienienie","obrzęk","gorączka","osłabienie"],
+      causes:["infekcje","urazy","alergie","choroby przewlekłe"],
+      firstaid:["odpoczynek","zimne okłady","nawodnienie","środki przeciwbólowe OTC"],
+      otc:["paracetamol","ibuprofen","maści łagodzące"],
+      rx:["antybiotyki","sterydy","leki przeciwzapalne"],
+      rehab:["ćwiczenia rozciągające","fizjoterapia","zmiana stylu życia"],
+      urgent:["nagły ostry ból","utrata przytomności","krwotok","trudności w oddychaniu"],
+      myths:[{m:"ból zawsze oznacza chorobę poważną",f:"często to błaha przyczyna"}],
+      faq:[{q:"Jak postępować w domu?",a:"stosuj pierwszą pomoc i obserwuj czerwone flagi"}]
     };
+    function fillList(id, arr){ const ul=document.getElementById(id); if(!ul) return;
+      arr.forEach(x=>{const li=document.createElement('li'); li.textContent=x; ul.appendChild(li);});
+    }
+    fillList('symp-common',data.common);
+    fillList('causes',data.causes);
+    fillList('firstaid',data.firstaid);
+    fillList('meds-otc',data.otc);
+    fillList('meds-rx',data.rx);
+    fillList('rehab-home',data.rehab);
+    fillList('urgent',data.urgent);
 
-    /* ======================================================
-       2) DANE „ANATOMIA” – PRZYKŁAD ROZBUDOWANY (kobieta→nos)
-          Możesz w tym formacie dopisywać swoje „wypasione” treści
-       ====================================================== */
-    const ANATOMIA = {
-      kobieta: {
-        nos: {
-          title: "Nos – kobieta",
-          img: "/img/kobieta-nos.png",
-          sections: {
-            help: `
-              <ul>
-                <li>Krwawienie: pochyl głowę do przodu, uciskaj skrzydełka 10–15 min.</li>
-                <li>Zimny okład na nasadę nosa; nie wydmuchuj mocno.</li>
-                <li>Uraz/złamanie – stabilizacja, chłodzenie, nie nastawiaj samodzielnie.</li>
-                <li>Nawilżanie śluzówki: sól morska/izotoniczna kilka razy dziennie.</li>
-              </ul>
-            `,
-            sym: `
-              <ul>
-                <li>Krwawienie z nosa (jedno- lub obustronne), zasychające strupy.</li>
-                <li>Niedrożność, zatkanie, kichanie; spadek węchu.</li>
-                <li>Ból/obrzęk po urazie, wyciek wodnisty z nosa.</li>
-              </ul>
-            `,
-            cau: `
-              <ul>
-                <li>Infekcje wirusowe/bakteryjne, alergiczny nieżyt nosa.</li>
-                <li>Suche powietrze, dłubanie w nosie, urazy.</li>
-                <li>Nadciśnienie, leki przeciwkrzepliwe, kruchość naczyń.</li>
-              </ul>
-            `,
-            med: `
-              <div class="col2">
-                <div>
-                  <div class="pill pill--otc">Bez recepty</div>
-                  <ul>
-                    <li>Sól morska/izotoniczna (nawilżanie).</li>
-                    <li>Żele/maści nawilżające śluzówkę.</li>
-                    <li>Krótko (max 3–5 dni): krople obkurczające (xylometazolina/oxymetazolina).</li>
-                    <li>Antyhistaminowe OTC w alergii (wg ulotki).</li>
-                  </ul>
-                </div>
-                <div>
-                  <div class="pill pill--rx">Na receptę</div>
-                  <ul>
-                    <li>GKS donosowe (np. mometazon, budezonid) w alergii/przewlekłym zapaleniu.</li>
-                    <li>Antybiotykoterapia przy bakteryjnych nadkażeniach – wg lekarza.</li>
-                    <li>Tamponada/nasączane opatrunki przy nawracających krwawieniach.</li>
-                  </ul>
-                </div>
-              </div>
-              <p class="muted">Uwaga: stosuj leki zgodnie z ulotką i zaleceniami specjalisty.</p>
-            `,
-            doc: `
-              <ul>
-                <li>Krwawienie > 20 min mimo ucisku/chłodzenia.</li>
-                <li>Nawracające krwawienia, silny ból, podejrzenie złamania.</li>
-                <li>Gorączka, ropna wydzielina, wyciek wodnisty po urazie głowy.</li>
-                <li>Duszność, znaczne upośledzenie węchu, nasilające się objawy.</li>
-              </ul>
-              <div class="muted"><strong>Czerwone flagi – kiedy się niepokoić:</strong>
-                utrata przytomności, krwotok masywny, objawy wstrząsu, trudności w oddychaniu – dzwoń 112.</div>
-            `
-          }
-        }
-        // dopisz resztę części dla kobiety w tym samym układzie
-      },
-      mezczyzna: {
-        // dopisz swoje części; jeśli brak – zadziała domyślny szablon poniżej
-      },
-      dziecko: {
-        // dopisz swoje części; jeśli brak – zadziała domyślny szablon poniżej
+    document.getElementById('q1s').textContent = data.faq[0]?.q;
+    document.getElementById('q1a').textContent = data.faq[0]?.a;
+  </script>
+
+  <script>
+  /* === PARTICLES === */
+  (function particles(){
+    const c=document.getElementById('bh-particles'); if(!c) return;
+    const dpr=Math.min(2,window.devicePixelRatio||1);
+    const ctx=c.getContext('2d'); let W,H,dots=[];
+    function resize(){
+      W=c.width=Math.floor(innerWidth*dpr);
+      H=c.height=Math.floor(innerHeight*dpr);
+      c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px';
+      const target=Math.floor((innerWidth*innerHeight)/14000);
+      dots=Array.from({length:target},()=>({
+        x:Math.random()*W,y:Math.random()*H,
+        vx:(Math.random()-.5)*.12*dpr,vy:(Math.random()-.5)*.12*dpr,
+        r:(Math.random()*1.4+0.6)*dpr,a:Math.random()*.55+.25
+      }));
+    }
+    function step(){
+      ctx.clearRect(0,0,W,H);
+      for(const p of dots){
+        p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0||p.x>W) p.vx*=-1; if(p.y<0||p.y>H) p.vy*=-1;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        const grad=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3);
+        grad.addColorStop(0,`rgba(164,107,255,${0.22*p.a})`);
+        grad.addColorStop(1,`rgba(94,234,212,0)`);
+        ctx.fillStyle=grad; ctx.fill();
       }
-    };
-
-    /* ======================================================
-       3) DOMYŚLNY SZABLON – bogaty, aby nigdy nic nie „znikło”
-       ====================================================== */
-    function defaultAnatomy(label){
-      const part = label || "ta część ciała";
-      return {
-        title: label || "Szczegóły",
-        img: "", // ustawimy auto-ścieżkę
-        sections: {
-          help: `
-            <ul>
-              <li>Chłodzenie (10–15 min), odciążenie, unikanie drażnienia.</li>
-              <li>W razie krwawienia – ucisk miejscowy, obserwacja.</li>
-              <li>W nasilonych objawach – skontaktuj się z 112/SOR.</li>
-            </ul>
-          `,
-          sym: `
-            <ul>
-              <li>Ból, obrzęk, zaczerwienienie, ograniczenie funkcji.</li>
-              <li>Nasilona tkliwość, wydzielina/krwawienie (jeśli dotyczy).</li>
-            </ul>
-          `,
-          cau: `
-            <ul>
-              <li>Uraz mechaniczny, przeciążenie, infekcja, alergia.</li>
-              <li>Czynniki środowiskowe (suchość, pyły), choroby przewlekłe.</li>
-            </ul>
-          `,
-          med: `
-            <div class="col2">
-              <div>
-                <div class="pill pill--otc">Bez recepty</div>
-                <ul>
-                  <li>Preparaty przeciwbólowe/łagodzące OTC – zgodnie z ulotką.</li>
-                  <li>Środki miejscowe (nawilżające, osłonowe) jeśli wskazane.</li>
-                </ul>
-              </div>
-              <div>
-                <div class="pill pill--rx">Na receptę</div>
-                <ul>
-                  <li>Leki dobierane przez lekarza (np. GKS miejscowe, antybiotyki, silniejsze analgetyki) zależnie od rozpoznania.</li>
-                </ul>
-              </div>
-            </div>
-            <p class="muted">Uwaga: konsultuj dobór leków ze specjalistą.</p>
-          `,
-          doc: `
-            <ul>
-              <li>Silny ból, deformacja, objawy uogólnione, gorączka, duszność.</li>
-              <li>Brak poprawy lub narastanie dolegliwości mimo postępowania domowego.</li>
-            </ul>
-            <div class="muted"><strong>Czerwone flagi – kiedy się niepokoić:</strong>
-              nagłe pogorszenie, zaburzenia świadomości, masywny krwotok, objawy wstrząsu – dzwoń 112.</div>
-          `
-        }
-      };
+      requestAnimationFrame(step);
     }
+    addEventListener('resize',resize,{passive:true});
+    resize(); step();
+  })();
 
-    /* ======================== RENDERERY ======================== */
-    function makeFirstAidSection(d){
-      const sec = document.createElement('section');
-      sec.className = 'hsection hsection--fa';
-      sec.innerHTML = `
-        <div class="hsection__media"><img src="${d.img}" alt="${d.title}" onerror="this.src='/img/placeholder.png'"></div>
-        <div class="hsection__text">
-          <h2>${d.title}</h2>
-          ${d.text}
-        </div>`;
-      return sec;
-    }
+  /* === AKORDEONY === */
+  (function acc(){
+    const ids=['symp-common','causes','firstaid','meds-otc','meds-rx','rehab-home','urgent'];
+    const LIM=4;
+    ids.forEach(id=>{
+      const el=document.getElementById(id); if(!el) return;
+      const items=[...el.children]; if(items.length<=LIM) return;
+      items.slice(LIM).forEach(li=>li.style.display='none');
+      const btn=document.createElement('button');
+      btn.className='more-btn'; btn.textContent='Pokaż więcej';
+      el.parentElement.appendChild(btn);
+      let open=false;
+      btn.addEventListener('click',()=>{
+        open=!open;
+        items.slice(LIM).forEach(li=>li.style.display=open?'':'none');
+        btn.textContent=open?'Pokaż mniej':'Pokaż więcej';
+      });
+    });
+  })();
 
-    function cardTemplate(kind, title, body){
-      const kindClass = {
-        help:'card--help', sym:'card--sym', cau:'card--cau', med:'card--med', doc:'card--doc'
-      }[kind] || '';
-      return `
-        <div class="card ${kindClass}">
-          <div class="card__bar"></div>
-          <div class="card__inner">
-            <h3 class="card__title">${title}</h3>
-            <div class="card__body">${body || '<p class="muted">Brak danych.</p>'}</div>
-          </div>
-        </div>
-      `;
-    }
-
-    function makeAnatomyView(d, imgAuto){
-      const view = document.createElement('section');
-      view.className = 'anatomy';
-      const imgSrc = d.img && d.img.trim() ? d.img : imgAuto;
-      const S = d.sections || {};
-      view.innerHTML = `
-        <div class="anatomy__media">
-          <img src="${imgSrc}" alt="${d.title}" onerror="this.src='/img/placeholder.png'">
-        </div>
-        <div class="anatomy__cards">
-          ${cardTemplate('help','Pierwsza pomoc', S.help)}
-          ${cardTemplate('sym','Objawy', S.sym)}
-          ${cardTemplate('cau','Przyczyny', S.cau)}
-          ${cardTemplate('med','Leki', S.med)}
-          ${cardTemplate('doc','Kiedy do lekarza', S.doc)}
-        </div>`;
-      return view;
-    }
-
-    /* =========================== LOGIKA =========================== */
-    const qp    = new URLSearchParams(location.search);
-    const typ   = (qp.get('typ')   || '').toLowerCase();   // porada | kobieta | mezczyzna | dziecko
-    const czesc = (qp.get('czesc') || '').toLowerCase();
-    const label = qp.get('label') || '';
-    const titleEl = document.getElementById('page-title');
-    const content = document.getElementById('content');
-    function setTitle(txt){ titleEl.textContent = txt || 'Szczegóły'; }
-
-    if (typ === 'porada') {
-      if (czesc === 'pierwszopomoc') {
-        setTitle('Pierwsza pomoc – przegląd');
-        content.appendChild(makeFirstAidSection(FIRSTAID.reanimacja));
-        content.appendChild(makeFirstAidSection(FIRSTAID.zadlawienie));
-        content.appendChild(makeFirstAidSection(FIRSTAID.wypadek));
-      } else if (FIRSTAID[czesc]) {
-        const d = FIRSTAID[czesc];
-        setTitle(d.title);
-        content.appendChild(makeFirstAidSection(d));
-      } else {
-        setTitle('Szczegóły porady');
-        content.innerHTML = '<p class="muted">Brak danych dla tej porady.</p>';
-      }
-    } else {
-      // widok anatomiczny
-      const store = ANATOMIA[typ] || {};
-      let d = store[czesc];
-      const autoImg = `/img/${typ}-${czesc}.png`;
-      if (!d) { d = defaultAnatomy(label || czesc); }
-      if (!d.img) d.img = autoImg;
-
-      setTitle(d.title || label || 'Szczegóły');
-      content.appendChild(makeAnatomyView(d, autoImg));
-    }
+  /* === SOS ACCENT === */
+  (function sos(){
+    const panel=document.getElementById('lekarz'); if(!panel) return;
+    const box=document.createElement('div');
+    box.className='strip strip--warn';
+    box.innerHTML='Masz objawy alarmowe? <strong>Nie zwlekaj.</strong> <a class="cta" href="tel:112">Zadzwoń 112</a>';
+    panel.appendChild(box);
+  })();
   </script>
 </body>
 </html>
